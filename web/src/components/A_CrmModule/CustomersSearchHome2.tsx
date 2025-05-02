@@ -4,9 +4,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState, useEffect } from 'react'
 import SiderForm from 'src/components/SiderForm/SiderForm'
-import {
-  getCRMCustomer,
-} from 'src/context/dbQueryFirebase'
+import { getCRMCustomer } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import 'flowbite'
 import { useSnackbar } from 'notistack'
@@ -80,7 +78,6 @@ const CustomersSearchHome2 = ({ project }) => {
   const getProjects = async () => {
     const { access, uid } = user
 
-
     const unsubscribe = getCRMCustomer(
       orgId,
       (querySnapshot) => {
@@ -151,23 +148,23 @@ const CustomersSearchHome2 = ({ project }) => {
                       className="px-6 py-3 text-left text-xs font-semibold text-[#0D027D]  tracking-wider"
                     >
                       Units
-                    </th> <th
+                    </th>{' '}
+                    <th
                       scope="col"
                       className="px-6 py-3 text-center rounded-tr-lg  text-xs font-semibold text-[#0D027D]  tracking-wider"
                     >
                       Action
                     </th>
-
                   </tr>
                 </thead>
                 <tbody className="bg-white">
                   {customerRawData.map((person, i) => (
-                    <motion.tr key={i} onClick={() => dispDoc(person)} 
-                    className='cursor-pointer  border-b border-dashed'>
-                      <td
-                        className="px-6 py-1 whitespace-nowrap"
-
-                      >
+                    <motion.tr
+                      key={i}
+                      onClick={() => dispDoc(person)}
+                      className="cursor-pointer  border-b border-dashed"
+                    >
+                      <td className="px-6 py-1 whitespace-nowrap">
                         <div className="flex items-center">
                           <div className="flex-shrink-0 h-10 w-10">
                             <img
@@ -195,14 +192,12 @@ const CustomersSearchHome2 = ({ project }) => {
                         <div className="text-sm text-gray-900">
                           {person?.remaining_money?.toLocaleString('en-IN')}
                         </div>
-
-                      </td> <td className="px-6 py-2 whitespace-nowrap  text-right">
-
+                      </td>{' '}
+                      <td className="px-6 py-2 whitespace-nowrap  text-right">
                         <div className="text-sm text-gray-900">
                           {person?.input_money?.toLocaleString('en-IN')}
                         </div>
                       </td>
-
                       <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-right">
                         {person?.utilized_money?.toLocaleString('en-IN')}
                       </td>
@@ -216,7 +211,6 @@ const CustomersSearchHome2 = ({ project }) => {
                           className="w-5 h-5 ml-[6px] mb-[4px] inline cursor-pointer"
                           onClick={() => {}}
                         />
-
                       </td>
                     </motion.tr>
                   ))}

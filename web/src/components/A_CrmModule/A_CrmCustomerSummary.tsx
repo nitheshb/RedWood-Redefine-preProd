@@ -13,15 +13,13 @@ const CrmCustomerSummary = ({
   const pdfUnitSummaryComp = useRef(null)
   const { orgId } = user
 
-
   useEffect(() => {
-  console.log('selCustomerIs', selCustomerPayload)
+    console.log('selCustomerIs', selCustomerPayload)
   }, [])
 
   return (
     <PDFExport paperSize="A4" margin="1cm" ref={pdfUnitSummaryComp}>
       <div className="py-3 px-3 m-4 mt-2 rounded-lg border border-gray-100 h-[100%] overflow-y-scroll overflow-auto no-scrollbar">
-
         <div className="text-end items-end mr-2 mt-3">
           <div
             className=" flex flex-row justify-end items-center align-middle text-blue-500 text-xs cursor-pointer hover:underline"
@@ -50,33 +48,27 @@ const CrmCustomerSummary = ({
         </div>
 
         <CrmUnitHeader projectDetails={selCustomerPayload} />
+      </div>
 
-        </div>
-
-
-
-        <div className="flex flex-row justify-between">
-
-
-          <div className="inline mt-2 ml-2 mb-5">
-            <div className="">
-              <label className="font-semibold text-[#053219]  text-sm  mt-3 mb-1  tracking-wide ">
-                Transaction Ddetails<abbr title="required"></abbr>
-              </label>
-            </div>
-
-            <div className="border-t-4 rounded-xl w-16 mt-1 border-green-600"></div>
+      <div className="flex flex-row justify-between">
+        <div className="inline mt-2 ml-2 mb-5">
+          <div className="">
+            <label className="font-semibold text-[#053219]  text-sm  mt-3 mb-1  tracking-wide ">
+              Transaction Ddetails<abbr title="required"></abbr>
+            </label>
           </div>
-          <div className="p-3 flex flex-col">
-            <span
-              className={`items-center h-6 px-3 py-1 mt-1 text-xs font-semibold text-green-500 bg-green-100 rounded-full
+
+          <div className="border-t-4 rounded-xl w-16 mt-1 border-green-600"></div>
+        </div>
+        <div className="p-3 flex flex-col">
+          <span
+            className={`items-center h-6 px-3 py-1 mt-1 text-xs font-semibold text-green-500 bg-green-100 rounded-full
                         `}
-            >
-              {'In-Progress'}
-            </span>
-          </div>
+          >
+            {'In-Progress'}
+          </span>
         </div>
- 
+      </div>
     </PDFExport>
   )
 }

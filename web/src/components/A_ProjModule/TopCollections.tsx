@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   LineChart,
   Line,
@@ -6,9 +6,9 @@ import {
   YAxis,
   ResponsiveContainer,
   CartesianGrid,
-  Tooltip, 
-} from 'recharts';
-import { TrendingUp } from 'lucide-react';
+  Tooltip,
+} from 'recharts'
+import { TrendingUp } from 'lucide-react'
 
 const TopCollections = () => {
   const data = [
@@ -24,15 +24,19 @@ const TopCollections = () => {
     { name: 'Luffy1', current: 5000, previous: 90000 },
     { name: 'Luffy2', current: 35000, previous: 35000 },
     { name: 'End', current: 5000, previous: 5000 },
-  ];
+  ]
 
   return (
     <div className="w-full max-w-4xl  h-full flex flex-col justify-between p-4 gap-6 overflow-hidden  bg-white">
       <div className="px-0 pt-0">
         <div className="flex flex-col gap-1">
-          <h2 className="text-[19px] text-[#000000] ml-4 font-normal">Top Collections</h2>
+          <h2 className="text-[19px] text-[#000000] ml-4 font-normal">
+            Top Collections
+          </h2>
           <div className="flex items-center ml-4 gap-3">
-            <span className="text-[30px] text-[#000000] font-semibold">&#8377; 387.75</span>
+            <span className="text-[30px] text-[#000000] font-semibold">
+              &#8377; 387.75
+            </span>
             <div className="flex items-center text-[#00A236]">
               <TrendingUp className="w-5 h-5 mx-3" />
               <span className="text-[18]">23%</span>
@@ -41,11 +45,13 @@ const TopCollections = () => {
         </div>
       </div>
 
-
       <div className="px-0 pb-0">
         <div className="relative h-80 w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={data} margin={{ top: 20, right: 0, left: 0, bottom: 0 }}>
+            <LineChart
+              data={data}
+              margin={{ top: 20, right: 0, left: 0, bottom: 0 }}
+            >
               <CartesianGrid vertical={false} stroke="#CCCCCC" />
               <XAxis
                 dataKey="name"
@@ -80,44 +86,35 @@ const TopCollections = () => {
                 isAnimationActive={false}
               />
 
-
-
-<Tooltip
-  content={({ active, payload, label }) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-md text-sm text-gray-700 min-w-[150px]">
-          <p className="font-bold text-blue-500 mb-2">{label}</p>
-          {payload.map((item, index) => (
-            <div key={index} className="flex justify-between items-center mt-2">
-              <div className="flex items-center">
-                <span
-                  className="w-3 h-3  mr-2"
-                  style={{ backgroundColor: item.color }}
-                />
-                <span className="font-medium">{item.name}</span>
-              </div>
-              <span className="font-semibold">₹{new Intl.NumberFormat().format(item.value)}</span>
-            </div>
-          ))}
-        </div>
-      );
-    }
-    return null;
-  }}
-/>
-
-
-
-
-
-
-
-
-
-
-
-
+              <Tooltip
+                content={({ active, payload, label }) => {
+                  if (active && payload && payload.length) {
+                    return (
+                      <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-md text-sm text-gray-700 min-w-[150px]">
+                        <p className="font-bold text-blue-500 mb-2">{label}</p>
+                        {payload.map((item, index) => (
+                          <div
+                            key={index}
+                            className="flex justify-between items-center mt-2"
+                          >
+                            <div className="flex items-center">
+                              <span
+                                className="w-3 h-3  mr-2"
+                                style={{ backgroundColor: item.color }}
+                              />
+                              <span className="font-medium">{item.name}</span>
+                            </div>
+                            <span className="font-semibold">
+                              ₹{new Intl.NumberFormat().format(item.value)}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    )
+                  }
+                  return null
+                }}
+              />
             </LineChart>
           </ResponsiveContainer>
 
@@ -145,9 +142,7 @@ const TopCollections = () => {
         </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default TopCollections;
-
-
+export default TopCollections

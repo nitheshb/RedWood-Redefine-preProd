@@ -204,17 +204,6 @@ const formatOptionLabel = ({ value, label, customAbbreviation }) => (
   </div>
 )
 
-
-
-
-
-
-
-
-
-
-
-
 export const MultiSelectMultiLineField = ({
   label,
   name,
@@ -228,13 +217,8 @@ export const MultiSelectMultiLineField = ({
   const defaultValue = (options, value) => {
     console.log('check it ', options, value)
     //return (options ? options.find((option) => option.value === value) : '') || ''
-    return options ? options.find((option) => option?.value === value) : '';
-
+    return options ? options.find((option) => option?.value === value) : ''
   }
-
-
-
-
 
   const selectStyles = {
     control: (provided) => ({
@@ -271,24 +255,7 @@ export const MultiSelectMultiLineField = ({
       ...provided,
       fontSize: '0.875rem',
     }),
-  };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  }
 
   return (
     <div className="section">
@@ -314,10 +281,8 @@ export const MultiSelectMultiLineField = ({
         //   console.log('Selected option is', selectedOption);
         //   onChange(selectedOption);
         // }}
-
-
       />
-        {/* <ErrorMessage
+      {/* <ErrorMessage
           component="div"
           name={name}
           className="error-message text-red-700 text-xs p-1 mx-auto"

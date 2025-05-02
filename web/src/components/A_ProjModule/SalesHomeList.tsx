@@ -43,13 +43,11 @@ const SalesHomeList = ({
   return (
     <div className="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
       <div className="px-4  z-10">
-
-
         <div className="flex flex-row ">
           <div className="mr-4 templateList">
             <div className=" flex">
               <div className="flex flex-col">
-              <button
+                <button
                   className={`templateItem ${
                     subView === 'brouchers' ? 'hightlightItem' : ''
                   }`}

@@ -1,10 +1,7 @@
-import  image from '../../public/image.png'
-import  image1 from '../../public/image1.png'
-import  image2 from '../../public/image2.png'
-import  image3 from '../../public/image3.png'
-
-
-
+import image from '../../public/image.png'
+import image1 from '../../public/image1.png'
+import image2 from '../../public/image2.png'
+import image3 from '../../public/image3.png'
 
 export const statesList = [
   {
@@ -172,10 +169,6 @@ export const projectPlans = [
   },
 ]
 
-
-
-
-
 export const unitTypeList = [
   { label: 'Select Count', value: '' },
   { label: '1 Bhk', value: '1 Bhk' },
@@ -186,7 +179,6 @@ export const unitTypeList = [
   { label: '4 Bhk', value: '4 Bhk' },
   { label: '5 Bhk', value: '5 Bhk' },
 ]
-
 
 export const bedRoomsList = [
   { label: 'Select Count', value: '' },
@@ -199,8 +191,6 @@ export const bedRoomsList = [
   // { label: '7 Bedroom', value: 'bed7' },
 ]
 
-
-
 export const carParkingList = [
   { label: 'Select Count', value: '' },
   { label: '1 Car Parking', value: 'car1' },
@@ -209,9 +199,6 @@ export const carParkingList = [
   { label: '4 Car Parking', value: 'car4' },
   { label: '5 Car Parking', value: 'car5' },
 ]
-
-
-
 
 export const plotTypeList = [
   { label: 'Select Count', value: '' },
@@ -256,14 +243,11 @@ export const releaseStausList = [
   { label: 'Un-Released', value: 'un-released' },
 ]
 
-
 export const inventorytypeList = [
   { label: 'Inventory Type', value: '' },
   { label: 'MAA', value: 'maa' },
   { label: 'SUBHA', value: 'subha' },
-
 ]
-
 
 export const mortgageType = [
   { label: 'Select Mortgage', value: '' },
@@ -271,15 +255,6 @@ export const mortgageType = [
   { label: 'Bank', value: 'bank' },
   { label: '3rd Party Investor', value: '3rd_party_investor' },
 ]
-
-
-
-
-
-
-
-
-
 
 export const projectDetailFlow = [
   {
@@ -441,7 +416,6 @@ export const chooseReraApproval = [
   },
 ]
 
-
 // export const paymentMode = [
 //   {
 //     value: 'cheque',
@@ -469,9 +443,6 @@ export const chooseReraApproval = [
 //     label: 'Customer Wallet',
 //   },
 // ]
-
-
-
 
 export const paymentMode = [
   {
@@ -504,9 +475,7 @@ export const paymentMode = [
     label: 'Customer Wallet',
     img: '/WalletIcon.svg',
   },
-];
-
-
+]
 
 export const walletMode = [
   {
@@ -521,13 +490,8 @@ export const walletMode = [
   {
     value: 'online',
     label: 'Imps/UPI',
-  }
+  },
 ]
-
-
-
-
-
 
 export const demandMode = [
   {
@@ -551,10 +515,7 @@ export const demandMode = [
     label: 'Upgrade',
     icon: image3,
   },
-];
-
-
-
+]
 
 export const areaConversions = [
   {
@@ -642,10 +603,12 @@ export const VillaCsSections = [
   {
     value: 'constadditionalCost',
     label: 'Const Additional Charges',
-  }, {
+  },
+  {
     value: 'possessionAdditionalCost',
     label: 'Possession Additional Charges',
-  }, {
+  },
+  {
     value: 'otherCharges',
     label: 'other Additional Charges',
   },
@@ -1004,12 +967,6 @@ export const apartUnitChargesMock = [
     val: '₹12000',
   },
 ]
-
-
-
-
-
-
 
 export const approvalAuthority = [
   // {
@@ -1506,62 +1463,52 @@ export const ProjectAccessFolder = [
   },
 ]
 
-
-export const constructCS_A =[
-
-    {
-      myId: '3',
-      units: {
-        value: 'cost_per_sqft',
-        label: 'Cost per cost',
-      },
-      component: {
-        value: 'villa_construct_cost',
-        label: 'Villa Construction Cost  ',
-      },
-
+export const constructCS_A = [
+  {
+    myId: '3',
+    units: {
+      value: 'cost_per_sqft',
+      label: 'Cost per cost',
     },
-    {
-      myId: '4',
-      units: {
-        value: 'cost_per_sqft',
-        label: 'Cost per cost',
-      },
-      component: {
-        value: 'plc_cost_sqft',
-        label: 'Construction PLC',
-      },
-
+    component: {
+      value: 'villa_construct_cost',
+      label: 'Villa Construction Cost  ',
     },
-
+  },
+  {
+    myId: '4',
+    units: {
+      value: 'cost_per_sqft',
+      label: 'Cost per cost',
+    },
+    component: {
+      value: 'plc_cost_sqft',
+      label: 'Construction PLC',
+    },
+  },
 ]
 
 export const plotCS_Dummy_A = [
-
-    {
-      myId: '1',
-      units: {
-        value: 'cost_per_sqft',
-        label: 'Cost per cost',
-      },
-      component: {
-        value: 'unit_cost_charges',
-        label: 'Unit Cost',
-      },
+  {
+    myId: '1',
+    units: {
+      value: 'cost_per_sqft',
+      label: 'Cost per cost',
     },
-    {
-      myId: '2',
-      units: {
-        value: 'cost_per_sqft',
-        label: 'Cost per cost',
-      },
-      component: {
-        value: 'plc_cost_sqft',
-        label: 'PLC',
-      },
+    component: {
+      value: 'unit_cost_charges',
+      label: 'Unit Cost',
     },
-
-  ]
-
-
-
+  },
+  {
+    myId: '2',
+    units: {
+      value: 'cost_per_sqft',
+      label: 'Cost per cost',
+    },
+    component: {
+      value: 'plc_cost_sqft',
+      label: 'PLC',
+    },
+  },
+]

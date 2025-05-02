@@ -7,7 +7,7 @@
   padding: 1rem;
   position: relative;
   cursor: pointer;
-  padding-bottom: 0px
+  padding-bottom: 0px;
 }
 .CompactCard:hover {
   box-shadow: none !important;
@@ -26,9 +26,9 @@
   overflow: visible;
 }
 .CircularProgressbar-path {
-  stroke: #a798ff  !important;
+  stroke: #a798ff !important;
   stroke-width: 12px !important;
-  filter: drop-shadow(2px 4px 6px #a798ff );
+  filter: drop-shadow(2px 4px 6px #a798ff);
 }
 .CircularProgressbar-trail {
   display: none;

@@ -81,8 +81,6 @@ const UnitBookingSummaryHomePage = ({
     boot()
   }, [projectList])
 
-
-
   useEffect(() => {
     setSearchValue(searchVal)
   }, [searchVal])
@@ -93,16 +91,12 @@ const UnitBookingSummaryHomePage = ({
       selUserProfileF('User Profile', searchData)
   }, [searchData, isClicked])
 
-
-
   const selUserProfileF = (title, data) => {
     setAddLeadsTypes(title)
     setUnitsViewMode(false)
     setisImportLeadsOpen(true)
     setSelUserProfile(data)
   }
-
-
 
   const boot = async () => {
     const unsubscribe = await getBookedUnitsByProject(
@@ -120,27 +114,38 @@ const UnitBookingSummaryHomePage = ({
           return x
         })
 
-        console.log('values are',usersListA )
+        console.log('values are', usersListA)
         await setUnitsFetchData(usersListA)
-
       },
       {
-        status: ['booked', 'Booked','agreement_pipeline', 'ATS','sd_pipeline', 'Registered', 'agreement','registered', 'construction', 'possession'],
+        status: [
+          'booked',
+          'Booked',
+          'agreement_pipeline',
+          'ATS',
+          'sd_pipeline',
+          'Registered',
+          'agreement',
+          'registered',
+          'construction',
+          'possession',
+        ],
       },
       () => setTableData([])
     )
     return unsubscribe
   }
   useEffect(() => {
-console.log('values are', unitsFetchData.length, selProjectIs.uid)
-switch (selProjectIs.value) {
-  case 'allprojects':
-    return setTableData(unitsFetchData)
-  default :
-    return setTableData(unitsFetchData.filter((dat) => dat?.pId === selProjectIs.uid))
-
-}
-  }, [unitsFetchData,selProjectIs])
+    console.log('values are', unitsFetchData.length, selProjectIs.uid)
+    switch (selProjectIs.value) {
+      case 'allprojects':
+        return setTableData(unitsFetchData)
+      default:
+        return setTableData(
+          unitsFetchData.filter((dat) => dat?.pId === selProjectIs.uid)
+        )
+    }
+  }, [unitsFetchData, selProjectIs])
 
   const getProjectsListFun = () => {
     const unsubscribe = getAllProjects(
@@ -154,7 +159,7 @@ switch (selProjectIs.value) {
           user.value = user.projectName
         })
         console.log('fetched proejcts list is', projectsListA)
-        let z = [ ...projectsListA]
+        let z = [...projectsListA]
         setprojectList(z)
       },
       (error) => setprojectList([])
@@ -189,8 +194,6 @@ switch (selProjectIs.value) {
     )
 
     return unsubscribe
-
-
   }, [])
 
   return (
@@ -223,8 +226,6 @@ switch (selProjectIs.value) {
                     ]}
                   />
                 </div>
-
-
               </div>
             </div>
 
@@ -244,7 +245,7 @@ switch (selProjectIs.value) {
         </div>
       </div>
 
-       <SiderForm
+      <SiderForm
         open={isImportLeadsOpen}
         setOpen={setisImportLeadsOpen}
         title={'unitDetails_crm_view'}

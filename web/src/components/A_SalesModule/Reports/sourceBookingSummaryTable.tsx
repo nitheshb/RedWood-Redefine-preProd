@@ -113,8 +113,6 @@ const SourceBookingSummaryTable = ({ projects }) => {
   )
   const [projectAValues, setProjectWithValues] = useState([])
 
-
-
   const [isOpenSideForm, setReportSideForm] = useState(false)
   const [drillDownPayload, setDrillDownPayload] = useState([])
   const [subTitle, setSubTitle] = useState('false')
@@ -136,7 +134,7 @@ const SourceBookingSummaryTable = ({ projects }) => {
 
   const handleDecreaseMonth = () => {
     setStartMonthOffset((prevOffset) => prevOffset - 1)
-    setMonthCount((prevCount) => prevCount + 1);
+    setMonthCount((prevCount) => prevCount + 1)
   }
 
   const filteredData = reportData.filter((item) => {
@@ -150,15 +148,11 @@ const SourceBookingSummaryTable = ({ projects }) => {
     setDataView(view)
   }
 
-
   const showDrillDownFun = async (text, data) => {
     setReportSideForm(true)
     setDrillDownPayload(data)
     setSubTitle(text)
   }
-
-
-
 
   const calculateTotal = (data, key) => {
     return data.reduce((acc, item) => {
@@ -307,8 +301,6 @@ const SourceBookingSummaryTable = ({ projects }) => {
           </tr>
         </thead>
         <tbody className="text-gray-600 text-sm font-light">
-
-
           {loader && <TableSkeleton rows={3} columns={7} />}
           {projectAValues
             ?.sort((a, b) => {
@@ -357,19 +349,14 @@ const SourceBookingSummaryTable = ({ projects }) => {
                           <td
                             key={i}
                             className="py-3 px-6 text-right font-medium text-gray-900"
-
-                            onClick={() =>{
+                            onClick={() => {
                               console.log('fetched values', data)
                               showDrillDownFun('Source Bookings', {
                                 uid: data.rep,
                                 months: data?.months,
                                 thisMonth: month,
                               })
-
                             }}
-
-
-
                           >
                             {`${month?.receive?.toLocaleString('en-IN')}`}
                           </td>
@@ -397,8 +384,6 @@ const SourceBookingSummaryTable = ({ projects }) => {
                 }
               }
 
-
-
               return (
                 <tr
                   key={index}
@@ -408,43 +393,29 @@ const SourceBookingSummaryTable = ({ projects }) => {
                     {data?.label}
                   </td>
 
-
-
-<td
-  className="py-3 px-6 border text-right bg-white border-b font-medium text-gray-900"
-  onClick={() => {
-    console.log('data is ', data);
-    showDrillDownFun('Source Bookings', {
-      uid: data.rep,
-      months: data?.months,
-      thisMonth: {
-        startOfMonth: data?.months[0]['startOfMonth'],
-        endOfMonth: data?.months[data?.months.length - 1]['endOfMonth'],
-      },
-    });
-  }}
->
-  <div>
-    {data?.months
-      ?.reduce((accumulator, currentValue) => {
-        return accumulator + (currentValue?.receive || 0);
-      }, 0)
-      ?.toLocaleString('en-IN')}
-  </div>
-</td>
-
-
-
-
-
-
-
-
-
-
-
-
-
+                  <td
+                    className="py-3 px-6 border text-right bg-white border-b font-medium text-gray-900"
+                    onClick={() => {
+                      console.log('data is ', data)
+                      showDrillDownFun('Source Bookings', {
+                        uid: data.rep,
+                        months: data?.months,
+                        thisMonth: {
+                          startOfMonth: data?.months[0]['startOfMonth'],
+                          endOfMonth:
+                            data?.months[data?.months.length - 1]['endOfMonth'],
+                        },
+                      })
+                    }}
+                  >
+                    <div>
+                      {data?.months
+                        ?.reduce((accumulator, currentValue) => {
+                          return accumulator + (currentValue?.receive || 0)
+                        }, 0)
+                        ?.toLocaleString('en-IN')}
+                    </div>
+                  </td>
 
                   <td className=" pl-2  border text-center bg-white border-b">
                     <section className="w-[100px] h-[30px]">
@@ -455,9 +426,6 @@ const SourceBookingSummaryTable = ({ projects }) => {
                 </tr>
               )
             })}
-
-
-
         </tbody>
       </table>
 
@@ -469,8 +437,6 @@ const SourceBookingSummaryTable = ({ projects }) => {
         leadsLogsPayload={drillDownPayload}
         widthClass="max-w-5xl"
       />
-
-
     </div>
   )
 }

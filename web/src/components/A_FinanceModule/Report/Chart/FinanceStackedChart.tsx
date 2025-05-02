@@ -100,9 +100,12 @@ const FinanceStackedChart = () => {
           axisLine={{ stroke: 'transparent' }}
           tickLine={false}
           tick={{ fill: '#9ca3af' }}
-
         />
-        <YAxis axisLine={{ stroke: 'transparent' }} tickLine={false}   tick={{ fill: '#9ca3af' }} />
+        <YAxis
+          axisLine={{ stroke: 'transparent' }}
+          tickLine={false}
+          tick={{ fill: '#9ca3af' }}
+        />
         <Tooltip content={<CustomTooltip />} />
         <Area
           type="linear"
@@ -113,7 +116,6 @@ const FinanceStackedChart = () => {
           // stroke="#22D3EE"
           // fill="#a5f3ff"
           strokeWidth={2}
-
         />
         <Area
           type="linear"
@@ -127,9 +129,5 @@ const FinanceStackedChart = () => {
     </ResponsiveContainer>
   )
 }
-
-
-
-
 
 export default FinanceStackedChart

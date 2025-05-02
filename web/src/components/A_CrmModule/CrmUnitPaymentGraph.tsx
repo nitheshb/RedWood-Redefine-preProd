@@ -13,17 +13,13 @@ const CrmUnitPaymentGraph = ({ selCustomerPayload }) => {
 
   const [unitTotal, setUnitTotal] = useState(0)
 
-
-
-
   console.log('payload is ', selCustomerPayload)
   useEffect(() => {
     const a =
       selCustomerPayload?.plotCS?.reduce(
         (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
         0
-      ) || 0;
-
+      ) || 0
 
     const b =
       selCustomerPayload?.addChargesCS?.reduce(
@@ -37,83 +33,80 @@ const CrmUnitPaymentGraph = ({ selCustomerPayload }) => {
             )
           ),
         0
-      ) || 0;
+      ) || 0
 
-      const c = selCustomerPayload?.addOnCS?.reduce(
+    const c =
+      selCustomerPayload?.addOnCS?.reduce(
         (partialSum, obj) =>
           partialSum +
           Number(
             computeTotal(
               obj,
-              selCustomerPayload?.super_built_up_area || selCustomerPayload?.area?.toString()?.replace(',', '')
+              selCustomerPayload?.super_built_up_area ||
+                selCustomerPayload?.area?.toString()?.replace(',', '')
             )
           ),
         0
-      ) || 0;
-
-
-
-
-
-
-
+      ) || 0
 
     setPartA(a)
     setPartB(b)
     setPartAddOn(c)
     console.log('value is ', a, b)
     setUnitTotal(a + b + c)
- 
-
-
   }, [selCustomerPayload])
 
   return (
     <section className="flex flex-col  rounded-md ">
       <>
-      <div className="flex flex-col border bg-white rounded-xl shadow my-1  px-2  py-3 pb-4 min-w-[140px] h-[82px]  justify-between mx-">
-                                <div className="flex flex-row justify-between mx- mb-2">
-                                  <DoughnutChartWithRoundedSegments
-                                    progress={
-                                      (selCustomerPayload?.T_review / selCustomerPayload?.T_total) *
-                                      100
-                                    }
-                                  />
-                                  <section className="font-bodyLato font-semibold text-xs m-1 w-[61%] ">
-                                    <section className="flex flex-col  w-full mt-">
-                                    <p className="flex flex-row justify-between text-zinc-500 text-[11px] font-normal font-['Lato'] tracking-wide">
-                                        Unit Cost:
-                                        <div>
+        <div className="flex flex-col border bg-white rounded-xl shadow my-1  px-2  py-3 pb-4 min-w-[140px] h-[82px]  justify-between mx-">
+          <div className="flex flex-row justify-between mx- mb-2">
+            <DoughnutChartWithRoundedSegments
+              progress={
+                (selCustomerPayload?.T_review / selCustomerPayload?.T_total) *
+                100
+              }
+            />
+            <section className="font-bodyLato font-semibold text-xs m-1 w-[61%] ">
+              <section className="flex flex-col  w-full mt-">
+                <p className="flex flex-row justify-between text-zinc-500 text-[11px] font-normal font-['Lato'] tracking-wide">
+                  Unit Cost:
+                  <div>
+                    ₹{' '}
+                    {Math.round(
+                      Number(
+                        selCustomerPayload?.T_total ||
+                          selCustomerPayload?.T_Total
+                      ) || 0
+                    ).toLocaleString('en-IN')}
+                  </div>
+                </p>
 
-                                        ₹ {Math.round(Number(selCustomerPayload?.T_total || selCustomerPayload?.T_Total) || 0).toLocaleString('en-IN')}
+                <div className="text-zinc-500 flex flex-row justify-between text-[11px] font-normal font-['Lato'] tracking-wide">
+                  Paid:
+                  <div>
+                    {' '}
+                    ₹{' '}
+                    {Math.round(
+                      Number(selCustomerPayload?.T_review || 0) +
+                        Number(selCustomerPayload?.T_approved || 0)
+                    ).toLocaleString('en-IN')}
+                  </div>
+                </div>
 
-               
-
-                                
-                                        </div>
-                                      </p>
-
-                                      <div className="text-zinc-500 flex flex-row justify-between text-[11px] font-normal font-['Lato'] tracking-wide">
-                                        Paid: 
-                                        <div>
-                                          {' '}
-
-                                          ₹ {Math.round(Number(selCustomerPayload?.T_review || 0) + Number(selCustomerPayload?.T_approved || 0)).toLocaleString('en-IN')}
-        
-                                        </div>
-                                      </div>
-
-                                      <div className="text-zinc-800 flex flex-row justify-between text-[11px] font-normal font-['Lato'] tracking-wide">
-                                        Balance:
-                                        <div className="text-zinc-900 text-[11px] font-bold  tracking-wide">
-                                        ₹ {Math.round(Number(selCustomerPayload?.T_balance || 0)).toLocaleString('en-IN')}
-                                        </div>
-                                      </div>
-                                    </section>
-                                  </section>
-                                </div>
-                              </div>
-
+                <div className="text-zinc-800 flex flex-row justify-between text-[11px] font-normal font-['Lato'] tracking-wide">
+                  Balance:
+                  <div className="text-zinc-900 text-[11px] font-bold  tracking-wide">
+                    ₹{' '}
+                    {Math.round(
+                      Number(selCustomerPayload?.T_balance || 0)
+                    ).toLocaleString('en-IN')}
+                  </div>
+                </div>
+              </section>
+            </section>
+          </div>
+        </div>
       </>
     </section>
   )

@@ -28,8 +28,6 @@ const PaymentScheduleSetup = ({ phase, source }) => {
 
   return (
     <div className="lg:col-span-10  w-full   ">
-   
-
       <PaymentScheduleForm
         blocksViewFeature={blocksViewFeature}
         title={'Payment Schedule'}

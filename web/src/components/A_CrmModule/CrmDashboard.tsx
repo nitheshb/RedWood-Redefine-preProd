@@ -3,7 +3,15 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 import { useState, useEffect } from 'react'
-import { Card, CardHeader, Container, Grid, Stack, Typography, useTheme } from '@mui/material'
+import {
+  Card,
+  CardHeader,
+  Container,
+  Grid,
+  Stack,
+  Typography,
+  useTheme,
+} from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { getAllProjects } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
@@ -234,8 +242,6 @@ const CrmDashboardHome = ({ project }) => {
     <div>
       <section className=" mt-1 mr-1 py-8 mb-2 leading-7 text-gray-900 bg-white  rounded-lg  ">
         <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-full ">
-         
-
           <section className="flex flex-row justify-between">
             <div className="">
               <h3 className="h1MainText">Congratulations Nithesh! 🎉</h3>
@@ -243,7 +249,6 @@ const CrmDashboardHome = ({ project }) => {
                 You have done <span>76%</span> more sales today. <br></br>
                 Check your inventory and update your stocks.
               </p>
-
 
               <div className="montF MuiBox-root cardBg">
                 <div className="montF flex w-full">
@@ -427,24 +432,24 @@ const CrmDashboardHome = ({ project }) => {
             <Grid xs={12} md={6} lg={4} sx={{ m: 3, borderRadius: 5 }}>
               <PieChart />
             </Grid>
-            <Grid xs={12} md={6} lg={7}  sx={{ m: 3, borderRadius: 5 }}>
-              <Conversion_rates/>
+            <Grid xs={12} md={6} lg={7} sx={{ m: 3, borderRadius: 5 }}>
+              <Conversion_rates />
             </Grid>
 
             <Grid xs={12} md={6} lg={4} sx={{ m: 3, borderRadius: 5 }}>
-              <RadarChart/>
+              <RadarChart />
             </Grid>
 
-            <Grid xs={12} md={6} lg={7}  sx={{ m: 3, borderRadius: 5 }}>
-            <Card >
-            <CardHeader title="News" />
-            </Card>
+            <Grid xs={12} md={6} lg={7} sx={{ m: 3, borderRadius: 5 }}>
+              <Card>
+                <CardHeader title="News" />
+              </Card>
             </Grid>
 
             <Grid xs={12} md={6} lg={4} sx={{ m: 3, borderRadius: 5 }}>
-            <Card >
-            <CardHeader title="Order Timeline" />
-            </Card>
+              <Card>
+                <CardHeader title="Order Timeline" />
+              </Card>
             </Grid>
           </Grid>
         </Container>

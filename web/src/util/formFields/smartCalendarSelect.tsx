@@ -78,7 +78,6 @@ export const SlimSelectBox = ({
   label,
   placeholder,
   className,
- 
 }) => {
   const defaultValue = (options, value) => {
     return (
@@ -188,18 +187,16 @@ export const VerySlimSelectBox = ({
 
 //   const d = new window.Date()
 
-
 //   // const d = new Date()
 //   const teamLeadDefault = [subMonths(startOfMonth(d), 6), endOfDay(d)]
 //   const normalDefault = [startOfDay(d), endOfDay(d)]
 //   const todayDefault = [startOfDay(d), endOfDay(d)]
 //   const thisWeekDefault = [startOfWeek(d), endOfWeek(d)]
 //   const thisMonthDefault = [startOfMonth(d), endOfMonth(d)]
-  
+
 //   const [dateRange, setDateRange] = useState(
 //     defaultForTeamLeads ? teamLeadDefault : normalDefault
 //   )
-  
 
 //   const [startDate, endDate] = dateRange
 
@@ -227,8 +224,8 @@ export const VerySlimSelectBox = ({
 //     //   label: 'Last 6 months',
 //     //   value: [subMonths(startOfMonth(d), 6), endOfDay(d)],
 //     // },
-//     { label: 'Last 6 months', 
-//       value: teamLeadDefault 
+//     { label: 'Last 6 months',
+//       value: teamLeadDefault
 //     },
 //     {
 //       label: 'Custome Range',
@@ -236,22 +233,16 @@ export const VerySlimSelectBox = ({
 //     },
 //   ])
 
-
-
 //   const [wasAutoSwitched, setWasAutoSwitched] = useState(defaultForTeamLeads)
 
 //   // const [wasAutoSwitched, setWasAutoSwitched] = useState(false)
 
-
 //   const [isAllDatesExplicitlySelected, setIsAllDatesExplicitlySelected] = useState(false)
-
-
-
 
 //   useEffect(() => {
 //     if (dateRange[0] != null) {
 //       const [startDate, endDate] = dateRange
-    
+
 //       onChange([startDate, endDate])
 //     }
 //   }, [dateRange])
@@ -260,7 +251,6 @@ export const VerySlimSelectBox = ({
 //   const [isDatePicker, setDatePicker] = useState(false)
 
 //   console.log(value, 'value')
-
 
 // // const handleSelectChange = (evt) => {
 
@@ -271,7 +261,6 @@ export const VerySlimSelectBox = ({
 // //     return
 // //   }
 
-
 // //   if (evt.label === 'All Dates') {
 // //     setValue('All Dates')
 // //     onChange([null, null])
@@ -280,12 +269,11 @@ export const VerySlimSelectBox = ({
 
 // //   setValue(evt.label)
 // //   onChange(evt.value)
-  
+
 // //   if (evt.label === 'Custome Range') {
 // //     setDatePicker(true)
 // //   }
 // // }
-
 
 // const handleSelectChange = (evt) => {
 
@@ -295,25 +283,21 @@ export const VerySlimSelectBox = ({
 
 //       setValue('Last 6 months')
 //       onChange(teamLeadDefault)
-      
 
 //       setIsAllDatesExplicitlySelected(true)
 //       return
 //     }
-    
 
 //     setValue('All Dates')
 //     onChange([null, null])
-    
 
 //     setIsAllDatesExplicitlySelected(false)
 //     return
 //   }
 
-  
 //   setValue(evt.label)
 //   onChange(evt.value)
-  
+
 //   if (evt.label === 'Custome Range') {
 //     setDatePicker(true)
 //   }
@@ -357,7 +341,7 @@ export const VerySlimSelectBox = ({
 //               onChange(teamLeadDefault)
 //               return
 //             }
-          
+
 //             setValue(evt.label)
 //             onChange(evt.value)
 //             if (evt.label === 'Custome Range') {
@@ -407,7 +391,6 @@ export const VerySlimSelectBox = ({
 //   )
 // }
 
-
 export const SmartCalendarSelect = ({
   onChange,
   label,
@@ -415,13 +398,13 @@ export const SmartCalendarSelect = ({
   defaultForTeamLeads = false,
 }) => {
   const d = new window.Date()
-  
+
   const teamLeadDefault = [subMonths(startOfMonth(d), 6), endOfDay(d)]
   const normalDefault = [null, null] // All Dates
   const todayDefault = [startOfDay(d), endOfDay(d)]
   const thisWeekDefault = [startOfWeek(d), endOfWeek(d)]
   const thisMonthDefault = [startOfMonth(d), endOfMonth(d)]
-  
+
   const [dateRange, setDateRange] = useState(normalDefault)
   const [startDate, endDate] = dateRange
 
@@ -442,9 +425,9 @@ export const SmartCalendarSelect = ({
       label: 'This Month',
       value: thisMonthDefault,
     },
-    { 
-      label: 'Last 6 months', 
-      value: teamLeadDefault 
+    {
+      label: 'Last 6 months',
+      value: teamLeadDefault,
     },
     {
       label: 'Custome Range',
@@ -467,14 +450,14 @@ export const SmartCalendarSelect = ({
     setValue(evt.label)
     onChange(evt.value)
     setDateRange(evt.value)
-    
+
     if (evt.label === 'Custome Range') {
       setDatePicker(true)
     }
   }
 
   return (
-    <div style={{ width: '200px'}}>
+    <div style={{ width: '200px' }}>
       {!isDatePicker ? (
         <Select
           maxMenuHeight={150}
@@ -483,7 +466,9 @@ export const SmartCalendarSelect = ({
           onChange={handleSelectChange}
           placeholder={value}
           options={options}
-          className={`text-sm ${label != '' ? 'mt-0' : ''} border-transparent border-0 p-0`}
+          className={`text-sm ${
+            label != '' ? 'mt-0' : ''
+          } border-transparent border-0 p-0`}
           classNamePrefix="react-select"
           styles={customStyles}
         />

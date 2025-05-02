@@ -1,33 +1,69 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import { ErrorMessage, Form, Formik, useFormik } from 'formik'
 import * as Yup from 'yup'
 import { v4 as uuidv4 } from 'uuid'
-import { addLegalClarificationTicket, steamUnitTasks } from 'src/context/dbQueryFirebase';
-import CustomDatePicker from 'src/util/formFields/CustomDatePicker';
+import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 import { setHours, setMinutes } from 'date-fns'
-import { supabase } from 'src/context/supabase';
-import { useAuth } from 'src/context/firebase-auth-context';
-import { prettyDateTime } from 'src/util/dateConverter';
+import { supabase } from 'src/context/supabase'
+import { useAuth } from 'src/context/firebase-auth-context'
+import { prettyDateTime } from 'src/util/dateConverter'
 import { CheckCircleIcon } from '@heroicons/react/solid'
+import { addLegalClarificationTicket, steamUnitTasks } from './Query'
 
-const ToDoList = ({selUnitPayload}) => {
+const ToDoList = ({ selUnitPayload }) => {
   const d = new window.Date()
- const { user } = useAuth()
+  const { user } = useAuth()
   const { orgId } = user
   const [tasks, setTasks] = useState([
-    { id: 1, text: 'Need to call contractor and update about Plastering and budget', date: '20 Mar 2025', priority: 'High Priority', completed: false },
-    { id: 2, text: 'Need to call contractor and update about Plastering and budget', date: '20 Mar 2025', priority: 'High Priority', completed: false },
-    { id: 3, text: 'Need to call contractor and update about Plastering and budget', date: '20 Mar 2025', priority: 'High Priority', completed: false },
-    { id: 4, text: 'Need to call contractor and update about Plastering and budget', date: '20 Mar 2025', priority: 'High Priority', completed: false },
-    { id: 5, text: 'Need to call contractor and update about Plastering and budget', date: '20 Mar 2025', priority: 'High Priority', completed: false },
-    { id: 6, text: 'Need to call contractor and update about Plastering and budget', date: '20 Mar 2025', priority: 'High Priority', completed: false },
-  ]);
+    {
+      id: 1,
+      text: 'Need to call contractor and update about Plastering and budget',
+      date: '20 Mar 2025',
+      priority: 'High Priority',
+      completed: false,
+    },
+    {
+      id: 2,
+      text: 'Need to call contractor and update about Plastering and budget',
+      date: '20 Mar 2025',
+      priority: 'High Priority',
+      completed: false,
+    },
+    {
+      id: 3,
+      text: 'Need to call contractor and update about Plastering and budget',
+      date: '20 Mar 2025',
+      priority: 'High Priority',
+      completed: false,
+    },
+    {
+      id: 4,
+      text: 'Need to call contractor and update about Plastering and budget',
+      date: '20 Mar 2025',
+      priority: 'High Priority',
+      completed: false,
+    },
+    {
+      id: 5,
+      text: 'Need to call contractor and update about Plastering and budget',
+      date: '20 Mar 2025',
+      priority: 'High Priority',
+      completed: false,
+    },
+    {
+      id: 6,
+      text: 'Need to call contractor and update about Plastering and budget',
+      date: '20 Mar 2025',
+      priority: 'High Priority',
+      completed: false,
+    },
+  ])
 
   const [startDate, setStartDate] = useState(d.getTime() + 60000)
-  const [activeTab, setActiveTab] = useState('ALL');
-  const [newTaskText, setNewTaskText] = useState('');
-  const [newTaskPriority, setNewTaskPriority] = useState('High Priority');
-  const [isAddingTask, setIsAddingTask] = useState(false);
+  const [activeTab, setActiveTab] = useState('ALL')
+  const [newTaskText, setNewTaskText] = useState('')
+  const [newTaskPriority, setNewTaskPriority] = useState('High Priority')
+  const [isAddingTask, setIsAddingTask] = useState(false)
   const [showAddTask, setShowAddTask] = useState(false)
   const [takTitle, setTakTitle] = useState('')
   const [takNotes, setNotesTitle] = useState('')
@@ -44,63 +80,43 @@ const ToDoList = ({selUnitPayload}) => {
     { value: 'High Priority', color: 'bg-red-100 text-red-800' },
     { value: 'Medium Priority', color: 'bg-yellow-100 text-yellow-800' },
     { value: 'Low Priority', color: 'bg-green-100 text-green-800' },
-    { value: 'No Priority', color: 'bg-gray-100 text-gray-800' }
-  ];
+    { value: 'No Priority', color: 'bg-gray-100 text-gray-800' },
+  ]
   useEffect(() => {
     boot()
     const channel = supabase
-    .channel('unit-tasks-channel')
-    .on(
-      'postgres_changes',
-      {
-        event: '*',
-        schema: 'public',
-        table: `${orgId}_unit_tasks`,
-      },
-      (payload) => {
-        console.log('account records', payload)
-        const updatedData = payload.new
-        const { id } = payload.old
-        const eventType = payload.eventType
-        console.log('account records', updatedData.Uuid, selUnitPayload?.id)
+      .channel('unit-tasks-channel')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: `${orgId}_unit_tasks`,
+        },
+        (payload) => {
+          console.log('account records', payload)
+          const updatedData = payload.new
+          const { id } = payload.old
+          const eventType = payload.eventType
+          console.log('account records', updatedData.Uuid, selUnitPayload?.id)
 
-        if (updatedData.Uuid === selUnitPayload?.id) {
           if (updatedData.Uuid === selUnitPayload?.id) {
-            console.log('account records', updatedData.Uuid, selUnitPayload?.id)
-            setUnitFetchedActivityData((prevLogs) => {
-              const existingLog = prevLogs.find((log) => log.id === id)
+            if (updatedData.Uuid === selUnitPayload?.id) {
               console.log(
                 'account records',
-                prevLogs,
-                existingLog,
-                id,
-                payload.old,
-                id
+                updatedData.Uuid,
+                selUnitPayload?.id
               )
-              if (existingLog) {
-                console.log('Existing record found!')
-                if (payload.new.status === 'Done') {
-                  const updatedLogs = prevLogs.filter((log) => log.id != id)
-                  return [...updatedLogs]
-                } else {
-                  const updatedLogs = prevLogs.map((log) =>
-                    log.id === id ? payload.new : log
-                  )
-                  return [...updatedLogs]
-                }
-              } else {
-                console.log('New record added!')
-                return [payload.new,...prevLogs]
-              }
-            })
-          } else {
-            if (
-              updatedData.by_uid === user?.uid ||
-              updatedData?.to_uid === user?.uid
-            ) {
               setUnitFetchedActivityData((prevLogs) => {
                 const existingLog = prevLogs.find((log) => log.id === id)
-
+                console.log(
+                  'account records',
+                  prevLogs,
+                  existingLog,
+                  id,
+                  payload.old,
+                  id
+                )
                 if (existingLog) {
                   console.log('Existing record found!')
                   if (payload.new.status === 'Done') {
@@ -114,13 +130,38 @@ const ToDoList = ({selUnitPayload}) => {
                   }
                 } else {
                   console.log('New record added!')
-                  return [payload.new,...prevLogs]
+                  return [payload.new, ...prevLogs]
                 }
               })
+            } else {
+              if (
+                updatedData.by_uid === user?.uid ||
+                updatedData?.to_uid === user?.uid
+              ) {
+                setUnitFetchedActivityData((prevLogs) => {
+                  const existingLog = prevLogs.find((log) => log.id === id)
+
+                  if (existingLog) {
+                    console.log('Existing record found!')
+                    if (payload.new.status === 'Done') {
+                      const updatedLogs = prevLogs.filter((log) => log.id != id)
+                      return [...updatedLogs]
+                    } else {
+                      const updatedLogs = prevLogs.map((log) =>
+                        log.id === id ? payload.new : log
+                      )
+                      return [...updatedLogs]
+                    }
+                  } else {
+                    console.log('New record added!')
+                    return [payload.new, ...prevLogs]
+                  }
+                })
+              }
             }
           }
         }
-      })
+      )
       .subscribe()
 
     // Clean up the subscription when the component unmounts
@@ -128,172 +169,178 @@ const ToDoList = ({selUnitPayload}) => {
       supabase.removeChannel(channel)
     }
   }, [])
-   const boot = async () => {
-      const unsubscribe = steamUnitTasks(orgId, {
-        uid: selUnitPayload?.id,
-        pId: selUnitPayload?.pId,
-      })
+  const boot = async () => {
+    const unsubscribe = steamUnitTasks(orgId, {
+      uid: selUnitPayload?.id,
+      pId: selUnitPayload?.pId,
+    })
 
-      const y = await unsubscribe
-      setUnitFetchedActivityData(y)
-      await console.log('new setup ', unitFetchedActivityData)
-      await console.log('new setup ', y)
-    }
+    const y = await unsubscribe
+    setUnitFetchedActivityData(y)
+    await console.log('new setup ', unitFetchedActivityData)
+    await console.log('new setup ', y)
+  }
   const getPriorityColor = (priority) => {
-    const option = priorityOptions.find(opt => opt.value === priority);
-    return option ? option.color : 'bg-red-100 text-red-800';
-  };
+    const option = priorityOptions.find((opt) => opt.value === priority)
+    return option ? option.color : 'bg-red-100 text-red-800'
+  }
 
   const toggleTaskCompletion = (id) => {
     setTasks(
-      tasks.map(task =>
+      tasks.map((task) =>
         task.id === id ? { ...task, completed: !task.completed } : task
       )
-    );
-  };
+    )
+  }
   const setTitleFun = (e) => {
     setTakTitle(e.target.value)
   }
 
   const addNewTask = () => {
-    if (newTaskText.trim() === '') return;
+    if (newTaskText.trim() === '') return
 
     const newTask = {
       id: tasks.length + 1,
       text: newTaskText,
-      date: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).replace(',', ''),
+      date: new Date()
+        .toLocaleDateString('en-GB', {
+          day: '2-digit',
+          month: 'short',
+          year: 'numeric',
+        })
+        .replace(',', ''),
       priority: newTaskPriority,
       completed: false,
-    };
+    }
 
-    setTasks([...tasks, newTask]);
-    setNewTaskText('');
-    setNewTaskPriority('High Priority');
-    setIsAddingTask(false);
-  };
+    setTasks([...tasks, newTask])
+    setNewTaskText('')
+    setNewTaskPriority('High Priority')
+    setIsAddingTask(false)
+  }
 
   const editTaskPriority = (id, priority) => {
     setTasks(
-      tasks.map(task =>
-        task.id === id ? { ...task, priority } : task
-      )
-    );
-  };
+      tasks.map((task) => (task.id === id ? { ...task, priority } : task))
+    )
+  }
 
-  const filteredTasks = () => {
-    switch (activeTab) {
-      case 'TO DO':
-        return tasks.filter(task => !task.completed);
-      case 'COMPLETED':
-        return tasks.filter(task => task.completed);
-      default:
-        return tasks;
-    }
-  };
   const initialState = {
     taskTitle: takTitle || '',
   }
-   const validateSchema = Yup.object({
-      taskTitle: Yup.string()
-        .max(180, 'Must be 180 characters or less')
-        .required('Task Title Required'),
-    })
+  const validateSchema = Yup.object({
+    taskTitle: Yup.string()
+      .max(180, 'Must be 180 characters or less')
+      .required('Task Title Required'),
+  })
+
+  const updateTaskStatus = (d) => {
+    // write query to update task status in supabase
+  }
   return (
+    <div className="overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
+      <div className="relative min-h-screen mr-6">
+        <div className="relative z-0">
+          <h1 className="text-[#606062] font-outfit mb-1   mx-auto w-full  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
+            Unit Tasks
+          </h1>
 
+          <img
+            alt="CRM Background"
+            src="/crmfinal.svg"
+            className="w-full h-auto object-cover"
+          />
 
-
-
-
-    <div className='overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300'>
-    <div className="relative min-h-screen mr-6">
-      <div className="relative z-0">
-        <h1 className="text-[#606062] font-outfit mb-1   mx-auto w-full  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
-        Unit Tasks
-        </h1>
-
-        <img
-          alt="CRM Background"
-          src="/crmfinal.svg"
-          className="w-full h-auto object-cover"
-        />
-
-        <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
-          <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
-            <div className="text-center space-y-2">
-              <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Cancelled On</p>
-              <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
-            </div>
-            <div className="text-center space-y-2">
-              <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Cancellation Reason</p>
-              <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
-            </div>
-            <div className="text-center space-y-2">
-              <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Cancelled By</p>
-              <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
+          <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
+            <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
+              <div className="text-center space-y-2">
+                <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">
+                  Cancelled On
+                </p>
+                <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">
+                  No Data
+                </h2>
+              </div>
+              <div className="text-center space-y-2">
+                <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">
+                  Cancellation Reason
+                </p>
+                <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">
+                  No Data
+                </h2>
+              </div>
+              <div className="text-center space-y-2">
+                <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">
+                  Cancelled By
+                </p>
+                <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">
+                  No Data
+                </h2>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
+        <div className="relative w-full max-w-7xl mx-auto px-4 mt-[-70px] z-10">
+          <div className="bg-white rounded-2xl p-6">
+            <section className="flex flex-row justify-between">
+              {/* <h1 className="text-2xl font-bold text-gray-800 mb-6">Unit Tasks</h1> */}
+            </section>
 
+            <div className="flex flex-row justify-between ">
+              <div className="flex flex-row bg-white rounded-xl border ">
+                <div
+                  className={` py-1 pr-4 pl-4 pt-0 min-w-[62px] ${
+                    selFilterVal === 'all' ? 'bg-[#c6fff0]' : ''
+                  } rounded-xl rounded-r-none`}
+                  onClick={() => setSelFilterVal('all')}
+                >
+                  <span className="mr-1 text-[13px] ">All</span>
 
-<div className='relative w-full max-w-7xl mx-auto px-4 mt-[-70px] z-10'>
+                  <span className="mr-1 text-[12px] ">
+                    {
+                      unitFetchedActivityData.filter(
+                        (d) => d?.due_date != undefined
+                      ).length
+                    }
+                  </span>
+                </div>
+                <div
+                  className={` py-1 pr-4 pl-4  pt-0 min-w-[62px] border-x ${
+                    selFilterVal === 'pending' ? 'bg-[#c6fff0]' : ''
+                  } `}
+                  onClick={() => setSelFilterVal('pending')}
+                >
+                  <CheckCircleIcon className="w-4 h-4  inline text-[#cdcdcd]" />
+                  <span className="mr-1 text-[13px] ">Pending</span>
+                  <span className=" text-[12px] ">
+                    {' '}
+                    {
+                      unitFetchedActivityData?.filter(
+                        (d) => d?.status === 'InProgress'
+                      ).length
+                    }
+                  </span>
+                </div>
+                <div
+                  className={` py-1 pr-4 pt-0 pl-4 min-w-[62px] ${
+                    selFilterVal === 'completed' ? 'bg-[#c6fff0]' : ''
+                  }  rounded-xl rounded-l-none`}
+                  onClick={() => setSelFilterVal('completed')}
+                >
+                  <CheckCircleIcon className="w-4 h-4 inline text-[#058527]" />
+                  <span className="mr-1 text-[12px]  ">Completed</span>
 
-<div className="bg-white rounded-2xl p-6">
-      <section className='flex flex-row justify-between'>
-      {/* <h1 className="text-2xl font-bold text-gray-800 mb-6">Unit Tasks</h1> */}
-</section>
-
-
-      <div className="flex flex-row justify-between ">
-                <div className="flex flex-row bg-white rounded-xl border ">
-                  <div
-                    className={` py-1 pr-4 pl-4 pt-0 min-w-[62px] ${
-                      selFilterVal === 'all' ? 'bg-[#c6fff0]' : ''
-                    } rounded-xl rounded-r-none`}
-                    onClick={() => setSelFilterVal('all')}
-                  >
-                    <span className="mr-1 text-[13px] ">All</span>
-
-                    <span className="mr-1 text-[12px] ">{
-                      leadSchFetchedData.filter((d) => d?.schTime != undefined)
-                        .length
-                    }</span>
-                  </div>
-                  <div
-                    className={` py-1 pr-4 pl-4  pt-0 min-w-[62px] border-x ${
-                      selFilterVal === 'pending' ? 'bg-[#c6fff0]' : ''
-                    } `}
-                    onClick={() => setSelFilterVal('pending')}
-                  >
-                    <CheckCircleIcon className="w-4 h-4  inline text-[#cdcdcd]" />
-                    <span className="mr-1 text-[13px] ">Pending</span>
-                    <span
-                      className=" text-[12px] "
-                    >
-                      {' '}
-                      {
-                        leadSchFetchedData?.filter((d) => d?.sts === 'pending')
-                          .length
-                      }
-                    </span>
-                  </div>
-                  <div
-                    className={` py-1 pr-4 pt-0 pl-4 min-w-[62px] ${
-                      selFilterVal === 'completed' ? 'bg-[#c6fff0]' : ''
-                    }  rounded-xl rounded-l-none`}
-                    onClick={() => setSelFilterVal('completed')}
-                  >
-                    <CheckCircleIcon className="w-4 h-4 inline text-[#058527]" />
-                    <span className="mr-1 text-[12px]  ">Completed</span>
-
-                    <span className="mr-1 text-[12px] ">  {
+                  <span className="mr-1 text-[12px] ">
+                    {' '}
+                    {
                       leadSchFetchedData?.filter((d) => d?.sts === 'completed')
                         .length
-                    }</span>
-                  </div>
+                    }
+                  </span>
                 </div>
-                <section>
+              </div>
+              <section>
                 {!showAddTask && (
                   <span
                     className="ml-2 mt-1 text-blue-800 cursor-pointer "
@@ -314,23 +361,21 @@ const ToDoList = ({selUnitPayload}) => {
                     Close Task
                   </span>
                 )}
-                </section>
-              </div>
+              </section>
+            </div>
 
-      {showAddTask && (
+            {showAddTask && (
               <div className="flex flex-col pt-0 my-10  mt-4 ">
                 <Formik
                   enableReinitialize={true}
                   initialValues={initialState}
                   validationSchema={validateSchema}
                   onSubmit={async (data, { resetForm }) => {
-
                     data.due_date = startDate
                     data.priorities = prior ? 'high' : 'medium'
                     // data.attachments = files
                     data.Uuid = selUnitPayload?.id
                     await addLegalClarificationTicket(orgId, data, user)
-
                     setShowAddTask(false)
                     return
                   }}
@@ -339,7 +384,6 @@ const ToDoList = ({selUnitPayload}) => {
                     <Form>
                       <div className=" form outline-none border rounded-lg  py-4">
                         <section className=" px-4">
-
                           <div className="text-xs font-bodyLato text-[#516f90] mb-[4px]">
                             Task Title
                             <ErrorMessage
@@ -384,7 +428,6 @@ const ToDoList = ({selUnitPayload}) => {
                                         setHours(setMinutes(d, 59), 23),
                                       ]}
                                       dateFormat="MMM d, yyyy h:mm aa"
-
                                     />
                                   </span>
                                 </div>
@@ -461,161 +504,115 @@ const ToDoList = ({selUnitPayload}) => {
                 </Formik>
               </div>
             )}
-             <div className="">
-        {unitFetchedActivityData.map(task => (
-          <div key={task.id} className="p-4 border-b">
-            <div className="flex items-start justify-between">
-              <div className="flex-1">
-
-                <div className={`text-md font-medium ${task?.completed ? 'line-through text-gray-400' : 'text-gray-800'}`}>
-                  {task?.title}
-                </div>
-                <section className='flex flex-row mt-[3px]'>
-                <div className="text-xs text-gray-500 ">Due:{prettyDateTime(task?.due_date)}</div>
-                <div className="w-[2px] mx-2 mt-[4px] h-[8px] border-0 border-r"></div>
-                <div className="text-xs  text-gray-500">CreatedBy:{task?.by_name || 'NA'}</div>
-                <div className="w-[2px] mx-2 mt-[4px] h-[8px] border-0 border-r"></div>
-                <div className="text-xs  text-gray-500">AssignedTo:{task?.to_name|| 'NA'}</div>
-
-                </section>
-              </div>
-              <div className="flex items-center space-x-4">
-                <div className="relative group">
-                  <span className={`${getPriorityColor(task.priority)} text-xs px-3 py-1 rounded-full cursor-pointer`}>
-                    {task.priority}
-                  </span>
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg hidden group-hover:block z-10">
-                    <div className="py-1">
-                      {priorityOptions.map(option => (
-                        <button
-                          key={option.value}
-                          className={`${option.color} block w-full text-left px-4 py-2 text-sm`}
-                          onClick={() => editTaskPriority(task.id, option.value)}
+            <div className="">
+              {unitFetchedActivityData.map((task) => (
+                <div key={task.id} className="p-4 border-b">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <div
+                        className={`text-md font-medium ${
+                          task?.completed
+                            ? 'line-through text-gray-400'
+                            : 'text-gray-800'
+                        }`}
+                      >
+                        {task?.title}
+                      </div>
+                      <section className="flex flex-row mt-[3px]">
+                        <div className="text-xs text-gray-500 ">
+                          Due:{prettyDateTime(task?.due_date)}
+                        </div>
+                        <div className="w-[2px] mx-2 mt-[4px] h-[8px] border-0 border-r"></div>
+                        <div className="text-xs  text-gray-500">
+                          CreatedBy:{task?.by_name || 'NA'}
+                        </div>
+                        <div className="w-[2px] mx-2 mt-[4px] h-[8px] border-0 border-r"></div>
+                        <div className="text-xs  text-gray-500">
+                          AssignedTo:{task?.to_name || 'NA'}
+                        </div>
+                      </section>
+                    </div>
+                    <div className="flex items-center space-x-4">
+                      <div className="relative group">
+                        <span
+                          className={`${getPriorityColor(
+                            task.priority
+                          )} text-xs px-3 py-1 rounded-full cursor-pointer`}
                         >
-                          {option.value}
-                        </button>
-                      ))}
+                          {task.priority}
+                        </span>
+                        <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg hidden group-hover:block z-10">
+                          <div className="py-1">
+                            {priorityOptions.map((option) => (
+                              <button
+                                key={option.value}
+                                className={`${option.color} block w-full text-left px-4 py-2 text-sm`}
+                                onClick={() =>
+                                  editTaskPriority(task.id, option.value)
+                                }
+                              >
+                                {option.value}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                      <input
+                        type="checkbox"
+                        checked={false}
+                        onChange={() => updateTaskStatus(d1)}
+                        className="h-5 w-5 text-black accent-black  border-gray-300 rounded focus:ring-black"
+                      />
+                      <div
+                        className={`w-6 h-6 border-2 rounded cursor-pointer ${
+                          task.completed
+                            ? 'bg-blue-500 border-blue-500'
+                            : 'border-gray-300'
+                        }`}
+                        onClick={() => toggleTaskCompletion(task.id)}
+                      >
+                        {task.completed && (
+                          <input
+                            type="checkbox"
+                            checked={false}
+                            //  onChange={() => triggerPaymentScheudlefun(d1)}
+                            className="h-5 w-5 text-black accent-black  border-gray-300 rounded focus:ring-black"
+                          />
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div
-                  className={`w-6 h-6 border-2 rounded cursor-pointer ${task.completed ? 'bg-blue-500 border-blue-500' : 'border-gray-300'}`}
-                  onClick={() => toggleTaskCompletion(task.id)}
+              ))}
+              {!showAddTask && (
+                <button
+                  className="w-full p-3 border mt-4 border-dashed border-gray-300 text-gray-500 rounded-lg flex items-center justify-center"
+                  onClick={() => setShowAddTask(true)}
                 >
-                  {task.completed && (
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  )}
-                </div>
-              </div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5 mr-2"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  Add New Task
+                </button>
+              )}
             </div>
           </div>
-        ))}
-        {!showAddTask && (<button
-            className="w-full p-3 border mt-4 border-dashed border-gray-300 text-gray-500 rounded-lg flex items-center justify-center"
-            onClick={() =>setShowAddTask(true)}
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
-            </svg>
-            Add New Task
-          </button>)}
+        </div>
       </div>
-
     </div>
+  )
+}
 
-</div>
-
-
-
-
-
-    </div>
-  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  );
-};
-
-export default ToDoList;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export default ToDoList
 
 // import React, { useState, useEffect } from 'react';
 // import {
@@ -630,7 +627,6 @@ export default ToDoList;
 //   deleteDoc
 // } from 'firebase/firestore';
 // import { db } from 'src/context/firebaseConfig';
-
 
 // const ToDoList = () => {
 //   const [tasks, setTasks] = useState([]);
@@ -953,31 +949,9 @@ export default ToDoList;
 
 // export default ToDoList;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{/* not useing */}
+{
+  /* not useing */
+}
 // import React, { useState } from 'react';
 
 // export default function TaskManagementDashboard() {
@@ -1262,7 +1236,6 @@ export default ToDoList;
 //               ))
 
 //             ))} */}
-
 
 // {calendarDates.map((week, weekIndex) => (
 //   week.map((date, dateIndex) => {

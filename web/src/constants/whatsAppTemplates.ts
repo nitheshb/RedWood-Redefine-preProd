@@ -1,4 +1,1 @@
-export const whatAppLeadTemplate = [
-  {id:'visitfixed'
-}
-]
+export const whatAppLeadTemplate = [{ id: 'visitfixed' }]

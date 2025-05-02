@@ -46,7 +46,6 @@ const FinanceHomeList = ({
           <div className="mr-4 templateList">
             <div className=" flex">
               <div className="flex flex-col">
-            
                 <button
                   className={`templateItem ${
                     subView === 'bankerdetails' ? 'hightlightItem' : ''

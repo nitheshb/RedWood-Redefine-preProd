@@ -1,4 +1,3 @@
-
 import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
@@ -28,9 +27,8 @@ const CRMReportSideWindow = ({
   setIsClicked,
   setCustomerDetails,
   setisImportLeadsOpen,
-  selUnitStatus
+  selUnitStatus,
 }) => {
-
   const dispatch = useDispatch()
   return (
     <Transition.Root show={open || false} as={Fragment}>
@@ -105,65 +103,53 @@ const CRMReportSideWindow = ({
                     subtitle={subtitle}
                     dialogOpen={setOpen}
                     leadsLogsPayload={leadsLogsPayload}
-                    setCustomerDetails= {setCustomerDetails}
+                    setCustomerDetails={setCustomerDetails}
                     setisImportLeadsOpen={setisImportLeadsOpen}
-
                   />
                 )}
 
-{title === 'project_collections' && (
+                {title === 'project_collections' && (
                   <CollectionsDrillI
                     title={title}
                     subtitle={subtitle}
                     dialogOpen={setOpen}
                     filterPaylod={filterPaylod}
                     leadsLogsPayload={leadsLogsPayload}
-                    setCustomerDetails= {setCustomerDetails}
+                    setCustomerDetails={setCustomerDetails}
                     setisImportLeadsOpen={setisImportLeadsOpen}
-
                   />
                 )}
 
-                   {title === 'Bookings' && (
+                {title === 'Bookings' && (
                   <BookedLeadsSideViewBody
                     title={title}
                     subtitle={subtitle}
                     dialogOpen={setOpen}
                     leadsLogsPayload={leadsLogsPayload}
-                    setCustomerDetails= {setCustomerDetails}
+                    setCustomerDetails={setCustomerDetails}
                     setisImportLeadsOpen={setisImportLeadsOpen}
-
                   />
                 )}
 
-
-                  {title === 'Source Bookings' && (
+                {title === 'Source Bookings' && (
                   <SourceBookedLeadsSideViewBody
                     title={title}
                     subtitle={subtitle}
                     dialogOpen={setOpen}
                     leadsLogsPayload={leadsLogsPayload}
-                    setCustomerDetails= {setCustomerDetails}
+                    setCustomerDetails={setCustomerDetails}
                     setisImportLeadsOpen={setisImportLeadsOpen}
-
                   />
                 )}
 
-
-
-
-
-
-
-                  {title === 'Employee Tasks' && (
+                {title === 'Employee Tasks' && (
                   <SalesCompletedTasksBody
                     title={title}
                     subtitle={subtitle}
                     dialogOpen={setOpen}
                     leadsLogsPayload={leadsLogsPayload}
-                    setCustomerDetails= {setCustomerDetails}
+                    setCustomerDetails={setCustomerDetails}
                     setisImportLeadsOpen={setisImportLeadsOpen}
-
                   />
                 )}
                 {title === 'Employee Bookings' && (
@@ -172,9 +158,8 @@ const CRMReportSideWindow = ({
                     subtitle={subtitle}
                     dialogOpen={setOpen}
                     leadsLogsPayload={leadsLogsPayload}
-                    setCustomerDetails= {setCustomerDetails}
+                    setCustomerDetails={setCustomerDetails}
                     setisImportLeadsOpen={setisImportLeadsOpen}
-
                   />
                 )}
 
@@ -184,10 +169,9 @@ const CRMReportSideWindow = ({
                     subtitle={subtitle}
                     dialogOpen={setOpen}
                     leadsLogsPayload={leadsLogsPayload}
-                    setCustomerDetails= {setCustomerDetails}
+                    setCustomerDetails={setCustomerDetails}
                     setisImportLeadsOpen={setisImportLeadsOpen}
                     selUnitStatus={selUnitStatus}
-
                   />
                 )}
               </div>

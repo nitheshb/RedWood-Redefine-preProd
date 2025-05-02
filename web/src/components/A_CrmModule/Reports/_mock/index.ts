@@ -1,10 +1,10 @@
-export * from './assets';
-export * from './_mock';
+export * from './assets'
+export * from './_mock'
 
 // ----------------------------------------------------------------------
 
 // export * from './_job';
-export * from './_user';
+export * from './_user'
 // export * from './_tour';
 // export * from './_blog';
 // export * from './_files';

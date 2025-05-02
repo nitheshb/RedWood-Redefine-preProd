@@ -18,6 +18,7 @@ import CostBreakUpPdfPreview from 'src/util/costBreakUpPdfPreview'
 import { TextFieldFlat } from 'src/util/formFields/TextFieldFlatType'
 import { prettyDate } from 'src/util/dateConverter'
 import { CalculateComponentTotal } from 'src/util/unitCostSheetCalculator'
+import { ToastBar } from 'react-hot-toast'
 
 const BookingSummaryView = ({
   projectDetails,
@@ -68,7 +69,6 @@ const BookingSummaryView = ({
   const { orgId } = user
   const { enqueueSnackbar } = useSnackbar()
   const ref = createRef()
-
 
   useEffect(() => {
     console.log('sel unti detials ', selUnitDetails)
@@ -174,7 +174,12 @@ const BookingSummaryView = ({
         data.TotalNetSaleValueGsT = total + gstTotal
         return data
       })
-      console.log('mytest',ConstructOtherChargesObj, constructOtherChargesObj, selPhaseObj )
+      console.log(
+        'mytest',
+        ConstructOtherChargesObj,
+        constructOtherChargesObj,
+        selPhaseObj
+      )
       setPartBPayload(additonalChargesObj)
       setAddiChargesObj(additonalChargesObj)
       setNewAdditonalConstChargesObj(constructOtherChargesObj)
@@ -266,7 +271,6 @@ const BookingSummaryView = ({
                   selUnitDetails?.builtup_area * selUnitDetails?.construct_price
                 ) * 0.05),
         },
-       
       ]
     }
     let merged = []
@@ -307,53 +311,52 @@ const BookingSummaryView = ({
     CreateNewPsFun(netTotal, plotBookingAdv, csMode)
   }, [netTotal, plotBookingAdv, csMode])
 
-  const CreateNewPsFun =  async(netTotal, plotBookingAdv, csMode) => {
-    const newPs = psPayload?.map( (d1, inx) => {
+  const CreateNewPsFun = async (netTotal, plotBookingAdv, csMode) => {
+    const newPs = psPayload?.map((d1, inx) => {
       const z = d1
-        let flatLegalFixedCosts = 0
-        const filLegalCharges = myBookingPayload?.addChargesCS?.filter(
-          (d) => d?.component?.value === 'legal_charges'
-        )
-        if(filLegalCharges && filLegalCharges?.length > 0){
-          flatLegalFixedCosts =filLegalCharges[0]?.TotalNetSaleValueGsT || 0
+      let flatLegalFixedCosts = 0
+      const filLegalCharges = myBookingPayload?.addChargesCS?.filter(
+        (d) => d?.component?.value === 'legal_charges'
+      )
+      if (filLegalCharges && filLegalCharges?.length > 0) {
+        flatLegalFixedCosts = filLegalCharges[0]?.TotalNetSaleValueGsT || 0
+      }
+      if ('plot_cs' === 'plot_cs') {
+        let applicablePlotCost = netTotal - flatLegalFixedCosts
+
+        if (!['costpersqft'].includes(d1?.units?.value)) {
+          z.value = ['fixedcost'].includes(d1?.units?.value)
+            ? Number(d1?.percentage)
+            : inx == 1
+            ? Number(
+                (applicablePlotCost * (d1?.percentage / 100)).toFixed(2) -
+                  plotBookingAdv
+              )
+            : Number((applicablePlotCost * (d1?.percentage / 100)).toFixed(2))
+        } else {
+          let calc = CalculateComponentTotal(
+            d1,
+            selUnitDetails?.area?.toString()?.replace(',', ''),
+            0,
+            Number(d1?.percentage)
+          )
+          z.value = calc?.TotalNetSaleValueGsT
         }
-        if ('plot_cs' === 'plot_cs') {
-             let applicablePlotCost = netTotal- flatLegalFixedCosts
-   
-
-            if(!['costpersqft'].includes(d1?.units?.value)){
-
-              z.value = ['fixedcost'].includes(d1?.units?.value)
-                ? Number(d1?.percentage)
-                : inx ==1 ? Number(
-                  (((applicablePlotCost) * (d1?.percentage / 100)).toFixed(2) - plotBookingAdv))
-
-                :  Number(
-                    ((applicablePlotCost) * (d1?.percentage / 100)).toFixed(2)
-                  )
-                }else {
-                  let calc =  CalculateComponentTotal(d1,selUnitDetails?.area?.toString()?.replace(',', '') ,0,Number(d1?.percentage))
-                  z.value = calc?.TotalNetSaleValueGsT
-                }
-              if (['fixedcost'].includes(d1?.units?.value)) {
-                z.elgible = true
-                z.elgFrom = Timestamp.now().toMillis()
-                return z
-              }
-              return z
-            }
-
+        if (['fixedcost'].includes(d1?.units?.value)) {
+          z.elgible = true
+          z.elgFrom = Timestamp.now().toMillis()
+          return z
+        }
+        return z
+      }
     })
     setNewPS(newPs)
   }
 
   const initialState = initialValuesA
-  const validate = Yup.object({
-
-  })
+  const validate = Yup.object({})
 
   const setTotalFun = async () => {
-
     const partATotal = costSheetA.reduce(
       (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
       0
@@ -376,13 +379,11 @@ const BookingSummaryView = ({
       0
     )
 
-
-
     setPartBTotal(partBTotal)
     setPartATotal(partATotal)
     setPartCTotal(partCTotal)
     setPartDTotal(partDTotal)
-    setNetTotal(partATotal + partBTotal +partCTotal + partDTotal + partETotal)
+    setNetTotal(partATotal + partBTotal + partCTotal + partDTotal + partETotal)
     selPhaseObj?.paymentScheduleObj?.map((data) => {
       if (data.stage?.value === 'on_booking') {
         setPlotBookingAdv(data?.percentage)
@@ -412,7 +413,8 @@ const BookingSummaryView = ({
       id,
       xData,
       'nitheshreddy.email@gmail.com',
-      enqueueSnackbar,
+      // enqueueSnackbar,
+      ToastBar,
       resetForm
     )
   }
@@ -497,8 +499,8 @@ const BookingSummaryView = ({
                                   ?.customerName1 || 'NA'}
                               </h1>
                               <span className="px-3 text-[12px] text-left  text-[12px] font-normal ">
-                              {customerInfo?.customerDetailsObj
-                                    ?.relation1?.label || ''}{' '}
+                                {customerInfo?.customerDetailsObj?.relation1
+                                  ?.label || ''}{' '}
                                 {customerInfo?.customerDetailsObj?.co_Name1 ||
                                   'NA'}
                               </span>
@@ -528,10 +530,11 @@ const BookingSummaryView = ({
                               </section>
                               <section className="flex flex-col  mt-2 mb-2">
                                 <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal ">
-                                  {customerInfo?.secondaryCustomerDetailsObj?.customerName1 || 'NA'}
+                                  {customerInfo?.secondaryCustomerDetailsObj
+                                    ?.customerName1 || 'NA'}
                                 </h1>
                                 <span className="px-3 text-[12px] text-left  text-[12px] font-normal ">
-                                {customerInfo?.secondaryCustomerDetailsObj
+                                  {customerInfo?.secondaryCustomerDetailsObj
                                     ?.relation1?.label || ''}{' '}
                                   {customerInfo?.secondaryCustomerDetailsObj
                                     ?.co_Name1 || 'NA'}
@@ -660,7 +663,10 @@ const BookingSummaryView = ({
                                 </div>
                                 <div className="self-stretch justify-start items-center gap-3 inline-flex">
                                   <div className="text-zinc-800 text-[16px] font-bold font-['Lato'] tracking-wide">
-                                    ₹{myBookingPayload?.T_total?.toLocaleString('en-IN')}
+                                    ₹
+                                    {myBookingPayload?.T_total?.toLocaleString(
+                                      'en-IN'
+                                    )}
                                   </div>
                                   <div className=" h-[19px] rounded justify-center items-center gap-2 flex">
                                     <div className="text-right">
@@ -677,7 +683,7 @@ const BookingSummaryView = ({
                                       <span className="text-emerald-600 text-xs font-medium font-['Lato'] tracking-wide">
                                         ▴{' '}
                                       </span>
-                                       <span className="text-emerald-600 text-[9px] font-bold font-['Lato'] tracking-wide">
+                                      <span className="text-emerald-600 text-[9px] font-bold font-['Lato'] tracking-wide">
                                         ₹{' '}
                                         {myBookingPayload?.construct_price_sqft?.toLocaleString(
                                           'en-IN'
@@ -718,14 +724,16 @@ const BookingSummaryView = ({
                           <div className="border rounded-lg shadow-lg w-full">
                             <section className="flex flex-row justify-between mt-2   ">
                               <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal ">
-                              {selPhaseObj?.projectType?.name ===
-                                      'Apartment'
-                                        ? 'Flat'
-                                        : 'Plot'}
+                                {selPhaseObj?.projectType?.name === 'Apartment'
+                                  ? 'Flat'
+                                  : 'Plot'}
                               </h1>
                               <section className="flex flex-row mt-[2px]">
                                 <section className="px-2 d-md font-semibold text-[12px] text-[#000000e6] leading-none">
-                                  ₹{myBookingPayload?.T_A?.toLocaleString('en-IN')}
+                                  ₹
+                                  {myBookingPayload?.T_A?.toLocaleString(
+                                    'en-IN'
+                                  )}
                                 </section>
                               </section>
                             </section>
@@ -735,40 +743,58 @@ const BookingSummaryView = ({
                               </h1>
                               <section className="flex flex-row mt-[2px]">
                                 <section className="px-2 d-md font-semibold text-[12px] text-[#000000e6] leading-none">
-                                  ₹{myBookingPayload?.T_B?.toLocaleString('en-IN')}
+                                  ₹
+                                  {myBookingPayload?.T_B?.toLocaleString(
+                                    'en-IN'
+                                  )}
                                 </section>
                               </section>
                             </section>
-                            {selPhaseObj?.projectType?.name === 'Villas' &&  <section className="flex flex-row justify-between  mt-2">
-                              <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal ">
-                                Construction
-                              </h1>
-                              <section className="flex flex-row mt-[2px]">
-                                <section className="px-2 d-md font-semibold text-[12px] text-[#000000e6] leading-none">
-                                  ₹{myBookingPayload?.T_C?.toLocaleString('en-IN')}
+                            {selPhaseObj?.projectType?.name === 'Villas' && (
+                              <section className="flex flex-row justify-between  mt-2">
+                                <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal ">
+                                  Construction
+                                </h1>
+                                <section className="flex flex-row mt-[2px]">
+                                  <section className="px-2 d-md font-semibold text-[12px] text-[#000000e6] leading-none">
+                                    ₹
+                                    {myBookingPayload?.T_C?.toLocaleString(
+                                      'en-IN'
+                                    )}
+                                  </section>
                                 </section>
                               </section>
-                            </section>}
-                            {selPhaseObj?.projectType?.name === 'Villas' &&  <section className="flex flex-row justify-between  mt-2">
-                              <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal ">
-                              Construction Additional Charges
-                              </h1>
-                              <section className="flex flex-row mt-[2px]">
-                                <section className="px-2 d-md font-semibold text-[12px] text-[#000000e6] leading-none">
-                                  ₹{myBookingPayload?.T_D?.toLocaleString('en-IN')}
+                            )}
+                            {selPhaseObj?.projectType?.name === 'Villas' && (
+                              <section className="flex flex-row justify-between  mt-2">
+                                <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal ">
+                                  Construction Additional Charges
+                                </h1>
+                                <section className="flex flex-row mt-[2px]">
+                                  <section className="px-2 d-md font-semibold text-[12px] text-[#000000e6] leading-none">
+                                    ₹
+                                    {myBookingPayload?.T_D?.toLocaleString(
+                                      'en-IN'
+                                    )}
+                                  </section>
                                 </section>
                               </section>
-                            </section>}
-                            {selPhaseObj?.projectType?.name === 'Villas' &&  <section className="flex flex-row justify-between  mt-2">
-                              <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal ">
-                              Possession Charges
-                              </h1>
-                              <section className="flex flex-row mt-[2px]">
-                                <section className="px-2 d-md font-semibold text-[12px] text-[#000000e6] leading-none">
-                                ₹{myBookingPayload?.T_E?.toLocaleString('en-IN')}
+                            )}
+                            {selPhaseObj?.projectType?.name === 'Villas' && (
+                              <section className="flex flex-row justify-between  mt-2">
+                                <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal ">
+                                  Possession Charges
+                                </h1>
+                                <section className="flex flex-row mt-[2px]">
+                                  <section className="px-2 d-md font-semibold text-[12px] text-[#000000e6] leading-none">
+                                    ₹
+                                    {myBookingPayload?.T_E?.toLocaleString(
+                                      'en-IN'
+                                    )}
+                                  </section>
                                 </section>
                               </section>
-                            </section>}
+                            )}
                             <section className="flex flex-row justify-between rounded-b-lg  bg-[#E8E6FE]  mt-2 py-2   ">
                               <h1 className="px-3 text-[12px] text-left  text-[12px] font-semibold pr-8 ">
                                 Total Cost
@@ -788,8 +814,7 @@ const BookingSummaryView = ({
                       <div>
                         <div>
                           <div className="">
-                            <section className="flex flex-row justify-between bg-[#f3fff2] rounded-t-lg">
-                            </section>
+                            <section className="flex flex-row justify-between bg-[#f3fff2] rounded-t-lg"></section>
                             {'costsheet' === 'costsheet' && (
                               <section>
                                 <div className=" border rounded-lg shadow-md overflow-hidden ">
@@ -797,10 +822,11 @@ const BookingSummaryView = ({
                                     <thead>
                                       <tr className="h-8 mb-1 border-none w-[100%] bg-[#E8E6FE] text-[#0D027D]  font-[600] ">
                                         <th className="min-w-[35%] px-2  text-[12px] text-left text-[#0D027D]  tracking-wide">
-                                        {selPhaseObj?.projectType?.name ===
-                                      'Apartment'
-                                        ? 'Flat'
-                                        : 'Plot'}{' '} Charges
+                                          {selPhaseObj?.projectType?.name ===
+                                          'Apartment'
+                                            ? 'Flat'
+                                            : 'Plot'}{' '}
+                                          Charges
                                         </th>
                                         <th className="w-[15%] px-2 text-[12px] text-right   tracking-wide">
                                           Rate/Sqft
@@ -826,53 +852,56 @@ const BookingSummaryView = ({
                                     </thead>
                                     <tbody className="divide-y divide-gray-200 ">
                                       {' '}
-                                      {myBookingPayload?.plotCS?.map((d1, inx) => (
-                                        <tr
-                                          key={inx}
-                                          className="py-1 my-2 h-[32px]  py-[24px]"
-                                        >
-                                          <th className="w-[40%] px-2 text-[12px] text-left  font-normal  ">
-                                            {d1?.component?.label}
-                                          </th>
-                                          <td className="w-[15%]  px-2 text-[12px] text-right  ">
-                                            {Number(
-                                              d1?.charges
-                                            )?.toLocaleString('en-IN')}
-                                          </td>
-                                          <td
-                                            className={`${
-                                              !showGstCol ? 'hidden' : ''
-                                            } w-[15%] px-2 text-[12px] text-right text-slate-500  `}
+                                      {myBookingPayload?.plotCS?.map(
+                                        (d1, inx) => (
+                                          <tr
+                                            key={inx}
+                                            className="py-1 my-2 h-[32px]  py-[24px]"
                                           >
-                                            ₹
-                                            {d1?.TotalSaleValue?.toLocaleString(
-                                              'en-IN'
-                                            )}
-                                          </td>
-                                          <td
-                                            className={`${
-                                              !showGstCol ? 'hidden' : ''
-                                            } w-[15%] px-2 text-[12px] text-right text-slate-500  `}
-                                          >
-                                            ₹
-                                            {d1?.gstValue?.toLocaleString(
-                                              'en-IN'
-                                            )}
-                                          </td>
-                                          <td className="w-[15%] px-2 text-[12px] text-right text-slate-900  ">
-                                            ₹
-                                            {d1?.TotalNetSaleValueGsT?.toLocaleString(
-                                              'en-IN'
-                                            )}
-                                          </td>
-                                        </tr>
-                                      ))}
+                                            <th className="w-[40%] px-2 text-[12px] text-left  font-normal  ">
+                                              {d1?.component?.label}
+                                            </th>
+                                            <td className="w-[15%]  px-2 text-[12px] text-right  ">
+                                              {Number(
+                                                d1?.charges
+                                              )?.toLocaleString('en-IN')}
+                                            </td>
+                                            <td
+                                              className={`${
+                                                !showGstCol ? 'hidden' : ''
+                                              } w-[15%] px-2 text-[12px] text-right text-slate-500  `}
+                                            >
+                                              ₹
+                                              {d1?.TotalSaleValue?.toLocaleString(
+                                                'en-IN'
+                                              )}
+                                            </td>
+                                            <td
+                                              className={`${
+                                                !showGstCol ? 'hidden' : ''
+                                              } w-[15%] px-2 text-[12px] text-right text-slate-500  `}
+                                            >
+                                              ₹
+                                              {d1?.gstValue?.toLocaleString(
+                                                'en-IN'
+                                              )}
+                                            </td>
+                                            <td className="w-[15%] px-2 text-[12px] text-right text-slate-900  ">
+                                              ₹
+                                              {d1?.TotalNetSaleValueGsT?.toLocaleString(
+                                                'en-IN'
+                                              )}
+                                            </td>
+                                          </tr>
+                                        )
+                                      )}
                                       <tr className=" border-[#fab56c]   h-[32px]">
                                         <th className="w-[40%] text-[11px] font-semibold text-left text-[#0D027D] pl-2 ">
-                                        {selPhaseObj?.projectType?.name ===
-                                      'Apartment'
-                                        ? 'Flat'
-                                        : 'Plot'} Cost
+                                          {selPhaseObj?.projectType?.name ===
+                                          'Apartment'
+                                            ? 'Flat'
+                                            : 'Plot'}{' '}
+                                          Cost
                                         </th>
                                         <td className="w-[15%] px-2 font-semibold text-[12px] text-right text-gray-600 pr-3"></td>
                                         <td
@@ -906,7 +935,10 @@ const BookingSummaryView = ({
                                             ?.toLocaleString('en-IN')}
                                         </td>
                                         <td className="w-[15%] px-2  font-semibold text-[12px] text-right  text-[#0D027D] ">
-                                          ₹{myBookingPayload?.T_A?.toLocaleString('en-IN')}
+                                          ₹
+                                          {myBookingPayload?.T_A?.toLocaleString(
+                                            'en-IN'
+                                          )}
                                         </td>
                                       </tr>
                                     </tbody>
@@ -943,46 +975,50 @@ const BookingSummaryView = ({
                                       </tr>
                                     </thead>
                                     <tbody>
-                                      {myBookingPayload?.addChargesCS?.map((d1, inx) => (
-                                        <tr
-                                          key={inx}
-                                          className="h-[32px] border-b border-dashed"
-                                        >
-                                          <th className=" text-[12px] px-2 text-left  font-normal ">
-                                            {d1?.component?.label}
-                                          </th>
-                                          <td className="w-[15%]  px-2 text-[12px] text-right   ">
-                                            ₹{' '}
-                                            {Number(
-                                              d1?.charges
-                                            )?.toLocaleString('en-IN')}
-                                          </td>
-                                          <td
-                                            className={`${
-                                              !showGstCol ? 'hidden' : ''
-                                            } w-[15%] px-2 text-[12px] text-right text-slate-500   `}
+                                      {myBookingPayload?.addChargesCS?.map(
+                                        (d1, inx) => (
+                                          <tr
+                                            key={inx}
+                                            className="h-[32px] border-b border-dashed"
                                           >
-                                            ₹
-                                            {d1?.TotalSaleValue?.toLocaleString(
-                                              'en-IN'
-                                            )}
-                                          </td>
-                                          <td
-                                            className={`${
-                                              !showGstCol ? 'hidden' : ''
-                                            } w-[15%] px-2 text-[12px] text-right text-slate-500   `}
-                                          >
-                                            ₹
-                                            {d1?.gstValue?.toLocaleString(
-                                              'en-IN'
-                                            )}
-                                          </td>
-                                          <td className="text-[12px] px-2 text-right   ">
-                                            ₹
-                                            {d1?.TotalNetSaleValueGsT?.toLocaleString('en-IN')}
-                                          </td>
-                                        </tr>
-                                      ))}
+                                            <th className=" text-[12px] px-2 text-left  font-normal ">
+                                              {d1?.component?.label}
+                                            </th>
+                                            <td className="w-[15%]  px-2 text-[12px] text-right   ">
+                                              ₹{' '}
+                                              {Number(
+                                                d1?.charges
+                                              )?.toLocaleString('en-IN')}
+                                            </td>
+                                            <td
+                                              className={`${
+                                                !showGstCol ? 'hidden' : ''
+                                              } w-[15%] px-2 text-[12px] text-right text-slate-500   `}
+                                            >
+                                              ₹
+                                              {d1?.TotalSaleValue?.toLocaleString(
+                                                'en-IN'
+                                              )}
+                                            </td>
+                                            <td
+                                              className={`${
+                                                !showGstCol ? 'hidden' : ''
+                                              } w-[15%] px-2 text-[12px] text-right text-slate-500   `}
+                                            >
+                                              ₹
+                                              {d1?.gstValue?.toLocaleString(
+                                                'en-IN'
+                                              )}
+                                            </td>
+                                            <td className="text-[12px] px-2 text-right   ">
+                                              ₹
+                                              {d1?.TotalNetSaleValueGsT?.toLocaleString(
+                                                'en-IN'
+                                              )}
+                                            </td>
+                                          </tr>
+                                        )
+                                      )}
                                       <tr className=" h-[32px] ">
                                         <th className="w-[40%] text-[11px] px-2 font-semibold text-left  text-[#0D027D] ">
                                           Additional Charges
@@ -1019,7 +1055,10 @@ const BookingSummaryView = ({
                                             ?.toLocaleString('en-IN')}
                                         </td>
                                         <td className="text-[12px] px-2 text-right text-[#0D027D] font-semibold">
-                                          ₹{myBookingPayload?.T_B?.toLocaleString('en-IN')}
+                                          ₹
+                                          {myBookingPayload?.T_B?.toLocaleString(
+                                            'en-IN'
+                                          )}
                                         </td>
                                       </tr>
                                     </tbody>
@@ -1027,353 +1066,375 @@ const BookingSummaryView = ({
                                 </div>
                                 {/* section- 3 */}
 
-                                {selPhaseObj?.projectType?.name === 'Villas' &&  <div className=" border rounded-lg shadow-md overflow-hidden mt-4">
-                                  <table className="w-full">
-
-                                    <thead>
-                                      <tr className="h-8 mb-1 border-none w-[100%]  bg-[#E8E6FE] text-[#0D027D] text-[#0D027D]  font-[600] ">
-                                        <th className="min-w-[35%] px-2  text-[12px] text-left font-bold tracking-wide">
-                                          Construction
-                                        </th>
-                                        <th className="w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide ">
-                                          Rate/Sqft
-                                        </th>
-                                        <th
-                                          className={`${
-                                            !showGstCol ? 'hidden' : ''
-                                          } w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide`}
-                                        >
-                                          Cost
-                                        </th>
-                                        <th
-                                          className={`${
-                                            !showGstCol ? 'hidden' : ''
-                                          }  w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide`}
-                                        >
-                                          GST
-                                        </th>
-                                        <th className="w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide">
-                                          Total
-                                        </th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      {myBookingPayload?.constructCS?.map((d1, inx) => (
-                                        <tr
-                                          key={inx}
-                                          className="h-[32px] border-b border-dashed"
-                                        >
-                                          <th className=" text-[12px] px-2 text-left  font-normal ">
-                                            {d1?.component?.label}
+                                {selPhaseObj?.projectType?.name ===
+                                  'Villas' && (
+                                  <div className=" border rounded-lg shadow-md overflow-hidden mt-4">
+                                    <table className="w-full">
+                                      <thead>
+                                        <tr className="h-8 mb-1 border-none w-[100%]  bg-[#E8E6FE] text-[#0D027D] text-[#0D027D]  font-[600] ">
+                                          <th className="min-w-[35%] px-2  text-[12px] text-left font-bold tracking-wide">
+                                            Construction
                                           </th>
-                                          <td className="w-[15%]  px-2 text-[12px] text-right   ">
-                                            ₹{' '}
-                                            {Number(
-                                              d1?.charges
-                                            )?.toLocaleString('en-IN')}
+                                          <th className="w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide ">
+                                            Rate/Sqft
+                                          </th>
+                                          <th
+                                            className={`${
+                                              !showGstCol ? 'hidden' : ''
+                                            } w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide`}
+                                          >
+                                            Cost
+                                          </th>
+                                          <th
+                                            className={`${
+                                              !showGstCol ? 'hidden' : ''
+                                            }  w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide`}
+                                          >
+                                            GST
+                                          </th>
+                                          <th className="w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide">
+                                            Total
+                                          </th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        {myBookingPayload?.constructCS?.map(
+                                          (d1, inx) => (
+                                            <tr
+                                              key={inx}
+                                              className="h-[32px] border-b border-dashed"
+                                            >
+                                              <th className=" text-[12px] px-2 text-left  font-normal ">
+                                                {d1?.component?.label}
+                                              </th>
+                                              <td className="w-[15%]  px-2 text-[12px] text-right   ">
+                                                ₹{' '}
+                                                {Number(
+                                                  d1?.charges
+                                                )?.toLocaleString('en-IN')}
+                                              </td>
+                                              <td
+                                                className={`${
+                                                  !showGstCol ? 'hidden' : ''
+                                                } w-[15%] px-2 text-[12px] text-right text-slate-500   `}
+                                              >
+                                                ₹
+                                                {d1?.TotalSaleValue?.toLocaleString(
+                                                  'en-IN'
+                                                )}
+                                              </td>
+                                              <td
+                                                className={`${
+                                                  !showGstCol ? 'hidden' : ''
+                                                } w-[15%] px-2 text-[12px] text-right text-slate-500   `}
+                                              >
+                                                ₹
+                                                {d1?.gstValue?.toLocaleString(
+                                                  'en-IN'
+                                                )}
+                                              </td>
+                                              <td className="text-[12px] px-2 text-right   ">
+                                                ₹{' '}
+                                                {d1?.TotalNetSaleValueGsT?.toLocaleString(
+                                                  'en-IN'
+                                                )}
+                                              </td>
+                                            </tr>
+                                          )
+                                        )}
+                                        <tr className=" h-[32px] ">
+                                          <th className="w-[40%] text-[11px] px-2 font-semibold text-left  text-[#0D027D] ">
+                                            Construction Cost
+                                          </th>
+                                          <td className="w-[15%] px-2 font-semibold text-[12px] text-right text-gray-600 pr-3"></td>
+                                          <td
+                                            className={`${
+                                              !showGstCol ? 'hidden' : ''
+                                            } w-[15%] px-2 font-semibold  text-[12px] text-right text-gray-800 `}
+                                          >
+                                            ₹
+                                            {constructCostSheetA
+                                              ?.reduce(
+                                                (partialSum, obj) =>
+                                                  partialSum +
+                                                  Number(obj?.TotalSaleValue),
+                                                0
+                                              )
+                                              ?.toLocaleString('en-IN')}
                                           </td>
                                           <td
                                             className={`${
                                               !showGstCol ? 'hidden' : ''
-                                            } w-[15%] px-2 text-[12px] text-right text-slate-500   `}
+                                            } w-[15%] px-2 font-semibold  text-[12px] text-right text-gray-800 `}
                                           >
                                             ₹
-                                            {d1?.TotalSaleValue?.toLocaleString(
-                                              'en-IN'
-                                            )}
+                                            {constructCostSheetA
+                                              ?.reduce(
+                                                (partialSum, obj) =>
+                                                  partialSum +
+                                                  Number(obj?.gstValue),
+                                                0
+                                              )
+                                              ?.toLocaleString('en-IN')}
                                           </td>
-                                          <td
-                                            className={`${
-                                              !showGstCol ? 'hidden' : ''
-                                            } w-[15%] px-2 text-[12px] text-right text-slate-500   `}
-                                          >
+                                          <td className="text-[12px] px-2 text-right text-[#0D027D] font-semibold">
                                             ₹
-                                            {d1?.gstValue?.toLocaleString(
+                                            {myBookingPayload?.T_C?.toLocaleString(
                                               'en-IN'
                                             )}
-                                          </td>
-                                          <td className="text-[12px] px-2 text-right   ">
-                                            ₹ {d1?.TotalNetSaleValueGsT?.toLocaleString('en-IN')}
-
                                           </td>
                                         </tr>
-                                      ))}
-                                      <tr className=" h-[32px] ">
-                                        <th className="w-[40%] text-[11px] px-2 font-semibold text-left  text-[#0D027D] ">
-                                          Construction Cost
-                                        </th>
-                                        <td className="w-[15%] px-2 font-semibold text-[12px] text-right text-gray-600 pr-3"></td>
-                                        <td
-                                          className={`${
-                                            !showGstCol ? 'hidden' : ''
-                                          } w-[15%] px-2 font-semibold  text-[12px] text-right text-gray-800 `}
-                                        >
-                                          ₹
-                                          {constructCostSheetA
-                                            ?.reduce(
-                                              (partialSum, obj) =>
-                                                partialSum +
-                                                Number(obj?.TotalSaleValue),
-                                              0
-                                            )
-                                            ?.toLocaleString('en-IN')}
-                                        </td>
-                                        <td
-                                          className={`${
-                                            !showGstCol ? 'hidden' : ''
-                                          } w-[15%] px-2 font-semibold  text-[12px] text-right text-gray-800 `}
-                                        >
-                                          ₹
-                                          {constructCostSheetA
-                                            ?.reduce(
-                                              (partialSum, obj) =>
-                                                partialSum +
-                                                Number(obj?.gstValue),
-                                              0
-                                            )
-                                            ?.toLocaleString('en-IN')}
-                                        </td>
-                                        <td className="text-[12px] px-2 text-right text-[#0D027D] font-semibold">
-                                          ₹{myBookingPayload?.T_C?.toLocaleString('en-IN')}
-                                        </td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                                </div>}
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                )}
                                 {/* section- 4 */}
-                                {selPhaseObj?.projectType?.name === 'Villas' &&
-                                 <div className=" border rounded-lg shadow-md overflow-hidden mt-4">
-                                  <table className="w-full">
-
-                                  <thead>
-                                      <tr className="h-8 mb-1 border-none w-[100%]  bg-[#E8E6FE] text-[#0D027D] text-[#0D027D]  font-[600] ">
-                                        <th className="min-w-[35%] px-2  text-[12px] text-left font-bold tracking-wide">
-                                        Construction Additonal Charges
-                                        </th>
-                                        <th className="w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide ">
-                                          Rate/Sqft
-                                        </th>
-                                        <th
-                                          className={`${
-                                            !showGstCol ? 'hidden' : ''
-                                          } w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide`}
-                                        >
-                                          Cost
-                                        </th>
-                                        <th
-                                          className={`${
-                                            !showGstCol ? 'hidden' : ''
-                                          }  w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide`}
-                                        >
-                                          GST
-                                        </th>
-                                        <th className="w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide">
-                                          Total
-                                        </th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      {myBookingPayload?.constAdditionalChargesCS?.map((d1, inx) => (
-                                        <tr
-                                          key={inx}
-                                          className="h-[32px] border-b border-dashed"
-                                        >
-                                          <th className=" text-[12px] px-2 text-left  font-normal ">
-                                            {d1?.component?.label}
+                                {selPhaseObj?.projectType?.name ===
+                                  'Villas' && (
+                                  <div className=" border rounded-lg shadow-md overflow-hidden mt-4">
+                                    <table className="w-full">
+                                      <thead>
+                                        <tr className="h-8 mb-1 border-none w-[100%]  bg-[#E8E6FE] text-[#0D027D] text-[#0D027D]  font-[600] ">
+                                          <th className="min-w-[35%] px-2  text-[12px] text-left font-bold tracking-wide">
+                                            Construction Additonal Charges
                                           </th>
-                                          <td className="w-[15%]  px-2 text-[12px] text-right   ">
-                                            ₹{' '}
-                                            {Number(
-                                              d1?.charges
-                                            )?.toLocaleString('en-IN')}
+                                          <th className="w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide ">
+                                            Rate/Sqft
+                                          </th>
+                                          <th
+                                            className={`${
+                                              !showGstCol ? 'hidden' : ''
+                                            } w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide`}
+                                          >
+                                            Cost
+                                          </th>
+                                          <th
+                                            className={`${
+                                              !showGstCol ? 'hidden' : ''
+                                            }  w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide`}
+                                          >
+                                            GST
+                                          </th>
+                                          <th className="w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide">
+                                            Total
+                                          </th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        {myBookingPayload?.constAdditionalChargesCS?.map(
+                                          (d1, inx) => (
+                                            <tr
+                                              key={inx}
+                                              className="h-[32px] border-b border-dashed"
+                                            >
+                                              <th className=" text-[12px] px-2 text-left  font-normal ">
+                                                {d1?.component?.label}
+                                              </th>
+                                              <td className="w-[15%]  px-2 text-[12px] text-right   ">
+                                                ₹{' '}
+                                                {Number(
+                                                  d1?.charges
+                                                )?.toLocaleString('en-IN')}
+                                              </td>
+                                              <td
+                                                className={`${
+                                                  !showGstCol ? 'hidden' : ''
+                                                } w-[15%] px-2 text-[12px] text-right text-slate-500   `}
+                                              >
+                                                ₹
+                                                {d1?.TotalSaleValue?.toLocaleString(
+                                                  'en-IN'
+                                                )}
+                                              </td>
+                                              <td
+                                                className={`${
+                                                  !showGstCol ? 'hidden' : ''
+                                                } w-[15%] px-2 text-[12px] text-right text-slate-500   `}
+                                              >
+                                                ₹
+                                                {d1?.gstValue?.toLocaleString(
+                                                  'en-IN'
+                                                )}
+                                              </td>
+                                              <td className="text-[12px] px-2 text-right   ">
+                                                ₹
+                                                {d1?.TotalNetSaleValueGsT?.toLocaleString(
+                                                  'en-IN'
+                                                )}
+                                              </td>
+                                            </tr>
+                                          )
+                                        )}
+                                        <tr className=" h-[32px] ">
+                                          <th className="w-[40%] text-[11px] px-2 font-semibold text-left  text-[#0D027D] ">
+                                            Construction Additonal Charges
+                                          </th>
+                                          <td className="w-[15%] px-2 font-semibold text-[12px] text-right text-gray-600 pr-3"></td>
+                                          <td
+                                            className={`${
+                                              !showGstCol ? 'hidden' : ''
+                                            } w-[15%] px-2 font-semibold  text-[12px] text-right text-gray-800 `}
+                                          >
+                                            ₹
+                                            {newAdditonalConstChargesObj
+                                              ?.reduce(
+                                                (partialSum, obj) =>
+                                                  partialSum +
+                                                  Number(obj?.TotalSaleValue),
+                                                0
+                                              )
+                                              ?.toLocaleString('en-IN')}
                                           </td>
                                           <td
                                             className={`${
                                               !showGstCol ? 'hidden' : ''
-                                            } w-[15%] px-2 text-[12px] text-right text-slate-500   `}
+                                            } w-[15%] px-2 font-semibold  text-[12px] text-right text-gray-800 `}
                                           >
                                             ₹
-                                            {d1?.TotalSaleValue?.toLocaleString(
+                                            {newAdditonalConstChargesObj
+                                              ?.reduce(
+                                                (partialSum, obj) =>
+                                                  partialSum +
+                                                  Number(obj?.gstValue),
+                                                0
+                                              )
+                                              ?.toLocaleString('en-IN')}
+                                          </td>
+                                          <td className="text-[12px] px-2 text-right text-[#0D027D] font-semibold">
+                                            ₹
+                                            {myBookingPayload?.T_D?.toLocaleString(
                                               'en-IN'
                                             )}
-                                          </td>
-                                          <td
-                                            className={`${
-                                              !showGstCol ? 'hidden' : ''
-                                            } w-[15%] px-2 text-[12px] text-right text-slate-500   `}
-                                          >
-                                            ₹
-                                            {d1?.gstValue?.toLocaleString(
-                                              'en-IN'
-                                            )}
-                                          </td>
-                                          <td className="text-[12px] px-2 text-right   ">
-                                            ₹
-                                            {d1?.TotalNetSaleValueGsT?.toLocaleString('en-IN')}
                                           </td>
                                         </tr>
-                                      ))}
-                                      <tr className=" h-[32px] ">
-                                        <th className="w-[40%] text-[11px] px-2 font-semibold text-left  text-[#0D027D] ">
-                                          Construction Additonal Charges
-                                        </th>
-                                        <td className="w-[15%] px-2 font-semibold text-[12px] text-right text-gray-600 pr-3"></td>
-                                        <td
-                                          className={`${
-                                            !showGstCol ? 'hidden' : ''
-                                          } w-[15%] px-2 font-semibold  text-[12px] text-right text-gray-800 `}
-                                        >
-                                          ₹
-                                          {newAdditonalConstChargesObj
-                                            ?.reduce(
-                                              (partialSum, obj) =>
-                                                partialSum +
-                                                Number(obj?.TotalSaleValue),
-                                              0
-                                            )
-                                            ?.toLocaleString('en-IN')}
-                                        </td>
-                                        <td
-                                          className={`${
-                                            !showGstCol ? 'hidden' : ''
-                                          } w-[15%] px-2 font-semibold  text-[12px] text-right text-gray-800 `}
-                                        >
-                                          ₹
-                                          {newAdditonalConstChargesObj
-                                            ?.reduce(
-                                              (partialSum, obj) =>
-                                                partialSum +
-                                                Number(obj?.gstValue),
-                                              0
-                                            )
-                                            ?.toLocaleString('en-IN')}
-                                        </td>
-                                        <td className="text-[12px] px-2 text-right text-[#0D027D] font-semibold">
-                                          ₹{myBookingPayload?.T_D?.toLocaleString('en-IN')}
-                                        </td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-
-                                </div>}
-
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                )}
 
                                 {/* section- 5 */}
-                                {selPhaseObj?.projectType?.name === 'Villas' &&
-                                 <div className=" border rounded-lg shadow-md overflow-hidden mt-4">
-                                  <table className="w-full">
-
-                                  <thead>
-                                      <tr className="h-8 mb-1 border-none w-[100%]  bg-[#E8E6FE] text-[#0D027D] text-[#0D027D]  font-[600] ">
-                                        <th className="min-w-[35%] px-2  text-[12px] text-left font-bold tracking-wide">
-                                        Possession Charges
-                                        </th>
-                                        <th className="w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide ">
-                                          Rate/Sqft
-                                        </th>
-                                        <th
-                                          className={`${
-                                            !showGstCol ? 'hidden' : ''
-                                          } w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide`}
-                                        >
-                                          Cost
-                                        </th>
-                                        <th
-                                          className={`${
-                                            !showGstCol ? 'hidden' : ''
-                                          }  w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide`}
-                                        >
-                                          GST
-                                        </th>
-                                        <th className="w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide">
-                                          Total
-                                        </th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      {myBookingPayload?.possessionAdditionalCostCS?.map((d1, inx) => (
-                                        <tr
-                                          key={inx}
-                                          className="h-[32px] border-b border-dashed"
-                                        >
-                                          <th className=" text-[12px] px-2 text-left  font-normal ">
-                                            {d1?.component?.label}
+                                {selPhaseObj?.projectType?.name ===
+                                  'Villas' && (
+                                  <div className=" border rounded-lg shadow-md overflow-hidden mt-4">
+                                    <table className="w-full">
+                                      <thead>
+                                        <tr className="h-8 mb-1 border-none w-[100%]  bg-[#E8E6FE] text-[#0D027D] text-[#0D027D]  font-[600] ">
+                                          <th className="min-w-[35%] px-2  text-[12px] text-left font-bold tracking-wide">
+                                            Possession Charges
                                           </th>
-                                          <td className="w-[15%]  px-2 text-[12px] text-right   ">
-                                            ₹{' '}
-                                            {Number(
-                                              d1?.charges
-                                            )?.toLocaleString('en-IN')}
+                                          <th className="w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide ">
+                                            Rate/Sqft
+                                          </th>
+                                          <th
+                                            className={`${
+                                              !showGstCol ? 'hidden' : ''
+                                            } w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide`}
+                                          >
+                                            Cost
+                                          </th>
+                                          <th
+                                            className={`${
+                                              !showGstCol ? 'hidden' : ''
+                                            }  w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide`}
+                                          >
+                                            GST
+                                          </th>
+                                          <th className="w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide">
+                                            Total
+                                          </th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        {myBookingPayload?.possessionAdditionalCostCS?.map(
+                                          (d1, inx) => (
+                                            <tr
+                                              key={inx}
+                                              className="h-[32px] border-b border-dashed"
+                                            >
+                                              <th className=" text-[12px] px-2 text-left  font-normal ">
+                                                {d1?.component?.label}
+                                              </th>
+                                              <td className="w-[15%]  px-2 text-[12px] text-right   ">
+                                                ₹{' '}
+                                                {Number(
+                                                  d1?.charges
+                                                )?.toLocaleString('en-IN')}
+                                              </td>
+                                              <td
+                                                className={`${
+                                                  !showGstCol ? 'hidden' : ''
+                                                } w-[15%] px-2 text-[12px] text-right text-slate-500   `}
+                                              >
+                                                ₹
+                                                {d1?.TotalSaleValue?.toLocaleString(
+                                                  'en-IN'
+                                                )}
+                                              </td>
+                                              <td
+                                                className={`${
+                                                  !showGstCol ? 'hidden' : ''
+                                                } w-[15%] px-2 text-[12px] text-right text-slate-500   `}
+                                              >
+                                                ₹
+                                                {d1?.gstValue?.toLocaleString(
+                                                  'en-IN'
+                                                )}
+                                              </td>
+                                              <td className="text-[12px] px-2 text-right   ">
+                                                ₹
+                                                {d1?.TotalNetSaleValueGsT?.toLocaleString(
+                                                  'en-IN'
+                                                )}
+                                              </td>
+                                            </tr>
+                                          )
+                                        )}
+                                        <tr className=" h-[32px] ">
+                                          <th className="w-[40%] text-[11px] px-2 font-semibold text-left  text-[#0D027D] ">
+                                            Possession Charges
+                                          </th>
+                                          <td className="w-[15%] px-2 font-semibold text-[12px] text-right text-gray-600 pr-3"></td>
+                                          <td
+                                            className={`${
+                                              !showGstCol ? 'hidden' : ''
+                                            } w-[15%] px-2 font-semibold  text-[12px] text-right text-gray-800 `}
+                                          >
+                                            ₹
+                                            {myBookingPayload?.possessionAdditionalCostCS
+                                              ?.reduce(
+                                                (partialSum, obj) =>
+                                                  partialSum +
+                                                  Number(obj?.TotalSaleValue),
+                                                0
+                                              )
+                                              ?.toLocaleString('en-IN')}
                                           </td>
                                           <td
                                             className={`${
                                               !showGstCol ? 'hidden' : ''
-                                            } w-[15%] px-2 text-[12px] text-right text-slate-500   `}
+                                            } w-[15%] px-2 font-semibold  text-[12px] text-right text-gray-800 `}
                                           >
                                             ₹
-                                            {d1?.TotalSaleValue?.toLocaleString(
+                                            {myBookingPayload?.possessionAdditionalCostCS
+                                              ?.reduce(
+                                                (partialSum, obj) =>
+                                                  partialSum +
+                                                  Number(obj?.gstValue),
+                                                0
+                                              )
+                                              ?.toLocaleString('en-IN')}
+                                          </td>
+                                          <td className="text-[12px] px-2 text-right text-[#0D027D] font-semibold">
+                                            ₹
+                                            {myBookingPayload?.T_E?.toLocaleString(
                                               'en-IN'
                                             )}
-                                          </td>
-                                          <td
-                                            className={`${
-                                              !showGstCol ? 'hidden' : ''
-                                            } w-[15%] px-2 text-[12px] text-right text-slate-500   `}
-                                          >
-                                            ₹
-                                            {d1?.gstValue?.toLocaleString(
-                                              'en-IN'
-                                            )}
-                                          </td>
-                                          <td className="text-[12px] px-2 text-right   ">
-                                            ₹
-                                            {d1?.TotalNetSaleValueGsT?.toLocaleString('en-IN')}
                                           </td>
                                         </tr>
-                                      ))}
-                                      <tr className=" h-[32px] ">
-                                        <th className="w-[40%] text-[11px] px-2 font-semibold text-left  text-[#0D027D] ">
-                                        Possession Charges
-                                        </th>
-                                        <td className="w-[15%] px-2 font-semibold text-[12px] text-right text-gray-600 pr-3"></td>
-                                        <td
-                                          className={`${
-                                            !showGstCol ? 'hidden' : ''
-                                          } w-[15%] px-2 font-semibold  text-[12px] text-right text-gray-800 `}
-                                        >
-                                          ₹
-                                          {myBookingPayload?.possessionAdditionalCostCS
-                                            ?.reduce(
-                                              (partialSum, obj) =>
-                                                partialSum +
-                                                Number(obj?.TotalSaleValue),
-                                              0
-                                            )
-                                            ?.toLocaleString('en-IN')}
-                                        </td>
-                                        <td
-                                          className={`${
-                                            !showGstCol ? 'hidden' : ''
-                                          } w-[15%] px-2 font-semibold  text-[12px] text-right text-gray-800 `}
-                                        >
-                                          ₹
-                                          {myBookingPayload?.possessionAdditionalCostCS
-                                            ?.reduce(
-                                              (partialSum, obj) =>
-                                                partialSum +
-                                                Number(obj?.gstValue),
-                                              0
-                                            )
-                                            ?.toLocaleString('en-IN')}
-                                        </td>
-                                        <td className="text-[12px] px-2 text-right text-[#0D027D] font-semibold">
-                                          ₹{myBookingPayload?.T_E?.toLocaleString('en-IN')}
-                                        </td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-
-                                </div>}
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                )}
                               </section>
                             )}
                             {'payment_schedule' === 'payment_schedule' && (
@@ -1444,100 +1505,114 @@ const BookingSummaryView = ({
                                     </thead>
 
                                     <tbody>
-                                      {myBookingPayload.plotPS?.map((d1, inx) => (
-                                        <tr
-                                          key={inx}
-                                          className="border-b-[0.05px] border-gray-300 py-1 my-2 h-[32px]  py-[24px]"
-                                        >
-                              
-                                           <th className=" px-2  text-[10px] text-left text-bold   tracking-wide  text-grey-900 ">
-                                      {d1?.stage?.label}
-                                      <div className="text-[9px] text-left   text-slate-500 ">
-                                        {d1?.description} ({d1?.zeroDay} days)
-                                      </div>
-                                    </th>
-                                          <td className="text-[11px] px-2  text-left font-normal tracking-wide uppercase ">
-                                          {prettyDate(d1?.schDate)}
-                                          </td>
-                                          <td className="text-[12px] px-2  text-right tracking-wide uppercase ">
-                                            ₹
-                                            {d1?.value?.toLocaleString('en-IN')}
-                                          </td>
-                                        </tr>
-                                      ))}
+                                      {myBookingPayload.plotPS?.map(
+                                        (d1, inx) => (
+                                          <tr
+                                            key={inx}
+                                            className="border-b-[0.05px] border-gray-300 py-1 my-2 h-[32px]  py-[24px]"
+                                          >
+                                            <th className=" px-2  text-[10px] text-left text-bold   tracking-wide  text-grey-900 ">
+                                              {d1?.stage?.label}
+                                              <div className="text-[9px] text-left   text-slate-500 ">
+                                                {d1?.description} ({d1?.zeroDay}{' '}
+                                                days)
+                                              </div>
+                                            </th>
+                                            <td className="text-[11px] px-2  text-left font-normal tracking-wide uppercase ">
+                                              {prettyDate(d1?.schDate)}
+                                            </td>
+                                            <td className="text-[12px] px-2  text-right tracking-wide uppercase ">
+                                              ₹
+                                              {d1?.value?.toLocaleString(
+                                                'en-IN'
+                                              )}
+                                            </td>
+                                          </tr>
+                                        )
+                                      )}
 
                                       <tr className="h-[32px]">
                                         <th className="text-[12px] px-2  text-left text-gray-800 ">
-                                        {selPhaseObj?.projectType?.name ===
-                                    'Apartment'
-                                      ? 'Flat Value Total Rs.:'
-                                      : 'Plot Value Total'}
+                                          {selPhaseObj?.projectType?.name ===
+                                          'Apartment'
+                                            ? 'Flat Value Total Rs.:'
+                                            : 'Plot Value Total'}
                                         </th>
                                         <td className="text-[12px] px-2  text-right text-gray-400 "></td>
                                         <th className="text-[12px] px-2  text-right text-gray-800 ">
-                                          ₹  {(
-                                      (myBookingPayload?.T_A || 0) +
-                                      (myBookingPayload?.T_B || 0)
-                                    )?.toLocaleString('en-IN')}
+                                          ₹{' '}
+                                          {(
+                                            (myBookingPayload?.T_A || 0) +
+                                            (myBookingPayload?.T_B || 0)
+                                          )?.toLocaleString('en-IN')}
                                         </th>
                                       </tr>
                                     </tbody>
                                   </table>
                                 </div>
-                                {selPhaseObj?.projectType?.name === 'Villas' && (
+                                {selPhaseObj?.projectType?.name ===
+                                  'Villas' && (
                                   <div className=" mt-4 border rounded-lg shadow-md overflow-hidden ">
-                                  <table className="w-full border-b border-dashed">
-                                    <thead className="">
-                                      {' '}
-                                      <tr className=" h-8  border-none bg-[#E8E6FE] text-[#0D027D]  font-[600]  ">
-                                        <th className="w-[50%] px-2   text-left  tracking-wide  text-[12px]   ">
-                                          Construction Payment Schedule
-                                        </th>
-                                        <th className="w-[30%] px-2   text-left  tracking-wide  text-[12px] ">
-                                          Payment Timeline
-                                        </th>
-                                        <th className="w-[20%] px-2   text-right  tracking-wide  text-[12px]">
-                                          Total inc GST
-                                        </th>
-                                      </tr>
-                                    </thead>
-
-                                    <tbody>
-                                      {myBookingPayload.constructPS?.map((d1, inx) => (
-                                        <tr
-                                          key={inx}
-                                          className="border-b-[0.05px] border-gray-300 py-1 my-2 h-[32px]  py-[24px]"
-                                        >
-                                         <th className=" px-2  text-[10px] text-left text-bold   tracking-wide  text-grey-900 ">
-                                      {d1?.stage?.label}
-                                      <div className="text-[9px] text-left   text-slate-500 ">
-                                        {d1?.description} ({d1?.zeroDay} days)
-                                      </div>
-                                    </th>
-                                          <td className="text-[11px] px-2  text-left font-normal tracking-wide uppercase ">
-                                          {prettyDate(d1?.schDate)}
-                                          </td>
-                                          <td className="text-[12px] px-2  text-right tracking-wide uppercase ">
-                                            ₹
-                                            {d1?.value?.toLocaleString('en-IN')}
-                                          </td>
+                                    <table className="w-full border-b border-dashed">
+                                      <thead className="">
+                                        {' '}
+                                        <tr className=" h-8  border-none bg-[#E8E6FE] text-[#0D027D]  font-[600]  ">
+                                          <th className="w-[50%] px-2   text-left  tracking-wide  text-[12px]   ">
+                                            Construction Payment Schedule
+                                          </th>
+                                          <th className="w-[30%] px-2   text-left  tracking-wide  text-[12px] ">
+                                            Payment Timeline
+                                          </th>
+                                          <th className="w-[20%] px-2   text-right  tracking-wide  text-[12px]">
+                                            Total inc GST
+                                          </th>
                                         </tr>
-                                      ))}
+                                      </thead>
 
-                                      <tr className="h-[32px]">
-                                        <th className="text-[12px] px-2  text-left text-gray-800 ">
-                                        Construction Value Total:
-                                        </th>
-                                        <td className="text-[12px] px-2  text-right text-gray-400 "></td>
-                                        <th className="text-[12px] px-2  text-right text-gray-800 ">
-                                          ₹  {(
-                                        (partCTotal || 0) + (partDTotal || 0) + (myBookingPayload?.T_E || 0)
-                                      )?.toLocaleString('en-IN')}
-                                        </th>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                                </div>
+                                      <tbody>
+                                        {myBookingPayload.constructPS?.map(
+                                          (d1, inx) => (
+                                            <tr
+                                              key={inx}
+                                              className="border-b-[0.05px] border-gray-300 py-1 my-2 h-[32px]  py-[24px]"
+                                            >
+                                              <th className=" px-2  text-[10px] text-left text-bold   tracking-wide  text-grey-900 ">
+                                                {d1?.stage?.label}
+                                                <div className="text-[9px] text-left   text-slate-500 ">
+                                                  {d1?.description} (
+                                                  {d1?.zeroDay} days)
+                                                </div>
+                                              </th>
+                                              <td className="text-[11px] px-2  text-left font-normal tracking-wide uppercase ">
+                                                {prettyDate(d1?.schDate)}
+                                              </td>
+                                              <td className="text-[12px] px-2  text-right tracking-wide uppercase ">
+                                                ₹
+                                                {d1?.value?.toLocaleString(
+                                                  'en-IN'
+                                                )}
+                                              </td>
+                                            </tr>
+                                          )
+                                        )}
+
+                                        <tr className="h-[32px]">
+                                          <th className="text-[12px] px-2  text-left text-gray-800 ">
+                                            Construction Value Total:
+                                          </th>
+                                          <td className="text-[12px] px-2  text-right text-gray-400 "></td>
+                                          <th className="text-[12px] px-2  text-right text-gray-800 ">
+                                            ₹{' '}
+                                            {(
+                                              (partCTotal || 0) +
+                                              (partDTotal || 0) +
+                                              (myBookingPayload?.T_E || 0)
+                                            )?.toLocaleString('en-IN')}
+                                          </th>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
                                 )}
                               </section>
                             )}

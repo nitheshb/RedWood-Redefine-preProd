@@ -50,12 +50,12 @@ function CompactCard({ param, setExpanded }) {
         <div className="h-[1px] mx- mt-[28px] bg-[#DEDEE0]"></div>
 
         <div className="flex flex-row justify-between mt-1 ">
-        <span className="block" style={{ fontSize: '12px' }}>
-              {amount}
-            </span>
-        <span className="block" style={{ fontSize: '12px' }}>
-              {area} Sft
-            </span>
+          <span className="block" style={{ fontSize: '12px' }}>
+            {amount}
+          </span>
+          <span className="block" style={{ fontSize: '12px' }}>
+            {area} Sft
+          </span>
         </div>
       </div>
     </motion.div>

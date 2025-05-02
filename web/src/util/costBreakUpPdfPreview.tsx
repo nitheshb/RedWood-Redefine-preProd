@@ -26,7 +26,7 @@ const CostBreakUpPdfPreview = ({
   showGstCol,
   partATotal,
   partBTotal,
-  netTotal
+  netTotal,
 }) => {
   const { user } = useAuth()
   const ref = createRef()
@@ -55,9 +55,8 @@ const CostBreakUpPdfPreview = ({
     // setNewPlotCsObj(costSheetA)
   }, [newSqftPrice])
   useEffect(() => {
-   console.log('first', costSheetA)
+    console.log('first', costSheetA)
   }, [])
-
 
   useEffect(() => {
     const {
@@ -221,48 +220,51 @@ const CostBreakUpPdfPreview = ({
   const CreateNewPsFun = (netTotal, plotBookingAdv, csMode) => {
     console.log('was this executed', newPlotPS)
 
-      const newPs = psPayload.map( (d1, inx) => {
-          const z = d1
-          let flatLegalFixedCosts = 0
-            const filLegalCharges = psPayload?.filter(
-              (d) => d?.component?.value === 'legal_charges'
-            )
-            if(filLegalCharges && filLegalCharges?.length > 0){
-              flatLegalFixedCosts =filLegalCharges[0]?.TotalNetSaleValueGsT || 0
-            }
+    const newPs = psPayload.map((d1, inx) => {
+      const z = d1
+      let flatLegalFixedCosts = 0
+      const filLegalCharges = psPayload?.filter(
+        (d) => d?.component?.value === 'legal_charges'
+      )
+      if (filLegalCharges && filLegalCharges?.length > 0) {
+        flatLegalFixedCosts = filLegalCharges[0]?.TotalNetSaleValueGsT || 0
+      }
 
-              if ('plot_cs' === 'plot_cs') {
-                       let applicablePlotCost = netTotal- flatLegalFixedCosts
-                      //  if(inx ==1){
-                      //   applicablePlotCost = (applicablePlotCost-bookingAdvanceCost)
-                      //  }
+      if ('plot_cs' === 'plot_cs') {
+        let applicablePlotCost = netTotal - flatLegalFixedCosts
+        //  if(inx ==1){
+        //   applicablePlotCost = (applicablePlotCost-bookingAdvanceCost)
+        //  }
 
-                      if(!['costpersqft'].includes(d1?.units?.value)){
-
-                        z.value = ['fixedcost'].includes(d1?.units?.value)
-                          ? Number(d1?.percentage)
-                          : inx ==1 ? Number(
-                            (((applicablePlotCost) * (d1?.percentage / 100)).toFixed(2) - plotBookingAdv))
-
-                          :  Number(
-                              ((applicablePlotCost) * (d1?.percentage / 100)).toFixed(2)
-                            )
-                            // z.value = applicablePlotCost
-                          }else {
-                            let calc =  CalculateComponentTotal(d1,selUnitDetails?.area?.toString()?.replace(',', '') ,0,Number(d1?.percentage))
-                            z.value = calc?.TotalNetSaleValueGsT
-                          }
-                        if (['fixedcost'].includes(d1?.units?.value)) {
-                          z.elgible = true
-                          z.elgFrom = Timestamp.now().toMillis()
-                          return z
-                        }
-                        z.oldDate= Timestamp.now().toMillis()
-                        z.schDate= Timestamp.now().toMillis()
-                        return z
-                      }
-
-        })
+        if (!['costpersqft'].includes(d1?.units?.value)) {
+          z.value = ['fixedcost'].includes(d1?.units?.value)
+            ? Number(d1?.percentage)
+            : inx == 1
+            ? Number(
+                (applicablePlotCost * (d1?.percentage / 100)).toFixed(2) -
+                  plotBookingAdv
+              )
+            : Number((applicablePlotCost * (d1?.percentage / 100)).toFixed(2))
+          // z.value = applicablePlotCost
+        } else {
+          let calc = CalculateComponentTotal(
+            d1,
+            selUnitDetails?.area?.toString()?.replace(',', ''),
+            0,
+            Number(d1?.percentage)
+          )
+          z.value = calc?.TotalNetSaleValueGsT
+        }
+        if (['fixedcost'].includes(d1?.units?.value)) {
+          z.elgible = true
+          z.elgFrom = Timestamp.now().toMillis()
+          return z
+        }
+        z.oldDate = Timestamp.now().toMillis()
+        z.schDate = Timestamp.now().toMillis()
+        return z
+      }
+    })
 
     setNewPS(newPs)
   }
@@ -339,10 +341,16 @@ const CostBreakUpPdfPreview = ({
     const y = costSheetA
     let total = 0
     let gstTotal = 0
-    const gstTaxForProjA = selPhaseObj?.partATaxObj.filter((d)=> d?.component.value === 'sqft_cost_tax')
-    const gstTaxIs = gstTaxForProjA.length >0 ? gstTaxForProjA[0]?.gst?.value: 0
-    const plcGstForProjA = selPhaseObj?.partATaxObj.filter((d)=> d?.component.value === 'plc_tax')
-    const plcGstIs = plcGstForProjA.length >0 ? plcGstForProjA[0]?.gst?.value: 0
+    const gstTaxForProjA = selPhaseObj?.partATaxObj.filter(
+      (d) => d?.component.value === 'sqft_cost_tax'
+    )
+    const gstTaxIs =
+      gstTaxForProjA.length > 0 ? gstTaxForProjA[0]?.gst?.value : 0
+    const plcGstForProjA = selPhaseObj?.partATaxObj.filter(
+      (d) => d?.component.value === 'plc_tax'
+    )
+    const plcGstIs =
+      plcGstForProjA.length > 0 ? plcGstForProjA[0]?.gst?.value : 0
 
     if (csMode === 'plot_cs') {
       total = Math.round(selUnitDetails?.area * newValue)
@@ -467,7 +475,7 @@ const CostBreakUpPdfPreview = ({
                           <thead>
                             <tr className="h-1 mb-1 border-none w-[100%] bg-[#318b96] text-white">
                               <th className="min-w-[35%] px-2  text-[8px] text-left  tracking-wide ">
-                              Charges
+                                Charges
                               </th>
                               <th className="w-[15%] px-2 text-[8px] text-right  tracking-wide ">
                                 Rate/Sqft
@@ -683,7 +691,7 @@ const CostBreakUpPdfPreview = ({
                             {' '}
                             <tr className="border-none bg-[#318b96] text-white ">
                               <th className="w-[50%] px-2   text-left  tracking-wide uppercase d-xsm text-white ">
-                              Charges
+                                Charges
                               </th>
                               <th className="w-[30%] px-2   text-left  tracking-wide uppercase d-xsm text-white">
                                 Payment Timeline

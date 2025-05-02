@@ -49,7 +49,7 @@ const EmpTasksReportM = ({
   console.log(show)
   return (
     <div
-    className='rounded-xl'
+      className="rounded-xl"
       style={{
         padding: '1rem',
         backgroundColor: 'white',
@@ -105,12 +105,12 @@ const EmpTasksReportM = ({
                     ).length
                   }`,
                 },
-
-
               ].map((item, i) => (
                 <div
                   key={i}
-                  className={`bg-[#3C7E7D] my-[0.5px] cursor-pointer ${i === 1 ? 'rounded-b-lg' : ''}`}
+                  className={`bg-[#3C7E7D] my-[0.5px] cursor-pointer ${
+                    i === 1 ? 'rounded-b-lg' : ''
+                  }`}
                   style={{
                     height: '4rem',
                     display: 'flex',
@@ -140,7 +140,7 @@ const EmpTasksReportM = ({
             </div>
           </div>
 
-          <table className=" text-center mx-3 cardborder" style ={{}}>
+          <table className=" text-center mx-3 cardborder" style={{}}>
             <thead className="border-b">
               <tr>
                 {[
@@ -188,7 +188,6 @@ const EmpTasksReportM = ({
                         <div
                           className={` opacity-100  rounded-lg `}
                           style={{
-
                             width: `${MycalculatePercentage(
                               data?.all_comp || 0,
                               data?.all || 0

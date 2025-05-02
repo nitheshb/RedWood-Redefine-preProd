@@ -7,15 +7,7 @@ import {
   ChevronDoubleRightIcon,
 } from '@heroicons/react/solid'
 import { startOfWeek, startOfDay, startOfMonth, subMonths } from 'date-fns'
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-} from 'recharts'
-
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts'
 
 import { sourceListItems } from 'src/constants/projects'
 import { USER_ROLES } from 'src/constants/userRoles'
@@ -26,10 +18,8 @@ import {
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 
-
 import { serialMyData } from './LeadsTeamReport/SourceLeads'
 import { serialEmployeeLeadData } from './LeadsTeamReport/serialEmployeeLeadData'
-
 
 const valueFeedData = [
   { k: 'Due', v: 300, pic: '' },
@@ -105,7 +95,6 @@ const MyLeadsReportHome = ({ project, onSliderOpen = () => {}, isEdit }) => {
   }, [])
   React.useEffect(() => {
     if (todaySch) {
-     
       console.log('zoro i s', todaySch)
       sorterFilterFun(todaySch)
     } else {
@@ -251,7 +240,6 @@ const MyLeadsReportHome = ({ project, onSliderOpen = () => {}, isEdit }) => {
 
     let y = []
 
-
     const z = todaySch.map((data1) => {
       console.log('master log ===>')
       data1['staDA'].map((data2) => {
@@ -283,7 +271,7 @@ const MyLeadsReportHome = ({ project, onSliderOpen = () => {}, isEdit }) => {
           dueTodo.push(y)
           return y
         }
-       
+
         if (
           y['sts'] === 'completed' &&
           y['comT'] > todayDate &&
@@ -298,7 +286,6 @@ const MyLeadsReportHome = ({ project, onSliderOpen = () => {}, isEdit }) => {
           return y
         }
 
-      
         console.log('my value is 1 ', y)
         return y
       })
@@ -318,7 +305,6 @@ const MyLeadsReportHome = ({ project, onSliderOpen = () => {}, isEdit }) => {
     )
   }
 
- 
   const showColumnsSourceFun = async (id) => {
     const y = ['new', 'followup', 'visitfixed', 'visitdone', 'neogotiation']
     const y1 = ['notinterested', 'dead', 'blocked', 'junk']
@@ -355,7 +341,6 @@ const MyLeadsReportHome = ({ project, onSliderOpen = () => {}, isEdit }) => {
         <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-full ">
           <div className="flex flex-col  leading-7  text-gray-900 border-0 border-gray-200 ">
             <div className="flex items-center flex-shrink-0  px-0  pl-0 border-b border-grey  mb-2">
-             
               <img className="w-16 h-16" alt="" src="/apart.svg"></img>
               <span className="relative z-10 flex items-center w-auto text-4xl font-bold leading-none pl-0 mt-[18px]">
                 {projectName}
@@ -369,13 +354,10 @@ const MyLeadsReportHome = ({ project, onSliderOpen = () => {}, isEdit }) => {
                     style={{ backgroundColor: '#fef7f7' }}
                   >
                     <div className="flex items-center flex-row px-0  pl-0 mb-2 ">
-                    
                       <div className="relative z-10 flex items-center w-auto text-md font-bold leading-none pl-0 ml-1 mt-4 ">
                         {`Task Stats of ${user.displayName} for Today`}
                       </div>
                     </div>
-
-                  
 
                     <div className="grid grid-cols-2 gap-0">
                       <ul className="flex-1 p-0 mt-8 ml-2 mr-2 max-w-[300px] border-r pr-10  border-slate-400 leading-7 text-gray-900  border-gray-200">
@@ -491,7 +473,7 @@ const MyLeadsReportHome = ({ project, onSliderOpen = () => {}, isEdit }) => {
                     <div className=" text-md font-bold leading-none pl-0 mt-4 border-b pb-4 mb-4 ">
                       {`My Leads Stats`}
                     </div>
-                   
+
                     <table className="min-w-full text-center mt-6">
                       <thead className="border-b">
                         <tr>
@@ -649,7 +631,6 @@ const MyLeadsReportHome = ({ project, onSliderOpen = () => {}, isEdit }) => {
                       {`Source vs My Status `}
                     </div>
 
-                  
                     <table className="min-w-full text-center mt-6">
                       <thead className="border-b">
                         <tr>

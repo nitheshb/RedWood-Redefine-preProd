@@ -3,9 +3,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useEffect, useState } from 'react'
-import {
-  XIcon,
-} from '@heroicons/react/solid'
+import { XIcon } from '@heroicons/react/solid'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 import { v4 as uuidv4 } from 'uuid'
 import { ToWords } from 'to-words'
@@ -35,10 +33,7 @@ import {
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { storage } from 'src/context/firebaseConfig'
-import {
-  prettyDate,
-  prettyDateTime,
-} from 'src/util/dateConverter'
+import { prettyDate, prettyDateTime } from 'src/util/dateConverter'
 import 'react-datepicker/dist/react-datepicker.css'
 import { setHours, setMinutes } from 'date-fns'
 import { Timestamp } from 'firebase/firestore'
@@ -49,31 +44,28 @@ import { USER_ROLES } from 'src/constants/userRoles'
 import UnitFullSummary from './CrmUnitFullSummary'
 import { getWhatsAppTemplates } from 'src/util/TuneWhatsappMsg'
 import { supabase } from 'src/context/supabase'
-import { Pie, Tooltip } from 'recharts';
-import { PieChart,  Cell } from 'recharts';
-import { BellIcon } from 'lucide-react';
-import { ChevronDownIcon } from "lucide-react";
+import { Pie, Tooltip } from 'recharts'
+import { PieChart, Cell } from 'recharts'
+import { BellIcon } from 'lucide-react'
+import { ChevronDownIcon } from 'lucide-react'
 import { calculatePercentages } from 'src/util/areaConverter'
 import AssigedToDropCompCrm from '../assignedToDropCompCrm'
+import toast, { ToastBar, useToaster } from 'react-hot-toast'
 
 const data = [
   { name: 'Paid', value: 10 },
   { name: 'Remaining', value: 90 },
-];
-
-
-
+]
 
 function formatIndianNumber(num) {
-  if (num >= 1_00_00_00_000) return (num / 1_00_00_00_000).toFixed(1) + 'Lcr+';
-  if (num >= 1_00_00_000) return (num / 1_00_00_000).toFixed(1) + 'Cr+';
-  if (num >= 1_00_000) return (num / 1_00_000).toFixed(1) + 'L+';
-  if (num >= 1_000) return (num / 1_000).toFixed(1) + 'K+';
-  return num.toString();
+  if (num >= 1_00_00_00_000) return (num / 1_00_00_00_000).toFixed(1) + 'Lcr+'
+  if (num >= 1_00_00_000) return (num / 1_00_00_000).toFixed(1) + 'Cr+'
+  if (num >= 1_00_000) return (num / 1_00_000).toFixed(1) + 'L+'
+  if (num >= 1_000) return (num / 1_000).toFixed(1) + 'K+'
+  return num.toString()
 }
 
-console.log(formatIndianNumber(25000000));
-
+console.log(formatIndianNumber(25000000))
 
 // interface iToastInfo {
 //   open: boolean
@@ -159,11 +151,10 @@ const notInterestOptions = [
   { label: 'Looking for Different Property', value: 'differeent_options' },
 
   { label: 'Others', value: 'others' },
-
-
 ]
 export default function UnitSideViewCRM({
   openUserProfile,
+  setOpen,
   rustomerDetails,
   unitViewerrr,
   unitsViewMode,
@@ -180,6 +171,7 @@ export default function UnitSideViewCRM({
   const { user } = useAuth()
   console.log('my user is ', user)
   const { enqueueSnackbar } = useSnackbar()
+
 
   const { orgId } = user
   const [fetchedUsersList, setfetchedUsersList] = useState([])
@@ -237,20 +229,10 @@ export default function UnitSideViewCRM({
   const [unitStatusLabel, setUnitStatusLabel] = useState('')
   const [allowStatusChangeOnDue, setAllowStatusChangeOnDue] = useState(false)
 
-
-
-
-
-
-
-
-
-
-
   const [selProjectIs, setSelProjectIs] = useState({
     projectName: '',
     uid: '',
-    allowCrmStatusChangeOnDue: false
+    allowCrmStatusChangeOnDue: false,
   })
 
   const [leadDetailsObj, setLeadDetailsObj] = useState({})
@@ -258,7 +240,6 @@ export default function UnitSideViewCRM({
     console.log('hello', customerDetails)
     streamUnitDataFun()
   }, [])
-
 
   useEffect(() => {
     setSelUnitDetails(unitPayload)
@@ -405,9 +386,7 @@ export default function UnitSideViewCRM({
 
     if (fet === 'appoint') {
       return
-    }
-
-    else {
+    } else {
       leadsActivityFetchedData.map((data) => {
         console.log('value of filtered feature count before', data)
       })
@@ -510,7 +489,6 @@ export default function UnitSideViewCRM({
     setAssignerName(value.name)
     setAssignedTo(value.value)
 
-
     const { data: data4, error: error4 } = supabase
       .from(`${orgId}_unit_logs`)
       .insert([
@@ -531,21 +509,41 @@ export default function UnitSideViewCRM({
       selCustomerPayload?.id,
       value,
       user.email,
-      enqueueSnackbar
+      // enqueueSnackbar
+      ToastBar
     )
-    selCustomerPayload?.fullPs.map((ps) => {
-      console.log('my values are', ps)
-      const newPayload = ps
-      newPayload.assignedTo = value?.value
-      newPayload.oldAssignedTo = selCustomerPayload?.assignedTo
+    return toast.promise(
+      (async () => {
+        try{
+          await Promise.all(
+            selCustomerPayload?.fullPs.map(async (ps) => {
+              console.log('my values are', ps)
+              const newPayload = ps
+              newPayload.assignedTo = value?.value
+              newPayload.oldAssignedTo = selCustomerPayload?.assignedTo
 
-      updateCrmExecutiveReAssignAgreegations(
-        orgId,
-        newPayload,
-        user.email,
-        enqueueSnackbar
-      )
-    })
+              await updateCrmExecutiveReAssignAgreegations(
+                orgId,
+                newPayload,
+                user.email,
+                enqueueSnackbar
+              )
+              return 'Employee projection updated'
+            })
+          )
+}
+    catch (error) {
+      console.log('error in uploading file with data', error);
+      throw error; // Rethrow to let toast.promise handle it
+    }
+  })(),
+  {
+    loading: 'Updating projections to new CRM Owner...',
+    success: (message) => message,
+    error: 'Employee projections updation failed'
+  }
+);
+
 
     const msgPayload = {
       projectName: Project,
@@ -574,7 +572,6 @@ export default function UnitSideViewCRM({
   const setNewProject = (leadDocId, value) => {
     console.log('sel pROJECT DETAILS ', value)
 
-
     const x = {
       Project: value.projectName,
       ProjectId: value.uid,
@@ -590,7 +587,7 @@ export default function UnitSideViewCRM({
     }
   }
   const setStatusFun = async (leadDocId, newStatus) => {
-    console.log('New Statusiiiiiiiii: ', newStatus);
+    console.log('New Statusiiiiiiiii: ', newStatus)
     const x = StatusListA.filter((d) => d.value === status)
     let allowedList = [{ allowed: [] }]
     if (x.length > 0) {
@@ -598,7 +595,8 @@ export default function UnitSideViewCRM({
     }
     console.log('value is', x, newStatus)
     console.log('balance ', selProjectIs)
-    const allowCrmStatusChangeOnDue = selProjectIs?.allowCrmStatusChangeOnDue || false
+    const allowCrmStatusChangeOnDue =
+      selProjectIs?.allowCrmStatusChangeOnDue || false
     const isBalanceExists = selCustomerPayload?.T_elgible_balance > 0
     const balanceRestrict = allowCrmStatusChangeOnDue ? false : isBalanceExists
 
@@ -609,7 +607,7 @@ export default function UnitSideViewCRM({
     } else {
       setLoader(true)
 
-      const dataObj = { status: newStatus?.value , oldStatus: ''}
+      const dataObj = { status: newStatus?.value, oldStatus: '' }
       dataObj.oldStatus = selCustomerPayload?.status || ''
       console.log('payment stuff is ', selCustomerPayload)
       const { fullPs } = selCustomerPayload
@@ -617,9 +615,9 @@ export default function UnitSideViewCRM({
       if (
         newStatus?.value === 'agreement_pipeline' &&
         selCustomerPayload?.kyc_status &&
-        selCustomerPayload?.man_cs_approval && !balanceRestrict
+        selCustomerPayload?.man_cs_approval &&
+        !balanceRestrict
       ) {
-
         setUnitStatusObj(newStatus)
         const updatedPs = fullPs.map((item) => {
           if (item.order === 2) {
@@ -642,7 +640,7 @@ export default function UnitSideViewCRM({
           (selCustomerPayload?.T_review ||
             0 + selCustomerPayload?.T_approved ||
             0)
-            dataObj.eventKey= 'alloted_on'
+        dataObj.eventKey = 'alloted_on'
         updateUnitStatus(
           orgId,
           selCustomerPayload,
@@ -653,7 +651,8 @@ export default function UnitSideViewCRM({
       } else if (
         newStatus?.value === 'ats_pipeline' &&
         selCustomerPayload?.ats_creation &&
-        selCustomerPayload?.both_ats_approval && !balanceRestrict
+        selCustomerPayload?.both_ats_approval &&
+        !balanceRestrict
       ) {
         const updatedPs = fullPs.map((item) => {
           if (item.order === 3) {
@@ -685,16 +684,12 @@ export default function UnitSideViewCRM({
           user.email,
           enqueueSnackbar
         )
-      }else if (
-        newStatus?.value === 'ATS' && !balanceRestrict
-
-
-      ) {
+      } else if (newStatus?.value === 'ATS' && !balanceRestrict) {
         setUnitStatusObj(newStatus)
         dataObj.fullPs = selCustomerPayload?.fullPs
         dataObj.T_elgible_new = selCustomerPayload?.T_elgible
         dataObj.T_elgible_balance = selCustomerPayload?.T_elgible_balance
-        dataObj.eventKey= 'agreement_on'
+        dataObj.eventKey = 'agreement_on'
 
         updateUnitStatus(
           orgId,
@@ -703,16 +698,12 @@ export default function UnitSideViewCRM({
           user.email,
           enqueueSnackbar
         )
-      } else if (
-        newStatus?.value === 'registered'
-
-        && !balanceRestrict
-      ) {
+      } else if (newStatus?.value === 'registered' && !balanceRestrict) {
         setUnitStatusObj(newStatus)
         dataObj.fullPs = selCustomerPayload?.fullPs
         dataObj.T_elgible_new = selCustomerPayload?.T_elgible
         dataObj.T_elgible_balance = selCustomerPayload?.T_elgible_balance
-        dataObj.eventKey= 'registered_on'
+        dataObj.eventKey = 'registered_on'
 
         updateUnitStatus(
           orgId,
@@ -721,18 +712,12 @@ export default function UnitSideViewCRM({
           user.email,
           enqueueSnackbar
         )
-      }else if (
-        newStatus?.value === 'possession'
-        && !balanceRestrict
-
-
-      ) {
+      } else if (newStatus?.value === 'possession' && !balanceRestrict) {
         setUnitStatusObj(newStatus)
         dataObj.fullPs = selCustomerPayload?.fullPs
         dataObj.T_elgible_new = selCustomerPayload?.T_elgible
         dataObj.T_elgible_balance = selCustomerPayload?.T_elgible_balance
-        dataObj.eventKey= 'possession_on'
-
+        dataObj.eventKey = 'possession_on'
 
         updateUnitStatus(
           orgId,
@@ -741,9 +726,9 @@ export default function UnitSideViewCRM({
           user.email,
           enqueueSnackbar
         )
-      }else {
+      } else {
         setStatusValidError(true)
-console.log('newStatus?.value',  newStatus?.value, selCustomerPayload)
+        console.log('newStatus?.value', newStatus?.value, selCustomerPayload)
 
         console.log('is this in statusvalidat or ')
         let errorList = ''
@@ -778,12 +763,10 @@ console.log('newStatus?.value',  newStatus?.value, selCustomerPayload)
           errorList = errorList + 'Manger or Customer Costsheet Approval,'
         }
 
-        if (
-          selCustomerPayload?.T_elgible_balance > 0
-        ) {
+        if (selCustomerPayload?.T_elgible_balance > 0) {
           errorList = errorList + 'Payment Due exists'
         }
-        errorList = errorList +'...needs to be completed'
+        errorList = errorList + '...needs to be completed'
         setNewStatusErrorList(errorList)
         enqueueSnackbar(`${errorList}`, {
           variant: 'warning',
@@ -803,8 +786,6 @@ console.log('newStatus?.value',  newStatus?.value, selCustomerPayload)
     } else {
       setTakTitle(' ')
     }
-
-
   }
 
   const downloadFile = (url) => {
@@ -824,7 +805,6 @@ console.log('newStatus?.value',  newStatus?.value, selCustomerPayload)
           usersListA.push(value)
           console.log('my total fetched list is 3', `${key}: ${value}`)
         })
-
 
         console.log('my total fetched list is', usersListA.length)
         setLeadsFetchedActivityData(usersListA)
@@ -855,7 +835,6 @@ console.log('newStatus?.value',  newStatus?.value, selCustomerPayload)
             }
           } else {
             usersListA.push(value)
-
           }
         })
 
@@ -1037,12 +1016,6 @@ console.log('newStatus?.value',  newStatus?.value, selCustomerPayload)
 
     console.log('unit log ', data, y, y.m, y['m']['url'])
 
-
-
-
-
-
-
     const x = await capturePaymentS(
       orgId,
       true,
@@ -1069,7 +1042,7 @@ console.log('newStatus?.value',  newStatus?.value, selCustomerPayload)
     y.m = data?.fileUploader
 
     console.log('unit log ', data, y, y.m, y['m']['url'])
-return
+    return
     const x = await capturePaymentS(
       orgId,
       true,
@@ -1083,54 +1056,45 @@ return
     )
   }
 
-
-
-
-
-
-
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-white p-2 shadow-lg rounded-md text-sm">
-          <p className="text-gray-700 font-medium">{payload[0].name}: ₹{payload[0].value.toLocaleString('en-IN')}</p>
+          <p className="text-gray-700 font-medium">
+            {payload[0].name}: ₹{payload[0].value.toLocaleString('en-IN')}
+          </p>
         </div>
-      );
+      )
     }
-    return null;
-  };
-
-
-
-const CustomTooltiptwo = ({ active, payload }: any) => {
-  if (active && payload && payload.length) {
-    return (
-     <div className="bg-white p-2 shadow-lg rounded-md text-sm border border-gray-200">
-        <p className="text-gray-700 font-medium">
-          {payload[0]?.name}: ₹{payload[0]?.value?.toLocaleString('en-IN') ?? '0'}
-        </p>
-      </div>
-    );
+    return null
   }
-  return null;
-};
 
-
-
+  const CustomTooltiptwo = ({ active, payload }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-white p-2 shadow-lg rounded-md text-sm border border-gray-200">
+          <p className="text-gray-700 font-medium">
+            {payload[0]?.name}: ₹
+            {payload[0]?.value?.toLocaleString('en-IN') ?? '0'}
+          </p>
+        </div>
+      )
+    }
+    return null
+  }
 
   return (
     <div
-      className={`bg-[#F6F5F8]  max-h-screen ${openUserProfile ? 'hidden' : ''} overflow-y-scroll overflow-x-hidden `}
+      className={`bg-[#F6F5F8]  max-h-screen ${
+        openUserProfile ? 'hidden' : ''
+      } overflow-y-scroll overflow-x-hidden `}
     >
       <div className=" pb-[2px] px-3 pb-30 mt-0 rounded-xs  bg-[#F6F5F8]">
-      {/* <hr className="pb-[2px] px-3 mt-0 rounded-md bg-[#000] relative overflow-hidden border border-b border-transparent before:absolute before:inset-0 before:rounded-md before:border-[1px] before:border-transparent before:bg-gradient-to-r before:from-transparent before:via-gray-300 before:to-transparent before:pointer-events-none"/> */}
-
+        {/* <hr className="pb-[2px] px-3 mt-0 rounded-md bg-[#000] relative overflow-hidden border border-b border-transparent before:absolute before:inset-0 before:rounded-md before:border-[1px] before:border-transparent before:bg-gradient-to-r before:from-transparent before:via-gray-300 before:to-transparent before:pointer-events-none"/> */}
 
         <div className="-mx-3 flex  sm:-mx-4 px-3">
           <div className="w-full   ">
-
-
-             <div className="flex flex-col justify-between">
+            <div className="flex flex-col justify-between">
               <section className="flex flex-row justify-between bg-[#F6F5F8] px-3 py-1  rounded-md ">
                 {/* <section>
                 <section className="flex flex-row   pt-2 justify-between">
@@ -1205,10 +1169,10 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
 
                 </section> */}
 
-<section className="flex flex-row pt-2 justify-between items-start">
-  <div className="flex flex-row items-start gap-2">
-    {/* Unit Number Box */}
-    {/* <section className="bg-[#EDE9FE]  flex flex-col p-4 py-2 min-w-[50px] max-w-fit   items-center rounded-2xl shadow-xs flex flex-col px-2 py-1 shadow">
+                <section className="flex flex-row pt-2 justify-between items-start">
+                  <div className="flex flex-row items-start gap-2">
+                    {/* Unit Number Box */}
+                    {/* <section className="bg-[#EDE9FE]  flex flex-col p-4 py-2 min-w-[50px] max-w-fit   items-center rounded-2xl shadow-xs flex flex-col px-2 py-1 shadow">
   <div className="font-semibold text-[#0E0A1F] text-[22px] tracking-wide">
     {selCustomerPayload?.unit_no}
   </div>
@@ -1216,81 +1180,88 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
 
 </section> */}
 
+                    <section className="bg-violet-100  items-center rounded-2xl shadow-xs flex flex-col px-2 py-1 shadow">
+                      <div className="font-semibold text-[#053219]  text-[22px]  mb-[1] tracking-wide">
+                        {selCustomerPayload?.unit_no}
+                      </div>
 
-
-<section className="bg-violet-100  items-center rounded-2xl shadow-xs flex flex-col px-2 py-1 shadow">
-                                      <div className="font-semibold text-[#053219]  text-[22px]  mb-[1] tracking-wide">
-                                        {selCustomerPayload?.unit_no}
-                                      </div>
-
-                                      <span
-                                        className={`items-center h-6   font-outfit text-xs font-semibold text-gray-500  rounded-full
+                      <span
+                        className={`items-center h-6   font-outfit text-xs font-semibold text-gray-500  rounded-full
                       `}
-                                      >
-                                        Unit No
-                                      </span>
-                                    </section>
+                      >
+                        Unit No
+                      </span>
+                    </section>
 
+                    {/* Customer & Property Details */}
+                    <div className="flex flex-col mt-1">
+                      {/* Customer Name & Phone Number */}
+                      <div>
+                        <p className="text-[16px] font-outfit font-semibold text-[#000000]">
+                          {selCustomerPayload?.customerDetailsObj
+                            ?.customerName1 || 'NA'}
+                        </p>
+                        <p className="text-[12px] font-outfit text-[#606062] font-medium">
+                          {selCustomerPayload?.customerDetailsObj?.phoneNo1}
+                        </p>
+                      </div>
 
+                      {/* Property Details */}
 
-    {/* Customer & Property Details */}
-    <div className="flex flex-col mt-1">
-      {/* Customer Name & Phone Number */}
-      <div>
-        <p className="text-[16px] font-outfit font-semibold text-[#000000]">
-          {selCustomerPayload?.customerDetailsObj?.customerName1 || 'NA'}
-        </p>
-        <p className="text-[12px] font-outfit text-[#606062] font-medium">
-          {selCustomerPayload?.customerDetailsObj?.phoneNo1}
-        </p>
-      </div>
-
-      {/* Property Details */}
-
-      <section className="flex flex-wrap items-center">
-  {selCustomerPayload?.block_no !== undefined && (
-    <h2 className="text-[12px] text-[#606062] font-medium border border-[#ECFDF5] py-1 rounded-md relative after:content-['|'] after:mx-2 after:text-[#606062] last:after:content-none">
-      Block: {selCustomerPayload?.block_no?.toLocaleString('en-IN')}
-    </h2>
-  )}
-  {selCustomerPayload?.floor_no !== undefined && (
-    <span className="text-[12px] text-[#606062] font-medium border border-[#ECFDF5] py-1 rounded-md relative after:content-['|'] after:mx-2 after:text-[#606062] last:after:content-none">
-      Floor: {selCustomerPayload?.floor_no?.toLocaleString('en-IN')}
-    </span>
-  )}
-  <h2 className="text-[12px] font-outfit text-[#606062] font-medium py-1 rounded-md relative after:content-['|'] after:mx-2 after:text-[#606062] last:after:content-none">
-    Size: {selCustomerPayload?.area?.toLocaleString('en-IN')} sqft
-  </h2>
-  {selCustomerPayload?.construct_area !== undefined && (
-    <h2 className="text-[12px]  font-outfit text-[#606062] font-medium py-1 rounded-md relative after:content-['|'] after:mx-2 after:text-[#606062] last:after:content-none">
-      BUA: {selCustomerPayload?.construct_area?.toLocaleString('en-IN')} sqft
-    </h2>
-  )}
-  <span className="text-[12px] font-outfit text-[#606062] font-medium py-1 rounded-md relative after:content-['|'] after:mx-2 after:text-[#606062] last:after:content-none">
-    Facing: {selCustomerPayload?.facing}
-  </span>
-  <span className="text-[12px] font-outfit text-[#606062] font-medium py-1 rounded-md">
-    Booked: {prettyDate(selCustomerPayload?.booked_on || 0)}
-  </span>
-</section>
-
-
-    </div>
-  </div>
-</section>
+                      <section className="flex flex-wrap items-center">
+                        {selCustomerPayload?.block_no !== undefined && (
+                          <h2 className="text-[12px] text-[#606062] font-medium border border-[#ECFDF5] py-1 rounded-md relative after:content-['|'] after:mx-2 after:text-[#606062] last:after:content-none">
+                            Block:{' '}
+                            {selCustomerPayload?.block_no?.toLocaleString(
+                              'en-IN'
+                            )}
+                          </h2>
+                        )}
+                        {selCustomerPayload?.floor_no !== undefined && (
+                          <span className="text-[12px] text-[#606062] font-medium border border-[#ECFDF5] py-1 rounded-md relative after:content-['|'] after:mx-2 after:text-[#606062] last:after:content-none">
+                            Floor:{' '}
+                            {selCustomerPayload?.floor_no?.toLocaleString(
+                              'en-IN'
+                            )}
+                          </span>
+                        )}
+                        <h2 className="text-[12px] font-outfit text-[#606062] font-medium py-1 rounded-md relative after:content-['|'] after:mx-2 after:text-[#606062] last:after:content-none">
+                          Size:{' '}
+                          {selCustomerPayload?.area?.toLocaleString('en-IN')}{' '}
+                          sqft
+                        </h2>
+                        {selCustomerPayload?.construct_area !== undefined && (
+                          <h2 className="text-[12px]  font-outfit text-[#606062] font-medium py-1 rounded-md relative after:content-['|'] after:mx-2 after:text-[#606062] last:after:content-none">
+                            BUA:{' '}
+                            {selCustomerPayload?.construct_area?.toLocaleString(
+                              'en-IN'
+                            )}{' '}
+                            sqft
+                          </h2>
+                        )}
+                        <span className="text-[12px] font-outfit text-[#606062] font-medium py-1 rounded-md relative after:content-['|'] after:mx-2 after:text-[#606062] last:after:content-none">
+                          Facing: {selCustomerPayload?.facing}
+                        </span>
+                        <span className="text-[12px] font-outfit text-[#606062] font-medium py-1 rounded-md">
+                          Booked:{' '}
+                          {prettyDate(selCustomerPayload?.booked_on || 0)}
+                        </span>
+                      </section>
+                    </div>
+                  </div>
+                </section>
 
                 <section className="flex flex-row  h-[28px] mt-6">
                   <section
                     style={{ padding: '14px 10px' }}
-
-                   className="flex group  flow-row justify-between bg-white  py-[15px]  mr-2   border border-[#E7E7E9]  text-black rounded-lg items-center align-middle text-xs cursor-pointer  hover:bg-[#E5E7EB]">
+                    className="flex group  flow-row justify-between bg-white  py-[15px]  mr-2   border border-[#E7E7E9]  text-black rounded-lg items-center align-middle text-xs cursor-pointer  hover:bg-[#E5E7EB]"
+                  >
                     <div className="font-medium text-sm text-[#000000] tracking-wide pr-2 mr-1 relative after:content-[''] after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[1px] after:h-[10px] after:bg-gray-300 group-hover:after:bg-white">
-
                       CRM Owner
                     </div>
                     <div className="font-md ml-2 text-xs tracking-wide font-semibold text-[#000000] ">
                       {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
-                        <div className=''>
+                        <div className="">
                           <AssigedToDropCompCrm
                             assignerName={assignerName}
                             id={id}
@@ -1309,24 +1280,21 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
                     </div>
                   </section>
                   <section
-                  style={{ padding: '14px 10px' }}
-
-                  className="flex group flow-row justify-between  py-[15px] mr-2   border border-[#E7E7E9]   px-[15px] bg-white text-black rounded-lg items-center align-middle text-xs cursor-pointer hover:bg-[#E5E7EB]">
-                  <div className="font-medium text-sm text-[#000000] tracking-wide pr-2 mr-1 relative after:content-[''] after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[0.8px] after:h-[10px] after:bg-gray-300 group-hover:after:bg-white">
-
+                    style={{ padding: '14px 10px' }}
+                    className="flex group flow-row justify-between  py-[15px] mr-2   border border-[#E7E7E9]   px-[15px] bg-white text-black rounded-lg items-center align-middle text-xs cursor-pointer hover:bg-[#E5E7EB]"
+                  >
+                    <div className="font-medium text-sm text-[#000000] tracking-wide pr-2 mr-1 relative after:content-[''] after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[0.8px] after:h-[10px] after:bg-gray-300 group-hover:after:bg-white">
                       Status
                     </div>
                     <div className="font-md  ml-2  text-xs tracking-wide font-semibold text-[#000000] ">
                       {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
-                        <div className=''>
+                        <div className="">
                           <AssigedToDropCompCrm
-                           assignerName={unitStatusLabel}
-
+                            assignerName={unitStatusLabel}
                             id={id}
                             setAssigner={setStatusFun}
                             usersList={StatusListA}
                             align={undefined}
-
                           />
                         </div>
                       )}
@@ -1339,30 +1307,32 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
                       )}
                     </div>
                   </section>
-                { (user?.role.includes('crm-manager') || user?.role.includes('crm-executive') || user?.role.includes('admin'))&&  <button
-                    className="text-[12px]  rounded-lg ml-2 bg-[#EDE9FE] px-5 border font-semibold  capitalize  border-[#E3BDFF] text-[#0E0A1F]"
-                    onClickCapture={() => {
-                      openPaymentFun()
-                    }}
-                  >
-                    Capture Payment
-                  </button>}
+                  {(user?.role.includes('crm-manager') ||
+                    user?.role.includes('crm-executive') ||
+                    user?.role.includes('admin')) && (
+                    <button
+                      className="text-[12px]  rounded-lg ml-2 bg-[#EDE9FE] px-5 border font-semibold  capitalize  border-[#E3BDFF] text-[#0E0A1F]"
+                      onClickCapture={() => {
+                        openPaymentFun()
+                      }}
+                    >
+                      Capture Payment
+                    </button>
+                  )}
 
-                  {customerDetails?.man_cs_approval==="approved" &&<button
-                    className=" text-[12px]  rounded-lg ml-2 bg-white px-5 border font-semibold capitalize  border-[#E3BDFF] "
-                    onClickCapture={() => {
-                      openDemandFun()
-                    }}
-                  >
-                    Modifications
-                  </button>}
-
+                  {customerDetails?.man_cs_approval === 'approved' && (
+                    <button
+                      className=" text-[12px]  rounded-lg ml-2 bg-white px-5 border font-semibold capitalize  border-[#E3BDFF] "
+                      onClickCapture={() => {
+                        openDemandFun()
+                      }}
+                    >
+                      Modifications
+                    </button>
+                  )}
                 </section>
               </section>
             </div>
-
-
-
           </div>
         </div>
         {statusValidError && (
@@ -1423,24 +1393,13 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
         )}
       </div>
 
-
-
-
-
       <hr className="h-[1px]  bg-gradient-to-r from-[#F6F5F8]/100 via-[#B1B1B1] to-[#F6F5F8]/100 border-0 my-4" />
-
 
       {/* <hr className="h-[1px] bg-gradient-to-r from-[#F6F5F8]/100 via-[#B1B1B1] to-[#F6F5F8]/100 border-0 my-4" /> */}
 
-
-
-
-
-
-
-{/*
+      {/*
 changed her */}
-{/*
+      {/*
 <div className='bg-[#F9F9FA] p-8  rounded-lg'>
 
 <div className="grid bg-[#F9F9FA]  rounded-lg grid-cols-3 gap-4 mb-3">
@@ -1716,10 +1675,10 @@ changed her */}
 
 </div> */}
 
-{/* changed her end */}
-
+      {/* changed her end */}
 
       <UnitFullSummary
+        setOpen={setOpen}
         customerDetails={customerDetails}
         selCustomerPayload={selCustomerPayload}
       />

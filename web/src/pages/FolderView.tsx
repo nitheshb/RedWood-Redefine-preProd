@@ -28,14 +28,9 @@
 
 // export default FolderView;
 
+import React from 'react'
 
-
-
-import React from 'react';
-
-
- import folder from '../../public/folder.png'
-
+import folder from '../../public/folder.png'
 
 const FolderView = ({ title, items, onItemClick, onBack }) => {
   return (
@@ -48,7 +43,7 @@ const FolderView = ({ title, items, onItemClick, onBack }) => {
           Back
         </button>
       )}
-      
+
       <div className="grid grid-cols-3 gap-4">
         {items.map((item, index) => (
           <div
@@ -56,18 +51,17 @@ const FolderView = ({ title, items, onItemClick, onBack }) => {
             onClick={() => onItemClick(item)}
             className="p-4 border rounded-lg cursor-pointer hover:bg-gray-100 flex items-center gap-3"
           >
-   
             <span className="text-2xl">📁</span>
             {/* <img src={folder} alt="Folder" className="w-10 h-10" /> */}
 
-            
-      
-            <h3 className="font-semibold">{item.projectName || item.blockName || item.unit_no}</h3>
+            <h3 className="font-semibold">
+              {item.projectName || item.blockName || item.unit_no}
+            </h3>
           </div>
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default FolderView;
+export default FolderView

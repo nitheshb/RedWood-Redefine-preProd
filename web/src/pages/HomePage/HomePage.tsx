@@ -11,17 +11,16 @@ import AllBankDetailsView from 'src/components/All_BankDetailsView'
 import { CountUpComp } from 'src/components/comps/countUpComp'
 import HeadNavBar2 from 'src/components/HeadNavBar/HeadNavBar2'
 import ProjectsUnitInventory from 'src/components/projectUnitsInventory'
-import { getAllProjects, getSalesReportsData } from 'src/context/dbQueryFirebase'
+import {
+  getAllProjects,
+  getSalesReportsData,
+} from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import DummyBodyLayout from '../../components/DummyBodyLayout/DummyBodyLayout'
 import ProjectsMHomeBody from '../../components/ProjectsMHomeBody/ProjectsMHomeBody'
 import SiderForm from '../../components/SiderForm/SiderForm'
 import ProfileSummary from 'src/components/A_SalesModule/Reports/profileSummary'
 import ProjectFilterDropdown from './ProjectFilterDropdown'
-
-
-
-
 
 const HomePage = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -38,8 +37,7 @@ const HomePage = () => {
   const { loading } = usePageLoadingContext()
   const [selModule, setSelModule] = useState('Projects')
 
-
-  const [selectedFilter, setSelectedFilter] = useState('All');
+  const [selectedFilter, setSelectedFilter] = useState('All')
 
   const getProjects = async () => {
     const unsubscribe = getAllProjects(
@@ -95,12 +93,16 @@ const HomePage = () => {
             />
 
             <div className="flex-grow   items-center overflow-y-auto no-scrollbar  h-[98%]  px-300  pt-300">
-              <HeadNavBar2 selModule={selModule} setSelModule={setSelModule}   setViewable={setViewable}/>
-             {viewable === 'userProfile' && <ProfileSummary />}
+              <HeadNavBar2
+                selModule={selModule}
+                setSelModule={setSelModule}
+                setViewable={setViewable}
+              />
+              {viewable === 'userProfile' && <ProfileSummary />}
 
               {viewable === 'Setup' && (
                 <>
-                {/*Sales Executive Notifications border */}
+                  {/*Sales Executive Notifications border */}
 
                   <div className="mt-1 mx-1">
                     <section className="w-full py-4  leading-7 text-gray-900 bg-white  rounded-md">
@@ -111,44 +113,37 @@ const HomePage = () => {
                           />
                         </div>
                       </div>
-
                     </section>
                   </div>
                 </>
               )}
-      
 
+              {viewable === 'Marketing' && (
+                <>
+                  <div className="relative mt-1 mx-1  overflow-hidden">
+                    <section className="relative w-full py-4 leading-7 text-gray-900 bg-white rounded-md overflow-hidden">
+                      <svg
+                        className="absolute right-0 top-0 h-full w-[250px] md:w-[300px] lg:w-[400px] xl:w-[500px] pointer-events-none"
+                        preserveAspectRatio="none"
+                        viewBox="0 0 510 832"
+                      >
+                        <path
+                          d="M365.868 0.000541687C481.144 -73.4421 715.868 0.000541687 715.868 0.000541687V850.001C715.868 850.001 119.675 1044.5 26.3676 850.001C-66.94 655.501 105.429 503.664 261.73 442.481C415.319 382.36 216.15 95.3857 365.868 0.000541687Z"
+                          fill="#F5F8FA"
+                        ></path>
+                      </svg>
 
-
-{viewable === 'Marketing' && (
-  <>
-    <div className="relative mt-1 mx-1  overflow-hidden">
-      <section className="relative w-full py-4 leading-7 text-gray-900 bg-white rounded-md overflow-hidden">
-        <svg
-          className="absolute right-0 top-0 h-full w-[250px] md:w-[300px] lg:w-[400px] xl:w-[500px] pointer-events-none"
-          preserveAspectRatio="none"
-          viewBox="0 0 510 832"
-        >
-          <path
-            d="M365.868 0.000541687C481.144 -73.4421 715.868 0.000541687 715.868 0.000541687V850.001C715.868 850.001 119.675 1044.5 26.3676 850.001C-66.94 655.501 105.429 503.664 261.73 442.481C415.319 382.36 216.15 95.3857 365.868 0.000541687Z"
-            fill="#F5F8FA"
-          ></path>
-        </svg>
-
-        <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-7xl py-8 relative">
-          <div className="flex flex-col leading-7 text-gray-900 border-0 border-gray-200">
-            <MarkeingMessagesList title={'WhatsApp Message Templates'} />
-          </div>
-        </div>
-      </section>
-    </div>
-  </>
-)}
-
-
-
-
-
+                      <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-7xl py-8 relative">
+                        <div className="flex flex-col leading-7 text-gray-900 border-0 border-gray-200">
+                          <MarkeingMessagesList
+                            title={'WhatsApp Message Templates'}
+                          />
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </>
+              )}
 
               {viewable === 'projectReports' && (
                 <>
@@ -177,7 +172,7 @@ const HomePage = () => {
                     </div> */}
                   </div>
 
-                  <div className='ml-1'>
+                  <div className="ml-1">
                     <section className="w-full  mb-8 leading-7 text-gray-900 bg-white  rounded-lg">
                       <div className="box-border px-4 w-full border-solid sm:px-6 md:px-6 lg:px-16 max-w-8xl mx-auto px-6 py-8 ">
                         <div className="flex flex-col  leading-7  text-gray-900 border-0 border-gray-200 ">
@@ -204,7 +199,7 @@ const HomePage = () => {
                               </button>
                             </section> */}
                           </div>
-                          <AllBankDetailsView  title={'Bank Accounts'} />
+                          <AllBankDetailsView title={'Bank Accounts'} />
                         </div>
                       </div>
                     </section>
@@ -224,7 +219,8 @@ const HomePage = () => {
                 viewable != 'unitsInventory' &&
                 viewable != 'Setup' &&
                 viewable != 'Marketing' &&
-                viewable != 'projectReports' && viewable != 'userProfile' && (
+                viewable != 'projectReports' &&
+                viewable != 'userProfile' && (
                   <>
                     <div className="">
                       <div className="flex items-center justify-between mt-1   pb-8 ">
@@ -347,17 +343,23 @@ const HomePage = () => {
                                             <div className="w-3.5 h-3.5 bg-emerald-500 mt-[9px]" />
                                             <div className="text-sky-950 text-2xl font-semibold font-['Manrope'] ml-3">
                                               <CountUpComp
-                                              value={projects.reduce(
-                                                (acc, project) =>
-                                                {
-                                                  if (project?.projectType?.name === 'Plots') {
-                                                    return acc + (project.totalUnitCount || 0);
-                                                  }
-                                                  return acc;
-                                                },
-                                                0
-                                              )}
-                                            />
+                                                value={projects.reduce(
+                                                  (acc, project) => {
+                                                    if (
+                                                      project?.projectType
+                                                        ?.name === 'Plots'
+                                                    ) {
+                                                      return (
+                                                        acc +
+                                                        (project.totalUnitCount ||
+                                                          0)
+                                                      )
+                                                    }
+                                                    return acc
+                                                  },
+                                                  0
+                                                )}
+                                              />
                                             </div>
                                             <div className="text-slate-400  font-medium  text-[12px] ml-[2px] mt-[10px]">
                                               Plots
@@ -367,18 +369,24 @@ const HomePage = () => {
                                           <div className="flex flex-row mt-3">
                                             <div className="w-3.5 h-3.5 bg-violet-500 mt-[9px]" />
                                             <div className="text-sky-950 text-2xl font-semibold font-['Manrope'] ml-3">
-                                            <CountUpComp
-                                              value={projects.reduce(
-                                                (acc, project) =>
-                                                {
-                                                  if (project?.projectType?.name === 'Apartment') {
-                                                    return acc + (project.totalUnitCount || 0);
-                                                  }
-                                                  return acc;
-                                                },
-                                                0
-                                              )}
-                                            />
+                                              <CountUpComp
+                                                value={projects.reduce(
+                                                  (acc, project) => {
+                                                    if (
+                                                      project?.projectType
+                                                        ?.name === 'Apartment'
+                                                    ) {
+                                                      return (
+                                                        acc +
+                                                        (project.totalUnitCount ||
+                                                          0)
+                                                      )
+                                                    }
+                                                    return acc
+                                                  },
+                                                  0
+                                                )}
+                                              />
                                             </div>
                                             <div className="text-slate-400  font-medium   text-[12px] ml-[2px] mt-[10px]">
                                               Apartments
@@ -387,18 +395,24 @@ const HomePage = () => {
                                           <div className="flex flex-row mt-3">
                                             <div className="w-3.5 h-3.5 bg-cyan-400 mt-[9px]" />
                                             <div className="text-sky-950 text-2xl font-semibold font-['Manrope'] ml-3">
-                                            <CountUpComp
-                                              value={projects.reduce(
-                                                (acc, project) =>
-                                                {
-                                                  if (project?.projectType?.name === 'Villas') {
-                                                    return acc + (project.totalUnitCount || 0);
-                                                  }
-                                                  return acc;
-                                                },
-                                                0
-                                              )}
-                                            />
+                                              <CountUpComp
+                                                value={projects.reduce(
+                                                  (acc, project) => {
+                                                    if (
+                                                      project?.projectType
+                                                        ?.name === 'Villas'
+                                                    ) {
+                                                      return (
+                                                        acc +
+                                                        (project.totalUnitCount ||
+                                                          0)
+                                                      )
+                                                    }
+                                                    return acc
+                                                  },
+                                                  0
+                                                )}
+                                              />
                                             </div>
                                             <div className="text-slate-400  font-medium   text-[12px] ml-[2px] mt-[10px]">
                                               Villas
@@ -407,16 +421,16 @@ const HomePage = () => {
                                         </section>
                                       </section>
                                     </section>
-                                            {/* Assets */}
-                                            <section className="mx-3 w-[25%]">
+                                    {/* Assets */}
+                                    <section className="mx-3 w-[25%]">
                                       <span className="text-slate-600 text-lg font-medium ">
-                                      Inventory
+                                        Inventory
                                       </span>
                                       <div className="w-[299.02px] h-[0px] border-[0.5px] border-stone-200 mt-2"></div>
                                       <section className="flex flex-row">
                                         <div className="text-sky-950 text-5xl font-semibold font-['Manrope'] leading-[80px]">
                                           <CountUpComp
-                                             value={projects.reduce(
+                                            value={projects.reduce(
                                               (acc, project) =>
                                                 acc +
                                                 (project?.availableCount || 0),
@@ -440,14 +454,15 @@ const HomePage = () => {
                                           <div className="flex flex-row">
                                             <div className="w-3.5 h-3.5 bg-emerald-500 mt-[9px]" />
                                             <div className="text-sky-950 text-2xl font-semibold font-['Manrope'] ml-3">
-                                            <CountUpComp
-                                             value={projects.reduce(
-                                              (acc, project) =>
-                                                acc +
-                                                (project?.soldUnitCount || 0),
-                                              0
-                                            )}
-                                            />
+                                              <CountUpComp
+                                                value={projects.reduce(
+                                                  (acc, project) =>
+                                                    acc +
+                                                    (project?.soldUnitCount ||
+                                                      0),
+                                                  0
+                                                )}
+                                              />
                                             </div>
                                             <div className="text-slate-400  font-medium  text-[12px] ml-[2px] mt-[10px]">
                                               Sold
@@ -457,14 +472,15 @@ const HomePage = () => {
                                           <div className="flex flex-row mt-3">
                                             <div className="w-3.5 h-3.5 bg-violet-500 mt-[9px]" />
                                             <div className="text-sky-950 text-2xl font-semibold font-['Manrope'] ml-3">
-                                            <CountUpComp
-                                             value={projects.reduce(
-                                              (acc, project) =>
-                                                acc +
-                                                (project?.custBlockCount || 0),
-                                              0
-                                            )}
-                                            />
+                                              <CountUpComp
+                                                value={projects.reduce(
+                                                  (acc, project) =>
+                                                    acc +
+                                                    (project?.custBlockCount ||
+                                                      0),
+                                                  0
+                                                )}
+                                              />
                                             </div>
                                             <div className="text-slate-400  font-medium   text-[12px] ml-[2px] mt-[10px]">
                                               Customer Blocked
@@ -473,14 +489,15 @@ const HomePage = () => {
                                           <div className="flex flex-row mt-3">
                                             <div className="w-3.5 h-3.5 bg-cyan-400 mt-[9px]" />
                                             <div className="text-sky-950 text-2xl font-semibold font-['Manrope'] ml-3">
-                                            <CountUpComp
-                                             value={projects.reduce(
-                                              (acc, project) =>
-                                                acc +
-                                                (project?.mangBlockCount || 0),
-                                              0
-                                            )}
-                                            />
+                                              <CountUpComp
+                                                value={projects.reduce(
+                                                  (acc, project) =>
+                                                    acc +
+                                                    (project?.mangBlockCount ||
+                                                      0),
+                                                  0
+                                                )}
+                                              />
                                             </div>
                                             <div className="text-slate-400  font-medium   text-[12px] ml-[2px] mt-[10px]">
                                               Management Blocked
@@ -497,7 +514,7 @@ const HomePage = () => {
                                       <div className="w-[299.02px] h-[0px] border-[0.5px] border-stone-200 mt-2"></div>
                                       <section className="flex flex-row">
                                         <div className="text-sky-950 text-5xl font-semibold font-['Manrope'] leading-[80px]">
-                                        <CountUpComp
+                                          <CountUpComp
                                             value={projects.reduce(
                                               (acc, project) =>
                                                 acc +
@@ -522,14 +539,14 @@ const HomePage = () => {
                                           <div className="flex flex-row">
                                             <div className="w-3.5 h-3.5 bg-emerald-500 mt-[9px]" />
                                             <div className="text-sky-950 text-2xl font-semibold font-['Manrope'] ml-3">
-                                            <CountUpComp
-                                            value={projects.reduce(
-                                              (acc, project) =>
-                                                acc +
-                                                (project?.s_possCount || 0),
-                                              0
-                                            )}
-                                          />
+                                              <CountUpComp
+                                                value={projects.reduce(
+                                                  (acc, project) =>
+                                                    acc +
+                                                    (project?.s_possCount || 0),
+                                                  0
+                                                )}
+                                              />
                                             </div>
                                             <div className="text-slate-400  font-medium  text-[12px] ml-[2px] mt-[10px]">
                                               Posession
@@ -539,14 +556,15 @@ const HomePage = () => {
                                           <div className="flex flex-row mt-3">
                                             <div className="w-3.5 h-3.5 bg-violet-500 mt-[9px]" />
                                             <div className="text-sky-950 text-2xl font-semibold font-['Manrope'] ml-3">
-                                            <CountUpComp
-                                            value={projects.reduce(
-                                              (acc, project) =>
-                                                acc +
-                                                (project?.releasedUnitCount || 0),
-                                              0
-                                            )}
-                                          />
+                                              <CountUpComp
+                                                value={projects.reduce(
+                                                  (acc, project) =>
+                                                    acc +
+                                                    (project?.releasedUnitCount ||
+                                                      0),
+                                                  0
+                                                )}
+                                              />
                                             </div>
                                             <div className="text-slate-400  font-medium   text-[12px] ml-[2px] mt-[10px]">
                                               Released
@@ -555,14 +573,13 @@ const HomePage = () => {
                                           <div className="flex flex-row mt-3">
                                             <div className="w-3.5 h-3.5 bg-cyan-400 mt-[9px]" />
                                             <div className="text-sky-950 text-2xl font-semibold font-['Manrope'] ml-3">
-                                            <CountUpComp
-                                            value={salesReportsDbData.reduce(
-                                              (acc, project) =>
-                                                acc +
-                                                (project?.Total || 0),
-                                              0
-                                            )}
-                                          />
+                                              <CountUpComp
+                                                value={salesReportsDbData.reduce(
+                                                  (acc, project) =>
+                                                    acc + (project?.Total || 0),
+                                                  0
+                                                )}
+                                              />
                                             </div>
                                             <div className="text-slate-400  font-medium   text-[12px] ml-[2px] mt-[10px]">
                                               Leads
@@ -947,79 +964,77 @@ const HomePage = () => {
                                       <div className="px-4">
                                         <div className="flex items-center justify-between py-2 pb-4  ">
                                           <span className="relative  flex items-center w-auto text-md font-bold leading-none pl-0 font-Playfair">
-                                          ONGOING PROJECTS
+                                            ONGOING PROJECTS
                                             {/* {viewable} */}
                                           </span>
 
-                                          <div className='flex'>
-
-                                          <ProjectFilterDropdown
-                                           selectedFilter={selectedFilter}
-                                           setSelectedFilter={setSelectedFilter}
-                                           />
-                                          <button
-                                            onClick={() =>{
-                                              setProject({})
-                                              setIsNewProjectOpen(true)
-                                            }}
-                                            className="flex items-center justify-center h-8 px-4  bg-gray-200 ml-auto text-sm font-medium rounded hover:bg-gray-300"
-                                          >
-                                            <svg
-                                              className="w-5 h-5"
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              fill="none"
-                                              viewBox="0 0 24 24"
-                                              stroke="currentColor"
+                                          <div className="flex">
+                                            <ProjectFilterDropdown
+                                              selectedFilter={selectedFilter}
+                                              setSelectedFilter={
+                                                setSelectedFilter
+                                              }
+                                            />
+                                            <button
+                                              onClick={() => {
+                                                setProject({})
+                                                setIsNewProjectOpen(true)
+                                              }}
+                                              className="flex items-center justify-center h-8 px-4  bg-gray-200 ml-auto text-sm font-medium rounded hover:bg-gray-300"
                                             >
-                                              <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2"
-                                                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                                              />
-                                            </svg>
-                                            <span className="ml-2 leading-none">
-                                              Add Project
-                                            </span>
-                                          </button>
-
+                                              <svg
+                                                className="w-5 h-5"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                              >
+                                                <path
+                                                  strokeLinecap="round"
+                                                  strokeLinejoin="round"
+                                                  strokeWidth="2"
+                                                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                                                />
+                                              </svg>
+                                              <span className="ml-2 leading-none">
+                                                Add Project
+                                              </span>
+                                            </button>
                                           </div>
-
-
                                         </div>
                                       </div>
                                       <section className="mx-2 rounded-xl bg-[#F6F5F8] shadow p-2">
                                         {projects
-                                            .filter(project =>
-                                              selectedFilter === 'All'
+                                          .filter((project) =>
+                                            selectedFilter === 'All'
                                               ? true
-                                              : project?.projectType?.name === selectedFilter
-                                            )
-                                        .map((project) => (
-                                          <ProjectsMHomeBody
-                                            key={project.uid}
-                                            project={project}
-                                            setProject={setProject}
-                                            onSliderOpen={() => {
-                                              setProject(project)
-                                              setIsEditProjectOpen(true)
-                                            }}
-                                            isEdit={false}
-                                          />
-                                        ))}
+                                              : project?.projectType?.name ===
+                                                selectedFilter
+                                          )
+                                          .map((project) => (
+                                            <ProjectsMHomeBody
+                                              key={project.uid}
+                                              project={project}
+                                              setProject={setProject}
+                                              onSliderOpen={() => {
+                                                setProject(project)
+                                                setIsEditProjectOpen(true)
+                                              }}
+                                              isEdit={false}
+                                            />
+                                          ))}
                                       </section>
-
-
                                     </section>
                                   ) : (
-                                    <span onClick={() => setIsNewProjectOpen(true)}>
-                                        <DummyBodyLayout />
+                                    <span
+                                      onClick={() => setIsNewProjectOpen(true)}
+                                    >
+                                      <DummyBodyLayout />
                                     </span>
                                   )}
                                 </>
                               )}
                           </div>
-
 
                           {viewable === 'unitsInventory' && (
                             <ProjectsUnitInventory
@@ -1090,8 +1105,6 @@ const HomePage = () => {
                                         </section>
                                       </div>
                                     </div>
-
-
                                   </div>
                                 </section>
                               </div>

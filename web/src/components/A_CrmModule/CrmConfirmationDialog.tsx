@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 const CrmConfirmationDialog = ({ onConfirm, onCancel }) => {
   return (
@@ -29,7 +29,7 @@ const CrmConfirmationDialog = ({ onConfirm, onCancel }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CrmConfirmationDialog;
+export default CrmConfirmationDialog

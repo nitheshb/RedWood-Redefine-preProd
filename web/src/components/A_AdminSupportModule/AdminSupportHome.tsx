@@ -21,7 +21,11 @@ const rowsCounter = (parent, searchKey) => {
   })
 }
 
-const AdminSupportHome = ({ setisImportLeadsOpen, selUserProfileF, taskType }) => {
+const AdminSupportHome = ({
+  setisImportLeadsOpen,
+  selUserProfileF,
+  taskType,
+}) => {
   const { t } = useTranslation()
   const { user } = useAuth()
   const [value, setValue] = useState('new')
@@ -39,7 +43,7 @@ const AdminSupportHome = ({ setisImportLeadsOpen, selUserProfileF, taskType }) =
 
   const getLeadsDataFun = async () => {
     const uid = user?.uid
-    const  orgId = user?.orgId
+    const orgId = user?.orgId
     if (uid) {
       const torrowDate = new Date(
         +new Date().setHours(0, 0, 0, 0) + 86400000
@@ -184,7 +188,7 @@ const AdminSupportHome = ({ setisImportLeadsOpen, selUserProfileF, taskType }) =
       <div className="flex-1 overflow-auto">
         <div className="p-0 px-1 ">
           <TodayLeadsActivitySearchView
-            moduleName={"Admin"}
+            moduleName={'Admin'}
             data={filterTable}
             searchKey={searchKey}
             setSearchKey={setSearchKey}

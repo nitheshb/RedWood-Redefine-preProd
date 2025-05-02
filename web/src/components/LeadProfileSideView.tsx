@@ -18,7 +18,7 @@ import {
 } from '@heroicons/react/solid'
 import { DownloadIcon } from '@heroicons/react/solid'
 import ClockIcon from '@heroicons/react/solid/ClockIcon'
-import { Slider } from '@mui/material'
+import { Box, Slider, Typography } from '@mui/material'
 import { setHours, setMinutes } from 'date-fns'
 import { addDoc, collection, doc, getDoc, Timestamp } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
@@ -53,10 +53,18 @@ import {
   IncrementTastTotalCount,
   decreCountOnResheduleOtherDay,
   sendCallNotification,
+  updateLeadsStrength,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { db, storage } from 'src/context/firebaseConfig'
-import { getDifferenceInDays, getDifferenceInHours, getDifferenceInMinutes, prettyDate, prettyDateTime, timeConv } from 'src/util/dateConverter'
+import {
+  getDifferenceInDays,
+  getDifferenceInHours,
+  getDifferenceInMinutes,
+  prettyDate,
+  prettyDateTime,
+  timeConv,
+} from 'src/util/dateConverter'
 import { CustomSelect } from 'src/util/formFields/selectBoxField'
 
 import LogSkelton from './shimmerLoaders/logSkelton'
@@ -88,8 +96,20 @@ import SiderForm from './SiderForm/SiderForm'
 import Stepper from './A_SalesModule/stepper'
 import RoundedProgressBar from './A_SalesModule/Reports/charts/horizontalProgressBar'
 import ProjectManagement from './A_SalesModule/ProjectManagement'
-import { ChevronDown, ChevronRight, ChevronUp, Plus, PlusCircle } from 'lucide-react'
+import {
+  ChevronDown,
+  ChevronRight,
+  ChevronUp,
+  Clock,
+  IndianRupee,
+  MessageSquare,
+  Phone,
+  Plus,
+  PlusCircle,
+} from 'lucide-react'
 import SemicircleProgressChart from './A_SalesModule/Reports/charts/SemiCircleProgress'
+import toast, { ToastBar } from 'react-hot-toast'
+import { use } from 'i18next'
 
 // interface iToastInfo {
 //   open: boolean
@@ -140,11 +160,8 @@ const notInterestOptions = [
   },
   { label: 'just doing property research', value: 'property_research' },
   { label: 'Others', value: 'others' },
-
-
 ]
 const junktOptions = [
-
   { label: 'Phone no invalid', value: 'phone_no_invalid' },
 
   {
@@ -152,8 +169,6 @@ const junktOptions = [
     value: 'fake_customer',
   },
   { label: 'RNR from Long Time', value: 'long_time_rnr' },
-
-
 ]
 
 const siteVisitFeedbackOptions = [
@@ -166,8 +181,6 @@ const siteVisitFeedbackOptions = [
   { label: 'Want more options', value: 'more_options' },
 
   { label: 'Others', value: 'others' },
-
-
 ]
 const lookingAtBudgetRange = [
   { label: 'less than 25 lakhs', value: 'less25L', str: 10 },
@@ -251,6 +264,8 @@ export default function LeadProfileSideView({
   const [leadNotesFetchedData, setLeadsFetchedNotesData] = useState([])
   const [showVisitFeedBackStatus, setShowVisitFeedBackStatus] = useState(false)
   const [leadSchFilteredData, setLeadsFilteredSchData] = useState([])
+  const [leadNextTaskObj, setLeadNextTaskObj] = useState({})
+
   const [takTitle, setTakTitle] = useState('')
   const [takNotes, setNotesTitle] = useState('')
   const [fbTitle, setFbTitle] = useState('')
@@ -289,6 +304,10 @@ export default function LeadProfileSideView({
     projectName: '',
     uid: '',
   })
+  const [selProjectFullDetails, setSelProjectFullDetails] = useState({
+    projectName: '',
+    uid: '',
+  })
   const emailFormik = useFormik({
     initialValues: {
       fromEmail: '',
@@ -308,14 +327,9 @@ export default function LeadProfileSideView({
   const [addCommentPlusTask, setAddCommentPlusTask] = useState(false)
   const [addCommentTitle, setAddCommentTitle] = useState('')
 
-
   const [addCommentTime, setAddCommentTime] = useState(d.getTime() + 60000)
   const {
     id,
-
-
-
-
 
     by,
     CT,
@@ -341,9 +355,7 @@ export default function LeadProfileSideView({
     notInterestedNotes,
     stsUpT,
     assignT,
-
   } = leadDetailsObj
-
 
   const { enqueueSnackbar } = useSnackbar()
   const [hover, setHover] = useState(false)
@@ -370,7 +382,6 @@ export default function LeadProfileSideView({
   }, [])
 
   useEffect(() => {
-
     console.log('my stuff ', selProjectIs?.uid, ProjectId)
 
     const z = projectList.filter((da) => {
@@ -381,7 +392,19 @@ export default function LeadProfileSideView({
     }
     setSelProjectIs(z1)
     console.log('my stuff ', z, selProjectIs, z1, ProjectId)
+    setopstr(customerDetails?.leadstrength || 0)
+    setoptionvalues(customerDetails?.optionvalues || optionvalues)
   }, [projectList, customerDetails])
+
+  useEffect(() => {
+    const z = projectList.filter((da) => {
+      return da.uid == (selProjectIs?.uid || ProjectId)
+    })
+    const z1 = {
+      ...z[0],
+    }
+    setSelProjectFullDetails(z1)
+  }, [selProjectIs])
 
   useEffect(() => {
     const { schTime } = addTaskCommentObj
@@ -404,7 +427,7 @@ export default function LeadProfileSideView({
       (querySnapshot) => {
         const SnapData = querySnapshot.data()
         SnapData.id = id
-    console.log('lead changed', SnapData)
+        console.log('lead changed', SnapData)
 
         setLeadDetailsObj(SnapData)
       },
@@ -417,6 +440,7 @@ export default function LeadProfileSideView({
 
   useEffect(() => {
     const { coveredA, Status, from } = leadDetailsObj
+    console.log('lead changed 2', Status, leadDetailsObj)
     if (coveredA) {
       setStreamCoveredA(coveredA)
     } else {
@@ -464,7 +488,18 @@ export default function LeadProfileSideView({
     console.log('xo xo xo', x)
     setLeadsFilteredSchData(x)
   }, [leadSchFetchedData, selFilterVal])
-
+  useEffect(() => {
+    if (leadSchFilteredData?.length > 0) {
+      const x = leadSchFilteredData[0]
+      let y =
+        Math.abs(getDifferenceInHours(x?.schTime, '')) <= 24 &&
+        Math.abs(getDifferenceInHours(x?.schTime, '')) >= 0
+          ? true
+          : false
+      x.comingSoon = y
+      setLeadNextTaskObj(x)
+    }
+  }, [leadSchFilteredData])
   useEffect(() => {
     setAssignedTo(customerDetails?.assignedTo)
     setAssignerName(customerDetails?.assignedToObj?.label)
@@ -495,9 +530,7 @@ export default function LeadProfileSideView({
 
     if (fet === 'appoint') {
       return
-    }
-
-    else {
+    } else {
       let x = []
       if (selFeature != 'timeline') {
         x = leadsActivityFetchedData?.filter((data) => data.type === fet)
@@ -564,8 +597,7 @@ export default function LeadProfileSideView({
 
     return unsubscribe
   }
-  useEffect(() => {
-  }, [customerDetails])
+  useEffect(() => {}, [customerDetails])
 
   const setAssigner = (leadDocId, value) => {
     const projId = selProjectIs?.uid || ProjectId
@@ -620,15 +652,12 @@ export default function LeadProfileSideView({
     }
   }
   const setNewProject = (leadDocId, value) => {
-
     const x = {
       Project: value.projectName,
       ProjectId: value.uid,
     }
     setSelProjectIs(value)
     updateLeadProject(orgId, leadDocId, x)
-
-
   }
 
   const setShowNotInterestedFun = (scheduleData, value) => {
@@ -641,7 +670,6 @@ export default function LeadProfileSideView({
     setShowVisitFeedBackStatus(false)
 
     setShowNotInterested(true)
-
   }
   const setShowVisitFeedBackStatusFun = (scheduleData, value) => {
     setSelSchGrpO(scheduleData)
@@ -655,29 +683,30 @@ export default function LeadProfileSideView({
     cancelResetStatusFun()
     setLoader(true)
     setClosePrevious(true)
-    if (newStatus == 'visitdone') {
-      enqueueSnackbar(`Create VISIT-FIXED Task`, {
-        variant: 'error',
-      })
-
+    if (newStatus == 'visitdone' && streamCurrentStatus != 'visitfixed') {
+      toast.error('No recent site visit found.Create it.')
+      setStatusFun(leadDocId, 'visitfixed')
       return
     }
 
     setLeadStatus(newStatus)
 
     const arr = ['visitdone', 'visitcancel']
-    if (newStatus === 'visitdone') {
-      setFeature('visitDoneNotes')
-    } else if (newStatus === 'visitcancel') {
+
+    if (newStatus === 'visitcancel') {
       setFeature('visitCancelNotes')
     } else if (newStatus === 'notinterested') {
+      setFeature('appointments')
       setShowNotInterestedFun({}, '')
     } else if (newStatus === 'junk') {
+      setFeature('appointments')
       setLoader(false)
       setShowJunk(true)
     } else {
-      arr.includes(newStatus) ? setFeature('notes') : setFeature('appointments')
-      arr.includes(newStatus) ? setAddNote(true) : setAddSch(true)
+      // arr.includes(newStatus) ? setFeature('notes') : setFeature('appointments')
+      // arr.includes(newStatus) ? setAddNote(true) : setAddSch(true)
+      setFeature('appointments')
+      arr.includes(newStatus) ? null : setAddSch(true)
       if (newStatus === 'followup') {
         await setTakTitle(
           `Make a followup Call to ${customerDetails?.Name || 'Customer'} `
@@ -688,6 +717,14 @@ export default function LeadProfileSideView({
             customerDetails?.Name || 'Customer'
           }   `
         )
+      } else if (newStatus === 'visitdone') {
+        toast.success('Please fill site visit feedback form')
+        let visitFixTaskA = leadSchFilteredData.filter(
+          (d) => d?.stsType === 'visitfixed' && d?.sts != 'completed'
+        )
+        visitFixTaskA.length > 0
+          ? setShowVisitFeedBackStatusFun(visitFixTaskA[0], 'visitdone')
+          : null
       } else if (newStatus === 'booked') {
         setLeadStatus('booked')
         await setTakTitle('Share the Details with CRM team')
@@ -695,8 +732,6 @@ export default function LeadProfileSideView({
         setTakTitle(' ')
       }
     }
-
-
   }
 
   const downloadFile = (url) => {
@@ -724,7 +759,6 @@ export default function LeadProfileSideView({
           const [key, value] = entry
           usersListA.push(value)
         })
-
 
         setLeadsFetchedActivityData(usersListA)
       },
@@ -754,10 +788,8 @@ export default function LeadProfileSideView({
             }
           } else {
             usersListA.push(value)
-
           }
         })
-
 
         setLeadsFetchedSchData(
           usersListA.sort((a, b) => {
@@ -825,7 +857,6 @@ export default function LeadProfileSideView({
 
     x.push('pending')
     setschStsA(x)
-
 
     await addLeadScheduler(orgId, id, data, schStsA, assignedTo)
 
@@ -912,7 +943,7 @@ export default function LeadProfileSideView({
     setShowVisitFeedBackStatus(false)
     setAddSch(false)
     setAddNote(false)
-    setLeadStatus(streamCurrentStatus)
+    setLeadStatus(tempLeadStatus)
     setLoader(false)
   }
   const fUpdateSchedule = async (data, actionType, count) => {
@@ -954,8 +985,6 @@ export default function LeadProfileSideView({
     setEditTaskObj(data)
     setTakTitle(data?.notes || '')
     setStartDate(setHours(setMinutes(data?.schTime, 30), 16))
-
-
   }
   const editTaskFun = (data) => {
     const inx = schStsMA.indexOf(data.ct)
@@ -1050,6 +1079,7 @@ export default function LeadProfileSideView({
       msgPayload
     )
     await cancelResetStatusFun()
+
     return
     data.comments = [
       {
@@ -1080,7 +1110,6 @@ export default function LeadProfileSideView({
       (d) => d?.schTime != undefined && d?.sts === 'pending'
     )
     pendingTaskAObj?.map(async (pendObj) => {
-
       pendObj.comments = [
         {
           c: closingComments,
@@ -1152,6 +1181,7 @@ export default function LeadProfileSideView({
     const x = schStsA
     x[inx] = 'pending'
     setschStsA(x)
+    setLeadStatus('negotiation')
   }
   const undoFun = (data) => {
     const inx = schStsMA.indexOf(data.ct)
@@ -1227,6 +1257,7 @@ export default function LeadProfileSideView({
         notInterestedNotes: takNotes === '' ? fbNotes : takNotes,
         stsUpT: Timestamp.now().toMillis(),
         Remarks: `${notInterestType}-${takNotes}`,
+        Remarks_T: Timestamp.now().toMillis(),
       }
       updateLeadRemarks_NotIntrested(
         orgId,
@@ -1243,6 +1274,7 @@ export default function LeadProfileSideView({
         Status: tempLeadStatus,
         stsUpT: Timestamp.now().toMillis(),
         Remarks: `${junkReason}`,
+        Remarks_T: Timestamp.now().toMillis(),
       }
       updateLeadRemarks_NotIntrested(
         orgId,
@@ -1254,10 +1286,7 @@ export default function LeadProfileSideView({
       setLeadStatus('junk')
       cancelResetStatusFun()
     } else if (tempLeadStatus === 'visitdone') {
-      const covA = [
-        ...(customerDetails?.coveredA || []),
-        ...['visitfixed', 'visitdone'],
-      ]
+      const covA = [...streamCoveredA, ...['visitfixed', 'visitdone']]
 
       const dat = {
         coveredA: covA,
@@ -1267,6 +1296,7 @@ export default function LeadProfileSideView({
         VisitDoneNotes: fbNotes,
         stsUpT: Timestamp.now().toMillis(),
         Remarks: `${fbTitle}-${fbNotes}`,
+        Remarks_T: Timestamp.now().toMillis(),
       }
       updateLeadRemarks_VisitDone(orgId, id, dat, user.email, enqueueSnackbar)
       doneFun(selSchGrpO)
@@ -1420,674 +1450,414 @@ export default function LeadProfileSideView({
     },
   }
 
+  // async function handleCallButtonClick(uid, leadName, mobileNumber) {
+  //   try {
+  //     console.log('Call button clicked with data:', {
+  //       uid,
+  //       leadName,
+  //       mobileNumber
+  //     });
 
+  //     // Step 1: Get user's fcmToken from Firestore
+  //     const userRef = doc(db, "users", uid);
+  //     const userSnap = await getDoc(userRef);
 
+  //     if (!userSnap.exists()) {
+  //       console.error("User not found!");
+  //       return;
+  //     }
 
+  //     const userData = userSnap.data();
+  //     console.log('Retrieved user data:', userData);
 
+  //     const { fcmToken } = userData;
 
-// async function handleCallButtonClick(uid, leadName, mobileNumber) {
-//   try {
-//     console.log('Call button clicked with data:', {
-//       uid,
-//       leadName,
-//       mobileNumber
-//     });
+  //     if (!fcmToken) {
+  //       console.error("FCM Token not found for user!");
+  //       return;
+  //     }
 
-//     // Step 1: Get user's fcmToken from Firestore
-//     const userRef = doc(db, "users", uid);
-//     const userSnap = await getDoc(userRef);
+  //     // Step 2: Add a new call document
+  //     const callData = {
+  //       leadName,
+  //       mobileNumber,
+  //       fcmToken,
+  //       timestamp: Timestamp.now()
+  //     };
 
-//     if (!userSnap.exists()) {
-//       console.error("User not found!");
-//       return;
-//     }
+  //     console.log('Creating call document with:', callData);
 
-//     const userData = userSnap.data();
-//     console.log('Retrieved user data:', userData);
+  //     const docRef = await addDoc(collection(db, "calls"), callData);
+  //     console.log("Call document added successfully with ID:", docRef.id);
 
-//     const { fcmToken } = userData;
+  //   } catch (error) {
+  //     console.error("Error in call trigger:", error);
+  //   }
+  // }
 
-//     if (!fcmToken) {
-//       console.error("FCM Token not found for user!");
-//       return;
-//     }
+  async function handleCallButtonClick(uid, name, number) {
+    try {
+      const userRef = doc(db, 'users', uid)
+      const userSnap = await getDoc(userRef)
 
-//     // Step 2: Add a new call document
-//     const callData = {
-//       leadName,
-//       mobileNumber,
-//       fcmToken,
-//       timestamp: Timestamp.now()
-//     };
+      if (!userSnap.exists()) {
+        console.error('User not found!')
+        return
+      }
 
-//     console.log('Creating call document with:', callData);
+      const { fcmToken } = userSnap.data()
+      console.error('Date', userSnap.data())
+      if (!fcmToken) {
+        toast.error('No Sales App exits for you')
+        return
+      }
 
-//     const docRef = await addDoc(collection(db, "calls"), callData);
-//     console.log("Call document added successfully with ID:", docRef.id);
+      console.log('FCM Token:', fcmToken)
 
-//   } catch (error) {
-//     console.error("Error in call trigger:", error);
-//   }
-// }
+      await addDoc(collection(db, 'calls'), {
+        name,
+        number,
+        fcmToken,
+        // timestamp: Timestamp.now()
+      })
 
-
-
-async function handleCallButtonClick(uid, name, number) {
-  try {
-    const userRef = doc(db, "users", uid);
-    const userSnap = await getDoc(userRef);
-
-    if (!userSnap.exists()) {
-      console.error("User not found!");
-      return;
+      console.log('Call document added successfully!')
+    } catch (error) {
+      console.error('Error in call trigger:', error)
     }
-
-    const { fcmToken } = userSnap.data();
-
-    if (!fcmToken) {
-      console.error("FCM Token not found for user!");
-      return;
-    }
-
-    console.log("FCM Token:", fcmToken);
-
-
-    await addDoc(collection(db, "calls"), {
-      name,
-      number,
-      fcmToken,
-      // timestamp: Timestamp.now()
-    });
-
-    console.log("Call document added successfully!");
-  } catch (error) {
-    console.error("Error in call trigger:", error);
   }
-}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  const [isProjectsExpanded, setIsProjectsExpanded] = useState(false);
-  const [isAssignedExpanded, setIsAssignedExpanded] = useState(false);
-  
+  const [isProjectsExpanded, setIsProjectsExpanded] = useState(false)
+  const [isAssignedExpanded, setIsAssignedExpanded] = useState(false)
 
   const projectData = {
     projects: [
       {
-        name: "Shuba Ecoston Ph 2",
-        date: "Apr 22, 2025"
+        name: 'Shuba Ecoston Ph 2',
+        date: 'Apr 22, 2025',
       },
       {
-        name: "Shuba Ecoston Ph 2",
-        date: "Apr 22, 2025"
+        name: 'Shuba Ecoston Ph 2',
+        date: 'Apr 22, 2025',
       },
       {
-        name: "Shuba Ecoston Ph 2",
-        date: "Apr 22, 2025"
+        name: 'Shuba Ecoston Ph 2',
+        date: 'Apr 22, 2025',
       },
       {
-        name: "Shuba Ecoston Ph 2",
-        date: "Apr 22, 2025"
+        name: 'Shuba Ecoston Ph 2',
+        date: 'Apr 22, 2025',
       },
       {
-        name: "Shuba Ecoston Ph 2",
-        date: "Apr 22, 2025"
-      }
+        name: 'Shuba Ecoston Ph 2',
+        date: 'Apr 22, 2025',
+      },
     ],
     assignedTo: [
       {
-        name: "Vishal Kumar",
-        date: "Apr 22, 2025",
-        isActive: true
+        name: 'Vishal Kumar',
+        date: 'Apr 22, 2025',
+        isActive: true,
       },
       {
-        name: "Priya Sharma",
-        date: "Apr 21, 2025",
-        isActive: false
+        name: 'Priya Sharma',
+        date: 'Apr 21, 2025',
+        isActive: false,
       },
       {
-        name: "Rajiv Mehta",
-        date: "Apr 20, 2025",
-        isActive: false
+        name: 'Rajiv Mehta',
+        date: 'Apr 20, 2025',
+        isActive: false,
       },
       {
-        name: "Deepak Gupta",
-        date: "Apr 18, 2025",
-        isActive: false
-      }
+        name: 'Deepak Gupta',
+        date: 'Apr 18, 2025',
+        isActive: false,
+      },
     ],
     siteVisit: {
-      date: "27 Mar 2025",
-      inCharge: "Chaithanya",
-      count: 4
+      date: '27 Mar 2025',
+      inCharge: 'Chaithanya',
+      count: 4,
     },
     taskLogs: {
       priceQuotations: 1,
       completedTasks: 12,
-      totalComments: 10
-    }
-  };
+      totalComments: 10,
+    },
+  }
 
   const toggleProjectsExpand = () => {
-    setIsProjectsExpanded(!isProjectsExpanded);
-  };
+    setIsProjectsExpanded(!isProjectsExpanded)
+  }
 
   const toggleAssignedExpand = () => {
-    setIsAssignedExpanded(!isAssignedExpanded);
-  };
+    setIsAssignedExpanded(!isAssignedExpanded)
+  }
 
+  const [isExpanded, setIsExpanded] = useState(false)
 
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded)
+  }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  const LeadStrengthFun = async () => {
+    const x = { leadstrength: opstr, optionvalues }
+    updateLeadsStrength(orgId, id, x, user.email)
+  }
 
   return (
     <>
-    <div
-      className={`bg-[#FFFFFF]   h-screen    ${openUserProfile ? 'hidden' : ''} `}
-    >
-
-      <div className="h-screen overflow-y-auto">
-        <div className=" pb-[2px] px-3  mt-0 rounded-xs  ">
-          <div className=" flex flex justify-between">
-            <div className="w-full pl-1 pt-[2px]  ">
-              <div className="">
-                <div className="font-semibold text-[#053219]  text-sm  mt-3 mb-1  tracking-wide">
-                  <div className="flex flex-row">
-
-                    <div className="flex flex-col">
-         
-
-
-
-                      <div className="flex items-center gap-1">
-
-
-  <div className="flex items-center gap-2">
-    <span className="w-8 h-8 bg-[#E0E0E0] rounded-full flex items-center justify-center font-semibold text-[#4B4B4B] uppercase text-sm">
-      {Name?.[0]}
-    </span>
-    <span className="text-[16px] uppercase">{Name}</span>
-  </div>
-
-
-  <img
-    src="/edit-02.svg"
-    alt="edit"
-    className="w-5 h-5 cursor-pointer"
-    onClick={() => setisImportLeadsOpen(true)}
-  />
-
-
-  <div className="text-sm ml-1 px-1 rounded text-[#FF8C02]">
-    {currentStatusDispFun(leadDetailsObj?.Status)}
-  </div>
-
-</div>
-
-
-
-                      <div className="flex mt-2  flex-row">
- 
-  <div className="flex items-center gap-2">
-    <img src="/phone.svg" className="w-4 h-4" alt="Phone Icon" />
-    <span className='font-[Outfit] font-normal text-[14px] leading-[100%] tracking-[0.06em] text-[#0E0A1F]'>{Mobile?.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3')}</span>
-  </div>
-
-
-
-  <div className="w-[2px] mx-2 mt-[4px] h-[8px] border-0 border-r"></div>
-
-
-
-
-
-  <div className="flex items-center gap-2">
-    <img src="/mail.svg" className="w-4 h-4" alt="Mail Icon" />
-    <span className='font-[Outfit] font-normal text-[14px] leading-[100%] tracking-[0.06em] text-[#0E0A1F]'>{Email}</span>
-  </div>
-</div>
-
-
-
-                    </div>
-
-
-
-
-                     {/* <div className="flex flex-col ml-[6px]">
-      <div className="flex flex-row">
-        <span className="text-[16px] uppercase">{Name}</span>
-        <PencilIcon
-          className="w-3 h-3 ml-2 mt-1 inline text-[#058527] cursor-pointer"
-          onClick={() => setisImportLeadsOpen(true)}
-        />
-        <div className="text-sm ml-[4px] px-[3px] pt-[1px] rounded text-[#FF8C02]">
-          {leadDetailsObj?.Status}
-        </div>
-      </div>
-
-      <div className="flex flex-row">
-        <div className="font-md text-sm text-gray-500 tracking-wide">
-          <DeviceMobileIcon className="w-3 h-3 inline text-[#058527]" />{" "}
-          <span className="mr-[2px] text-[12px]">
-            {Mobile?.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3")}
-          </span>
-        </div>
-        <div className="font-md text-sm text-gray-500 ml-[6px] tracking-wide">
-          <MailIcon className="w-3 h-3 inline text-[#058527]" /> {Email}
-        </div>
-      </div>
-
-
-      <button
-        onClick={sendNotification}
-        className="mt-2 flex items-center px-3 py-1 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600 transition"
+      <div
+        className={`   h-screen    ${openUserProfile ? 'hidden' : ''} `}
+        style={{
+          background: 'linear-gradient(to left, #EEF0F9, #E1F2F2, #DBE6F0)',
+        }}
       >
-        <PhoneIcon className="w-4 h-4 mr-2" /> Call
-      </button>
-    </div> */}
-{/*
-<div className="flex flex-col ml-[6px]">
-  <div className="flex flex-row">
-    <span className="text-[16px] uppercase">{Name}</span>
-    <PencilIcon
-      className="w-3 h-3 ml-2 mt-1 inline text-[#058527] cursor-pointer"
-      onClick={() => setisImportLeadsOpen(true)}
-    />
-    <div className="text-sm ml-[4px] px-[3px] pt-[1px] rounded text-[#FF8C02]">
-      {leadDetailsObj?.Status}
-    </div>
-  </div>
-
-  <div className="flex flex-row">
-    <div className="font-md text-sm text-gray-500 tracking-wide">
-      <DeviceMobileIcon className="w-3 h-3 inline text-[#058527]" />{" "}
-      <span className="mr-[2px] text-[12px]">
-        {Mobile?.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3")}
-      </span>
-    </div>
-    <div className="font-md text-sm text-gray-500 ml-[6px] tracking-wide">
-      <MailIcon className="w-3 h-3 inline text-[#058527]" /> {Email}
-    </div>
-  </div>
-
-  <button
-    onClick={sendNotification}
-    className="mt-2 flex items-center px-3 py-1 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600 transition"
-  >
-    <PhoneIcon className="w-4 h-4 mr-2" />
-    {isSending ? 'Sending...' : 'Call via App'}
-  </button>
-</div> */}
-
-
-
-
-
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className='mt-3'>
-
-            <div className=" ml-2 ">
-              <div className="flex flex-row  p-4 py-2 ">
-                {/* <section>
-                  <div className="font-md text-xs text-gray-500 mb-[px] tracking-wide mr-4">
-                    Assigned To box {}
-                  </div>
-                  {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
-                    <div>
-                      <AssigedToDropComp
-                        assignerName={assignerName}
-                        id={id}
-                        setAssigner={setAssigner}
-                        usersList={usersList}
-                        align={undefined}
-                        classNames={{
-                          container: 'text-left',
-                          button: 'bg-[#f4f4f4] text-black border border-gray-300',
-                          item: 'hover:bg-blue-100',
-                          chevron: 'text-blue-600',
-                          menuItems: 'shadow-xl',
-                        }}
-
-
-                      />
-                    </div>
-                  )}
-                  {user?.role?.includes(USER_ROLES.CP_AGENT) && (
-                    <span className="text-left text-sm"> {assignerName}</span>
-                  )}
-                </section> */}
-                {/* <section>
-  <div className="font-md text-xs text-gray-500 mb-[px] tracking-wide mr-4">
-    <label htmlFor="assignedTo" className="block text-[12px]  text-gray-700">
-      Assigned To
-    </label>
-  </div>
-  {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
-                      <div className="font-semibold text-sm text-slate-900 tracking-wide overflow-ellipsis">
-
-      <AssigedToDropComp
-        assignerName={assignerName}
-        id={id}
-        setAssigner={setAssigner}
-        usersList={usersList}
-        align={undefined}
-
-
-      />
-    </div>
-  )}
-  {user?.role?.includes(USER_ROLES.CP_AGENT) && (
-    <span className="text-left text-sm"> {assignerName}</span>
-  )}
-</section> */}
-
-                <section className=" ml-2">
-                  <div className="flex flex-row ">
-                    {/* <div className="font-md text-xs text-gray-500 mb-[2px] tracking-wide mr-4">
-                      Project {}
-                    </div> */}
-                        <label htmlFor="assignedTo" className="block text-[12px] text-gray-700">
-                        Project
-    </label>
-                  </div>
-                  <div className="font-semibold text-sm text-slate-900 tracking-wide overflow-ellipsis">
-
-                    <AssigedToDropComp
-                      assignerName={selProjectIs?.projectName || Project}
-                      id={id}
-                      align="right"
-                      setAssigner={setNewProject}
-                      usersList={projectList}
-
-                    />
-                  </div>
-                </section>
-                <section>
-                  <div>
-                    <div className="text-center items-center  mt-[1px]">
-                      <div
-                        className="text-center border border-[#7BD2EA] text-[#5198ab]  rounded-[8px] px-2 py-2 ml-1 items-center align-middle text-xs cursor-pointe"
-                        onClickCapture={() => {
-                          setUnitsViewMode(!unitsViewMode)
-                        }}
-                      >
-                        {selProjectIs?.uid?.length > 4 &&
-                          (unitsViewMode ? (
-
-                            <span className="   text-black  text-[10px] text-[#] font-semibold whitespace-nowrap">
-                              {' '}
-                              Show Lead
+        <div className="h-screen overflow-y-auto scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
+          <div className=" pb-[2px] px-3  mt-0 rounded-xs">
+            <div className="flex  justify-between">
+              <div className="w-full pl-1 pt-[2px]">
+                <div className="">
+                  <div className="font-semibold text-[#053219] text-sm mt-3 mb-1 tracking-wide">
+                    <div className="flex gap-4 flex-row">
+                      <div>
+                        <span className="w-12 h-12 bg-[#D3D7F8] rounded-full flex items-center justify-center font-semibold text-[#5B5FC7] uppercase text-[21px]">
+                          {Name?.[0]}
+                        </span>
+                      </div>
+                      <div className="flex flex-col">
+                        <div className="flex items-center gap-1">
+                          <div className="flex items-center gap-2">
+                            <span className="text-[16px] uppercase">
+                              {Name}
                             </span>
-                          ) : (
+                          </div>
+                          <img
+                            src="/edit-02.svg"
+                            alt="edit"
+                            className="w-5 h-5 cursor-pointer"
+                            onClick={() => setisImportLeadsOpen(true)}
+                          />
+                          {/* <div className="text-sm ml-1 px-1 rounded text-[#FF8C02]">
+                {currentStatusDispFun(leadDetailsObj?.Status)}
+              </div> */}
+                        </div>
 
-                            <span className="   text-white-300  text-[10px] text-[#] font-semibold whitespace-nowrap">
-                              {' '}
-                              Show Units
+                        <div className="flex mt-2 flex-row">
+                          <div className="flex items-center gap-2">
+                            <img
+                              src="/phone.svg"
+                              className="w-4 h-4"
+                              alt="Phone Icon"
+                            />
+                            <span className="font-[Outfit] font-normal text-[14px] leading-[100%] tracking-[0.06em] text-[#0E0A1F]">
+                              {Mobile?.replace(
+                                /(\d{3})(\d{3})(\d{4})/,
+                                '$1-$2-$3'
+                              )}
                             </span>
-                          ))}
+                          </div>
+
+                          <div className="w-[2px] mx-2 mt-[4px] h-[8px] border-0 border-r"></div>
+
+                          <div className="flex items-center gap-2">
+                            <img
+                              src="/mail.svg"
+                              className="w-4 h-4"
+                              alt="Mail Icon"
+                            />
+                            <span className="font-[Outfit] font-normal text-[14px] leading-[100%] tracking-[0.06em] text-[#0E0A1F]">
+                              {Email}
+                            </span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </section>
-
-
-                <section>
-                <div className="flex flex-col items-center justify-center bg-white p-2 rounded-lg   mx-auto">
-      <div className="flex items-center gap-2">
-
-      <div className="flex items-center">
-      <div className="bg-purple-100 p-1.5 rounded-lg "
-      
-      onClick={() => {
-        console.log('Call button clicked for lead:', Name, Mobile);
-        handleCallButtonClick(assignedTo, Name, Mobile);
-      }}
-      
-      >
-        <img src="/call.svg" alt="Clock Icon" className="w-[18px] h-[18px]" />
-      </div>
-    </div>
-
-    <div>
-    <h2 className="text-[14px] font-semibold text-gray-800">Negotiation</h2>
-
-<p className="text-[12px] text-gray-600"
->
-  Starts in 3min
-</p>
-    </div>
-
-      </div>
- 
-    </div>
-                </section>
-
+                </div>
               </div>
-            </div>
 
-            </div>
+              <div className="mt-3">
+                <div className="ml-2">
+                  <div className="flex flex-row p-4 py-2">
+                    <section>
+                      <div className="flex flex-col justify-center bg-white px-2.5 py-3 rounded-[14px] mx-auto">
+                        <div className="flex items-center gap-3">
+                          <div className="flex items-center cursor-pointer">
+                            <div
+                              className="bg-purple-100 p-2 rounded-lg flex items-center justify-center"
+                              onClick={() => {
+                                console.log(
+                                  'Call button clicked for lead:',
+                                  Name,
+                                  Mobile
+                                )
+                                handleCallButtonClick(user?.uid, Name, Mobile)
+                              }}
+                            >
+                              <img
+                                src="/call.svg"
+                                alt="Call Icon"
+                                className="w-[18px] h-[18px] min-w-[18px]"
+                              />
+                            </div>
+                          </div>
 
-          </div>
-
-          {/* <hr className="h-[1px]  bg-gradient-to-r from-[#F6F5F8]/100 via-[#B1B1B1] to-[#F6F5F8]/100 border-0 my-3" /> */}
-
-
-
-          <div className="flex flex-row justify-between">
-            <div className=" py-0 flex flex-row  text-xs font-thin  text-[12px]  py-[6px] px-2 ">
-              Recent Comments:{' '}
-              <span className="text-[#867777] ml-1 ">
-                {' '}
-                {leadDetailsObj?.Remarks || 'NA'}
-              </span>
-            </div>
-            <div
-              className="relative flex flex-col  group"
-            >
-              <div
-                className="absolute bottom-0 right-0 flex-col items-center hidden mb-6 group-hover:flex"
-                style={{ zIndex: '9999' }}
-              >
-                <span
-                  className="rounded italian relative mr-2 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
-                  style={{
-                    color: 'black',
-                    background: '#e2c062',
-                    maxWidth: '300px',
-                  }}
-                >
-                  <div className="italic flex flex-col">
-                    <div className="font-bodyLato">
-                      {Source?.toString() || 'NA'}
-                    </div>
+                          <div>
+                            <h2 className="font-semibold text-[14px] leading-[100%] tracking-[6%] mb-1 text-[#696990]">
+                              {streamCurrentStatus}
+                            </h2>
+                            <p className="font-normal whitespace-nowrap text-[12px] leading-[100%]  cursor-pointer text-[#960000] decoration-solid">
+                              Starts in 3min
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
                   </div>
-                </span>
-                <div
-                  className="w-3 h-3  -mt-2 rotate-45 bg-black"
-                  style={{ background: '#e2c062', marginRight: '12px' }}
-                ></div>
-              </div>
-              <div className=" flex flex-row ">
-                <span className="font-bodyLato text-[#867777] text-xs mt-2">
-
-
-                  {Source?.toString() || 'NA'}
-                </span>
-                <div
-                  className=" cursor-pointer hover:underline"
-                  onClickCapture={() => {
-                    setTimeHide(!timeHide)
-                  }}
-                >
-                  {selProjectIs?.uid?.length > 4 &&
-                    (timeHide ? (
-                      <XIcon
-                        className="h-4 w-4  inline text-green"
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      <span className="px-[3px]  ml-1  text-[#318896]  text-[10px] text-[#] font-semibold">
-                        {' '}
-                        <AdjustmentsIcon
-                          className="h-4 w-4  inline text-[#318896] "
-                          aria-hidden="true"
-                        />
-                      </span>
-                    ))}
                 </div>
               </div>
             </div>
+
+            {/* <hr className="h-[1px]  bg-gradient-to-r from-[#F6F5F8]/100 via-[#B1B1B1] to-[#F6F5F8]/100 border-0 my-3" /> */}
+
+            {timeHide && (
+              <>
+                <div className="w-full border-b border-[#ebebeb]"></div>
+                <div className=" w-full  pt-1 font-md text-xs text-gray-500 mb-[2px] tracking-wide mr-4 flex flex-row justify-between">
+                  {' '}
+                  <section>
+                    <span className="font-thin   font-bodyLato text-[9px]  py-[6px]">
+                      Created On
+                      <span className="text-[#867777] ck ml-2">
+                        {CT != undefined
+                          ? prettyDateTime(CT)
+                          : prettyDateTime(Date)}
+                      </span>
+                    </span>
+                  </section>
+                  <section>
+                    <span className="font-thin   font-bodyLato text-[9px]  py-[6px]">
+                      Updated On :
+                      <span className="text-[#867777] ck ml-2">
+                        {stsUpT === undefined
+                          ? 'NA'
+                          : prettyDateTime(stsUpT) || 'NA'}
+                      </span>
+                    </span>
+                  </section>
+                  <section>
+                    <span className="font-thin text-[#867777]   font-bodyLato text-[9px]  py-[6px]">
+                      Assigned On
+                      <span className="text-[#867777] ck ml-2">
+                        {assignT != undefined
+                          ? prettyDateTime(assignT)
+                          : prettyDateTime(Date)}
+                      </span>
+                    </span>
+                  </section>
+                </div>
+              </>
+            )}
           </div>
 
-          {timeHide && (
-            <>
-              <div className="w-full border-b border-[#ebebeb]"></div>
-              <div className=" w-full  pt-1 font-md text-xs text-gray-500 mb-[2px] tracking-wide mr-4 flex flex-row justify-between">
-                {' '}
-                <section>
-                  <span className="font-thin   font-bodyLato text-[9px]  py-[6px]">
-                    Created On
-                    <span className="text-[#867777] ck ml-2">
-                      {CT != undefined
-                        ? prettyDateTime(CT)
-                        : prettyDateTime(Date)}
-                    </span>
-                  </span>
-                </section>
-                <section>
-                  <span className="font-thin   font-bodyLato text-[9px]  py-[6px]">
-                    Updated On :
-                    <span className="text-[#867777] ck ml-2">
-                      {stsUpT === undefined
-                        ? 'NA'
-                        : prettyDateTime(stsUpT) || 'NA'}
-                    </span>
-                  </span>
-                </section>
-                <section>
-                  <span className="font-thin text-[#867777]   font-bodyLato text-[9px]  py-[6px]">
-                    Assigned On
-                    <span className="text-[#867777] ck ml-2">
-                      {assignT != undefined
-                        ? prettyDateTime(assignT)
-                        : prettyDateTime(Date)}
-                    </span>
-                  </span>
-                </section>
-              </div>
-            </>
-          )}
-        </div>
-
-
-
-
           {/* <hr className="h-[1px]  bg-gradient-to-r from-[#F6F5F8]/100 via-[#B1B1B1] to-[#F6F5F8]/100 border-0 py-[1px]" /> */}
-<div className='mt-[1px]  bg-[#FFFFFF] mx-2 rounded-lg '>
-  <div className="flex flex-row justify-between pb-3 pt-5 mb-0   bg-white relative rounded-lg">
-    {StatusListA.map((statusFlowObj, i) => (
-      <div key={i} className="flex-1 flex flex-col items-center relative">
-        <div
-          className={`w-6 h-6 flex items-center justify-center rounded-full border transition-all duration-200 mb-1 z-10 ${
-            streamCoveredA.includes(statusFlowObj.value)
-              ? 'bg-[#5B5FC7]  text-white '
-              : statusFlowObj.value === streamCurrentStatus || statusFlowObj.value === tempLeadStatus
-                ? 'bg-white border-black text-black'
-                : 'bg-white border-gray-300 text-gray-300'
-          }`}
-          onClick={() => setStatusFun(id, statusFlowObj.value)}
-          onMouseEnter={() => {
-            hoverEffectFun(i);
-            setHover(true);
-          }}
-          onMouseLeave={() => {
-            hoverEffectFun(1000);
-            setHover(false);
-          }}
-          style={{
-            ...(hover && hoverId === i ? { boxShadow: '0 0 0 3px rgba(44, 164, 218, 0.2)' } : {}),
-            cursor: 'pointer',
-          }}
-        >
-          {streamCoveredA.includes(statusFlowObj.value) ? (
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-[#0E0A1F] " fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-          ) : statusFlowObj.value === streamCurrentStatus || statusFlowObj.value === tempLeadStatus ? (
-            <div className="h-2 w-2 bg-black  rounded-full" />
-          ) : i >= StatusListA.length - 2 ? null : (
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          )}
-        </div>
+          <div className="mt-[1px]   ">
+            <div className="flex flex-row justify-between pb-3 pt-5 mb-0   relative rounded-lg">
+              {StatusListA.map((statusFlowObj, i) => (
+                <div
+                  key={i}
+                  className="flex-1 flex flex-col items-center relative"
+                >
+                  <div
+                    className={`w-6 h-6 flex items-center justify-center rounded-full border transition-all duration-200 mb-1 z-10 ${
+                      streamCoveredA.includes(statusFlowObj.value)
+                        ? 'bg-[#5B5FC7]  text-white '
+                        : statusFlowObj.value === streamCurrentStatus ||
+                          statusFlowObj.value === tempLeadStatus
+                        ? 'bg-white border-black text-black'
+                        : 'bg-white border-gray-300 text-gray-300'
+                    }`}
+                    onClick={() => setStatusFun(id, statusFlowObj.value)}
+                    onMouseEnter={() => {
+                      hoverEffectFun(i)
+                      setHover(true)
+                    }}
+                    onMouseLeave={() => {
+                      hoverEffectFun(1000)
+                      setHover(false)
+                    }}
+                    style={{
+                      ...(hover && hoverId === i ? { boxShadow: '' } : {}),
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {statusFlowObj.value === streamCurrentStatus ||
+                    statusFlowObj.value === tempLeadStatus ? (
+                      <div className="h-2 w-2 bg-black  rounded-full" />
+                    ) : streamCoveredA.includes(statusFlowObj.value) ? (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-3 w-3 text-white "
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M5 13l4 4L19 7"
+                        />
+                      </svg>
+                    ) : i >= StatusListA.length - 2 ? null : (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-3 w-3"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    )}
+                  </div>
 
-        <span className={`font-bodyLato text-[11px] text-black font-normal px-2 py-1 z-10 text-center ${statusFlowObj.value === streamCurrentStatus || statusFlowObj.value === tempLeadStatus ? 'text-[13px] ': 'text-[11px]'}`}>
-          {statusFlowObj.label}
-        </span>
+                  <span
+                    className={`font-bodyLato text-[11px] text-black font-normal px-2 py-1 z-10 text-center ${
+                      statusFlowObj.value === streamCurrentStatus ||
+                      statusFlowObj.value === tempLeadStatus
+                        ? 'text-[13px] '
+                        : 'text-[11px]'
+                    }`}
+                  >
+                    {statusFlowObj.label}
+                  </span>
 
-        {i < StatusListA.length - 1 && (
-          <div
-            className={`absolute top-3 left-[calc(50%+0.5rem)] h-[1px] w-[calc(100%-1rem)] ${
-              streamCoveredA.includes(StatusListA[i + 1].value)
-                ? 'bg-[#0E0A1F]'
-                : 'bg-gray-300'
-            }`}
-            style={{ transform: 'translateY(-50%)' }}
-          />
-        )}
-      </div>
-    ))}
-  </div>
-</div>
+                  {i < StatusListA.length - 1 && (
+                    <div
+                      className={`absolute top-3 left-[calc(50%+0.5rem)] h-[1px] w-[calc(100%-1rem)] ${
+                        streamCoveredA.includes(StatusListA[i + 1].value)
+                          ? 'bg-[#5B5FC7]'
+                          : 'bg-gray-300'
+                      }`}
+                      style={{ transform: 'translateY(-50%)' }}
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
 
+          <hr />
 
-
-
-<hr/>
-
-
-
-
-
-{/*
+          {/*
         <div
           className="flex flex-row justify-between   py-3 px-3  mt-[0.5px] mb-0 rounded-xs bg-[#F2F5F8]"
           style={{ flex: '4 0 100%' }}
@@ -2130,350 +1900,397 @@ async function handleCallButtonClick(uid, name, number) {
         </div>
         */}
 
-
-        {unitsViewMode && (
-          <>
-            <ProjPhaseHome
-              projectDetails={selProjectIs}
-              leadDetailsObj={leadDetailsObj}
-              source={undefined}
-              unitDetails={undefined}
-            />
-          </>
-        )}
-        {!unitsViewMode && (
-          <>
-            <section className=" pb-8 pt-1 px-2   rounded-xs  bg-white mt-1 mx-2 rounded-lg">
-              <div className="">
+          {unitsViewMode && (
+            <>
+              <ProjPhaseHome
+                projectDetails={selProjectIs}
+                leadDetailsObj={leadDetailsObj}
+                source={undefined}
+                unitDetails={undefined}
+              />
+            </>
+          )}
+          {!unitsViewMode && (
+            <>
+              <section className=" pb-8 px-5 py-2  rounded-xs  bg-white">
                 <div className="">
-
-                  <div className="flex flex-row justify-between border-gray-200 mt-2">
-                    <ul
-                      className="flex rounded-t-lg  mx-2"
-                      id="myTab"
-                      data-tabs-toggle="#myTabContent"
-                      role="tablist"
-                    >
-                      {[
-                        { lab: 'Summary', val: 'lead_summary' },
-                        { lab: 'Tasks', val: 'appointments' },
-                        { lab: 'Notes', val: 'notes' },
-                        { lab: 'Email', val: 'email' },
-                        { lab: 'Activity Log', val: 'timeline' },
-                      ].map((d, i, array) => {
-                        return (
-
-                          <div key={i} className="flex items-center">
-                                  <li className="" role="presentation">
-                            <button
-                              className={`inline-block pb-1 text-sm font-medium text-center text-[#606062] rounded-t-lg border-b-2  hover:text-black hover:border-gray-300   ${
-                                selFeature === d.val
-                                  ? 'border-black text-black'
-                                  : 'text-[#606062] border-none'
-                              }`}
-                              type="button"
-                              role="tab"
-                              onClick={() => setFeature(d.val)}
-                            >
-                              {`${d.lab} `}
-
-                            </button>
-                          </li>
-                          {i !== array.length - 1 && (
-          <div className="w-px mx-4 h-5 bg-[#E7E7E9]"></div>
-        )}
-                          </div>
-
-                        )
-                      })}
-                    </ul>
-                    {selFeature != 'lead_strength' && (
-                      <span
-                        className="rounded-[8px] px-[10px] py-[11px] gap-[8px] border text-[#000000] font-outfit font-normal text-[14px] leading-[100%] tracking-[0%] cursor-pointer"
-                        onClick={() => setFeature('lead_strength')}
+                  <div className="">
+                    <div className="flex flex-row justify-between border-gray-200 mt-2">
+                      <ul
+                        className="flex rounded-t-lg  mx-2"
+                        id="myTab"
+                        data-tabs-toggle="#myTabContent"
+                        role="tablist"
                       >
-                        Lead Strength
-                      </span>
-                    )}
-                    {selFeature == 'lead_strength' && (
-                      <span
-                        className="rounded-[8px] px-[10px] py-[11px] gap-[8px] border text-[#000000] font-outfit font-normal text-[14px] leading-[100%] tracking-[0%] cursor-pointer"
-                        onClick={() => setFeature('appointments')}
-                      >
-                        Close
-                      </span>
-                    )}
-                  </div>
-                  {selFeature == 'lead_strength' && (
-                    <>
-                      <Formik
-                        enableReinitialize={true}
-
-                        initialValues={{
-                          assetPossesed: {},
-                        }}
-                        onSubmit={(values, { resetForm }) => {
-
-                        }}
-                      >
-                        {(formik) => (
-                          <div className="flex flex-col pt-0 my-10 mt-[30px] rounded  mx-4 p-4">
-                            <div className="border border-red-100 mt-2 mt-4 bg-white rounded-md p-4 font-bold">
-                              <div className="flex justify-between w-full ">
-                                <div>Total Lead Strength</div>
-                                <div>{`${opstr}%`}</div>
-                              </div>
-                              <Slider
-                                onChange={(e) => setopstr(e.target.value)}
-                                value={opstr}
-                                defaultValue={opstr}
-                                aria-label="Default"
-                                valueLabelDisplay="auto"
-                              />
-                            </div>
-                            <div className="grid grid-cols-2 gap-8 pt-3 mx-3  mt-2">
-
-                              <div className="mt-2">
-                                <div className="flex justify-between w-11.7/12 m-auto">
-                                  <div>Any Existing Banglore Assets ?*</div>
-
-                                  <div className="flex items-center">
-  <div className="w-16 mr-2">
-    <RoundedProgressBar 
-      progress={optionvalues.asstr} 
-      height={8}
-      fillColor="#7BD2EA"
-      showLabels={false}
-    />
-  </div>
-  <span className="text-xs font-medium">{`${optionvalues.asstr}%`}</span>
-</div>
-
-                                  
-
-                          
-                                </div>
-                                <CustomSelect
-                                  name="assetPossesed"
-                                  label="Existing Asset"
-                                  className="input"
-                                  onChange={(value) => {
-                                    setoptionvalues({
-                                      ...optionvalues,
-                                      asset: value.value,
-                                      asstr: value.str,
-                                    })
-                                  }}
-                                  value={optionvalues.asset}
-                                  options={exitstingAsset}
-                                />
-                              </div>
-                              <div className="mt-2">
-                                <div className="flex justify-between w-11.7/12 m-auto">
-                                  <div>Reason For Purchase ?*</div>
-
-                                  <div className="flex items-center">
-  <div className="w-16 mr-2">
-    <RoundedProgressBar 
-      progress={optionvalues.pstr} 
-      height={8}
-      fillColor="#7BD2EA"
-      showLabels={false}
-    />
-  </div>
-  <span className="text-xs font-medium">{`${optionvalues.pstr}%`}</span>
-</div>
-                                  {/* <div> {`${optionvalues.pstr}%`}</div> */}
-                                </div>
-                                <CustomSelect
-                                  name="reasonPurchase"
-                                  label="Purchase Reason"
-                                  className="input"
-                                  onChange={(value) => {
-
-                                    setoptionvalues({
-                                      ...optionvalues,
-                                      purchase: value.value,
-                                      pstr: value.str,
-                                    })
-                                  }}
-                                  value={optionvalues.purchase}
-                                  options={reasonPurchase}
-                                />
-                              </div>
-                              <div className="mt-2">
-                                <div className="flex justify-between w-11.7/12 m-auto">
-                                  <div>Preferred Area ?*</div>
-                                  <div className="flex items-center">
-  <div className="w-16 mr-2">
-    <RoundedProgressBar 
-      progress={optionvalues.astr} 
-      height={8}
-      fillColor="#7BD2EA"
-      showLabels={false}
-    />
-  </div>
-  <span className="text-xs font-medium">{`${optionvalues.astr}%`}</span>
-</div>
-                                  {/* <div> {`${optionvalues.astr}%`}</div> */}
-                                </div>
-                                <CustomSelect
-                                  name="preferredArea"
-                                  className="input"
-                                  onChange={(value) => {
-                                    setoptionvalues({
-                                      ...optionvalues,
-                                      area: value.value,
-                                      astr: value.str,
-                                    })
-                                  }}
-                                  value={optionvalues.area}
-                                  options={preferredArea}
-                                />
-                              </div>
-                            </div>
-                            <div></div>
-
-                            <div className="flex flex-row justify-end mt-6">
-                              <section className="flex flex-row">
+                        {[
+                          { lab: 'Summary', val: 'lead_summary' },
+                          { lab: 'Tasks', val: 'appointments' },
+                          { lab: 'Notes', val: 'notes' },
+                          { lab: 'Email', val: 'email' },
+                          { lab: 'Activity Log', val: 'timeline' },
+                        ].map((d, i, array) => {
+                          return (
+                            <div key={i} className="flex items-center">
+                              <li className="" role="presentation">
                                 <button
-                                  onClick={() => fAddNotes()}
-                                  className={`flex mt-2 rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium  bg-[#7bd2ea] text-black hover:bg-gray-700 hover:text-white   `}
+                                  className={`inline-block pb-1 text-sm font-medium text-center text-[#606062] rounded-t-lg border-b-2  hover:text-black hover:border-gray-300   ${
+                                    selFeature === d.val
+                                      ? 'border-black text-black'
+                                      : 'text-[#606062] border-none'
+                                  }`}
+                                  type="button"
+                                  role="tab"
+                                  onClick={() => setFeature(d.val)}
                                 >
-                                  <span className="ml-1 ">Save</span>
+                                  {`${d.lab} `}
                                 </button>
-
-                                <button
-                                  onClick={() => setFeature('appointments')}
-                                  className={`flex mt-2 ml-4  rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  text-black hover:bg-gray-700 hover:text-white  `}
-                                >
-                                  <span className="ml-1 ">Cancel</span>
-                                </button>
-                              </section>
+                              </li>
+                              {i !== array.length - 1 && (
+                                <div className="w-px mx-4 h-5 bg-[#E7E7E9]"></div>
+                              )}
                             </div>
-                          </div>
-                        )}
-                      </Formik>
-                    </>
-                  )}
-                  {selFeature == 'email' && (
-                    <>
-                      <EmailForm />
-                    </>
-                  )}
-                  {selFeature === 'notes' && (
-                    <div className="flex flex-col justify-between  pt-6">
-                      {leadNotesFetchedData.length === 0 && !addNote && (
-                        <div className="py-8 px-8 flex flex-col items-center mt-5">
-                          <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
-                            <img
-                              className="w-[180px] h-[180px] inline"
-                              alt=""
-                              src="/note-widget.svg"
-                            />
-                          </div>
-                          <h3 className="mb-1 text-sm font-semibold text-gray-900 ">
-                            No Helpful Notes {addNote}
-                          </h3>
-                          <button onClick={() => selFun()}>
-                            <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">
-                              <span className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md cursor-pointer hover:bg-blue-700">
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  strokeWidth={2}
-                                  stroke="currentColor"
-                                  className="w-5 h-5"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M12 4.5v15m7.5-7.5h-15"
-                                  />
-                                </svg>
-                                Add Notes
-                              </span>
-                            </time>
-                          </button>
-                          <Confetti />
-                        </div>
-                      )}
-                      {addNote && (
-                        <Formik
-                          initialValues={initialState1}
-                          validationSchema={validateSchema1}
-                          onSubmit={(values, { resetForm }) => {
-                            console.log('values of form is ', values)
-                            fAddNotes()
-                          }}
+                          )
+                        })}
+                      </ul>
+                      {selFeature != 'lead_strength' && (
+                        <span
+                          className=" px-[10px] py-[11px] gap-[8px] font-outfit font-semibold text-[14px] leading-[100%] underline underline-offset-[25%] decoration-[0%] text-[#5B5FC7] cursor-pointer"
+                          onClick={() => setFeature('lead_strength')}
                         >
-                          {(formik1) => (
-                            <Form>
-                              <div className=" form flex flex-col pt-0 my-10 mt-[10px] rounded bg-white mx-4 p-4">
-
-
-                                <div className="  outline-none border  rounded p-4 mt-4">
-                                  <ErrorMessage
-                                    component="div"
-                                    name="notesText"
-                                    className="error-message text-red-700 text-xs p-1"
-                                  />
-                                  <textarea
-                                    name="notesText"
-                                    value={takNotes}
-                                    onChange={(e) => {
-                                      console.log(
-                                        'what the matter',
-                                        e.target.value
-                                      )
-                                      formik1.setFieldValue(
-                                        'notesText',
-                                        e.target.value
-                                      )
-                                      setNotesTitle(e.target.value)
-                                    }}
-                                    placeholder="Type & make a notes"
-                                    className="w-full h-full pb-10 outline-none  focus:border-blue-600 hover:border-blue-600 rounded bg-[#FFFFFF] "
-                                  ></textarea>
+                          Lead requirement
+                        </span>
+                      )}
+                      {selFeature == 'lead_strength' && (
+                        <span
+                          className="px-[10px] py-[11px] gap-[8px] font-outfit font-semibold text-[14px] leading-[100%] underline underline-offset-[25%] decoration-[0%] text-[#5B5FC7] cursor-pointer"
+                          onClick={() => setFeature('appointments')}
+                        >
+                          Close
+                        </span>
+                      )}
+                    </div>
+                    {selFeature == 'lead_strength' && (
+                      <>
+                        <Formik
+                          enableReinitialize={true}
+                          initialValues={{
+                            accountName: '',
+                            reasonPurchase: '',
+                            preferredArea: '',
+                          }}
+                          onSubmit={(values, { resetForm }) => {}}
+                        >
+                          {(formik) => (
+                            <div className="flex flex-col pt-0 my-10 mt-[30px] rounded  mx-4 p-4">
+                              <div className="border border-red-100 mt-2 mt-4 bg-white rounded-md p-4 font-bold">
+                                <div className="flex justify-between w-full ">
+                                  <div>Total Lead Strength</div>
+                                  <div>{`${opstr}%`}</div>
                                 </div>
-                                <div className="flex flex-row mt-1">
+                                <Slider
+                                  onChange={(e) => setopstr(e.target.value)}
+                                  value={opstr}
+                                  defaultValue={opstr}
+                                  aria-label="Default"
+                                  valueLabelDisplay="auto"
+                                />
+                              </div>
+                              <div className="grid grid-cols-2 gap-8 pt-3 mx-3  mt-2">
+                                <div className="mt-2">
+                                  <div className="flex justify-between w-11.7/12 m-auto">
+                                    <div>Any Existing Banglore Assets ?*</div>
+
+                                    <div className="flex items-center">
+                                      <div className="w-16 mr-2">
+                                        <RoundedProgressBar
+                                          progress={optionvalues.asstr}
+                                          height={8}
+                                          fillColor="#7BD2EA"
+                                          showLabels={false}
+                                        />
+                                      </div>
+                                      <span className="text-xs font-medium">{`${optionvalues.asstr}%`}</span>
+                                    </div>
+                                  </div>
+                                  <CustomSelect
+                                    name="accountName"
+                                    label="Existing Asset"
+                                    className="input"
+                                    onChange={(value) => {
+                                      setoptionvalues({
+                                        ...optionvalues,
+                                        asset: value.value,
+                                        asstr: value.str,
+                                      })
+                                    }}
+                                    value={optionvalues.asset}
+                                    options={exitstingAsset}
+                                  />
+                                </div>
+                                <div className="mt-2">
+                                  <div className="flex justify-between w-11.7/12 m-auto">
+                                    <div>Reason For Purchase ?*</div>
+
+                                    <div className="flex items-center">
+                                      <div className="w-16 mr-2">
+                                        <RoundedProgressBar
+                                          progress={optionvalues.pstr}
+                                          height={8}
+                                          fillColor="#7BD2EA"
+                                          showLabels={false}
+                                        />
+                                      </div>
+                                      <span className="text-xs font-medium">{`${optionvalues.pstr}%`}</span>
+                                    </div>
+                                    {/* <div> {`${optionvalues.pstr}%`}</div> */}
+                                  </div>
+                                  <CustomSelect
+                                    name="reasonPurchase"
+                                    label="Purchase Reason"
+                                    className="input"
+                                    onChange={(value) => {
+                                      setoptionvalues({
+                                        ...optionvalues,
+                                        purchase: value.value,
+                                        pstr: value.str,
+                                      })
+                                    }}
+                                    value={optionvalues.purchase}
+                                    options={reasonPurchase}
+                                  />
+                                </div>
+                                <div className="mt-2">
+                                  <div className="flex justify-between w-11.7/12 m-auto">
+                                    <div>Preferred Area ?*</div>
+                                    <div className="flex items-center">
+                                      <div className="w-16 mr-2">
+                                        <RoundedProgressBar
+                                          progress={optionvalues.astr}
+                                          height={8}
+                                          fillColor="#7BD2EA"
+                                          showLabels={false}
+                                        />
+                                      </div>
+                                      <span className="text-xs font-medium">{`${optionvalues.astr}%`}</span>
+                                    </div>
+                                    {/* <div> {`${optionvalues.astr}%`}</div> */}
+                                  </div>
+                                  <CustomSelect
+                                    name="preferredArea"
+                                    className="input"
+                                    onChange={(value) => {
+                                      setoptionvalues({
+                                        ...optionvalues,
+                                        area: value.value,
+                                        astr: value.str,
+                                      })
+                                    }}
+                                    value={optionvalues.area}
+                                    options={preferredArea}
+                                  />
+                                </div>
+                              </div>
+                              <div></div>
+
+                              <div className="flex flex-row justify-end mt-6">
+                                <section className="flex flex-row">
                                   <button
-                                    type="submit"
-                                    className={`flex mt-2 rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-black  bg-[#7bd2ea]  hover:bg-gray-700 hover:text-white  `}
+                                    onClick={() => LeadStrengthFun()}
+                                    className={`flex mt-2 rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium  bg-[#7bd2ea] text-black hover:bg-gray-700 hover:text-white   `}
                                   >
                                     <span className="ml-1 ">Save</span>
                                   </button>
+
                                   <button
-                                    onClick={() => cancelResetStatusFun()}
-                                    type="submit"
-                                    className={`flex mt-2 ml-4 rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-black  bg-[#7bd2ea]  hover:bg-gray-700 hover:text-white `}
-                                  >
-                                    <span className="ml-1 ">
-                                      Save & Whats App
-                                    </span>
-                                  </button>
-                                  <button
-                                    onClick={() => cancelResetStatusFun()}
-                                    className={`flex mt-2 ml-4  rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700 hover:text-white `}
+                                    onClick={() => setFeature('appointments')}
+                                    className={`flex mt-2 ml-4  rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  text-black hover:bg-gray-700 hover:text-white  `}
                                   >
                                     <span className="ml-1 ">Cancel</span>
                                   </button>
-                                </div>
+                                </section>
                               </div>
-                            </Form>
+                            </div>
                           )}
                         </Formik>
-                      )}
-                      {leadNotesFetchedData.length > 0 && (
-                        <div className="px-4">
-                          <div className="flex justify-between">
-                            <div className="font-md font-medium text-xl mb-4 text-[#053219]">
-                              Notes
+                      </>
+                    )}
+                    {selFeature == 'email' && (
+                      <>
+                        <EmailForm />
+                      </>
+                    )}
+                    {selFeature === 'notes' && (
+                      <div className="flex flex-col justify-between  pt-6">
+                        {leadNotesFetchedData.length === 0 && !addNote && (
+                          <div className="py-8 px-8 flex flex-col items-center mt-5">
+                            <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
+                              <img
+                                className="w-[180px] h-[180px] inline"
+                                alt=""
+                                src="/note-widget.svg"
+                              />
                             </div>
-
+                            <h3 className="mb-1 text-sm font-semibold text-gray-900 ">
+                              No Helpful Notes {addNote}
+                            </h3>
                             <button onClick={() => selFun()}>
                               <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">
+                                <span className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md cursor-pointer hover:bg-blue-700">
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth={2}
+                                    stroke="currentColor"
+                                    className="w-5 h-5"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      d="M12 4.5v15m7.5-7.5h-15"
+                                    />
+                                  </svg>
+                                  Add Notes
+                                </span>
+                              </time>
+                            </button>
+                            <Confetti />
+                          </div>
+                        )}
+                        {addNote && (
+                          <Formik
+                            initialValues={initialState1}
+                            validationSchema={validateSchema1}
+                            onSubmit={(values, { resetForm }) => {
+                              console.log('values of form is ', values)
+                              fAddNotes()
+                            }}
+                          >
+                            {(formik1) => (
+                              <Form>
+                                <div className=" form flex flex-col pt-0 my-10 mt-[10px] rounded bg-white mx-4 p-4">
+                                  <div className="  outline-none border  rounded p-4 mt-4">
+                                    <ErrorMessage
+                                      component="div"
+                                      name="notesText"
+                                      className="error-message text-red-700 text-xs p-1"
+                                    />
+                                    <textarea
+                                      name="notesText"
+                                      value={takNotes}
+                                      onChange={(e) => {
+                                        console.log(
+                                          'what the matter',
+                                          e.target.value
+                                        )
+                                        formik1.setFieldValue(
+                                          'notesText',
+                                          e.target.value
+                                        )
+                                        setNotesTitle(e.target.value)
+                                      }}
+                                      placeholder="Type & make a notes"
+                                      className="w-full h-full pb-10 outline-none  focus:border-blue-600 hover:border-blue-600 rounded bg-[#FFFFFF] "
+                                    ></textarea>
+                                  </div>
+                                  <div className="flex flex-row mt-1">
+                                    <button
+                                      type="submit"
+                                      className={`flex mt-2 rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-black  bg-[#7bd2ea]  hover:bg-gray-700 hover:text-white  `}
+                                    >
+                                      <span className="ml-1 ">Save</span>
+                                    </button>
+                                    <button
+                                      onClick={() => cancelResetStatusFun()}
+                                      type="submit"
+                                      className={`flex mt-2 ml-4 rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-black  bg-[#7bd2ea]  hover:bg-gray-700 hover:text-white `}
+                                    >
+                                      <span className="ml-1 ">
+                                        Save & Whats App
+                                      </span>
+                                    </button>
+                                    <button
+                                      onClick={() => cancelResetStatusFun()}
+                                      className={`flex mt-2 ml-4  rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700 hover:text-white `}
+                                    >
+                                      <span className="ml-1 ">Cancel</span>
+                                    </button>
+                                  </div>
+                                </div>
+                              </Form>
+                            )}
+                          </Formik>
+                        )}
+                        {leadNotesFetchedData.length > 0 && (
+                          <div className="px-4">
+                            <div className="flex justify-between">
+                              <div className="font-md font-medium text-xl mb-4 text-[#053219]">
+                                Notes
+                              </div>
+
+                              <button onClick={() => selFun()}>
+                                <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">
+                                  <span className="text-blue-600">
+                                    {' '}
+                                    Add Notes
+                                  </span>
+                                </time>
+                              </button>
+                            </div>
+                            <ol className="relative border-l ml-3 border-gray-200  ">
+                              {leadNotesFetchedData.map((data, i) => (
+                                <section key={i} className="">
+                                  <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-green-200 rounded-full ring-8 ring-white  ">
+                                    <DocumentIcon className=" w-3 h-3" />
+                                  </span>
+                                  <div className="text-gray-600  m-3 ml-6">
+                                    <div className="text-base font-normal">
+                                      <span className="font-medium text-green-900 ">
+                                        {data?.notes}
+                                      </span>{' '}
+                                    </div>
+                                    <div className="text-sm font-normal">
+                                      {data?.txt}
+                                    </div>
+                                    <span className="inline-flex items-center text-xs font-normal text-gray-500 ">
+                                      <ClockIcon className=" w-3 h-3" />
+
+                                      <span className="ml-1">added on:</span>
+                                      <span className="text-gray-500 ml-1">
+                                        {prettyDateTime(data?.ct)}
+                                      </span>
+                                      <div className="w-[2px] mx-2 mt-[4px] h-[8px] border-0 border-r"></div>
+                                      <span className="">added by:</span>
+                                      <span className="text-gray-500 ml-1 ">
+                                        {data?.by}
+                                      </span>
+                                    </span>
+                                  </div>
+                                </section>
+                              ))}
+                            </ol>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {selFeature === 'visitDoneNotes' && (
+                      <div className="flex flex-col justify-between  pt-6">
+                        {leadNotesFetchedData.length === 0 && !addNote && (
+                          <div className="py-8 px-8 flex flex-col items-center mt-5">
+                            <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
+                              <img
+                                className="w-[180px] h-[180px] inline"
+                                alt=""
+                                src="/note-widget.svg"
+                              />
+                            </div>
+                            <h3 className="mb-1 text-sm font-semibold text-gray-900 ">
+                              No Helpful Notes {addNote}
+                            </h3>
+                            <button onClick={() => selFun()}>
+                              <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">
+                                Better always attach a string
                                 <span className="text-blue-600">
                                   {' '}
                                   Add Notes
@@ -2481,214 +2298,153 @@ async function handleCallButtonClick(uid, name, number) {
                               </time>
                             </button>
                           </div>
-                          <ol className="relative border-l ml-3 border-gray-200  ">
-                            {leadNotesFetchedData.map((data, i) => (
-                              <section key={i} className="">
-                                <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-green-200 rounded-full ring-8 ring-white  ">
+                        )}
+                        {addNote && (
+                          <div className="flex flex-col pt-0 my-10 mt-[10px] rounded bg-[#FFFFFF] mx-2">
+                            <div className="w-full flex flex-col mb-3 mt-2">
+                              <CustomSelect
+                                name="source"
+                                label="Site Visit Feedback*"
+                                className="input mt-3"
+                                onChange={(value) => {
+                                  setNotInterestType(value.value)
+                                }}
+                                value={notInterestType}
+                                options={siteVisitFeedbackOptions}
+                              />
+                            </div>
 
-                                  <DocumentIcon className=" w-3 h-3" />
-                                </span>
-                                <div className="text-gray-600  m-3 ml-6">
-                                  <div className="text-base font-normal">
-                                    <span className="font-medium text-green-900 ">
-                                      {data?.notes}
-                                    </span>{' '}
-                                  </div>
-                                  <div className="text-sm font-normal">
-                                    {data?.txt}
-                                  </div>
-                                  <span className="inline-flex items-center text-xs font-normal text-gray-500 ">
-                                    <ClockIcon className=" w-3 h-3" />
-
-                                    <span className="ml-1">added on:</span>
-                                    <span className="text-gray-500 ml-1">
-                                      {prettyDateTime(data?.ct)}
-                                    </span>
-                                    <div className="w-[2px] mx-2 mt-[4px] h-[8px] border-0 border-r"></div>
-                                    <span className="">added by:</span>
-                                    <span className="text-gray-500 ml-1 ">
-                                      {data?.by}
-                                    </span>
-                                  </span>
-                                </div>
-                              </section>
-                            ))}
-                          </ol>
-                        </div>
-                      )}
-                    </div>
-                  )}
-
-                  {selFeature === 'visitDoneNotes' && (
-                    <div className="flex flex-col justify-between  pt-6">
-                      {leadNotesFetchedData.length === 0 && !addNote && (
-                        <div className="py-8 px-8 flex flex-col items-center mt-5">
-                          <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
-                            <img
-                              className="w-[180px] h-[180px] inline"
-                              alt=""
-                              src="/note-widget.svg"
-                            />
+                            <div className="  outline-none border  rounded p-4 mt-4">
+                              <textarea
+                                value={takNotes}
+                                onChange={(e) => setNotesTitle(e.target.value)}
+                                placeholder="Type & make a notes *"
+                                className="w-full h-full pb-10 outline-none  focus:border-blue-600 hover:border-blue-600 rounded bg-[#FFFFFF] "
+                              ></textarea>
+                            </div>
+                            <div className="flex flex-row mt-1">
+                              <button
+                                onClick={() => fAddNotes()}
+                                className={`flex mt-2 rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-balck  bg-[#7bd2ea]  hover:bg-gray-700 hover:text-white `}
+                              >
+                                <span className="ml-1 ">Save</span>
+                              </button>
+                              <button
+                                onClick={() => fAddNotes()}
+                                className={`flex mt-2 ml-4 rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-black  bg-[#7bd2ea]  hover:bg-gray-700 hover:text-white  `}
+                              >
+                                <span className="ml-1 ">Save & Whats App</span>
+                              </button>
+                              <button
+                                onClick={() => cancelResetStatusFun()}
+                                className={`flex mt-2 ml-4  rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700 hover:text-white  `}
+                              >
+                                <span className="ml-1 ">Cancel</span>
+                              </button>
+                            </div>
                           </div>
-                          <h3 className="mb-1 text-sm font-semibold text-gray-900 ">
-                            No Helpful Notes {addNote}
-                          </h3>
-                          <button onClick={() => selFun()}>
-                            <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">
-                              Better always attach a string
-                              <span className="text-blue-600"> Add Notes</span>
-                            </time>
-                          </button>
+                        )}
+                        {leadNotesFetchedData.length > 0 && (
+                          <div className="px-4">
+                            <div className="flex justify-between">
+                              <div className="font-md font-medium text-xl mb-4 text-[#053219]">
+                                Notes
+                              </div>
+
+                              <button onClick={() => selFun()}>
+                                <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">
+                                  <span className="text-blue-600">
+                                    {' '}
+                                    Add Notes
+                                  </span>
+                                </time>
+                              </button>
+                            </div>
+                            <ol className="relative border-l ml-3 border-gray-200  ">
+                              {leadNotesFetchedData.map((data, i) => (
+                                <section key={i} className="">
+                                  <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-green-200 rounded-full ring-8 ring-white  ">
+                                    <DocumentIcon className=" w-3 h-3" />
+                                  </span>
+                                  <div className="text-gray-600  m-3 ml-6">
+                                    <div className="text-base font-normal">
+                                      <span className="font-medium text-green-900 ">
+                                        {data?.notes}
+                                      </span>{' '}
+                                    </div>
+                                    <div className="text-sm font-normal">
+                                      {data?.txt}
+                                    </div>
+                                    <span className="inline-flex items-center text-xs font-normal text-gray-500 ">
+                                      <ClockIcon className=" w-3 h-3" />
+
+                                      <span className="ml-1">added on:</span>
+                                      <span className="text-red-900 ml-1 mr-4">
+                                        {prettyDateTime(data?.ct)}
+                                      </span>
+                                      <div className="w-[2px] mx-2 mt-[4px] h-[8px] border-0 border-r"></div>
+                                      <span className="ml-2">added by:</span>
+                                      <span className="text-red-900 ml-1 mr-4">
+                                        {data?.by}
+                                      </span>
+                                    </span>
+                                  </div>
+                                </section>
+                              ))}
+                            </ol>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+                {selFeature === 'documents' && (
+                  <div className="border px-4">
+                    {docsList.length === 0 && (
+                      <div className="py-8 px-8 flex flex-col items-center mt-6">
+                        <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
+                          <img
+                            className="w-[200px] h-[200px] inline"
+                            alt=""
+                            src="/empty-dashboard.svg"
+                          />
                         </div>
-                      )}
-                      {addNote && (
-                        <div className="flex flex-col pt-0 my-10 mt-[10px] rounded bg-[#FFFFFF] mx-2">
+                        <h3 className="mb-1 text-sm font-semibold text-gray-900 ">
+                          No Attachments
+                        </h3>
+                        <button onClick={() => showAddAttachF()}>
+                          <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">
+                            Better always attach a string
+                            <span className="text-blue-600"> Add Dcoument</span>
+                          </time>
+                        </button>
+                      </div>
+                    )}
+
+                    {attach && (
+                      <div className="flex justify-center mt-4">
+                        <div className="mb-3 w-96 px-10 bg-[#FFFFFF] rounded-md py-3 pb-6">
                           <div className="w-full flex flex-col mb-3 mt-2">
                             <CustomSelect
                               name="source"
-                              label="Site Visit Feedback*"
+                              label="Document Type *"
                               className="input mt-3"
                               onChange={(value) => {
-
-                                setNotInterestType(value.value)
+                                setAttachType(value.value)
                               }}
-                              value={notInterestType}
-                              options={siteVisitFeedbackOptions}
+                              value={attachType}
+                              options={attachTypes}
                             />
                           </div>
-
-                          <div className="  outline-none border  rounded p-4 mt-4">
-                            <textarea
-                              value={takNotes}
-                              onChange={(e) => setNotesTitle(e.target.value)}
-                              placeholder="Type & make a notes *"
-                              className="w-full h-full pb-10 outline-none  focus:border-blue-600 hover:border-blue-600 rounded bg-[#FFFFFF] "
-                            ></textarea>
-                          </div>
-                          <div className="flex flex-row mt-1">
-                            <button
-                              onClick={() => fAddNotes()}
-                              className={`flex mt-2 rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-balck  bg-[#7bd2ea]  hover:bg-gray-700 hover:text-white `}
-                            >
-                              <span className="ml-1 ">Save</span>
-                            </button>
-                            <button
-                              onClick={() => fAddNotes()}
-                              className={`flex mt-2 ml-4 rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-black  bg-[#7bd2ea]  hover:bg-gray-700 hover:text-white  `}
-                            >
-                              <span className="ml-1 ">Save & Whats App</span>
-                            </button>
-                            <button
-                              onClick={() => cancelResetStatusFun()}
-                              className={`flex mt-2 ml-4  rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700 hover:text-white  `}
-                            >
-                              <span className="ml-1 ">Cancel</span>
-                            </button>
-                          </div>
-                        </div>
-                      )}
-                      {leadNotesFetchedData.length > 0 && (
-                        <div className="px-4">
-                          <div className="flex justify-between">
-                            <div className="font-md font-medium text-xl mb-4 text-[#053219]">
-                              Notes
-                            </div>
-
-                            <button onClick={() => selFun()}>
-                              <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">
-                                <span className="text-blue-600">
-                                  {' '}
-                                  Add Notes
-                                </span>
-                              </time>
-                            </button>
-                          </div>
-                          <ol className="relative border-l ml-3 border-gray-200  ">
-                            {leadNotesFetchedData.map((data, i) => (
-                              <section key={i} className="">
-                                <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-green-200 rounded-full ring-8 ring-white  ">
-
-                                  <DocumentIcon className=" w-3 h-3" />
-                                </span>
-                                <div className="text-gray-600  m-3 ml-6">
-                                  <div className="text-base font-normal">
-                                    <span className="font-medium text-green-900 ">
-                                      {data?.notes}
-                                    </span>{' '}
-                                  </div>
-                                  <div className="text-sm font-normal">
-                                    {data?.txt}
-                                  </div>
-                                  <span className="inline-flex items-center text-xs font-normal text-gray-500 ">
-                                    <ClockIcon className=" w-3 h-3" />
-
-                                    <span className="ml-1">added on:</span>
-                                    <span className="text-red-900 ml-1 mr-4">
-                                      {prettyDateTime(data?.ct)}
-                                    </span>
-                                    <div className="w-[2px] mx-2 mt-[4px] h-[8px] border-0 border-r"></div>
-                                    <span className="ml-2">added by:</span>
-                                    <span className="text-red-900 ml-1 mr-4">
-                                      {data?.by}
-                                    </span>
-                                  </span>
-                                </div>
-                              </section>
-                            ))}
-                          </ol>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </div>
-              </div>
-              {selFeature === 'documents' && (
-                <div className="border px-4">
-                  {docsList.length === 0 && (
-                    <div className="py-8 px-8 flex flex-col items-center mt-6">
-                      <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
-                        <img
-                          className="w-[200px] h-[200px] inline"
-                          alt=""
-                          src="/empty-dashboard.svg"
-                        />
-                      </div>
-                      <h3 className="mb-1 text-sm font-semibold text-gray-900 ">
-                        No Attachments
-                      </h3>
-                      <button onClick={() => showAddAttachF()}>
-                        <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">
-                          Better always attach a string
-                          <span className="text-blue-600"> Add Dcoument</span>
-                        </time>
-                      </button>
-                    </div>
-                  )}
-
-                  {attach && (
-                    <div className="flex justify-center mt-4">
-                      <div className="mb-3 w-96 px-10 bg-[#FFFFFF] rounded-md py-3 pb-6">
-                        <div className="w-full flex flex-col mb-3 mt-2">
-                          <CustomSelect
-                            name="source"
-                            label="Document Type *"
-                            className="input mt-3"
-                            onChange={(value) => {
-                              setAttachType(value.value)
-                            }}
-                            value={attachType}
-                            options={attachTypes}
-                          />
-                        </div>
-                        <label
-                          htmlFor="formFile"
-                          className="form-label inline-block mb-2  font-regular text-sm "
-                        >
-                          Upload file
-                        </label>
-                        <form onSubmit={docUploadHandler}>
-                          <input
-                            className="form-control
+                          <label
+                            htmlFor="formFile"
+                            className="form-label inline-block mb-2  font-regular text-sm "
+                          >
+                            Upload file
+                          </label>
+                          <form onSubmit={docUploadHandler}>
+                            <input
+                              className="form-control
                             block
                             w-full
                             px-3
@@ -2703,201 +2459,203 @@ async function handleCallButtonClick(uid, name, number) {
                             ease-in-out
                             m-0
                             focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                            type="file"
-                            id="formFile"
-                          />
-                          <div className="flex flex-row mt-3">
-                            <button
-                              type="submit"
-                              className={`flex mt-2 rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-white  bg-[#7bd2ea]  hover:bg-gray-700  `}
-                            >
-                              <span className="ml-1 ">Upload</span>
-                            </button>
-                            <button
-                              onClick={() => setAttach(false)}
-                              className={`flex mt-2 ml-4  rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700  `}
-                            >
-                              <span className="ml-1 ">Cancel</span>
-                            </button>
-                          </div>
-                        </form>
-
-                      </div>
-                    </div>
-                  )}
-
-                  {docsList.length > 0 && (
-                    <div className="py-8">
-                      <div className="flex justify-between">
-                        <h2 className="text-xl font-semibold leading-tight">
-                          Customer Documents
-                        </h2>
-                        <button onClick={() => showAddAttachF()}>
-                          <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">
-                            <span className="text-blue-600"> Add Dcoument</span>
-                          </time>
-                        </button>
-                      </div>
-                      <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-                        <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
-                          <table className="min-w-full leading-normal">
-                            <thead>
-                              <tr>
-                                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                  Name
-                                </th>
-
-                                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                  Created On / By
-                                </th>
-                                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                  Status
-                                </th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {docsList.map((dat, i) => {
-                                return (
-                                  <tr key={i} className=" border-b">
-                                    <td className="px-5 py-5 bg-white text-sm ">
-                                      <div className="flex">
-                                        <div className="">
-                                          <p className="text-gray-900 whitespace-no-wrap overflow-ellipsis">
-                                            {dat.name}
-                                          </p>
-                                          <p className="text-blue-600 whitespace-no-wrap">
-                                            {dat.type}
-                                          </p>
-                                        </div>
-                                      </div>
-                                    </td>
-
-                                    <td className="px-5 py-5 bg-white text-sm ">
-                                      <p className="text-gray-900 whitespace-no-wrap">
-                                        {prettyDate(dat.cTime)}
-                                      </p>
-                                      <p className="text-gray-600 whitespace-no-wrap overflow-ellipsis">
-                                        {dat.by}
-                                      </p>
-                                    </td>
-                                    <td className="px-5 py-5 bg-white text-sm">
-                                      <>
-
-
-                                        <DownloadIcon
-                                          onClick={() => downloadFile(dat.url)}
-                                          className="w-5 h-5 text-gray-400 ml-3 cursor-pointer"
-                                          aria-hidden="true"
-                                        />
-                                      </>
-                                    </td>
-                                  </tr>
-                                )
-                              })}
-                            </tbody>
-                          </table>
+                              type="file"
+                              id="formFile"
+                            />
+                            <div className="flex flex-row mt-3">
+                              <button
+                                type="submit"
+                                className={`flex mt-2 rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-white  bg-[#7bd2ea]  hover:bg-gray-700  `}
+                              >
+                                <span className="ml-1 ">Upload</span>
+                              </button>
+                              <button
+                                onClick={() => setAttach(false)}
+                                className={`flex mt-2 ml-4  rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700  `}
+                              >
+                                <span className="ml-1 ">Cancel</span>
+                              </button>
+                            </div>
+                          </form>
                         </div>
                       </div>
-                    </div>
-                  )}
-                </div>
-              )}
-              {selFeature === 'tasks' && (
-                <div className="py-8 px-8 flex flex-col items-center">
-                  <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
-                    <img
-                      className="w-[200px] h-[200px] inline"
-                      alt=""
-                      src="/all-complete.svg"
-                    />
-                  </div>
-                  <h3 className="mb-1 text-sm font-semibold text-gray-900 ">
-                    You are clean
-                  </h3>
-                  <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">
-                    Sitback & Relax{' '}
-                    <span className="text-blue-600">Add Task</span>
-                  </time>
-                </div>
-              )}
-              {selFeature === 'phone' && (
-                <>
-                  {filterData?.length === 0 && (
-                    <div className="py-8 px-8 flex flex-col items-center">
-                      <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
-                        <img
-                          className="w-[200px] h-[200px] inline"
-                          alt=""
-                          src="/all-complete.svg"
-                        />
-                      </div>
-                      <h3 className="mb-1 text-sm font-semibold text-gray-900 ">
-                        You are clean
-                      </h3>
-                      <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">
-                        Sitback & Relax{' '}
-                        <span className="text-blue-600">Add Task</span>
-                      </time>
-                    </div>
-                  )}
+                    )}
 
-                  <div className="px-4 mt-4">
-                    <div className="font-md font-medium text-xl mb-4 text-[#053219]">
-                      Phone Calls
-                    </div>
-                    <ol className="relative border-l border-gray-200 ml-3 ">
-                      {filterData?.map((data, i) => (
-                        <section key={i} className="">
-                          <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-green-200 rounded-full ring-8 ring-white  ">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              className="h-3 w-3 text-blue-600 "
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                            >
-                              <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                            </svg>
-                          </span>
-                          <div className="text-gray-600  m-3 ml-6">
-                            <div className="text-base font-normal">
-                              <span className="font-medium text-green-900 ">
-                                {'Rajiv'}
-                              </span>{' '}
-                              called{' '}
-                              <span className="text-sm text-red-900  ">
-                                {Name}
-                              </span>{' '}
-                            </div>
-                            <div className="text-sm font-normal">
-                              {data?.txt}
-                            </div>
-                            <span className="inline-flex items-center text-xs font-normal text-gray-500 ">
-                              <ClockIcon className="mr-1 w-3 h-3" />
-                              {data?.type == 'ph'
-                                ? timeConv(Number(data?.time)).toLocaleString()
-                                : timeConv(data?.T).toLocaleString()}
-                              {'    '}
-                              <span className="text-red-900 ml-4 mr-4">
-                                {Number(data?.duration)} sec
+                    {docsList.length > 0 && (
+                      <div className="py-8">
+                        <div className="flex justify-between">
+                          <h2 className="text-xl font-semibold leading-tight">
+                            Customer Documents
+                          </h2>
+                          <button onClick={() => showAddAttachF()}>
+                            <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">
+                              <span className="text-blue-600">
+                                {' '}
+                                Add Dcoument
                               </span>
-                              or
-                              <span className="text-red-900 ml-4">
-                                {parseInt(data?.duration / 60)} min
-                              </span>
-                            </span>
+                            </time>
+                          </button>
+                        </div>
+                        <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+                          <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
+                            <table className="min-w-full leading-normal">
+                              <thead>
+                                <tr>
+                                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    Name
+                                  </th>
+
+                                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    Created On / By
+                                  </th>
+                                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    Status
+                                  </th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {docsList.map((dat, i) => {
+                                  return (
+                                    <tr key={i} className=" border-b">
+                                      <td className="px-5 py-5 bg-white text-sm ">
+                                        <div className="flex">
+                                          <div className="">
+                                            <p className="text-gray-900 whitespace-no-wrap overflow-ellipsis">
+                                              {dat.name}
+                                            </p>
+                                            <p className="text-blue-600 whitespace-no-wrap">
+                                              {dat.type}
+                                            </p>
+                                          </div>
+                                        </div>
+                                      </td>
+
+                                      <td className="px-5 py-5 bg-white text-sm ">
+                                        <p className="text-gray-900 whitespace-no-wrap">
+                                          {prettyDate(dat.cTime)}
+                                        </p>
+                                        <p className="text-gray-600 whitespace-no-wrap overflow-ellipsis">
+                                          {dat.by}
+                                        </p>
+                                      </td>
+                                      <td className="px-5 py-5 bg-white text-sm">
+                                        <>
+                                          <DownloadIcon
+                                            onClick={() =>
+                                              downloadFile(dat.url)
+                                            }
+                                            className="w-5 h-5 text-gray-400 ml-3 cursor-pointer"
+                                            aria-hidden="true"
+                                          />
+                                        </>
+                                      </td>
+                                    </tr>
+                                  )
+                                })}
+                              </tbody>
+                            </table>
                           </div>
-                        </section>
-                      ))}
-                    </ol>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                </>
-              )}
-              {selFeature === 'lead_summary' && (
-                              <>
+                )}
+                {selFeature === 'tasks' && (
+                  <div className="py-8 px-8 flex flex-col items-center">
+                    <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
+                      <img
+                        className="w-[200px] h-[200px] inline"
+                        alt=""
+                        src="/all-complete.svg"
+                      />
+                    </div>
+                    <h3 className="mb-1 text-sm font-semibold text-gray-900 ">
+                      You are clean
+                    </h3>
+                    <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">
+                      Sitback & Relax{' '}
+                      <span className="text-blue-600">Add Task</span>
+                    </time>
+                  </div>
+                )}
+                {selFeature === 'phone' && (
+                  <>
+                    {filterData?.length === 0 && (
+                      <div className="py-8 px-8 flex flex-col items-center">
+                        <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
+                          <img
+                            className="w-[200px] h-[200px] inline"
+                            alt=""
+                            src="/all-complete.svg"
+                          />
+                        </div>
+                        <h3 className="mb-1 text-sm font-semibold text-gray-900 ">
+                          You are clean
+                        </h3>
+                        <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">
+                          Sitback & Relax{' '}
+                          <span className="text-blue-600">Add Task</span>
+                        </time>
+                      </div>
+                    )}
 
-<div className="max-w-5xl mx-auto space-y-4 mt-4">
-
-{/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="px-4 mt-4">
+                      <div className="font-md font-medium text-xl mb-4 text-[#053219]">
+                        Phone Calls
+                      </div>
+                      <ol className="relative border-l border-gray-200 ml-3 ">
+                        {filterData?.map((data, i) => (
+                          <section key={i} className="">
+                            <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-green-200 rounded-full ring-8 ring-white  ">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-3 w-3 text-blue-600 "
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                              >
+                                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                              </svg>
+                            </span>
+                            <div className="text-gray-600  m-3 ml-6">
+                              <div className="text-base font-normal">
+                                <span className="font-medium text-green-900 ">
+                                  {'Rajiv'}
+                                </span>{' '}
+                                called{' '}
+                                <span className="text-sm text-red-900  ">
+                                  {Name}
+                                </span>{' '}
+                              </div>
+                              <div className="text-sm font-normal">
+                                {data?.txt}
+                              </div>
+                              <span className="inline-flex items-center text-xs font-normal text-gray-500 ">
+                                <ClockIcon className="mr-1 w-3 h-3" />
+                                {data?.type == 'ph'
+                                  ? timeConv(
+                                      Number(data?.time)
+                                    ).toLocaleString()
+                                  : timeConv(data?.T).toLocaleString()}
+                                {'    '}
+                                <span className="text-red-900 ml-4 mr-4">
+                                  {Number(data?.duration)} sec
+                                </span>
+                                or
+                                <span className="text-red-900 ml-4">
+                                  {parseInt(data?.duration / 60)} min
+                                </span>
+                              </span>
+                            </div>
+                          </section>
+                        ))}
+                      </ol>
+                    </div>
+                  </>
+                )}
+                {selFeature === 'lead_summary' && (
+                  <>
+                    <div className="max-w-5xl mx-auto space-y-4 mt-4">
+                      {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
   <div className="bg-white rounded-2xl shadow-lg p-6">
     <div>
@@ -3048,10 +2806,9 @@ async function handleCallButtonClick(uid, name, number) {
   </div>
 </div> */}
 
+                      {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4"> */}
 
-{/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4"> */}
-
-  {/* <div className="bg-white rounded-2xl shadow-lg  p-6">
+                      {/* <div className="bg-white rounded-2xl shadow-lg  p-6">
     <div>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 mb-4 ">
@@ -3119,7 +2876,7 @@ async function handleCallButtonClick(uid, name, number) {
     </div>
   </div> */}
 
-{/* 
+                      {/*
   <div className="bg-white rounded-2xl shadow-lg overflow-visible p-6">
     <div>
       <div className="flex items-center gap-2 overflow-visible mb-4">
@@ -3197,95 +2954,414 @@ async function handleCallButtonClick(uid, name, number) {
       </div>
     </div>
   </div> */}
-{/* </div> */}
+                      {/* </div> */}
 
+                      <div>
+                        <div className="grid grid-cols-1 lg:grid-cols-1 gap-4 ">
+                          <div
+                            className=" bg-[#F9F9FB] rounded-[16px] p-4  border border-[#E7E7E9] flex flex-col gap-3"
 
+                            // style={{
+                            //   transition: 'transform 200ms ease-in-out',
+                            //   cursor: 'pointer'
+                            // }}
+                            // onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.01)'}
+                            // onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                          >
+                            <div>
+                              <div className="flex items-center justify-between">
+                                <h2 className="font-[Outfit] font-medium text-[16px] leading-[100%] tracking-[0%] text-[#0E0A1F]">
+                                  {leadNextTaskObj?.notes}
+                                </h2>
+                                <div
+                                  className={`bg-white border rounded-full px-3 py-1 flex items-center gap-1 ${
+                                    leadNextTaskObj?.comingSoon
+                                      ? 'bg-green-400'
+                                      : 'border-red-700 text-red-700 '
+                                  }`}
+                                >
+                                  <Phone size={14} />
+                                  <span className="font-medium text-[12px] leading-[100%] cursor-pointer tracking-[0%]">
+                                    {' '}
+                                    {(leadNextTaskObj?.sts != 'completed' ||
+                                      Math.abs(
+                                        getDifferenceInHours(
+                                          leadNextTaskObj?.schTime,
+                                          ''
+                                        )
+                                      ) <= 24) && (
+                                      <span
+                                        className={`  py-1 ml-6 mb-2 ${
+                                          leadNextTaskObj?.comingSoon
+                                            ? 'bg-green-400'
+                                            : 'bg-red-400'
+                                        }  text-white text-[12px] text-center`}
+                                      >
+                                        {leadNextTaskObj?.comingSoon
+                                          ? 'Starts in'
+                                          : 'Delayed by'}{' '}
+                                        {'  '}
+                                        {Math.abs(
+                                          getDifferenceInMinutes(
+                                            leadNextTaskObj?.schTime,
+                                            ''
+                                          )
+                                        ) > 60
+                                          ? Math.abs(
+                                              getDifferenceInMinutes(
+                                                leadNextTaskObj?.schTime,
+                                                ''
+                                              )
+                                            ) > 8640
+                                            ? `${Math.abs(
+                                                getDifferenceInDays(
+                                                  leadNextTaskObj?.schTime,
+                                                  ''
+                                                )
+                                              )} Days `
+                                            : `${Math.abs(
+                                                getDifferenceInHours(
+                                                  leadNextTaskObj?.schTime,
+                                                  ''
+                                                )
+                                              )} Hours `
+                                          : `${Math.abs(
+                                              getDifferenceInMinutes(
+                                                leadNextTaskObj?.schTime,
+                                                ''
+                                              )
+                                            )} Min`}{' '}
+                                      </span>
+                                    )}
+                                  </span>
+                                </div>
+                              </div>
 
+                              <div className="flex items-center gap-2">
+                                <div className="text-gray-500">
+                                  <img
+                                    src="/comment.svg"
+                                    alt=""
+                                    className="w-5 h-5"
+                                  />
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <span className="font-[Outfit] font-normal text-[14px] leading-[100%] tracking-[0%] text-[#0E0A1F]">
+                                    Recent Comments:
+                                  </span>
+                                  <span className="font-[Outfit] font-normal text-[14px] leading-[100%] tracking-[0%] text-[#606062]">
+                                    {' '}
+                                    {leadDetailsObj?.Remarks || 'NA'}
+                                  </span>
+                                  <span className="font-[Outfit] font-normal text-[10px] leading-[100%] tracking-[0%] text-[#606062] ml-2">
+                                    {leadDetailsObj?.Remarks_T &&
+                                      prettyDateTime(leadDetailsObj?.Remarks_T)}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
 
+                          <div className="flex flex-col md:flex-row rounded-[16px]  bg-[#F9F9FB] overflow-visible border border-[#E7E7E9]">
+                            {/* Section 1 - Project Dropdown */}
+                            <div className="relative flex-1 p-3  border-b md:border-b-0 flex flex-col justify-center items-center text-center z-[20]">
+                              <span className="hidden md:block absolute top-2 bottom-2 right-0 w-px bg-gray-200" />
+                              <p className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0%] text-[#606062] mb-1">
+                                Project
+                              </p>
+                              <div className="font-[Outfit] font-semibold text-[14px] text-[#0E0A1F] tracking-wide overflow-visible relative">
+                                <AssigedToDropComp
+                                  assignerName={
+                                    selProjectIs?.projectName || Project
+                                  }
+                                  id={id}
+                                  align="right"
+                                  setAssigner={setNewProject}
+                                  usersList={projectList}
+                                  className="z-[999]"
+                                />
+                              </div>
+                            </div>
 
+                            {/* Section 2 - Assigned To (Dynamically integrated) */}
+                            <div className="relative flex-1 p-3  border-b md:border-b-0 flex flex-col justify-center items-center text-center">
+                              <span className="hidden md:block absolute top-2 bottom-2 right-0 w-px bg-gray-200" />
+                              <p className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0%] text-[#606062] mb-1">
+                                Assigned to
+                              </p>
+                              {!user?.role?.includes(USER_ROLES.CP_AGENT) ? (
+                                <div className="font-[Outfit] font-semibold text-[14px] text-[#0E0A1F] tracking-wide overflow-ellipsis">
+                                  <AssigedToDropComp
+                                    assignerName={assignerName}
+                                    id={id}
+                                    setAssigner={setAssigner}
+                                    usersList={usersList}
+                                    align={undefined}
+                                  />
+                                </div>
+                              ) : (
+                                <span className="text-[14px] text-[#0E0A1F] font-[Outfit]">
+                                  {assignerName}
+                                </span>
+                              )}
+                            </div>
 
+                            {/* Section 3 - Lead Created */}
+                            <div className="relative flex-1 p-3  border-b md:border-b-0 flex flex-col justify-center items-center text-center">
+                              <span className="hidden md:block absolute top-2 bottom-2 right-0 w-px bg-gray-200" />
+                              <p className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0%] text-[#606062] mb-1">
+                                Lead Created
+                              </p>
+                              <p className="font-[Outfit] font-normal text-[14px] leading-[100%] tracking-[0%] text-[#0E0A1F]">
+                                27 Mar 2025, 11:30 am
+                              </p>
+                            </div>
 
+                            {/* Section 4 - Source */}
+                            <div className="flex-1 p-3 flex flex-col justify-center items-center text-center">
+                              <p className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0%] text-[#606062] mb-1">
+                                Source
+                              </p>
+                              <p className="font-[Outfit] font-normal text-[14px] leading-[100%] tracking-[0%] text-[#0E0A1F]">
+                                {Source?.toString() || 'NA'}
+                              </p>
+                            </div>
+                          </div>
 
+                          <div>
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 ">
+                              {/* Left Column */}
+                              <div className="space-y-4">
+                                <div className=" rounded-[16px] p-4  bg-[#F9F9FB]  border border-[#E7E7E9]  max-w-lg">
+                                  <div className="flex items-center mb-8">
+                                    <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
+                                      {/* <Clock className="text-purple-500 w-5 h-5" /> */}
+                                      <img
+                                        src="/fire.svg"
+                                        alt=""
+                                        className="w-[18px] h-[18px]"
+                                      />
+                                    </div>
 
+                                    <span className="font-semibold text-[12px] leading-[100%] tracking-[0.06em] text-[#696990]">
+                                      LEAD STRENGTH
+                                    </span>
+                                  </div>
 
-
-    <div>
-
-
-
-
-        <div className='grid grid-cols-1 lg:grid-cols-1 gap-4 p-4'>
-
-
-            <div>
-            <div className=" bg-[#F9F9FB] rounded-lg p-6 ">
-      <div className="flex items-center mb-4">
-      <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
-        {/* <Clock className="text-purple-500 w-5 h-5" /> */}
-        <img src="/quill_clock.svg" alt="" className='w-[18px] h-[18px]' />
-
-      </div>
-
-        <span className="font-semibold text-[12px] leading-[100%] tracking-[0.06em] text-[#696990]">UPCOMING TASK</span>
-      </div>
-      
-      <h2 className="font-medium text-[16px]  text-[#0E0A1F] font-outfit">Get into Introduction Call with customer</h2>
-      
-      <div className="flex flex-wrap text-gray-600 mt-2 mb-4">
-        <div className="flex items-center mr-6 mb-2">
-          <span className='font-normal text-[14px] text-[#606062] font-outfit'>
-          {CT != undefined
-                        ? prettyDateTime(CT)
-                        : prettyDateTime(Date)}
-          </span>
-          <span className="mx-3 text-gray-300">|</span>
+                                  {/* <div className="relative h-3 bg-gray-100 rounded-full mb-6">
+        <div
+          className="absolute top-0 left-0 h-full bg-indigo-500 rounded-full"
+          style={{ width: '50%' }}
+        >
         </div>
-        
-        <div className="flex items-center mr-6 mb-2">
-          <span className='font-normal text-[14px]  text-[#606062] font-outfit'>Assigned to: <span className="font-normal text-[14px] text-[#606062] font-outfit">vishal@gmail.com</span></span>
-          <span className="mx-3 text-gray-300">|</span>
+        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+          <span className="text-xs font-medium text-white z-10">50%</span>
         </div>
-        
-        <div className="flex items-center mb-2">
-          <span className='font-normal text-[14px]  text-[#606062] font-outfit'>Created by: Vishal Kumar</span>
-        </div>
-      </div>
-      
-      <div className="flex items-start">
-        <div className="text-gray-400 mr-2">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-1.008c-.417.18-.875.327-1.356.43A.75.75 0 013.75 16.5v-2.87c0-.642.225-1.255.635-1.725A6.922 6.922 0 003 10c0-3.866 3.582-7 8-7s8 3.134 8 7z" clipRule="evenodd" />
-          </svg>
-        </div>
-        <div className="font-normal text-[14px]  text-[#606062] font-outfit">
-          <span className="font-medium">Recent Comments:</span>{' '} {leadDetailsObj?.Remarks || 'NA'}
-        </div>
-      </div>
-    </div>
-            </div>
+      </div> */}
+
+                                  <div className="mb-6">
+                                    {/* <Slider
+      onChange={(e) => setopstr(e.target.value)} // Use the same handler to set value
+      value={opstr}
+      defaultValue={opstr}
+      aria-label="Lead Strength Slider"
+      valueLabelDisplay="auto"
+      min={0}
+      max={100}
+    /> */}
+
+                                    <Box
+                                      sx={{
+                                        position: 'relative',
+                                        width: '100%',
+                                      }}
+                                    >
+                                      <Slider
+                                        value={opstr}
+                                        min={0}
+                                        max={100}
+                                        onChange={(e) =>
+                                          setopstr(e.target.value)
+                                        }
+                                        aria-label="Lead Strength Slider"
+                                        sx={{
+                                          height: 20,
+                                          paddingRight: 0,
+                                          '& .MuiSlider-track': {
+                                            // backgroundColor: '#5a5acc',
+                                            // height: 20,
+                                            // borderRadius: 10,
+                                            backgroundColor: '#5a5acc',
+                                            height: 20,
+                                            borderRadius: 10,
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            color: '#fff', // optional, for visibility
+                                            fontSize: 12, // optional
+                                          },
+                                          '& .MuiSlider-rail': {
+                                            backgroundColor: '#cfd0ff',
+                                            height: 20,
+                                            borderRadius: 10,
+                                          },
+                                          // '& .MuiSlider-thumb': {
+                                          //   display: 'none', // Hide the thumb
+                                          // },
+                                          '& .MuiSlider-thumb': {
+                                            width: 24,
+                                            height: 24,
+                                            backgroundColor: '#5B5FC7',
+                                            // border: '2px solid #5a5acc',
+
+                                            '&:hover, &.Mui-focusVisible': {
+                                              boxShadow:
+                                                '0px 0px 0px 8px rgba(90, 90, 204, 0.16)',
+                                            },
+                                          },
+                                        }}
+                                      />
+                                      <Box
+                                        sx={{
+                                          position: 'absolute',
+                                          top: 0,
+                                          left: `${opstr}%`,
+                                          transform: 'translateX(-100%)',
+                                          height: '100%',
+                                          display: 'flex',
+                                          alignItems: 'center',
+                                          pr: 1,
+                                        }}
+                                      >
+                                        <Typography
+                                          variant="caption"
+                                          sx={{
+                                            color: '#fff',
+                                            fontWeight: 'bold',
+                                            fontSize: '0.75rem',
+                                          }}
+                                        >
+                                          {opstr}%
+                                        </Typography>
+                                      </Box>
+                                    </Box>
+                                  </div>
+
+                                  {/*
+
+<div className="mb-6 relative">
+  <Slider
+    onChange={(e) => setopstr(e.target.value)}
+    value={opstr}
+    defaultValue={opstr}
+    aria-label="Lead Strength Slider"
+    valueLabelDisplay="auto"
+    min={20}
+    max={100}
+    sx={{
+      height: '14px',
+      '& .MuiSlider-rail': {
+        backgroundColor: '#e0e0e0',
+      },
+      '& .MuiSlider-track': {
+        backgroundColor: '#3f51b5',
+      },
+      '& .MuiSlider-thumb': {
+        width: 20,
+        height: 20,
+        backgroundColor: '#3f51b5',
+      }
+    }}
+  />
+
+  <div
+    className="absolute top-0 left-0 w-full h-full flex items-center justify-center"
+    style={{
+      width: `${opstr}%`,
+    }}
+  >
+    <span className="text-xs font-medium text-white">{`${opstr}%`}</span>
+  </div>
 
 
+  <div className="flex justify-between mt-2">
+    <span className="text-xs font-medium text-[#606062]">0%</span>
+    <span className="text-xs font-medium text-[#606062]">100%</span>
+  </div>
+</div> */}
 
+                                  <div className="flex justify-between items-center mb-6">
+                                    <div className="font-normal text-[12px] leading-[100%] tracking-[0%] text-[#606062]">
+                                      Requirement : 10/12
+                                    </div>
+                                    <div className="font-normal text-[12px] leading-[100%] tracking-[0%] text-[#606062]">
+                                      Updated : 27 Mar, 4:30 pm
+                                    </div>
+                                  </div>
 
+                                  <div className="flex flex-wrap gap-3">
+                                    <div className="bg-white rounded-[4px] border border-[#E7E7E9]  px-2 py-1 flex items-center">
+                                      {/* <Clock className="w-5 h-5 mr-2 text-gray-600" /> */}
+                                      <img
+                                        src="/costR.svg"
+                                        alt=""
+                                        className="w-5 h-5"
+                                      />
+                                      <span className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#606062]">
+                                        Shuba Ecosone Ph 2
+                                      </span>
+                                    </div>
 
+                                    <div className="bg-white rounded-[4px] border border-[#E7E7E9] px-2 py-1 flex items-center">
+                                      <img
+                                        src="/costR.svg"
+                                        alt=""
+                                        className="w-5 h-5"
+                                      />
+                                      <span className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#606062]">
+                                        Min: 2.12cr
+                                      </span>
+                                    </div>
 
-            <div>
+                                    <div className="bg-white rounded-[4px] border border-[#E7E7E9] px-2 py-1 flex items-center">
+                                      <img
+                                        src="/costR.svg"
+                                        alt=""
+                                        className="w-5 h-5"
+                                      />
+                                      <span className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#606062]">
+                                        Max: 5.12cr
+                                      </span>
+                                    </div>
 
+                                    {[1, 2, 3, 4, 5].map((index) => (
+                                      <div
+                                        key={index}
+                                        className="bg-white border border-[#E7E7E9] rounded-[4px] px-2 py-1 flex items-center h-[28px]"
+                                      >
+                                        <img
+                                          src="/costR.svg"
+                                          alt=""
+                                          className="w-5 h-5 mr-1"
+                                        />
+                                        <span className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#606062]">
+                                          Call
+                                        </span>
+                                      </div>
+                                    ))}
 
+                                    {/* Add button */}
+                                    <div className="border border-indigo-500 rounded-md p-1 flex items-center justify-center">
+                                      <Plus className="w-5 h-5 text-[#5B5FC7]" />
+                                    </div>
+                                  </div>
+                                </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 ">
-
-
-
-
-{/* Left Column */}
-<div className="space-y-4">
-
-      {/* Lead Strength Card */}
-      <div className="bg-[#F9F9FB] p-3 rounded-lg shadow-sm">
+                                {/* Lead Strength Card */}
+                                {/* <div className="border border-[#E7E7E9] bg-[#F9F9FB] p-3 rounded-[16px]">
     <div className="flex items-center mb-2">
       <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
-        {/* <Clock className="text-purple-500 w-5 h-5" /> */}
+        <Clock className="text-purple-500 w-5 h-5" />
         <img src="/quill_clock.svg" alt="" className='w-[18px] h-[18px]' />
 
       </div>
@@ -3297,261 +3373,457 @@ async function handleCallButtonClick(uid, name, number) {
         <p className="font-normal text-[14px] leading-[100%] tracking-[0%] text-[#606062] mb-1">Total Questions: 2/3</p>
         <p className="font-normal text-[14px] leading-[100%] tracking-[0%] text-[#606062]">Last Updated: 27 Mar, 4:30 pm</p>
       </div>
-      {/* <div className="relative w-20 h-20">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-2xl font-bold">50%</span>
-        </div>
-        <svg className="w-full h-full transform -rotate-90">
-          <circle
-            cx="40"
-            cy="40"
-            r="36"
-            fill="none"
-            stroke="#e6e6f0"
-            strokeWidth="8"
-          />
-          <circle
-            cx="40"
-            cy="40"
-            r="36"
-            fill="none"
-            stroke="#6366f1"
-            strokeWidth="8"
-            strokeDasharray="226"
-            strokeDashoffset="113"
-          />
-        </svg>
-      </div> */}
+
 
       <div>
           <SemicircleProgressChart progress={0}/>
       </div>
     </div>
-  </div>
+  </div> */}
 
+                                <div className="border border-[#E7E7E9] bg-[#F9F9FB] p-3 rounded-[16px]">
+                                  <div className="flex justify-between">
+                                    <div className="flex flex-col ">
+                                      <div className="flex items-center mb-4">
+                                        <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
+                                          <img
+                                            src="/location.svg"
+                                            alt=""
+                                            className="w-[18px] h-[18px]"
+                                          />
+                                        </div>
+                                        <span className="font-semibold text-[12px] text-[#696990] leading-[100%] tracking-[0.06em] uppercase">
+                                          SITE VISIT (
+                                          {projectData.siteVisit.count})
+                                        </span>
+                                      </div>
 
-  {/* Site Visit Section */}
-  <div className="bg-[#F9F9FB] p-4 rounded-lg shadow-sm">
-    <div className="flex items-center mb-4">
-      <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
-        {/* <Clock className="text-purple-600" size={20} /> */}
-        <img src="/quill_clock.svg" alt="" className='w-[18px] h-[18px]' />
+                                      <div>
+                                        <p className="font-normal text-[14px] text-[#606062]">
+                                          Visit Date:{' '}
+                                          {projectData.siteVisit.date}
+                                        </p>
+                                        <p className="font-normal text-[14px] text-[#606062]">
+                                          Site In-charge:{' '}
+                                          {projectData.siteVisit.inCharge}
+                                        </p>
+                                      </div>
+                                    </div>
 
-      </div>
-      <span className="font-semibold text-[12px] text-[#696990] leading-[100%] tracking-[0.06em] uppercase">SITE VISIT ({projectData.siteVisit.count})</span>
-    </div>
-    
-    <div className="flex justify-between items-center">
-      <div className='flex gap-2 flex-col'>
-        <div className="font-normal text-[14px] leading-[100%] tracking-[0%] text-[#606062]">Visit Date: {projectData.siteVisit.date}</div>
-        <div className="font-normal text-[14px] leading-[100%] tracking-[0%] text-[#606062]">Site In-charge: {projectData.siteVisit.inCharge}</div>
-      </div>
-      <button className="font-semibold text-[14px] leading-[100%] tracking-[0em] text-[#0E0A1F]">Review emoji</button>
-    </div>
-  </div>
+                                    <div className="flex flex-col items-center font-semibold text-[14px] text-[#0E0A1F]">
+                                      <img
+                                        src="/good.svg"
+                                        alt="icon"
+                                        className="mb-1 w-16 h-16"
+                                      />
+                                      Good
+                                    </div>
+                                  </div>
+                                </div>
 
-
-
-{/* Task Logs Section */}
-<div className="bg-[#F9F9FB] p-4 rounded-lg shadow-sm">
-  <div className="flex items-center mb-4">
-    <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
-      <img src="/quill_clock.svg" alt="Clock Icon" className="w-[18px] h-[18px]" />
-    </div>
-    <span className="font-semibold text-[12px] text-[#696990] leading-[100%] tracking-[0.06em] uppercase">
-      TASK LOGS
-    </span>
-    <div className="ml-auto">
-      <img src="/arrowright.svg" alt="Arrow Right Icon" className="w-5 h-5" />
-    </div>
-  </div>
-
-
-  <div className='space-y-4 px-4'>
-
-
-  {[
-    {
-      label: 'Price Quotations',
-      value: projectData.taskLogs.priceQuotations,
-    },
-    {
-      label: 'Completed Tasks',
-      value: projectData.taskLogs.completedTasks,
-    },
-    {
-      label: 'Total Comments',
-      value: projectData.taskLogs.totalComments,
-    },
-  ].map((item, index, array) => (
-    <div
-      key={item.label}
-      className={`${index !== array.length - 1 ? 'border-b pb-3 mb-3' : ''}`}
-    >
-      <div className="flex justify-between  items-center">
-        <div className="flex gap-2 items-center">
-          <img src="/fileicon.svg" alt="File Icon" className="w-5 h-5" />
-          <span className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062]">
-            {item.label}
-          </span>
-        </div>
-        <span className="font-outfit font-normal text-xs leading-tight tracking-tight text-[#606062]">
-          {item.value}
-        </span>
-      </div>
-    </div>
-  ))}
-
-  </div>
-
-
-</div>
-
-
-</div>
-
-{/* Right Column */}
-<div className="space-y-4">
-
-
-
-
-      {/* Projects Card */}
-      <div className="bg-[#F9F9FB] p-4 rounded-lg shadow-sm">
-    {!isProjectsExpanded && (
-      <div>
-        <div className="flex items-center mb-4">
-          <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
-            {/* <Clock className="text-purple-600" size={20} /> */}
-            <img src="/quill_clock.svg" alt="" className='w-[18px] h-[18px]' />
-          </div>
-          <span className="font-semibold text-[12px] text-[#696990] leading-[100%] tracking-[0.06em] uppercase">PROJECTS (3)</span>
-          <div className="ml-auto">
-            <button className="bg-[#5B5FC7] p-1 rounded-lg text-white">
-              <Plus size={20} />
-            </button>
-          </div>
-        </div>
-        
-        <div className="mb-2">
-          <div className="flex justify-between items-center">
-            <div>
-              <span className="font-medium text-[12px] leading-[100%] tracking-normal text-[#404040]">{projectData.projects[0].name}</span>
-              <span className="font-normal text-[12px] leading-[100%] tracking-normal text-[#666666] ml-2">{projectData.projects[0].date}</span>
-            </div>
-            <div className="flex items-center ml-auto">
-              <button className="font-outfit text-[#7746E0] font-normal text-[12px] leading-[100%] tracking-[0em] underline decoration-solid decoration-[0px] underline-offset-[0%]">View units</button>
-            </div>
-          </div>
-        </div>
-
-        <button 
-          onClick={toggleProjectsExpand} 
-          className="flex items-center font-medium text-[12px] leading-[100%] tracking-[0em] text-[#7746E0] mt-2"
-        >
-          +7 more <ChevronDown size={16} className="ml-1" />
-        </button>
-      </div>
-    )}
-    {/* Expanded View */}
-    {isProjectsExpanded && (
-      <div>
-        <div className="flex items-center mb-4">
-          <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
-            {/* <Clock className="text-purple-600" size={20} /> */}
-            <img src="/quill_clock.svg" alt="" className='w-[18px] h-[18px]' />
-
-          </div>
-          <span className="font-semibold text-[12px] text-[#696990] leading-[100%] tracking-[0.06em] uppercase">PROJECTS (3)</span>
-          <div className="ml-auto">
-            <button className="bg-[#EDE9FE] p-2 rounded-lg text-white">
-              <PlusCircle size={20} />
-            </button>
-          </div>
-        </div>
-        
-        {projectData.projects.map((project, index) => (
-          <div key={index} className="mb-4">
-            <div className="flex justify-between items-center">
-              <div>
-                <div className="text-gray-800 font-medium">{project.name}</div>
-                <div className="text-gray-500 text-sm">{project.date}</div>
-              </div>
-              <ChevronRight size={20} className="text-gray-400" />
-            </div>
-          </div>
-        ))}
-
-        <button 
-          onClick={toggleProjectsExpand} 
-          className="flex items-center text-purple-600 mt-2 font-medium"
-        >
-          Less <ChevronUp size={16} className="ml-1" />
-        </button>
-      </div>
-    )}
-  </div>
-
-
-
-
-  <div className="bg-[#F9F9FB] p-4 rounded-lg shadow-sm">
+                                {/*
+  <div className="border border-[#E7E7E9] bg-[#F9F9FB] p-4 rounded-[16px]">
   <div className="flex items-center mb-4">
     <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
       <img src="/quill_clock.svg" alt="" className='w-[18px] h-[18px]' />
     </div>
-    <span className="font-semibold text-[12px] text-[#696990] leading-[100%] tracking-[0.06em] uppercase">
-      ASSIGNED TO
-    </span>
+    <span className="font-semibold text-[12px] text-[#696990] leading-[100%] tracking-[0.06em] uppercase">SITE VISIT (4)</span>
   </div>
 
-  <div className="flex flex-col gap-2">
-    <div className="flex justify-between items-center cursor-pointer" onClick={toggleAssignedExpand}>
-      {!user?.role?.includes(USER_ROLES.CP_AGENT) ? (
-        <div className="font-semibold text-sm text-slate-900 tracking-wide w-full">
-          <AssigedToDropComp
-            assignerName={assignerName}
-            id={id}
-            setAssigner={setAssigner}
-            usersList={usersList}
-            align={undefined}
-          />
-        </div>
-      ) : (
-        <span className="text-left text-sm font-medium text-[#404040]">
-          {assignerName}
-        </span>
-      )}
-      
-      {isAssignedExpanded ? (
-        <ChevronUp size={20} className="text-gray-500" />
-      ) : (
-        <ChevronDown size={20} className="text-gray-500" />
-      )}
-    </div>
 
-    {/* Date display - shown for all users */}
-    <div className="font-normal text-[12px] leading-[100%] tracking-[0em] text-[#666666]">
-    {assignT != undefined
-                        ? prettyDateTime(assignT)
-                        : prettyDateTime(Date)}
+
+
+  <div className="grid grid-cols-2 items-center gap-4">
+  <div className="flex gap-2 flex-col">
+    <div className="font-normal text-[14px] tracking-[0%] text-[#606062]">
+      Visit Date: {projectData.siteVisit.date}
     </div>
+    <div className="font-normal text-[14px] tracking-[0%] text-[#606062]">
+      Site In-charge: {projectData.siteVisit.inCharge}
+    </div>
+  </div>
+
+  <div className="font-semibold text-[14px] leading-[100%] tracking-[0em] text-[#0E0A1F] flex flex-col items-center">
+    <img src="/good.svg" alt="icon" className="mb-1 w-16 h-16" />
+    Good
   </div>
 </div>
 
 
 
+</div> */}
 
+                                <div className="border border-[#E7E7E9] bg-[#F9F9FB] p-4 rounded-[16px] cursor-pointer">
+                                  <div className="flex items-center mb-4">
+                                    <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
+                                      <img
+                                        src="/target-sale.svg"
+                                        alt="Clock Icon"
+                                        className="w-[18px] h-[18px]"
+                                      />
+                                    </div>
+                                    <span className="font-semibold text-[12px] text-[#696990] leading-[100%] tracking-[0.06em] uppercase">
+                                      TASK LOGS
+                                    </span>
+                                    <div className="ml-auto">
+                                      <img
+                                        src="/arrowright.svg"
+                                        alt="Arrow Right Icon"
+                                        className="w-5 h-5"
+                                      />
+                                    </div>
+                                  </div>
 
+                                  <div className="space-y-4 px-4">
+                                    {[
+                                      {
+                                        label: 'Price Quotations',
+                                        value:
+                                          projectData.taskLogs.priceQuotations,
+                                      },
+                                      {
+                                        label: 'Completed Tasks',
+                                        value:
+                                          projectData.taskLogs.completedTasks,
+                                      },
+                                      {
+                                        label: 'Total Comments',
+                                        value:
+                                          projectData.taskLogs.totalComments,
+                                      },
+                                    ].map((item, index, array) => (
+                                      <div
+                                        key={item.label}
+                                        className={`${
+                                          index !== array.length - 1
+                                            ? 'border-b pb-3 mb-3'
+                                            : ''
+                                        }`}
+                                      >
+                                        <div className="flex justify-between  items-center">
+                                          <div className="flex gap-2 items-center">
+                                            <img
+                                              src="/fileicon.svg"
+                                              alt="File Icon"
+                                              className="w-5 h-5"
+                                            />
+                                            <span className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062]">
+                                              {item.label}
+                                            </span>
+                                          </div>
+                                          <span className="font-outfit font-normal text-xs leading-tight tracking-tight text-[#606062]">
+                                            {item.value}
+                                          </span>
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              </div>
 
+                              {/* Right Column */}
+                              <div className="space-y-4">
+                                <div className=" rounded-[16px] p-4  bg-[#F9F9FB]  border border-[#E7E7E9]  max-w-lg">
+                                  <div className="flex items-center mb-4">
+                                    {/* <div className="bg-purple-50 p-3 rounded-full mr-3">
+          <Clock className="text-purple-600 w-5 h-5" />
+        </div> */}
+                                    <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
+                                      <img
+                                        src="/folder-library.svg"
+                                        alt=""
+                                        className="w-[18px] h-[18px]"
+                                      />
+                                    </div>
+                                    <span className="font-semibold text-[12px] text-[#696990] leading-[100%] tracking-[0.06em] uppercase">
+                                      PROJECT
+                                    </span>
+                                  </div>
 
+                                  <div className="mb-4">
+                                    <div className="flex justify-between items-center mb-4">
+                                      <h2 className="font-medium text-base leading-tight tracking-normal text-[#404040]">
+                                        {' '}
+                                        {selProjectFullDetails?.projectName}
+                                      </h2>
+                                      <a
+                                        href="#"
+                                        className="font-medium text-xs leading-tight tracking-normal text-[#7746E0] underline decoration-solid decoration-0 decoration-offset-[25%] decoration-thick decoration-skip-ink-auto"
+                                        onClick={() => {
+                                          setUnitsViewMode(!unitsViewMode)
+                                        }}
+                                      >
+                                        View Units (
+                                        {selProjectFullDetails?.availableCount}/
+                                        {selProjectFullDetails?.totalUnitCount})
+                                      </a>
+                                    </div>
 
+                                    <div className="flex flex-wrap gap-2">
+                                      <div className="border bg-white rounded-lg py-1 px-2 flex items-center">
+                                        <span className="mr-2 font-outfit font-normal text-xs leading-tight tracking-normal text-[#0E0A1F]">
+                                          Planning Approval-
+                                          {
+                                            selProjectFullDetails?.planningApproval
+                                          }
+                                        </span>
+                                        <div className="">
+                                          {/* <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-white" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg> */}
+                                          <img
+                                            src="/yes1.svg"
+                                            alt=""
+                                            className="w-5 h-5"
+                                          />
+                                        </div>
+                                      </div>
 
+                                      <div className="border bg-white rounded-lg py-1 px-2 flex items-center">
+                                        <span className="mr-2 font-outfit font-normal text-xs leading-tight tracking-normal text-[#0E0A1F]">
+                                          Rera Approval-
+                                          {
+                                            selProjectFullDetails?.planningApproval
+                                          }
+                                        </span>
+                                        <div className=" ">
+                                          {/* <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-white" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg> */}
+                                          <img
+                                            src="/yes1.svg"
+                                            alt=""
+                                            className="w-5 h-5"
+                                          />
+                                        </div>
+                                      </div>
 
+                                      <div className="border bg-white rounded-lg py-1 px-2 font-outfit font-normal text-xs leading-tight tracking-normal text-[#0E0A1F] flex items-center justify-center">
+                                        +21 Amenities
+                                      </div>
+                                    </div>
+                                  </div>
 
+                                  {isExpanded && (
+                                    <div className="mt-4 pt-4 border-t">
+                                      <h3 className="font-medium text-base leading-tight tracking-normal text-[#404040] mb-2">
+                                        Additional Information
+                                      </h3>
+                                      <p className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062]">
+                                        This is the second phase of the Shuba
+                                        Ecosone development featuring
+                                        eco-friendly design, sustainable
+                                        materials, and energy-efficient
+                                        construction. The project includes
+                                        studio, 1 BHK, and 2 BHK apartments with
+                                        modern amenities.
+                                      </p>
+                                      <div className="mt-3">
+                                        <h4 className="font-medium text-base leading-tight tracking-normal text-[#404040] mb-1">
+                                          Key Features:
+                                        </h4>
+                                        <ul className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062]">
+                                          <li>Solar-powered common areas</li>
+                                          <li>Rainwater harvesting</li>
+                                          <li>Organic waste composting</li>
+                                          <li>EV charging stations</li>
+                                        </ul>
+                                      </div>
+                                    </div>
+                                  )}
 
-  {/* More Details Card */}
-  {/* <div className="bg-white p-6 rounded-lg shadow-sm">
+                                  <button
+                                    onClick={toggleExpand}
+                                    className="mt-4 font-medium text-xs leading-tight tracking-normal text-[#7746E0] underline decoration-solid decoration-0 decoration-offset-[25%] decoration-thick decoration-skip-ink-auto flex items-center"
+                                  >
+                                    View {isExpanded ? 'less' : 'more'}
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="20"
+                                      height="20"
+                                      viewBox="0 0 24 24"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      strokeWidth="2"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      className={`ml-1 transition-transform ${
+                                        isExpanded ? 'rotate-180' : ''
+                                      }`}
+                                    >
+                                      <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                  </button>
+                                </div>
+
+                                {/* Projects Card */}
+                                <div className="border border-[#E7E7E9] bg-[#F9F9FB] p-4 rounded-[16px] ">
+                                  {!isProjectsExpanded && (
+                                    <div>
+                                      <div className="flex items-center mb-4">
+                                        <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
+                                          {/* <Clock className="text-purple-600" size={20} /> */}
+                                          <img
+                                            src="/quill_clock.svg"
+                                            alt=""
+                                            className="w-[18px] h-[18px]"
+                                          />
+                                        </div>
+                                        <span className="font-semibold text-[12px] text-[#696990] leading-[100%] tracking-[0.06em] uppercase">
+                                          PROJECTS (3)
+                                        </span>
+                                        <div className="ml-auto">
+                                          <button className="bg-[#5B5FC7] p-1 rounded-lg text-white">
+                                            <Plus size={20} />
+                                          </button>
+                                        </div>
+                                      </div>
+
+                                      <div className="mb-2">
+                                        <div className="flex justify-between items-center">
+                                          <div>
+                                            <span className="font-medium text-[12px] leading-[100%] tracking-normal text-[#404040]">
+                                              {projectData.projects[0].name}
+                                            </span>
+                                            <span className="font-normal text-[12px] leading-[100%] tracking-normal text-[#666666] ml-2">
+                                              {projectData.projects[0].date}
+                                            </span>
+                                          </div>
+                                          <div className="flex items-center ml-auto">
+                                            <button className="font-outfit text-[#7746E0] font-normal text-[12px] leading-[100%] tracking-[0em] underline decoration-solid decoration-[0px] underline-offset-[0%]">
+                                              View units
+                                            </button>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <button
+                                        onClick={toggleProjectsExpand}
+                                        className="flex items-center font-medium text-[12px] leading-[100%] tracking-[0em] text-[#7746E0] mt-2"
+                                      >
+                                        +7 more{' '}
+                                        <ChevronDown
+                                          size={16}
+                                          className="ml-1"
+                                        />
+                                      </button>
+                                    </div>
+                                  )}
+                                  {/* Expanded View */}
+                                  {isProjectsExpanded && (
+                                    <div>
+                                      <div className="flex items-center mb-4">
+                                        <div className="border border-[#E7E7E9] bg-[#F9F9FB] p-1.5 rounded-[16px] mr-3">
+                                          {/* <Clock className="text-purple-600" size={20} /> */}
+                                          <img
+                                            src="/quill_clock.svg"
+                                            alt=""
+                                            className="w-[18px] h-[18px]"
+                                          />
+                                        </div>
+                                        <span className="font-semibold text-[12px] text-[#696990] leading-[100%] tracking-[0.06em] uppercase">
+                                          PROJECTS (3)
+                                        </span>
+                                        <div className="ml-auto">
+                                          <button className="bg-[#EDE9FE] p-2 rounded-lg text-white">
+                                            <PlusCircle size={20} />
+                                          </button>
+                                        </div>
+                                      </div>
+
+                                      {projectData.projects.map(
+                                        (project, index) => (
+                                          <div key={index} className="mb-4">
+                                            <div className="flex justify-between items-center">
+                                              <div>
+                                                <div className="text-gray-800 font-medium">
+                                                  {project.name}
+                                                </div>
+                                                <div className="text-gray-500 text-sm">
+                                                  {project.date}
+                                                </div>
+                                              </div>
+                                              <ChevronRight
+                                                size={20}
+                                                className="text-gray-400"
+                                              />
+                                            </div>
+                                          </div>
+                                        )
+                                      )}
+
+                                      <button
+                                        onClick={toggleProjectsExpand}
+                                        className="flex items-center text-purple-600 mt-2 font-medium"
+                                      >
+                                        Less{' '}
+                                        <ChevronUp size={16} className="ml-1" />
+                                      </button>
+                                    </div>
+                                  )}
+                                </div>
+
+                                <div className="border border-[#E7E7E9] bg-[#F9F9FB] p-4 rounded-[16px] ">
+                                  <div className="flex items-center mb-4">
+                                    <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
+                                      <img
+                                        src="/quill_clock.svg"
+                                        alt=""
+                                        className="w-[18px] h-[18px]"
+                                      />
+                                    </div>
+                                    <span className="font-semibold text-[12px] text-[#696990] leading-[100%] tracking-[0.06em] uppercase">
+                                      ASSIGNED TO
+                                    </span>
+                                  </div>
+
+                                  <div className="flex flex-col gap-2">
+                                    <div
+                                      className="flex justify-between items-center cursor-pointer"
+                                      onClick={toggleAssignedExpand}
+                                    >
+                                      {!user?.role?.includes(
+                                        USER_ROLES.CP_AGENT
+                                      ) ? (
+                                        <div className="font-semibold text-sm text-slate-900 tracking-wide w-full">
+                                          <AssigedToDropComp
+                                            assignerName={assignerName}
+                                            id={id}
+                                            setAssigner={setAssigner}
+                                            usersList={usersList}
+                                            align={undefined}
+                                          />
+                                        </div>
+                                      ) : (
+                                        <span className="text-left text-sm font-medium text-[#404040]">
+                                          {assignerName}
+                                        </span>
+                                      )}
+
+                                      {isAssignedExpanded ? (
+                                        <ChevronUp
+                                          size={20}
+                                          className="text-gray-500"
+                                        />
+                                      ) : (
+                                        <ChevronDown
+                                          size={20}
+                                          className="text-gray-500"
+                                        />
+                                      )}
+                                    </div>
+
+                                    {/* Date display - shown for all users */}
+                                    <div className="font-normal text-[12px] leading-[100%] tracking-[0em] text-[#666666]">
+                                      {assignT != undefined
+                                        ? prettyDateTime(assignT)
+                                        : prettyDateTime(Date)}
+                                    </div>
+                                  </div>
+                                </div>
+
+                                {/* More Details Card */}
+                                {/* <div className="bg-white p-6 rounded-lg shadow-sm">
     <div className="flex items-center justify-between mb-6">
       <div className="flex items-center">
         <div className="bg-purple-100 p-2 rounded-full mr-3">
@@ -3573,853 +3845,892 @@ async function handleCallButtonClick(uid, name, number) {
     </div>
   </div> */}
 
+                                {/* Call Activity Card */}
+                                <div className="border border-[#E7E7E9] bg-[#F9F9FB] cursor-pointer p-4 rounded-[16px] ">
+                                  <div className="flex items-center justify-between mb-6">
+                                    <div className="flex items-center">
+                                      <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
+                                        <img
+                                          src="/call.svg"
+                                          alt="Clock Icon"
+                                          className="w-[18px] h-[18px]"
+                                        />
+                                      </div>
+                                      <h2 className="font-semibold text-[12px] leading-[100%] tracking-[0.06em] text-[#696990]">
+                                        CALL ACTIVITY
+                                      </h2>
+                                    </div>
+                                    <img
+                                      src="/arrowright.svg"
+                                      alt="Arrow Icon"
+                                      className="w-5 h-5"
+                                    />
+                                  </div>
 
-
-{/* Call Activity Card */}
-<div className="bg-[#F9F9FB] p-4 rounded-lg shadow-sm">
-  <div className="flex items-center justify-between mb-6">
-    <div className="flex items-center">
-      <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
-        <img src="/quill_clock.svg" alt="Clock Icon" className="w-[18px] h-[18px]" />
-      </div>
-      <h2 className="font-semibold text-[12px] leading-[100%] tracking-[0.06em] text-[#696990]">CALL ACTIVITY</h2>
-    </div>
-    <img src="/arrowright.svg" alt="Arrow Icon" className="w-5 h-5" />
-  </div>
-
-  <div className="space-y-4 px-4">
-    {[
-      {
-        label: "Total Talk time",
-        value: "102 hrs, 32 mins",
-      },
-      {
-        label: "No of time Contacted",
-        value: "30 times",
-      },
-      {
-        label: "RNR",
-        value: "20 times",
-      },
-    ].map((item, index, array) => (
-      <div
-        key={item.label}
-        className={`flex justify-between items-center ${
-          index !== array.length - 1 ? 'pb-3 border-b border-gray-200' : ''
-        }`}
-      >
-        <div className="flex items-center">
-          <div className="mr-3">
-            <img src="/fileicon.svg" alt="Icon" className="w-5 h-5" />
-          </div>
-          <p className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062]">
-            {item.label}
-          </p>
-        </div>
-        <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0em] text-[#616162]">
-          {item.value}
-        </p>
-      </div>
-    ))}
-  </div>
-</div>
-
-</div>
-</div>
-
-
-            </div>
-
-
-        </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-
-                              </>)}
-              {selFeature === 'appointments' && (
-                <>
-                  <Formik
-                    initialValues={initialState1}
-
-                  >
-                    {(formik2) => (
-                      <div className=" h-screen bg-white rounded-xl mt-2 ">
-                        {(showNotInterested ||
-                          showVisitFeedBackStatus ||
-                          showJunk) &&
-                          selSchGrpO?.ct === undefined && (
-                            <div className="flex flex-col pt-0 my-10 mt-[10px] rounded bg-[#FFFFFF] mx-2">
-                              {showNotInterested && (
-                                <div className="w-full flex flex-col mb-3 mt-2">
-                                  <CustomSelect
-                                    name="source"
-                                    label={`Why  ${
-                                      customerDetails?.Name?.toLocaleUpperCase() ||
-                                      'Customer'
-                                    } is  not Interested *`}
-                                    className="input mt-3"
-                                    onChange={(value) => {
-                                      setNotInterestType(value.value)
-                                    }}
-                                    value={notInterestType}
-                                    options={notInterestOptions}
-                                  />
+                                  <div className="space-y-4 px-4">
+                                    {[
+                                      {
+                                        label: 'Total Talk time',
+                                        value: '102 hrs, 32 mins',
+                                      },
+                                      {
+                                        label: 'No of time Contacted',
+                                        value: '30 times',
+                                      },
+                                      {
+                                        label: 'RNR',
+                                        value: '20 times',
+                                      },
+                                    ].map((item, index, array) => (
+                                      <div
+                                        key={item.label}
+                                        className={`flex justify-between items-center ${
+                                          index !== array.length - 1
+                                            ? 'pb-3 border-b border-gray-200'
+                                            : ''
+                                        }`}
+                                      >
+                                        <div className="flex items-center">
+                                          <div className="mr-3">
+                                            <img
+                                              src="/fileicon.svg"
+                                              alt="Icon"
+                                              className="w-5 h-5"
+                                            />
+                                          </div>
+                                          <p className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062]">
+                                            {item.label}
+                                          </p>
+                                        </div>
+                                        <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0em] text-[#616162]">
+                                          {item.value}
+                                        </p>
+                                      </div>
+                                    ))}
+                                  </div>
                                 </div>
-                              )}
-                              {showJunk && (
-                                <div className="w-full flex flex-col mb-3 mt-2">
-                                  <CustomSelect
-                                    name="source"
-                                    label={`Why customer details are Junk ?`}
-                                    className="input mt-3"
-                                    onChange={(value) => {
-                                      setJunkReason(value.value)
-                                    }}
-                                    value={junkReason}
-                                    options={junktOptions}
-                                  />
+
+                                <div className="border border-[#E7E7E9] bg-[#F9F9FB] cursor-pointer p-4 rounded-[16px] ">
+                                  <div className="flex items-center justify-between mb-6">
+                                    <div className="flex items-center">
+                                      <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
+                                        <img
+                                          src="/quill_clock.svg"
+                                          alt="Clock Icon"
+                                          className="w-[18px] h-[18px]"
+                                        />
+                                      </div>
+                                      <h2 className="font-semibold text-[12px] leading-[100%] tracking-[0.06em] text-[#696990]">
+                                        Dates
+                                      </h2>
+                                    </div>
+                                    <img
+                                      src="/arrowright.svg"
+                                      alt="Arrow Icon"
+                                      className="w-5 h-5"
+                                    />
+                                  </div>
+
+                                  <div className="space-y-4 px-4">
+                                    <div className="flex justify-between items-center pb-3 border-b border-gray-200">
+                                      <div className="flex items-center">
+                                        <div className="mr-3">
+                                          <img
+                                            src="/fileicon.svg"
+                                            alt="Icon"
+                                            className="w-5 h-5"
+                                          />
+                                        </div>
+                                        <p className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062]">
+                                          Created On
+                                        </p>
+                                      </div>
+                                      <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0em] text-[#616162]">
+                                        {CT != undefined
+                                          ? prettyDateTime(CT)
+                                          : prettyDateTime(Date)}
+                                      </p>
+                                    </div>
+
+                                    <div className="flex justify-between items-center pb-3 border-b border-gray-200">
+                                      <div className="flex items-center">
+                                        <div className="mr-3">
+                                          <img
+                                            src="/fileicon.svg"
+                                            alt="Icon"
+                                            className="w-5 h-5"
+                                          />
+                                        </div>
+                                        <p className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062]">
+                                          Updated On :
+                                        </p>
+                                      </div>
+                                      <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0em] text-[#616162]">
+                                        {stsUpT === undefined
+                                          ? 'NA'
+                                          : prettyDateTime(stsUpT) || 'NA'}
+                                      </p>
+                                    </div>
+
+                                    <div className="flex justify-between items-center">
+                                      <div className="flex items-center">
+                                        <div className="mr-3">
+                                          <img
+                                            src="/fileicon.svg"
+                                            alt="Icon"
+                                            className="w-5 h-5"
+                                          />
+                                        </div>
+                                        <p className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062]">
+                                          Assigned On
+                                        </p>
+                                      </div>
+                                      <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0em] text-[#616162]">
+                                        {assignT != undefined
+                                          ? prettyDateTime(assignT)
+                                          : prettyDateTime(Date)}
+                                      </p>
+                                    </div>
+                                  </div>
                                 </div>
-                              )}
-
-                              {showVisitFeedBackStatus && (
-                                <div className="w-full flex flex-col mb-3 mt-2">
-                                  <CustomSelect
-                                    name="source"
-                                    label="Sitess Visit Feedback*"
-                                    className="input mt-3"
-                                    onChange={(value) => {
-                                      setNotInterestType(value.value)
-                                    }}
-                                    value={notInterestType}
-                                    options={siteVisitFeedbackOptions}
-                                  />
-                                </div>
-                              )}
-
-                              {!showJunk && (
-                                <div className="  outline-none border  rounded p-4 mt-4">
-                                  <textarea
-                                    value={takNotes}
-                                    onChange={(e) =>
-                                      setNotesTitle(e.target.value)
-                                    }
-                                    placeholder="Type & make a notes"
-                                    className="w-full h-full pb-10 outline-none  focus:border-blue-600 hover:border-blue-600 rounded bg-[#FFFFFF] "
-                                  ></textarea>
-                                </div>
-                              )}
-                              <div className="flex flex-row mt-1">
-                                <button
-                                  onClick={() => notInterestedFun()}
-                                  className={`flex mt-2 rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-balck  bg-[#7bd2ea]  hover:bg-gray-700 hover:text-white  `}
-                                >
-                                  <span className="ml-1 ">Save</span>
-                                </button>
-                                <button
-                                  onClick={() => notInterestedFun()}
-                                  className={`flex mt-2 ml-4 rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-balck  bg-[#7bd2ea]  hover:bg-gray-700 hover:text-white `}
-                                >
-                                  <span className="ml-1 ">
-                                    Save & Whats App
-                                  </span>
-                                </button>
-                                <button
-                                  onClick={() => cancelResetStatusFun()}
-                                  className={`flex mt-2 ml-4  rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700 hover:text-white  `}
-                                >
-                                  <span className="ml-1 ">Cancel</span>
-                                </button>
-                              </div>
-                            </div>
-                          )}
-
-                        <div className="font-md font-medium text-xs  ml-2 text-gray-800 flex flex-row justify-between mr-4 py-2">
-                          <section className="flex flex-row py-1">
-
-
-
-                          </section>
-                          <div className="flex flex-row ">
-
-
-                            <div className="flex flex-row bg-white rounded-xl border ">
-                              <div
-                                className={` py-1 pr-4 pl-4 min-w-[62px] ${
-                                  selFilterVal === 'all' ? 'bg-[#e4faff]' : ''
-                                } rounded-xl rounded-r-none`}
-                                onClick={() => setSelFilterVal('all')}
-                              >
-                                <span className="mr-1 text-[10px] ">All</span>
-
-                                {
-                                  leadSchFetchedData.filter(
-                                    (d) => d?.schTime != undefined
-                                  ).length
-                                }
-                              </div>
-                              <div
-                                className={` py-1 pr-4 pl-4 min-w-[62px] border-x ${
-                                  selFilterVal === 'pending'
-                                    ? 'bg-[#e4faff] text-[0E0A1F]'
-                                    : ''
-                                } `}
-                                onClick={() => setSelFilterVal('pending')}
-                              >
-                                <CheckCircleIcon className="w-4 h-3  inline " />
-                                <span className="mr-1 text-[10px] ">
-                                  Pending
-                                </span>
-                                <span
-                                  className=" text-[11
-                              px] "
-                                >
-                                  {' '}
-                                  {
-                                    leadSchFetchedData?.filter(
-                                      (d) => d?.sts === 'pending'
-                                    ).length
-                                  }
-                                </span>
-                              </div>
-                              <div
-                                className={` py-1 pr-4 pl-4 min-w-[62px] ${
-                                  selFilterVal === 'completed'
-                                    ? 'bg-[#e4faff]'
-                                    : ''
-                                }  rounded-xl rounded-l-none`}
-                                onClick={() => setSelFilterVal('completed')}
-                              >
-                                <CheckCircleIcon className="w-4 h-3 inline text-[#058527]" />
-                                <span className="mr-1 text-[10px] ">
-                                  Completed
-                                </span>
-
-                                {
-                                  leadSchFetchedData?.filter(
-                                    (d) => d?.sts === 'completed'
-                                  ).length
-                                }
                               </div>
                             </div>
                           </div>
                         </div>
-                        {loader && (
-                          <div
-                            id="toast-success"
-                            className="flex items-center w-[96.4%] mx-4 rounded-t-lg p-2 text-white
-                     bg-[#7bd2ea]"
-                            role="alert"
-                          >
-
-
-                            <div className=" text-sm font-normal font-bodyLato  tight-wider">
-
-                              Hey, Plan your{' '}
-                              <span className="text-xs  tight-wider ">
-                                {tempLeadStatus.toLocaleUpperCase()}{' '}
-                              </span>
-                              ..!
-                            </div>
-                            <button
-                              type="button"
-                              className="ml-auto -mx-0.5 -my-0.5  text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 "
-                              data-dismiss-target="#toast-success"
-                              aria-label="Close"
-                            >
-                              <span className="sr-only">Close</span>
-                              <svg
-                                className="w-5 h-5"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  fillRule="evenodd"
-                                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                  clipRule="evenodd"
-                                ></path>
-                              </svg>
-                            </button>
-                          </div>
-                        )}
-                        {addSch && (
-                          <div className="flex flex-col pt-0 my-10 mx-4 mt-[0px] ">
-                            <Formik
-                              enableReinitialize={true}
-                              initialValues={initialState}
-                              validationSchema={validateSchema}
-                              onSubmit={(values, { resetForm }) => {
-                                fAddSchedule()
-                              }}
-                            >
-                              {(formik) => (
-                                <Form>
-                                  <div className=" form outline-none border  py-4">
-                                    <section className=" px-4">
-
-                                      <div className="text-xs font-bodyLato text-[#516f90]">
-                                        Task Title
-                                        <ErrorMessage
-                                          component="div"
-                                          name="taskTitle"
-                                          className="error-message text-red-700 text-xs p-1"
-                                        />
-                                      </div>
-                                      <input
-                                        autoFocus
-                                        name="taskTitle"
-                                        type="text"
-                                        value={takTitle}
-                                        onChange={(e) => {
-                                          formik.setFieldValue(
-                                            'taskTitle',
-                                            e.target.value
-                                          )
-                                          setTitleFun(e)
-                                        }}
-                                        placeholder="Enter a short title"
-                                        className="w-full h-full pb-1 outline-none text-sm font-bodyLato focus:border-blue-600 hover:border-blue-600  border-b border-[#cdcdcd] text-[33475b]  "
-                                      ></input>
-                                      <div className="flex flex-row mt-3">
-                                        <section>
-                                          <span className="text-xs font-bodyLato text-[#516f90]">
-                                            <span className="">
-                                              {tempLeadStatus
-                                                .charAt(0)
-                                                .toUpperCase() +
-                                                tempLeadStatus.slice(1)}{' '}
-                                            </span>
-                                            Due Date
-                                          </span>
-                                          <div className="bg-green   pl-   flex flex-row ">
-                                            <span className="inline">
-                                              <CustomDatePicker
-                                                className=" mt-[2px] pl- px- min-w-[240px] inline text-xs text-[#0091ae] "
-                                                selected={startDate}
-                                                onChange={(date) =>
-                                                  setStartDate(date)
-                                                }
-                                                showTimeSelect
-                                                timeFormat="HH:mm"
-                                                injectTimes={[
-                                                  setHours(setMinutes(d, 1), 0),
-                                                  setHours(
-                                                    setMinutes(d, 5),
-                                                    12
-                                                  ),
-                                                  setHours(
-                                                    setMinutes(d, 59),
-                                                    23
-                                                  ),
-                                                ]}
-                                                dateFormat="MMM d, yyyy h:mm aa"
-                                              />
-                                            </span>
-                                          </div>
-                                        </section>
-                                      </div>
-                                    </section>
-                                    <div className="flex flex-row mt-4 justify-between pr-4 border-t">
-                                      <section>
-                                        <span>{''}</span>
-                                      </section>
-                                      <section className="flex">
-                                        <button
-                                          type="submit"
-                                          className={`flex mt-2 cursor-pointer rounded-lg text-bodyLato items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium   bg-[#7bd2ea] bg-[#7bd2ea] text-black hover:bg-gray-700 hover:text-white  `}
-                                        >
-                                          <span className="ml-1 ">
-                                            Create{' '}
-                                            {tempLeadStatus !=
-                                              streamCurrentStatus &&
-                                              tempLeadStatus}{' '}
-                                            Task
-                                          </span>
-                                        </button>
-                                        <button
-                                          onClick={() => cancelResetStatusFun()}
-                                          className={`flex mt-2 ml-4 rounded-lg items-center text-bodyLato pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700 hover:text-white `}
-                                        >
-                                          <span className="ml-1 ">Cancel</span>
-                                        </button>
-                                      </section>
-                                    </div>
+                      </div>
+                    </div>
+                  </>
+                )}
+                {selFeature === 'appointments' && (
+                  <>
+                    <Formik initialValues={initialState1}>
+                      {(formik2) => (
+                        <div className=" h-screen bg-white rounded-xl mt-2 ">
+                          {(showNotInterested ||
+                            showVisitFeedBackStatus ||
+                            showJunk) &&
+                            selSchGrpO?.ct === undefined && (
+                              <div className="flex flex-col pt-0 my-10 mt-[10px] rounded bg-[#FFFFFF] mx-2">
+                                {showNotInterested && (
+                                  <div className="w-full flex flex-col mb-3 mt-2">
+                                    <CustomSelect
+                                      name="source"
+                                      label={`Why  ${
+                                        customerDetails?.Name?.toLocaleUpperCase() ||
+                                        'Customer'
+                                      } is  not Interested *`}
+                                      className="input mt-3"
+                                      onChange={(value) => {
+                                        setNotInterestType(value.value)
+                                      }}
+                                      value={notInterestType}
+                                      options={notInterestOptions}
+                                    />
                                   </div>
-                                </Form>
-                              )}
-                            </Formik>
-                          </div>
-                        )}
+                                )}
+                                {showJunk && (
+                                  <div className="w-full flex flex-col mb-3 mt-2">
+                                    <CustomSelect
+                                      name="source"
+                                      label={`Why customer details are Junk ?`}
+                                      className="input mt-3"
+                                      onChange={(value) => {
+                                        setJunkReason(value.value)
+                                      }}
+                                      value={junkReason}
+                                      options={junktOptions}
+                                    />
+                                  </div>
+                                )}
 
+                                {showVisitFeedBackStatus && (
+                                  <div className="w-full flex flex-col mb-3 mt-2">
+                                    <CustomSelect
+                                      name="source"
+                                      label="Sitess Visit Feedback*"
+                                      className="input mt-3"
+                                      onChange={(value) => {
+                                        setNotInterestType(value.value)
+                                      }}
+                                      value={notInterestType}
+                                      options={siteVisitFeedbackOptions}
+                                    />
+                                  </div>
+                                )}
 
-                        {leadSchLoading &&
-                          [1, 2, 3].map((data, i) => <LogSkelton key={i} />)}
-
-                        {!leadSchLoading &&
-                          leadSchFetchedData.length == 0 &&
-                          !addSch && (
-                            <div className="py-8 px-8 flex flex-col items-center">
-                              <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
-                                <img
-                                  className="w-[200px] h-[200px] inline"
-                                  alt=""
-                                  src="/target.svg"
-                                />
+                                {!showJunk && (
+                                  <div className="  outline-none border  rounded p-4 mt-4">
+                                    <textarea
+                                      value={takNotes}
+                                      onChange={(e) =>
+                                        setNotesTitle(e.target.value)
+                                      }
+                                      placeholder="Type & make a notes"
+                                      className="w-full h-full pb-10 outline-none  focus:border-blue-600 hover:border-blue-600 rounded bg-[#FFFFFF] "
+                                    ></textarea>
+                                  </div>
+                                )}
+                                <div className="flex flex-row mt-1">
+                                  <button
+                                    onClick={() => notInterestedFun()}
+                                    className={`flex mt-2 rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-balck  bg-[#7bd2ea]  hover:bg-gray-700 hover:text-white  `}
+                                  >
+                                    <span className="ml-1 ">Save</span>
+                                  </button>
+                                  <button
+                                    onClick={() => notInterestedFun()}
+                                    className={`flex mt-2 ml-4 rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-balck  bg-[#7bd2ea]  hover:bg-gray-700 hover:text-white `}
+                                  >
+                                    <span className="ml-1 ">
+                                      Save & Whats App
+                                    </span>
+                                  </button>
+                                  <button
+                                    onClick={() => cancelResetStatusFun()}
+                                    className={`flex mt-2 ml-4  rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700 hover:text-white  `}
+                                  >
+                                    <span className="ml-1 ">Cancel</span>
+                                  </button>
+                                </div>
                               </div>
-                              <h3 className="mb-1 text-sm font-semibold text-gray-900 ">
-                                No Appointmentss
-                              </h3>
-                              <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">
-                                Appointments always bring more suprises{' '}
-                                <span
-                                  className="text-blue-600"
-                                  onClick={() => setAddSch(true)}
+                            )}
+
+                          <div className="font-md font-medium text-xs  ml-2 text-gray-800 flex flex-row justify-between mr-4 py-2">
+                            <section className="flex flex-row py-1"></section>
+                            <div className="flex flex-row ">
+                              <div className="flex flex-row bg-white rounded-xl border ">
+                                <div
+                                  className={` py-1 pr-4 pl-4 min-w-[62px] ${
+                                    selFilterVal === 'all' ? 'bg-[#e4faff]' : ''
+                                  } rounded-xl rounded-r-none`}
+                                  onClick={() => setSelFilterVal('all')}
                                 >
-                                  Add new
+                                  <span className="mr-1 text-[10px] ">All</span>
+
+                                  {
+                                    leadSchFetchedData.filter(
+                                      (d) => d?.schTime != undefined
+                                    ).length
+                                  }
+                                </div>
+                                <div
+                                  className={` py-1 pr-4 pl-4 min-w-[62px] border-x ${
+                                    selFilterVal === 'pending'
+                                      ? 'bg-[#e4faff] text-[0E0A1F]'
+                                      : ''
+                                  } `}
+                                  onClick={() => setSelFilterVal('pending')}
+                                >
+                                  <CheckCircleIcon className="w-4 h-3  inline " />
+                                  <span className="mr-1 text-[10px] ">
+                                    Pending
+                                  </span>
+                                  <span
+                                    className=" text-[11
+                              px] "
+                                  >
+                                    {' '}
+                                    {
+                                      leadSchFetchedData?.filter(
+                                        (d) => d?.sts === 'pending'
+                                      ).length
+                                    }
+                                  </span>
+                                </div>
+                                <div
+                                  className={` py-1 pr-4 pl-4 min-w-[62px] ${
+                                    selFilterVal === 'completed'
+                                      ? 'bg-[#e4faff]'
+                                      : ''
+                                  }  rounded-xl rounded-l-none`}
+                                  onClick={() => setSelFilterVal('completed')}
+                                >
+                                  <CheckCircleIcon className="w-4 h-3 inline text-[#058527]" />
+                                  <span className="mr-1 text-[10px] ">
+                                    Completed
+                                  </span>
+
+                                  {
+                                    leadSchFetchedData?.filter(
+                                      (d) => d?.sts === 'completed'
+                                    ).length
+                                  }
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          {loader && (
+                            <div
+                              id="toast-success"
+                              className="flex items-center w-[96.4%] mx-4 rounded-t-lg p-2 text-white
+                     bg-[#7bd2ea]"
+                              role="alert"
+                            >
+                              <div className=" text-sm font-normal font-bodyLato  tight-wider">
+                                Hey, Plan your{' '}
+                                <span className="text-xs  tight-wider ">
+                                  {tempLeadStatus.toLocaleUpperCase()}{' '}
                                 </span>
-                              </time>
+                                ..!
+                              </div>
+                              <button
+                                type="button"
+                                className="ml-auto -mx-0.5 -my-0.5  text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 "
+                                data-dismiss-target="#toast-success"
+                                aria-label="Close"
+                              >
+                                <span className="sr-only">Close</span>
+                                <svg
+                                  className="w-5 h-5"
+                                  fill="currentColor"
+                                  viewBox="0 0 20 20"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    fillRule="evenodd"
+                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                    clipRule="evenodd"
+                                  ></path>
+                                </svg>
+                              </button>
                             </div>
                           )}
-                        <div className="max-h-[60%]">
-                          <ol className="relative  border-gray-200 ">
-                            {leadSchFilteredData.map((data, i) => (
-                              <section
-                                key={i}
-                                className=" mx-2 bg-[#FFF] mb-[1px]  px-3 py-3 border-b"
-                                onMouseEnter={() => {
-                                  hoverEffectTaskFun(data?.ct)
-                                }}
-                                onMouseLeave={() => {
-                                  hoverEffectTaskFun(2000)
+                          {addSch && (
+                            <div className="flex flex-col pt-0 my-10 mx-4 mt-[0px] ">
+                              <Formik
+                                enableReinitialize={true}
+                                initialValues={initialState}
+                                validationSchema={validateSchema}
+                                onSubmit={(values, { resetForm }) => {
+                                  fAddSchedule()
                                 }}
                               >
-                                {editTaskObj?.ct === data?.ct ? (
-                                  <EditLeadTask
-                                    editTaskObj={editTaskObj}
-                                    setStartDate={setStartDate}
-                                    startDate={startDate}
-                                    takTitle={takTitle}
-                                    setTitleFun={setTitleFun}
-                                    cancelResetStatusFun={cancelResetStatusFun}
-                                    editTaskFun={editTaskFun}
-                                    d={d}
-                                  />
-                                ) : null}
-                                <>
-                                  {' '}
-
-                                  <LeadTaskDisplayHead
-                                    data={data}
-                                    setAddTaskCommentObj={setAddTaskCommentObj}
-                                    closeTaskFun={closeTaskFun}
-                                    hoverTasId={hoverTasId}
-                                    undoFun={undoFun}
-                                    setShowVisitFeedBackStatusFun={
-                                      setShowVisitFeedBackStatusFun
-                                    }
-                                  />
-                                  {addTaskCommentObj?.ct === data?.ct && (
-
-                                    <AddLeadTaskComment
-                                      closeTask={closeTask}
-                                      data={data}
-                                      setShowVisitFeedBackStatusFun={
-                                        setShowVisitFeedBackStatusFun
-                                      }
-                                      setShowNotInterestedFun={
-                                        setShowNotInterestedFun
-                                      }
-                                      setAddCommentTitle={setAddCommentTitle}
-                                      addCommentTitle={addCommentTitle}
-                                      addCommentTime={addCommentTime}
-                                      setPostPoneToFuture={setPostPoneToFuture}
-                                      setClosePrevious={setClosePrevious}
-                                      setAddCommentPlusTask={
-                                        setAddCommentPlusTask
-                                      }
-                                      setAddCommentTime={setAddCommentTime}
-                                      cancelResetStatusFun={
-                                        cancelResetStatusFun
-                                      }
-                                      addTaskCommentFun={addTaskCommentFun}
-                                      addCommentPlusTask={addCommentPlusTask}
-                                      setSelType={setSelType}
-                                      selType={selType}
-                                      d={d}
-                                    />
-                                  )}
-                                  {data?.comments?.map((commentObj, k) => {
-                                    return (
-                                      <li
-                                        key={k}
-                                        className={`ml-6 py-1 text-[14px] text-[#7E92A2] tracking-wide ${
-                                          data?.comments?.length - 1 === k
-                                            ? 'mb-1'
-                                            : ''
-                                        }`}
-                                      >
-                                        <section className="flex flex-row justify-between">
-                                          <span>
-                                            {' '}
-                                            <svg
-                                              viewBox="0 0 12 12"
-                                              className="notes_icon inline w-4 h-4 mr-1"
-                                              aria-label="2 comments"
-                                            >
-                                              <g fill="none" fillRule="evenodd">
-                                                <path
-                                                  fill="currentColor"
-                                                  fillRule="nonzero"
-                                                  d="M9.5 1A1.5 1.5 0 0 1 11 2.5v5A1.5 1.5 0 0 1 9.5 9H7.249L5.28 10.97A.75.75 0 0 1 4 10.44V9H2.5A1.5 1.5 0 0 1 1 7.5v-5A1.5 1.5 0 0 1 2.5 1h7zm0 1h-7a.5.5 0 0 0-.5.5v5a.5.5 0 0 0 .5.5H5v1.836L6.835 8H9.5a.5.5 0 0 0 .5-.5v-5a.5.5 0 0 0-.5-.5z"
-                                                ></path>
-                                              </g>
-                                            </svg>{' '}
-                                            <span className="text-[#606062]">{commentObj?.c}</span>
-                                          </span>
-                                          <span className="text-[#606062] text-[14px]">
-                                            {' '}
-                                            {prettyDateTime(commentObj?.t)}
-                                          </span>
-                                        </section>
-                                      </li>
-                                    )
-                                  })}
-                                  {(showNotInterested ||
-                                    showVisitFeedBackStatus) &&
-                                    selSchGrpO?.ct === data?.ct && (
-                                      <div className="flex flex-col pt-0 my-10 mt-[10px] rounded bg-[#FFFFFF] mx-2">
-                                        {showNotInterested && (
-                                          <div className="w-full flex flex-col mb-3 mt-2">
-                                            <SelectDropDownComp
-                                              label={`Why  ${
-                                                customerDetails?.Name?.toLocaleUpperCase() ||
-                                                'Customer'
-                                              } is  not Interested*`}
-                                              options={notInterestOptions}
-                                              value={fbTitle}
-                                              onChange={(value) => {
-                                                setFbTitle(value.value)
-                                              }}
-                                            />
-                                          </div>
-                                        )}
-                                        {showVisitFeedBackStatus && (
-                                          <div className="w-full flex flex-col mb-3 mt-2">
-                                            <SelectDropDownComp
-                                              label="Sites Visit Feedback *"
-                                              options={siteVisitFeedbackOptions}
-                                              value={fbTitle}
-                                              onChange={(value) => {
-
-                                                setFbTitle(value.value)
-                                              }}
-                                            />
-                                          </div>
-                                        )}
-
-                                        <div className="  outline-none border  rounded p-4 mt-4">
-                                          <textarea
-                                            value={fbNotes}
-                                            onChange={(e) =>
-                                              setfbNotes(e.target.value)
-                                            }
-                                            placeholder="Type & make a notes *"
-                                            className="w-full h-full pb-10 outline-none  focus:border-blue-600 hover:border-blue-600 rounded bg-[#FFFFFF] "
-                                          ></textarea>
+                                {(formik) => (
+                                  <Form>
+                                    <div className=" form outline-none border  py-4">
+                                      <section className=" px-4">
+                                        <div className="text-xs font-bodyLato text-[#516f90]">
+                                          Task Title
+                                          <ErrorMessage
+                                            component="div"
+                                            name="taskTitle"
+                                            className="error-message text-red-700 text-xs p-1"
+                                          />
                                         </div>
-                                        <div className="flex flex-row mt-1">
-                                          <button
-                                            onClick={() => {
-                                              if (fbNotes != '') {
-                                                setLeadStatus('visitdone')
-                                                if (showNotInterested) {
-                                                  notInterestedFun()
-                                                  return
-                                                }
-                                                addFeedbackFun(data)
-                                              } else {
-                                                enqueueSnackbar(
-                                                  'Please Enter Notes',
-                                                  {
-                                                    variant: 'warning',
+                                        <input
+                                          autoFocus
+                                          name="taskTitle"
+                                          type="text"
+                                          value={takTitle}
+                                          onChange={(e) => {
+                                            formik.setFieldValue(
+                                              'taskTitle',
+                                              e.target.value
+                                            )
+                                            setTitleFun(e)
+                                          }}
+                                          placeholder="Enter a short title"
+                                          className="w-full h-full pb-1 outline-none text-sm font-bodyLato focus:border-blue-600 hover:border-blue-600  border-b border-[#cdcdcd] text-[33475b]  "
+                                        ></input>
+                                        <div className="flex flex-row mt-3">
+                                          <section>
+                                            <span className="text-xs font-bodyLato text-[#516f90]">
+                                              <span className="">
+                                                {tempLeadStatus
+                                                  .charAt(0)
+                                                  .toUpperCase() +
+                                                  tempLeadStatus.slice(1)}{' '}
+                                              </span>
+                                              Due Date
+                                            </span>
+                                            <div className="bg-green   pl-   flex flex-row ">
+                                              <span className="inline">
+                                                <CustomDatePicker
+                                                  className=" mt-[2px] pl- px- min-w-[240px] inline text-xs text-[#0091ae] "
+                                                  selected={startDate}
+                                                  onChange={(date) =>
+                                                    setStartDate(date)
                                                   }
-                                                )
-                                              }
-                                            }}
-                                            className={`flex mt-2 rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-balck  bg-[#7bd2ea]  hover:bg-gray-700 hover:text-white `}
-                                          >
-                                            <span className="ml-1 ">Save</span>
-                                          </button>
+                                                  showTimeSelect
+                                                  timeFormat="HH:mm"
+                                                  injectTimes={[
+                                                    setHours(
+                                                      setMinutes(d, 1),
+                                                      0
+                                                    ),
+                                                    setHours(
+                                                      setMinutes(d, 5),
+                                                      12
+                                                    ),
+                                                    setHours(
+                                                      setMinutes(d, 59),
+                                                      23
+                                                    ),
+                                                  ]}
+                                                  dateFormat="MMM d, yyyy h:mm aa"
+                                                />
+                                              </span>
+                                            </div>
+                                          </section>
+                                        </div>
+                                      </section>
+                                      <div className="flex flex-row mt-4 justify-between pr-4 border-t">
+                                        <section>
+                                          <span>{''}</span>
+                                        </section>
+                                        <section className="flex">
                                           <button
-                                            onClick={() => {
-                                              console.log('am i clicked')
-
-                                              setLeadStatus('visitdone')
-                                              if (showNotInterested) {
-                                                notInterestedFun()
-                                                return
-                                              }
-                                              addFeedbackFun(data)
-
-                                              getWhatsAppTemplates(
-                                                'on_sitevisit_done',
-                                                'wa',
-                                                'customer',
-                                                ProjectId,
-                                                receiverDetails,
-                                                msgPayload
-                                              )
-                                            }}
-                                            className={`flex mt-2 ml-4 rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-balck  bg-[#7bd2ea]  hover:bg-gray-700 hover:text-white `}
+                                            type="submit"
+                                            className={`flex mt-2 cursor-pointer rounded-lg text-bodyLato items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium   bg-[#7bd2ea] bg-[#7bd2ea] text-black hover:bg-gray-700 hover:text-white  `}
                                           >
                                             <span className="ml-1 ">
-                                              Save & Whats App
+                                              Create{' '}
+                                              {tempLeadStatus !=
+                                                streamCurrentStatus &&
+                                                tempLeadStatus}{' '}
+                                              Task
                                             </span>
                                           </button>
                                           <button
                                             onClick={() =>
                                               cancelResetStatusFun()
                                             }
-                                            className={`flex mt-2 ml-4  rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700 hover:text-white  `}
+                                            className={`flex mt-2 ml-4 rounded-lg items-center text-bodyLato pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700 hover:text-white `}
                                           >
                                             <span className="ml-1 ">
                                               Cancel
                                             </span>
                                           </button>
-                                        </div>
+                                        </section>
                                       </div>
-                                    )}
-                                  {addTaskCommentObj?.ct != data?.ct && (
-                                    <LeadTaskFooter
-                                      data={data}
-                                      hoverTasId={hoverTasId}
-                                      EditTaskOpenWindowFun={
-                                        EditTaskOpenWindowFun
-                                      }
-                                      delFun={delFun}
-                                    />
-                                  )}
-                                </>
-                              </section>
-                            ))}{' '}
-                          </ol>
-                        </div>
-
-                      </div>
-                    )}
-                  </Formik>
-                </>
-              )}
-              {selFeature === 'timeline' && (
-                <div className="py-8 mx-4">
-                  {filterData?.length == 0 && (
-                    <div className="py-8 px-8 flex flex-col items-center">
-                      <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
-                        <img
-                          className="w-[200px] h-[200px] inline"
-                          alt=""
-                          src="/templates.svg"
-                        />
-                      </div>
-                      <h3 className="mb-1 text-sm font-semibold text-gray-900 ">
-                        Timeline is Empty
-                      </h3>
-                      <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">
-                        This scenario is very rare to view
-                      </time>
-                    </div>
-                  )}
-             
-
-             <div className="text-gray-600 font-medium mr-6 text-[12px] uppercase tracking-wide mb-4 ">
-                    Timeline
-                  </div>
-
-                  <div className='mx-4'>
-
-
-     
-
-
-
-                  <ol className="col-span-12 space-y-2 relative pl-4 sm:col-span-8  sm:before:absolute sm:before:top-2 sm:before:bottom-0 sm:before:w-0.5 sm:before:-left-3 before:bg-gray-200">
-
-                    
-
-                    {filterData?.map((data, i) => (
-                      <section key={i} className="flex flex-col sm:relative sm:before:absolute sm:before:top-2 sm:before:w-4 sm:before:h-4 sm:before:rounded-full sm:before:left-[-35px] sm:before:z-[1] before:bg-[#7BD2EA] bg-white  rounded-lg">
-                        <a
-                          href="#"
-                          className="block items-center px-3 sm:flex "
-                        >
-                          {data?.type == 'status' && (
-                            <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-blue-200 rounded-full ring-8 ring-white  ">
-                              <svg
-                                className="w-3 h-3 text-blue-600 \"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  fillRule="evenodd"
-                                  d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                                  clipRule="evenodd"
-                                ></path>
-                              </svg>
-                            </span>
-                          )}
-                          {data?.type == 'ph' && (
-                            <>
-                              <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-green-200 rounded-full ring-8 ring-white ">
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  className="h-3 w-3 text-blue-600 "
-                                  viewBox="0 0 20 20"
-                                  fill="currentColor"
-                                >
-                                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                                </svg>
-                              </span>
-                              <div className="text-gray-600  m-3">
-                                <div className="text-base font-normal">
-                                  <span className="font-medium text-green-900 ">
-                                    {'Rajiv'}
-                                  </span>{' '}
-                                  called{' '}
-                                  <span className="text-sm text-red-900 ">
-                                    {Name}
-                                  </span>{' '}
-                                </div>
-                                <div className="text-sm font-normal">
-                                  {data?.txt}
-                                </div>
-                                <span className="inline-flex items-center text-xs font-normal text-gray-500 ">
-                                  <ClockIcon className="mr-1 w-3 h-3" />
-                                  {data?.type == 'ph'
-                                    ? timeConv(
-                                        Number(data?.time)
-                                      ).toLocaleString()
-                                    : timeConv(data?.T).toLocaleString()}
-                                  {'    '}
-                                  <span className="text-red-900 ml-4 mr-4">
-                                    {Number(data?.duration)} sec
-                                  </span>
-                                  or
-                                  <span className="text-red-900 ml-4">
-                                    {parseInt(data?.duration / 60)} min
-                                  </span>
-                                </span>
-                              </div>
-                            </>
-                          )}
-                          {data?.type != 'ph' && (
-                            <div className="text-gray-600 font-bodyLato mx-3 my-1">
-                              <div className="text-base font-normal">
-                                {data?.type === 'sts_change' && (
-                                  <span className="text-sm font-medium text-gray-800 ">
-                                    {data?.from?.toUpperCase()} {'  '}
-                                  </span>
+                                    </div>
+                                  </Form>
                                 )}
-                                <span className="text-sm font-normal text-gray-800 mx-2 ">
-                                  {activieLogNamer(data)}
-                                </span>{' '}
-                                {data?.type === 'sts_change' && (
-                                  <span className="text-sm font-medium text-gray-800 ">
-                                    {'  '} {data?.to?.toUpperCase()}
-                                  </span>
-                                )}
-                                {data?.type === 'assign_change' && (
-                                  <span className="text-xs  text-gray-500 ">
-                                    {'  '} {empNameSetter(data?.to)}
-                                  </span>
-                                )}
-                              </div>
-                              <div className="text-sm font-normal">
-                                {data?.txt}
-                              </div>
-                              <span className="inline-flex items-center text-xs font-normal text-gray-500 ">
-                                <ClockIcon className=" w-3 h-3   text-gray-500" />
-
-                                <span className="text-xs  text-gray-500 ml-1">
-                                  {data?.type == 'ph'
-                                    ? timeConv(
-                                        Number(data?.time)
-                                      ).toLocaleString()
-                                    : timeConv(data?.T).toLocaleString()}
-                                </span>
-
-
-                                <div className="w-[2px] mx-2 mt-[4px] h-[8px] border-0 border-r"></div>
-
-
-                                
-                                <span className="text-xs  text-gray-500">by:</span>
-                                <span className="text-xs  text-gray-500 ml-1 ">
-                                  {data?.by}
-                                </span>
-                              </span>
+                              </Formik>
                             </div>
                           )}
-                        </a>
-                      </section>
-                    ))}
-                  </ol>
 
+                          {leadSchLoading &&
+                            [1, 2, 3].map((data, i) => <LogSkelton key={i} />)}
+
+                          {!leadSchLoading &&
+                            leadSchFetchedData.length == 0 &&
+                            !addSch && (
+                              <div className="py-8 px-8 flex flex-col items-center">
+                                <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
+                                  <img
+                                    className="w-[200px] h-[200px] inline"
+                                    alt=""
+                                    src="/target.svg"
+                                  />
+                                </div>
+                                <h3 className="mb-1 text-sm font-semibold text-gray-900 ">
+                                  No Appointmentss
+                                </h3>
+                                <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">
+                                  Appointments always bring more suprises{' '}
+                                  <span
+                                    className="text-blue-600"
+                                    onClick={() => setAddSch(true)}
+                                  >
+                                    Add new
+                                  </span>
+                                </time>
+                              </div>
+                            )}
+                          <div className="max-h-[60%]">
+                            <ol className="relative  border-gray-200 ">
+                              {leadSchFilteredData.map((data, i) => (
+                                <section
+                                  key={i}
+                                  className=" mx-2 bg-[#FFF] mb-[1px]  px-3 py-3 border-b"
+                                  onMouseEnter={() => {
+                                    hoverEffectTaskFun(data?.ct)
+                                  }}
+                                  onMouseLeave={() => {
+                                    hoverEffectTaskFun(2000)
+                                  }}
+                                >
+                                  {editTaskObj?.ct === data?.ct ? (
+                                    <EditLeadTask
+                                      editTaskObj={editTaskObj}
+                                      setStartDate={setStartDate}
+                                      startDate={startDate}
+                                      takTitle={takTitle}
+                                      setTitleFun={setTitleFun}
+                                      cancelResetStatusFun={
+                                        cancelResetStatusFun
+                                      }
+                                      editTaskFun={editTaskFun}
+                                      d={d}
+                                    />
+                                  ) : null}
+                                  <>
+                                    {' '}
+                                    <LeadTaskDisplayHead
+                                      data={data}
+                                      setAddTaskCommentObj={
+                                        setAddTaskCommentObj
+                                      }
+                                      closeTaskFun={closeTaskFun}
+                                      hoverTasId={hoverTasId}
+                                      undoFun={undoFun}
+                                      setShowVisitFeedBackStatusFun={
+                                        setShowVisitFeedBackStatusFun
+                                      }
+                                    />
+                                    {addTaskCommentObj?.ct === data?.ct && (
+                                      <AddLeadTaskComment
+                                        closeTask={closeTask}
+                                        data={data}
+                                        setShowVisitFeedBackStatusFun={
+                                          setShowVisitFeedBackStatusFun
+                                        }
+                                        setShowNotInterestedFun={
+                                          setShowNotInterestedFun
+                                        }
+                                        setAddCommentTitle={setAddCommentTitle}
+                                        addCommentTitle={addCommentTitle}
+                                        addCommentTime={addCommentTime}
+                                        setPostPoneToFuture={
+                                          setPostPoneToFuture
+                                        }
+                                        setClosePrevious={setClosePrevious}
+                                        setAddCommentPlusTask={
+                                          setAddCommentPlusTask
+                                        }
+                                        setAddCommentTime={setAddCommentTime}
+                                        cancelResetStatusFun={
+                                          cancelResetStatusFun
+                                        }
+                                        addTaskCommentFun={addTaskCommentFun}
+                                        addCommentPlusTask={addCommentPlusTask}
+                                        setSelType={setSelType}
+                                        selType={selType}
+                                        d={d}
+                                      />
+                                    )}
+                                    {data?.comments?.map((commentObj, k) => {
+                                      return (
+                                        <li
+                                          key={k}
+                                          className={`ml-6 py-1 text-[14px] text-[#7E92A2] tracking-wide ${
+                                            data?.comments?.length - 1 === k
+                                              ? 'mb-1'
+                                              : ''
+                                          }`}
+                                        >
+                                          <section className="flex flex-row justify-between">
+                                            <span>
+                                              {' '}
+                                              <svg
+                                                viewBox="0 0 12 12"
+                                                className="notes_icon inline w-4 h-4 mr-1"
+                                                aria-label="2 comments"
+                                              >
+                                                <g
+                                                  fill="none"
+                                                  fillRule="evenodd"
+                                                >
+                                                  <path
+                                                    fill="currentColor"
+                                                    fillRule="nonzero"
+                                                    d="M9.5 1A1.5 1.5 0 0 1 11 2.5v5A1.5 1.5 0 0 1 9.5 9H7.249L5.28 10.97A.75.75 0 0 1 4 10.44V9H2.5A1.5 1.5 0 0 1 1 7.5v-5A1.5 1.5 0 0 1 2.5 1h7zm0 1h-7a.5.5 0 0 0-.5.5v5a.5.5 0 0 0 .5.5H5v1.836L6.835 8H9.5a.5.5 0 0 0 .5-.5v-5a.5.5 0 0 0-.5-.5z"
+                                                  ></path>
+                                                </g>
+                                              </svg>{' '}
+                                              <span className="text-[#606062]">
+                                                {commentObj?.c}
+                                              </span>
+                                            </span>
+                                            <span className="text-[#606062] text-[14px]">
+                                              {' '}
+                                              {prettyDateTime(commentObj?.t)}
+                                            </span>
+                                          </section>
+                                        </li>
+                                      )
+                                    })}
+                                    {(showNotInterested ||
+                                      showVisitFeedBackStatus) &&
+                                      selSchGrpO?.ct === data?.ct && (
+                                        <div className="flex flex-col pt-0 my-10 mt-[10px] rounded bg-[#FFFFFF] mx-2">
+                                          {showNotInterested && (
+                                            <div className="w-full flex flex-col mb-3 mt-2">
+                                              <SelectDropDownComp
+                                                label={`Why  ${
+                                                  customerDetails?.Name?.toLocaleUpperCase() ||
+                                                  'Customer'
+                                                } is  not Interested*`}
+                                                options={notInterestOptions}
+                                                value={fbTitle}
+                                                onChange={(value) => {
+                                                  setFbTitle(value.value)
+                                                }}
+                                              />
+                                            </div>
+                                          )}
+                                          {showVisitFeedBackStatus && (
+                                            <div className="w-full flex flex-col mb-3 mt-2">
+                                              <SelectDropDownComp
+                                                label="Sites Visit Feedback *"
+                                                options={
+                                                  siteVisitFeedbackOptions
+                                                }
+                                                value={fbTitle}
+                                                onChange={(value) => {
+                                                  setFbTitle(value.value)
+                                                }}
+                                              />
+                                            </div>
+                                          )}
+
+                                          <div className="  outline-none border  rounded p-4 mt-4">
+                                            <textarea
+                                              value={fbNotes}
+                                              onChange={(e) =>
+                                                setfbNotes(e.target.value)
+                                              }
+                                              placeholder="Type & make a notes *"
+                                              className="w-full h-full pb-10 outline-none  focus:border-blue-600 hover:border-blue-600 rounded bg-[#FFFFFF] "
+                                            ></textarea>
+                                          </div>
+                                          <div className="flex flex-row mt-1">
+                                            <button
+                                              onClick={() => {
+                                                if (fbNotes != '') {
+                                                  setLeadStatus('visitdone')
+                                                  if (showNotInterested) {
+                                                    notInterestedFun()
+                                                    return
+                                                  }
+                                                  addFeedbackFun(data)
+                                                } else {
+                                                  toast.error(
+                                                    'Please Enter Notes'
+                                                  )
+                                                }
+                                              }}
+                                              className={`flex mt-2 rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-balck  bg-[#7bd2ea]  hover:bg-gray-700 hover:text-white `}
+                                            >
+                                              <span className="ml-1 ">
+                                                Save
+                                              </span>
+                                            </button>
+                                            <button
+                                              onClick={() => {
+                                                console.log('am i clicked')
+
+                                                setLeadStatus('visitdone')
+                                                if (showNotInterested) {
+                                                  notInterestedFun()
+                                                  return
+                                                }
+                                                addFeedbackFun(data)
+
+                                                getWhatsAppTemplates(
+                                                  'on_sitevisit_done',
+                                                  'wa',
+                                                  'customer',
+                                                  ProjectId,
+                                                  receiverDetails,
+                                                  msgPayload
+                                                )
+                                              }}
+                                              className={`flex mt-2 ml-4 rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-balck  bg-[#7bd2ea]  hover:bg-gray-700 hover:text-white `}
+                                            >
+                                              <span className="ml-1 ">
+                                                Save & Whats App
+                                              </span>
+                                            </button>
+                                            <button
+                                              onClick={() =>
+                                                cancelResetStatusFun()
+                                              }
+                                              className={`flex mt-2 ml-4  rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700 hover:text-white  `}
+                                            >
+                                              <span className="ml-1 ">
+                                                Cancel
+                                              </span>
+                                            </button>
+                                          </div>
+                                        </div>
+                                      )}
+                                    {addTaskCommentObj?.ct != data?.ct && (
+                                      <LeadTaskFooter
+                                        data={data}
+                                        hoverTasId={hoverTasId}
+                                        EditTaskOpenWindowFun={
+                                          EditTaskOpenWindowFun
+                                        }
+                                        delFun={delFun}
+                                      />
+                                    )}
+                                  </>
+                                </section>
+                              ))}{' '}
+                            </ol>
+                          </div>
+                        </div>
+                      )}
+                    </Formik>
+                  </>
+                )}
+                {selFeature === 'timeline' && (
+                  <div className="py-8 mx-4">
+                    {filterData?.length == 0 && (
+                      <div className="py-8 px-8 flex flex-col items-center">
+                        <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
+                          <img
+                            className="w-[200px] h-[200px] inline"
+                            alt=""
+                            src="/templates.svg"
+                          />
+                        </div>
+                        <h3 className="mb-1 text-sm font-semibold text-gray-900 ">
+                          Timeline is Empty
+                        </h3>
+                        <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">
+                          This scenario is very rare to view
+                        </time>
+                      </div>
+                    )}
+
+                    <div className="text-gray-600 font-medium mr-6 text-[12px] uppercase tracking-wide mb-4 ">
+                      Timeline
+                    </div>
+
+                    <div className="mx-4">
+                      <ol className="col-span-12 space-y-2 relative pl-4 sm:col-span-8  sm:before:absolute sm:before:top-2 sm:before:bottom-0 sm:before:w-0.5 sm:before:-left-3 before:bg-gray-200">
+                        {filterData?.map((data, i) => (
+                          <section
+                            key={i}
+                            className="flex flex-col sm:relative sm:before:absolute sm:before:top-2 sm:before:w-4 sm:before:h-4 sm:before:rounded-full sm:before:left-[-35px] sm:before:z-[1] before:bg-[#7BD2EA] bg-white  rounded-lg"
+                          >
+                            <a
+                              href="#"
+                              className="block items-center px-3 sm:flex "
+                            >
+                              {data?.type == 'status' && (
+                                <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-blue-200 rounded-full ring-8 ring-white  ">
+                                  <svg
+                                    className="w-3 h-3 text-blue-600 \"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      fillRule="evenodd"
+                                      d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                                      clipRule="evenodd"
+                                    ></path>
+                                  </svg>
+                                </span>
+                              )}
+                              {data?.type == 'ph' && (
+                                <>
+                                  <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-green-200 rounded-full ring-8 ring-white ">
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      className="h-3 w-3 text-blue-600 "
+                                      viewBox="0 0 20 20"
+                                      fill="currentColor"
+                                    >
+                                      <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                                    </svg>
+                                  </span>
+                                  <div className="text-gray-600  m-3">
+                                    <div className="text-base font-normal">
+                                      <span className="font-medium text-green-900 ">
+                                        {'Rajiv'}
+                                      </span>{' '}
+                                      called{' '}
+                                      <span className="text-sm text-red-900 ">
+                                        {Name}
+                                      </span>{' '}
+                                    </div>
+                                    <div className="text-sm font-normal">
+                                      {data?.txt}
+                                    </div>
+                                    <span className="inline-flex items-center text-xs font-normal text-gray-500 ">
+                                      <ClockIcon className="mr-1 w-3 h-3" />
+                                      {data?.type == 'ph'
+                                        ? timeConv(
+                                            Number(data?.time)
+                                          ).toLocaleString()
+                                        : timeConv(data?.T).toLocaleString()}
+                                      {'    '}
+                                      <span className="text-red-900 ml-4 mr-4">
+                                        {Number(data?.duration)} sec
+                                      </span>
+                                      or
+                                      <span className="text-red-900 ml-4">
+                                        {parseInt(data?.duration / 60)} min
+                                      </span>
+                                    </span>
+                                  </div>
+                                </>
+                              )}
+                              {data?.type != 'ph' && (
+                                <div className="text-gray-600 font-bodyLato mx-3 my-1">
+                                  <div className="text-base font-normal">
+                                    {data?.type === 'sts_change' && (
+                                      <span className="text-sm font-medium text-gray-800 ">
+                                        {data?.from?.toUpperCase()} {'  '}
+                                      </span>
+                                    )}
+                                    <span className="text-sm font-normal text-gray-800 mx-2 ">
+                                      {activieLogNamer(data)}
+                                    </span>{' '}
+                                    {data?.type === 'sts_change' && (
+                                      <span className="text-sm font-medium text-gray-800 ">
+                                        {'  '} {data?.to?.toUpperCase()}
+                                      </span>
+                                    )}
+                                    {data?.type === 'assign_change' && (
+                                      <span className="text-xs  text-gray-500 ">
+                                        {'  '} {empNameSetter(data?.to)}
+                                      </span>
+                                    )}
+                                  </div>
+                                  <div className="text-sm font-normal">
+                                    {data?.txt}
+                                  </div>
+                                  <span className="inline-flex items-center text-xs font-normal text-gray-500 ">
+                                    <ClockIcon className=" w-3 h-3   text-gray-500" />
+
+                                    <span className="text-xs  text-gray-500 ml-1">
+                                      {data?.type == 'ph'
+                                        ? timeConv(
+                                            Number(data?.time)
+                                          ).toLocaleString()
+                                        : timeConv(data?.T).toLocaleString()}
+                                    </span>
+
+                                    <div className="w-[2px] mx-2 mt-[4px] h-[8px] border-0 border-r"></div>
+
+                                    <span className="text-xs  text-gray-500">
+                                      by:
+                                    </span>
+                                    <span className="text-xs  text-gray-500 ml-1 ">
+                                      {data?.by}
+                                    </span>
+                                  </span>
+                                </div>
+                              )}
+                            </a>
+                          </section>
+                        ))}
+                      </ol>
+                    </div>
                   </div>
-
-             
-
-                  
-                </div>
-              )}
-            </section>
-          </>
-        )}
+                )}
+              </section>
+            </>
+          )}
+        </div>
       </div>
-    </div>
-    <SiderForm
+      <SiderForm
         open={isImportLeadsOpen}
         setOpen={setisImportLeadsOpen}
         title={'Edit Lead'}

@@ -70,8 +70,6 @@ const SemiCircleProgress = () => {
   }
   return (
     <section sx={{}} style={{ minWidth: '200px' }}>
-
-
       <section
         sx={{
           mt: 2,

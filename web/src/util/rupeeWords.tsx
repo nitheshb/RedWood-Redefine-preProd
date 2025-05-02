@@ -1,4 +1,4 @@
-import { ToWords } from 'to-words';
+import { ToWords } from 'to-words'
 
 const toWords = new ToWords({
   localeCode: 'en-IN',
@@ -7,13 +7,13 @@ const toWords = new ToWords({
     ignoreDecimal: false,
     ignoreZeroCurrency: false,
     doNotAddOnly: false,
-  }
-});
+  },
+})
 
 const RupeeInWords = ({ amount }) => {
-  const words = toWords.convert(amount, { currency: true });
+  const words = toWords.convert(amount, { currency: true })
 
-  return <span>{words}</span>;
-};
+  return <span>{words}</span>
+}
 
-export default RupeeInWords;
+export default RupeeInWords

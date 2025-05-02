@@ -13,7 +13,6 @@ import { useAuth } from 'src/context/firebase-auth-context'
 import { prettyDate } from 'src/util/dateConverter'
 import SiderForm from '../SiderForm/SiderForm'
 
-
 const LeadsDummyHome = ({ leadsTyper }) => {
   const { user } = useAuth()
   const { orgId } = user
@@ -54,7 +53,6 @@ const LeadsDummyHome = ({ leadsTyper }) => {
     } else {
       return serialLeadsData.filter((item) => {
         return item?.status?.toLowerCase() === searchKey?.toLowerCase()
-
       })
     }
   }
@@ -82,8 +80,6 @@ const LeadsDummyHome = ({ leadsTyper }) => {
         await setSerialLeadsData(usersListA)
         await setLeadsFetchedData(usersListA)
         await console.log('this is strange 2', serialLeadsData.length)
-
- 
       },
       {
         status:
@@ -167,17 +163,10 @@ const LeadsDummyHome = ({ leadsTyper }) => {
       )
       return unsubscribe
     }
-
   }
 
   const serealizeData = (array) => {
-    const x = [
-      'new',
-      'review',
-      'cleared',
-      'rejected',
-      '',
-    ].map((status) => {
+    const x = ['new', 'review', 'cleared', 'rejected', ''].map((status) => {
       const items = array.filter((data) => data.Status.toLowerCase() == status)
 
       return { name: status, items }
@@ -446,8 +435,6 @@ const LeadsDummyHome = ({ leadsTyper }) => {
                 </div>
               </div>
             )}
-
-
           </div>
         </div>
       </div>

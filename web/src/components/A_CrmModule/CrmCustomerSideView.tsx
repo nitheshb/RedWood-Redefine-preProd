@@ -84,8 +84,6 @@ import AssigedToDropComp from '../assignedToDropComp'
 import { USER_ROLES } from 'src/constants/userRoles'
 import UnitFullSummary from './CrmUnitFullSummary'
 
-
-
 // interface iToastInfo {
 //   open: boolean
 //   message: string
@@ -122,7 +120,6 @@ const attachTypes = [
   { label: 'Payment Screenshot (IMPS/RTGS/NEFT)', value: 'payment_screenshot' },
   { label: 'Payment Receipt', value: 'payment_receipt' },
   { label: 'Others', value: 'others' },
-
 ]
 
 const notInterestOptions = [
@@ -131,8 +128,6 @@ const notInterestOptions = [
   { label: 'Looking for Different Property', value: 'differeent_options' },
 
   { label: 'Others', value: 'others' },
-
-
 ]
 export default function CustomerSideViewCRM({
   openUserProfile,
@@ -154,8 +149,6 @@ export default function CustomerSideViewCRM({
   const [selSubMenu1, setSelSubMenu1] = useState('summary')
   const [filterData, setFilterData] = useState([])
 
-
-
   const [openCapturePayment, setOpenCapturePayment] = useState(false)
   const [selProjectIs, setSelProjectIs] = useState({
     projectName: '',
@@ -174,24 +167,24 @@ export default function CustomerSideViewCRM({
   useEffect(() => {
     console.log('first', selCustomerPayload)
 
- getUnitDetails()
-
-
+    getUnitDetails()
   }, [selCustomerPayload])
 
   const getUnitDetails = async () => {
     const unitDetails = []
-  const x =  await  Promise.all( selCustomerPayload.my_assets?.map(async (d) => {
-    const unit = await getCrmUnitById1(orgId, d)
-    console.log('unit is ', unit)
-    const y = await unit;
-    y.id = d
-    return y
-    }) || []  )
+    const x = await Promise.all(
+      selCustomerPayload.my_assets?.map(async (d) => {
+        const unit = await getCrmUnitById1(orgId, d)
+        console.log('unit is ', unit)
+        const y = await unit
+        y.id = d
+        return y
+      }) || []
+    )
     setUnitsOverviewA(x)
   }
   useEffect(() => {
-   console.log('value is ', unitsOverviewA)
+    console.log('value is ', unitsOverviewA)
   }, [unitsOverviewA])
 
   const viewTransaction = (docData, sideViewCategory, sideViewCategory1) => {
@@ -206,15 +199,16 @@ export default function CustomerSideViewCRM({
     console.log('selected value is ', data)
 
     const y = await capturePayment(data, resetForm)
-    
   }
 
   const capturePayment = async (data, resetForm) => {
-    
-
-    const paymentCB = await captureWalletPayment(orgId,selCustomerPayload,data, user?.email, enqueueSnackbar)
-
-
+    const paymentCB = await captureWalletPayment(
+      orgId,
+      selCustomerPayload,
+      data,
+      user?.email,
+      enqueueSnackbar
+    )
   }
   return (
     <div
@@ -223,7 +217,6 @@ export default function CustomerSideViewCRM({
       <div className=" pb-[2px] px-3 mt-0 rounded-xs border-b bg-[#D9D8FF]">
         <div className="-mx-3 flex  sm:-mx-4 px-3">
           <div className="w-full  xl:w-4/12  ">
-
             <div className="flex flex-col justify-between">
               <p className="text-md font-bold tracking-tight uppercase font-body my-[2px]  ml-2">
                 {selCustomerPayload?.Name}
@@ -268,13 +261,11 @@ export default function CustomerSideViewCRM({
                       Rs {selCustomerPayload?.utilized_money}
                     </div>
                   </section>
-
                 </section>
 
                 <section>
                   <div>
                     <div className="text-center items-center mr-2 mt-3">
-
                       <div
                         className="text-center p-[10px] mt-5 bg-[#318896] text-white rounded-3xl items-center align-middle text-xs cursor-pointer hover:underline"
                         onClickCapture={() => {
@@ -292,9 +283,7 @@ export default function CustomerSideViewCRM({
           </div>
         </div>
         <div className="flex flex-row justify-between">
-          <div
-            className="relative flex flex-col  group"
-          >
+          <div className="relative flex flex-col  group">
             <div
               className="absolute bottom-0 right-0 flex-col items-center hidden mb-6 group-hover:flex"
               style={{ zIndex: '9999' }}
@@ -308,8 +297,7 @@ export default function CustomerSideViewCRM({
                 }}
               >
                 <div className="italic flex flex-col">
-                  <div className="font-bodyLato">
-                  </div>
+                  <div className="font-bodyLato"></div>
                 </div>
               </span>
               <div
@@ -317,9 +305,7 @@ export default function CustomerSideViewCRM({
                 style={{ background: '#e2c062', marginRight: '12px' }}
               ></div>
             </div>
-            <span className="font-bodyLato text-[#867777] text-xs mt-2">
-
-            </span>
+            <span className="font-bodyLato text-[#867777] text-xs mt-2"></span>
           </div>
         </div>
       </div>
@@ -328,8 +314,6 @@ export default function CustomerSideViewCRM({
           <>
             <div className="">
               <div className="">
-  
-
                 <div className=" border-gray-900  bg-[#F1F5F9] rounded-t-lg ">
                   <ul
                     className="flex   rounded-t-lg overflow-x-scroll"
@@ -360,73 +344,76 @@ export default function CustomerSideViewCRM({
                             onClick={() => setFeature(d.val)}
                           >
                             {`${d.lab} `}
-            
                           </button>
                         </li>
                       )
                     })}
                   </ul>
                 </div>
-   
               </div>
             </div>
 
-
             {selFeature === 'summary' && (
               <div className="py-8 px-8 flex flex-col">
-                <span className='text-green-700 text-md font pb-3'>My Units</span>
-                 {unitsOverviewA?.map((d, i) => (
-                  <div key={i} className=" cursor-pointer items-left" onClick={() => viewTransaction(d, 'unit_information', 'unit_information')}>
-                       <section className="flex-row w-full px-3  py-2 justify-between border border-gray-200 rounded-lg">
-                                  <div className="flex flex-row">
-                                    <section className="bg-violet-100  items-center rounded-2xl shadow-xs flex flex-col px-2 py-1">
-                                      <div className="font-semibold text-[#053219]  text-[22px]  mb-[1] tracking-wide">
-                                        {d?.unit_no}
-                                      </div>
-                                      <span
-                                        className={`items-center h-6   text-xs font-semibold text-gray-500  rounded-full
+                <span className="text-green-700 text-md font pb-3">
+                  My Units
+                </span>
+                {unitsOverviewA?.map((d, i) => (
+                  <div
+                    key={i}
+                    className=" cursor-pointer items-left"
+                    onClick={() =>
+                      viewTransaction(d, 'unit_information', 'unit_information')
+                    }
+                  >
+                    <section className="flex-row w-full px-3  py-2 justify-between border border-gray-200 rounded-lg">
+                      <div className="flex flex-row">
+                        <section className="bg-violet-100  items-center rounded-2xl shadow-xs flex flex-col px-2 py-1">
+                          <div className="font-semibold text-[#053219]  text-[22px]  mb-[1] tracking-wide">
+                            {d?.unit_no}
+                          </div>
+                          <span
+                            className={`items-center h-6   text-xs font-semibold text-gray-500  rounded-full
                       `}
-                                      >
-                                        Unit No
-                                      </span>
-                                    </section>
-                                    <div className="flex flex-col ml-2 item-right">
-                                      <span
-                                        className={`items-center h-1 mt-[6px] mb-2  text-xs font-semibold text-green-600
+                          >
+                            Unit No
+                          </span>
+                        </section>
+                        <div className="flex flex-col ml-2 item-right">
+                          <span
+                            className={`items-center h-1 mt-[6px] mb-2  text-xs font-semibold text-green-600
                       `}
-                                      >
-                                        {d?.customerDetailsObj?.customerName1 ||
-                                          'NA'}
-                                      </span>
-                                      <div className="font text-[12px] text-gray-500 tracking-wide overflow-ellipsis overflow-hidden ">
-                                        {d?.projName}
-                                      </div>
-                                      <section>
-                                        <span className="  text-[10px] h-[20px]  text-[#005E36] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
-                                          {d?.area?.toLocaleString(
-                                            'en-IN'
-                                          )}{' '}
-                                          sqft
-                                        </span>
+                          >
+                            {d?.customerDetailsObj?.customerName1 || 'NA'}
+                          </span>
+                          <div className="font text-[12px] text-gray-500 tracking-wide overflow-ellipsis overflow-hidden ">
+                            {d?.projName}
+                          </div>
+                          <section>
+                            <span className="  text-[10px] h-[20px]  text-[#005E36] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
+                              {d?.area?.toLocaleString('en-IN')} sqft
+                            </span>
 
-                                        <span className="  text-[10px] h-[20px] text-[#005E36] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
-                                          {d?.facing}
-                                        </span>
-                                        <span className="  text-[10px] h-[20px] text-[#005E36] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
-                                          {d?.status}
-                                        </span>
-                                      </section>
-                                      <section>
-                                        <span className="  text-[10px] h-[20px] text-[#005E36] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
-                                          Total Stage Balance: {d?.T_elgible_balance?.toLocaleString('en-IN')}
-                                        </span>
-                                        <span className="  text-[10px] h-[20px] text-[#005E36] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
-                                        Total Balance: {d?.T_balance?.toLocaleString('en-IN')}
-                                        </span>
-                                      </section>
-                                    </div>
-                                  </div>
-                                </section>
+                            <span className="  text-[10px] h-[20px] text-[#005E36] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
+                              {d?.facing}
+                            </span>
+                            <span className="  text-[10px] h-[20px] text-[#005E36] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
+                              {d?.status}
+                            </span>
+                          </section>
+                          <section>
+                            <span className="  text-[10px] h-[20px] text-[#005E36] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
+                              Total Stage Balance:{' '}
+                              {d?.T_elgible_balance?.toLocaleString('en-IN')}
+                            </span>
+                            <span className="  text-[10px] h-[20px] text-[#005E36] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
+                              Total Balance:{' '}
+                              {d?.T_balance?.toLocaleString('en-IN')}
+                            </span>
+                          </section>
+                        </div>
+                      </div>
+                    </section>
                   </div>
                 ))}
               </div>
@@ -555,8 +542,6 @@ export default function CustomerSideViewCRM({
                               {data?.txt}
                             </div>
                             <span className="inline-flex items-center text-xs font-normal text-gray-500 ">
-
-
                               <ClockIcon className="mr-1 w-3 h-3" />
                               {data?.type == 'ph'
                                 ? timeConv(Number(data?.time)).toLocaleString()
@@ -576,9 +561,9 @@ export default function CustomerSideViewCRM({
 
       {unitView && (
         <UnitFullSummary
-        customerDetails={selCustomerPayload}
-        selCustomerPayload={selCustomerPayload}
-      />
+          customerDetails={selCustomerPayload}
+          selCustomerPayload={selCustomerPayload}
+        />
       )}
 
       {selFeature === 'legal_info' && <></>}
@@ -593,17 +578,17 @@ export default function CustomerSideViewCRM({
       />
 
       <SiderForm
-              open={isUnitDetailsOpen}
-              setOpen={setisUnitDetailsOpen}
-              title={'unitDetails_crm_view'}
-              customerDetails={selUnitDetails}
-              setSelUnitDetails={setSelUnitDetails}
-              widthClass="max-w-7xl"
-              transactionData={transactionData}
-              unitsViewMode={false}
-              selCustomerPayload={selUnitDetails}
-              selSubMenu={selSubMenu}
-              selSubMenu2={selSubMenu1}
+        open={isUnitDetailsOpen}
+        setOpen={setisUnitDetailsOpen}
+        title={'unitDetails_crm_view'}
+        customerDetails={selUnitDetails}
+        setSelUnitDetails={setSelUnitDetails}
+        widthClass="max-w-7xl"
+        transactionData={transactionData}
+        unitsViewMode={false}
+        selCustomerPayload={selUnitDetails}
+        selSubMenu={selSubMenu}
+        selSubMenu2={selSubMenu1}
       />
     </div>
   )

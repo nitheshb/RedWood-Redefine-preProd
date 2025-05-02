@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next' 
+import { useTranslation } from 'react-i18next'
 import {
   getCRMdocById1,
   getCRMTeamTasks,
@@ -22,7 +22,6 @@ const rowsCounter = (parent, searchKey) => {
 }
 
 const FinanceHome = ({ setisImportLeadsOpen, selUserProfileF, taskType }) => {
-
   const { t } = useTranslation()
   const { user } = useAuth()
   const { orgId } = user
@@ -164,8 +163,7 @@ const FinanceHome = ({ setisImportLeadsOpen, selUserProfileF, taskType }) => {
     }
   }
 
-  useEffect(() => {
-  }, [todaySchL])
+  useEffect(() => {}, [todaySchL])
 
   const filterTable = tableData.filter((item) =>
     value !== '' ? item.role.toLowerCase() === value : item.role
@@ -175,7 +173,7 @@ const FinanceHome = ({ setisImportLeadsOpen, selUserProfileF, taskType }) => {
       <div className="flex-1 overflow-auto">
         <div className="p-0 px-1">
           <TodayLeadsActivitySearchView
-            moduleName={"Accounts"}
+            moduleName={'Accounts'}
             data={filterTable}
             searchKey={searchKey}
             setSearchKey={setSearchKey}
@@ -192,7 +190,5 @@ const FinanceHome = ({ setisImportLeadsOpen, selUserProfileF, taskType }) => {
     </div>
   )
 }
-
-
 
 export default FinanceHome

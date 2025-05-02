@@ -1,16 +1,14 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { useState, useEffect } from 'react'
-import {
-  PuzzleIcon,
-} from '@heroicons/react/outline'
+import { PuzzleIcon } from '@heroicons/react/outline'
 import {
   ChartPieIcon,
   SearchIcon,
   NewspaperIcon,
   InformationCircleIcon,
 } from '@heroicons/react/solid'
-import { } from '@heroicons/react/solid'
+import {} from '@heroicons/react/solid'
 import { Box, LinearProgress } from '@mui/material'
 import { startOfDay } from 'date-fns'
 import { useTranslation } from 'react-i18next'
@@ -24,9 +22,7 @@ import { useAuth } from 'src/context/firebase-auth-context'
 import { computeTotal } from 'src/util/computeCsTotals'
 import CSVDownloader from 'src/util/csvDownload'
 import { prettyDate } from 'src/util/dateConverter'
-import {
-  VerySlimSelectBox,
-} from 'src/util/formFields/slimSelectBoxField'
+import { VerySlimSelectBox } from 'src/util/formFields/slimSelectBoxField'
 import DoughnutChartWithRoundedSegments from '../A_SalesModule/Reports/charts/piechartRounded'
 import CrmSiderForm from '../SiderForm/CRM_SideForm'
 import SiderForm from '../SiderForm/SiderForm'
@@ -42,14 +38,9 @@ import { PhoneCall } from 'lucide-react'
 import SemicircleProgressChart from '../A_SalesModule/Reports/charts/SemiCircleProgress'
 import RadialChartSemi from '../A_SalesModule/Reports/charts/RadialChartSemi'
 
-
-
-
-
 const toWords = new ToWords({
   localeCode: 'en-IN',
 })
-
 
 const agreementItems = [
   {
@@ -169,7 +160,6 @@ const CrmRegisterModeHome = ({ leadsTyper, customerDetails }) => {
   const [selSubMenu1, setSelSubMenu1] = useState('summary')
   const [unitTotal, setUnitTotal] = useState(0)
 
-
   const [assignerName, setAssignerName] = useState('')
 
   const DocumentationHeadA = [
@@ -250,10 +240,6 @@ const CrmRegisterModeHome = ({ leadsTyper, customerDetails }) => {
     await getProjectsListFun()
   }
 
-
-
-
-
   useEffect(() => {
     getLeadsDataFun(projectList, ['booked', 'Booked'])
     getLeadsDataFun(projectList, ['agreement_pipeline'])
@@ -268,14 +254,12 @@ const CrmRegisterModeHome = ({ leadsTyper, customerDetails }) => {
   }, [selProjectIs])
 
   const filter_Leads_Projects_Users_Fun = () => {
-
     getLeadsDataFun(projectList, ['booked', 'Booked'])
     getLeadsDataFun(projectList, ['agreement_pipeline'])
     getLeadsDataFun(projectList, ['agreement', 'ATS'])
     getLeadsDataFun(projectList, ['registered', 'Registered'])
     getLeadsDataFun(projectList, ['possession', 'Possession'])
     getLeadsDataFun(projectList, ['unassigned'])
-
   }
 
   const getProjectsListFun = () => {
@@ -296,9 +280,7 @@ const CrmRegisterModeHome = ({ leadsTyper, customerDetails }) => {
     return unsubscribe
   }
 
-  useEffect(() => {
-
-  }, [selCategory])
+  useEffect(() => {}, [selCategory])
 
   const rowsCounter = (parent, searchKey) => {
     return parent.filter((item) => {
@@ -324,18 +306,9 @@ const CrmRegisterModeHome = ({ leadsTyper, customerDetails }) => {
           }
           return x
         })
-
       },
       {
-        status: [
-          'latest',
-          'reviewing',
-          'review',
-          'cleared',
-          'rejected',
-          '',
-
-        ],
+        status: ['latest', 'reviewing', 'review', 'cleared', 'rejected', ''],
       },
       () => setCrmCustomerDBData([])
     )
@@ -351,28 +324,22 @@ const CrmRegisterModeHome = ({ leadsTyper, customerDetails }) => {
           x.id = docSnapshot.id
           const y = projectList.filter((proj) => proj?.uid == x?.pId)
           if (y.length > 0) {
-
             x.projName = y[0].projectName
           }
           return x
         })
 
-
         await usersListA.sort((a, b) => {
           return a.unit_no - b.unit_no
         })
 
-
         await usersListA.sort((a, b) => {
-          const dateA = new Date(a.booked_on || a.ct || 0);
-          const dateB = new Date(b.booked_on || b.ct || 0);
-          return dateB - dateA;
-        });
-
-
+          const dateA = new Date(a.booked_on || a.ct || 0)
+          const dateB = new Date(b.booked_on || b.ct || 0)
+          return dateB - dateA
+        })
 
         if (statusFil.includes('booked')) {
-
           await setBookingReviewA(usersListA)
           await setBookingReviewCo(usersListA.length)
 
@@ -405,7 +372,6 @@ const CrmRegisterModeHome = ({ leadsTyper, customerDetails }) => {
       () => setCrmCustomerDBData([])
     )
     return unsubscribe
-
   }
 
   useEffect(() => {
@@ -420,9 +386,9 @@ const CrmRegisterModeHome = ({ leadsTyper, customerDetails }) => {
       return (
         (item?.customerDetailsObj?.customerName1 &&
           item?.customerDetailsObj?.customerName1 &&
-          item?.customerDetailsObj?.AssignedBy
-            ?.toLowerCase()
-            ?.includes(lowerSearchKey)) ||
+          item?.customerDetailsObj?.AssignedBy?.toLowerCase()?.includes(
+            lowerSearchKey
+          )) ||
         (item?.unit_no &&
           item?.unit_no?.toString()?.toLowerCase()?.includes(lowerSearchKey))
       )
@@ -430,29 +396,21 @@ const CrmRegisterModeHome = ({ leadsTyper, customerDetails }) => {
     await setFilteredDataA(z)
   }
   const searchBar = async (searchKey) => {
-
     if (selCategory === 'booked') {
       searchLogic(searchKey, queryResult)
-    }
-    else if (selCategory === 'agreement_pipeline') {
+    } else if (selCategory === 'agreement_pipeline') {
       searchLogic(searchKey, agreePipeA)
-    }
-    else if (selCategory === 'agreement') {
+    } else if (selCategory === 'agreement') {
       searchLogic(searchKey, sdPipeA)
-    }
-    else if (selCategory === 'registered') {
+    } else if (selCategory === 'registered') {
       searchLogic(searchKey, registeredA)
-    }
-    else if (selCategory === 'possession') {
+    } else if (selCategory === 'possession') {
       searchLogic(searchKey, posessionA)
-    }
-    else if (selCategory === 'unassigned') {
+    } else if (selCategory === 'unassigned') {
       // searchLogic(searchKey, unassignedA)
       searchLogic(searchKey, crmCustomersDBData)
     }
-
   }
-
 
   const serealizeData = (array) => {
     // let newData =
@@ -485,32 +443,20 @@ const CrmRegisterModeHome = ({ leadsTyper, customerDetails }) => {
     setSelUnitDetails(docData)
   }
 
-
-
   function formatIndianNumber(num) {
-    if (num >= 1_00_00_00_000) return (num / 1_00_00_00_000).toFixed(1) + 'Lcr+';
-    if (num >= 1_00_00_000) return (num / 1_00_00_000).toFixed(1) + 'Cr+';
-    if (num >= 1_00_000) return (num / 1_00_000).toFixed(1) + 'L+';
-    if (num >= 1_000) return (num / 1_000).toFixed(1) + 'K+';
-    return num.toString();
+    if (num >= 1_00_00_00_000) return (num / 1_00_00_00_000).toFixed(1) + 'Lcr+'
+    if (num >= 1_00_00_000) return (num / 1_00_00_000).toFixed(1) + 'Cr+'
+    if (num >= 1_00_000) return (num / 1_00_000).toFixed(1) + 'L+'
+    if (num >= 1_000) return (num / 1_000).toFixed(1) + 'K+'
+    return num.toString()
   }
 
-  console.log(formatIndianNumber(25000000));
+  console.log(formatIndianNumber(25000000))
   useEffect(() => {
-
     setAssignerName(customerDetails?.assignedToObj?.label)
   }, [customerDetails])
 
-
-
-
-
-
-  console.log("Assigner Name:", assignerName);
-
-
-
-
+  console.log('Assigner Name:', assignerName)
 
   return (
     <>
@@ -541,7 +487,7 @@ const CrmRegisterModeHome = ({ leadsTyper, customerDetails }) => {
                     ]}
                   />
                 </div>
-                {(
+                {
                   <div className=" flex flex-col   w-40">
                     <VerySlimSelectBox
                       name="project"
@@ -552,7 +498,6 @@ const CrmRegisterModeHome = ({ leadsTyper, customerDetails }) => {
                         setSelLeadsOf(value)
                       }}
                       value={selLeadsOf?.value}
-
                       options={[
                         ...[
                           { label: 'Team Units', value: 'teamunits' },
@@ -562,11 +507,10 @@ const CrmRegisterModeHome = ({ leadsTyper, customerDetails }) => {
                       ]}
                     />
                   </div>
-                )}
+                }
               </div>
             </div>
             <div className="  flex-col justify-between flex  my-4  ">
-
               <div className=" border-gray-900 flex items-center flex-row justify-between">
                 <ul
                   className="flex  gap-x-4  rounded-t-lg "
@@ -588,23 +532,30 @@ const CrmRegisterModeHome = ({ leadsTyper, customerDetails }) => {
                       <li
                         key={b}
                         // className="mr-2 ml-2 text-sm font-bodyLato"
-                        className={`ml-2 text-sm font-bodyLato flex  items-center  h-4 ${b !== arr.length - 1 ? 'border-r border-gray-300' : ''
-                          }`}
+                        className={`ml-2 text-sm font-bodyLato flex  items-center  h-4 ${
+                          b !== arr.length - 1 ? 'border-r border-gray-300' : ''
+                        }`}
                         role="presentation"
                       >
                         <button
-                          className={`inline-block py-2 mr-3 px-1 text-[16px] font-medium  font-outfit text-center text-black rounded-t-lg border-b-2  hover:text-black hover:border-gray-300   ${selCategory === d.val
-                            ? 'text-black border-black '
-                            : 'text-gray-500  border-transparent'
-                            }`}
+                          className={`inline-block py-2 mr-3 px-1 text-[16px] font-medium  font-outfit text-center text-black rounded-t-lg border-b-2  hover:text-black hover:border-gray-300   ${
+                            selCategory === d.val
+                              ? 'text-black border-black '
+                              : 'text-gray-500  border-transparent'
+                          }`}
                           type="button"
                           role="tab"
                           onClick={() => setSelCategory(d.val)}
                         >
                           {`${d.lab} `}
                           {/* <span className=" bg-[#E5E7EB] text-gray-800 px-1.5 py-1.5 rounded-full ml-[4px] text-[12px] "> */}
-                          <span className={` ${selCategory === d.val ? 'bg-[#EDE9FE] text-[#0E0A1F]' : 'bg-[#E5E7EB] text-[#606062]'} px-1.5 py-1.5 rounded-full ml-[4px] text-[12px] `}>
-
+                          <span
+                            className={` ${
+                              selCategory === d.val
+                                ? 'bg-[#EDE9FE] text-[#0E0A1F]'
+                                : 'bg-[#E5E7EB] text-[#606062]'
+                            } px-1.5 py-1.5 rounded-full ml-[4px] text-[12px] `}
+                          >
                             {d.val === 'booked' && (
                               <span>{bookingReviewCo}</span>
                             )}
@@ -651,8 +602,9 @@ const CrmRegisterModeHome = ({ leadsTyper, customerDetails }) => {
                 </div>
               </div>
               <div
-                className={`${showSettings ? 'hidden' : ''
-                  } flex flex-row py-2 justify-between `}
+                className={`${
+                  showSettings ? 'hidden' : ''
+                } flex flex-row py-2 justify-between `}
               >
                 <div className="flex flex-row w-full">
                   <span className="flex ml-2 mr-2 h-[34px]  border border-gray-300 border-solid box-border w-1/3 rounded-md">
@@ -681,8 +633,10 @@ const CrmRegisterModeHome = ({ leadsTyper, customerDetails }) => {
                     />
                   </span>
 
-
-                  <span className="mt-2 ml-2 text-red-400 cursor-pointer text-xs" onClick={() => setSearchKeyField('')}>
+                  <span
+                    className="mt-2 ml-2 text-red-400 cursor-pointer text-xs"
+                    onClick={() => setSearchKeyField('')}
+                  >
                     {' '}
                     Clear
                   </span>
@@ -699,8 +653,9 @@ const CrmRegisterModeHome = ({ leadsTyper, customerDetails }) => {
                 {leadsTyper == 'inProgress' && (
                   <span className="inline-flex p-1 border bg-gray-200 rounded-md">
                     <button
-                      className={`px-2 py-1  rounded ${ready ? 'bg-white shadow' : ''
-                        }`}
+                      className={`px-2 py-1  rounded ${
+                        ready ? 'bg-white shadow' : ''
+                      }`}
                       onClick={() => setReady(true)}
                     >
                       <svg
@@ -719,8 +674,9 @@ const CrmRegisterModeHome = ({ leadsTyper, customerDetails }) => {
                       </svg>
                     </button>
                     <button
-                      className={`px-2 py-1  rounded ${!ready ? 'bg-white shadow' : ''
-                        }`}
+                      className={`px-2 py-1  rounded ${
+                        !ready ? 'bg-white shadow' : ''
+                      }`}
                       onClick={() => setReady(false)}
                     >
                       <svg
@@ -822,7 +778,6 @@ const CrmRegisterModeHome = ({ leadsTyper, customerDetails }) => {
                                         <span className="  text-[10px] h-[20px] text-[#005E36] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
                                           {finData?.facing}
                                         </span>
-
                                       </section>
                                     </div>
                                   </div>
@@ -860,21 +815,21 @@ const CrmRegisterModeHome = ({ leadsTyper, customerDetails }) => {
                                               _this + val.TotalNetSaleValueGsT
                                             )
                                           },
-                                            0) || 0) +
-                                          finData?.addChargesCS?.reduce(
-                                            (partialSum, obj) =>
-                                              partialSum +
-                                              Number(
-                                                computeTotal(
-                                                  obj,
-                                                  finData?.super_built_up_area ||
-                                                  finData?.area
-                                                    ?.toString()
-                                                    ?.replace(',', '')
-                                                )
-                                              ),
-                                            0
-                                          ) || 0
+                                          0) || 0) +
+                                            finData?.addChargesCS?.reduce(
+                                              (partialSum, obj) =>
+                                                partialSum +
+                                                Number(
+                                                  computeTotal(
+                                                    obj,
+                                                    finData?.super_built_up_area ||
+                                                      finData?.area
+                                                        ?.toString()
+                                                        ?.replace(',', '')
+                                                  )
+                                                ),
+                                              0
+                                            ) || 0
                                         )?.toLocaleString('en-IN')}
                                       </div>
                                     </div>
@@ -883,9 +838,11 @@ const CrmRegisterModeHome = ({ leadsTyper, customerDetails }) => {
                                   <section className="flex flex-col mt-3">
                                     <div className=" text-[#0E0A1F] text-[12px]  font-normal font-outfit tracking-wide">
                                       Balance ₹
-                                      {finData?.T_elgible_balance < 0 ? 0 : finData?.T_elgible_balance?.toLocaleString(
-                                        'en-IN'
-                                      )}
+                                      {finData?.T_elgible_balance < 0
+                                        ? 0
+                                        : finData?.T_elgible_balance?.toLocaleString(
+                                            'en-IN'
+                                          )}
                                     </div>
                                     <div className="text-[#0E0A1F] text-[11px] font-normal font-outfit tracking-wide">
                                       Paid: ₹
@@ -968,12 +925,13 @@ const CrmRegisterModeHome = ({ leadsTyper, customerDetails }) => {
 
                                 <div className="w-[253px] mx-4 left-[25px] mt-3 ml-4 justify-start items-center gap-2 inline-flex">
                                   <div
-                                    className={`grow shrink basis-0 px-2.5 py-1.5 rounded-[16px] flex-col justify-center items-center gap-2 inline-flex ${finData?.man_cs_approval == 'approved'
-                                      ? 'bg-[#CCC5F7]'
-                                      : finData?.man_cs_approval == 'rejected'
+                                    className={`grow shrink basis-0 px-2.5 py-1.5 rounded-[16px] flex-col justify-center items-center gap-2 inline-flex ${
+                                      finData?.man_cs_approval == 'approved'
+                                        ? 'bg-[#CCC5F7]'
+                                        : finData?.man_cs_approval == 'rejected'
                                         ? 'bg-[#ffdbdb]'
                                         : 'bg-[#F1F5F9] '
-                                      }  px-1 py-1 mx-1 inline-block self-end`}
+                                    }  px-1 py-1 mx-1 inline-block self-end`}
                                     style={{
                                       display: 'inline-block',
                                       alignSelf: 'flex-end',
@@ -991,12 +949,13 @@ const CrmRegisterModeHome = ({ leadsTyper, customerDetails }) => {
                                     </div>
                                   </div>
                                   <div
-                                    className={`grow shrink basis-0 px-2.5 py-1.5 bg-gray-200 rounded-[16px] flex-col justify-center items-center gap-2 inline-flex ${finData?.kyc_status == 'approved'
-                                      ? 'bg-[#CCC5F7]'
-                                      : finData?.kyc_status == 'rejected'
+                                    className={`grow shrink basis-0 px-2.5 py-1.5 bg-gray-200 rounded-[16px] flex-col justify-center items-center gap-2 inline-flex ${
+                                      finData?.kyc_status == 'approved'
+                                        ? 'bg-[#CCC5F7]'
+                                        : finData?.kyc_status == 'rejected'
                                         ? 'bg-[#ffdbdb]'
                                         : 'bg-[#F1F5F9] '
-                                      }  px-1 py-1 mx-1 inline-block self-end`}
+                                    }  px-1 py-1 mx-1 inline-block self-end`}
                                     style={{
                                       display: 'inline-block',
                                       alignSelf: 'flex-end',
@@ -1019,7 +978,16 @@ const CrmRegisterModeHome = ({ leadsTyper, customerDetails }) => {
                       </li>
                     </ul>
                   )}
-                  {['booked', 'agreement_pipeline', 'agreement', 'registered', 'construction', 'possession', 'unAssigned_crm', 'queries'].includes(selCategory) &&
+                  {[
+                    'booked',
+                    'agreement_pipeline',
+                    'agreement',
+                    'registered',
+                    'construction',
+                    'possession',
+                    'unAssigned_crm',
+                    'queries',
+                  ].includes(selCategory) &&
                     !horizontalMode &&
                     filteredDataA.map((finData, c) => {
                       const {
@@ -1041,9 +1009,7 @@ const CrmRegisterModeHome = ({ leadsTyper, customerDetails }) => {
                       } = finData
                       return (
                         <section key={c} className=" bg-[#F6F5F8] ">
-
                           <section className="flex  flex-row items-center justify-center bg-[#FFFFFF] py-2 px-4 mb-2  rounded-2xl">
-
                             <div className=" w-[23%] ">
                               <div className="flex flex-row   ">
                                 <div
@@ -1059,7 +1025,6 @@ const CrmRegisterModeHome = ({ leadsTyper, customerDetails }) => {
                                   <section className="font-outfit flex flex-row w-[100%] justify-between">
                                     <section className="flex flex-col   w-[100%]">
                                       <section className="flex flex-row justify-between">
-
                                         <div className="flex flex-row w-full">
                                           <section className="bg-[#EDE9FE] items-center rounded-2xl shadow-xs flex flex-col px-2 py-1 min-w-[90px]">
                                             <div className="font-semibold text-[#053219]  text-[22px]  mb-[1] tracking-wide">
@@ -1087,18 +1052,32 @@ const CrmRegisterModeHome = ({ leadsTyper, customerDetails }) => {
                                                   'en-IN'
                                                 )}{' '}
                                               </span> */}
-                                              <div className='flex gap-1 items-center text-green-600 text-[12px] mt-1'>
-                                                <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                  <path d="M12.6605 13.1667H12.6668M12.6605 13.1667C12.2454 13.5783 11.493 13.4758 10.9655 13.4758C10.3178 13.4758 10.006 13.6025 9.54378 14.0647C9.15023 14.4583 8.62265 15.1667 8.00018 15.1667C7.37769 15.1667 6.85011 14.4583 6.45654 14.0647C5.99435 13.6025 5.68249 13.4758 5.03487 13.4758C4.50728 13.4758 3.75495 13.5783 3.33982 13.1667C2.92137 12.7517 3.02435 11.9963 3.02435 11.4653C3.02435 10.7943 2.8776 10.4857 2.39975 10.0079C1.68892 9.29709 1.33351 8.94164 1.3335 8.49999C1.3335 8.05835 1.68891 7.70294 2.39973 6.99212C2.8263 6.56555 3.02435 6.14286 3.02435 5.53471C3.02435 5.00711 2.92183 4.25477 3.3335 3.83964C3.74845 3.4212 4.5039 3.52418 5.03488 3.52418C5.64301 3.52418 6.06571 3.32615 6.49226 2.89959C7.20309 2.18876 7.55851 1.83334 8.00016 1.83334C8.44182 1.83334 8.79723 2.18876 9.50806 2.89959C9.93453 3.32605 10.3571 3.52418 10.9654 3.52418C11.493 3.52418 12.2454 3.42166 12.6605 3.83334C13.079 4.2483 12.976 5.00374 12.976 5.53471C12.976 6.20573 13.1227 6.51426 13.6006 6.99212C14.3114 7.70294 14.6668 8.05835 14.6668 8.49999C14.6668 8.94164 14.3114 9.29709 13.6006 10.0079C13.1227 10.4857 12.976 10.7943 12.976 11.4653C12.976 11.9963 13.079 12.7517 12.6605 13.1667Z" stroke="#1B6600" />
-                                                  <path d="M6 9.09525L7.2 10.1667L10 6.83334" stroke="#1B6600" stroke-linecap="round" stroke-linejoin="round" />
+                                              <div className="flex gap-1 items-center text-green-600 text-[12px] mt-1">
+                                                <svg
+                                                  width="16"
+                                                  height="17"
+                                                  viewBox="0 0 16 17"
+                                                  fill="none"
+                                                  xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                  <path
+                                                    d="M12.6605 13.1667H12.6668M12.6605 13.1667C12.2454 13.5783 11.493 13.4758 10.9655 13.4758C10.3178 13.4758 10.006 13.6025 9.54378 14.0647C9.15023 14.4583 8.62265 15.1667 8.00018 15.1667C7.37769 15.1667 6.85011 14.4583 6.45654 14.0647C5.99435 13.6025 5.68249 13.4758 5.03487 13.4758C4.50728 13.4758 3.75495 13.5783 3.33982 13.1667C2.92137 12.7517 3.02435 11.9963 3.02435 11.4653C3.02435 10.7943 2.8776 10.4857 2.39975 10.0079C1.68892 9.29709 1.33351 8.94164 1.3335 8.49999C1.3335 8.05835 1.68891 7.70294 2.39973 6.99212C2.8263 6.56555 3.02435 6.14286 3.02435 5.53471C3.02435 5.00711 2.92183 4.25477 3.3335 3.83964C3.74845 3.4212 4.5039 3.52418 5.03488 3.52418C5.64301 3.52418 6.06571 3.32615 6.49226 2.89959C7.20309 2.18876 7.55851 1.83334 8.00016 1.83334C8.44182 1.83334 8.79723 2.18876 9.50806 2.89959C9.93453 3.32605 10.3571 3.52418 10.9654 3.52418C11.493 3.52418 12.2454 3.42166 12.6605 3.83334C13.079 4.2483 12.976 5.00374 12.976 5.53471C12.976 6.20573 13.1227 6.51426 13.6006 6.99212C14.3114 7.70294 14.6668 8.05835 14.6668 8.49999C14.6668 8.94164 14.3114 9.29709 13.6006 10.0079C13.1227 10.4857 12.976 10.7943 12.976 11.4653C12.976 11.9963 13.079 12.7517 12.6605 13.1667Z"
+                                                    stroke="#1B6600"
+                                                  />
+                                                  <path
+                                                    d="M6 9.09525L7.2 10.1667L10 6.83334"
+                                                    stroke="#1B6600"
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                  />
                                                 </svg>
 
                                                 <span>
                                                   Booked On:{' '}
                                                   {prettyDate(
                                                     finData?.booked_on ||
-                                                    finData?.ct ||
-                                                    0
+                                                      finData?.ct ||
+                                                      0
                                                   )}
                                                 </span>
                                               </div>
@@ -1115,13 +1094,7 @@ const CrmRegisterModeHome = ({ leadsTyper, customerDetails }) => {
                             {/* divider */}
                             <div className="h-12 border-r rounded-sm border-[#E7E7E9] mx-4"></div>
 
-
-
-                            <div className=' w-[22%]  items-center'>
-
-
-
-
+                            <div className=" w-[22%]  items-center">
                               {/* <div className="flex flex-row mx-1 pt-">
 
 
@@ -1136,30 +1109,31 @@ showLabels={true}
 />
 </div> */}
                               <div className="flex flex-row  my-1   items-center justify-between mr-1">
-
-
-
-
-                                 <RadialChart
-                                 progress={
-                                  (((finData?.T_review || 0) +
-                                  (finData?.T_approved || 0))  / finData?.T_total) *
-                                  100
-                                }
+                                <RadialChart
+                                  progress={
+                                    (((finData?.T_review || 0) +
+                                      (finData?.T_approved || 0)) /
+                                      finData?.T_total) *
+                                    100
+                                  }
                                 />
 
                                 <div className="flex  flex-col justify-between  mb-1">
-
                                   <section className=" flex gap-2 justify-between font-semibold text-xs m-1 w-full  ">
                                     <div className="text-[12px] text-[#0E0A1F] font-normal">
                                       Unit Cost:
                                     </div>
 
-
-                                    <div className="relative flex flex-col items-center group" style={{ alignItems: 'start' }}>
+                                    <div
+                                      className="relative flex flex-col items-center group"
+                                      style={{ alignItems: 'start' }}
+                                    >
                                       <div
                                         className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
-                                        style={{ alignItems: 'start', width: '300px' }}
+                                        style={{
+                                          alignItems: 'start',
+                                          width: '300px',
+                                        }}
                                       >
                                         <span
                                           className="rounded italian relative mr-3 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
@@ -1170,41 +1144,48 @@ showLabels={true}
                                           }}
                                         >
                                           <span className="italic">
-                                          ₹{Math.round(finData?.T_total  || 0).toLocaleString('en-IN')}
-
+                                            ₹
+                                            {Math.round(
+                                              finData?.T_total || 0
+                                            ).toLocaleString('en-IN')}
                                           </span>
                                         </span>
                                         <div
                                           className="w-3 h-3 ml-1 -mt-2 rotate-45 bg-black"
-                                          style={{ background: '#213343', marginRight: '12px' }}
+                                          style={{
+                                            background: '#213343',
+                                            marginRight: '12px',
+                                          }}
                                         ></div>
                                       </div>
                                       <span className="text-[#0E0A1F] font-medium text-[12px]  font-outfit tracking-wide">
-                                        ₹{formatIndianNumber?.(Math.round(finData?.T_total || 0))}
+                                        ₹
+                                        {formatIndianNumber?.(
+                                          Math.round(finData?.T_total || 0)
+                                        )}
                                       </span>
                                     </div>
                                   </section>
 
-
-
                                   <section className="flex gap-2 justify-between font-semibold text-xs m-1 w-full">
-
-                                    <div className='flex'>
-
+                                    <div className="flex">
                                       <div className="h-3 w-3 bg-purple-300 mr-2"></div>
 
                                       <div className="text-[12px] text-[#0E0A1F] font-normal">
                                         Paid:
                                       </div>
-
                                     </div>
 
-
-
-                                    <div className="relative flex flex-col items-center group" style={{ alignItems: 'start' }}>
+                                    <div
+                                      className="relative flex flex-col items-center group"
+                                      style={{ alignItems: 'start' }}
+                                    >
                                       <div
                                         className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
-                                        style={{ alignItems: 'start', width: '300px' }}
+                                        style={{
+                                          alignItems: 'start',
+                                          width: '300px',
+                                        }}
                                       >
                                         <span
                                           className="rounded italian relative mr-3 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
@@ -1215,16 +1196,29 @@ showLabels={true}
                                           }}
                                         >
                                           <span className="italic">
-                                            ₹{Math.round((finData?.T_review || 0) + (finData?.T_approved || 0)).toLocaleString('en-IN')}
+                                            ₹
+                                            {Math.round(
+                                              (finData?.T_review || 0) +
+                                                (finData?.T_approved || 0)
+                                            ).toLocaleString('en-IN')}
                                           </span>
                                         </span>
                                         <div
                                           className="w-3 h-3 ml-1 -mt-2 rotate-45 bg-black"
-                                          style={{ background: '#213343', marginRight: '12px' }}
+                                          style={{
+                                            background: '#213343',
+                                            marginRight: '12px',
+                                          }}
                                         ></div>
                                       </div>
                                       <span className="text-[#0E0A1F] font-medium text-[12px]  font-outfit tracking-wide">
-                                         ₹{formatIndianNumber?.(Math.round((finData?.T_review || 0) + (finData?.T_approved || 0)))}
+                                        ₹
+                                        {formatIndianNumber?.(
+                                          Math.round(
+                                            (finData?.T_review || 0) +
+                                              (finData?.T_approved || 0)
+                                          )
+                                        )}
                                       </span>
                                     </div>
 
@@ -1239,8 +1233,7 @@ showLabels={true}
                                   </section>
                                   {/* section- 3 */}
                                   <section className="flex gap-2 justify-between font-semibold text-xs m-1 w-full">
-
-                                    <div className='flex'>
+                                    <div className="flex">
                                       <div className="h-3 w-3 bg-gray-300 mr-2"></div>
 
                                       <div className="text-[12px] text-[#0E0A1F] font-normal">
@@ -1248,10 +1241,16 @@ showLabels={true}
                                       </div>
                                     </div>
 
-                                    <div className="relative flex flex-col items-center group" style={{ alignItems: 'start' }}>
+                                    <div
+                                      className="relative flex flex-col items-center group"
+                                      style={{ alignItems: 'start' }}
+                                    >
                                       <div
                                         className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
-                                        style={{ alignItems: 'start', width: '300px' }}
+                                        style={{
+                                          alignItems: 'start',
+                                          width: '300px',
+                                        }}
                                       >
                                         <span
                                           className="rounded italian relative mr-3 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
@@ -1262,66 +1261,55 @@ showLabels={true}
                                           }}
                                         >
                                           <span className="italic">
-                                          ₹{Math.round(finData?.T_balance || 0).toLocaleString('en-IN')}
+                                            ₹
+                                            {Math.round(
+                                              finData?.T_balance || 0
+                                            ).toLocaleString('en-IN')}
                                           </span>
                                         </span>
                                         <div
                                           className="w-3 h-3 ml-1 -mt-2 rotate-45 bg-black"
-                                          style={{ background: '#213343', marginRight: '12px' }}
+                                          style={{
+                                            background: '#213343',
+                                            marginRight: '12px',
+                                          }}
                                         ></div>
                                       </div>
                                       <span className="text-[#0E0A1F] font-medium text-[12px] font-bold  tracking-wide">
-                                      ₹{formatIndianNumber?.(Math.round(finData?.T_balance || 0))}
+                                        ₹
+                                        {formatIndianNumber?.(
+                                          Math.round(finData?.T_balance || 0)
+                                        )}
                                       </span>
                                     </div>
-
-
                                   </section>
-
                                 </div>
-
-
                               </div>
                             </div>
-
-
-
 
                             {/* divider */}
                             <div className="h-12 border-r  rounded-sm border-[#E7E7E9] mx-4"></div>
 
                             {/* other one */}
 
-                            <div className='w-[22%] items-center '>
+                            <div className="w-[22%] items-center ">
                               <div className="flex flex-row  my-1 items-center  justify-between mr-1">
-
-
-
                                 {/* <RadialChart
   progress={
     (((finData?.T_review || 0) + (finData?.T_approved || 0)) / finData?.T_elgible) * 100
   }
 /> */}
 
-
-
-
-
- 
-<RadialChartSemi
+                                <RadialChartSemi
                                   progress={
                                     (((finData?.T_review || 0) +
-                                      (finData?.T_approved || 0)) / finData?.T_elgible) *
+                                      (finData?.T_approved || 0)) /
+                                      finData?.T_elgible) *
                                     100
                                   }
-      />
-
-
-
+                                />
 
                                 <div className="flex flex-col justify-between  mb-1">
-
-
                                   <section className="flex gap-2 justify-between font-semibold text-xs m-1 w-full ">
                                     <div className="text-[12px] text-[#0E0A1F] font-normal">
                                       Stage Cost:
@@ -1332,7 +1320,10 @@ showLabels={true}
                                     >
                                       <div
                                         className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
-                                        style={{ alignItems: 'start', width: '300px' }}
+                                        style={{
+                                          alignItems: 'start',
+                                          width: '300px',
+                                        }}
                                       >
                                         <span
                                           className="rounded italian relative mr-3 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
@@ -1343,17 +1334,25 @@ showLabels={true}
                                           }}
                                         >
                                           <span className="italic">
-                                          ₹{Math.round(finData?.T_elgible || 0).toLocaleString('en-IN')}
+                                            ₹
+                                            {Math.round(
+                                              finData?.T_elgible || 0
+                                            ).toLocaleString('en-IN')}
                                           </span>
                                         </span>
                                         <div
                                           className="w-3 h-3 ml-1  -mt-2 rotate-45 bg-black"
-                                          style={{ background: '#213343', marginRight: '12px' }}
+                                          style={{
+                                            background: '#213343',
+                                            marginRight: '12px',
+                                          }}
                                         ></div>
                                       </div>
                                       <span className="text-[#0E0A1F] font-medium  text-[12px]  font-outfit tracking-wide ">
-                                      ₹{formatIndianNumber?.(Math.round(finData?.T_elgible || 0))}
-
+                                        ₹
+                                        {formatIndianNumber?.(
+                                          Math.round(finData?.T_elgible || 0)
+                                        )}
                                       </span>
                                     </div>
                                     {/* <div className="text-zinc-800 text-[12px]  font-outfit tracking-wide">
@@ -1367,11 +1366,9 @@ showLabels={true}
                                   </section>
 
                                   <section className=" flex gap-2 justify-between font-semibold text-xs m-1 w-full  ">
-                                    <div className='flex'>
-
+                                    <div className="flex">
                                       <div className="h-3 w-3 bg-purple-300 mr-2"></div>
                                       <div className="text-[12px] text-[#0E0A1F] font-normal">
-
                                         Paid:
                                         <span
                                           title={`₹ ${(
@@ -1384,7 +1381,6 @@ showLabels={true}
                                           <InformationCircleIcon className="h-4 w-4 inline text-zinc-400" />
                                         </span>
                                       </div>
-
                                     </div>
 
                                     {/* <div className="text-zinc-800 text-[12px] font-bold font-outfit tracking-wide">
@@ -1395,11 +1391,16 @@ showLabels={true}
                                       )?.toLocaleString('en-IN')}
                                     </div> */}
 
-
-                                    <div className="relative flex flex-col items-center group" style={{ alignItems: 'start' }}>
+                                    <div
+                                      className="relative flex flex-col items-center group"
+                                      style={{ alignItems: 'start' }}
+                                    >
                                       <div
                                         className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
-                                        style={{ alignItems: 'start', width: '300px' }}
+                                        style={{
+                                          alignItems: 'start',
+                                          width: '300px',
+                                        }}
                                       >
                                         <span
                                           className="rounded italian relative mr-3 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
@@ -1410,47 +1411,59 @@ showLabels={true}
                                           }}
                                         >
                                           <span className="italic">
-                                        ₹{((finData?.T_review || 0) + (finData?.T_approved || 0)).toLocaleString('en-IN')}
-
+                                            ₹
+                                            {(
+                                              (finData?.T_review || 0) +
+                                              (finData?.T_approved || 0)
+                                            ).toLocaleString('en-IN')}
                                           </span>
                                         </span>
                                         <div
                                           className="w-3 h-3 ml-1 -mt-2 rotate-45 bg-black"
-                                          style={{ background: '#213343', marginRight: '12px' }}
+                                          style={{
+                                            background: '#213343',
+                                            marginRight: '12px',
+                                          }}
                                         ></div>
                                       </div>
                                       <span className="text-[#0E0A1F] font-medium text-[12px]  font-outfit tracking-wide">
-                                      ₹{formatIndianNumber?.(Math.round((finData?.T_review || 0) + (finData?.T_approved || 0)))}
+                                        ₹
+                                        {formatIndianNumber?.(
+                                          Math.round(
+                                            (finData?.T_review || 0) +
+                                              (finData?.T_approved || 0)
+                                          )
+                                        )}
                                       </span>
                                     </div>
                                   </section>
 
-
                                   {/* section- 3 */}
                                   <section className="flex gap-2 justify-between font-semibold text-xs m-1 w-full">
-                                    <div className='flex'>
+                                    <div className="flex">
                                       <div className="h-3 w-3 bg-gray-300 mr-2"></div>
 
                                       <div className="text-[12px] font-outfit text-[#0E0A1F] font-normal">
                                         Balance:
                                       </div>
-
                                     </div>
 
                                     <div className="text-zinc-800 text-[12px] font-bold font-outfit tracking-wide">
                                       {/* ₹ {finData?.T_elgible_balance < 0 ? 0 : Math.round(finData?.T_elgible_balance).toLocaleString('en-IN')} */}
 
                                       {/* <IndianCurrencyTooltip amount={(finData?.T_elgible_balance < 0 ? 0 : finData?.T_elgible_balance)?.toLocaleString("en-IN")} /> */}
-
-
-
-
                                     </div>
 
-                                    <div className="relative flex flex-col items-center group" style={{ alignItems: 'start' }}>
+                                    <div
+                                      className="relative flex flex-col items-center group"
+                                      style={{ alignItems: 'start' }}
+                                    >
                                       <div
                                         className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
-                                        style={{ alignItems: 'start', width: '300px' }}
+                                        style={{
+                                          alignItems: 'start',
+                                          width: '300px',
+                                        }}
                                       >
                                         <span
                                           className="rounded italian relative mr-3 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
@@ -1462,19 +1475,31 @@ showLabels={true}
                                         >
                                           <span className="italic">
                                             {/* {formatIndianNumber?.(Math.round((finData?.T_review || 0) + (finData?.T_approved || 0)))} */}
-                                            ₹{finData?.T_elgible_balance < 0 ? 0 : Math.round(finData?.T_elgible_balance).toLocaleString('en-IN')}
-
+                                            ₹
+                                            {finData?.T_elgible_balance < 0
+                                              ? 0
+                                              : Math.round(
+                                                  finData?.T_elgible_balance
+                                                ).toLocaleString('en-IN')}
                                           </span>
                                         </span>
                                         <div
                                           className="w-3 h-3 ml-1 -mt-2 rotate-45 bg-black"
-                                          style={{ background: '#213343', marginRight: '12px' }}
+                                          style={{
+                                            background: '#213343',
+                                            marginRight: '12px',
+                                          }}
                                         ></div>
                                       </div>
                                       <span className="text-[#0E0A1F] font-medium text-[12px] font-outfit tracking-wide">
-
-                                      ₹{formatIndianNumber(finData?.T_elgible_balance < 0 ? 0 : Math.round(finData?.T_elgible_balance))}
-
+                                        ₹
+                                        {formatIndianNumber(
+                                          finData?.T_elgible_balance < 0
+                                            ? 0
+                                            : Math.round(
+                                                finData?.T_elgible_balance
+                                              )
+                                        )}
                                       </span>
                                     </div>
                                   </section>
@@ -1504,23 +1529,23 @@ showLabels={true}
                                 /> */}
 
                                 {/* <HalfSemiCircleGauge/> */}
-
-
                               </div>
                             </div>
-
-
 
                             {/* divider */}
                             <div className="h-12 border-r rounded-sm border-[#E7E7E9] mx-4"></div>
 
-                            <div className='w-[33%]'>
-                              <div className=' '>
+                            <div className="w-[33%]">
+                              <div className=" ">
                                 <div className="">
-                                <div className=' '>
+                                  <div className=" ">
                                     <div className="text-[12px]">
-                                      <span className="font-medium text-[#0E0A1F]">Comments:</span>
-                                      <span className="ml-2 text-[#0E0A1F] font-normal">Make a follow up call to Ram at 10am</span>
+                                      <span className="font-medium text-[#0E0A1F]">
+                                        Comments:
+                                      </span>
+                                      <span className="ml-2 text-[#0E0A1F] font-normal">
+                                        Make a follow up call to Ram at 10am
+                                      </span>
                                       <span className="ml-2 h-2 w-2 rounded-full bg-green-500 inline-block"></span>
                                     </div>
                                     {/* <div className="text-[12px]">
@@ -1529,15 +1554,7 @@ showLabels={true}
                                     </div> */}
                                   </div>
                                   <div className="flex items-center mt-3  ">
-
-
-
-
-
-
-
                                     <div>
-
                                       <div className="flex">
                                         <div className="flex items-center justify-center">
                                           <div>
@@ -1545,24 +1562,38 @@ showLabels={true}
                                               <div className="flex  items-center justify-center  h-full rounded-md ">
                                                 <div className="flex items-center justify-center   pr-1">
                                                   {/* section 2 */}
-                                                  {['booked', 'selCategory'].includes(selCategory) &&
+                                                  {[
+                                                    'booked',
+                                                    'selCategory',
+                                                  ].includes(selCategory) && (
                                                     <section className="flex gap-1 items-center">
-                                                      {!(user?.role.includes('crm-executive')) && (
+                                                      {!user?.role.includes(
+                                                        'crm-executive'
+                                                      ) && (
                                                         <div
-                                                          className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] p-[2px] pl-[3px] pr-[7px] inline-flex items-center gap-1 ${finData?.man_cs_approval == 'approved'
-                                                            ? 'text-green-700'
-                                                            : finData?.man_cs_approval == 'rejected'
+                                                          className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] p-[2px] pl-[3px] pr-[7px] inline-flex items-center gap-1 ${
+                                                            finData?.man_cs_approval ==
+                                                            'approved'
+                                                              ? 'text-green-700'
+                                                              : finData?.man_cs_approval ==
+                                                                'rejected'
                                                               ? 'text-red-700'
                                                               : 'text-black'
-                                                            } `}
+                                                          } `}
                                                           // style={{
                                                           //   display: 'inline-block',
                                                           //   alignSelf: 'flex-end',
                                                           // }}
                                                           onClick={() => {
-                                                            setSelUnitDetails(finData)
-                                                            setIsSubTopicOpen(true)
-                                                            setIsSubTopic('crm_cs_approval')
+                                                            setSelUnitDetails(
+                                                              finData
+                                                            )
+                                                            setIsSubTopicOpen(
+                                                              true
+                                                            )
+                                                            setIsSubTopic(
+                                                              'crm_cs_approval'
+                                                            )
                                                           }}
                                                         >
                                                           <div className="flex  items-center justify-center gap-1">
@@ -1575,34 +1606,38 @@ showLabels={true}
                                           : 'text-gray-600 '
                                       }`}
                                       aria-hidden="true"
-                                    /> */}                                                              <span className={`inline-flex items-center justify-center w-6 h-6 rounded-full ${finData?.man_cs_approval == 'approved'
-                                                                ? 'bg-[#DFF6E0]'
-                                                                : finData?.man_cs_approval == 'rejected'
-                                                                  ? 'bg-[#F5E6E6]'
-                                                                  : 'bg-gray-100'
-                                                                }`}>
-
-
+                                    /> */}{' '}
+                                                              <span
+                                                                className={`inline-flex items-center justify-center w-6 h-6 rounded-full ${
+                                                                  finData?.man_cs_approval ==
+                                                                  'approved'
+                                                                    ? 'bg-[#DFF6E0]'
+                                                                    : finData?.man_cs_approval ==
+                                                                      'rejected'
+                                                                    ? 'bg-[#F5E6E6]'
+                                                                    : 'bg-gray-100'
+                                                                }`}
+                                                              >
                                                                 {/* <img
                                                                   alt="CRM Background"
                                                                   src="/timebox.svg"
                                                                   className="w-4 h-4"
                                                                 /> */}
 
-
                                                                 <img
                                                                   alt="CRM Status"
                                                                   src={
-                                                                    finData?.man_cs_approval === 'approved'
+                                                                    finData?.man_cs_approval ===
+                                                                    'approved'
                                                                       ? '/crmc.svg'
-                                                                      : finData?.man_cs_approval === 'rejected'
-                                                                        ? '/crmw.svg'
-                                                                        : '/crmp.svg'
+                                                                      : finData?.man_cs_approval ===
+                                                                        'rejected'
+                                                                      ? '/crmw.svg'
+                                                                      : '/crmp.svg'
                                                                   }
                                                                   className="w-4 h-4"
                                                                 />
                                                               </span>
-
                                                             </div>
 
                                                             <span className=" text-xs ">
@@ -1613,97 +1648,92 @@ showLabels={true}
                                                       )}
 
                                                       {/* section 3*/}
+
                                                       <div
-                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px]  p-[2px] pl-[3px] pr-[7px] inline-flex items-center gap-1${finData?.kyc_status == 'approved'
-                                                          ? 'text-green-700'
-                                                          : finData?.kyc_status == 'rejected'
-                                                            // ? 'bg-[#ffdbdb]'
-                                                            // : 'bg-[#FFFFFF] '
+                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px]  p-[2px] pl-[3px] pr-[7px] inline-flex items-center gap-1 ${
+                                                          finData?.kyc_status ===
+                                                          'approved'
+                                                            ? 'text-green-700'
+                                                            : finData?.kyc_status ===
+                                                              'rejected'
                                                             ? 'text-red-700'
                                                             : 'text-black'
-                                                          } `}
-                                                        // style={{
-                                                        //   display: 'inline-block',
-                                                        //   alignSelf: 'flex-end',
-                                                        // }}
+                                                        }`}
                                                         onClick={() => {
-                                                          setSelUnitDetails(finData)
-                                                          setIsSubTopicOpen(true)
-                                                          setIsSubTopic('crm_KYC')
+                                                          setSelUnitDetails(
+                                                            finData
+                                                          )
+                                                          setIsSubTopicOpen(
+                                                            true
+                                                          )
+                                                          setIsSubTopic(
+                                                            'crm_KYC'
+                                                          )
                                                         }}
                                                       >
-                                                        <div className="flex  items-center justify-center gap-1">
-                                                          <div className="flex items-center justify-center ">
-                                                            {/* <NewspaperIcon
-                                      className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
-                                        finData?.kyc_status == 'approved'
-                                          ? 'bg-[#CCC5F7]'
-                                          : finData?.kyc_status ==
-                                            'rejected'
-                                          ? 'bg-[#ffdbdb]'
-                                          : 'bg-[#F1F5F9] '
-                                      }`}
-                                      aria-hidden="true"
-                                    /> */}
-                                                            {/* <img
-alt="CRM Background"
-src="/IconSets.svg"
-className="w-4 h-4"
-/> */}
-
-
-
-                                                            <span className={`inline-flex items-center justify-center w-6 h-6 rounded-full ${finData?.man_cs_approval == 'approved'
-                                                              ? 'bg-[#DFF6E0]'
-                                                              : finData?.man_cs_approval == 'rejected'
-                                                                ? 'bg-[#F5E6E6]'
-                                                                : 'bg-gray-100'
-                                                              }`}>
-
-
-                                                              {/* <img
-                                                                alt="CRM Background"
-                                                                src="/timebox.svg"
-                                                                className="w-4 h-4"
-                                                              /> */}
-
+                                                        <div className="flex items-center justify-center gap-1">
+                                                          <div className="flex items-center justify-center">
+                                                            <span
+                                                              className={`inline-flex items-center justify-center w-6 h-6 rounded-full ${
+                                                                finData?.kyc_status ===
+                                                                'approved'
+                                                                  ? 'bg-[#DFF6E0]'
+                                                                  : finData?.kyc_status ===
+                                                                    'rejected'
+                                                                  ? 'bg-[#F5E6E6]'
+                                                                  : 'bg-gray-100'
+                                                              }`}
+                                                            >
                                                               <img
                                                                 alt="Status Icon"
                                                                 src={
-                                                                  finData?.man_cs_approval === 'approved'
+                                                                  finData?.kyc_status ===
+                                                                  'approved'
                                                                     ? '/crmc.svg'
-                                                                    : finData?.man_cs_approval === 'rejected'
-                                                                      ? '/crmw.svg'
-                                                                      : '/crmp.svg'
+                                                                    : finData?.kyc_status ===
+                                                                      'rejected'
+                                                                    ? '/crmw.svg'
+                                                                    : '/crmp.svg'
                                                                 }
                                                                 className="w-4 h-4"
                                                               />
                                                             </span>
-
                                                           </div>
                                                           <span className="text-xs">
                                                             KYC
                                                           </span>
                                                         </div>
                                                       </div>
-                                                    </section>}
-                                                  {['agreement_pipeline'].includes(selCategory) &&
-                                                    <section className='flex gap-2'>
+                                                    </section>
+                                                  )}
+                                                  {[
+                                                    'agreement_pipeline',
+                                                  ].includes(selCategory) && (
+                                                    <section className="flex gap-2">
                                                       <div
-                                                        className={`cursor-pointer  border border-[#E7E7E9] rounded-[36px] p-[2px] pl-[3px] pr-[7px]  inline-flex items-center gap-1 ${finData?.man_ats_approval == 'approved'
-                                                          ? 'text-green-700'
-                                                          : finData?.man_ats_approval == 'rejected'
+                                                        className={`cursor-pointer  border border-[#E7E7E9] rounded-[36px] p-[2px] pl-[3px] pr-[7px]  inline-flex items-center gap-1 ${
+                                                          finData?.man_ats_approval ==
+                                                          'approved'
+                                                            ? 'text-green-700'
+                                                            : finData?.man_ats_approval ==
+                                                              'rejected'
                                                             ? 'text-red-700'
                                                             : 'text-gray-600'
-                                                          } `}
+                                                        } `}
                                                         // style={{
                                                         //   display: 'inline-block',
                                                         //   alignSelf: 'flex-end',
                                                         // }}
                                                         onClick={() => {
-                                                          setSelUnitDetails(finData)
-                                                          setIsSubTopicOpen(true)
-                                                          setIsSubTopic('crm_ATS_Draft')
+                                                          setSelUnitDetails(
+                                                            finData
+                                                          )
+                                                          setIsSubTopicOpen(
+                                                            true
+                                                          )
+                                                          setIsSubTopic(
+                                                            'crm_ATS_Draft'
+                                                          )
                                                         }}
                                                       >
                                                         {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
@@ -1727,13 +1757,17 @@ className="w-4 h-4"
                                 </div> */}
                                                         <div className="flex  items-center justify-center gap-1">
                                                           <div className="flex items-center justify-center ">
-
-                                                            <span className={`inline-flex items-center justify-center w-6 h-6 rounded-full ${finData?.man_cs_approval == 'approved'
-                                                              ? 'bg-[#DFF6E0]'
-                                                              : finData?.man_cs_approval == 'rejected'
-                                                                ? 'bg-[#F5E6E6]'
-                                                                : 'bg-gray-100'
-                                                              }`}>
+                                                            <span
+                                                              className={`inline-flex items-center justify-center w-6 h-6 rounded-full ${
+                                                                finData?.man_cs_approval ==
+                                                                'approved'
+                                                                  ? 'bg-[#DFF6E0]'
+                                                                  : finData?.man_cs_approval ==
+                                                                    'rejected'
+                                                                  ? 'bg-[#F5E6E6]'
+                                                                  : 'bg-gray-100'
+                                                              }`}
+                                                            >
                                                               {/* <img
                                                                 alt="CRM Background"
                                                                 src="/timebox.svg"
@@ -1743,16 +1777,17 @@ className="w-4 h-4"
                                                               <img
                                                                 alt="CRM Background"
                                                                 src={
-                                                                  finData?.man_cs_approval === 'approved'
+                                                                  finData?.man_cs_approval ===
+                                                                  'approved'
                                                                     ? '/crmc.svg'
-                                                                    : finData?.man_cs_approval === 'rejected'
-                                                                      ? '/crmw.svg'
-                                                                      : '/crmp.svg'
+                                                                    : finData?.man_cs_approval ===
+                                                                      'rejected'
+                                                                    ? '/crmw.svg'
+                                                                    : '/crmp.svg'
                                                                 }
                                                                 className="w-4 h-4"
                                                               />
                                                             </span>
-
                                                           </div>
                                                           <h6 className=" text-xs">
                                                             ATS Draft
@@ -1761,20 +1796,29 @@ className="w-4 h-4"
                                                       </div>
                                                       {/* section 3*/}
                                                       <div
-                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] p-[2px] pl-[3px] pr-[7px]  inline-flex items-center gap-1${finData?.kyc_status == 'approved'
-                                                          ? 'text-green-700'
-                                                          : finData?.kyc_status == 'rejected'
+                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] p-[2px] pl-[3px] pr-[7px]  inline-flex items-center gap-1${
+                                                          finData?.kyc_status ==
+                                                          'approved'
+                                                            ? 'text-green-700'
+                                                            : finData?.kyc_status ==
+                                                              'rejected'
                                                             ? 'text-red-700'
                                                             : 'text-gray-600'
-                                                          } `}
+                                                        } `}
                                                         // style={{
                                                         //   display: 'inline-block',
                                                         //   alignSelf: 'flex-end',
                                                         // }}
                                                         onClick={() => {
-                                                          setSelUnitDetails(finData)
-                                                          setIsSubTopicOpen(true)
-                                                          setIsSubTopic('crm_KYC')
+                                                          setSelUnitDetails(
+                                                            finData
+                                                          )
+                                                          setIsSubTopicOpen(
+                                                            true
+                                                          )
+                                                          setIsSubTopic(
+                                                            'crm_KYC'
+                                                          )
                                                         }}
                                                       >
                                                         {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
@@ -1804,12 +1848,17 @@ className="w-4 h-4"
     className="block"
   />
 </div> */}
-                                                          <span className={`inline-flex items-center justify-center w-6 h-6 rounded-full ${finData?.man_cs_approval == 'approved'
-                                                            ? 'bg-[#DFF6E0]'
-                                                            : finData?.man_cs_approval == 'rejected'
-                                                              ? 'bg-[#F5E6E6]'
-                                                              : 'bg-gray-100'
-                                                            }`}>
+                                                          <span
+                                                            className={`inline-flex items-center justify-center w-6 h-6 rounded-full ${
+                                                              finData?.man_cs_approval ==
+                                                              'approved'
+                                                                ? 'bg-[#DFF6E0]'
+                                                                : finData?.man_cs_approval ==
+                                                                  'rejected'
+                                                                ? 'bg-[#F5E6E6]'
+                                                                : 'bg-gray-100'
+                                                            }`}
+                                                          >
                                                             {/* <img
                                                               alt="CRM Background"
                                                               src="/timebox.svg"
@@ -1819,11 +1868,13 @@ className="w-4 h-4"
                                                             <img
                                                               alt="CRM Status"
                                                               src={
-                                                                finData?.man_cs_approval === 'approved'
+                                                                finData?.man_cs_approval ===
+                                                                'approved'
                                                                   ? '/crmc.svg'
-                                                                  : finData?.man_cs_approval === 'rejected'
-                                                                    ? '/crmw.svg'
-                                                                    : '/crmp.svg'
+                                                                  : finData?.man_cs_approval ===
+                                                                    'rejected'
+                                                                  ? '/crmw.svg'
+                                                                  : '/crmp.svg'
                                                               }
                                                               className="w-4 h-4"
                                                             />
@@ -1833,24 +1884,36 @@ className="w-4 h-4"
                                                           </h6>
                                                         </div>
                                                       </div>
-                                                    </section>}
-                                                  {['agreement'].includes(selCategory) &&
-                                                    <section className='flex gap-2 '>
+                                                    </section>
+                                                  )}
+                                                  {['agreement'].includes(
+                                                    selCategory
+                                                  ) && (
+                                                    <section className="flex gap-2 ">
                                                       <div
-                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] p-[2px] pl-[3px] pr-[7px] inline-flex items-center gap-1 ${finData?.both_sd_approval == 'approved'
-                                                          ? 'text-green-700'
-                                                          : finData?.both_sd_approval == 'rejected'
+                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] p-[2px] pl-[3px] pr-[7px] inline-flex items-center gap-1 ${
+                                                          finData?.both_sd_approval ==
+                                                          'approved'
+                                                            ? 'text-green-700'
+                                                            : finData?.both_sd_approval ==
+                                                              'rejected'
                                                             ? 'text-red-700'
                                                             : 'text-gray-600'
-                                                          } `}
+                                                        } `}
                                                         // style={{
                                                         //   display: 'inline-block',
                                                         //   alignSelf: 'flex-end',
                                                         // }}
                                                         onClick={() => {
-                                                          setSelUnitDetails(finData)
-                                                          setIsSubTopicOpen(true)
-                                                          setIsSubTopic('crm_SD_Approval')
+                                                          setSelUnitDetails(
+                                                            finData
+                                                          )
+                                                          setIsSubTopicOpen(
+                                                            true
+                                                          )
+                                                          setIsSubTopic(
+                                                            'crm_SD_Approval'
+                                                          )
                                                         }}
                                                       >
                                                         {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
@@ -1878,12 +1941,17 @@ className="w-4 h-4"
     className="block"
   />
 </div> */}
-                                                          <span className={`inline-flex items-center justify-center w-6 h-6 rounded-full ${finData?.man_cs_approval == 'approved'
-                                                            ? 'bg-[#DFF6E0]'
-                                                            : finData?.man_cs_approval == 'rejected'
-                                                              ? 'bg-[#F5E6E6]'
-                                                              : 'bg-gray-100'
-                                                            }`}>
+                                                          <span
+                                                            className={`inline-flex items-center justify-center w-6 h-6 rounded-full ${
+                                                              finData?.man_cs_approval ==
+                                                              'approved'
+                                                                ? 'bg-[#DFF6E0]'
+                                                                : finData?.man_cs_approval ==
+                                                                  'rejected'
+                                                                ? 'bg-[#F5E6E6]'
+                                                                : 'bg-gray-100'
+                                                            }`}
+                                                          >
                                                             {/* <img
                                                               alt="CRM Background"
                                                               src="/timebox.svg"
@@ -1893,11 +1961,13 @@ className="w-4 h-4"
                                                             <img
                                                               alt="CRM Status"
                                                               src={
-                                                                finData?.man_cs_approval === 'approved'
+                                                                finData?.man_cs_approval ===
+                                                                'approved'
                                                                   ? '/crmc.svg'
-                                                                  : finData?.man_cs_approval === 'rejected'
-                                                                    ? '/crmw.svg'
-                                                                    : '/crmp.svg'
+                                                                  : finData?.man_cs_approval ===
+                                                                    'rejected'
+                                                                  ? '/crmw.svg'
+                                                                  : '/crmp.svg'
                                                               }
                                                               className="w-4 h-4"
                                                             />
@@ -1909,20 +1979,29 @@ className="w-4 h-4"
                                                       </div>
                                                       {/* section 3*/}
                                                       <div
-                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] p-[2px] pl-[3px] pr-[7px]  inline-flex items-center gap-1${finData?.LpostStatus == 'Approved'
-                                                          ? 'text-green-700'
-                                                          : finData?.LpostStatus == 'Rejected'
+                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] p-[2px] pl-[3px] pr-[7px]  inline-flex items-center gap-1${
+                                                          finData?.LpostStatus ==
+                                                          'Approved'
+                                                            ? 'text-green-700'
+                                                            : finData?.LpostStatus ==
+                                                              'Rejected'
                                                             ? 'text-red-700'
                                                             : 'text-gray-600'
-                                                          }  `}
+                                                        }  `}
                                                         // style={{
                                                         //   display: 'inline-block',
                                                         //   alignSelf: 'flex-end',
                                                         // }}
                                                         onClick={() => {
-                                                          setSelUnitDetails(finData)
-                                                          setIsSubTopicOpen(true)
-                                                          setIsSubTopic('crm_loan')
+                                                          setSelUnitDetails(
+                                                            finData
+                                                          )
+                                                          setIsSubTopicOpen(
+                                                            true
+                                                          )
+                                                          setIsSubTopic(
+                                                            'crm_loan'
+                                                          )
                                                         }}
                                                       >
                                                         {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
@@ -1952,13 +2031,17 @@ className="w-4 h-4"
   />
 </div> */}
 
-
-                                                          <span className={`inline-flex items-center justify-center w-6 h-6 rounded-full ${finData?.man_cs_approval == 'approved'
-                                                            ? 'bg-[#DFF6E0]'
-                                                            : finData?.man_cs_approval == 'rejected'
-                                                              ? 'bg-[#F5E6E6]'
-                                                              : 'bg-gray-100'
-                                                            }`}>
+                                                          <span
+                                                            className={`inline-flex items-center justify-center w-6 h-6 rounded-full ${
+                                                              finData?.man_cs_approval ==
+                                                              'approved'
+                                                                ? 'bg-[#DFF6E0]'
+                                                                : finData?.man_cs_approval ==
+                                                                  'rejected'
+                                                                ? 'bg-[#F5E6E6]'
+                                                                : 'bg-gray-100'
+                                                            }`}
+                                                          >
                                                             {/* <img
                                                               alt="CRM Background"
                                                               src="/timebox.svg"
@@ -1968,11 +2051,13 @@ className="w-4 h-4"
                                                             <img
                                                               alt="CRM Status"
                                                               src={
-                                                                finData?.man_cs_approval === 'approved'
+                                                                finData?.man_cs_approval ===
+                                                                'approved'
                                                                   ? '/crmc.svg'
-                                                                  : finData?.man_cs_approval === 'rejected'
-                                                                    ? '/crmw.svg'
-                                                                    : '/crmp.svg'
+                                                                  : finData?.man_cs_approval ===
+                                                                    'rejected'
+                                                                  ? '/crmw.svg'
+                                                                  : '/crmp.svg'
                                                               }
                                                               className="w-4 h-4"
                                                             />
@@ -1982,24 +2067,37 @@ className="w-4 h-4"
                                                           </h6>
                                                         </div>
                                                       </div>
-                                                    </section>}
-                                                  {['registered', 'possession'].includes(selCategory) &&
-                                                    <section className='flex gap-2'>
+                                                    </section>
+                                                  )}
+                                                  {[
+                                                    'registered',
+                                                    'possession',
+                                                  ].includes(selCategory) && (
+                                                    <section className="flex gap-2">
                                                       <div
-                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] p-[2px] pl-[3px] pr-[7px]  inline-flex items-center gap-1${finData?.both_sd_approval == 'approved'
-                                                          ? 'text-green-700'
-                                                          : finData?.both_sd_approval == 'rejected'
+                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] p-[2px] pl-[3px] pr-[7px]  inline-flex items-center gap-1${
+                                                          finData?.both_sd_approval ==
+                                                          'approved'
+                                                            ? 'text-green-700'
+                                                            : finData?.both_sd_approval ==
+                                                              'rejected'
                                                             ? 'text-red-700'
                                                             : 'text-gray-600'
-                                                          } `}
+                                                        } `}
                                                         // style={{
                                                         //   display: 'inline-block',
                                                         //   alignSelf: 'flex-end',
                                                         // }}
                                                         onClick={() => {
-                                                          setSelUnitDetails(finData)
-                                                          setIsSubTopicOpen(true)
-                                                          setIsSubTopic('crm_posession')
+                                                          setSelUnitDetails(
+                                                            finData
+                                                          )
+                                                          setIsSubTopicOpen(
+                                                            true
+                                                          )
+                                                          setIsSubTopic(
+                                                            'crm_posession'
+                                                          )
                                                         }}
                                                       >
                                                         {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
@@ -2027,13 +2125,17 @@ className="w-4 h-4"
   />
 </div> */}
 
-
-                                                          <span className={`inline-flex items-center justify-center w-6 h-6 rounded-full ${finData?.man_cs_approval == 'approved'
-                                                            ? 'bg-[#DFF6E0]'
-                                                            : finData?.man_cs_approval == 'rejected'
-                                                              ? 'bg-[#F5E6E6]'
-                                                              : 'bg-gray-100'
-                                                            }`}>
+                                                          <span
+                                                            className={`inline-flex items-center justify-center w-6 h-6 rounded-full ${
+                                                              finData?.man_cs_approval ==
+                                                              'approved'
+                                                                ? 'bg-[#DFF6E0]'
+                                                                : finData?.man_cs_approval ==
+                                                                  'rejected'
+                                                                ? 'bg-[#F5E6E6]'
+                                                                : 'bg-gray-100'
+                                                            }`}
+                                                          >
                                                             {/* <img
                                                               alt="CRM Background"
                                                               src="/timebox.svg"
@@ -2043,11 +2145,13 @@ className="w-4 h-4"
                                                             <img
                                                               alt="CRM Status"
                                                               src={
-                                                                finData?.man_cs_approval === 'approved'
+                                                                finData?.man_cs_approval ===
+                                                                'approved'
                                                                   ? '/crmc.svg'
-                                                                  : finData?.man_cs_approval === 'rejected'
-                                                                    ? '/crmw.svg'
-                                                                    : '/crmp.svg'
+                                                                  : finData?.man_cs_approval ===
+                                                                    'rejected'
+                                                                  ? '/crmw.svg'
+                                                                  : '/crmp.svg'
                                                               }
                                                               className="w-4 h-4"
                                                             />
@@ -2059,20 +2163,29 @@ className="w-4 h-4"
                                                       </div>
                                                       {/* section 3*/}
                                                       <div
-                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] p-[2px] pr-[7px] inline-flex items-center gap-1${finData?.kyc_status == 'approved'
-                                                          ? 'text-green-700'
-                                                          : finData?.kyc_status == 'rejected'
+                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] p-[2px] pr-[7px] inline-flex items-center gap-1${
+                                                          finData?.kyc_status ==
+                                                          'approved'
+                                                            ? 'text-green-700'
+                                                            : finData?.kyc_status ==
+                                                              'rejected'
                                                             ? 'text-red-700'
                                                             : 'text-gray-600'
-                                                          } `}
+                                                        } `}
                                                         // style={{
                                                         //   display: 'inline-block',
                                                         //   alignSelf: 'flex-end',
                                                         // }}
                                                         onClick={() => {
-                                                          setSelUnitDetails(finData)
-                                                          setIsSubTopicOpen(true)
-                                                          setIsSubTopic('crm_loan')
+                                                          setSelUnitDetails(
+                                                            finData
+                                                          )
+                                                          setIsSubTopicOpen(
+                                                            true
+                                                          )
+                                                          setIsSubTopic(
+                                                            'crm_loan'
+                                                          )
                                                         }}
                                                       >
                                                         {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
@@ -2094,7 +2207,6 @@ className="w-4 h-4"
                                   </h6>
                                 </div> */}
 
-
                                                         <div className="flex  items-center justify-center gap-1">
                                                           {/* <div className="flex items-center justify-center  p-1">
   <img
@@ -2103,12 +2215,17 @@ className="w-4 h-4"
     className="block"
   />
 </div> */}
-                                                          <span className={`inline-flex items-center justify-center w-6 h-6 rounded-full ${finData?.man_cs_approval == 'approved'
-                                                            ? 'bg-[#DFF6E0]'
-                                                            : finData?.man_cs_approval == 'rejected'
-                                                              ? 'bg-[#F5E6E6]'
-                                                              : 'bg-gray-100'
-                                                            }`}>
+                                                          <span
+                                                            className={`inline-flex items-center justify-center w-6 h-6 rounded-full ${
+                                                              finData?.man_cs_approval ==
+                                                              'approved'
+                                                                ? 'bg-[#DFF6E0]'
+                                                                : finData?.man_cs_approval ==
+                                                                  'rejected'
+                                                                ? 'bg-[#F5E6E6]'
+                                                                : 'bg-gray-100'
+                                                            }`}
+                                                          >
                                                             {/* <img
                                                               alt="CRM Background"
                                                               src="/timebox.svg"
@@ -2118,11 +2235,13 @@ className="w-4 h-4"
                                                             <img
                                                               alt="CRM Status"
                                                               src={
-                                                                finData?.man_cs_approval === 'approved'
+                                                                finData?.man_cs_approval ===
+                                                                'approved'
                                                                   ? '/crmc.svg'
-                                                                  : finData?.man_cs_approval === 'rejected'
-                                                                    ? '/crmw.svg'
-                                                                    : '/crmp.svg'
+                                                                  : finData?.man_cs_approval ===
+                                                                    'rejected'
+                                                                  ? '/crmw.svg'
+                                                                  : '/crmp.svg'
                                                               }
                                                               className="w-4 h-4"
                                                             />
@@ -2132,19 +2251,17 @@ className="w-4 h-4"
                                                           </h6>
                                                         </div>
                                                       </div>
-                                                    </section>}
+                                                    </section>
+                                                  )}
                                                   {/* section 4*/}
                                                 </div>
                                               </div>
                                             </div>
                                           </div>
 
-
                                           {/* <div className='flex items-center cursor-pointer border justify-center rounded-md'>
            Call
         </div> */}
-
-
                                         </div>
 
                                         {/* <div className="flex items-center cursor-pointer border justify-center py-[3px] px-2  rounded-md">
@@ -2152,13 +2269,12 @@ className="w-4 h-4"
           <p className="ml-1 text-[12px]">Call</p>
         </div> */}
 
-
                                         <div
                                           className="cursor-pointer border border-[#E7E7E9] rounded-[36px] p-[2px] pl-[3px] pr-[7px]  inline-flex items-center gap-1"
                                           onClick={() => {
-                                            setSelUnitDetails(finData);
-                                            setIsSubTopicOpen(true);
-                                            setIsSubTopic('crm_call');
+                                            setSelUnitDetails(finData)
+                                            setIsSubTopicOpen(true)
+                                            setIsSubTopic('crm_call')
                                           }}
                                         >
                                           <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100">
@@ -2168,9 +2284,11 @@ className="w-4 h-4"
                                               className="w-4 h-4"
                                             />
                                           </span>
-                                          <span className="font-bodyLato text-xs">Call</span>
+                                          <span className="font-bodyLato text-xs whitespace-nowrap">
+                                            Tasks (
+                                            {finData?.T_pending_tasks || 0})
+                                          </span>
                                         </div>
-
 
                                         {/*
 <div className="flex items-center cursor-pointer border border-blue-500 bg-blue-50 justify-center  rounded-md">
@@ -2184,7 +2302,9 @@ className="w-4 h-4"
                                       {finData?.assignedToObj?.label ? (
                                         // Show first letter of name
                                         <div className="w-6 h-6 bg-[#ccc] rounded-full flex items-center justify-center text-white text-xs font-medium">
-                                          {finData.assignedToObj.label.charAt(0).toUpperCase()}
+                                          {finData.assignedToObj.label
+                                            .charAt(0)
+                                            .toUpperCase()}
                                         </div>
                                       ) : (
                                         // Show empty avatar for unassigned
@@ -2193,19 +2313,15 @@ className="w-4 h-4"
                                         </div>
                                       )}
                                       <span className="text-[#0E0A1F] font-medium text-[14px] ml-2 min-w-[80px]">
-                                        {finData?.assignedToObj?.label || finData?.assignedBy || 'Unassigned'}
+                                        {finData?.assignedToObj?.label ||
+                                          finData?.assignedBy ||
+                                          'Unassigned'}
                                       </span>
                                     </div>
                                   </div>
-
                                 </div>
-
                               </div>
                             </div>
-
-
-
-
                           </section>
                         </section>
                       )

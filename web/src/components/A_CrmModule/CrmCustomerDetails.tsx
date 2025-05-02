@@ -12,4 +12,3 @@ const CrmCustomerDetails = ({}) => {
 }
 
 export default CrmCustomerDetails
-

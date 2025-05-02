@@ -4,7 +4,11 @@
 import { EyeIcon, PencilIcon } from '@heroicons/react/outline'
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { deleteUser, steamUsersList, steaminactiveUsersList } from 'src/context/dbQueryFirebase'
+import {
+  deleteUser,
+  steamUsersList,
+  steaminactiveUsersList,
+} from 'src/context/dbQueryFirebase'
 import { TrashIcon } from '@heroicons/react/outline'
 import StyledButton from 'src/components/RoundedButton'
 import { useAuth } from 'src/context/firebase-auth-context'
@@ -38,7 +42,7 @@ const AssetsManageTable = ({ editEmployeeFun, showCompletedTasks }) => {
     }
   }, [selDept, leadsFetchedData])
   const getLeadsDataFun = async () => {
-    if(showCompletedTasks) {
+    if (showCompletedTasks) {
       const unsubscribe = steaminactiveUsersList(
         orgId,
         (querySnapshot) => {
@@ -50,18 +54,18 @@ const AssetsManageTable = ({ editEmployeeFun, showCompletedTasks }) => {
         () => setLeadsFetchedData([])
       )
       return unsubscribe
-    }else {
-    const unsubscribe = steamUsersList(
-      orgId,
-      (querySnapshot) => {
-        const usersListA = querySnapshot.docs.map((docSnapshot) =>
-          docSnapshot.data()
-        )
-        setLeadsFetchedData(usersListA)
-      },
-      () => setLeadsFetchedData([])
-    )
-    return unsubscribe
+    } else {
+      const unsubscribe = steamUsersList(
+        orgId,
+        (querySnapshot) => {
+          const usersListA = querySnapshot.docs.map((docSnapshot) =>
+            docSnapshot.data()
+          )
+          setLeadsFetchedData(usersListA)
+        },
+        () => setLeadsFetchedData([])
+      )
+      return unsubscribe
     }
   }
 
@@ -86,8 +90,6 @@ const AssetsManageTable = ({ editEmployeeFun, showCompletedTasks }) => {
               { label: 'AccessCard', val: 'construction' },
               { label: 'Headset', val: 'admin_support' },
               { label: 'Two Wheeler', val: 'admin_support' },
-
-
             ].map((dat, index) => (
               <a
                 key={index}
@@ -111,7 +113,7 @@ const AssetsManageTable = ({ editEmployeeFun, showCompletedTasks }) => {
           <div className="shadow overflow-hidden border-b border-gray-200  bg-white pb-4  px-4">
             <table className="min-w-full divide-y divide-gray-200 table-fixed">
               <thead className="bg-[#E8E6FE]">
-                <tr className=''>
+                <tr className="">
                   <th
                     scope="col"
                     className="px-6 py-3 text-left rounded-tl-md text-xs font-semibold text-[#0D027D]  capitalize  tracking-wider"
@@ -145,22 +147,26 @@ const AssetsManageTable = ({ editEmployeeFun, showCompletedTasks }) => {
                   {/* <th scope="col" className="relative px-6 py-3">
                     <span className="sr-only">Edit</span>
                   </th> */}
-                  <th scope="col" className="px-6 py-3 text-right text-xs font-semibold text-[#0D027D] capitalize tracking-wider rounded-tr-md">
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-right text-xs font-semibold text-[#0D027D] capitalize tracking-wider rounded-tr-md"
+                  >
                     Edit
-                   </th>
+                  </th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200 ">
                 {filterData.map((person) => (
-                  <motion.tr key={person.email}  className='cursor-pointer border-b border-dashed ' >
+                  <motion.tr
+                    key={person.email}
+                    className="cursor-pointer border-b border-dashed "
+                  >
                     <td className="px-6 py-1 whitespace-nowrap">
                       <div className="flex items-center">
                         <div className="flex-shrink-0 h-10 w-10">
                           <img
                             className="h-10 w-10 rounded-full"
-                            src={
-                              '/avatar_1.png'
-                            }
+                            src={'/avatar_1.png'}
                             alt=""
                           />
                         </div>
@@ -193,7 +199,7 @@ const AssetsManageTable = ({ editEmployeeFun, showCompletedTasks }) => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full capitalize text-[#0ABC31]">
-                      {person?.userStatus}
+                        {person?.userStatus}
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

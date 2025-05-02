@@ -34,20 +34,17 @@ const CampaignTable = ({ campaigns }) => {
   const [campaignsList, setCampaignsList] = useState([])
   const [fetchedCampaignsList, setfetchedCampaignsList] = useState([])
 
-
   const [campaignPaylaod, setCampaignPaylaod] = useState({})
   const [mode, setMode] = useState('add')
-
-
 
   const [isImportLeadsOpen1, setisImportLeadsOpen1] = React.useState(false)
   useEffect(() => {
     const unsubscribe = getAllCampaigns(
       orgId,
       (querySnapshot) => {
-        const projectsListA = querySnapshot.docs.map((docSnapshot) =>
-         {return { ...docSnapshot.data(), ...{ docId: docSnapshot.id } } }
-        )
+        const projectsListA = querySnapshot.docs.map((docSnapshot) => {
+          return { ...docSnapshot.data(), ...{ docId: docSnapshot.id } }
+        })
         setfetchedCampaignsList(projectsListA)
         projectsListA.map((user) => {
           user.label = user.projectName
@@ -75,8 +72,8 @@ const CampaignTable = ({ campaigns }) => {
             className="flex items-center text-sm	 bg-[#fff] text-black border border-gray-300	 py-2 px-4 rounded-full z-10"
             onClick={() => {
               setMode('add')
-              setisImportLeadsOpen1(true)}
-            }
+              setisImportLeadsOpen1(true)
+            }}
           >
             <svg
               className="h-6 w-6 mr-2 text-[#0891B2]"
@@ -86,7 +83,6 @@ const CampaignTable = ({ campaigns }) => {
               strokeWidth="2"
               viewBox="0 0 24 24"
               stroke="currentColor"
-              
             >
               <path d="M12 4v16m8-8H4" />
             </svg>
@@ -189,10 +185,11 @@ const CampaignTable = ({ campaigns }) => {
                   key={i}
                   className="hover:bg-gray-100"
                   style={{ height: '40px' }}
-                  onClick={()=> {
+                  onClick={() => {
                     setMode('edit')
                     setisImportLeadsOpen1(true)
-                    setCampaignPaylaod(campaign)}}
+                    setCampaignPaylaod(campaign)
+                  }}
                 >
                   <td
                     className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border border-gray-200"

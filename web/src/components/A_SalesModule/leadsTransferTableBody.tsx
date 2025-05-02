@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react'
-import {
-  Tooltip,
-} from '@mui/material'
+import { Tooltip } from '@mui/material'
 import { useSnackbar } from 'notistack'
 
 import AssigedToDropComp from 'src/components/assignedToDropComp'
@@ -264,13 +262,11 @@ const LeadsTransferTableBody = ({
 
   return (
     <div className="h-full flex flex-col ">
-
       <div className="z-10 flex flex-row justify-between">
-
         {'Leads'} ({leadsFilA.length || 0})
         <section className="flex flex-row gap-2">
           <button className=" text-[#0E0A1F]  font-normal text-sm">
-           ( {checkboxCount} Selected )
+            ( {checkboxCount} Selected )
           </button>
           <section className="flex flex-row items-center space-x-2">
             <AssigedToDropComp
@@ -283,12 +279,10 @@ const LeadsTransferTableBody = ({
               // itemButtonClassName=" font-normal"
               // variant="special"
               label="Projects"
-              
               usersList={[
                 ...[{ label: 'All Projects', value: 'allprojects' }],
                 ...projectList,
               ]}
-
               customStyles={{
                 control: (provided) => ({
                   ...provided,
@@ -308,12 +302,8 @@ const LeadsTransferTableBody = ({
               Project {}
             </div> */}
           </section>
- 
-
 
           <Tooltip title={`Download ${selectedIds.length} Row`}>
-
-
             {/* <CSVDownloader
               className="mr-6 h-[20px] w-[20px]"
               downloadRows={selectedIds}
@@ -327,12 +317,14 @@ const LeadsTransferTableBody = ({
       <div className="grid  gap-8 grid-cols-1">
         <div className="flex flex-col">
           <div className="flex flex-col rounded-lg ">
-
             {loadingIcon ? (
               <LogSkelton />
             ) : (
               // <table className="min-w-full  rounded-lg  text-center mt-6">
-              <table className="min-w-full rounded-2xl overflow-hidden text-center mt-6" style={{ borderCollapse: 'separate', borderSpacing: 0 }}>
+              <table
+                className="min-w-full rounded-2xl overflow-hidden text-center mt-6"
+                style={{ borderCollapse: 'separate', borderSpacing: 0 }}
+              >
                 <thead className="rounded-2xl">
                   <tr>
                     <th
@@ -351,21 +343,19 @@ const LeadsTransferTableBody = ({
                             leadsFilA.length > 0
                           }
                           onChange={handleSelectAllChange}
-                          className='mx-auto accent-black'
+                          className="mx-auto accent-black"
                         />
                       </label>
                     </th>
 
                     {[
-                             { label: 'sNo', id: 'no', align: 'left' },
-                             { label: 'Project', id: 'label', align: 'center' },
-                             { label: 'Lead Ph', id: 'all', align: 'center' },
-                             { label: 'Status', id: 'new', align: 'center' },
-                             { label: 'Source', id: 'new', align: 'center' },
-                             { label: 'Executive', id: 'all', align: 'center' },
-                             { label: 'Created on', id: 'all', align: 'center' },
-
-
+                      { label: 'sNo', id: 'no', align: 'left' },
+                      { label: 'Project', id: 'label', align: 'center' },
+                      { label: 'Lead Ph', id: 'all', align: 'center' },
+                      { label: 'Status', id: 'new', align: 'center' },
+                      { label: 'Source', id: 'new', align: 'center' },
+                      { label: 'Executive', id: 'all', align: 'center' },
+                      { label: 'Created on', id: 'all', align: 'center' },
                     ].map((d, i) => (
                       <th
                         key={i}
@@ -375,12 +365,11 @@ const LeadsTransferTableBody = ({
                           //   ? 'text-left'
                           //   : ''
                           d.align === 'left' ? 'text-left' : 'text-center'
-
                         }`}
                       >
                         {/* {d?.label?.toUpperCase()} */}
-                        {d?.label?.charAt(0).toUpperCase() + d?.label?.slice(1).toLowerCase()}
-
+                        {d?.label?.charAt(0).toUpperCase() +
+                          d?.label?.slice(1).toLowerCase()}
                       </th>
                     ))}
                   </tr>
@@ -390,16 +379,12 @@ const LeadsTransferTableBody = ({
                   {leadsFilA?.map((data, i) => {
                     return (
                       <tr
-                        className={`  ${
-                          i % 2 === 0
-                            ? 'bg-white'
-                            : 'bg-white'
-                        }`}
+                        className={`  ${i % 2 === 0 ? 'bg-white' : 'bg-white'}`}
                         key={i}
                         onClick={() => selLeadFun(data)}
                       >
                         <td className="px-6 py-4 whitespace-nowrap w-12">
-                          <label className='flex   justify-center'>
+                          <label className="flex   justify-center">
                             <input
                               type="checkbox"
                               checked={idExists(selectedIds, data.id)}
@@ -407,7 +392,7 @@ const LeadsTransferTableBody = ({
                                 e.stopPropagation()
                                 handleCheckboxChange(data)
                               }}
-                              className='accent-black'
+                              className="accent-black"
                             />
                           </label>
                         </td>
@@ -424,11 +409,9 @@ const LeadsTransferTableBody = ({
                           {data?.Status}
                         </td>
 
-
                         <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
                           {data?.Source}
                         </td>
-
 
                         <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
                           {data?.assignedToObj?.name}
@@ -436,13 +419,11 @@ const LeadsTransferTableBody = ({
                         <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
                           {prettyDateTime(data?.Date)}
                         </td>
-
                       </tr>
                     )
                   })}
                 </tbody>
               </table>
-
             )}
           </div>
           <div className="mt-0"></div>

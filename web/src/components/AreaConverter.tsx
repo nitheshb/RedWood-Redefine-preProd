@@ -3,7 +3,15 @@ import { areaConversions } from 'src/constants/projects'
 import { sqmtConverter } from 'src/util/sqmtConverter'
 import NoBorderDropDown from './comps/noBorderDropDown'
 
-export const AreaConverter = ({ formik, hideField, fieldName,textPrimaryName, textSecondaryName, dropDownPrimaryName, dropdownSecondaryName }) => {
+export const AreaConverter = ({
+  formik,
+  hideField,
+  fieldName,
+  textPrimaryName,
+  textSecondaryName,
+  dropDownPrimaryName,
+  dropdownSecondaryName,
+}) => {
   const onConverterAdd = ({
     primary,
     primaryUnit,
@@ -11,33 +19,36 @@ export const AreaConverter = ({ formik, hideField, fieldName,textPrimaryName, te
     secondaryUnit,
     formik,
   }) => {
-
-    const primaryValue = formik.values[textPrimaryName] 
-    ? sqmtConverter(formik.values[textPrimaryName], formik.values[dropDownPrimaryName]) 
-    : 0
-  const secondaryValue = formik.values[textSecondaryName]
-    ? sqmtConverter(formik.values[textSecondaryName], formik.values[dropdownSecondaryName])
-    : 0
-  const value = primaryValue + secondaryValue
-  value && formik.setFieldValue(fieldName, value) && hideField(false)
+    const primaryValue = formik.values[textPrimaryName]
+      ? sqmtConverter(
+          formik.values[textPrimaryName],
+          formik.values[dropDownPrimaryName]
+        )
+      : 0
+    const secondaryValue = formik.values[textSecondaryName]
+      ? sqmtConverter(
+          formik.values[textSecondaryName],
+          formik.values[dropdownSecondaryName]
+        )
+      : 0
+    const value = primaryValue + secondaryValue
+    value && formik.setFieldValue(fieldName, value) && hideField(false)
   }
-
-
 
   return (
     <div className="mt-3 mb-6">
-      <label htmlFor="area" className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162] ">
+      <label
+        htmlFor="area"
+        className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162] "
+      >
         Sqmt Converter
       </label>
       <div className="">
-   
         <MuiTextField
-
-
-id={fieldName}
-name={textPrimaryName}
-value={formik.values[textPrimaryName]}
-onChange={formik.handleChange}
+          id={fieldName}
+          name={textPrimaryName}
+          value={formik.values[textPrimaryName]}
+          onChange={formik.handleChange}
           className={`w-[100%] bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 p-0 `}
           size="small"
           InputProps={{
@@ -73,19 +84,12 @@ onChange={formik.handleChange}
           }}
           label=""
           type="text"
-
         />
         <MuiTextField
-
-id={`${fieldName}Secondary`}
-
-
-
-name={textSecondaryName}
-value={formik.values[textSecondaryName]}
-onChange={formik.handleChange}
-
-        
+          id={`${fieldName}Secondary`}
+          name={textSecondaryName}
+          value={formik.values[textSecondaryName]}
+          onChange={formik.handleChange}
           className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10  mt-1 p-0`}
           size="small"
           InputProps={{
@@ -94,7 +98,6 @@ onChange={formik.handleChange}
               padding: '0px',
               margin: '0px',
               borderRadius: '6px',
-        
             },
             endAdornment: (
               <InputAdornment
@@ -121,7 +124,6 @@ onChange={formik.handleChange}
             ),
           }}
           label=""
-
           type="text"
         />
       </div>

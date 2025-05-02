@@ -184,11 +184,7 @@ const CampaingsTopBarsComponent = () => {
         Your overall performance is 98% higher than average.
       </div>
 
-
       {/* <Home/> */}
-
-
-
     </div>
   )
 }

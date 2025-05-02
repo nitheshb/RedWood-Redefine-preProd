@@ -3,14 +3,8 @@
 
 import { useState, useEffect } from 'react'
 
-import {
-  PuzzleIcon,
-} from '@heroicons/react/outline'
-import {
-  ChartPieIcon,
-  SearchIcon,
-  NewspaperIcon,
-} from '@heroicons/react/solid'
+import { PuzzleIcon } from '@heroicons/react/outline'
+import { ChartPieIcon, SearchIcon, NewspaperIcon } from '@heroicons/react/solid'
 import {} from '@heroicons/react/solid'
 import { Box, LinearProgress } from '@mui/material'
 import { startOfDay } from 'date-fns'
@@ -267,26 +261,35 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
           user.label = user.projectName
           user.value = user.projectName
         })
-        projectsListA.filter((data)=> {
-          console.log('fetched proejcts list is kk',data.label, data?.projectType?.name , data?.projectType?.name == 'Plots')
-         return data?.projectType?.name == 'Plots'
+        projectsListA.filter((data) => {
+          console.log(
+            'fetched proejcts list is kk',
+            data.label,
+            data?.projectType?.name,
+            data?.projectType?.name == 'Plots'
+          )
+          return data?.projectType?.name == 'Plots'
         })
 
-
         console.log('fetched proejcts list is kk', projectsListA)
-        setprojectList(projectsListA.filter((data)=> {
-          console.log('fetched proejcts list is kk',data.label, data?.projectType?.name , data?.projectType?.name == 'Plots')
-         return data?.projectType?.name != 'Plots'
-        }))
+        setprojectList(
+          projectsListA.filter((data) => {
+            console.log(
+              'fetched proejcts list is kk',
+              data.label,
+              data?.projectType?.name,
+              data?.projectType?.name == 'Plots'
+            )
+            return data?.projectType?.name != 'Plots'
+          })
+        )
       },
       (error) => setprojectList([])
     )
     return unsubscribe
   }
 
-  useEffect(() => {
-
-  }, [selCategory])
+  useEffect(() => {}, [selCategory])
 
   const rowsCounter = (parent, searchKey) => {
     return parent.filter((item) => {
@@ -322,14 +325,7 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
         await console.log('my Array data is set it', crmCustomersDBData)
       },
       {
-        status: [
-          'latest',
-          'reviewing',
-          'review',
-          'cleared',
-          'rejected',
-          '',
-        ],
+        status: ['latest', 'reviewing', 'review', 'cleared', 'rejected', ''],
       },
       () => setCrmCustomerDBData([])
     )
@@ -491,8 +487,6 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
               </div>
             </div>
             <div className="items-center justify-between  my-1 bg-white rounded-lg  ">
-
-
               <div className=" border-gray-900  bg-[#F1F5F9] rounded-t-lg flex flex-row justify-between">
                 <ul
                   className="flex   rounded-t-lg "
@@ -544,7 +538,6 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
                             )}
                             {d.val === 'queries' && <span>{unassignedCo}</span>}
                           </span>
-
                         </button>
                       </li>
                     )
@@ -822,7 +815,9 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
                                                   computeTotal(
                                                     obj,
                                                     finData?.super_built_up_area ||
-                                                      finData?.area?.toString()?.replace(',', '')
+                                                      finData?.area
+                                                        ?.toString()
+                                                        ?.replace(',', '')
                                                   )
                                                 ),
                                               0
@@ -841,9 +836,11 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
                                     </div>
                                     <div className="text-zinc-500 text-[11px] font-normal font-['Lato'] tracking-wide">
                                       Paid: ₹
-                                      {(finData?.T_review || 0 + finData?.T_approved || 0)?.toLocaleString(
-                                        'en-IN'
-                                      )}
+                                      {(
+                                        finData?.T_review ||
+                                        0 + finData?.T_approved ||
+                                        0
+                                      )?.toLocaleString('en-IN')}
                                     </div>
                                   </section>
                                 </div>
@@ -1013,7 +1010,6 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
                                   <section className="font-rubikF flex flex-row w-[100%] justify-between">
                                     <section className="flex flex-col ml-2 mt-[3px] w-[100%]">
                                       <section className="flex flex-row justify-between">
-
                                         <div className="flex flex-row w-full">
                                           <section className="bg-violet-100  items-center rounded-2xl shadow-xs flex flex-col px-2 py-1 min-w-[100px]">
                                             <div className="font-semibold text-[#053219]  text-[22px]  mb-[1] tracking-wide">
@@ -1058,10 +1054,8 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
                                       </section>
 
                                       <section className="flex flex-row mt-3  ">
-
                                         <section>
                                           <span className="  text-[10px] h-[20px]  text-[#823d00] font-bodyLato font-[600] mt-[2px] bg-[#ffeccf] px-[6px] py-[2px] rounded-xl mr-1 ">
-
                                             {finData?.area?.toLocaleString(
                                               'en-IN'
                                             )}{' '}
@@ -1072,7 +1066,6 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
                                             {finData?.facing}
                                           </span>
                                           <span className=" text-[10px] h-[20px] text-[#823d00] font-bodyLato font-[600] mt-[2px] bg-[#ffeccf] px-[6px] py-[2px] rounded-xl mr-1 ">
-
                                             ₹{' '}
                                             {finData?.sqft_rate?.toLocaleString(
                                               'en-IN'
@@ -1084,15 +1077,12 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
                                           {finData?.assignedToObj?.name ||
                                             'Not Assigned'}
                                         </span>
-
                                       </section>
                                     </section>
                                   </section>
-
                                 </div>
                               </div>
                             </div>
-
 
                             <div className="w-2/4 bg-[#f2f3f8] px-1">
                               <div className="flex flex-col bg-white shadow rounded-md my-1   py-1">
@@ -1238,8 +1228,8 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
                               </div>
                             </div>
 
-                               {/* check it  */}
-                               <div>
+                            {/* check it  */}
+                            <div>
                               <div className="flex flex-col bg-white shadow rounded-md my-1  px-2  py-2 pb-4 min-w-[244px] justify-between mx-2">
                                 <div className="flex flex-row justify-between mx- mb-2">
                                   <section className="font-bodyLato font-semibold text-xs m-1 w-full">
@@ -1265,7 +1255,9 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
                                                 computeTotal(
                                                   obj,
                                                   finData?.super_built_up_area ||
-                                                    finData?.area?.toString()?.replace(',', '')
+                                                    finData?.area
+                                                      ?.toString()
+                                                      ?.replace(',', '')
                                                 )
                                               ),
                                             0
@@ -1282,9 +1274,11 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
                                     </p>
                                     <div className="text-zinc-500 flex flex-row justify-end text-[11px] font-normal font-['Lato'] tracking-wide">
                                       Paid: ₹
-                                      {(finData?.T_review || 0 + finData?.T_approved || 0).toLocaleString(
-                                        'en-IN'
-                                      ) || 0}
+                                      {(
+                                        finData?.T_review ||
+                                        0 + finData?.T_approved ||
+                                        0
+                                      ).toLocaleString('en-IN') || 0}
                                     </div>
                                   </section>
                                 </div>
@@ -1368,7 +1362,6 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
                                     </div>
                                     <div className="text-zinc-800 text-[20px] font-bold font-['Lato'] tracking-wide">
                                       ₹
-
                                       {finData?.T_elgible?.toLocaleString(
                                         'en-IN'
                                       )}
@@ -1383,9 +1376,11 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
                                     </div>
                                     <div className="text-zinc-500 flex flex-row justify-end text-[11px] font-normal font-['Lato'] tracking-wide">
                                       Paid: ₹
-                                      {(finData?.T_review || 0 + finData?.T_approved || 0)?.toLocaleString(
-                                        'en-IN'
-                                      )}
+                                      {(
+                                        finData?.T_review ||
+                                        0 + finData?.T_approved ||
+                                        0
+                                      )?.toLocaleString('en-IN')}
                                     </div>
                                   </section>
                                 </div>
@@ -1459,7 +1454,6 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
                                 </div>
                               </div>
                             </div>
-
                           </section>
                         </section>
                       )
@@ -1500,16 +1494,13 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
                                   }
                                 >
                                   <section className="font-rubikF flex flex-row">
-
                                     <section className="flex flex-col ml-2 mt-[3px]">
                                       <section className="flex flex-col">
                                         <section className="flex flex-row justify-between">
                                           <span className=" text-[14px] text-black font-[500] ml-[2px]">
-
                                             Unit-{unit_no}
                                           </span>
                                           <span className=" text-[10px] text-black font-bodyLato font-[600] mt-[2px] ">
-
                                             ₹{' '}
                                             {finData?.plotCS
                                               ?.reduce(function (_this, val) {
@@ -1536,14 +1527,12 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
                                               'NA'}
                                           </span>
                                           <span className=" text-[10px] text-black font-[400] mt-[2px] ">
-
                                             12-June-2023
                                           </span>
                                         </section>
                                       </section>
                                     </section>
                                   </section>
-
                                 </div>
                               </div>
                             </div>
@@ -1853,13 +1842,11 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
                                   }
                                 >
                                   <section className="font-rubikF flex flex-row">
-
                                     <section className="flex flex-col ml-2 mt-[7px]">
                                       <span className=" text-[12px] text-[#036046] font-[400]">
                                         {projName}
                                       </span>
                                       <span className=" text-[14px] text-black font-[500] ">
-
                                         Unit-{unit_no}
                                       </span>
 
@@ -1872,7 +1859,6 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
                                       </span>
                                     </section>
                                   </section>
-
                                 </div>
                               </div>
                             </div>

@@ -22,7 +22,6 @@ const rowsCounter = (parent, searchKey) => {
 }
 
 const HrModuleHome = ({ setisImportLeadsOpen, selUserProfileF, taskType }) => {
-
   const { t } = useTranslation()
   const { user } = useAuth()
   const [value, setValue] = useState('new')
@@ -40,7 +39,7 @@ const HrModuleHome = ({ setisImportLeadsOpen, selUserProfileF, taskType }) => {
 
   const getLeadsDataFun = async () => {
     const uid = user?.uid
-    const  orgId = user?.orgId
+    const orgId = user?.orgId
     if (uid) {
       const torrowDate = new Date(
         +new Date().setHours(0, 0, 0, 0) + 86400000
@@ -122,7 +121,7 @@ const HrModuleHome = ({ setisImportLeadsOpen, selUserProfileF, taskType }) => {
 
               if (y.length > 0) {
                 x.uid = docSnapshot.id
-        
+
                 let y1 = await getLeadbyId1(orgId, x.uid)
                 await console.log('fetched value is ', x, y)
                 x.leadUser = await y1
@@ -131,12 +130,10 @@ const HrModuleHome = ({ setisImportLeadsOpen, selUserProfileF, taskType }) => {
                 setSchLoading(false)
 
                 return
-             
               }
             })
-        
+
             if (projects.length > 0) {
-         
               Promise.all(projects).then(function (results) {
                 console.log(
                   'my values are ',
@@ -178,7 +175,7 @@ const HrModuleHome = ({ setisImportLeadsOpen, selUserProfileF, taskType }) => {
       <div className="flex-1 overflow-auto">
         <div className="px-1">
           <TodayLeadsActivitySearchView
-            moduleName={"Admin"}
+            moduleName={'Admin'}
             data={filterTable}
             searchKey={searchKey}
             setSearchKey={setSearchKey}

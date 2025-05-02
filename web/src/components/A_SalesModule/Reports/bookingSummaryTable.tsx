@@ -133,8 +133,7 @@ const ProjectBookingSummaryTable = ({ projects }) => {
 
   const handleDecreaseMonth = () => {
     setStartMonthOffset((prevOffset) => prevOffset - 1)
-    setMonthCount((prevCount) => prevCount + 1);
-
+    setMonthCount((prevCount) => prevCount + 1)
   }
 
   const filteredData = reportData.filter((item) => {
@@ -233,8 +232,6 @@ const ProjectBookingSummaryTable = ({ projects }) => {
           Project Booking Report
         </div>
 
-
-
         <div className="flex mb-2 space-x-2">
           <button
             onClick={handleDecreaseMonth}
@@ -301,8 +298,6 @@ const ProjectBookingSummaryTable = ({ projects }) => {
           </tr>
         </thead>
         <tbody className="text-gray-600 text-sm font-light">
-
-
           {loader && <TableSkeleton rows={3} columns={7} />}
           {projectAValues
             ?.sort((a, b) => {
@@ -392,24 +387,22 @@ const ProjectBookingSummaryTable = ({ projects }) => {
                 >
                   <td className="py-3 px-6 text-left whitespace-nowrap bg-white border-b font-medium text-gray-900">
                     {capitalizeFirstLetter(data?.projectName)}
-
                   </td>
 
                   <td
                     className="py-3 px-6  border text-right bg-white border-b font-medium text-gray-900"
-                    onClick={() =>{
+                    onClick={() => {
                       console.log('data is ', data)
                       showDrillDownFun('Bookings', {
                         uid: data.uid,
                         months: data?.months,
-                       thisMonth: {
+                        thisMonth: {
                           startOfMonth: data?.months[0]['startOfMonth'],
                           endOfMonth:
                             data?.months[data?.months.length - 1]['endOfMonth'],
                         },
                       })
-                    }
-                  }
+                    }}
                   >
                     {data?.totalCount?.toLocaleString('en-IN')}
                   </td>

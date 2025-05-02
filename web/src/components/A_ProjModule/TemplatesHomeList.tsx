@@ -45,7 +45,6 @@ const TemplatesHomeList = ({ title, dialogOpen, data }) => {
           <div className="mr-4 templateList">
             <div className=" flex">
               <div className="flex flex-col">
-
                 <button
                   className="templateItem flex"
                   tabIndex="0"

@@ -17,8 +17,6 @@ const EmailForm = () => {
     },
   })
 
-
-
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="w-[100%] flex flex-col gap-4  pt-0 my-10 mt-[10px] rounded bg-[#FFFFFF] mx-2">
@@ -87,9 +85,8 @@ const EmailForm = () => {
               type="submit"
               className="w-[4rem] h-[36px] mt-2 rounded-lg text-sm font-medium text-black bg-[#7bd2ea] hover:bg-gray-700 hover:text-white flex items-center justify-center"
             >
-              Send 
+              Send
             </button>
-
           </span>
         </div>
       </div>

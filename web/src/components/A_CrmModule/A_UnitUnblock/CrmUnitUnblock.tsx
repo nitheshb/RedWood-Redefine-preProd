@@ -111,7 +111,6 @@ export default function UnitBookingUnblockCRM({
   selSubMenu,
   selSubMenu2,
 }) {
-
   console.log('entered unblock crm====>')
   const { user } = useAuth()
   const { enqueueSnackbar } = useSnackbar()
@@ -323,9 +322,7 @@ export default function UnitBookingUnblockCRM({
 
     if (fet === 'appoint') {
       return
-    }
-
-    else {
+    } else {
       leadsActivityFetchedData.map((data) => {
         console.log('value of filtered feature count before', data)
       })
@@ -474,7 +471,6 @@ export default function UnitBookingUnblockCRM({
   const setNewProject = (leadDocId, value) => {
     console.log('sel pROJECT DETAILS ', value)
 
-
     const x = {
       Project: value.projectName,
       ProjectId: value.uid,
@@ -614,7 +610,6 @@ export default function UnitBookingUnblockCRM({
           console.log('my total fetched list is 3', `${key}: ${value}`)
         })
 
-
         console.log('my total fetched list is', usersListA.length)
         setLeadsFetchedActivityData(usersListA)
       },
@@ -644,10 +639,8 @@ export default function UnitBookingUnblockCRM({
             }
           } else {
             usersListA.push(value)
- 
           }
         })
-
 
         console.log('my total fetched list is', usersListA.length)
         usersListA.sort((a, b) => {
@@ -839,17 +832,13 @@ export default function UnitBookingUnblockCRM({
     )
   }
   return (
-    <div
-      className={`bg-white   h-screen    } `}
-    >
+    <div className={`bg-white   h-screen    } `}>
       <div className=" pb-[2px] px-3  ">
         <div className="-mx-3 flex  sm:-mx-4 px-3">
           <div className="w-full">
-
-
             <div className="flex flex-col justify-between">
               <section className="flex flex-row justify-between bg-white px-3 py-1 h-[50px] ">
-                {/* <section>
+                <section>
                   <section className="flex flex-row">
                     <img
                       src="https://static.ambitionbox.com/static/benefits/WFH.svg"
@@ -859,7 +848,6 @@ export default function UnitBookingUnblockCRM({
                     <p className="text-md font-bold text-[23px] tracking-tight uppercase font-body  ml-2 mt-2">
                       {selCustomerPayload?.unit_no}
                       <span className="ml-2 font-normal text-green-800 text-xs px-2 py-[2px] bg-green-300 rounded-xl">
-        
                         <span className="ml1">{selProjectIs?.value}</span>
                       </span>
 
@@ -949,7 +937,7 @@ export default function UnitBookingUnblockCRM({
                       )}
                     </div>
                   </section>
-                </section> */}
+                </section>
               </section>
             </div>
           </div>
@@ -1010,23 +998,30 @@ export default function UnitBookingUnblockCRM({
           </>
         )}
       </div>
-      {selFeature === 'Cancel_Unit' && <>
-      <UnitFullSummary
-        customerDetails={customerDetails}
-        selCustomerPayload={selCustomerPayload}
-        source={"cancelBooking"}
-        selSubMenu={"cancel_booking"}
-      />    </>}
+      {selFeature === 'Cancel_Unit' && (
+        <>
+          <UnitFullSummary
+            customerDetails={customerDetails}
+            selCustomerPayload={selCustomerPayload}
+            source={'cancelBooking'}
+            selSubMenu={'cancel_booking'}
+            // unitsViewMode={true}
+          />{' '}
+        </>
+      )}
 
-      {selFeature === 'unblock_Unit' && <>
-        <UnitFullSummary
-        openUserProfile={openUserProfile}
-        customerDetails={customerDetails}
-        selCustomerPayload={selCustomerPayload}
-        source={"cancelBooking"}
-        selSubMenu={"unblock_Unit"}
-      />
-      </>}
+      {selFeature === 'unblock_Unit' && (
+        <>
+          <UnitFullSummary
+            openUserProfile={openUserProfile}
+            customerDetails={customerDetails}
+            // widthClass="max-w-xl"
+            selCustomerPayload={selCustomerPayload}
+            source={'cancelBooking'}
+            selSubMenu={'unblock_Unit'}
+          />
+        </>
+      )}
 
       {selFeature === 'legal_info' && <></>}
       <SiderForm

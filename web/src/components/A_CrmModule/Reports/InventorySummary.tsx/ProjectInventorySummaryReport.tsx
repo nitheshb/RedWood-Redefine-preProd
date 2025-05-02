@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react'
 
-import {
-  Tooltip,
-} from '@mui/material'
+import { Tooltip } from '@mui/material'
 import { useSnackbar } from 'notistack'
 
 import AssigedToDropComp from 'src/components/assignedToDropComp'
@@ -21,7 +19,7 @@ const ProjectInventorySummaryReport = ({
   dialogOpen,
   setCustomerDetails,
   setisImportLeadsOpen,
-  selUnitStatus
+  selUnitStatus,
 }) => {
   const { user } = useAuth()
   const { orgId } = user
@@ -59,7 +57,6 @@ const ProjectInventorySummaryReport = ({
     getProjectsListFun()
   }, [leadsLogsPayload])
   const getUnitsFun = async () => {
-
     const todoData = await getUnitsAllBlocks(
       orgId,
       (querySnapshot) => {
@@ -74,10 +71,10 @@ const ProjectInventorySummaryReport = ({
           y.push(x)
         })
         y.sort((a, b) => a.unit_no - b.unit_no)
-console.log('units feed is ', y);
+        console.log('units feed is ', y)
         setUnitsFeed(y)
       },
-      { pId: leadsLogsPayload?.uid, blockId:  1, type: 'today', selUnitStatus },
+      { pId: leadsLogsPayload?.uid, blockId: 1, type: 'today', selUnitStatus },
       (error) => {
         console.log('error', error)
       }
@@ -108,8 +105,6 @@ console.log('units feed is ', y);
 
     return unsubscribe
   }
-
-
 
   useEffect(() => {
     const unsubscribe = steamUsersListByRole(
@@ -216,8 +211,7 @@ console.log('units feed is ', y);
   return (
     <div className="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
       <div className="px-4 sm:px-6  z-10 flex flex-row justify-between">
-
-         {leadsLogsPayload?.projectName || title} Units-({unitsFeed.length})
+        {leadsLogsPayload?.projectName || title} Units-({unitsFeed.length})
         <section className="flex flex-row">
           <section className="flex flex-col border ml-2 py-1  px-4 text-xs  rounded-full">
             <AssigedToDropComp
@@ -234,7 +228,6 @@ console.log('units feed is ', y);
               Project {}
             </div>
           </section>
-
 
           <Tooltip title={`Download ${unitsFeed?.length} Row`}>
             {/* <IconButton>
@@ -253,196 +246,191 @@ console.log('units feed is ', y);
       </div>
 
       <div className="bg-white shadow-md rounded my-6 overflow-x-auto">
-            <table className="min-w-max w-full table-auto border-collapse">
-              <thead>
-                <tr className="bg-blue-200 text-gray-900  text-sm leading-normal">
-                  <th
-                    className="py-3 px-6 text-center border border-black"
-                    colSpan="9"
-                  >
-                    Inventory List of {leadsLogsPayload?.projectName}
-                  </th>
-                  <th
-                    className="py-3 px-6 text-center border border-black  bg-white"
-                    colSpan="4"
-                  >
-                    Dimensions *(m)
-                  </th>
-                  <th
-                    className="py-3 px-6 text-center border border-black bg-white"
-                    colSpan="4"
-                  >
-                    Schedule
-                  </th>
-                  <th
-                    className="py-3 px-6 text-center border border-black bg-white"
-                    colSpan="1"
-                  ></th>
-                  <th
-                    className="py-3 px-6 text-center border border-black bg-white"
-                    colSpan="1"
-                  ></th>
-                  <th
-                    className="py-3 px-6 text-center border border-black bg-white"
-                    colSpan="1"
-                  ></th>
-                </tr>
-                <tr className="bg-blue-100 text-gray-900  text-sm leading-normal">
-                  <th className="py-3 px-6 text-left border border-black">
-                    Unit No.
-                  </th>
-                  <th className="py-3 px-6 text-left border border-black">
-                    Unit Type
-                  </th>
-                  <th className="py-3 px-6 text-center border border-black">
-                    Unit Facing
-                  </th>
-                  <th className="py-3 px-6 text-center border border-black">
-                    Unit Area
-                  </th>
-                  <th className="py-3 px-6 text-center border border-black">
-                    Release Status
-                  </th>
-                  <th className="py-3 px-6 text-center border border-black">
-                    Price Per Sft
-                  </th>
-                  <th className="py-3 px-6 text-center border border-black">
-                    PLC
-                  </th>
-                  <th className="py-3 px-6 text-center border border-black">
-                    Unit Cost
-                  </th>
-                  <th className="py-3 px-6 text-center border border-black">
-                    Unit Status
-                  </th>
-                  <th className="py-2 px-3 text-center border border-black">
-                    North
-                  </th>
-                  <th className="py-2 px-3 text-center border border-black">
-                    South
-                  </th>
-                  <th className="py-2 px-3 text-center border border-black">
-                    East
-                  </th>
-                  <th className="py-2 px-3 text-center border border-black">
-                    West
-                  </th>
-                  <th className="py-2 px-3 text-center border border-black">
-                    North
-                  </th>
-                  <th className="py-2 px-3 text-center border border-black">
-                    South
-                  </th>
-                  <th className="py-2 px-3 text-center border border-black">
-                    East
-                  </th>
-                  <th className="py-2 px-3 text-center border border-black">
-                    West
-                  </th>
-                  <th className="py-3 px-6 text-center border border-black">
-                    S No.
-                  </th>
-                  <th className="py-3 px-6 text-center border border-black">
-                    Khataha
-                  </th>
-                  <th className="py-3 px-6 text-center border border-black">
-                    PID
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="text-gray-900 text-sm font-light">
-                {unitsFeed.map((item, index) => (
-                  <tr key={index} className="hover:bg-gray-100">
-                    <td className="py-3 px-6 text-left border border-black">
-                      {item?.unit_no}
-                    </td>
-                    <td className="py-3 px-6 text-left border border-black">
-                      {item?.size}
-                    </td>
-                    <td className="py-3 px-6 text-center border border-black">
-                      {item?.facing}
-                    </td>
-                    <td className="py-3 px-6 text-center border border-black">
-                      {item?.area}
-                    </td>
-                    <td className="py-3 px-6 text-center border border-black">
-                      {item?.release_status}
-                    </td>
-                    <td className="py-3 px-6 text-center border border-black">
-                      {item?.sqft_rate}
-                    </td>
-                    <td className="py-3 px-6 text-center border border-black">
-                      {item?.plc_per_sqft}
-                    </td>
-                    <td className="py-3 px-6 text-center border border-black">
-                      {item?.unitCost || 'NA'}
-                    </td>
-                    <td className="py-3 px-6 text-center border border-black">
-                      {item?.status}
-                    </td>
-                    <td className="py-3 px-6 text-center border border-black">
-                      {item?.north_d}
-                    </td>
-                    <td className="py-3 px-6 text-center border border-black">
-                      {item?.south_d}
-                    </td>
-                    <td className="py-3 px-6 text-center border border-black">
-                      {item?.east_d}
-                    </td>
-                    <td className="py-3 px-6 text-center border border-black">
-                      {item?.west_d}
-                    </td>
-                    <td className="py-3 px-6 text-center border border-black">
-                      {item?.north_sch_by}
-                    </td>
-                    <td className="py-3 px-6 text-center border border-black">
-                      {item?.south_sch_by}
-                    </td>
-                    <td className="py-3 px-6 text-center border border-black">
-                      {item?.east_sch_by}
-                    </td>
-                    <td className="py-3 px-6 text-center border border-black">
-                      {item?.west_sch_by}
-                    </td>
-                    <td className="py-3 px-6 text-center border border-black">
-                      {item?.sNo || 'na'}
-                    </td>
-                    <td className="py-3 px-6 text-center border border-black">
-                      {item?.Katha_no}
-                    </td>
-                    <td className="py-3 px-6 text-center border border-black">
-                      {item?.PID_no}
-                    </td>
-                  </tr>
-                ))}
-                <tr className="bg-blue-200 text-gray-900  text-sm leading-normal">
-                  <td className="py-3 px-6 text-left border border-black">
-                    Totals:
-                  </td>
-                  <td className="py-3 px-6 text-left border border-black"></td>
-                  <td className="py-3 px-6 text-center border border-black"></td>
-                  <td className="py-3 px-6 text-center border border-black"></td>
-                  <td className="py-3 px-6 text-center border border-black"></td>
-                  <td className="py-3 px-6 text-center border border-black"></td>
-                  <td className="py-3 px-6 text-center border border-black"></td>
-                  <td className="py-3 px-6 text-center border border-black"></td>
-                  <td className="py-3 px-6 text-center border border-black"></td>
-                  <td className="py-3 px-6 text-center border border-black"></td>
-                  <td className="py-3 px-6 text-center border border-black"></td>
-                  <td className="py-3 px-6 text-center border border-black"></td>
-                  <td className="py-3 px-6 text-center border border-black"></td>
-                  <td className="py-3 px-6 text-center border border-black"></td>
-                  <td className="py-3 px-6 text-center border border-black"></td>
-                  <td className="py-3 px-6 text-center border border-black"></td>
-                  <td className="py-3 px-6 text-center border border-black"></td>
-                  <td className="py-3 px-6 text-center border border-black"></td>
-                  <td className="py-3 px-6 text-center border border-black"></td>
-                  <td className="py-3 px-6 text-center border border-black"></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
+        <table className="min-w-max w-full table-auto border-collapse">
+          <thead>
+            <tr className="bg-blue-200 text-gray-900  text-sm leading-normal">
+              <th
+                className="py-3 px-6 text-center border border-black"
+                colSpan="9"
+              >
+                Inventory List of {leadsLogsPayload?.projectName}
+              </th>
+              <th
+                className="py-3 px-6 text-center border border-black  bg-white"
+                colSpan="4"
+              >
+                Dimensions *(m)
+              </th>
+              <th
+                className="py-3 px-6 text-center border border-black bg-white"
+                colSpan="4"
+              >
+                Schedule
+              </th>
+              <th
+                className="py-3 px-6 text-center border border-black bg-white"
+                colSpan="1"
+              ></th>
+              <th
+                className="py-3 px-6 text-center border border-black bg-white"
+                colSpan="1"
+              ></th>
+              <th
+                className="py-3 px-6 text-center border border-black bg-white"
+                colSpan="1"
+              ></th>
+            </tr>
+            <tr className="bg-blue-100 text-gray-900  text-sm leading-normal">
+              <th className="py-3 px-6 text-left border border-black">
+                Unit No.
+              </th>
+              <th className="py-3 px-6 text-left border border-black">
+                Unit Type
+              </th>
+              <th className="py-3 px-6 text-center border border-black">
+                Unit Facing
+              </th>
+              <th className="py-3 px-6 text-center border border-black">
+                Unit Area
+              </th>
+              <th className="py-3 px-6 text-center border border-black">
+                Release Status
+              </th>
+              <th className="py-3 px-6 text-center border border-black">
+                Price Per Sft
+              </th>
+              <th className="py-3 px-6 text-center border border-black">PLC</th>
+              <th className="py-3 px-6 text-center border border-black">
+                Unit Cost
+              </th>
+              <th className="py-3 px-6 text-center border border-black">
+                Unit Status
+              </th>
+              <th className="py-2 px-3 text-center border border-black">
+                North
+              </th>
+              <th className="py-2 px-3 text-center border border-black">
+                South
+              </th>
+              <th className="py-2 px-3 text-center border border-black">
+                East
+              </th>
+              <th className="py-2 px-3 text-center border border-black">
+                West
+              </th>
+              <th className="py-2 px-3 text-center border border-black">
+                North
+              </th>
+              <th className="py-2 px-3 text-center border border-black">
+                South
+              </th>
+              <th className="py-2 px-3 text-center border border-black">
+                East
+              </th>
+              <th className="py-2 px-3 text-center border border-black">
+                West
+              </th>
+              <th className="py-3 px-6 text-center border border-black">
+                S No.
+              </th>
+              <th className="py-3 px-6 text-center border border-black">
+                Khataha
+              </th>
+              <th className="py-3 px-6 text-center border border-black">PID</th>
+            </tr>
+          </thead>
+          <tbody className="text-gray-900 text-sm font-light">
+            {unitsFeed.map((item, index) => (
+              <tr key={index} className="hover:bg-gray-100">
+                <td className="py-3 px-6 text-left border border-black">
+                  {item?.unit_no}
+                </td>
+                <td className="py-3 px-6 text-left border border-black">
+                  {item?.size}
+                </td>
+                <td className="py-3 px-6 text-center border border-black">
+                  {item?.facing}
+                </td>
+                <td className="py-3 px-6 text-center border border-black">
+                  {item?.area}
+                </td>
+                <td className="py-3 px-6 text-center border border-black">
+                  {item?.release_status}
+                </td>
+                <td className="py-3 px-6 text-center border border-black">
+                  {item?.sqft_rate}
+                </td>
+                <td className="py-3 px-6 text-center border border-black">
+                  {item?.plc_per_sqft}
+                </td>
+                <td className="py-3 px-6 text-center border border-black">
+                  {item?.unitCost || 'NA'}
+                </td>
+                <td className="py-3 px-6 text-center border border-black">
+                  {item?.status}
+                </td>
+                <td className="py-3 px-6 text-center border border-black">
+                  {item?.north_d}
+                </td>
+                <td className="py-3 px-6 text-center border border-black">
+                  {item?.south_d}
+                </td>
+                <td className="py-3 px-6 text-center border border-black">
+                  {item?.east_d}
+                </td>
+                <td className="py-3 px-6 text-center border border-black">
+                  {item?.west_d}
+                </td>
+                <td className="py-3 px-6 text-center border border-black">
+                  {item?.north_sch_by}
+                </td>
+                <td className="py-3 px-6 text-center border border-black">
+                  {item?.south_sch_by}
+                </td>
+                <td className="py-3 px-6 text-center border border-black">
+                  {item?.east_sch_by}
+                </td>
+                <td className="py-3 px-6 text-center border border-black">
+                  {item?.west_sch_by}
+                </td>
+                <td className="py-3 px-6 text-center border border-black">
+                  {item?.sNo || 'na'}
+                </td>
+                <td className="py-3 px-6 text-center border border-black">
+                  {item?.Katha_no}
+                </td>
+                <td className="py-3 px-6 text-center border border-black">
+                  {item?.PID_no}
+                </td>
+              </tr>
+            ))}
+            <tr className="bg-blue-200 text-gray-900  text-sm leading-normal">
+              <td className="py-3 px-6 text-left border border-black">
+                Totals:
+              </td>
+              <td className="py-3 px-6 text-left border border-black"></td>
+              <td className="py-3 px-6 text-center border border-black"></td>
+              <td className="py-3 px-6 text-center border border-black"></td>
+              <td className="py-3 px-6 text-center border border-black"></td>
+              <td className="py-3 px-6 text-center border border-black"></td>
+              <td className="py-3 px-6 text-center border border-black"></td>
+              <td className="py-3 px-6 text-center border border-black"></td>
+              <td className="py-3 px-6 text-center border border-black"></td>
+              <td className="py-3 px-6 text-center border border-black"></td>
+              <td className="py-3 px-6 text-center border border-black"></td>
+              <td className="py-3 px-6 text-center border border-black"></td>
+              <td className="py-3 px-6 text-center border border-black"></td>
+              <td className="py-3 px-6 text-center border border-black"></td>
+              <td className="py-3 px-6 text-center border border-black"></td>
+              <td className="py-3 px-6 text-center border border-black"></td>
+              <td className="py-3 px-6 text-center border border-black"></td>
+              <td className="py-3 px-6 text-center border border-black"></td>
+              <td className="py-3 px-6 text-center border border-black"></td>
+              <td className="py-3 px-6 text-center border border-black"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 }

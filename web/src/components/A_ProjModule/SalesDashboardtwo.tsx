@@ -1,11 +1,12 @@
-import React from 'react';
+import React from 'react'
 import {
   BarChart,
   Bar,
   XAxis,
   YAxis,
   CartesianGrid,
-  ResponsiveContainer} from 'recharts';
+  ResponsiveContainer,
+} from 'recharts'
 
 const SalesDashboardtwo = () => {
   const salesData = [
@@ -23,12 +24,12 @@ const SalesDashboardtwo = () => {
     { step: 'Step 3', value: 31800 },
     { step: 'Step 3', value: 27500 },
     { step: 'Step 3', value: 28500 },
-    { step: 'Step 3', value: 12300 }
-  ];
+    { step: 'Step 3', value: 12300 },
+  ]
 
   const formatCurrency = (value) => {
-    return `₹ ${(value / 1000).toFixed(1)}k`;
-  };
+    return `₹ ${(value / 1000).toFixed(1)}k`
+  }
 
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white rounded-3xl shadow-lg space-y-8">
@@ -42,28 +43,24 @@ const SalesDashboardtwo = () => {
           <span className="text-4xl font-bold">₹ 218.84</span>
           <span className="text-gray-500">4 orders</span>
         </div>
-        
+
         {/* Bar Chart */}
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={salesData}>
               <CartesianGrid vertical={false} strokeDasharray="3 3" />
-              <XAxis 
-                dataKey="step" 
+              <XAxis
+                dataKey="step"
                 axisLine={false}
                 tickLine={false}
                 tickCount={3}
               />
-              <YAxis 
+              <YAxis
                 tickFormatter={formatCurrency}
                 axisLine={false}
                 tickLine={false}
               />
-              <Bar 
-                dataKey="value" 
-                fill="#2196f3"
-                radius={[2, 2, 0, 0]}
-              />
+              <Bar dataKey="value" fill="#2196f3" radius={[2, 2, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -113,7 +110,7 @@ const SalesDashboardtwo = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SalesDashboardtwo;
+export default SalesDashboardtwo

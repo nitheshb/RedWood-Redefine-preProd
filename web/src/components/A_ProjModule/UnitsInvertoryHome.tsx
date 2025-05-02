@@ -20,9 +20,6 @@ import FloordetailsSearch from '../Floordetails/FloordetailsInSearch'
 
 import A_Crm_Map from '../A_CrmModule/A_Crm_Map'
 
-
-
-
 const UnitsInventoryHome = ({ project }) => {
   const { user } = useAuth()
 
@@ -54,7 +51,6 @@ const UnitsInventoryHome = ({ project }) => {
 
   const [unitsFeedA, setUnitsFeedA] = useState([])
   const [filUnitsFeedA, setFilUnitsFeedA] = useState([])
-
 
   const [phaseDetails, setPhaseDetails] = useState({
     projectName: '',
@@ -107,23 +103,24 @@ const UnitsInventoryHome = ({ project }) => {
   }, [unitsFeedA, availType, selUnitDimension, selsize, selFacing])
 
   const filFun = () => {
-
     const filData = unitsFeedA?.filter((da) => {
       const statusMatch =
         availType.value === 'any' ? true : da?.status == availType.value
       const dimensionMatch =
         selUnitDimension.value === 'any'
           ? true
-          : projectDetails?.projectType?.name ==='Apartment'? (String(da?.bedrooms_c)?.toLocaleLowerCase() || 0) ==
-          selUnitDimension.value?.toLocaleLowerCase() : (String(da?.dimension)?.toLocaleLowerCase() || 0) ==
+          : projectDetails?.projectType?.name === 'Apartment'
+          ? (String(da?.bedrooms_c)?.toLocaleLowerCase() || 0) ==
+            selUnitDimension.value?.toLocaleLowerCase()
+          : (String(da?.dimension)?.toLocaleLowerCase() || 0) ==
             selUnitDimension.value?.toLocaleLowerCase()
 
       const facingMatch =
         selFacing.value === 'any'
           ? true
           : da?.facing?.toLocaleLowerCase() == selFacing.value
-       const sizeMatch =
-       selsize.value === 'any'
+      const sizeMatch =
+        selsize.value === 'any'
           ? true
           : Number(da?.area) < Number(selsize.value)
       return statusMatch && facingMatch && dimensionMatch && sizeMatch
@@ -208,8 +205,14 @@ const UnitsInventoryHome = ({ project }) => {
         response.sort((a, b) => {
           return a.blockName - b.blockName
         })
-        setBlocks(response )
-        console.log('myblocks are',response, blocks, myProjectDetails?.uid, phaseId)
+        setBlocks(response)
+        console.log(
+          'myblocks are',
+          response,
+          blocks,
+          myProjectDetails?.uid,
+          phaseId
+        )
       },
       (e) => {
         console.log('error at getBlocks', e)
@@ -440,7 +443,6 @@ const UnitsInventoryHome = ({ project }) => {
       projectName: '5BHK',
       value: '5',
     },
-
   ]
   const sizeA = [
     {
@@ -494,7 +496,6 @@ const UnitsInventoryHome = ({ project }) => {
       uid: '',
       value: 'any',
     })
-
   }
   const selPhaseFun = (project) => {
     setPhaseDetails(project)
@@ -565,7 +566,11 @@ const UnitsInventoryHome = ({ project }) => {
                   viewUnitStatusA={[]}
                   pickCustomViewer={selTypeFun}
                   selProjectIs={selUnitDimension}
-                  dropDownItemsA={projectDetails?.projectType?.name ==='Apartment'? typeB: typeA}
+                  dropDownItemsA={
+                    projectDetails?.projectType?.name === 'Apartment'
+                      ? typeB
+                      : typeA
+                  }
                 />
                 <DropDownSearchBar
                   label={'Facing'}
@@ -588,17 +593,14 @@ const UnitsInventoryHome = ({ project }) => {
                   dropDownItemsA={sizeA}
                   noBorder={true}
                 />
-
               </section>
             </div>
           </div>
         </div>
 
-
         {/* <div>
           <A_Crm_Map filteredUnits={filteredUnits} />
         </div> */}
-
 
         {projectDetails == undefined && (
           <div className="py-8 px-8 mt-10 flex flex-col  items-center bg-red-100 rounded">
@@ -620,15 +622,14 @@ const UnitsInventoryHome = ({ project }) => {
 
         {projectDetails != undefined && (
           <div className="mt-4 ">
-
-              <FloordetailsSearch
+            <FloordetailsSearch
               pId={projectDetails?.uid}
               projectDetails={projectDetails}
               phaseFeed={phases}
               unitsFeedA={unitsFeedA}
               filUnitsFeedA={filUnitsFeedA}
               filteredUnits={filteredUnits}
-              setFilteredUnits = {setFilteredUnits}
+              setFilteredUnits={setFilteredUnits}
               BlockFeed={blocks}
               selBlock={selBlock}
               setSelBlock={setSelBlock}
@@ -639,15 +640,9 @@ const UnitsInventoryHome = ({ project }) => {
               leadDetailsObj={{}}
               setPhaseFun={setPhaseFun}
               selPhaseName={selPhaseName}
-
             />
           </div>
         )}
-
-
-
-
-
       </div>
     </section>
   )

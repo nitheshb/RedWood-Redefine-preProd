@@ -1,11 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import {
-  Box as Section,
-  Card,
-  Grid,
-  Tooltip,
-} from '@mui/material'
+import { Box as Section, Card, Grid, Tooltip } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
 import DropCompUnitStatus from 'src/components/dropDownUnitStatus'
@@ -31,7 +26,6 @@ const CreditNoteSummaryTableLayout = ({
   leadsTyper,
   searchVal,
 }) => {
-
   const { t } = useTranslation()
   const [value, setValue] = useState('all')
   const [tableData, setTableData] = useState([])
@@ -42,12 +36,7 @@ const CreditNoteSummaryTableLayout = ({
   const [finalKeyA, setFinalKeyA] = useState([])
 
   useEffect(() => {
-
-
-    const tabHeadFieldsA1 = [
-      { value: 'all', lab: 'All', val: 'all' },
-
-    ]
+    const tabHeadFieldsA1 = [{ value: 'all', lab: 'All', val: 'all' }]
 
     settabHeadFieldsA(tabHeadFieldsA1)
 
@@ -117,16 +106,12 @@ const CreditNoteSummaryTableLayout = ({
     }
   }
 
-
-
   const [filLeadsA, setFilLeadsA] = useState([])
 
   useEffect(() => {
-
     console.log('selected value is', value)
     setFetchLeadsLoader(false)
     setFilLeadsA(leadsFetchedData)
-
   }, [leadsFetchedData])
 
   const pickCustomViewer = (item) => {
@@ -219,13 +204,15 @@ const CreditNoteSummaryTableLayout = ({
                   viewUnitStatusA={viewUnitStatusA}
                   pickCustomViewer={pickCustomViewer}
                 />
-                {filLeadsA.length > 0 && <Tooltip title={`Download ${filLeadsA?.length} Row`}>
+                {filLeadsA.length > 0 && (
+                  <Tooltip title={`Download ${filLeadsA?.length} Row`}>
                     <CSVDownloader
                       className="mr-6 h-[20px] w-[20px]"
                       downloadRows={leadsFetchedData}
                       style={{ height: '20px', width: '20px' }}
                     />
-                  </Tooltip>}
+                  </Tooltip>
+                )}
               </section>
             </div>
 
@@ -259,7 +246,6 @@ const CreditNoteSummaryTableLayout = ({
                 mySelRows={mySelRows}
                 searchVal={searchVal}
               />
-
             )}
           </Grid>
         </Grid>

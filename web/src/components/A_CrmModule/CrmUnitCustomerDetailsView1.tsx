@@ -1,9 +1,5 @@
 import { useAuth } from 'src/context/firebase-auth-context'
-const CrmUnitCustomerDetailsView1 = ({
-  Name,
-  Mobile,
-  netTotal,
-}) => {
+const CrmUnitCustomerDetailsView1 = ({ Name, Mobile, netTotal }) => {
   const { user } = useAuth()
   const { orgId } = user
 
@@ -13,8 +9,7 @@ const CrmUnitCustomerDetailsView1 = ({
         <h1 className="font-bodyLato font-semibold  text-gray-800 text-[10px] mb-[2px]">
           Addressed To
         </h1>
-        <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-        </div>
+        <div className="font-md text-xs tracking-wide font-semibold text-slate-900 "></div>
 
         <p className="font-playfair font-semibold  text-gray-600 text-[9px]">
           {Name}

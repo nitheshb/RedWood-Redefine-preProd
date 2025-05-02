@@ -9,7 +9,12 @@ import SiderForm from '../SiderForm/SiderForm'
 import CrmConfirmationDialog from './CrmConfirmationDialog'
 import PdfPaymentScheduleGenerator from 'src/util/PdfPaymentScheduleGenerator'
 
-const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs }) => {
+const CrmUnitPaymentSchedule = ({
+  selCustomerPayload,
+  assets,
+  project,
+  totalIs,
+}) => {
   const { user } = useAuth()
   const { orgId } = user
   const { enqueueSnackbar } = useSnackbar()
@@ -18,7 +23,6 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
   const [unitTotal, setUnitTotal] = useState(0)
   const [unitReceivedTotal, setReceivedTotal] = useState(0)
   const [PSa, setPSa] = useState([])
-
 
   const [projectDetails, setProject] = useState({})
   const getProjectDetails = async (id) => {
@@ -42,54 +46,29 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
     getProjectDetails(selCustomerPayload?.pId)
   }, [selCustomerPayload])
 
-
-
-
-
-
-
-
-  const [isOpenSideView, setIsOpenSideView] = useState(false);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
-  const [switchOn, setSwitchOn] = useState(false);
-
+  const [isOpenSideView, setIsOpenSideView] = useState(false)
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [selectedItem, setSelectedItem] = useState(null)
+  const [switchOn, setSwitchOn] = useState(false)
 
   const toggleSiderForm = () => {
-    setIsOpenSideView((prev) => !prev);
-  };
-
+    setIsOpenSideView((prev) => !prev)
+  }
 
   const handleConfirm = () => {
     if (selectedItem) {
-      setSwitchOn(true);
-      triggerPaymentScheudlefun(selectedItem);
+      setSwitchOn(true)
+      triggerPaymentScheudlefun(selectedItem)
     }
-    setIsDialogOpen(false);
-    setIsOpenSideView(false);
-  };
-
+    setIsDialogOpen(false)
+    setIsOpenSideView(false)
+  }
 
   const handleCancel = () => {
-    setSwitchOn(false);
-    setIsDialogOpen(false);
-    setIsOpenSideView(false);
-  };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    setSwitchOn(false)
+    setIsDialogOpen(false)
+    setIsOpenSideView(false)
+  }
 
   console.log('payload is ', selCustomerPayload)
   useEffect(() => {
@@ -103,38 +82,48 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
         Number(
           computeTotal(
             obj,
-            selCustomerPayload?.super_built_up_area || selCustomerPayload?.area?.toString()?.replace(',', '')
+            selCustomerPayload?.super_built_up_area ||
+              selCustomerPayload?.area?.toString()?.replace(',', '')
           )
         ),
       0
     )
-    const c = selCustomerPayload?.addOnCS?.reduce(
-      (partialSum, obj) =>
-        partialSum +
-        Number(
-          computeTotal(
-            obj,
-            selCustomerPayload?.super_built_up_area || selCustomerPayload?.area?.toString()?.replace(',', '')
-          )
-        ),
-      0
-    ) || 0
+    const c =
+      selCustomerPayload?.addOnCS?.reduce(
+        (partialSum, obj) =>
+          partialSum +
+          Number(
+            computeTotal(
+              obj,
+              selCustomerPayload?.super_built_up_area ||
+                selCustomerPayload?.area?.toString()?.replace(',', '')
+            )
+          ),
+        0
+      ) || 0
     setPartA(a)
     setPartB(b)
     setUnitTotal(a + b + c)
-    setReceivedTotal(((selCustomerPayload?.T_review || 0) + (selCustomerPayload?.T_approved || 0))?.toLocaleString('en-IN'))
-    const paidAmount = (selCustomerPayload?.T_review || 0) + (selCustomerPayload?.T_approved || 0)
+    setReceivedTotal(
+      (
+        (selCustomerPayload?.T_review || 0) +
+        (selCustomerPayload?.T_approved || 0)
+      )?.toLocaleString('en-IN')
+    )
+    const paidAmount =
+      (selCustomerPayload?.T_review || 0) +
+      (selCustomerPayload?.T_approved || 0)
     let bal = 0
     let leftOver = paidAmount
     let newPaidAmount = paidAmount
     let outStanding = 0
     const z = selCustomerPayload?.fullPs?.map((d1, inx) => {
-      console.log('left over stuff',inx, leftOver, d1.value)
+      console.log('left over stuff', inx, leftOver, d1.value)
       bal = leftOver >= d1?.value ? d1?.value : leftOver
 
       leftOver = newPaidAmount - d1?.value > 0 ? newPaidAmount - d1?.value : 0
       newPaidAmount = newPaidAmount - d1?.value
-      outStanding =  d1?.value - bal
+      outStanding = d1?.value - bal
       return { ...d1, amt: bal, leftOver, outStanding }
     })
 
@@ -164,7 +153,8 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
       fullPs: updatedArray,
       status: selCustomerPayload?.status,
       T_elgible_new: sum,
-      T_elgible_balance: selCustomerPayload?.T_elgible_balance || 0  + selItem?.value
+      T_elgible_balance:
+        selCustomerPayload?.T_elgible_balance || 0 + selItem?.value,
     }
     updateUnitStatus(
       orgId,
@@ -178,43 +168,35 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
 
   return (
     <>
-
       <div className="mt-2">
         <section className="flex flex-col  ">
           <div>
             <div className=" rounded-md  pb-4">
               <div className=" flex flex-row px-3 justify-between items-center">
-
-                <div className='flex items-center'>
-          
-                <h1 className=" font-outfit text-left uppercase text-[#606062] font-medium text-[12px] mb-2 mt-1 ml-1">
-                  Payment Schedule
-                </h1>
+                <div className="flex items-center">
+                  <h1 className=" font-outfit text-left uppercase text-[#606062] font-medium text-[12px] mb-2 mt-1 ml-1">
+                    Payment Schedule
+                  </h1>
                 </div>
 
-
                 <div>
-
-      <PdfPaymentScheduleGenerator
-      user={user}
-      PSa={PSa}
-      selCustomerPayload={selCustomerPayload}
-      projectDetails={projectDetails}
-      unitTotal={unitTotal}
-      unitReceivedTotal={unitReceivedTotal}
-      project={project}
-
-
-
-       />
+                  <PdfPaymentScheduleGenerator
+                    user={user}
+                    PSa={PSa}
+                    selCustomerPayload={selCustomerPayload}
+                    projectDetails={projectDetails}
+                    unitTotal={unitTotal}
+                    unitReceivedTotal={unitReceivedTotal}
+                    project={project}
+                  />
                 </div>
               </div>
               <table className="w-full  rounded-2xl  overflow-hidden ">
-                <thead className='ml-2'>
+                <thead className="ml-2">
                   {' '}
                   <tr className="   h-9 ">
                     <th className="w-[34%] text-[12px] px-3 text-left   tracking-wide   text-[#0E0A1F] font-medium pl-6    bg-[#E8E6FE] ">
-                    Charges
+                      Charges
                     </th>
                     <th className="w-[18%] text-[12px]  px-2  text-right tracking-wide    text-[#0E0A1F] font-medium     bg-[#E8E6FE] ">
                       Total inc GST
@@ -232,7 +214,7 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
                   </tr>
                 </thead>
 
-                <tbody >
+                <tbody>
                   {PSa?.map((d1, inx) => {
                     totalIs = selCustomerPayload?.T_review
                     return (
@@ -261,18 +243,26 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
                           </div>
                         </th>
                         <td className="text-[12px] text-right text-[#6A6A6A] bg-[#fff] px-2 ">
-                        ₹ {Math.round(Number(d1?.value) || 0).toLocaleString('en-IN')}
+                          ₹{' '}
+                          {Math.round(Number(d1?.value) || 0).toLocaleString(
+                            'en-IN'
+                          )}
                         </td>
 
                         <td className="text-[12px] text-right text-green-600 bg-[#fff] px-2 font-bold">
-                        ₹ {Math.round(Number(d1?.amt) || 0).toLocaleString('en-IN')}
+                          ₹{' '}
+                          {Math.round(Number(d1?.amt) || 0).toLocaleString(
+                            'en-IN'
+                          )}
                         </td>
                         <td className="text-[12px] text-right text-[#6A6A6A] bg-[#fff] px-2 ">
-                        ₹ {Math.round(Number(d1?.outStanding) || 0).toLocaleString('en-IN')}
+                          ₹{' '}
+                          {Math.round(
+                            Number(d1?.outStanding) || 0
+                          ).toLocaleString('en-IN')}
                         </td>
                         <td className="text-[10px] text-center  font-bold text-[#6A6A6A] bg-[#fff]">
-                          <span
-                          >
+                          <span>
                             <div className="">
                               {/* <Switch
                                 checked={d1?.elgible}
@@ -289,12 +279,12 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
                                   } inline-block h-4 w-4 transform rounded-full bg-white transition`}
                                 />
                               </Switch> */}
-                                          <input
-              type="checkbox"
-              checked={d1?.elgible}
-              onChange={() => triggerPaymentScheudlefun(d1)}
-              className="h-5 w-5 text-black accent-black  border-gray-300 rounded focus:ring-black"
-            />
+                              <input
+                                type="checkbox"
+                                checked={d1?.elgible}
+                                onChange={() => triggerPaymentScheudlefun(d1)}
+                                className="h-5 w-5 text-black accent-black  border-gray-300 rounded focus:ring-black"
+                              />
                             </div>
                           </span>
                         </td>
@@ -304,80 +294,54 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
 
                   <tr className=" py-3 h-[51px] ">
                     <td className="text-[10px] text-right text-gray-400  bg-[#fff]"></td>
-                      <th className="text-[10px] text-right text-gray-800 bg-[#fff] ">
+                    <th className="text-[10px] text-right text-gray-800 bg-[#fff] ">
                       <section className="py-1 d-md  font-medium text-[#0E0A1F] text-[12px]leading-none px-2 ">
                         Total Value:
                       </section>
                     </th>
                     <th className="text-[10px] text-right text-gray-800 bg-[#fff] ">
                       <section className="py-1 d-md  font-medium text-[#0E0A1F] text-[12px]leading-none px-2 ">
-                      ₹ {Math.round(Number(selCustomerPayload?.T_total) || 0).toLocaleString('en-IN')}
+                        ₹{' '}
+                        {Math.round(
+                          Number(selCustomerPayload?.T_total) || 0
+                        ).toLocaleString('en-IN')}
                       </section>
                     </th>
                     <th className="text-[10px] text-right text-gray-800 bg-[#fff] ">
                       <section className="py-1 d-md  font-medium text-[#0E0A1F] text-[12px] leading-none px-2 ">
-                      ₹ {Math.round(Number(unitReceivedTotal) || 0).toLocaleString('en-IN')}
+                        ₹{' '}
+                        {Math.round(
+                          Number(unitReceivedTotal) || 0
+                        ).toLocaleString('en-IN')}
                       </section>
                     </th>
                     <th className="text-[10px] text-right text-gray-800 bg-[#fff] ">
-                      <section className="py-1 d-md font-medium text-[#0E0A1F] text-[12px] leading-none px-2 ">
-                      </section>
+                      <section className="py-1 d-md font-medium text-[#0E0A1F] text-[12px] leading-none px-2 "></section>
                     </th>
-
                   </tr>
                 </tbody>
               </table>
-
-
-
-              
-
-
-   
             </div>
           </div>
         </section>
 
+        {isOpenSideView && (
+          <SiderForm
+            open={isOpenSideView}
+            setOpen={setIsOpenSideView}
+            title={'confirmationDialog'}
+            unitsViewMode={false}
+            widthClass="max-w-xl"
+            selUnitDetails={selCustomerPayload}
+          />
+        )}
 
-
-
-
-
-      {isOpenSideView && (
-        <SiderForm
-          open={isOpenSideView}
-          setOpen={setIsOpenSideView}
-          title={'confirmationDialog'}
-          unitsViewMode={false}
-          widthClass="max-w-xl"
-          selUnitDetails={selCustomerPayload}
-        />
-      )}
-
-      {isDialogOpen && (
-        <CrmConfirmationDialog
-          onConfirm={handleConfirm}
-          onCancel={handleCancel}
-        />
-      )}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        {isDialogOpen && (
+          <CrmConfirmationDialog
+            onConfirm={handleConfirm}
+            onCancel={handleCancel}
+          />
+        )}
       </div>
     </>
   )

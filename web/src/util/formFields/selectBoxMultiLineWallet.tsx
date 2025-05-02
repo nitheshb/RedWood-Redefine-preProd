@@ -99,16 +99,14 @@ const MyOption = (props) => {
           className="hover:bg-blue-400  p-2 "
         >
           <section className="flex flex-row justify-between">
-          <div>{data?.label}</div>   <div style={{ marginLeft: '0px', color: '#ccc' }}>
-              Not matching
-            </div>
+            <div>{data?.label}</div>{' '}
+            <div style={{ marginLeft: '0px', color: '#ccc' }}>Not matching</div>
           </section>
 
           <div style={{ display: 'flex' }}>
             <div style={{ marginLeft: '0px', color: '#ccc' }}>
-           Wallet:  ₹{data?.walletAmount?.toLocaleString('en-IN')}
+              Wallet: ₹{data?.walletAmount?.toLocaleString('en-IN')}
             </div>
-
           </div>
         </div>
       )}
@@ -216,8 +214,7 @@ export const MultiSelectMultiLineWallet = ({
   const defaultValue = (options, value) => {
     console.log('check it ', options, value)
     //return (options ? options.find((option) => option.value === value) : '') || ''
-    return options ? options.find((option) => option?.value === value) : '';
-
+    return options ? options.find((option) => option?.value === value) : ''
   }
   return (
     <div className="section">
@@ -239,15 +236,12 @@ export const MultiSelectMultiLineWallet = ({
         valueComponent={GravatarValue}
         className="text-sm  mt-1 border-none"
 
-
         // onChange={(selectedOption) => {
         //   console.log('Selected option is', selectedOption);
         //   onChange(selectedOption);
         // }}
-
-
       />
-        {/* <ErrorMessage
+      {/* <ErrorMessage
           component="div"
           name={name}
           className="error-message text-red-700 text-xs p-1 mx-auto"

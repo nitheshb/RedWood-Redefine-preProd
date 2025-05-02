@@ -13,7 +13,6 @@ export default function EditLeadTask({
   editTaskFun,
   d,
 }) {
-
   const [pickerDate, setPickerDate] = useState(new Date(startDate))
   useEffect(() => {
     console.log('date issue ', startDate)
@@ -24,7 +23,6 @@ export default function EditLeadTask({
     console.log('date issue ', startDate)
     setPickerDate(new Date(startDate))
   }, [startDate])
-
 
   const [error, setError] = useState(false)
   useEffect(() => {
@@ -40,7 +38,6 @@ export default function EditLeadTask({
       <section className=" px-4">
         <div className="text-xs font-bodyLato text-[#516f90]">
           Edit Title
-
           {error && (
             <div className="error-message text-red-700 text-xs p-1">
               {' '}
@@ -68,13 +65,10 @@ export default function EditLeadTask({
                 <DatePicker
                   className=" mt-[2px] pl- px-   min-w-[151px] inline text-xs text-[#0091ae] bg-[#F5F8FA]"
                   selected={pickerDate}
-                  onChange={
-
-                    (date) =>{
-                      console.log('am i coming here',date,   date.getTime())
-                      setStartDate(date.getTime())
-
-                    }}
+                  onChange={(date) => {
+                    console.log('am i coming here', date, date.getTime())
+                    setStartDate(date.getTime())
+                  }}
                   showTimeSelect
                   timeFormat="HH:mm"
                   injectTimes={[

@@ -17,7 +17,7 @@ export default function ReportCard(props) {
             <div className="text-md font-bold leading-none">{props.title}</div>
           </div>
 
-           <div
+          <div
             className="relative  flex items-center w-auto text-md font-bold leading-none pl-0 ml-1 mt-4"
             style={{ gap: '50px' }}
           >

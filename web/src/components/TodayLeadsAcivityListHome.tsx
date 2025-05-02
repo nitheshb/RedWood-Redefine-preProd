@@ -44,14 +44,10 @@ const TodayLeadsActivityListHomeView = ({
     setValue(newValue)
   }
 
-
-
   useEffect(() => {
     console.log('check if this is loading on new page check', user?.uid)
     getLeadsDataFun()
   }, [taskType, user])
-
-
 
   const getLeadsDataFun = async () => {
     const uid = user?.uid
@@ -175,17 +171,14 @@ const TodayLeadsActivityListHomeView = ({
     }
   }
 
-  useEffect(() => {
-  }, [todaySchL])
-
-
+  useEffect(() => {}, [todaySchL])
 
   const filterTable = tableData.filter((item) =>
     value !== '' ? item.role.toLowerCase() === value : item.role
   )
   return (
     <TodayLeadsActivitySearchView
-      moduleName= {'Sales'}
+      moduleName={'Sales'}
       data={filterTable}
       searchKey={searchKey}
       setSearchKey={setSearchKey}

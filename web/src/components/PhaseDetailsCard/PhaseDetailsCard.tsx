@@ -12,7 +12,6 @@ const PhaseDetailsCard = ({ kind, feedData, bg, currency }) => {
         {kind}
       </h3>
 
-
       <ul className="flex-1 p-0 mt-4 ml-2 mr-2 leading-7 text-gray-900 border-0 border-gray-200">
         {feedData.map((data, i) => {
           return (
@@ -21,7 +20,6 @@ const PhaseDetailsCard = ({ kind, feedData, bg, currency }) => {
               className="flex justify-between  w-full mb-5  font-semibold text-left border-dotted border-b "
             >
               <span className="inline-flex w-32">
-  
                 <span className="text-sm font-medium text-gray-900">
                   {' '}
                   {data.k}

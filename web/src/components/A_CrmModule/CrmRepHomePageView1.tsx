@@ -193,7 +193,6 @@ const CrmRepHomePageView1 = ({ leadsTyper }) => {
             "
           >
             <div className="items-center justify-between rounded-md my-1 py-2 px-2 bg-white ">
-
               <div className="flex flex-row">
                 <div className="flex flex-col">
                   <div className="flex flex-row">
@@ -549,7 +548,6 @@ const CrmRepHomePageView1 = ({ leadsTyper }) => {
                                   {`${fieldHead.lab} `}
                                 </span>
                                 <span className="bg-gray-100 text-gray-800 px-2 py-1 rounded-full ml-[4px] text-[10px] ">
-
                                   {
                                     rowsCounter(
                                       leadsFetchedData,
@@ -557,7 +555,6 @@ const CrmRepHomePageView1 = ({ leadsTyper }) => {
                                     ).length
                                   }
                                 </span>
-   
                               </button>
                             </li>
                           )
@@ -597,9 +594,7 @@ const CrmRepHomePageView1 = ({ leadsTyper }) => {
                             </th>
 
                             <th className="text-right text-xs app-color-black py-2 whitespace-nowrap px-3">
-                              <span className="m-10">
-                                Constuction Progress
-                              </span>
+                              <span className="m-10">Constuction Progress</span>
                             </th>
                             <th className="text-right text-xs app-color-black py-2 px-3">
                               <span className="m-10">Queries</span>
@@ -623,7 +618,6 @@ const CrmRepHomePageView1 = ({ leadsTyper }) => {
                                 <div className="flex justify-center text-right items-center rounded-md w-2 h-8 app-bg-yellow-2 app-color-yellow-1 text-xs font-semibold">
                                   {i + 1}
                                 </div>
-           
                               </td>
                               <td>
                                 <div className="flex flex-row py-2 ml-4">
@@ -705,8 +699,6 @@ const CrmRepHomePageView1 = ({ leadsTyper }) => {
                 </div>
               </div>
             )}
-
-
           </div>
         </div>
       </div>

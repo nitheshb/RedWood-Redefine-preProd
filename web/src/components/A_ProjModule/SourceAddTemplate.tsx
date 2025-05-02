@@ -4,24 +4,14 @@
 import { useAuth } from 'src/context/firebase-auth-context'
 import ModularProjectMetrics from './Comps/SourceAddTable'
 
-
-
 const SourceAddTemplate = ({ phase, source }) => {
   const { user } = useAuth()
 
   const { orgId } = user
 
-
-
   return (
     <div className="lg:col-span-10 border   rounded-xl w-full ">
-
-
-      <ModularProjectMetrics
-        title={''}
-        data={phase}
-        source={source}
-      />
+      <ModularProjectMetrics title={''} data={phase} source={source} />
     </div>
   )
 }

@@ -3,7 +3,7 @@ import { memo, forwardRef } from 'react'
 // @mui
 import Box from '@mui/material/Box'
 import { alpha, styled, Theme, SxProps } from '@mui/material/styles'
-import SimpleBar, {Props} from 'simplebar-react'
+import SimpleBar, { Props } from 'simplebar-react'
 
 // @mui
 

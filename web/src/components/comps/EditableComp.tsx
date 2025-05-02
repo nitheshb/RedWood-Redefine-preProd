@@ -6,10 +6,7 @@ import { useSnackbar } from 'notistack'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { v4 as uuidv4 } from 'uuid'
 
-
-import {
-  VillaCsSections,
-} from 'src/constants/projects'
+import { VillaCsSections } from 'src/constants/projects'
 import {
   addCostSheetMaster,
   addPhaseFullCs,
@@ -20,8 +17,8 @@ import {
 import { useAuth } from 'src/context/firebase-auth-context'
 import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
 
-
 import WarningModel from './warnPopUp'
+import { ToastBar } from 'react-hot-toast'
 const StyledSelect = styled(SelectMAT)(({ theme }) => ({
   fontSize: '13px',
   '&.MuiInputBase-root': {
@@ -211,17 +208,13 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
   const [saveWarn, setSaveWarn] = useState(false)
   const [selcDelRow, SetSelDelRow] = useState({})
 
-
   const [taxA, setTaxA] = useState([])
-const [costSheetAdditionalChargesA, setCostSheetAdditionalCharges] = useState([]);
-const [csSectionsA, setCsSections] = useState([]);
-const [unitsCancellationA, setUnitsCancellation] = useState([]);
-const [paymentScheduleA, setPaymentSchedule] = useState([]);
-
-
-
-
-
+  const [costSheetAdditionalChargesA, setCostSheetAdditionalCharges] = useState(
+    []
+  )
+  const [csSectionsA, setCsSections] = useState([])
+  const [unitsCancellationA, setUnitsCancellation] = useState([])
+  const [paymentScheduleA, setPaymentSchedule] = useState([])
 
   useEffect(() => {
     const unsubscribe = streamMasters(
@@ -241,28 +234,35 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
           const hA = bankA.filter((item) => item.title === 'Cost Type')
           const iA = bankA.filter((item) => item.title === 'Payment Stage')
 
-          setTaxA(cA.sort((a, b) => {
-            return a.order - b.order
-          }))
+          setTaxA(
+            cA.sort((a, b) => {
+              return a.order - b.order
+            })
+          )
 
+          setCostSheetAdditionalCharges(
+            fA.sort((a, b) => {
+              return a.order - b.order
+            })
+          )
 
+          setCsSections(
+            gA.sort((a, b) => {
+              return a.order - b.order
+            })
+          )
 
-          setCostSheetAdditionalCharges(fA.sort((a, b) => {
-            return a.order - b.order;
-          }));
+          setUnitsCancellation(
+            hA.sort((a, b) => {
+              return a.order - b.order
+            })
+          )
 
-          setCsSections(gA.sort((a, b) => {
-            return a.order - b.order;
-          }));
-
-          setUnitsCancellation(hA.sort((a, b) => {
-            return a.order - b.order;
-          }));
-
-          setPaymentSchedule(iA.sort((a, b) => {
-            return a.order - b.order;
-          }));
-
+          setPaymentSchedule(
+            iA.sort((a, b) => {
+              return a.order - b.order
+            })
+          )
         }
       },
       (error) => setRows([])
@@ -270,17 +270,6 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
 
     return unsubscribe
   }, [])
-
-
-
-
-
-
-
-
-
-
-
 
   useEffect(() => {
     if (source === 'project') {
@@ -296,7 +285,7 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
         const x = costSqftA[0]
         setCostPerSqft(x?.charges)
         setGST(x?.gst.value)
-      }else{
+      } else {
         setCostPerSqft(phase?.area_cost_persqft || 0)
         setGST(phase?.area_tax || 0)
       }
@@ -305,7 +294,7 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
         const x = costConstructSqftA[0]
         setConstructionPerSqft(x?.charges || 0)
         setConstGST(x?.gst.value || 0)
-      }else{
+      } else {
         setConstructionPerSqft(phase?.const_cost_persqft || 0)
         setConstGST(phase?.const_tax || 0)
       }
@@ -346,9 +335,11 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
     } else {
       setCsCategoryOptionsA(csSectionsA)
     }
-    console.log('csCategoryOptionsA set to:', phase?.projectType?.name === 'Villas' ? VillaCsSections : csSectionsA)
-
-  }, [phase,csSectionsA])
+    console.log(
+      'csCategoryOptionsA set to:',
+      phase?.projectType?.name === 'Villas' ? VillaCsSections : csSectionsA
+    )
+  }, [phase, csSectionsA])
   const categories = ['Food', 'Drink', 'Electronics', 'Clothing']
 
   const handleChange = (id, field, value) => {
@@ -420,7 +411,7 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
   }
 
   const handleChange1 = (id, column, value) => {
-    console.log('latest check',column, value)
+    console.log('latest check', column, value)
 
     setRows(
       rows.map((row) => (row.id === id ? { ...row, [column]: value } : row))
@@ -474,14 +465,22 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
       const myId = selcDelRow?.id
       if (myId) setRows(rows.filter((item) => item.id !== myId))
       const newSet = rows.filter((item) => item.id !== myId)
-    const defaultSqftCost= {  area_cost_persqft: costPerSqft,
-      const_cost_persqft: constructionPerSqft,
-      area_tax:gst,
-      const_tax: constGst}
-      addPhaseFullCs(orgId, uid, newSet, 'partATaxObj', enqueueSnackbar)
-      addPhaseDefaultSqftCost(orgId, uid, defaultSqftCost, 'partATaxObj', enqueueSnackbar)
+      const defaultSqftCost = {
+        area_cost_persqft: costPerSqft,
+        const_cost_persqft: constructionPerSqft,
+        area_tax: gst,
+        const_tax: constGst,
+      }
+      addPhaseFullCs(orgId, uid, newSet, 'partATaxObj', ToastBar)
+      addPhaseDefaultSqftCost(
+        orgId,
+        uid,
+        defaultSqftCost,
+        'partATaxObj',
+        ToastBar
+      )
     } else {
-      addCostSheetMaster(orgId, `${type}_cs`, data, enqueueSnackbar)
+      addCostSheetMaster(orgId, `${type}_cs`, data, ToastBar)
     }
   }
 
@@ -503,8 +502,6 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
   ]
 
   const crmItems = ['Lead Source', 'Booking By']
-
-
 
   const [activeItem, setActiveItem] = useState<string | null>(null)
   const contentRefs = useRef<{ [key: string]: HTMLElement | null }>({})
@@ -576,7 +573,6 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
   )
 
   const [rows, setRows] = useState([
-
     {
       id: '0',
       myId: '2c7bcd74-d334-471e-9138-5de5c96ee484',
@@ -685,9 +681,6 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
     }
   }
   const handleConstructCostChange = (e) => {
-
-
-
     const rawValue = e.target.value.replace(/,/g, '')
     const numValue = parseFloat(rawValue)
     if (!isNaN(numValue)) {
@@ -711,20 +704,14 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
     }
   }
 
-
-
-
-
-
-
   const handleCostGSTChange = (e) => {
-    let inputValue = e.target.value;
+    let inputValue = e.target.value
     if (inputValue === '' || isNaN(inputValue) || inputValue < 0) {
-      setGST('');
-      return;
+      setGST('')
+      return
     }
 
-    inputValue = Math.min(100, inputValue);
+    inputValue = Math.min(100, inputValue)
 
     setRows(
       rows.map((row) =>
@@ -732,154 +719,157 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
           ? { ...row, gst: { value: inputValue, label: `${inputValue}%` } }
           : row
       )
-    );
-    setGST(inputValue);
-  };
-
+    )
+    setGST(inputValue)
+  }
 
   const handleConstCostGSTChange = (e) => {
-    let inputValue = e.target.value;
-  
+    let inputValue = e.target.value
 
     if (inputValue === '' || isNaN(inputValue) || Number(inputValue) < 0) {
-      setConstGST(''); 
-      return;
+      setConstGST('')
+      return
     }
-  
-    inputValue = Math.min(100, Number(inputValue));
- 
+
+    inputValue = Math.min(100, Number(inputValue))
+
     setRows(
       rows.map((row) =>
         row.component.value === 'sqft_construct_cost_tax'
           ? { ...row, gst: { value: inputValue, label: `${inputValue}%` } }
           : row
       )
-    );
-  
-    setConstGST(inputValue);
-  };
-  
+    )
 
-
-
-
-
+    setConstGST(inputValue)
+  }
 
   return (
     <>
       <div className="">
-       {source != 'Masters' &&
-<>
-       <div className="mb-4 ">
-          <div className="inline">
-            <div className="">
-              <label className="font-medium text-[12px] leading-[100%] tracking-[0.06em] uppercase text-[#606062] mb-1  ">
-                Unit Pricing Details<abbr title="required"></abbr>
-              </label>
-            </div>
+        {source != 'Masters' && (
+          <>
+            <div className="mb-4 ">
+              <div className="inline">
+                <div className="">
+                  <label className="font-medium text-[12px] leading-[100%] tracking-[0.06em] uppercase text-[#606062] mb-1  ">
+                    Unit Pricing Details<abbr title="required"></abbr>
+                  </label>
+                </div>
 
-            {/* <div className="border-t-4 rounded-xl w-16 mt-1 border-[#0891B2]"></div> */}
-          </div>
-        </div>
-        <section className="flex flex-row space-x-4">
-          <section className="border border-[#E5EAF2] flex flex-row p-4 rounded-xl">
-            <div className="mb-3 w-[172px] mr-4">
-              <label htmlFor="area" className="label font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162] ">
-                Base {type === 'Apartment' ? 'Flat ' : 'Plot '}Price per sqft*
-              </label>
-              <div className="flex w-[140px]">
-                <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0  rounded-l-md ">
-
-                  Rs
-                </span>
-                <input
-                  type="text"
-                  id="website-admin"
-                  className="rounded-none rounded-r-md bg-gray-50 border text-gray-900 focus:ring-none focus:border-none block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 "
-                  placeholder="cost/sqft"
-                  value={formatIndianNumber(costPerSqft) || 0}
-                  onChange={handleCostChange}
-                />
+                {/* <div className="border-t-4 rounded-xl w-16 mt-1 border-[#0891B2]"></div> */}
               </div>
             </div>
+            <section className="flex flex-row space-x-4">
+              <section className="border border-[#E5EAF2] flex flex-row p-4 rounded-xl">
+                <div className="mb-3 w-[172px] mr-4">
+                  <label
+                    htmlFor="area"
+                    className="label font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162] "
+                  >
+                    Base {type === 'Apartment' ? 'Flat ' : 'Plot '}Price per
+                    sqft*
+                  </label>
+                  <div className="flex w-[140px]">
+                    <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0  rounded-l-md ">
+                      Rs
+                    </span>
+                    <input
+                      type="text"
+                      id="website-admin"
+                      className="rounded-none rounded-r-md bg-gray-50 border text-gray-900 focus:ring-none focus:border-none block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 "
+                      placeholder="cost/sqft"
+                      value={formatIndianNumber(costPerSqft) || 0}
+                      onChange={handleCostChange}
+                    />
+                  </div>
+                </div>
 
-            <div className="ml-2 mb-3 w-[140px]">
-              <label htmlFor="area" className="label font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162]">
-                Standard Tax Rate*
-              </label>
-              <div className="flex w-[140px]">
-                <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0  rounded-l-md">
- 
-                  %
-                </span>
-                <input
-                  type="text"
-                  id="website-admin"
-                  className="rounded-none rounded-r-md bg-gray-50 border text-gray-900 focus:ring-none focus:border-none block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5"
-                  placeholder="GST"
-                  value={gst}
-                        min="0"     
+                <div className="ml-2 mb-3 w-[140px]">
+                  <label
+                    htmlFor="area"
+                    className="label font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162]"
+                  >
+                    Standard Tax Rate*
+                  </label>
+                  <div className="flex w-[140px]">
+                    <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0  rounded-l-md">
+                      %
+                    </span>
+                    <input
+                      type="text"
+                      id="website-admin"
+                      className="rounded-none rounded-r-md bg-gray-50 border text-gray-900 focus:ring-none focus:border-none block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5"
+                      placeholder="GST"
+                      value={gst}
+                      min="0"
+                      max="100"
+                      onChange={handleCostGSTChange}
+                    />
+                  </div>
+                </div>
+              </section>
+              {type === 'Villas' && (
+                <section className="border border-[#E5EAF2] flex flex-row p-4 rounded-xl">
+                  <div className="mb-3 w-[220px] ">
+                    <label
+                      htmlFor="area"
+                      className="label font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162]"
+                    >
+                      Base Const Price per sqft*
+                    </label>
+                    <div className="flex w-[140px]">
+                      <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0  rounded-l-md">
+                        Rs
+                      </span>
+                      <input
+                        type="text"
+                        id="website-admin"
+                        className="rounded-none rounded-r-md bg-gray-50 border text-gray-900 focus:ring-none focus:border-none block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5"
+                        placeholder="cost/sqft"
+                        value={formatIndianNumber(constructionPerSqft) || 0}
+                        onChange={handleConstructCostChange}
+                      />
+                    </div>
+                  </div>
+                  <div className="mb-3 ">
+                    <label
+                      htmlFor="area"
+                      className="label font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162]"
+                    >
+                      Standard Tax Rate*
+                    </label>
+                    <div className="flex w-[140px]">
+                      <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0  rounded-l-md">
+                        %
+                      </span>
+                      <input
+                        type="number"
+                        id="website-admin"
+                        className="rounded-none rounded-r-md bg-gray-50 border text-gray-900 focus:ring-none focus:border-none block flex-1 min-w-0 max-w-[120px] text-sm border-gray-300 p-2.5"
+                        placeholder="GST"
+                        value={constGst}
+                        min="0"
                         max="100"
-                  onChange={handleCostGSTChange}
-                />
-              </div>
-            </div>
-          </section>
-          {type === 'Villas' && (
-            <section className="border border-[#E5EAF2] flex flex-row p-4 rounded-xl">
-              <div className="mb-3 w-[220px] ">
-                <label htmlFor="area" className="label font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162]">
-                  Base Const Price per sqft*
-                </label>
-                <div className="flex w-[140px]">
-                  <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0  rounded-l-md">
-                    Rs
-                  </span>
-                  <input
-                    type="text"
-                    id="website-admin"
-                    className="rounded-none rounded-r-md bg-gray-50 border text-gray-900 focus:ring-none focus:border-none block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5"
-                    placeholder="cost/sqft"
-                    value={formatIndianNumber(constructionPerSqft) || 0}
-                    onChange={handleConstructCostChange}
-                  />
-                </div>
-              </div>
-              <div className="mb-3 ">
-                <label htmlFor="area" className="label font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162]">
-                  Standard Tax Rate*
-                </label>
-                <div className="flex w-[140px]">
-                  <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0  rounded-l-md">
-                    %
-                  </span>
-                  <input
-                    type="number"
-                    id="website-admin"
-                    className="rounded-none rounded-r-md bg-gray-50 border text-gray-900 focus:ring-none focus:border-none block flex-1 min-w-0 max-w-[120px] text-sm border-gray-300 p-2.5"
-                    placeholder="GST"
-                    value={constGst}
-                    min="0"
-                    max="100"
-                    step="1"
-                    onChange={handleConstCostGSTChange}
-                    onKeyDown={(e) => {
-                      if (e.key === '-' || e.key === '+' || e.key === 'e') {
-                        e.preventDefault(); 
-                      }
-                    }}
-              
-                  />
-                </div>
-              </div>
+                        step="1"
+                        onChange={handleConstCostGSTChange}
+                        onKeyDown={(e) => {
+                          if (e.key === '-' || e.key === '+' || e.key === 'e') {
+                            e.preventDefault()
+                          }
+                        }}
+                      />
+                    </div>
+                  </div>
+                </section>
+              )}
             </section>
-          )}
-        </section>
-        <p className="text-xs text-red-400 text-left my-3 mt-1">
-          <abbr title="Required field">Note:</abbr> Set PLC value at unit level.
-        </p>
-
-        </>}
+            <p className="text-xs text-red-400 text-left my-3 mt-1">
+              <abbr title="Required field">Note:</abbr> Set PLC value at unit
+              level.
+            </p>
+          </>
+        )}
 
         <div className="">
           <div className="mb-4 mt-2">
@@ -901,14 +891,24 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
                     <th className=" p-2 pl-2 text-center font-semibold	 text-md">
                       Charges For
                     </th>
-                    <th className=" p-1 pl-2 text-center  font-semibold">Category</th>
-                    <th className=" p-1 pl-2 text-center  font-semibold">Cost Type</th>
-                    <th className=" p-1 pl-2 text-center  font-semibold">Amount</th>
-                    <th className=" p-1 pl-2 text-center  font-semibold">Tax Rate</th>
+                    <th className=" p-1 pl-2 text-center  font-semibold">
+                      Category
+                    </th>
+                    <th className=" p-1 pl-2 text-center  font-semibold">
+                      Cost Type
+                    </th>
+                    <th className=" p-1 pl-2 text-center  font-semibold">
+                      Amount
+                    </th>
+                    <th className=" p-1 pl-2 text-center  font-semibold">
+                      Tax Rate
+                    </th>
                     {/* <th className="border border-[#e0e0e0] p-2 text-left">
                   Description
                 </th> */}
-                    <th className=" p-1 pl-2 text-center  font-semibold">Action</th>
+                    <th className=" p-1 pl-2 text-center  font-semibold">
+                      Action
+                    </th>
                   </tr>
                 </thead>
                 <Droppable droppableId="table">
@@ -930,7 +930,6 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
                                 className="hover:bg-gray-100 transition-colors duration-150 ease-in-out"
                               >
                                 <td className="border-b border-[#e0e0e0] px-2">
-      
                                   <StyledSelect
                                     disableUnderline={true}
                                     defaultValue={row?.component?.value}
@@ -959,8 +958,6 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
                                       )
                                     )}
                                   </StyledSelect>
-    
-              
                                 </td>
                                 <td className="border-b border-[#e0e0e0]">
                                   <StyledSelect
@@ -989,7 +986,6 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
                                       </MenuItem>
                                     ))}
                                   </StyledSelect>
-             
                                 </td>
                                 <td className="border-b border-[#e0e0e0]">
                                   <StyledSelect
@@ -1057,11 +1053,10 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
                                     value={row?.gst?.value}
                                     onChange={(e) => {
                                       console.log('taxA', e.target.value)
-                                      const selectedOptionObject =
-                                      taxA.find(
-                                          (option) =>
-                                            option.value === e.target.value
-                                        )
+                                      const selectedOptionObject = taxA.find(
+                                        (option) =>
+                                          option.value === e.target.value
+                                      )
                                       handleChange1(
                                         row.id,
                                         'gst',
@@ -1078,7 +1073,6 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
                                       </MenuItem>
                                     ))}
                                   </StyledSelect>
-        
                                 </td>
 
                                 <td className="border-b border-[#e0e0e0] text-center">

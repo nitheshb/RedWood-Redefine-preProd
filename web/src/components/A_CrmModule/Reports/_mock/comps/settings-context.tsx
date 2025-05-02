@@ -2,7 +2,6 @@ import { createContext, useContext } from 'react'
 
 //
 
-
 // ----------------------------------------------------------------------
 
 export const SettingsContext = createContext({} as SettingsContextProps)
@@ -19,25 +18,24 @@ export const useSettingsContext = () => {
 // ----------------------------------------------------------------------
 
 export type SettingsValueProps = {
-  themeStretch: boolean;
-  themeMode: 'light' | 'dark';
-  themeDirection: 'rtl' | 'ltr';
-  themeContrast: 'default' | 'bold';
-  themeLayout: 'vertical' | 'horizontal' | 'mini';
-  themeColorPresets: 'default' | 'cyan' | 'purple' | 'blue' | 'orange' | 'red';
-};
+  themeStretch: boolean
+  themeMode: 'light' | 'dark'
+  themeDirection: 'rtl' | 'ltr'
+  themeContrast: 'default' | 'bold'
+  themeLayout: 'vertical' | 'horizontal' | 'mini'
+  themeColorPresets: 'default' | 'cyan' | 'purple' | 'blue' | 'orange' | 'red'
+}
 
 export type SettingsContextProps = SettingsValueProps & {
   // Update
-  onUpdate: (name: string, value: string | boolean) => void;
+  onUpdate: (name: string, value: string | boolean) => void
   // Direction by lang
-  onChangeDirectionByLang: (lang: string) => void;
+  onChangeDirectionByLang: (lang: string) => void
   // Reset
-  canReset: boolean;
-  onReset: VoidFunction;
+  canReset: boolean
+  onReset: VoidFunction
   // Drawer
-  open: boolean;
-  onToggle: VoidFunction;
-  onClose: VoidFunction;
-};
-
+  open: boolean
+  onToggle: VoidFunction
+  onClose: VoidFunction
+}

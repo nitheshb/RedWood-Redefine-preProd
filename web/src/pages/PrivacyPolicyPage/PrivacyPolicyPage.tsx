@@ -267,9 +267,9 @@ const PrivacyPolicyPage = () => {
               contain personal information. Prior to posting a testimonial, we
               will obtain your consent to use your name and testimonial. If you
               wish to update, or delete your testimonial, please contact us at{' '}
-              <a href="mailto:crminfo@redefineerp.in">crminfo@redefineerp.in</a> and
-              be sure to include your name, testimonial location, and contact
-              information.
+              <a href="mailto:crminfo@redefineerp.in">crminfo@redefineerp.in</a>{' '}
+              and be sure to include your name, testimonial location, and
+              contact information.
             </p>
             <p className="my-2">
               Deliver targeted advertising to you: We may use your information
@@ -723,8 +723,8 @@ const PrivacyPolicyPage = () => {
             <p className="my-2">
               If you have questions or comments about this policy, email us
               BRAIN CELL TECHNOLOGIES LLP at{' '}
-              <a href="mailto:crminfo@redefineerp.in">crminfo@redefineerp.in</a> or by
-              post to:
+              <a href="mailto:crminfo@redefineerp.in">crminfo@redefineerp.in</a>{' '}
+              or by post to:
             </p>
             <p className="my-2">BRAIN CELL TECHNOLOGIES LLP</p>
             <p className="my-2">Nithesh Reddy B</p>
@@ -741,8 +741,10 @@ const PrivacyPolicyPage = () => {
               <strong>Nithesh Reddy B</strong> to be its representative in the
               EEA. You can contact them directly regarding the processing of
               your information by COMPANY, by email at &nbsp;
-              <a href="mailto:crminfo@redefineerp.in">crminfo@redefineerp.in</a> or by
-              post to:
+              <a href="mailto:crminfo@redefineerp.in">
+                crminfo@redefineerp.in
+              </a>{' '}
+              or by post to:
             </p>
             <p className="my-2">BRAIN CELL TECHNOLOGIES LLP</p>
             <p className="my-2">Nithesh Reddy B</p>
@@ -755,8 +757,8 @@ const PrivacyPolicyPage = () => {
             <p className="my-2">
               If you have any further questions or comments about us or our
               policies, email us at{' '}
-              <a href="mailto:crminfo@redefineerp.in">crminfo@redefineerp.in</a> or by
-              post to:
+              <a href="mailto:crminfo@redefineerp.in">crminfo@redefineerp.in</a>{' '}
+              or by post to:
             </p>
             <p className="my-2">BRAIN CELL TECHNOLOGIES LLP</p>
             <p className="my-2">Nithesh Reddy B</p>

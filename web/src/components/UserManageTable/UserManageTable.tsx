@@ -44,10 +44,16 @@ const UserManageTable = ({ editEmployeeFun, showCompletedTasks }) => {
       )
     }
   }, [selDept, leadsFetchedData])
-  const handleDelete =  () => {
-  console.log('delte user is ')
+  const handleDelete = () => {
+    console.log('delte user is ')
 
-    deleteUser(orgId, selDelUser?.uid, user?.email, selDelUser?.email, selDelUser?.roles)
+    deleteUser(
+      orgId,
+      selDelUser?.uid,
+      user?.email,
+      selDelUser?.email,
+      selDelUser?.roles
+    )
     setSelDelUser({})
   }
   const getLeadsDataFun = async () => {
@@ -112,8 +118,7 @@ const UserManageTable = ({ editEmployeeFun, showCompletedTasks }) => {
                       : 'text-gray-500 hover:text-black'
                   }`}
                 >
-
-<img alt="" src="/temp2.png" className="h-5 w-5 mr-1" />
+                  <img alt="" src="/temp2.png" className="h-5 w-5 mr-1" />
 
                   {dat.label}
                 </div>
@@ -121,18 +126,17 @@ const UserManageTable = ({ editEmployeeFun, showCompletedTasks }) => {
             ))}
           </section>
 
-
           <WarningModel
-                        type={'Danger'}
-                        open={open}
-                        setOpen={setOpen}
-                        proceedAction={handleDelete}
-                        title={'Are you sure you want to delete this user?'}
-                        subtext={
-                          'This User will be permanently removed. This action cannot be undone.'
-                        }
-                        actionBtnTxt={'Delete User'}
-                      />
+            type={'Danger'}
+            open={open}
+            setOpen={setOpen}
+            proceedAction={handleDelete}
+            title={'Are you sure you want to delete this user?'}
+            subtext={
+              'This User will be permanently removed. This action cannot be undone.'
+            }
+            actionBtnTxt={'Delete User'}
+          />
           <div className="shadow overflow-hidden border-b border-gray-200  bg-white pb-4  px-4">
             <table className="min-w-full  divide-y divide-gray-200 table-fixed ">
               <thead className="bg-[#E8E6FE] ">
@@ -170,15 +174,20 @@ const UserManageTable = ({ editEmployeeFun, showCompletedTasks }) => {
                   {/* <th scope="col" className="relative px-6 rounded-tr-md  py-3">
                     <span className="sr-only">Edit</span>
                   </th> */}
-                  <th scope="col" className="px-6 py-3 text-right text-xs font-semibold text-[#0D027D] capitalize tracking-wider rounded-tr-md">
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-right text-xs font-semibold text-[#0D027D] capitalize tracking-wider rounded-tr-md"
+                  >
                     Edit
-                   </th>
-
+                  </th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200 ">
                 {filterData.map((person) => (
-                  <motion.tr key={person.email} className="border-b border-dashed">
+                  <motion.tr
+                    key={person.email}
+                    className="border-b border-dashed"
+                  >
                     <td className="px-6 py-1 whitespace-nowrap">
                       <div className="flex items-center">
                         <div className="flex-shrink-0 h-10 w-10">
@@ -228,9 +237,10 @@ const UserManageTable = ({ editEmployeeFun, showCompletedTasks }) => {
 
                       <TrashIcon
                         className="w-5 h-5 ml-[18px] mb-[4px] inline cursor-pointer"
-                        onClick={() =>{
+                        onClick={() => {
                           setSelDelUser(person)
-                          setOpen(true)}}
+                          setOpen(true)
+                        }}
                       />
                     </td>
                   </motion.tr>

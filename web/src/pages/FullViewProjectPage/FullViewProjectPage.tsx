@@ -8,11 +8,12 @@ const FullViewProjectPage = () => {
 
       <h1>FullViewProjectPage</h1>
       <p>
-        Find me in <code>./web/src/pages/FullViewProjectPage/FullViewProjectPage.tsx</code>
+        Find me in{' '}
+        <code>./web/src/pages/FullViewProjectPage/FullViewProjectPage.tsx</code>
       </p>
       <p>
-        My default route is named <code>fullViewProject</code>, link to me with `
-        <Link to={routes.fullViewProject()}>FullViewProject</Link>`
+        My default route is named <code>fullViewProject</code>, link to me with
+        `<Link to={routes.fullViewProject()}>FullViewProject</Link>`
       </p>
     </>
   )

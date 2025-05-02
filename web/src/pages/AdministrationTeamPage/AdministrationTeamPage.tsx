@@ -41,7 +41,6 @@ const AdministrationTeamPage = (props) => {
     }
   }, [user])
 
-
   return (
     <>
       <div className="flex w-screen h-screen text-gray-700">
@@ -66,15 +65,19 @@ const AdministrationTeamPage = (props) => {
             </div>
 
             <div className="flex-grow  items-center overflow-y-auto  overflow-auto no-scrollbar px-300  py-300">
-              <HeadNavBar2 selModule={selModule} setSelModule={setSelModule}  setViewable={setViewable} />
+              <HeadNavBar2
+                selModule={selModule}
+                setSelModule={setSelModule}
+                setViewable={setViewable}
+              />
               {viewable === 'userProfile' && <ProfileSummary />}
 
               {viewable === 'Today1' && (
                 <AdminSupportHome leadsTyper={undefined} />
               )}
-                       {viewable === 'Team Lead Report' && (
+              {viewable === 'Team Lead Report' && (
                 <>
-                {/* <AdminSummaryReport/> */}
+                  {/* <AdminSummaryReport/> */}
                   {/* <ReportMain /> */}
                   {/* <LeadsTeamReportBody
                     project={{
@@ -89,7 +92,6 @@ const AdministrationTeamPage = (props) => {
                 </>
               )}
             </div>
-
           </div>
         </div>
       </div>
@@ -98,6 +100,3 @@ const AdministrationTeamPage = (props) => {
 }
 
 export default AdministrationTeamPage
-
-
-

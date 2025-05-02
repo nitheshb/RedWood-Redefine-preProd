@@ -23,8 +23,6 @@ import { visuallyHidden } from '@mui/utils'
 import PropTypes from 'prop-types'
 import Highlighter from 'react-highlight-words'
 
-
-
 import {
   getAllProjects,
   steamUsersListByRole,
@@ -344,7 +342,6 @@ export default function TodayLeadsActivitySearchView({
   React.useEffect(() => {
     console.log('send values is', rowsParent)
     filterStuff(rowsParent)
-
   }, [selStatus, rowsParent])
   useEffect(() => {
     getMyTodayProgress()
@@ -414,7 +411,6 @@ export default function TodayLeadsActivitySearchView({
     console.log('max check it my value is ', todaySch)
     const streamedTodo = []
     let y = []
-
 
     let TaskStatusReq = []
     if (searchKey.includes('upcoming')) {
@@ -518,7 +514,6 @@ export default function TodayLeadsActivitySearchView({
       const z = todaySch?.filter((item) => {
         if (selLeadsOf?.value == 'mytasks') {
           return item
-
         } else if (selLeadsOf?.value === 'teamtasks') {
           console.log('zoro i s teamtasks')
           console.log('zoro condition', selProjectIs?.value)
@@ -611,7 +606,6 @@ export default function TodayLeadsActivitySearchView({
       if (item.Source.toLowerCase().includes(selStatus.toLowerCase())) {
         return item
       }
-
     })
     await setRows(x)
     await console.log('xo', x)
@@ -622,10 +616,9 @@ export default function TodayLeadsActivitySearchView({
     setisImportLeadsOpen(true)
     setSelUserProfile(data)
   }
-  const selTaskManObjF =(data)=>{
+  const selTaskManObjF = (data) => {
     setisViewTaskMan(true)
     setSelTaskMan(data)
-
   }
   const handleSortDrop = (e) => {
     setSortType(e.target.value)
@@ -639,8 +632,6 @@ export default function TodayLeadsActivitySearchView({
 
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0
-
-
 
   console.log('what is here', todaySch)
   const torrowDate = new Date(
@@ -661,17 +652,10 @@ export default function TodayLeadsActivitySearchView({
         {/* <Header /> */}
         <div className="flex justify-center items-center text-gray-900"></div>
         <div className=" justify-center items-center text-gray-900">
-
-
-          {
-            schLoading &&
-              [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map((data, i) => (
-                <LogSkelton key={i} />
-              ))
-
-          }
-
-
+          {schLoading &&
+            [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map((data, i) => (
+              <LogSkelton key={i} />
+            ))}
 
           {!schLoading && !leadByViewLayout && todaySch && (
             <>
@@ -692,14 +676,12 @@ export default function TodayLeadsActivitySearchView({
                       setSearchKey={setSearchKey}
                     />
                   </div>
-                    <div className="w-2/12 flex flex-col">
+                  <div className="w-2/12 flex flex-col">
                     <section className="bg-white rounded-lg  flex flex-col p-4 ml-1 mb-1 w-100 ">
                       <h5 className="text-sm">{greet}...!🖐</h5>
                       <h2 className="text-md font-semibold text-black leading-light font-Playfair pb-1">
                         {user?.displayName?.toLocaleUpperCase()}
                       </h2>
-
-
                     </section>
                     <section className="ml-1">
                       <TaskProgress userTodayPerfA={userTodayPerfA} />
@@ -723,32 +705,9 @@ export default function TodayLeadsActivitySearchView({
             </>
           )}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
           {leadByViewLayout && todaySch && (
             <div className=" w-full">
               <div className="bg-white py-4 md:py-7 px-4 md:px-4 xl:px-6 rounded">
-
                 <div className="sm:flex items-center justify-between">
                   <div className="flex items-center">
                     <a
@@ -859,8 +818,6 @@ export default function TodayLeadsActivitySearchView({
                             selUserProfileF('User Profile', leadUser)
                           }}
                         >
-
-
                           <div className="flex  w-full mx-4 py-2 border-b mt-4 ">
                             <label className="font-semibold text-[#053219] px-4 py-[4px] bg-green-100  text-2xl  mb-1 mr-2  ">
                               {index + 1}

@@ -1,5 +1,3 @@
-
-
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/iframe-has-title */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
@@ -15,7 +13,7 @@ import {
 import { useAuth } from 'src/context/firebase-auth-context'
 import SiderForm from './SiderForm/SiderForm'
 import { EyeIcon, EyeOffIcon } from 'lucide-react'
-import TaskManagementDashboard from './A_CrmModule/ToDoList'
+import TaskManagementDashboard from './A_CrmModule/T_UnitTasks/ToDoList'
 const AllBankDetailsView = ({ title, pId, data }) => {
   const { user } = useAuth()
   const { orgId } = user
@@ -90,64 +88,51 @@ const AllBankDetailsView = ({ title, pId, data }) => {
     }
   }
 
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
 
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [accountToDelete, setAccountToDelete] = useState(null)
 
-  
-  const [accountToDelete, setAccountToDelete] = useState(null);
-
-
-  const [selectedBankDe, setSelectedBankDe] = useState<any>(null);
-
+  const [selectedBankDe, setSelectedBankDe] = useState<any>(null)
 
   const toggleAccountVisibility = (accountId) => {
-    setVisibleAccounts(prev => ({
+    setVisibleAccounts((prev) => ({
       ...prev,
-      [accountId]: !prev[accountId]
+      [accountId]: !prev[accountId],
     }))
   }
 
-
   const openDeleteDialog = (bankDe: any) => {
-    setSelectedBankDe(bankDe);
-    setIsDialogOpen(true);  
-  };
-  
-
+    setSelectedBankDe(bankDe)
+    setIsDialogOpen(true)
+  }
 
   const closeDeleteDialog = () => {
-    setIsDialogOpen(false);
-    setAccountToDelete(null);
-  };
+    setIsDialogOpen(false)
+    setAccountToDelete(null)
+  }
 
-  
   const confirmDelete = () => {
     if (accountToDelete) {
       deleteAssetFun(
         accountToDelete.docId,
         accountToDelete.accountName,
         accountToDelete.usedInA?.length || 0
-      );
+      )
     }
-    closeDeleteDialog();
-  };
-
-
-
-
-  const maskAccountNumber = (accountNo) => {
-    if (!accountNo) return "••••••••";
-    
-    const accountStr = String(accountNo);
-    
-    if (accountStr.length <= 4) return "•".repeat(accountStr.length);
-    
-    const lastFour = accountStr.slice(-4);
-    const maskedPart = "•".repeat(accountStr.length - 4);
-    return maskedPart + lastFour;
+    closeDeleteDialog()
   }
 
+  const maskAccountNumber = (accountNo) => {
+    if (!accountNo) return '••••••••'
 
+    const accountStr = String(accountNo)
+
+    if (accountStr.length <= 4) return '•'.repeat(accountStr.length)
+
+    const lastFour = accountStr.slice(-4)
+    const maskedPart = '•'.repeat(accountStr.length - 4)
+    return maskedPart + lastFour
+  }
 
   // const getBankIcon = (bankName) => {
   //   return (
@@ -156,10 +141,6 @@ const AllBankDetailsView = ({ title, pId, data }) => {
   //     </svg>
   //   );
   // }
-  
-
-
-
 
   return (
     <>
@@ -167,7 +148,7 @@ const AllBankDetailsView = ({ title, pId, data }) => {
         <div className="max-w-7xl">
           <section className="flex flex-row justify-between items-center p-4  rounded-lg mb-6">
             {/* <h2 className="text-lg font-semibold ml-5 text-black">{title}</h2> */}
-              {/* <span className="flex gap-2 items-center">
+            {/* <span className="flex gap-2 items-center">
                               <img
                                 className="w-12 h-12"
                                 alt=""
@@ -178,44 +159,40 @@ const AllBankDetailsView = ({ title, pId, data }) => {
                               </span>
               </span> */}
 
-                 <section className='flex flex-row'>
-                <img className="w-11 h-11" alt=""                    
-                src="/paymentsbank.svg"
-                ></img>
+            <section className="flex flex-row">
+              <img className="w-11 h-11" alt="" src="/paymentsbank.svg"></img>
 
-                <h2 className="ml-2 mt-2  text-2xl text-[#33475B] font-semibold leading-light font-Playfair">
-                  {title}
-                </h2>
-                </section>
+              <h2 className="ml-2 mt-2  text-2xl text-[#33475B] font-semibold leading-light font-Playfair">
+                {title}
+              </h2>
+            </section>
 
             <button
-                 className="flex items-center  bg-[#E5E7EB] hover:bg-gray-100 text-black px-4 py-2 rounded-lg transition duration-200 shadow-sm"
-                onClick={() => {
-                  setSliderInfo({
-                    open: true,
-                    title: title,
-                    sliderData: {},
-                    widthClass: 'max-w-xl',
-                  })
-                }}
-              >
-                {bankDetialsA.length > 0 && (
-                  <time className="block text-sm font-normal leading-none">
-                    <span className="flex items-center">
-                      {' '}
-                      <PlusCircleIcon
-                        className="h-5 w-5 mr-2"
-                        aria-hidden="true"
-                      />
-                      <span>Add New</span>
-                    </span>
-                  </time>
-                )}
-              </button>
+              className="flex items-center  bg-[#E5E7EB] hover:bg-gray-100 text-black px-4 py-2 rounded-lg transition duration-200 shadow-sm"
+              onClick={() => {
+                setSliderInfo({
+                  open: true,
+                  title: title,
+                  sliderData: {},
+                  widthClass: 'max-w-xl',
+                })
+              }}
+            >
+              {bankDetialsA.length > 0 && (
+                <time className="block text-sm font-normal leading-none">
+                  <span className="flex items-center">
+                    {' '}
+                    <PlusCircleIcon
+                      className="h-5 w-5 mr-2"
+                      aria-hidden="true"
+                    />
+                    <span>Add New</span>
+                  </span>
+                </time>
+              )}
+            </button>
           </section>
 
-
-          
           <div className="p-4 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
             {bankDetialsA.map((bankDe, i) => {
               return (
@@ -224,22 +201,18 @@ const AllBankDetailsView = ({ title, pId, data }) => {
                     <div className=" justify-between mb-4">
                       <div>
                         <div className="flex flex-row justify-between items-center border-b pb-3">
-
                           <div>
-
-                          {/* <div className="bg-blue-50 p-2 rounded-full mr-3 text-blue-600">
+                            {/* <div className="bg-blue-50 p-2 rounded-full mr-3 text-blue-600">
                               {getBankIcon(bankDe?.bank)}
                             </div> */}
 
-                          <p className="text-lg font-semibold text-gray-800">
-                            {bankDe?.accountName}
-                          </p>
-                          <p className="mt-0.5  text-neutral-400 text-sm">
-                          {bankDe?.aliasName}
-                        </p>
-
+                            <p className="text-lg font-semibold text-gray-800">
+                              {bankDe?.accountName}
+                            </p>
+                            <p className="mt-0.5  text-neutral-400 text-sm">
+                              {bankDe?.aliasName}
+                            </p>
                           </div>
-
 
                           <div className="flex items-center">
                             {/* <span className="bg-green-50 text-green-700 px-2 py-1 text-xs rounded-full mr-2">
@@ -252,12 +225,8 @@ const AllBankDetailsView = ({ title, pId, data }) => {
                             />
                           </div>
 
-
-
-
-
                           {/* <span
-            
+
                           >
                             <TrashIcon
                              onClick={() => openDeleteDialog(bankDe)}
@@ -266,67 +235,64 @@ const AllBankDetailsView = ({ title, pId, data }) => {
                             />
                           </span> */}
                         </div>
-            
                       </div>
                       {/* <div className="text-right">
                         <p className="text-lg  text-transparent">
                           <span>{'h'}</span>
                         </p>
-             
+
                         <span className="text-green-600  text-sm  rounded-lg font">
                           {bankDe?.preferredtype}
                         </span>
                       </div> */}
                     </div>
 
-  
                     <div className="space-y-4 py-3">
                       <div className="grid grid-cols-2 gap-4">
-
-                        
-
-                      <div>
-                        <span className="">
-                       
-                            </span>
-                        </div>
-
-
                         <div>
-                        <span className="bg-green-50 text-green-700 px-2 py-1 text-xs rounded-full mr-2">
-                              {bankDe?.preferredtype || 'Standard'}
-                            </span>
+                          <span className=""></span>
                         </div>
 
                         <div>
-                          <p className="text-xs text-gray-500 mb-1">Account No</p>
+                          <span className="bg-green-50 text-green-700 px-2 py-1 text-xs rounded-full mr-2">
+                            {bankDe?.preferredtype || 'Standard'}
+                          </span>
+                        </div>
+
+                        <div>
+                          <p className="text-xs text-gray-500 mb-1">
+                            Account No
+                          </p>
                           {/* <p className="text-sm text-neutral-600 group-hover:text-red-600 duration-150">
                             {bankDe?.accountNo}
                           </p> */}
 
-<div className="flex items-center">
+                          <div className="flex items-center">
                             <p className="text-sm font-medium text-gray-700">
-                              {visibleAccounts[bankDe.docId] 
-                                ? bankDe?.accountNo 
-                                // : bankDe?.accountNo?.replace(/\d(?=\d{4})/g, "•")}
-                                : maskAccountNumber(bankDe?.accountNo)}
-
+                              {visibleAccounts[bankDe.docId]
+                                ? bankDe?.accountNo
+                                : // : bankDe?.accountNo?.replace(/\d(?=\d{4})/g, "•")}
+                                  maskAccountNumber(bankDe?.accountNo)}
                             </p>
-                            <button 
-                              onClick={() => toggleAccountVisibility(bankDe.docId)} 
+                            <button
+                              onClick={() =>
+                                toggleAccountVisibility(bankDe.docId)
+                              }
                               className="ml-2 text-gray-400 hover:text-gray-700"
                             >
-                              {visibleAccounts[bankDe.docId] 
-                                ? <EyeOffIcon className="h-4 w-4" /> 
-                                : <EyeIcon className="h-4 w-4" />}
+                              {visibleAccounts[bankDe.docId] ? (
+                                <EyeOffIcon className="h-4 w-4" />
+                              ) : (
+                                <EyeIcon className="h-4 w-4" />
+                              )}
                             </button>
                           </div>
                         </div>
 
-
-
                         <div>
-                          <p className="text-xs text-gray-500 mb-1">IFSC Code</p>
+                          <p className="text-xs text-gray-500 mb-1">
+                            IFSC Code
+                          </p>
                           <p className="text-sm font-medium text-gray-700">
                             {bankDe?.ifsccode}
                           </p>
@@ -350,19 +316,21 @@ const AllBankDetailsView = ({ title, pId, data }) => {
                         </div>
                       </div>
                       {/* <div className="flex justify-between group duration-150 cursor-pointer"> */}
-                        <div>
-                          <p className="text-xs text-neutral-400">GST/PAN NO</p>
-                          <p className="text-sm text-neutral-600 ">
-                            {bankDe?.gstNo}
-                          </p>
-                        </div>
+                      <div>
+                        <p className="text-xs text-neutral-400">GST/PAN NO</p>
+                        <p className="text-sm text-neutral-600 ">
+                          {bankDe?.gstNo}
+                        </p>
+                      </div>
                       {/* </div> */}
                     </div>
 
                     <div className="mt-4 border-t border-gray-100 space-y-4 py-4">
                       <div className="grid grid-cols-2 gap-4">
                         <div>
-                          <p className="text-xs text-gray-500 mb-1">Linked In</p>
+                          <p className="text-xs text-gray-500 mb-1">
+                            Linked In
+                          </p>
                           <p className="text-sm font-medium text-indigo-600">
                             {bankDe?.usedInA?.length || 0} Projects
                           </p>
@@ -377,55 +345,43 @@ const AllBankDetailsView = ({ title, pId, data }) => {
                         </div>
                       </div>
                     </div>
-        
                   </div>
                 </section>
-
-
-
               )
             })}
 
-{/* {isDialogOpen && ( */}
-      {isDialogOpen && selectedBankDe && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-md shadow-lg max-w-sm w-full">
-            <h3 className="text-lg font-semibold text-neutral-800 mb-4">Are you sure you want to delete this account?</h3>
-            <div className="flex justify-end space-x-4">
-              <button
-                onClick={closeDeleteDialog}
-                className="px-4 py-2 bg-gray-200 text-neutral-700 rounded-md"
-              >
-                Cancel
-              </button>
+            {/* {isDialogOpen && ( */}
+            {isDialogOpen && selectedBankDe && (
+              <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                <div className="bg-white p-6 rounded-md shadow-lg max-w-sm w-full">
+                  <h3 className="text-lg font-semibold text-neutral-800 mb-4">
+                    Are you sure you want to delete this account?
+                  </h3>
+                  <div className="flex justify-end space-x-4">
+                    <button
+                      onClick={closeDeleteDialog}
+                      className="px-4 py-2 bg-gray-200 text-neutral-700 rounded-md"
+                    >
+                      Cancel
+                    </button>
 
-
-
-
-<button
-          onClick={() => {
-            confirmDelete();  
-            deleteAssetFun(
-              selectedBankDe?.docId,
-              selectedBankDe?.accountName,
-              selectedBankDe?.usedInA?.length || 0
-            );  
-          }}
-          className="px-4 py-2 bg-red-600 text-white rounded-md"
-        >
-          Delete
-        </button>
-
-
-
-            </div>
-          </div>
-        </div>
-      )}
-
-
-        
-  
+                    <button
+                      onClick={() => {
+                        confirmDelete()
+                        deleteAssetFun(
+                          selectedBankDe?.docId,
+                          selectedBankDe?.accountName,
+                          selectedBankDe?.usedInA?.length || 0
+                        )
+                      }}
+                      className="px-4 py-2 bg-red-600 text-white rounded-md"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
         {bankDetialsA.length === 0 && (
@@ -459,12 +415,8 @@ const AllBankDetailsView = ({ title, pId, data }) => {
         )}
       </div>
 
-
-
-{/* 
+      {/*
       <TaskManagementDashboard/> */}
-
-
 
       <SiderForm
         open={sliderInfo.open}

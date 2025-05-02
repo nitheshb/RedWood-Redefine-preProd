@@ -13,9 +13,6 @@ import {
 import { useAuth } from 'src/context/firebase-auth-context'
 import { TextFieldFlat } from 'src/util/formFields/TextFieldFlatType'
 
-
-
-
 const PaymentScheduleSheet = ({
   title,
   leadDetailsObj2,
@@ -128,9 +125,7 @@ const PaymentScheduleSheet = ({
         ? leadDetailsObj2[`${uid}_cs`]?.newSqftPrice
         : ''
 
-    const x = [
-      
-    ]
+    const x = []
     let merged = []
     try {
       if (leadDetailsObj2) {
@@ -166,9 +161,7 @@ const PaymentScheduleSheet = ({
 
   const initialState = initialValuesA
 
-  const validateSchema = Yup.object({
-  
-  })
+  const validateSchema = Yup.object({})
 
   const resetter = () => {
     setSelected({})
@@ -430,7 +423,6 @@ const PaymentScheduleSheet = ({
                                                           label=""
                                                           name="Booking"
                                                           onChange={(e) => {
-                                                            
                                                             formik.setFieldValue(
                                                               `${
                                                                 d1?.stage?.value
@@ -538,8 +530,6 @@ const PaymentScheduleSheet = ({
                                                   paymentScheduleA,
                                                   formik
                                                 )}
-                 
-                        
                                               </td>
                                             </tr>
                                           </tfoot>
@@ -570,7 +560,6 @@ const PaymentScheduleSheet = ({
                                             type="submit"
                                             disabled={loading}
                                           >
-                                          
                                             Save
                                           </button>
                                         </div>
@@ -591,7 +580,6 @@ const PaymentScheduleSheet = ({
           </div>
         </div>
       </div>
-
     </>
   )
 }

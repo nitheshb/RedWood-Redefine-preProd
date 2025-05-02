@@ -27,7 +27,6 @@ const LLeadsTableView = ({
   leadsTyper,
   searchVal,
 }) => {
-
   const { t } = useTranslation()
   const [value, setValue] = useState('all')
   const [tableData, setTableData] = useState([])
@@ -38,8 +37,6 @@ const LLeadsTableView = ({
   const [finalKeyA, setFinalKeyA] = useState([])
 
   useEffect(() => {
-
-
     const tabHeadFieldsA1 =
       leadsTyper === 'inProgress'
         ? [
@@ -49,14 +46,11 @@ const LLeadsTableView = ({
             { lab: 'Visit Fixed', val: 'visitfixed' },
             { lab: 'Negotiation', val: 'negotiation' },
             { lab: 'Un Assigned', val: 'unassigned' },
-,
+            ,
           ]
         : leadsTyper === 'archieveLeads'
         ? archieveTab
-        : [
-            { lab: 'Booked', val: 'booked' },
-
-          ]
+        : [{ lab: 'Booked', val: 'booked' }]
     settabHeadFieldsA(tabHeadFieldsA1)
 
     leadsTyper === 'inProgress'
@@ -93,8 +87,6 @@ const LLeadsTableView = ({
   const [newStatusA, setNewStatusA] = useState([])
   const [followupA, setfollowupA] = useState([])
   const [mySelRows, setmySelRows] = useState([])
-
-
 
   const newStatus = []
   const followup = []
@@ -165,14 +157,11 @@ const LLeadsTableView = ({
             { lab: 'Negotiation', val: 'negotiation' },
 
             { lab: 'Un Assigned', val: 'unassigned' },
-,
+            ,
           ]
         : leadsTyper === 'archieveLeads'
         ? archieveTab
-        : [
-            { lab: 'Booked', val: 'booked' },
- 
-          ]
+        : [{ lab: 'Booked', val: 'booked' }]
     const y = {}
 
     const z1 = []
@@ -337,8 +326,6 @@ const LLeadsTableView = ({
       >
         <Grid container>
           <Grid item xs={12}>
-
-
             <div className="mb-1 border-b mx-4  border-[#e7eaee] ">
               <ul
                 className="flex flex-wrap"
@@ -356,68 +343,54 @@ const LLeadsTableView = ({
                       aria-label="secondary tabs example"
                       key={i}
                     >
-                      <li key={i} className=" flex items-center" role="presentation">
-<button
-  className={`inline-flex items-center  py-2 text-sm font-medium transition-all border-b-2 ${
-    value === d.val
-     ? 'border-black text-gray-900 font-medium' 
-     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-  }`}
-  type="button"
-  role="tab"
-  onClick={() => {
-    setFetchLeadsLoader(true);
-    setValue(d.val);
-    setFetchLeadsLoader(false);
-    setmySelRows(rowsCounter(leadsFetchedData, d.val));
+                      <li
+                        key={i}
+                        className=" flex items-center"
+                        role="presentation"
+                      >
+                        <button
+                          className={`inline-flex items-center  py-2 text-sm font-medium transition-all border-b-2 ${
+                            value === d.val
+                              ? 'border-black text-gray-900 font-medium'
+                              : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                          }`}
+                          type="button"
+                          role="tab"
+                          onClick={() => {
+                            setFetchLeadsLoader(true)
+                            setValue(d.val)
+                            setFetchLeadsLoader(false)
+                            setmySelRows(rowsCounter(leadsFetchedData, d.val))
+                          }}
+                        >
+                          <span
+                            className={` mr-2  ${
+                              value === d.val ? 'font-medium' : ''
+                            }`}
+                          >
+                            {d.lab}
+                          </span>
 
-  }}
->
-  <span
-    className={` mr-2  ${
-      value === d.val ? 'font-medium' : ''
-    }`}
-  >
-    {d.lab}
-  </span>
+                          <span
+                            className={`flex items-center justify-center min-w-6 h-6 px-2 text-xs font-medium rounded-full ${
+                              value === d.val
+                                ? 'bg-[#EDE9FE] text-[#0E0A1F]'
+                                : 'bg-gray-200 text-gray-600'
+                            }`}
+                          >
+                            {rowsCounter(leadsFetchedData, d.val).length}
+                          </span>
+                        </button>
 
-
-
-<span
-  className={`flex items-center justify-center min-w-6 h-6 px-2 text-xs font-medium rounded-full ${
-    value === d.val
-      ? 'bg-[#EDE9FE] text-[#0E0A1F]'  
-      : 'bg-gray-200 text-gray-600'     
-  }`}
->
-  {rowsCounter(leadsFetchedData, d.val).length}
-</span>
-</button>
-
-
-
-{i !== tabHeadFieldsA.length - 1 && (
-            <div className="w-px h-5 mx-4 bg-gray-200"></div>
-          )}
-
+                        {i !== tabHeadFieldsA.length - 1 && (
+                          <div className="w-px h-5 mx-4 bg-gray-200"></div>
+                        )}
                       </li>
                     </ul>
                   )
                 })}
               </ul>
-
             </div>
-
-
-
-
-
-
-
-
-
-
-
 
             {fetchLeadsLoader &&
               [1, 2, 3].map((data, i) => <LogSkelton key={i} />)}
@@ -435,7 +408,7 @@ const LLeadsTableView = ({
                 </span>
               </div>
             )}
-   
+
             {!fetchLeadsLoader && statusSepA[0]?.[value].length != 0 && (
               <LLeadsTableBody
                 leadsTyper={leadsTyper}

@@ -1,7 +1,12 @@
 import React from 'react'
 import { RadioGroup } from '@headlessui/react'
 
-export const CustomRadioGroupProject = ({ label, value, onChange, options }) => {
+export const CustomRadioGroupProject = ({
+  label,
+  value,
+  onChange,
+  options,
+}) => {
   return (
     <>
       {/* <label className="font-semibold text-[#053219] py-2 text-sm mb-2 mt-0">
@@ -9,13 +14,13 @@ export const CustomRadioGroupProject = ({ label, value, onChange, options }) => 
         <abbr title="required"></abbr>
       </label> */}
 
-      <div className='py-2 px-2'>
-
-      <div className="mb-1 mx-1">
+      <div className="py-2 px-2">
+        <div className="mb-1 mx-1">
           <div className="inline">
             <div className="">
               <label className="font-medium text-[12px] uppercase text-[#606062]">
-              {label}<abbr title="required"></abbr>
+                {label}
+                <abbr title="required"></abbr>
               </label>
             </div>
 
@@ -23,56 +28,58 @@ export const CustomRadioGroupProject = ({ label, value, onChange, options }) => 
           </div>
         </div>
 
-      <RadioGroup value={value} onChange={onChange}>
-        <div className="flex  bg-white   p-2 rounded-md gap-4">
-          {options.map((option) => (
-            <RadioGroup.Option
-              key={option.name}
-              value={option}
-              className={({ active }) =>
-                `${
-                  active
-                    ? 'ring-2 ring-offset-2 border  border-[#000]   bg-[#F2F2F2] ring-white ring-opacity-60 col-span-2'
-                    : ''
-                }
+        <RadioGroup value={value} onChange={onChange}>
+          <div className="flex  bg-white   p-2 rounded-md gap-4">
+            {options.map((option) => (
+              <RadioGroup.Option
+                key={option.name}
+                value={option}
+                className={({ active }) =>
+                  `${
+                    active
+                      ? 'ring-2 ring-offset-2 border  border-[#000]   bg-[#F2F2F2] ring-white ring-opacity-60 col-span-2'
+                      : ''
+                  }
 ${
   value.name == option.name
     ? 'ring-1  ring-[#0E0A1F] border bg-opacity-75   text-black'
     : 'bg-white'
 }
 relative rounded-lg px-5 py-2 cursor-pointer flex border border-[#E5E7EB] col-span-2`
-              }
-            >
-              {() => (
-                <>
-                  <div className="w-[152px]  flex justify-between ">
-                    <div className="w-full">
-                      <div className="text-sm">
-                        <RadioGroup.Label
-                          as="p"
-                          // className={`font-medium flex flex-row gap-2  ${
-                          //   value.name == option.name
-                          //     ? 'text-gray-900'
-                          //     : 'text-gray-900'
-                          // }`}
-                          className={`font-medium flex flex-row gap-2 ${
-                            value.name === option.name ? 'text-gray-900' : 'text-gray-500'
-                          }`}
-                          
-                        >
-                          <section className=" col-span-4 flex flex-row justify-center ">
-                            {option.img && (
-                              <img
-                                // className="w-5 h-5 inline"
-                                className={`w-5 h-5 inline transition duration-200 ${
-                                  value.name === option.name ? 'grayscale-0' : 'grayscale'
-                                }`}
-                                
-                                alt=""
-                                src={option.img}
-                              ></img>
-                            )}
-                            {/* <div
+                }
+              >
+                {() => (
+                  <>
+                    <div className="w-[152px]  flex justify-between ">
+                      <div className="w-full">
+                        <div className="text-sm">
+                          <RadioGroup.Label
+                            as="p"
+                            // className={`font-medium flex flex-row gap-2  ${
+                            //   value.name == option.name
+                            //     ? 'text-gray-900'
+                            //     : 'text-gray-900'
+                            // }`}
+                            className={`font-medium flex flex-row gap-2 ${
+                              value.name === option.name
+                                ? 'text-gray-900'
+                                : 'text-gray-500'
+                            }`}
+                          >
+                            <section className=" col-span-4 flex flex-row justify-center ">
+                              {option.img && (
+                                <img
+                                  // className="w-5 h-5 inline"
+                                  className={`w-5 h-5 inline transition duration-200 ${
+                                    value.name === option.name
+                                      ? 'grayscale-0'
+                                      : 'grayscale'
+                                  }`}
+                                  alt=""
+                                  src={option.img}
+                                ></img>
+                              )}
+                              {/* <div
                               className={`${
                                 option.name == value.name
                                   ? 'flex-shrink-0 text-white ml-auto'
@@ -103,24 +110,21 @@ relative rounded-lg px-5 py-2 cursor-pointer flex border border-[#E5E7EB] col-sp
                                 />
                               </svg>
                             </div> */}
-                          </section>{' '}
-                          <div className=" mr-2 inline  text-sm text-b font-light ">
-                            {option.name}
-                          </div>
-                        </RadioGroup.Label>
+                            </section>{' '}
+                            <div className=" mr-2 inline  text-sm text-b font-light ">
+                              {option.name}
+                            </div>
+                          </RadioGroup.Label>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </>
-              )}
-            </RadioGroup.Option>
-          ))}
-        </div>
-      </RadioGroup>
-
+                  </>
+                )}
+              </RadioGroup.Option>
+            ))}
+          </div>
+        </RadioGroup>
       </div>
-
-
     </>
   )
 }

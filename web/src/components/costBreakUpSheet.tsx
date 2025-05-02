@@ -36,10 +36,8 @@ import UnitTransactionForm from './UnitBillTransactionForm'
 import { Dialog } from '@headlessui/react'
 import PdfSummaryGenerator from 'src/util/PdfSummaryGenerator'
 
-
 import bookingpng from '../../../web/public/bookingpng.png'
-
-
+import { ToastBar } from 'react-hot-toast'
 
 const CostBreakUpSheet = ({
   title,
@@ -84,8 +82,9 @@ const CostBreakUpSheet = ({
   const [newAdditonalChargesObj, setNewAdditonalChargesObj] = useState([])
   const [newAdditonalConstChargesObj, setNewAdditonalConstChargesObj] =
     useState([])
-    const [newPossessAdditionalCostCS, setNewPossessAdditionalCostCS] =
-    useState([])
+  const [newPossessAdditionalCostCS, setNewPossessAdditionalCostCS] = useState(
+    []
+  )
 
   const [StatusListA, setStatusListA] = useState([])
   const [reviewLinks, setReviewLinks] = useState([])
@@ -103,10 +102,8 @@ const CostBreakUpSheet = ({
   const [paymentSchedule, setPaymentSchedule] = useState({})
   const [streamUnitDetails, setStreamUnitDetails] = useState({})
 
-
   const pdfExportComponent = useRef(null)
   const pdfExportComponentConstruct = useRef(null)
-
 
   useEffect(() => {
     streamUnitDataFun()
@@ -116,50 +113,50 @@ const CostBreakUpSheet = ({
   }, [selUnitDetails])
 
   const streamUnitDataFun = () => {
-    if(selUnitDetails?.id){
-    const { id } = selUnitDetails
-    console.log('hello', selUnitDetails)
-    const z = streamUnitById(
-      orgId,
-      (querySnapshot) => {
-        const SnapData = querySnapshot.data()
-        SnapData.id = id
-        SnapData.uid = id
-        console.log('hello stream setup is ==>', SnapData)
-        setStreamUnitDetails(SnapData)
-      },
-      { uid: id },
-      () => {
-        console.log('error')
-      }
-    )
+    if (selUnitDetails?.id) {
+      const { id } = selUnitDetails
+      console.log('hello', selUnitDetails)
+      const z = streamUnitById(
+        orgId,
+        (querySnapshot) => {
+          const SnapData = querySnapshot.data()
+          SnapData.id = id
+          SnapData.uid = id
+          console.log('hello stream setup is ==>', SnapData)
+          setStreamUnitDetails(SnapData)
+        },
+        { uid: id },
+        () => {
+          console.log('error')
+        }
+      )
+    }
   }
-}
-useEffect(() => {
-  if(onStep === 'customerDetails'){
-   setStepIndx(1)
-  }
-  if(onStep === 'additonalInfo'){
-   setStepIndx(2)
-  }
+  useEffect(() => {
+    if (onStep === 'customerDetails') {
+      setStepIndx(1)
+    }
+    if (onStep === 'additonalInfo') {
+      setStepIndx(2)
+    }
 
-  if(onStep === 'costsheet'){
-   setStepIndx(3)
-  }
+    if (onStep === 'costsheet') {
+      setStepIndx(3)
+    }
 
-  if(onStep === 'payment_schedule'){
-   setStepIndx(4)
-  }
-   if(onStep === 'booking_summary'){
-   setStepIndx(5)
-  }
-  if(onStep === 'booksheet'){
-   setStepIndx(6)
-  } if(onStep === 'blocksheet'){
-   setStepIndx(6)
-  }
-
- }, [onStep])
+    if (onStep === 'payment_schedule') {
+      setStepIndx(4)
+    }
+    if (onStep === 'booking_summary') {
+      setStepIndx(5)
+    }
+    if (onStep === 'booksheet') {
+      setStepIndx(6)
+    }
+    if (onStep === 'blocksheet') {
+      setStepIndx(6)
+    }
+  }, [onStep])
   useEffect(() => {
     console.log('payload data is ', leadPayload)
   }, [leadPayload])
@@ -184,12 +181,11 @@ useEffect(() => {
       }
     })
     x.applicantCount = customerInfo.length
-    setMyBookingPayload({...myBookingPayload, ...x})
+    setMyBookingPayload({ ...myBookingPayload, ...x })
   }, [customerInfo])
 
   useEffect(() => {
-console.log('customer info', myBookingPayload)
-
+    console.log('customer info', myBookingPayload)
   }, [myBookingPayload])
 
   useEffect(() => {
@@ -217,9 +213,7 @@ console.log('customer info', myBookingPayload)
         },
       ])
       setOnStep('costsheet')
-    }
-
-    else if (actionMode === 'unitBlockMode') {
+    } else if (actionMode === 'unitBlockMode') {
       setStatusListA([
         {
           label: 'Customer info',
@@ -423,18 +417,13 @@ console.log('customer info', myBookingPayload)
     console.log('phase details are ', merged, costSheetA)
   }, [selPhaseObj, leadDetailsObj1])
 
-
-
   const [loading, setLoading] = useState(false)
   const [isImportLeadsOpen, setisImportLeadsOpen] = useState(false)
   const [isMover, setIsMover] = useState(false)
   const [showUnitDetails, setShowUnitDetials] = useState(false)
 
-
   const initialState = initialValuesA
-  const validate = Yup.object({
-
-  })
+  const validate = Yup.object({})
   const moveStep = (stepper) => {
     console.log('customerInf i s', customerInfo)
     setOnStep(stepper)
@@ -451,7 +440,6 @@ console.log('customer info', myBookingPayload)
 
     const { uid } = selUnitDetails
     const { id } = leadDetailsObj1
-
 
     const newCostSheetA = costSheetA.map((dat) => {
       dat.charges = data[dat?.component?.value]
@@ -476,7 +464,8 @@ console.log('customer info', myBookingPayload)
         id,
         xData,
         'nitheshreddy.email@gmail.com',
-        enqueueSnackbar,
+        // enqueueSnackbar,
+        ToastBar,
         resetForm
       )
     } else {
@@ -485,44 +474,42 @@ console.log('customer info', myBookingPayload)
         selUnitDetails?.uid,
         xData,
         user?.email,
-        enqueueSnackbar,
+        // enqueueSnackbar,
+        ToastBar,
         resetForm
       )
     }
 
-    if(isMover){
-    setOnStep('payment_schedule')
-    if (onStep === 'payment_schedule') {
-      setOnStep('booking_summary')
+    if (isMover) {
+      setOnStep('payment_schedule')
+      if (onStep === 'payment_schedule') {
+        setOnStep('booking_summary')
+      }
     }
   }
 
-
-
-
-
-  }
-
   const setStatusFun = async (index, newStatus) => {
-    if(newStatus === 'booksheet'){
-      if(streamUnitDetails?.status=='available'){
-      if(streamUnitDetails.customerDetailsObj && (streamUnitDetails.customerDetailsObj
-        ?.customerName1 != "")){
-        moveStep(newStatus)
-      }else{
+    if (newStatus === 'booksheet') {
+      if (streamUnitDetails?.status == 'available') {
+        if (
+          streamUnitDetails.customerDetailsObj &&
+          streamUnitDetails.customerDetailsObj?.customerName1 != ''
+        ) {
+          moveStep(newStatus)
+        } else {
           enqueueSnackbar('Please fill customer details', {
             variant: 'error',
           })
-      }}else{
+        }
+      } else {
         enqueueSnackbar('Unit already booked', {
           variant: 'error',
         })
       }
       console.log('confirm booking')
-    }else{
+    } else {
       moveStep(newStatus)
     }
-
   }
   return (
     <>
@@ -530,295 +517,275 @@ console.log('customer info', myBookingPayload)
         <div className="max-w-5xl mx-auto py-  bg-white">
           <article className="overflow-hidden">
             <div className=" rounded-b-md ">
-
-
-            <div className="px-3 pt-2 z-10 flex items-center justify-between ">
-        <Dialog.Title className=" font-semibold text-xl mr-auto  text-[#053219] w-full">
-          <div className="flex flex-row   justify-between mb-1">
-<section  className="flex flex-row">
-            <div className="bg-violet-100  items-center rounded-2xl shadow-xs flex flex-col px-2 py-1">
-            <div className="font-semibold text-[#053219]  text-[22px]  mb-[1] tracking-wide">
-                {streamUnitDetails.unit_no}
-
-
-              </div>
-              <span
-                  className={`items-center h-6   text-xs font-semibold text-gray-500  rounded-full
+              <div className="px-3 pt-2 z-10 flex items-center justify-between ">
+                <Dialog.Title className=" font-semibold text-xl mr-auto  text-[#053219] w-full">
+                  <div className="flex flex-row   justify-between mb-1">
+                    <section className="flex flex-row">
+                      <div className="bg-violet-100  items-center rounded-2xl shadow-xs flex flex-col px-2 py-1">
+                        <div className="font-semibold text-[#053219]  text-[22px]  mb-[1] tracking-wide">
+                          {streamUnitDetails.unit_no}
+                        </div>
+                        <span
+                          className={`items-center h-6   text-xs font-semibold text-gray-500  rounded-full
                       `}
-                >
-                  Unit No
-                </span>
-            </div>
-            <div className="flex flex-col ml-2 item-right">
-            <span
-                  className={`items-center h-1 mt-[10px] mb-2  text-xs font-semibold text-green-600
+                        >
+                          Unit No
+                        </span>
+                      </div>
+                      <div className="flex flex-col ml-2 item-right">
+                        <span
+                          className={`items-center h-1 mt-[10px] mb-2  text-xs font-semibold text-green-600
                       `}
-                >
-                  {streamUnitDetails?.status?.toUpperCase()}
-                </span>
-              <div className="font text-[12px] text-gray-500 tracking-wide overflow-ellipsis overflow-hidden ">
-                {projectDetails?.projectName}
-              </div>
-            </div>
-            </section>
+                        >
+                          {streamUnitDetails?.status?.toUpperCase()}
+                        </span>
+                        <div className="font text-[12px] text-gray-500 tracking-wide overflow-ellipsis overflow-hidden ">
+                          {projectDetails?.projectName}
+                        </div>
+                      </div>
+                    </section>
 
-            {/* 2 */}
-            <div className=" flex flex-row mt-2">
-              <span
-                className={`items-center cursor-pointer h-6 px-3 py-1  mt-1 text-xs font-semibold text-blue-600  mr-2 `}
-                onClick={() => {
-                  setShowUnitDetials(!showUnitDetails)
-                }}
-              >
-                {showUnitDetails ? 'Hide unit details' : 'View unit details'}
-              </span>
+                    {/* 2 */}
+                    <div className=" flex flex-row mt-2">
+                      <span
+                        className={`items-center cursor-pointer h-6 px-3 py-1  mt-1 text-xs font-semibold text-blue-600  mr-2 `}
+                        onClick={() => {
+                          setShowUnitDetials(!showUnitDetails)
+                        }}
+                      >
+                        {showUnitDetails
+                          ? 'Hide unit details'
+                          : 'View unit details'}
+                      </span>
 
-              {selUnitDetails?.unitDetail?.status === 'available' && (    <div className=" flex flex-col mt-1">
-
-
-
-              </div>)}
-            </div>
-          </div>
-        </Dialog.Title>
-      </div>
-      {showUnitDetails && (
-                    <div className="py-3  mx-4 grid grid-cols-3 mb-2">
-                      <section className="flex flex-col bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md">
-                        <section className="flex flow-row justify-between mb-1">
-                          <div className="font-md text-xs text-gray-700 tracking-wide">
-                            Unit No
-                          </div>
-                          <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                            {streamUnitDetails?.unit_no}
-                          </div>
-                        </section>
-                        <section className="flex flow-row justify-between mb-1">
-                          <div className="font-md text-xs text-gray-500  tracking-wide">
-                            Size
-                            <span className="text-[10px] text-black-500 ml-1">
-                              (sqft)
-                            </span>
-                          </div>
-                          <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                            {/* {streamUnitDetails?.builtup_area?.toLocaleString(
-                              'en-IN'
-                            )|| streamUnitDetails?.area?.toLocaleString(
-                              'en-IN'
-                            ) } */}
-                            {streamUnitDetails?.area?.toLocaleString('en-IN')}
-                          </div>
-                        </section>
-                        <section className="flex flow-row justify-between mb-1">
-                          <div className="font-md text-xs text-gray-500  tracking-wide">
-                            Facing
-                          </div>
-                          <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                            {streamUnitDetails?.facing}
-                          </div>
-                        </section>
-                        <section className="flex flow-row justify-between mb-1">
-                          <div className="font-md text-xs text-gray-500  tracking-wide">
-                            BUA
-                          </div>
-                          <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                            {/* {streamUnitDetails?.builtup_area?.toLocaleString(
-                              'en-IN'
-                            )|| streamUnitDetails?.area?.toLocaleString(
-                              'en-IN'
-                            ) } */}
-                            {streamUnitDetails?.builtup_area?.toLocaleString('en-IN') || streamUnitDetails?.construct_area?.toLocaleString('en-IN')}
-
-                          </div>
-                        </section>
-                      </section>
-                      <section className="flex flex-col mx-4 bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
-                        <section className="flex flow-row justify-between mb-1">
-                          <div className="font-md text-xs text-gray-700 tracking-wide">
-                            East
-                          </div>
-                          <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                            {streamUnitDetails?.east_d?.toLocaleString('en-IN')}
-                          </div>
-                        </section>
-                        <section className="flex flow-row justify-between mb-1">
-                          <div className="font-md text-xs text-gray-500  tracking-wide">
-                            West
-                          </div>
-                          <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                            {streamUnitDetails?.west_d?.toLocaleString('en-IN')}
-                          </div>
-                        </section>
-                        <section className="flex flow-row justify-between mb-1">
-                          <div className="font-md text-xs text-gray-500  tracking-wide">
-                            South
-                          </div>
-                          <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                            {streamUnitDetails?.south_d?.toLocaleString('en-IN')}
-                          </div>
-                        </section>
-                        <section className="flex flow-row justify-between mb-1">
-                          <div className="font-md text-xs text-gray-500  tracking-wide">
-                            North
-                          </div>
-                          <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                            {streamUnitDetails?.north_d?.toLocaleString('en-IN')}
-                          </div>
-                        </section>
-                      </section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                      <section className="flex flex-col bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
-                        <section className="flex flow-row justify-between mb-1">
-                          <div className="font-md text-xs text-gray-700 tracking-wide">
-                          Release Status
-                          </div>
-                          <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                            {(
-
-                              streamUnitDetails?.release_status
-                            )}
-                          </div>
-                        </section>
-                        <section className="flex flow-row justify-between mb-1">
-                          <div className="font-md text-xs text-gray-500  tracking-wide">
-                          Survey No
-                          </div>
-                          <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                            {streamUnitDetails?.survey_no
-                            }
-                          </div>
-                        </section>
-                        <section className="flex flow-row justify-between mb-1">
-                          <div className="font-md text-xs text-gray-500  tracking-wide">
-                            Type
-                          </div>
-                          <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                            {streamUnitDetails?.size}
-                          </div>
-                        </section>
-                        <section className="flex flow-row justify-between mb-1">
-                          <div className="font-md text-xs text-gray-500  tracking-wide">
-                            KathaId
-                          </div>
-                          <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                            {streamUnitDetails?.kathaId}
-                          </div>
-                        </section>
-                      </section>
+                      {selUnitDetails?.unitDetail?.status === 'available' && (
+                        <div className=" flex flex-col mt-1"></div>
+                      )}
                     </div>
-                  )}
+                  </div>
+                </Dialog.Title>
+              </div>
+              {showUnitDetails && (
+                <div className="py-3  mx-4 grid grid-cols-3 mb-2">
+                  <section className="flex flex-col bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md">
+                    <section className="flex flow-row justify-between mb-1">
+                      <div className="font-md text-xs text-gray-700 tracking-wide">
+                        Unit No
+                      </div>
+                      <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+                        {streamUnitDetails?.unit_no}
+                      </div>
+                    </section>
+                    <section className="flex flow-row justify-between mb-1">
+                      <div className="font-md text-xs text-gray-500  tracking-wide">
+                        Size
+                        <span className="text-[10px] text-black-500 ml-1">
+                          (sqft)
+                        </span>
+                      </div>
+                      <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+                        {/* {streamUnitDetails?.builtup_area?.toLocaleString(
+                              'en-IN'
+                            )|| streamUnitDetails?.area?.toLocaleString(
+                              'en-IN'
+                            ) } */}
+                        {streamUnitDetails?.area?.toLocaleString('en-IN')}
+                      </div>
+                    </section>
+                    <section className="flex flow-row justify-between mb-1">
+                      <div className="font-md text-xs text-gray-500  tracking-wide">
+                        Facing
+                      </div>
+                      <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+                        {streamUnitDetails?.facing}
+                      </div>
+                    </section>
+                    <section className="flex flow-row justify-between mb-1">
+                      <div className="font-md text-xs text-gray-500  tracking-wide">
+                        BUA
+                      </div>
+                      <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+                        {/* {streamUnitDetails?.builtup_area?.toLocaleString(
+                              'en-IN'
+                            )|| streamUnitDetails?.area?.toLocaleString(
+                              'en-IN'
+                            ) } */}
+                        {streamUnitDetails?.builtup_area?.toLocaleString(
+                          'en-IN'
+                        ) ||
+                          streamUnitDetails?.construct_area?.toLocaleString(
+                            'en-IN'
+                          )}
+                      </div>
+                    </section>
+                  </section>
+                  <section className="flex flex-col mx-4 bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
+                    <section className="flex flow-row justify-between mb-1">
+                      <div className="font-md text-xs text-gray-700 tracking-wide">
+                        East
+                      </div>
+                      <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+                        {streamUnitDetails?.east_d?.toLocaleString('en-IN')}
+                      </div>
+                    </section>
+                    <section className="flex flow-row justify-between mb-1">
+                      <div className="font-md text-xs text-gray-500  tracking-wide">
+                        West
+                      </div>
+                      <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+                        {streamUnitDetails?.west_d?.toLocaleString('en-IN')}
+                      </div>
+                    </section>
+                    <section className="flex flow-row justify-between mb-1">
+                      <div className="font-md text-xs text-gray-500  tracking-wide">
+                        South
+                      </div>
+                      <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+                        {streamUnitDetails?.south_d?.toLocaleString('en-IN')}
+                      </div>
+                    </section>
+                    <section className="flex flow-row justify-between mb-1">
+                      <div className="font-md text-xs text-gray-500  tracking-wide">
+                        North
+                      </div>
+                      <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+                        {streamUnitDetails?.north_d?.toLocaleString('en-IN')}
+                      </div>
+                    </section>
+                  </section>
+
+                  <section className="flex flex-col bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
+                    <section className="flex flow-row justify-between mb-1">
+                      <div className="font-md text-xs text-gray-700 tracking-wide">
+                        Release Status
+                      </div>
+                      <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+                        {streamUnitDetails?.release_status}
+                      </div>
+                    </section>
+                    <section className="flex flow-row justify-between mb-1">
+                      <div className="font-md text-xs text-gray-500  tracking-wide">
+                        Survey No
+                      </div>
+                      <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+                        {streamUnitDetails?.survey_no}
+                      </div>
+                    </section>
+                    <section className="flex flow-row justify-between mb-1">
+                      <div className="font-md text-xs text-gray-500  tracking-wide">
+                        Type
+                      </div>
+                      <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+                        {streamUnitDetails?.size}
+                      </div>
+                    </section>
+                    <section className="flex flow-row justify-between mb-1">
+                      <div className="font-md text-xs text-gray-500  tracking-wide">
+                        KathaId
+                      </div>
+                      <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+                        {streamUnitDetails?.kathaId}
+                      </div>
+                    </section>
+                  </section>
+                </div>
+              )}
               <section className="flex flex-row-reverse">
                 {['unitBookingMode', 'unitBlockMode'].includes(actionMode) && (
                   <div className="flex flex-col   w-[350px]  h-screen">
                     {/* <img className='rounded-[0px] h-[100px]' src="https://cdn.shopify.com/shopifycloud/shopify/assets/admin/home/onboarding/guides/pg_SetupGuide-56362e0c1a71e80bd572f85c30f0e202203a42a2e79ed40e0ea3906cc0aedce8.png"></img> */}
 
-                   <section className="bg-white  pt-4 mx-2 px-2 ">
-                    <div className="mt-1">
-                      <div className="flex flex-row align-middle justify-between  mb-1">
-                        <h6 className="font-medium text-sm">
-                          {'Unit Booking'}
-                        </h6>
+                    <section className="bg-white  pt-4 mx-2 px-2 ">
+                      <div className="mt-1">
+                        <div className="flex flex-row align-middle justify-between  mb-1">
+                          <h6 className="font-medium text-sm">
+                            {'Unit Booking'}
+                          </h6>
+                          <span className="font-bodyLato text-[12px] text-[#94A4C4] ml-1 mt-[1px]">
+                            Preview
+                          </span>
+                        </div>
+                        <LinearProgress
+                          variant="determinate"
+                          color="warning"
+                          value={stepIndx * 16.666}
+                          sx={{
+                            backgroundColor: '#e5eaf2',
+                            borderRadius: '6px',
+                            height: '7px',
+                            '& .MuiLinearProgress-bar': {
+                              backgroundColor: '#8B5CF6',
+                            },
+                          }}
+                          style={{
+                            backgroundColor: '#E5EAF2',
+                            borderRadius: '6px',
+                            height: '7px',
+                          }}
+                        />
                         <span className="font-bodyLato text-[12px] text-[#94A4C4] ml-1 mt-[1px]">
-                        Preview
-                        </span>
-                      </div>
-                      <LinearProgress
-                        variant="determinate"
-                        color="warning"
-                        value={stepIndx * 16.666}
-                        sx={{
-                          backgroundColor: '#e5eaf2',
-                          borderRadius: '6px',
-                          height: '7px',
-                          '& .MuiLinearProgress-bar': {
-                            backgroundColor: '#8B5CF6', 
-                          },
-                        }}
-                        style={{
-                          backgroundColor: '#E5EAF2',
-                          borderRadius: '6px',
-                          height: '7px',
-                        }}
-                      />
-                         <span className="font-bodyLato text-[12px] text-[#94A4C4] ml-1 mt-[1px]">
                           {stepIndx} of {StatusListA?.length} completed!
                         </span>
-                    </div>
+                      </div>
 
-
-                    <section className='flex flex-col mt-4'>
-                    {StatusListA?.map((statusFlowObj, i) => {
-                        return (<section key={i} className={`flex flex-row mt-2 cursor-pointer bg-[#F3F3F3] p-2 py-3 rounded-[12px] font-medium border ${onStep != statusFlowObj.value ?' border-white': 'border-violet-300'}`}
-                          onClick={() => setStatusFun(i, statusFlowObj.value)}
-                        >
-
-<span className=" flex items-center justify-center w-7 h-7 bg-[#DDD6FE] rounded-full  mt-[px] ">
-                              <span className="text-[11px] font-bold">
-                                {i==4 ?  <EyeIcon className=" w-3 h-3  text-gray-500" />: (i + 1)}
-
+                      <section className="flex flex-col mt-4">
+                        {StatusListA?.map((statusFlowObj, i) => {
+                          return (
+                            <section
+                              key={i}
+                              className={`flex flex-row mt-2 cursor-pointer bg-[#F3F3F3] p-2 py-3 rounded-[12px] font-medium border ${
+                                onStep != statusFlowObj.value
+                                  ? ' border-white'
+                                  : 'border-violet-300'
+                              }`}
+                              onClick={() =>
+                                setStatusFun(i, statusFlowObj.value)
+                              }
+                            >
+                              <span className=" flex items-center justify-center w-7 h-7 bg-[#DDD6FE] rounded-full  mt-[px] ">
+                                <span className="text-[11px] font-bold">
+                                  {i == 4 ? (
+                                    <EyeIcon className=" w-3 h-3  text-gray-500" />
+                                  ) : (
+                                    i + 1
+                                  )}
+                                </span>
                               </span>
 
-                            </span>
+                              <div className="ml-2 w-full ">
+                                <span className="text-[12px]  font-bold    -[2px] rounded-lg flex flex-row text-[#000] justify-between ">
+                                  {statusFlowObj.label}
+                                  {onStep != statusFlowObj.value ? (
+                                    i == 5 ? (
+                                      <SparklesIcon className=" w-4 h-4 mt-[2px] ml-2 text-gray-400" />
+                                    ) : (
+                                      <MinusCircleIcon className=" w-3 h-3 mt-[2px] ml-2 text-gray-400" />
+                                    )
+                                  ) : (
+                                    <CheckCircleIcon className=" w-3 h-3 mt-[2px] ml-2 text-green-500" />
+                                  )}
+                                </span>
+                                <p className=" text-[9px]">
+                                  {statusFlowObj?.text}
+                                  {i == 5 &&
+                                    `${streamUnitDetails.customerDetailsObj?.customerName1}`}
+                                </p>
+                              </div>
+                            </section>
+                          )
+                        })}
+                      </section>
 
-                            <div className="ml-2 w-full ">
-                              <span className="text-[12px]  font-bold    -[2px] rounded-lg flex flex-row text-[#000] justify-between ">
-                                {statusFlowObj.label}
-                                {(onStep != statusFlowObj.value) ?
-                                 i==5 ? <SparklesIcon className=" w-4 h-4 mt-[2px] ml-2 text-gray-400" />: <MinusCircleIcon className=" w-3 h-3 mt-[2px] ml-2 text-gray-400" />
-                                 : (
-                                  <CheckCircleIcon className=" w-3 h-3 mt-[2px] ml-2 text-green-500" />
-                                )}
-                              </span>
-                              <p className=" text-[9px]">
-                               {statusFlowObj?.text}{i==5 && `${streamUnitDetails.customerDetailsObj
-        ?.customerName1 }` }
-                              </p>
-
-                            </div>
-
-                        </section>)})}
-                    </section>
-
-                    {/* <section className='h-full mt-4"'>
+                      {/* <section className='h-full mt-4"'>
                      <img className='rounded-[0px] w-full h-full  ' src={bookingpng}></img>
                      </section> */}
 
-
-
-                    {/* <ScrollHighlightNabbar navHeader={reviewLinks} /> */}
+                      {/* <ScrollHighlightNabbar navHeader={reviewLinks} /> */}
                     </section>
-
-            
-
                   </div>
                 )}
 
-                
                 <div className="w-full ">
-  
                   {['costsheet', 'allsheets', 'payment_schedule'].includes(
                     onStep
                   ) && (
@@ -842,7 +809,6 @@ console.log('customer info', myBookingPayload)
                                     boxShadow: '0 1px 12px #f2f2f2',
                                   }}
                                 >
-                                
                                   {csMode === 'both' && (
                                     <CostBreakUpPdf
                                       formik={formik}
@@ -893,79 +859,71 @@ console.log('customer info', myBookingPayload)
                                 </section>
 
                                 <div className="flex z-10 flex-row justify-between items-center pr-6 bg-white shadow-lg absolute bottom-0 w-full py-3">
-                                <div className="inline-block ml-8 ">
-                                      <PdfInvoiceGenerator
-                                        user={user}
-                                        selUnitDetails={selUnitDetails}
-                                        streamUnitDetails={streamUnitDetails}
-                                        myBookingPayload= {myBookingPayload}
-                                        myObj={newPlotCostSheetA}
-                                        newPlotPS={newPlotPS}
-                                        myAdditionalCharges={
-                                          newAdditonalChargesObj
-                                        }
-                                        netTotal={netTotal}
-                                        setNetTotal={setNetTotal}
-                                        partATotal={partATotal}
-                                        partBTotal={partBTotal}
-                                        setPartATotal={setPartATotal}
-                                        project={project}
-                                        setPartBTotal={setPartBTotal}
-                                        projectDetails={projectDetails}
-                                        leadDetailsObj1={leadDetailsObj1}
-                                        selPhaseObj={selPhaseObj}
-                                        possessAdditionalCS={possessAdditionalCS}
-                                        possessionAdditionalCostCS={possessionAdditionalCostCS}
-                                      />
-
-
+                                  <div className="inline-block ml-8 ">
+                                    <PdfInvoiceGenerator
+                                      user={user}
+                                      selUnitDetails={selUnitDetails}
+                                      streamUnitDetails={streamUnitDetails}
+                                      myBookingPayload={myBookingPayload}
+                                      myObj={newPlotCostSheetA}
+                                      newPlotPS={newPlotPS}
+                                      myAdditionalCharges={
+                                        newAdditonalChargesObj
+                                      }
+                                      netTotal={netTotal}
+                                      setNetTotal={setNetTotal}
+                                      partATotal={partATotal}
+                                      partBTotal={partBTotal}
+                                      setPartATotal={setPartATotal}
+                                      project={project}
+                                      setPartBTotal={setPartBTotal}
+                                      projectDetails={projectDetails}
+                                      leadDetailsObj1={leadDetailsObj1}
+                                      selPhaseObj={selPhaseObj}
+                                      possessAdditionalCS={possessAdditionalCS}
+                                      possessionAdditionalCostCS={
+                                        possessionAdditionalCostCS
+                                      }
+                                    />
                                   </div>
                                   <div className="mt-2 text-right md:space-x-3 md:block flex flex-row-reverse justify-between mb-3">
-
-                                    <section className='flex gap-2'>
-                                    <button
-                                      className="mb-2 mr-0 md:mb-0  hover:scale-110 focus:outline-none hover:bg-[#5671fc] bg-gradient-to-r from-violet-600 to-indigo-600
+                                    <section className="flex gap-2">
+                                      <button
+                                        className="mb-2 mr-0 md:mb-0  hover:scale-110 focus:outline-none hover:bg-[#5671fc] bg-gradient-to-r from-violet-600 to-indigo-600
 text-black
 
  duration-200 ease-in-out
 transition
  px-5 text-sm shadow-sm font-medium tracking-wider text-white rounded-md hover:shadow-lg hover:bg-green-500
  bg-cyan-600 px-5 py-[6px] text-sm shadow-sm font-medium mr-2 tracking-wider text-white  rounded-md hover:shadow-lg "
-                                      type="submit"
-                                      disabled={loading}
-                                      onClick={()=>{
-                                        setIsMover(false)
-                                      }}
-                                  
-                                    >
-                               
-                                      Save
-                                    </button>
-                                    {[
-                                      'unitBookingMode',
-                                      'unitBlockMode',
-                                    ].includes(actionMode) && (
-                                      <button
-                                        className="mb-2 mr-0 md:mb-0  hover:scale-110 focus:outline-none              hover:bg-[#5671fc]
+                                        type="submit"
+                                        disabled={loading}
+                                        onClick={() => {
+                                          setIsMover(false)
+                                        }}
+                                      >
+                                        Save
+                                      </button>
+                                      {[
+                                        'unitBookingMode',
+                                        'unitBlockMode',
+                                      ].includes(actionMode) && (
+                                        <button
+                                          className="mb-2 mr-0 md:mb-0  hover:scale-110 focus:outline-none              hover:bg-[#5671fc]
 bg-gradient-to-r from-violet-600 to-indigo-600
-text-black
-
- duration-200 ease-in-out
-transition
+text-black duration-200 ease-in-out transition
  px-5 text-sm shadow-sm font-medium tracking-wider text-white rounded-md hover:shadow-lg hover:bg-green-500
  bg-cyan-600 px-5 py-[6px] text-sm shadow-sm font-medium mr-3 tracking-wider text-white  rounded-md hover:shadow-lg
                                    "
-                                        type="submit"
-                                        disabled={loading}
-                                        onClick={()=>{
-                                          setIsMover(true)
-                                        }}
-                                      
-                                      >
-                                 
-                                        <span>Save & Next</span>
-                                      </button>
-                                    )}
+                                          type="submit"
+                                          disabled={loading}
+                                          onClick={() => {
+                                            setIsMover(true)
+                                          }}
+                                        >
+                                          <span>Save & Next</span>
+                                        </button>
+                                      )}
                                     </section>
                                   </div>
                                 </div>
@@ -976,7 +934,6 @@ transition
                       </div>
                     </div>
                   )}
-
 
                   {['customerDetails', 'allsheets'].includes(onStep) && (
                     <>
@@ -1038,7 +995,7 @@ transition
                     />
                   )}
 
-                  {['booking_summary' ].includes(onStep) && (
+                  {['booking_summary'].includes(onStep) && (
                     <BookingSummaryView
                       projectDetails={projectDetails}
                       csMode={csMode}
@@ -1049,7 +1006,6 @@ transition
                       selPhaseObj={selPhaseObj}
                       leadDetailsObj1={leadDetailsObj1}
                       customerInfo={streamUnitDetails}
-
                       selUnitDetails={streamUnitDetails}
                       setNewPlotCsObj={setNewPlotCsObj}
                       newPlotCsObj={newPlotCsObj}
@@ -1057,7 +1013,6 @@ transition
                       constructCostSheetA={newConstCostSheetA}
                       newAdditonalChargesObj={newAdditonalChargesObj}
                       newAdditonalConstChargesObj={newAdditonalConstChargesObj}
-                 
                       setNewAdditonalConstChargesObj={
                         setNewAdditonalConstChargesObj
                       }
@@ -1097,16 +1052,9 @@ transition
                     />
                   )}
                   {['Detail View'].includes(onStep) && <UnitTransactionForm />}
-                 
                 </div>
-
-
-              
               </section>
             </div>
-
-            
-
           </article>
         </div>
       </section>
@@ -1125,7 +1073,6 @@ transition
         newPlotCsObj={newPlotCsObj}
         costSheetA={costSheetA || newPlotCostSheetA || []}
         newPlotCostSheetA={costSheetA || newPlotCostSheetA || []}
-
       />
     </>
   )
@@ -1190,11 +1137,11 @@ ScrollHighlightNabbar.propTypes = {
 }
 
 /**
- * @param {number} currentPosition 
- * @param {Array} sectionPositionArray 
- * @param {number} startIndex 
- * @param {number} endIndex 
- * @return {number} 
+ * @param {number} currentPosition
+ * @param {Array} sectionPositionArray
+ * @param {number} startIndex
+ * @param {number} endIndex
+ * @return {number}
  */
 const nearestIndex = (
   currentPosition,
@@ -1273,13 +1220,10 @@ export const MyComponent = ({ data }) => {
   }
 
   return null
-
-
 }
 
 export const PaymentScheduleStats = ({ newPlotPS }) => {
   if (newPlotPS?.length > 0) {
-
     let start = 'NA'
     let end = 'NA'
     if (newPlotPS[0]['schDate']) {

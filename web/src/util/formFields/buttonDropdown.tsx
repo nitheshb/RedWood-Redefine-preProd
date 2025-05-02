@@ -10,7 +10,7 @@ export default function ButtonDropDown({
   dropDownItemsA,
   selProjectIs,
 }) {
-console.log('value of drop down is ', selProjectIs)
+  console.log('value of drop down is ', selProjectIs)
   return (
     <div className="flex-shrink-0 z-10 inline-flex items-center text-sm font-medium text-center text-gray-900 bg-gray-100   rounded-[16px]  focus:ring-4 focus:outline-none focus:ring-gray-100 w-2/3">
       <Menu as="div" className="relative inline-block text-left">
@@ -52,19 +52,24 @@ console.log('value of drop down is ', selProjectIs)
                         } group   items-center py-[2px] pl-[5px] text-sm flex flex-row w-full justify-between`}
                         onClick={() => pickCustomViewer(viewData)}
                       >
-
-                       <span className='text-[12px] text-left  text-ellipsis whitespace-nowrap'> {viewData?.label}</span>
-                       <span>    {viewData?.value === selProjectIs?.value ? (
-                          <CheckIcon
-                            className="h-3 w-3 mr-2"
-                            aria-hidden="true"
-                          />
-                        ) : (
-                          <CheckIcon
-                            className="w-3 h-3 mr-2 text-transparent"
-                            aria-hidden="true"
-                          />
-                        )}</span>
+                        <span className="text-[12px] text-left  text-ellipsis whitespace-nowrap">
+                          {' '}
+                          {viewData?.label}
+                        </span>
+                        <span>
+                          {' '}
+                          {viewData?.value === selProjectIs?.value ? (
+                            <CheckIcon
+                              className="h-3 w-3 mr-2"
+                              aria-hidden="true"
+                            />
+                          ) : (
+                            <CheckIcon
+                              className="w-3 h-3 mr-2 text-transparent"
+                              aria-hidden="true"
+                            />
+                          )}
+                        </span>
                       </button>
                     )}
                   </Menu.Item>

@@ -3,8 +3,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { useEffect, useState, useRef } from 'react'
 
-
-
 import { USER_ROLES } from 'src/constants/userRoles'
 import { getPhasesByProject } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
@@ -45,7 +43,7 @@ export default function CSManagerApprovalBody({
   const [bootedPs, setBootedPs] = useState([])
 
   const [netTotal, setNetTotal] = useState(0)
- 
+
   useEffect(() => {
     console.log('unit details', selUnitPayload)
     setBootedPs(selUnitPayload?.fullPs)
@@ -69,7 +67,6 @@ export default function CSManagerApprovalBody({
           })
           setPhasesList(phases)
           if (phases.length > 0) {
-
             setSelPhaseObj(phases?.[0])
           }
           console.log('myphases are', phases)
@@ -93,17 +90,26 @@ export default function CSManagerApprovalBody({
           </p>
 
           <span>{selUnitPayload?.customerDetailsObj?.customerName1}</span>
-          <span>{selUnitPayload?.customerDetailsObj?.phoneNo1 || "NA"}</span>
+          <span>{selUnitPayload?.customerDetailsObj?.phoneNo1 || 'NA'}</span>
         </div>
         <div className="flex flex-col text-right">
           <div className="flex-row font-bold uppercase text-[#1f2f3e] text-[10px]">
-            Unit No: <span className="text-[#848789] ml-[1px]">{selUnitPayload?.unit_no}</span>
+            Unit No:{' '}
+            <span className="text-[#848789] ml-[1px]">
+              {selUnitPayload?.unit_no}
+            </span>
           </div>
           <div className="flex-row font-bold uppercase text-[#1f2f3e] text-[10px]">
-            Survey No:<span className="text-[#848789] ml-[1px]">{selUnitPayload?.survey_no || "NA"}</span>
+            Survey No:
+            <span className="text-[#848789] ml-[1px]">
+              {selUnitPayload?.survey_no || 'NA'}
+            </span>
           </div>
           <div className="flex-row font-bold uppercase text-[#1f2f3e] text-[10px]">
-            Katha Id: <span className="text-[#848789] ml-[1px]">{selUnitPayload?.katha_id || "NA"}</span>
+            Katha Id:{' '}
+            <span className="text-[#848789] ml-[1px]">
+              {selUnitPayload?.katha_id || 'NA'}
+            </span>
           </div>
         </div>
       </div>
@@ -114,7 +120,9 @@ export default function CSManagerApprovalBody({
         </div>
         <div className="min-w-[120px]">
           <p className="text-title text-xs font-bold uppercase">Booking Date</p>
-          <span className="text-content3 text-[#848789]">{prettyDate(selUnitPayload?.booked_on || "NA")}</span>
+          <span className="text-content3 text-[#848789]">
+            {prettyDate(selUnitPayload?.booked_on || 'NA')}
+          </span>
         </div>
         <div className="min-w-[120px]">
           <p className="text-title text-xs font-bold uppercase">
@@ -132,8 +140,8 @@ export default function CSManagerApprovalBody({
 
       <CostBreakUpEditor
         csMode={'plot_cs'}
-        netTotal= {netTotal}
-        setNetTotal ={setNetTotal}
+        netTotal={netTotal}
+        setNetTotal={setNetTotal}
         pdfExportComponent={pdfExportComponent}
         selPhaseObj={selPhaseObj}
         leadDetailsObj1={{ id: 'leadId' }}
@@ -147,7 +155,6 @@ export default function CSManagerApprovalBody({
         newPlotPS={newPlotPS}
         bootedPs={bootedPs}
       />
-
     </div>
   )
 }

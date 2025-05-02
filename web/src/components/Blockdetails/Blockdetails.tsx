@@ -24,10 +24,7 @@ const Blockdetails = ({
   const [selFloor, setSelFloor] = useState('All')
   const [openAddBlock, setOpenAddBlock] = useState(false)
 
-  const [viewUnitStatusA, setViewUnitStatusA] = useState([
-    'Available',
-
-  ])
+  const [viewUnitStatusA, setViewUnitStatusA] = useState(['Available'])
   const [editOpitionsObj, setEditOptions] = useState(false)
 
   useEffect(() => {
@@ -92,9 +89,7 @@ const Blockdetails = ({
                 }}
               >
                 <button
-                  onClick={() => {
-
-                  }}
+                  onClick={() => {}}
                   className={
                     'flex   cursor-pointer items-center h-6 px-3 text-[14px] font-semibold  rounded-full '
                   }

@@ -101,14 +101,17 @@ export default function AuthContextProvider({ children }) {
         additionalUserInfo?.roles[0]
       )
 
-    await  console.log('additionalUserInfo', additionalUserInfo)
+      await console.log('additionalUserInfo', additionalUserInfo)
 
       const user = {
         uid: currentUser.uid,
         avatar: currentUser.photoURL,
         email: currentUser.email,
         displayName: currentUser.displayName || additionalUserInfo?.name,
-        phone: currentUser?.phoneNumber || currentUser?.offPh || additionalUserInfo?.offPh,
+        phone:
+          currentUser?.phoneNumber ||
+          currentUser?.offPh ||
+          additionalUserInfo?.offPh,
         personalPhone: additionalUserInfo?.perPh,
         token: currentUser.uid,
         projAccessA: additionalUserInfo.projAccessA || [],

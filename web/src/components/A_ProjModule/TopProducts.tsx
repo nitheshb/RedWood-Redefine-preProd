@@ -1,5 +1,4 @@
-import { ArrowRight } from "lucide-react";
-
+import { ArrowRight } from 'lucide-react'
 
 const products = [
   {
@@ -20,7 +19,7 @@ const products = [
     stock: 100,
     status: 'Out of stock',
   },
-];
+]
 
 export function TopProducts() {
   return (
@@ -54,7 +53,10 @@ export function TopProducts() {
             </thead>
             <tbody>
               {products.map((product, idx) => (
-                <tr key={idx} className="text-sm border-b border-gray-50 last:border-0">
+                <tr
+                  key={idx}
+                  className="text-sm border-b border-gray-50 last:border-0"
+                >
                   <td className="py-3">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 bg-orange-50 rounded-lg flex items-center justify-center">
@@ -62,7 +64,9 @@ export function TopProducts() {
                       </div>
                       <div>
                         <p className="font-medium">{product.name}</p>
-                        <p className="text-xs text-gray-500">{product.category}</p>
+                        <p className="text-xs text-gray-500">
+                          {product.category}
+                        </p>
                       </div>
                     </div>
                   </td>
@@ -85,9 +89,11 @@ export function TopProducts() {
             </tbody>
           </table>
         ) : (
-          <p className="text-gray-500 text-center py-6">No products available.</p>
+          <p className="text-gray-500 text-center py-6">
+            No products available.
+          </p>
         )}
       </div>
     </div>
-  );
+  )
 }

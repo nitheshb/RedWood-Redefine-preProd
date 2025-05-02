@@ -23,13 +23,17 @@ const AddBlockForm = ({ title, dialogOpen, data }) => {
     console.log('it is ==>', data, data?.projectId)
     const updatedData = {
       ...formData,
-      projectId:  data?.phase?.projectId || data?.data?.projectId,
-      uid:  data?.uid || data?.data?.uid,
+      projectId: data?.phase?.projectId || data?.data?.projectId,
+      uid: data?.uid || data?.data?.uid,
       editMode: true,
     }
     setLoading(true)
-    if ((data?.block?.editMode || data?.data?.editMode) && title === 'Edit Block') {
-      await updateBlock(orgId,
+    if (
+      (data?.block?.editMode || data?.data?.editMode) &&
+      title === 'Edit Block'
+    ) {
+      await updateBlock(
+        orgId,
         data?.block?.uid || data?.data?.uid,
         {
           ...formData,
@@ -37,18 +41,24 @@ const AddBlockForm = ({ title, dialogOpen, data }) => {
         },
         enqueueSnackbar
       )
-    }  else if ( title === 'Add Block') {
-      await createBlock(orgId,updatedData, enqueueSnackbar, resetForm)
-    }else {
-      enqueueSnackbar(`Cannot Edit Block ${title} ${data?.block?.editMode || data?.data?.editMode}`, {
-        variant: 'warning',
-      })
+    } else if (title === 'Add Block') {
+      await createBlock(orgId, updatedData, enqueueSnackbar, resetForm)
+    } else {
+      enqueueSnackbar(
+        `Cannot Edit Block ${title} ${
+          data?.block?.editMode || data?.data?.editMode
+        }`,
+        {
+          variant: 'warning',
+        }
+      )
     }
     setLoading(false)
   }
 
   const initialState = {
-    blockName: data?.block?.blockName || data?.blockName ||data?.data?.blockName || '',
+    blockName:
+      data?.block?.blockName || data?.blockName || data?.data?.blockName || '',
     floors: data?.block?.floors || 0,
     units: data?.block?.units || 0,
     totalArea: data?.block?.totalArea || 0,
@@ -84,7 +94,6 @@ const AddBlockForm = ({ title, dialogOpen, data }) => {
                         />
                       </div>
                       <div className=" flex justify-end mt-4 ">
-
                         <button
                           className="flex items-center px-4 py-2 bg-green-400 text-white text-sm shadow-sm font-medium rounded-lg hover:bg-green-500 disabled:opacity-50 "
                           type="submit"

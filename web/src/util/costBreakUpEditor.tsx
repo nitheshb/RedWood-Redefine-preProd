@@ -15,6 +15,7 @@ import { TextFieldFlat } from './formFields/TextFieldFlatType'
 import '../styles/myStyles.css'
 import CustomDatePicker from './formFields/CustomDatePicker'
 import { CalculateComponentTotal } from './unitCostSheetCalculator'
+import { ToastBar } from 'react-hot-toast'
 
 const CostBreakUpEditor = ({
   projectDetails,
@@ -143,70 +144,67 @@ const CostBreakUpEditor = ({
     await setPartEPayload(possessionAdditionalCostCS || [])
     await setTotalFun(plotCS, addChargesCS)
 
+    // resetting values
+    let projectPs = selPhaseObj?.paymentScheduleObj || []
 
-// resetting values
-let projectPs = selPhaseObj?.paymentScheduleObj || []
+    projectPs.map((data, i) => {
+      let x = {
+        value: newPlotPS[i]?.value || 0,
+        preCheck: newPlotPS[i]?.preCheck || 0,
+        elgFrom: newPlotPS[i]?.elgFrom || 0,
+        schDate: newPlotPS[i]?.schDate || 0,
+        zeroDay: newPlotPS[i]?.zeroDay || 0,
+        oldDate: newPlotPS[i]?.oldDate || 0,
 
-      projectPs.map((data, i) => {
-     let x =  {
-  "value": newPlotPS[i]?.value || 0,
-  "preCheck": newPlotPS[i]?.preCheck || 0,
-  "elgFrom": newPlotPS[i]?.elgFrom || 0,
-  "schDate": newPlotPS[i]?.schDate || 0,
-  "zeroDay": newPlotPS[i]?.zeroDay || 0,
-  "oldDate": newPlotPS[i]?.oldDate || 0,
+        category: 'plotPS',
+        description: '',
+        order: 0,
+        stage: data?.stage,
+        percentage: data?.percentage,
 
-  "category": "plotPS",
-  "description": "",
-  "order": 0,
-  "stage": data?.stage,
-  "percentage": data?.percentage,
+        units: data?.units,
+        tableData: {
+          id: i + 1,
+        },
+        myId: data?.id,
+        elgible: i == 0 ? true : false,
 
-  "units": data?.units,
-  "tableData": {
-    "id": i +1
-  },
-  "myId": data?.id,
-  "elgible": i==0 ? true : false,
+        id: data?.id,
+        label: data?.stage?.label,
+      }
+      return x
+    })
 
-  "id": data?.id,
-  "label": data?.stage?.label,
-
-}
-return x
-      })
-
-// {
-//   "value": 100,
-//   "schDate": 1734416831448,
-//   "category": "plotPS",
-//   "description": "",
-//   "order": 0,
-//   "stage": {
-//     "value": "on_booking",
-//     "label": "On Booking"
-//   },
-//   "percentage": 100,
-//   "zeroDay": "0",
-//   "oldDate": 1734416831448,
-//   "units": {
-//     "value": "fixedcost",
-//     "label": "Fixed cost"
-//   },
-//   "tableData": {
-//     "id": 1
-//   },
-//   "myId": "8ace002f-2b86-40b7-be9d-95049e6383d0",
-//   "elgible": true,
-//   "elgFrom": 1735842603603,
-//   "id": "8ace002f-2b86-40b7-be9d-95049e6383d0",
-//   "label": "On Booking",
-//   "preCheck": 826879
-// }
+    // {
+    //   "value": 100,
+    //   "schDate": 1734416831448,
+    //   "category": "plotPS",
+    //   "description": "",
+    //   "order": 0,
+    //   "stage": {
+    //     "value": "on_booking",
+    //     "label": "On Booking"
+    //   },
+    //   "percentage": 100,
+    //   "zeroDay": "0",
+    //   "oldDate": 1734416831448,
+    //   "units": {
+    //     "value": "fixedcost",
+    //     "label": "Fixed cost"
+    //   },
+    //   "tableData": {
+    //     "id": 1
+    //   },
+    //   "myId": "8ace002f-2b86-40b7-be9d-95049e6383d0",
+    //   "elgible": true,
+    //   "elgFrom": 1735842603603,
+    //   "id": "8ace002f-2b86-40b7-be9d-95049e6383d0",
+    //   "label": "On Booking",
+    //   "preCheck": 826879
+    // }
 
     await setNewPS(fullPs)
     await setPSPayload(fullPs)
-
 
     await fullPs?.map((data) => {
       if (data.stage?.value === 'on_booking') {
@@ -279,7 +277,6 @@ return x
     setTotalFun(costSheetA, partCPayload)
   }
 
-
   const handlePriceChangePartD = (index, price) => {
     console.log('changed price is ', price)
     const updatedRows = [...partDPayload]
@@ -311,8 +308,6 @@ return x
     setTotalFun(costSheetA, partDPayload)
   }
 
-
-
   const handlePriceChangePartE = (index, price) => {
     const updatedRows = [...partEPayload]
     updatedRows[index].charges = price
@@ -321,10 +316,11 @@ return x
 
     console.log('new value is ', partEPayload)
 
-
     let total = 0
     let gstTotal = 0
-    const isChargedPerSqft = ['cost_per_sqft','costpersqft' ].includes(updatedRows[index]?.units.value)
+    const isChargedPerSqft = ['cost_per_sqft', 'costpersqft'].includes(
+      updatedRows[index]?.units.value
+    )
 
     const gstPercent =
       Number(updatedRows[index]?.gst?.value) > 1
@@ -335,11 +331,7 @@ return x
         Number(updatedRows[index]?.charges)
       : Number(updatedRows[index]?.charges)
 
-
-
     gstTotal = Math.round(total * gstPercent)
-
-
 
     updatedRows[index].TotalSaleValue = total
     updatedRows[index].gstValue = gstTotal
@@ -347,7 +339,6 @@ return x
     setPartEPayload(updatedRows)
     setTotalFun(costSheetA, partCPayload)
   }
-
 
   const handlePriceChangePartA = (inx, newValue) => {
     console.log('changed price is ', newValue)
@@ -406,26 +397,36 @@ return x
     //   0
     // )
 
-    const partBTotal = partBPayload?.reduce(
-      (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT || 0),
-      0
-    ) || 0
-    const partATotal = costSheetA?.reduce(
-      (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT || 0),
-      0
-    ) || 0
-    const partCTotal = partCPayload?.reduce(
-      (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT || 0),
-      0
-    ) || 0
-    const partDTotal = partDPayload?.reduce(
-      (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT || 0),
-      0
-    ) || 0
-    const partETotal = partEPayload?.reduce(
-      (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT || 0),
-      0
-    ) || 0
+    const partBTotal =
+      partBPayload?.reduce(
+        (partialSum, obj) =>
+          partialSum + Number(obj?.TotalNetSaleValueGsT || 0),
+        0
+      ) || 0
+    const partATotal =
+      costSheetA?.reduce(
+        (partialSum, obj) =>
+          partialSum + Number(obj?.TotalNetSaleValueGsT || 0),
+        0
+      ) || 0
+    const partCTotal =
+      partCPayload?.reduce(
+        (partialSum, obj) =>
+          partialSum + Number(obj?.TotalNetSaleValueGsT || 0),
+        0
+      ) || 0
+    const partDTotal =
+      partDPayload?.reduce(
+        (partialSum, obj) =>
+          partialSum + Number(obj?.TotalNetSaleValueGsT || 0),
+        0
+      ) || 0
+    const partETotal =
+      partEPayload?.reduce(
+        (partialSum, obj) =>
+          partialSum + Number(obj?.TotalNetSaleValueGsT || 0),
+        0
+      ) || 0
     setPartBTotal(partBTotal)
     setPartCTotal(partCTotal)
     setPartDTotal(partDTotal)
@@ -443,50 +444,53 @@ return x
   }
   const CreateNewPsFun = (netTotal, plotBookingAdv, csMode) => {
     console.log('sel unti details', psPayload, netTotal, partATotal, partBTotal)
-      const newPs = psPayload.map( (d1, inx) => {
-            const z = d1
-            let flatLegalFixedCosts = 0
-              const filLegalCharges = psPayload?.filter(
-                (d) => d?.component?.value === 'legal_charges'
+    const newPs = psPayload.map((d1, inx) => {
+      const z = d1
+      let flatLegalFixedCosts = 0
+      const filLegalCharges = psPayload?.filter(
+        (d) => d?.component?.value === 'legal_charges'
+      )
+      if (filLegalCharges && filLegalCharges?.length > 0) {
+        flatLegalFixedCosts = filLegalCharges[0]?.TotalNetSaleValueGsT || 0
+      }
+
+      if ('plot_cs' === 'plot_cs') {
+        let applicablePlotCost = netTotal - flatLegalFixedCosts
+        //  if(inx ==1){
+        //   applicablePlotCost = (applicablePlotCost-bookingAdvanceCost)
+        //  }
+
+        if (!['costpersqft'].includes(d1?.units?.value)) {
+          z.value = ['fixedcost'].includes(d1?.units?.value)
+            ? Number(d1?.percentage)
+            : inx == 1
+            ? Number(
+                (applicablePlotCost * (d1?.percentage / 100)).toFixed(2) -
+                  plotBookingAdv
               )
-              if(filLegalCharges && filLegalCharges?.length > 0){
-                flatLegalFixedCosts =filLegalCharges[0]?.TotalNetSaleValueGsT || 0
-              }
+            : Number((applicablePlotCost * (d1?.percentage / 100)).toFixed(2))
 
-                if ('plot_cs' === 'plot_cs') {
-                         let applicablePlotCost = netTotal- flatLegalFixedCosts
-                        //  if(inx ==1){
-                        //   applicablePlotCost = (applicablePlotCost-bookingAdvanceCost)
-                        //  }
-
-                        if(!['costpersqft'].includes(d1?.units?.value)){
-
-                          z.value = ['fixedcost'].includes(d1?.units?.value)
-                            ? Number(d1?.percentage)
-                            : inx ==1 ? Number(
-                              (((applicablePlotCost) * (d1?.percentage / 100)).toFixed(2) - plotBookingAdv))
-
-                            :  Number(
-                                ((applicablePlotCost) * (d1?.percentage / 100)).toFixed(2)
-                              )
-
-                              // z.value = applicablePlotCost
-                            }else {
-                              let calc =  CalculateComponentTotal(d1,selUnitDetails?.area?.toString()?.replace(',', '') ,0,Number(d1?.percentage))
-                              z.value = calc?.TotalNetSaleValueGsT
-                            }
-                            z.preCheck = ['on_booking'].includes(d1?.stage?.value)
-                            ? Number(netTotal)
-                            : Math.round(netTotal - plotBookingAdv)
-                          if (['fixedcost'].includes(d1?.units?.value)) {
-                            z.elgible = true
-                            z.elgFrom = Timestamp.now().toMillis()
-                            return z
-                          }
-                          return z
-                        }
-
-          })
+          // z.value = applicablePlotCost
+        } else {
+          let calc = CalculateComponentTotal(
+            d1,
+            selUnitDetails?.area?.toString()?.replace(',', ''),
+            0,
+            Number(d1?.percentage)
+          )
+          z.value = calc?.TotalNetSaleValueGsT
+        }
+        z.preCheck = ['on_booking'].includes(d1?.stage?.value)
+          ? Number(netTotal)
+          : Math.round(netTotal - plotBookingAdv)
+        if (['fixedcost'].includes(d1?.units?.value)) {
+          z.elgible = true
+          z.elgFrom = Timestamp.now().toMillis()
+          return z
+        }
+        return z
+      }
+    })
 
     console.log('new ps is ', newPs)
     setNewPS(newPs)
@@ -530,7 +534,7 @@ return x
     let plotPsNew = []
     let constructPsNew = []
 
-   plotPsNew  = newPlotPS?.map((d1, inx) => {
+    plotPsNew = newPlotPS?.map((d1, inx) => {
       console.log('d1 is', d1)
       const z = d1
       z.value = ['fixedcost'].includes(d1?.units?.value)
@@ -562,10 +566,12 @@ return x
       d1.schDate =
         d1?.schDate ||
         d.getTime() +
-          (newPlotPS.slice(0, inx).reduce(
-            (sum, prevItem) => sum + (Number(prevItem.zeroDay) || 0),
-            0
-          ) +
+          (newPlotPS
+            .slice(0, inx)
+            .reduce(
+              (sum, prevItem) => sum + (Number(prevItem.zeroDay) || 0),
+              0
+            ) +
             Number(d1?.zeroDay || 0)) *
             86400000
       return z
@@ -597,19 +603,18 @@ return x
       addChargesCS: partBPayload,
       constAdditionalChargesCS: partBPayload,
       possessionAdditionalCostCS: partEPayload,
-      fullPsPayload: fullPsPayload
+      fullPsPayload: fullPsPayload,
     }
-console.log('saved data is===>', dataObj)
+    console.log('saved data is===>', dataObj)
 
     updateManagerApproval(
       orgId,
       selUnitDetails?.id,
       dataObj,
       user.email,
-      enqueueSnackbar
+      // enqueueSnackbar
+      ToastBar
     )
-
-
   }
   const handlePSdateChange = (index, newDate) => {
     const updatedRows = [...newPlotPS]
@@ -799,7 +804,7 @@ console.log('saved data is===>', dataObj)
                             </tbody>
                           </table>
                           <table className="w-full mt-1">
-                          <thead>
+                            <thead>
                               <tr className="h-8 mb-1 border-none w-[100%] bg-[#e8e6fe] ">
                                 <th className="min-w-[35%] px-2  text-[10px] text-left  tracking-wide">
                                   Additonal Charges
@@ -931,33 +936,33 @@ console.log('saved data is===>', dataObj)
                             selPhaseObj?.projectType?.name
                           ) && (
                             <table className="w-full mt-1">
-                                 <thead>
-                              <tr className="h-8 mb-1 border-none w-[100%] bg-[#e8e6fe] ">
-                                <th className="min-w-[35%] px-2  text-[10px] text-left  tracking-wide">
-                                  Construction Charges
-                                </th>
-                                <th className="w-[15%] px-2 text-[10px] text-right  tracking-wide ">
-                                  Rate/Sqft
-                                </th>
-                                <th
-                                  className={`${
-                                    !showGstCol ? 'hidden' : ''
-                                  } w-[15%] px-2 text-[10px] text-right  tracking-wide `}
-                                >
-                                  Sale Value
-                                </th>
-                                <th
-                                  className={`${
-                                    !showGstCol ? 'hidden' : ''
-                                  }  w-[15%] px-2 text-[10px] text-right  tracking-wide `}
-                                >
-                                  GST
-                                </th>
-                                <th className="w-[15%] px-2 text-[10px] text-right  tracking-wide ">
-                                  Total
-                                </th>
-                              </tr>
-                            </thead>
+                              <thead>
+                                <tr className="h-8 mb-1 border-none w-[100%] bg-[#e8e6fe] ">
+                                  <th className="min-w-[35%] px-2  text-[10px] text-left  tracking-wide">
+                                    Construction Charges
+                                  </th>
+                                  <th className="w-[15%] px-2 text-[10px] text-right  tracking-wide ">
+                                    Rate/Sqft
+                                  </th>
+                                  <th
+                                    className={`${
+                                      !showGstCol ? 'hidden' : ''
+                                    } w-[15%] px-2 text-[10px] text-right  tracking-wide `}
+                                  >
+                                    Sale Value
+                                  </th>
+                                  <th
+                                    className={`${
+                                      !showGstCol ? 'hidden' : ''
+                                    }  w-[15%] px-2 text-[10px] text-right  tracking-wide `}
+                                  >
+                                    GST
+                                  </th>
+                                  <th className="w-[15%] px-2 text-[10px] text-right  tracking-wide ">
+                                    Total
+                                  </th>
+                                </tr>
+                              </thead>
                               <tbody>
                                 {partCPayload?.map((d1, inx) => (
                                   <tr
@@ -1079,33 +1084,33 @@ console.log('saved data is===>', dataObj)
                             selPhaseObj?.projectType?.name
                           ) && (
                             <table className="w-full mt-1">
-                                 <thead>
-                              <tr className="h-8 mb-1 border-none w-[100%] bg-[#e8e6fe] ">
-                                <th className="min-w-[35%] px-2  text-[10px] text-left  tracking-wide">
-                                  Construction Additional Charges
-                                </th>
-                                <th className="w-[15%] px-2 text-[10px] text-right  tracking-wide ">
-                                  Rate/Sqft
-                                </th>
-                                <th
-                                  className={`${
-                                    !showGstCol ? 'hidden' : ''
-                                  } w-[15%] px-2 text-[10px] text-right  tracking-wide `}
-                                >
-                                  Sale Value
-                                </th>
-                                <th
-                                  className={`${
-                                    !showGstCol ? 'hidden' : ''
-                                  }  w-[15%] px-2 text-[10px] text-right  tracking-wide `}
-                                >
-                                  GST
-                                </th>
-                                <th className="w-[15%] px-2 text-[10px] text-right  tracking-wide ">
-                                  Total
-                                </th>
-                              </tr>
-                            </thead>
+                              <thead>
+                                <tr className="h-8 mb-1 border-none w-[100%] bg-[#e8e6fe] ">
+                                  <th className="min-w-[35%] px-2  text-[10px] text-left  tracking-wide">
+                                    Construction Additional Charges
+                                  </th>
+                                  <th className="w-[15%] px-2 text-[10px] text-right  tracking-wide ">
+                                    Rate/Sqft
+                                  </th>
+                                  <th
+                                    className={`${
+                                      !showGstCol ? 'hidden' : ''
+                                    } w-[15%] px-2 text-[10px] text-right  tracking-wide `}
+                                  >
+                                    Sale Value
+                                  </th>
+                                  <th
+                                    className={`${
+                                      !showGstCol ? 'hidden' : ''
+                                    }  w-[15%] px-2 text-[10px] text-right  tracking-wide `}
+                                  >
+                                    GST
+                                  </th>
+                                  <th className="w-[15%] px-2 text-[10px] text-right  tracking-wide ">
+                                    Total
+                                  </th>
+                                </tr>
+                              </thead>
                               <tbody>
                                 {partDPayload?.map((d1, inx) => (
                                   <tr
@@ -1223,36 +1228,35 @@ console.log('saved data is===>', dataObj)
                             </table>
                           )}
 
-{partEPayload.length>0
-                          && (
+                          {partEPayload.length > 0 && (
                             <table className="w-full mt-1">
-                                 <thead>
-                              <tr className="h-8 mb-1 border-none w-[100%] bg-[#e8e6fe] ">
-                                <th className="min-w-[35%] px-2  text-[10px] text-left  tracking-wide">
-                                  Possession Charges
-                                </th>
-                                <th className="w-[15%] px-2 text-[10px] text-right  tracking-wide ">
-                                  Rate/Sqft
-                                </th>
-                                <th
-                                  className={`${
-                                    !showGstCol ? 'hidden' : ''
-                                  } w-[15%] px-2 text-[10px] text-right  tracking-wide `}
-                                >
-                                  Sale Value
-                                </th>
-                                <th
-                                  className={`${
-                                    !showGstCol ? 'hidden' : ''
-                                  }  w-[15%] px-2 text-[10px] text-right  tracking-wide `}
-                                >
-                                  GST
-                                </th>
-                                <th className="w-[15%] px-2 text-[10px] text-right  tracking-wide ">
-                                  Total
-                                </th>
-                              </tr>
-                            </thead>
+                              <thead>
+                                <tr className="h-8 mb-1 border-none w-[100%] bg-[#e8e6fe] ">
+                                  <th className="min-w-[35%] px-2  text-[10px] text-left  tracking-wide">
+                                    Possession Charges
+                                  </th>
+                                  <th className="w-[15%] px-2 text-[10px] text-right  tracking-wide ">
+                                    Rate/Sqft
+                                  </th>
+                                  <th
+                                    className={`${
+                                      !showGstCol ? 'hidden' : ''
+                                    } w-[15%] px-2 text-[10px] text-right  tracking-wide `}
+                                  >
+                                    Sale Value
+                                  </th>
+                                  <th
+                                    className={`${
+                                      !showGstCol ? 'hidden' : ''
+                                    }  w-[15%] px-2 text-[10px] text-right  tracking-wide `}
+                                  >
+                                    GST
+                                  </th>
+                                  <th className="w-[15%] px-2 text-[10px] text-right  tracking-wide ">
+                                    Total
+                                  </th>
+                                </tr>
+                              </thead>
                               <tbody>
                                 {partEPayload?.map((d1, inx) => (
                                   <tr
@@ -1370,19 +1374,18 @@ console.log('saved data is===>', dataObj)
                             </table>
                           )}
 
-
-                          <div className='mt-5'>
+                          <div className="mt-5">
                             <section className="flex flex-row justify-between mb-8 mt-4">
                               <div></div>
 
                               <div className="border rounded-lg shadow-lg  mt-4">
                                 <section className="flex flex-row justify-between mt-2   ">
                                   <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal ">
-                                  {selPhaseObj?.projectType?.name ===
-                                      'Apartment'
-                                        ? 'Flat'
-                                        : 'Plot'}{' '}
-                                      Charges
+                                    {selPhaseObj?.projectType?.name ===
+                                    'Apartment'
+                                      ? 'Flat'
+                                      : 'Plot'}{' '}
+                                    Charges
                                   </h1>
                                   <section className="flex flex-row mt-1">
                                     <section className="px-2 d-md font-semibold text-[12px] text-[#000000e6] leading-none">
@@ -1415,7 +1418,7 @@ console.log('saved data is===>', dataObj)
                                     </section>
                                     <section className="flex flex-row justify-between  mt-2">
                                       <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal mr-9 ">
-                                      Construction Additional Charges
+                                        Construction Additional Charges
                                       </h1>
                                       <section className="flex flex-row mt-1">
                                         <section className="px-2 d-md font-semibold text-[12px] text-[#000000e6] leading-none">
@@ -1456,33 +1459,33 @@ console.log('saved data is===>', dataObj)
                               PAYMENT SCHEDULE
                             </h1>
                             <section className="">
-                            <div className="w-full flex items-center ">
-                              <label
-                                htmlFor="area"
-                                className="label font-regular text-sm font-bodyLato"
-                              >
-                                Copy from Project
-                              </label>
-                              <Field
-                                name="isGSTChecked"
-                                type="checkbox"
-                                component={() => (
-                                  <Checkbox
-                                    color="primary"
-                                    checked={showGstCol}
-                                    onClick={() => setShowGstCol(!showGstCol)}
-                                  />
-                                )}
-                              />
-                            </div>
-                          </section>
+                              <div className="w-full flex items-center ">
+                                <label
+                                  htmlFor="area"
+                                  className="label font-regular text-sm font-bodyLato"
+                                >
+                                  Copy from Project
+                                </label>
+                                <Field
+                                  name="isGSTChecked"
+                                  type="checkbox"
+                                  component={() => (
+                                    <Checkbox
+                                      color="primary"
+                                      checked={showGstCol}
+                                      onClick={() => setShowGstCol(!showGstCol)}
+                                    />
+                                  )}
+                                />
+                              </div>
+                            </section>
                           </section>
                           <table className="w-full border-b border-dashed">
                             <thead className="">
                               {' '}
                               <tr className=" h-8  border-none bg-[#e8e6fe]  ">
                                 <th className="w-[50%] px-2   text-left  tracking-wide uppercase d-xsm  ">
-                                Charges
+                                  Charges
                                 </th>
                                 <th className="w-[30%] px-2   text-left  tracking-wide uppercase d-xsm ">
                                   Payment Timeline
@@ -1555,77 +1558,80 @@ console.log('saved data is===>', dataObj)
             )}
           </Formik>
           <div className="mt- left-0 text-right md:space-x-3 md:block flex flex-col-reverse pb-3 mr-6 flex flex-col mt-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white shadow-lg absolute bottom-0  w-full">
-          <div className="mx-2 o my-  ">
+            <div className="mx-2 o my-  ">
               <div className="bg-white  py-2 rounded-xl">
                 {/* <h1 className="text-center text-xl font-semibold text-gray-500">
                   Are you Sure to Canel this booking?
                 </h1> */}
 
-
-                {rejection &&    <div className="mt-">
-                      <div className="flex justify-center border-2 py-2 px-6 px-10 mb-2 rounded-xl">
-                        <input
-                          type="text"
-                          name="blockReason"
-                          placeholder="Write Rejection Comments"
-                          className="w-full outline-none text-gray-700 text-lg"
-                          onChange={(e) => {
-                            setRejectionReason(e.target.value)
-                            // formik.setFieldValue('blockReason', e.target.value)
-
-                          }}
-                        />
-                        {fillError && <div
+                {rejection && (
+                  <div className="mt-">
+                    <div className="flex justify-center border-2 py-2 px-6 px-10 mb-2 rounded-xl">
+                      <input
+                        type="text"
+                        name="blockReason"
+                        placeholder="Write Rejection Comments"
+                        className="w-full outline-none text-gray-700 text-lg"
+                        onChange={(e) => {
+                          setRejectionReason(e.target.value)
+                          // formik.setFieldValue('blockReason', e.target.value)
+                        }}
+                      />
+                      {fillError && (
+                        <div
                           // component="div"
 
                           // name={'blockReason'}
                           className="error-message text-red-700 text-xs p-1 mx-auto"
-                        /> }
-                        <button
-                          type="submit"
-                          className={`${rejectionReason.length>0 ? 'bg-[#ff9f87]' : 'bg-[#f9eeeb]'  }  text-gray-700 font-semibold px-6 py-2 rounded-xl text-md`}
-                          onClick={() =>{
-                            if(rejectionReason!==''){
-                              showFillError(false)
-                              submitManagerApproval('rejected')
-              }else{
-                showFillError(true)
-              }
-}}
-                        >
-                          Reject
-                        </button>
+                        />
+                      )}
+                      <button
+                        type="submit"
+                        className={`${
+                          rejectionReason.length > 0
+                            ? 'bg-[#ff9f87]'
+                            : 'bg-[#f9eeeb]'
+                        }  text-gray-700 font-semibold px-6 py-2 rounded-xl text-md`}
+                        onClick={() => {
+                          if (rejectionReason !== '') {
+                            showFillError(false)
+                            submitManagerApproval('rejected')
+                          } else {
+                            showFillError(true)
+                          }
+                        }}
+                      >
+                        Reject
+                      </button>
+                    </div>
+                  </div>
+                )}
+                <button
+                  className=" text-black active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded  border  border-[#E3BDFF] shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                  type="submit"
+                  onClick={() => {
+                    setRejection(!rejection)
+                    // submitManagerApproval('rejected')
+                  }}
+                  // disabled={loading}
+                >
+                  {'Reject'}
+                </button>
 
-
-                      </div>
-                    </div>}
-                    <button
-              className=" text-black active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded  border  border-[#E3BDFF] shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-              type="submit"
-              onClick={() => {
-                setRejection(!rejection)
-                // submitManagerApproval('rejected')
-              }}
-              // disabled={loading}
-            >
-              {'Reject'}
-            </button>
-
-                    <button
-              className="bg-[#e3bdff] text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-              type="submit"
-              // disabled={loading}
-              onClick={() => {
-                // mark man_cs_approval as true
-                console.log('node aa is ')
-                submitManagerApproval('approved')
-              }}
-            >
-              {'Approve'}
-            </button>
+                <button
+                  className="bg-[#e3bdff] text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                  type="submit"
+                  // disabled={loading}
+                  onClick={() => {
+                    // mark man_cs_approval as true
+                    console.log('node aa is ')
+                    submitManagerApproval('approved')
+                  }}
+                >
+                  {'Approve'}
+                </button>
               </div>
             </div>
-
           </div>
         </div>
       )}

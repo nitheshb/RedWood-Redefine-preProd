@@ -7,7 +7,7 @@ import * as Yup from 'yup'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { computeTotal } from 'src/util/computeCsTotals'
 
-import "src/styles/myStyles.css"
+import 'src/styles/myStyles.css'
 import { CalculateComponentTotal } from 'src/util/unitCostSheetCalculator'
 
 const CSBody = ({
@@ -43,19 +43,14 @@ const CSBody = ({
   const [psPayload, setPSPayload] = useState([])
   const [pdfPreview, setpdfPreview] = useState(false)
 
-
-
-  const [newPlotPS, setNewPS ] = useState({})
+  const [newPlotPS, setNewPS] = useState({})
   useEffect(() => {
     console.log('gen costSheetA', costSheetA)
 
     setTotalFun()
-
   }, [costSheetA, selPhaseObj])
 
-  useEffect(() => {
-  }, [newSqftPrice])
-
+  useEffect(() => {}, [newSqftPrice])
 
   useEffect(() => {
     const {
@@ -106,7 +101,6 @@ const CSBody = ({
             value: plot_gstValue,
           },
           TotalNetSaleValueGsT: plotTotalSaleValue + plot_gstValue,
-
         },
         {
           myId: '2',
@@ -133,7 +127,7 @@ const CSBody = ({
               Number(
                 selUnitDetails?.super_built_up_area ||
                   selUnitDetails?.plot_Sqf * (selUnitDetails?.plc || 200)
-              ) * 0.00
+              ) * 0.0
             ),
           },
           TotalNetSaleValueGsT:
@@ -190,20 +184,16 @@ const CSBody = ({
                   selUnitDetails?.builtup_area * selUnitDetails?.construct_price
                 ) * 0.05),
         },
-
       ]
     }
     let merged = []
     try {
-
       merged = [...x, ...additonalChargesObj]
-
     } catch (error) {
       console.log('error at feching the leadDetails Obj')
       console.log('gen costSheetA', x, additonalChargesObj)
       merged = [...x, ...additonalChargesObj]
     }
-
 
     const initformValues = {}
     merged.map((d) => {
@@ -213,7 +203,7 @@ const CSBody = ({
     setInitialValuesA(initformValues)
     console.log('gen costSheetA', x)
     setCostSheetA(x)
-  },[])
+  }, [])
 
   useEffect(() => {
     CreateNewPsFun(netTotal, plotBookingAdv, csMode)
@@ -223,50 +213,50 @@ const CSBody = ({
   }, [netTotal, plotBookingAdv, csMode])
 
   const CreateNewPsFun = (netTotal, plotBookingAdv, csMode) => {
-    const newPs = psPayload.map( (d1, inx) => {
+    const newPs = psPayload.map((d1, inx) => {
       const z = d1
       let flatLegalFixedCosts = 0
-        const filLegalCharges = psPayload?.filter(
-          (d) => d?.component?.value === 'legal_charges'
-        )
-        if(filLegalCharges && filLegalCharges?.length > 0){
-          flatLegalFixedCosts =filLegalCharges[0]?.TotalNetSaleValueGsT || 0
+      const filLegalCharges = psPayload?.filter(
+        (d) => d?.component?.value === 'legal_charges'
+      )
+      if (filLegalCharges && filLegalCharges?.length > 0) {
+        flatLegalFixedCosts = filLegalCharges[0]?.TotalNetSaleValueGsT || 0
+      }
+
+      if ('plot_cs' === 'plot_cs') {
+        let applicablePlotCost = netTotal - flatLegalFixedCosts
+
+        if (!['costpersqft'].includes(d1?.units?.value)) {
+          z.value = ['fixedcost'].includes(d1?.units?.value)
+            ? Number(d1?.percentage)
+            : inx == 1
+            ? Number(
+                (applicablePlotCost * (d1?.percentage / 100)).toFixed(2) -
+                  plotBookingAdv
+              )
+            : Number((applicablePlotCost * (d1?.percentage / 100)).toFixed(2))
+        } else {
+          let calc = CalculateComponentTotal(
+            d1,
+            selUnitDetails?.area?.toString()?.replace(',', ''),
+            0,
+            Number(d1?.percentage)
+          )
+          z.value = calc?.TotalNetSaleValueGsT
         }
-
-          if ('plot_cs' === 'plot_cs') {
-                   let applicablePlotCost = netTotal- flatLegalFixedCosts
-
-
-                  if(!['costpersqft'].includes(d1?.units?.value)){
-
-                    z.value = ['fixedcost'].includes(d1?.units?.value)
-                      ? Number(d1?.percentage)
-                      : inx ==1 ? Number(
-                        (((applicablePlotCost) * (d1?.percentage / 100)).toFixed(2) - plotBookingAdv))
-
-                      :  Number(
-                          ((applicablePlotCost) * (d1?.percentage / 100)).toFixed(2)
-                        )
-                      }else {
-                        let calc =  CalculateComponentTotal(d1,selUnitDetails?.area?.toString()?.replace(',', '') ,0,Number(d1?.percentage))
-                        z.value = calc?.TotalNetSaleValueGsT
-                      }
-                    if (['fixedcost'].includes(d1?.units?.value)) {
-                      z.elgible = true
-                      z.elgFrom = Timestamp.now().toMillis()
-                      return z
-                    }
-                    return z
-                  }
-
+        if (['fixedcost'].includes(d1?.units?.value)) {
+          z.elgible = true
+          z.elgFrom = Timestamp.now().toMillis()
+          return z
+        }
+        return z
+      }
     })
     setNewPS(newPs)
   }
 
   const initialState = initialValuesA
-  const validate = Yup.object({
- 
-  })
+  const validate = Yup.object({})
 
   const setTotalFun = async () => {
     const partBTotal = selPhaseObj?.additonalChargesObj.reduce(
@@ -292,7 +282,6 @@ const CSBody = ({
   const onSubmit = async (data, resetForm) => {
     const { uid } = selUnitDetails
     const { id } = leadDetailsObj1
-
 
     const newCostSheetA = costSheetA.map((dat) => {
       dat.charges = data[dat?.component?.value]
@@ -392,7 +381,6 @@ const CSBody = ({
                           </thead>
                           <tbody>
                             {' '}
-
                             <tr className=" border-[#fab56c]  bg-[#e3fcff]">
                               <th className="w-[40%] text-[12px] text-left text-gray-600 pl-2 ">
                                 Total (A)
@@ -439,7 +427,6 @@ const CSBody = ({
                           </tbody>
                         </table>
                         <table className="w-full mt-1">
-  
                           <tbody>
                             {partBPayload?.map((d1, inx) => (
                               <tr key={inx} className="h-[22px]">
@@ -453,8 +440,10 @@ const CSBody = ({
                                   {Number(
                                     computeTotal(
                                       d1,
-                                      selUnitDetails?.super_built_up_area||
-                                      selUnitDetails?.area?.toString()?.replace(',', '')
+                                      selUnitDetails?.super_built_up_area ||
+                                        selUnitDetails?.area
+                                          ?.toString()
+                                          ?.replace(',', '')
                                     )
                                   )?.toLocaleString('en-IN')}
                                 </td>
@@ -490,7 +479,7 @@ const CSBody = ({
                             {' '}
                             <tr className=" h-8  border-none bg-[#318b96] text-white ">
                               <th className="w-[50%] px-2   text-left  tracking-wide uppercase d-xsm text-white ">
-                              Charges
+                                Charges
                               </th>
                               <th className="w-[30%] px-2   text-left  tracking-wide uppercase d-xsm text-white">
                                 Payment Timeline
@@ -502,8 +491,6 @@ const CSBody = ({
                           </thead>
 
                           <tbody>
-         
-
                             <tr className="border-b-[0.05px] border-black">
                               <th className="text-[12px] px-2  text-left text-gray-800 ">
                                 Plot Value Total Rs.:

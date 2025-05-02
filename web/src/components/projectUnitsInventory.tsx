@@ -77,9 +77,7 @@ const ProjectsUnitInventory = ({
         <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-full ">
           <div className="flex flex-col  leading-7  text-gray-900 border-0 border-gray-200 ">
             <div className="flex items-center flex-shrink-0  px-0  pl-0 border-b border-grey  mb-2">
-              <Link
-                className="flex items-center"
-              >
+              <Link className="flex items-center">
                 <img className="w-16 h-16" alt="" src="/apart.svg"></img>
                 <span className="relative z-10 flex items-center w-auto text-3xl font-bold leading-none pl-0 mt-[18px]">
                   {projectName}
@@ -125,18 +123,14 @@ const ProjectsUnitInventory = ({
                           </div>
                         </div>
                       </div>
-    
                     </div>
                   </div>
                 </>
-
-
               ))
             ) : (
               <DummyBodyLayout />
             )}
           </section>
-         
         </div>
       </section>
       <SiderForm
@@ -145,10 +139,6 @@ const ProjectsUnitInventory = ({
         title={'Project Inventory'}
         projectDetails={projectDetails}
         unitsViewMode={true}
-
-
-
-
       />
     </div>
   )

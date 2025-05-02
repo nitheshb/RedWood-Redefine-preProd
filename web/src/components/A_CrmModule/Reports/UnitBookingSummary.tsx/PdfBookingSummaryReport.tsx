@@ -20,8 +20,6 @@ import numeral from 'numeral'
 // import { prettyDate } from './dateConverter'
 import { Bold, Download } from 'lucide-react'
 
-
-
 // import pdfimg1 from '../../public/pdfimg1.png'
 // import pdfimg2 from '../../public/pdfimg2.png'
 // import pdfimg3 from '../../public/pdfimg3.png'
@@ -39,9 +37,6 @@ import { getProject } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { computeTotal } from 'src/util/computeCsTotals'
 import { prettyDate } from 'src/util/dateConverter'
-
-
-
 
 Font.register({
   family: 'Roboto',
@@ -65,10 +60,7 @@ const useStyles = () =>
           marginLeft: '20px',
           marginRight: '20px',
           marginTop: '20px',
-
         },
-
-
 
         smallFitter: {
           paddingLeft: '10px',
@@ -131,7 +123,7 @@ const useStyles = () =>
         pt5: { paddingTop: 10 },
         h3: { fontSize: 16, fontWeight: 400 },
         h4: { fontSize: 13, fontWeight: 700 },
-        bold: {fontWeight: 700, color: '#000' },
+        bold: { fontWeight: 700, color: '#000' },
         h1: {
           fontSize: 20,
           fontWeight: 700,
@@ -189,14 +181,12 @@ const useStyles = () =>
           // borderBottomWidth: 0.5,
           // borderStyle: 'solid',
           // borderColor: '#DFE3E8',
-
         },
         borderbottom: {
           borderBottomWidth: 1,
           borderStyle: 'solid',
           borderColor: '#DFE3E8',
         },
-
 
         totalRow: {
           padding: '6px 0',
@@ -229,13 +219,10 @@ const useStyles = () =>
           borderTopRightRadius: '10px',
         },
 
-
         boottomBoderRadiusHeader: {
           borderBottomLeftRadius: '10px',
           borderBottomRightRadius: '10px',
         },
-
-
 
         topBoderRadiusnew: {
           borderTopLeftRadius: '15px',
@@ -247,14 +234,10 @@ const useStyles = () =>
           borderBottomRightRadius: '16px',
         },
 
-
-
         tableHeader: {
           padding: '4px 0',
           flexDirection: 'row',
-          alignItems:'flex-end'
-
-
+          alignItems: 'flex-end',
         },
         bg: {
           backgroundColor: '#F3FFF2',
@@ -287,7 +270,7 @@ const useStyles = () =>
         },
         tableCell_1: {
           width: '5%',
-           paddingLeft: 10,
+          paddingLeft: 10,
         },
         tableCell_35: {
           width: '35%',
@@ -299,23 +282,19 @@ const useStyles = () =>
           // paddingRight: 16,
         },
 
-
         // tableCell_15: {
         //   width: '15%',
 
         // },
-        
 
         tableCell_200: {
           width: '20%',
           // paddingRight: 3,
-
         },
 
         tableCell_2000: {
           width: '15%',
           paddingRight: 3,
-
         },
 
         tableCell_20: {
@@ -330,9 +309,7 @@ const useStyles = () =>
 
         tableCell_150: {
           width: '15%',
-         
         },
-
 
         // tableCell_b1: {
         //   width: '5%',
@@ -341,7 +318,6 @@ const useStyles = () =>
         // tableCell_b2: {
         //   width: '5%',
         // },
-
 
         // tableCell_b3: {
         //   width: '5%',
@@ -386,10 +362,6 @@ const useStyles = () =>
         // tableCell_b13: {
         //   width: '10%',
         // },
-
-
-
-
 
         tableCell_b1: {
           width: '3%',
@@ -449,14 +421,6 @@ const useStyles = () =>
           // backgroundColor: '#FF4500', // Orange Red
         },
 
-
-        
-
-
-
-
-
-
         tableCell_2: {
           width: '50%',
           // paddingRight: 16,
@@ -489,16 +453,16 @@ const useStyles = () =>
         cellBgHead: {
           backgroundColor: '#EDEDED',
         },
-        textcolor:{
+        textcolor: {
           color: '#6A6A6A',
         },
-        textcolorhead:{
+        textcolorhead: {
           color: '#3D3D3D',
         },
 
-        blockborder:{
-          border: '1px solid 6A6A6A'
-        }
+        blockborder: {
+          border: '1px solid 6A6A6A',
+        },
       }),
     []
   )
@@ -585,7 +549,6 @@ function result(format: string, key = '.00', currencySymbol: string) {
     ? currencySymbol + format.replace(key, '')
     : currencySymbol + format
 }
-
 
 export function fDate(date: InputValue2, newFormat?: string) {
   const fm = newFormat || 'dd MMM yyyy'
@@ -717,10 +680,6 @@ const invoiceDet: IInvoice[] = [
   },
 ]
 
-
-
-
-
 const MyDocument = ({
   user,
   selUnitDetails,
@@ -747,10 +706,10 @@ const MyDocument = ({
   setPartBTotal,
   tableData,
 }) => {
-  const styles = useStyles();
+  const styles = useStyles()
 
-  const [sectionDimensions, setSectionDimensions] = useState([]);
-  const [tableDimensions, setTableDimensions] = useState([]);
+  const [sectionDimensions, setSectionDimensions] = useState([])
+  const [tableDimensions, setTableDimensions] = useState([])
 
   const [categorizedData, setCategorizedData] = useState<Record<string, any>>({
     booked: [],
@@ -759,12 +718,12 @@ const MyDocument = ({
     registered: [],
     construction: [],
     possession: [],
-  });
+  })
 
-  const keys = Object.keys(categorizedData || {});
+  const keys = Object.keys(categorizedData || {})
 
   useEffect(() => {
-    if (!tableData) return;
+    if (!tableData) return
 
     const newCategorizedData = {
       booked: [],
@@ -773,34 +732,31 @@ const MyDocument = ({
       registered: [],
       construction: [],
       possession: [],
-    };
+    }
 
     tableData.forEach((item) => {
-      const status = item?.unitStatus?.toString() || item.status.toString();
+      const status = item?.unitStatus?.toString() || item.status.toString()
       if (newCategorizedData.hasOwnProperty(status)) {
-        newCategorizedData[status].push(item);
+        newCategorizedData[status].push(item)
       }
-    });
+    })
 
-    setCategorizedData(newCategorizedData);
-  }, [tableData]);
+    setCategorizedData(newCategorizedData)
+  }, [tableData])
 
   const calculateTotals = (data) => {
-    let totalSaleValue = 0;
-    let totalReceived = 0;
-    let totalBalance = 0;
+    let totalSaleValue = 0
+    let totalReceived = 0
+    let totalBalance = 0
 
     data.forEach((item) => {
-      totalSaleValue += item?.T_A || 0;
-      totalReceived += item?.T_approved || 0;
-      totalBalance += item?.T_balance || 0;
-    });
+      totalSaleValue += item?.T_A || 0
+      totalReceived += item?.T_approved || 0
+      totalBalance += item?.T_balance || 0
+    })
 
-    return { totalSaleValue, totalReceived, totalBalance };
-  };
-
-
-
+    return { totalSaleValue, totalReceived, totalBalance }
+  }
 
   const toRoman = (num) => {
     const romanNumerals = [
@@ -817,30 +773,36 @@ const MyDocument = ({
       { value: 5, numeral: 'V' },
       { value: 4, numeral: 'IV' },
       { value: 1, numeral: 'I' },
-    ];
-  
-    let result = '';
+    ]
+
+    let result = ''
     for (const { value, numeral } of romanNumerals) {
       while (num >= value) {
-        result += numeral;
-        num -= value;
+        result += numeral
+        num -= value
       }
     }
-    return result;
-  };
+    return result
+  }
 
   const renderTable = (data, status, index) => {
-    const { totalSaleValue, totalReceived, totalBalance } = calculateTotals(data);
+    const { totalSaleValue, totalReceived, totalBalance } =
+      calculateTotals(data)
 
-    
     return (
-
-      
-<View key={status}>
-        <Text style={[styles.subtitle1, styles.mb5, styles.mT15, styles.col, styles.smallFitter, styles.ml2]}>
+      <View key={status}>
+        <Text
+          style={[
+            styles.subtitle1,
+            styles.mb5,
+            styles.mT15,
+            styles.col,
+            styles.smallFitter,
+            styles.ml2,
+          ]}
+        >
           {/* {status.toUpperCase()} */}
           {`${toRoman(index + 1)}. ${status.toUpperCase()}`}
-
         </Text>
         <View style={[styles.fitter]}>
           <View style={[{ borderRadius: 8 }]}>
@@ -867,43 +829,147 @@ const MyDocument = ({
                 <View style={[styles.tableCell_b1, styles.p12]}>
                   <Text style={styles.subtitle1}>S.NO</Text>
                 </View>
-                <View style={[styles.tableCell_b2, styles.alignLeft, styles.p12, styles.pr4, styles.ml1]}>
+                <View
+                  style={[
+                    styles.tableCell_b2,
+                    styles.alignLeft,
+                    styles.p12,
+                    styles.pr4,
+                    styles.ml1,
+                  ]}
+                >
                   <Text style={styles.subtitle1}>Unit No</Text>
                 </View>
-                <View style={[styles.tableCell_b3, styles.alignLeft, styles.p12, styles.pr8, styles.ml1]}>
+                <View
+                  style={[
+                    styles.tableCell_b3,
+                    styles.alignLeft,
+                    styles.p12,
+                    styles.pr8,
+                    styles.ml1,
+                  ]}
+                >
                   <Text style={styles.subtitle1}>Facing</Text>
                 </View>
-                <View style={[styles.tableCell_b4, styles.alignRight, styles.p12, styles.pr8, styles.ml1]}>
+                <View
+                  style={[
+                    styles.tableCell_b4,
+                    styles.alignRight,
+                    styles.p12,
+                    styles.pr8,
+                    styles.ml1,
+                  ]}
+                >
                   <Text style={styles.subtitle1}>Plot Area</Text>
                 </View>
-                <View style={[styles.tableCell_b5, styles.alignLeft, styles.p12, styles.pr8, styles.ml1]}>
+                <View
+                  style={[
+                    styles.tableCell_b5,
+                    styles.alignLeft,
+                    styles.p12,
+                    styles.pr8,
+                    styles.ml1,
+                  ]}
+                >
                   <Text style={styles.subtitle1}>Customer Name</Text>
                 </View>
-                <View style={[styles.tableCell_b6, styles.alignRight, styles.p12, styles.pr8, styles.ml1]}>
+                <View
+                  style={[
+                    styles.tableCell_b6,
+                    styles.alignRight,
+                    styles.p12,
+                    styles.pr8,
+                    styles.ml1,
+                  ]}
+                >
                   <Text style={styles.subtitle1}>B Date</Text>
                 </View>
-                <View style={[styles.tableCell_b7, styles.alignRight, styles.p12, styles.pr8, styles.ml1]}>
+                <View
+                  style={[
+                    styles.tableCell_b7,
+                    styles.alignRight,
+                    styles.p12,
+                    styles.pr8,
+                    styles.ml1,
+                  ]}
+                >
                   <Text style={styles.subtitle1}>SU Date</Text>
                 </View>
-                <View style={[styles.tableCell_b14, styles.alignRight, styles.p12, styles.pr8, styles.ml1]}>
+                <View
+                  style={[
+                    styles.tableCell_b14,
+                    styles.alignRight,
+                    styles.p12,
+                    styles.pr8,
+                    styles.ml1,
+                  ]}
+                >
                   <Text style={styles.subtitle1}>Ageing</Text>
                 </View>
-                <View style={[styles.tableCell_b8, styles.alignRight, styles.p12, styles.pr8, styles.ml1]}>
+                <View
+                  style={[
+                    styles.tableCell_b8,
+                    styles.alignRight,
+                    styles.p12,
+                    styles.pr8,
+                    styles.ml1,
+                  ]}
+                >
                   <Text style={styles.subtitle1}>Price/sqft</Text>
                 </View>
-                <View style={[styles.tableCell_b9, styles.alignRight, styles.p12, styles.pr8, styles.ml1]}>
+                <View
+                  style={[
+                    styles.tableCell_b9,
+                    styles.alignRight,
+                    styles.p12,
+                    styles.pr8,
+                    styles.ml1,
+                  ]}
+                >
                   <Text style={styles.subtitle1}>Sale Value</Text>
                 </View>
-                <View style={[styles.tableCell_b10, styles.alignRight, styles.p12, styles.pr8, styles.ml1]}>
+                <View
+                  style={[
+                    styles.tableCell_b10,
+                    styles.alignRight,
+                    styles.p12,
+                    styles.pr8,
+                    styles.ml1,
+                  ]}
+                >
                   <Text style={styles.subtitle1}>Received</Text>
                 </View>
-                <View style={[styles.tableCell_b11, styles.alignRight, styles.p12, styles.pr8, styles.ml1]}>
+                <View
+                  style={[
+                    styles.tableCell_b11,
+                    styles.alignRight,
+                    styles.p12,
+                    styles.pr8,
+                    styles.ml1,
+                  ]}
+                >
                   <Text style={styles.subtitle1}>Balance</Text>
                 </View>
-                <View style={[styles.tableCell_b12, styles.alignRight, styles.p12, styles.pr8, styles.ml1]}>
+                <View
+                  style={[
+                    styles.tableCell_b12,
+                    styles.alignRight,
+                    styles.p12,
+                    styles.pr8,
+                    styles.ml1,
+                  ]}
+                >
                   <Text style={styles.subtitle1}>Sales Person Name</Text>
                 </View>
-                <View style={[styles.tableCell_b13, styles.alignRight, styles.p12, styles.pr8, styles.ml1]}>
+                <View
+                  style={[
+                    styles.tableCell_b13,
+                    styles.alignRight,
+                    styles.p12,
+                    styles.pr8,
+                    styles.ml1,
+                  ]}
+                >
                   <Text style={styles.subtitle1}>CRM Name</Text>
                 </View>
               </View>
@@ -916,50 +982,180 @@ const MyDocument = ({
                     styles.textcolor,
                     styles.bg1,
                     index + 1 !== data.length ? styles.borderbottom : null,
-                    { borderBottom: '1px solid #e5e7eb', marginTop: '2px', paddingTop: '4px', borderLeft: '0px' },
+                    {
+                      borderBottom: '1px solid #e5e7eb',
+                      marginTop: '2px',
+                      paddingTop: '4px',
+                      borderLeft: '0px',
+                    },
                   ]}
                   key={index}
                 >
-                  <View style={[styles.tableCell_b1, styles.bg1, styles.pl2, { borderLeftWidth: 0, borderRightWidth: 0 }, { marginTop: '-1px' }]}>
+                  <View
+                    style={[
+                      styles.tableCell_b1,
+                      styles.bg1,
+                      styles.pl2,
+                      { borderLeftWidth: 0, borderRightWidth: 0 },
+                      { marginTop: '-1px' },
+                    ]}
+                  >
                     <Text>{index + 1}</Text>
                   </View>
-                  <View style={[styles.tableCell_b2, styles.alignLeft, styles.p12, styles.pr8, styles.ml1, styles.bg1]}>
+                  <View
+                    style={[
+                      styles.tableCell_b2,
+                      styles.alignLeft,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml1,
+                      styles.bg1,
+                    ]}
+                  >
                     <Text style={styles.subtitle2}>{item?.unit_no}</Text>
                   </View>
-                  <View style={[styles.tableCell_b3, styles.alignLeft, styles.p12, styles.pr8, styles.ml1, styles.bg1]}>
+                  <View
+                    style={[
+                      styles.tableCell_b3,
+                      styles.alignLeft,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml1,
+                      styles.bg1,
+                    ]}
+                  >
                     <Text>{item?.facing}</Text>
                   </View>
-                  <View style={[styles.tableCell_b4, styles.alignRight, styles.p12, styles.pr8, styles.ml1, styles.bg1]}>
+                  <View
+                    style={[
+                      styles.tableCell_b4,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml1,
+                      styles.bg1,
+                    ]}
+                  >
                     <Text>{item?.area}</Text>
                   </View>
-                  <View style={[styles.tableCell_b5, styles.alignLeft, styles.p12, styles.pr8, styles.ml1, styles.bg1]}>
+                  <View
+                    style={[
+                      styles.tableCell_b5,
+                      styles.alignLeft,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml1,
+                      styles.bg1,
+                    ]}
+                  >
                     <Text>{item?.customerDetailsObj?.customerName1}</Text>
                   </View>
-                  <View style={[styles.tableCell_b6, styles.alignRight, styles.p12, styles.pr8, styles.ml1, styles.bg1]}>
+                  <View
+                    style={[
+                      styles.tableCell_b6,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml1,
+                      styles.bg1,
+                    ]}
+                  >
                     <Text>{prettyDate(item?.booked_on)}</Text>
                   </View>
-                  <View style={[styles.tableCell_b7, styles.alignRight, styles.p12, styles.pr8, styles.ml1, styles.bg1]}>
+                  <View
+                    style={[
+                      styles.tableCell_b7,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml1,
+                      styles.bg1,
+                    ]}
+                  >
                     <Text>{prettyDate(item?.stsUpT)}</Text>
                   </View>
-                  <View style={[styles.tableCell_b14, styles.alignRight, styles.p12, styles.pr8, styles.ml1, styles.bg1]}>
+                  <View
+                    style={[
+                      styles.tableCell_b14,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml1,
+                      styles.bg1,
+                    ]}
+                  >
                     <Text>NA</Text>
                   </View>
-                  <View style={[styles.tableCell_b8, styles.alignRight, styles.p12, styles.pr8, styles.ml1, styles.bg1]}>
+                  <View
+                    style={[
+                      styles.tableCell_b8,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml1,
+                      styles.bg1,
+                    ]}
+                  >
                     <Text>₹{item?.sqft_rate?.toLocaleString('en-IN')}</Text>
                   </View>
-                  <View style={[styles.tableCell_b9, styles.alignRight, styles.p12, styles.pr8, styles.ml1, styles.bg1]}>
+                  <View
+                    style={[
+                      styles.tableCell_b9,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml1,
+                      styles.bg1,
+                    ]}
+                  >
                     <Text>₹{item?.T_A?.toLocaleString('en-IN')}</Text>
                   </View>
-                  <View style={[styles.tableCell_b10, styles.alignRight, styles.p12, styles.pr8, styles.ml1, styles.bg1]}>
+                  <View
+                    style={[
+                      styles.tableCell_b10,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml1,
+                      styles.bg1,
+                    ]}
+                  >
                     <Text>₹{item?.T_approved?.toLocaleString('en-IN')}</Text>
                   </View>
-                  <View style={[styles.tableCell_b11, styles.alignRight, styles.p12, styles.pr8, styles.ml1, styles.bg1]}>
+                  <View
+                    style={[
+                      styles.tableCell_b11,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml1,
+                      styles.bg1,
+                    ]}
+                  >
                     <Text>₹{item?.T_balance?.toLocaleString('en-IN')}</Text>
                   </View>
-                  <View style={[styles.tableCell_b12, styles.alignRight, styles.p12, styles.pr8, styles.ml1, styles.bg1]}>
+                  <View
+                    style={[
+                      styles.tableCell_b12,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml1,
+                      styles.bg1,
+                    ]}
+                  >
                     <Text>{item?.by}</Text>
                   </View>
-                  <View style={[styles.tableCell_b13, styles.alignRight, styles.p12, styles.pr8, styles.ml1, styles.bg1]}>
+                  <View
+                    style={[
+                      styles.tableCell_b13,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml1,
+                      styles.bg1,
+                    ]}
+                  >
                     <Text>{item?.assignedToObj?.email}</Text>
                   </View>
                 </View>
@@ -971,49 +1167,182 @@ const MyDocument = ({
                   styles.tableRow,
                   styles.textcolor,
                   styles.bg1,
-                  { borderBottom: '1px solid #e5e7eb', marginTop: '2px', paddingTop: '4px', borderLeft: '0px' },
+                  {
+                    borderBottom: '1px solid #e5e7eb',
+                    marginTop: '2px',
+                    paddingTop: '4px',
+                    borderLeft: '0px',
+                  },
                 ]}
               >
-                <View style={[styles.tableCell_b1, styles.bg1, styles.pl2, { borderLeftWidth: 0, borderRightWidth: 0 }, { marginTop: '-1px' }]}>
+                <View
+                  style={[
+                    styles.tableCell_b1,
+                    styles.bg1,
+                    styles.pl2,
+                    { borderLeftWidth: 0, borderRightWidth: 0 },
+                    { marginTop: '-1px' },
+                  ]}
+                >
                   <Text>Total</Text>
                 </View>
-                <View style={[styles.tableCell_b2, styles.alignLeft, styles.p12, styles.pr8, styles.ml1, styles.bg1]}>
+                <View
+                  style={[
+                    styles.tableCell_b2,
+                    styles.alignLeft,
+                    styles.p12,
+                    styles.pr8,
+                    styles.ml1,
+                    styles.bg1,
+                  ]}
+                >
                   <Text></Text>
                 </View>
-                <View style={[styles.tableCell_b3, styles.alignLeft, styles.p12, styles.pr8, styles.ml1, styles.bg1]}>
+                <View
+                  style={[
+                    styles.tableCell_b3,
+                    styles.alignLeft,
+                    styles.p12,
+                    styles.pr8,
+                    styles.ml1,
+                    styles.bg1,
+                  ]}
+                >
                   <Text></Text>
                 </View>
-                <View style={[styles.tableCell_b4, styles.alignRight, styles.p12, styles.pr8, styles.ml1, styles.bg1]}>
+                <View
+                  style={[
+                    styles.tableCell_b4,
+                    styles.alignRight,
+                    styles.p12,
+                    styles.pr8,
+                    styles.ml1,
+                    styles.bg1,
+                  ]}
+                >
                   <Text></Text>
                 </View>
-                <View style={[styles.tableCell_b5, styles.alignLeft, styles.p12, styles.pr8, styles.ml1, styles.bg1]}>
+                <View
+                  style={[
+                    styles.tableCell_b5,
+                    styles.alignLeft,
+                    styles.p12,
+                    styles.pr8,
+                    styles.ml1,
+                    styles.bg1,
+                  ]}
+                >
                   <Text></Text>
                 </View>
-                <View style={[styles.tableCell_b6, styles.alignRight, styles.p12, styles.pr8, styles.ml1, styles.bg1]}>
+                <View
+                  style={[
+                    styles.tableCell_b6,
+                    styles.alignRight,
+                    styles.p12,
+                    styles.pr8,
+                    styles.ml1,
+                    styles.bg1,
+                  ]}
+                >
                   <Text></Text>
                 </View>
-                <View style={[styles.tableCell_b7, styles.alignRight, styles.p12, styles.pr8, styles.ml1, styles.bg1]}>
+                <View
+                  style={[
+                    styles.tableCell_b7,
+                    styles.alignRight,
+                    styles.p12,
+                    styles.pr8,
+                    styles.ml1,
+                    styles.bg1,
+                  ]}
+                >
                   <Text></Text>
                 </View>
-                <View style={[styles.tableCell_b14, styles.alignRight, styles.p12, styles.pr8, styles.ml1, styles.bg1]}>
+                <View
+                  style={[
+                    styles.tableCell_b14,
+                    styles.alignRight,
+                    styles.p12,
+                    styles.pr8,
+                    styles.ml1,
+                    styles.bg1,
+                  ]}
+                >
                   <Text></Text>
                 </View>
-                <View style={[styles.tableCell_b8, styles.alignRight, styles.p12, styles.pr8, styles.ml1, styles.bg1]}>
+                <View
+                  style={[
+                    styles.tableCell_b8,
+                    styles.alignRight,
+                    styles.p12,
+                    styles.pr8,
+                    styles.ml1,
+                    styles.bg1,
+                  ]}
+                >
                   <Text></Text>
                 </View>
-                <View style={[styles.tableCell_b9, styles.alignRight, styles.p12, styles.pr8, styles.ml1, styles.bg1, styles.bold]}>
+                <View
+                  style={[
+                    styles.tableCell_b9,
+                    styles.alignRight,
+                    styles.p12,
+                    styles.pr8,
+                    styles.ml1,
+                    styles.bg1,
+                    styles.bold,
+                  ]}
+                >
                   <Text>₹{totalSaleValue?.toLocaleString('en-IN')}</Text>
                 </View>
-                <View style={[styles.tableCell_b10, styles.alignRight, styles.p12, styles.pr8, styles.ml1, styles.bg1, styles.bold]}>
+                <View
+                  style={[
+                    styles.tableCell_b10,
+                    styles.alignRight,
+                    styles.p12,
+                    styles.pr8,
+                    styles.ml1,
+                    styles.bg1,
+                    styles.bold,
+                  ]}
+                >
                   <Text>₹{totalReceived?.toLocaleString('en-IN')}</Text>
                 </View>
-                <View style={[styles.tableCell_b11, styles.alignRight, styles.p12, styles.pr8, styles.ml1, styles.bg1, styles.bold]}>
+                <View
+                  style={[
+                    styles.tableCell_b11,
+                    styles.alignRight,
+                    styles.p12,
+                    styles.pr8,
+                    styles.ml1,
+                    styles.bg1,
+                    styles.bold,
+                  ]}
+                >
                   <Text>₹{totalBalance?.toLocaleString('en-IN')}</Text>
                 </View>
-                <View style={[styles.tableCell_b12, styles.alignRight, styles.p12, styles.pr8, styles.ml1, styles.bg1]}>
+                <View
+                  style={[
+                    styles.tableCell_b12,
+                    styles.alignRight,
+                    styles.p12,
+                    styles.pr8,
+                    styles.ml1,
+                    styles.bg1,
+                  ]}
+                >
                   <Text></Text>
                 </View>
-                <View style={[styles.tableCell_b13, styles.alignRight, styles.p12, styles.pr8, styles.ml1, styles.bg1]}>
+                <View
+                  style={[
+                    styles.tableCell_b13,
+                    styles.alignRight,
+                    styles.p12,
+                    styles.pr8,
+                    styles.ml1,
+                    styles.bg1,
+                  ]}
+                >
                   <Text></Text>
                 </View>
               </View>
@@ -1021,26 +1350,40 @@ const MyDocument = ({
           </View>
         </View>
       </View>
-
-
-    );
-  };
-
-
-
-
+    )
+  }
 
   return (
     <Document>
       <Page size="A3" orientation="landscape" style={styles.page}>
         <View style={[styles.fitternew]}>
-          <View style={[styles.gridContainer, styles.mb10, styles.topBoderRadiusHeader, styles.boottomBoderRadiusHeader, styles.dashBorder, styles.cellBgHead, styles.headFitter]}>
+          <View
+            style={[
+              styles.gridContainer,
+              styles.mb10,
+              styles.topBoderRadiusHeader,
+              styles.boottomBoderRadiusHeader,
+              styles.dashBorder,
+              styles.cellBgHead,
+              styles.headFitter,
+            ]}
+          >
             <View style={[styles.col6, styles.pr3]}>
               <Text style={[styles.h4, styles.pt3, styles.ml1]}>
                 {projectDetails?.projName}
               </Text>
             </View>
-            <View style={[styles.col6, { flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-end', height: '100%' }]}>
+            <View
+              style={[
+                styles.col6,
+                {
+                  flexDirection: 'column',
+                  justifyContent: 'flex-end',
+                  alignItems: 'flex-end',
+                  height: '100%',
+                },
+              ]}
+            >
               <Text style={[styles.h4, styles.mT1, styles.pt5, styles.pr3]}>
                 Summary by Stage
               </Text>
@@ -1051,60 +1394,48 @@ const MyDocument = ({
           </View>
         </View>
 
+        <View
+          style={{
+            borderTopLeftRadius: 6,
+            borderTopRightRadius: 6,
+            borderBottomLeftRadius: 6,
+            borderBottomRightRadius: 6,
+            borderWidth: 1,
+            borderColor: '#e5e7eb',
+            borderStyle: 'solid',
+            margin: 20,
+            backgroundColor: '#FFFFFF',
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: '#EDEDED',
+              padding: 12,
+              borderTopLeftRadius: 6,
+              borderTopRightRadius: 6,
+            }}
+          >
+            <Text
+              style={{
+                color: '#000',
+                fontSize: 16,
+                fontWeight: 'bold',
+                textAlign: 'left',
+              }}
+            >
+              Booking Summary
+            </Text>
+            <Text color="#6A6A6A">Booked, ATS, SD</Text>
+          </View>
 
-
-
-
-<View
-  style={{
-    borderTopLeftRadius: 6,
-    borderTopRightRadius: 6,
-    borderBottomLeftRadius: 6,
-    borderBottomRightRadius: 6, 
-    borderWidth: 1,
-    borderColor: '#e5e7eb',
-    borderStyle: 'solid',
-    margin: 20,
-    backgroundColor: '#FFFFFF', 
-  }}
->
-
-  <View
-    style={{
-      backgroundColor: '#EDEDED',
-      padding: 12,
-      borderTopLeftRadius: 6,
-      borderTopRightRadius: 6,
-
-    }}
-  >
-    <Text
-      style={{
-        color: '#000', 
-        fontSize: 16,
-        fontWeight: 'bold',
-        textAlign: 'left',
-      }}
-    >
-      Booking Summary
-    </Text>
-    <Text color='#6A6A6A'>Booked, ATS, SD</Text>
-  </View>
-
-
-  {Object.entries(categorizedData).map(([status, data], index) => renderTable(data, status, index))}
-</View>
-
-
-
+          {Object.entries(categorizedData).map(([status, data], index) =>
+            renderTable(data, status, index)
+          )}
+        </View>
       </Page>
     </Document>
-  );
-};
-
-
-
-
+  )
+}
 
 const PdfBookingSummaryReport = ({
   user,
@@ -1163,21 +1494,25 @@ const PdfBookingSummaryReport = ({
         {({ blob, url, loading, error }) =>
           loading ? (
             <div className="flex items-center bg-white text-black px-3 py-1 text-sm tracking-wider rounded-md focus:outline-none">
-              <Download style={{ height: '20px', width: '14px', strokeWidth: '2.5' }} className="mr-2 mb-0.5 font-semibold" />
+              <Download
+                style={{ height: '20px', width: '14px', strokeWidth: '2.5' }}
+                className="mr-2 mb-0.5 font-semibold"
+              />
               <p className="text-black text-[13px] font-semibold">Download</p>
             </div>
           ) : (
             <div className="flex items-center bg-white px-3 py-1 text-black text-sm tracking-wider rounded-md focus:outline-none">
-              <Download style={{ height: '20px', width: '14px', strokeWidth: '2.5' }} className="mr-2 mb-0.5 font-semibold" />
+              <Download
+                style={{ height: '20px', width: '14px', strokeWidth: '2.5' }}
+                className="mr-2 mb-0.5 font-semibold"
+              />
               <p className="text-black text-[13px] font-semibold">Download</p>
             </div>
           )
         }
       </PDFDownloadLink>
     </div>
-  );
-};
-
-
+  )
+}
 
 export default PdfBookingSummaryReport

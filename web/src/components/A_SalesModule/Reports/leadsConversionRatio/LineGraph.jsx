@@ -1,9 +1,6 @@
 import React from 'react'
 
-import {
-  LineChart,
-  Line,
-} from 'recharts'
+import { LineChart, Line } from 'recharts'
 
 const LineGraph = () => {
   const data = [

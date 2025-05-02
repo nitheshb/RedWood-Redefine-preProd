@@ -19,7 +19,6 @@ const HeadNavBar = (props) => {
     props.searchVal ? props.searchVal : ''
   )
 
-
   const [showSearchDropdown, setShowSearchDropdown] =
     React.useState<boolean>(false)
   const [showLoader, setshowLoader] = React.useState<boolean>(false)
@@ -66,7 +65,6 @@ const HeadNavBar = (props) => {
         setSearchData(res)
         dispatch(searchResponse({ ...res[0], id: 'dkcjbkdjbadkj' }))
         setshowLoader(false)
-
       }
     }
     const handleClickOutside = (event) => {
@@ -103,8 +101,6 @@ const HeadNavBar = (props) => {
             style={{ marginLeft: '-19px' }}
             className="relative z-10 flex items-center text-md font-extrabold leading-none text-[#141446] select-none pl-0"
           >
-
-
             <span className="ml- text-md" style={{ marginLeft: '41px' }}>
               {' '}
               Redefine Erp .
@@ -119,7 +115,6 @@ const HeadNavBar = (props) => {
               />
             </section>
           </span>
-
 
           <span
             style={{ marginLeft: '10px' }}
@@ -159,7 +154,6 @@ const HeadNavBar = (props) => {
                       </div>
                     </div>
                   ) : (
-
                     <div className="z-10 absolute w-72 bg-zinc-700 text-white">
                       {searchData.length
                         ? searchData.map((item, index) => {
@@ -183,22 +177,20 @@ const HeadNavBar = (props) => {
                                   >
                                     CRM {'   '}
                                   </Link>
-                          
+
                                   <Link
                                     to={routes.financeModule()}
                                     className="text-lg underline mr-2"
                                   >
                                     Finance {'   '}
                                   </Link>
-                      
+
                                   <Link
                                     to={routes.legalModule()}
                                     className="text-lg underline mr-2"
                                   >
                                     Legal {'   '}
                                   </Link>
-
-      
                                 </div>
                                 {searchData.length - 1 !== index && <hr></hr>}
                               </div>
@@ -246,7 +238,6 @@ const HeadNavBar = (props) => {
                   : user?.department}
               </div>
             </section>
-
           </Box>
           <Menu
             id="basic-menu"

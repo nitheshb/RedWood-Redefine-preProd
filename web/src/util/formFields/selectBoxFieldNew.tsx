@@ -28,7 +28,6 @@ const customStyles = {
   indicatorsContainer: (provided, state) => ({
     ...provided,
     height: '30px',
-
   }),
   menu: (provided) => ({ ...provided, zIndex: 9999 }),
 }
@@ -45,7 +44,7 @@ const formatOptionLabel = ({ value, label, dept }) => (
         paddingBottom: '2px',
         borderRadius: '10px',
         fontSize: '10px',
-        height: '21px'
+        height: '21px',
       }}
     >
       {dept}
@@ -81,7 +80,9 @@ export const CustomSelectNew = ({
       // components={{ Option: CustomOption }}
       // getOptionLabel={(option) => `${option.label} - ${option.dept}`}
       formatOptionLabel={formatOptionLabel}
-      className={`text-sm  w-full ${label != '' ? 'mt-' : ''} border-transparent`}
+      className={`text-sm  w-full ${
+        label != '' ? 'mt-' : ''
+      } border-transparent`}
       styles={customStyles}
     />
   )

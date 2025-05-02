@@ -289,7 +289,6 @@ const CrmTaskList = ({ leadsTyper }) => {
     setBoardData(newBoardData)
   }
 
-
   const fSetLeadsType = (type) => {
     setAddLeadsTypes(type)
     setisImportLeadsOpen(true)
@@ -358,19 +357,10 @@ const CrmTaskList = ({ leadsTyper }) => {
       )
       return unsubscribe
     }
-
   }
 
   const serealizeData = (array) => {
- 
-    const x = [
-      'new',
-      'review',
-      'cleared',
-      'rejected',
-      '',
-
-    ].map((status) => {
+    const x = ['new', 'review', 'cleared', 'rejected', ''].map((status) => {
       const items = array.filter((data) => data.Status.toLowerCase() == status)
 
       return { name: status, items }
@@ -379,7 +369,6 @@ const CrmTaskList = ({ leadsTyper }) => {
   }
 
   const selUserProfileF = (data) => {
-
     setSelUserProfile(data)
   }
   return (
@@ -630,7 +619,6 @@ const CrmTaskList = ({ leadsTyper }) => {
                                 <span className="font-normal text-xs app-color-gray-1">
                                   {finData?.[`${assets[0]}_comment`] || '-'}
                                 </span>
-  
                               </td>
                             </tr>
                           )
@@ -652,7 +640,7 @@ const CrmTaskList = ({ leadsTyper }) => {
         widthClass="max-w-7xl"
         transactionData={transactionData}
         unitsViewMode={false}
-        selCustomerPayload = {selUserProfile}
+        selCustomerPayload={selUserProfile}
       />
     </>
   )

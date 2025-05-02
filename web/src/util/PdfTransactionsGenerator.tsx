@@ -34,7 +34,6 @@ import pdfimg11 from '../../public/pdfimg11.png'
 import pdfimg12 from '../../public/pdfimg12.png'
 import Loader from 'src/components/Loader/Loader'
 
-
 Font.register({
   family: 'Roboto',
   fonts: [
@@ -57,10 +56,7 @@ const useStyles = () =>
           marginLeft: '20px',
           marginRight: '20px',
           // marginTop: '20px',
-
         },
-
-
 
         smallFitter: {
           paddingLeft: '10px',
@@ -140,7 +136,7 @@ const useStyles = () =>
           padding: '0px',
           paddingTop: 35,
           paddingHorizontal: 5,
-          paddingBottom: 20 
+          paddingBottom: 20,
           // padding: '40px 24px 60px 24px',
         },
         footer: {
@@ -180,7 +176,6 @@ const useStyles = () =>
           // borderBottomWidth: 0.5,
           // borderStyle: 'solid',
           // borderColor: '#DFE3E8',
-
         },
         borderbottom: {
           borderBottomWidth: 1,
@@ -223,14 +218,10 @@ const useStyles = () =>
           borderBottomRightRadius: '16px',
         },
 
-
-
         tableHeader: {
           padding: '4px 0',
           flexDirection: 'row',
-          alignItems:'flex-end'
-
-
+          alignItems: 'flex-end',
         },
         bg: {
           backgroundColor: '#F3FFF2',
@@ -263,7 +254,7 @@ const useStyles = () =>
         },
         tableCell_1: {
           width: '5%',
-           paddingLeft: 10,
+          paddingLeft: 10,
         },
         tableCell_35: {
           width: '35%',
@@ -273,7 +264,6 @@ const useStyles = () =>
         tableCell_200: {
           width: '20%',
           paddingRight: 3,
-
         },
 
         tableCell_20: {
@@ -281,19 +271,14 @@ const useStyles = () =>
           paddingRight: 10,
         },
 
-
         tableCell_150: {
           width: '15%',
           paddingRight: 10,
         },
 
-
         tableCell_1500: {
           width: '15%',
-       
         },
-
-
 
         tableCell_10: {
           width: '10%',
@@ -331,16 +316,16 @@ const useStyles = () =>
         cellBgHead: {
           backgroundColor: '#EDEDED',
         },
-        textcolor:{
+        textcolor: {
           color: '#6A6A6A',
         },
-        textcolorhead:{
+        textcolorhead: {
           color: '#3D3D3D',
         },
 
-        blockborder:{
-          border: '1px solid 6A6A6A'
-        }
+        blockborder: {
+          border: '1px solid 6A6A6A',
+        },
       }),
     []
   )
@@ -569,9 +554,6 @@ const invoiceDet: IInvoice[] = [
   },
 ]
 
-
-
-
 const MyDocument = ({
   user,
   selUnitDetails,
@@ -603,575 +585,697 @@ const MyDocument = ({
     console.log('myObj', myObj, myAdditionalCharges)
   }, [myObj])
 
-
-
-
-
-
-  const [sectionDimensions, setSectionDimensions] = useState([]);
-  const [tableDimensions, setTableDimensions] = useState([]);
+  const [sectionDimensions, setSectionDimensions] = useState([])
+  const [tableDimensions, setTableDimensions] = useState([])
 
   // This function handles the section rendering
   const handleSectionRender = (e, sectionIndex) => {
-    const { width, height } = e.source;
-    setSectionDimensions((prev) => [
-      ...prev,
-      { sectionIndex, width, height },
-    ]);
-    console.log(`Section ${sectionIndex} rendered with dimensions:`, width, height);
-  };
+    const { width, height } = e.source
+    setSectionDimensions((prev) => [...prev, { sectionIndex, width, height }])
+    console.log(
+      `Section ${sectionIndex} rendered with dimensions:`,
+      width,
+      height
+    )
+  }
 
   // This function handles the table rendering
   const handleTableRender = (e, tableIndex) => {
-    const { width, height } = e.source;
-    setTableDimensions((prev) => [
-      ...prev,
-      { tableIndex, width, height },
-    ]);
-    console.log(`Table ${tableIndex} rendered with dimensions:`, width, height);
-  };
+    const { width, height } = e.source
+    setTableDimensions((prev) => [...prev, { tableIndex, width, height }])
+    console.log(`Table ${tableIndex} rendered with dimensions:`, width, height)
+  }
 
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-
-
-        <View style={[ styles.fitternew, ]}>
-
-
-        <View
-          style={[
-            styles.gridContainer,
-            // styles.mb10,
-            // styles.fitternew,
-            styles.topBoderRadius,
-
-            styles.dashBorder,
-            styles.cellBgHead,
-            styles.headFitter,
-          ]}
-        >
+        <View style={[styles.fitternew]}>
           <View
-            style={[styles.col6, styles.smallFitter, styles.pr3, styles.ml1,
-              {  flexDirection: 'column', alignItems: 'flex-start', }
+            style={[
+              styles.gridContainer,
+              // styles.mb10,
+              // styles.fitternew,
+              styles.topBoderRadius,
+
+              styles.dashBorder,
+              styles.cellBgHead,
+              styles.headFitter,
             ]}
           >
+            <View
+              style={[
+                styles.col6,
+                styles.smallFitter,
+                styles.pr3,
+                styles.ml1,
+                { flexDirection: 'column', alignItems: 'flex-start' },
+              ]}
+            >
+              <Image
+                src={projectDetails?.projectLogoUrl}
+                style={{ width: 95, height: 45, objectFit: 'contain' }}
+              />
 
-            <Image src={projectDetails?.projectLogoUrl} style={{ width: 95, height: 45, objectFit: 'contain'  }} />
-            
-            {/* <Image source="/ps_logo.png" style={{ width: 85, height: 35 }} /> */}
-            <Text style={[styles.h4, styles.pt3, styles.ml1]}>
-              {projectDetails?.projectName}
-            </Text>
-            {/* <Text>{myObj} </Text> */}
+              {/* <Image source="/ps_logo.png" style={{ width: 85, height: 35 }} /> */}
+              <Text style={[styles.h4, styles.pt3, styles.ml1]}>
+                {projectDetails?.projectName}
+              </Text>
+              {/* <Text>{myObj} </Text> */}
+            </View>
+
+            <View
+              style={[
+                styles.col6,
+
+                // styles.fitternew,
+                {
+                  flexDirection: 'column',
+                  justifyContent: 'flex-end',
+                  alignItems: 'flex-end',
+                  height: '100%',
+                },
+              ]}
+            >
+              <Text style={[styles.h4, styles.mT1, styles.pt5, styles.pr3]}>
+                Payments Transactions
+              </Text>
+
+              <Text style={[styles.body2, styles.pr3, { color: '#3D3D3D' }]}>
+                {fDate(prettyDate(Timestamp.now().toMillis()))}
+              </Text>
+            </View>
           </View>
-
-
-
-<View
-  style={[
-    styles.col6,
-
-    // styles.fitternew,
-    {
-      flexDirection: 'column',
-      justifyContent: 'flex-end',
-      alignItems: 'flex-end',
-      height: '100%',
-
-    },
-  ]}
->
-  <Text
-    style={[
-      styles.h4,
-      styles.mT1,
-      styles.pt5,
-      styles.pr3,
-    ]}
-  >
-    Payments Transactions
-  </Text>
-
-  <Text style={[styles.body2, styles.pr3, {color:'#3D3D3D'}]}>
-    {fDate(prettyDate(Timestamp.now().toMillis()))}
-  </Text>
-</View>
-
-
-
-
-
-
-        </View>
-
-        <View style={[styles.gridContainer, styles.bottomBorderRadius, styles.pt3,    styles.mb10, { backgroundColor:'#EDEDED'}]}>
 
           <View
-  style={[
-    styles.col4,
-    styles.ml3,
-    styles.cellBgHead,
-    styles.AllsmallFitter,
-
-    // styles.mb10,
-  ]}
->
-
- 
-
-
-
-
-
-
-
-  <View>
-
-  <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
-  <Image src={pdfimg1} style={{ width: 10, height: 10,  marginRight: 8 , marginBottom:5 }} />
-
-    <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
-    Applicant Name:
-    </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>{selCustomerPayload?.customerDetailsObj?.customerName1}</Text>
-  </View>
-
-
-
-
-  <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
-  <Image src={pdfimg2} style={{ width: 10, height: 10,  marginRight: 8 , marginBottom:5 }} />
-
-    <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
-    Customer ID:
-    </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>NA</Text>
-  </View>
-
-
-  <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
-  <Image src={pdfimg3} style={{ width: 10, height: 10,  marginRight: 8 , marginBottom:5 }} />
-
-    <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
-    Phone number:
-    </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>{selCustomerPayload?.customerDetailsObj?.phoneNo1}</Text>
-  </View>
-
-
-  <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
-  <Image src={pdfimg5} style={{ width: 10, height: 10,  marginRight: 8 , marginBottom:5 }} />
-
-    <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
-    Email:
-    </Text>
-    <Text style={[ { marginLeft: 15, color:'#6A6A6A' }]}>{selCustomerPayload?.customerDetailsObj?.email1}</Text>
-  </View>
-</View>
-
-
-
-</View>
-
-
-
-
-
-
-
-
-
-
-
-          <View style={[styles.col4, styles.cellBgHead, styles.AllsmallFitter]}>
-
-
-<View>
-
-  <View style={{ flexDirection: 'row',  alignItems: 'center', marginBottom: 5 }}>
-  <Image src={pdfimg5} style={{ width: 10, height: 10,  marginRight: 8 , marginBottom:5 }} />
-    <Text style={[styles.subtitle2, { fontWeight: 600, width: 40 }]}>
-      Unit No:
-    </Text>
-    <Text style={{ flex: 1,  color:'#6A6A6A' }}>{selCustomerPayload?.unit_no}</Text>
-  </View>
-
-
-  <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
-  <Image src={pdfimg6} style={{ width: 10, height: 10,  marginRight: 8 , marginBottom:5 }} />
-    <Text style={[styles.subtitle2, { fontWeight: 600, width: 40 }]}>
-      Size:
-    </Text>
-    <Text style={{ flex: 1,  color:'#6A6A6A' }}>
-      {selUnitDetails?.size}{' '}
-      <Text>
-        {'('}
-        {selCustomerPayload?.area} sqft{')'}
-      </Text>
-    </Text>
-  </View>
-
-
-  <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
-  <Image src={pdfimg7} style={{ width: 10, height: 10,  marginRight: 8 , marginBottom:5 }} />
-    <Text style={[styles.subtitle2, { fontWeight: 600, width: 40 }]}>
-      Facing:
-    </Text>
-    <Text style={{ flex: 1,  color:'#6A6A6A' }}>{selCustomerPayload?.facing}</Text>
-  </View>
-
-
-  <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
-  <Image src={pdfimg8} style={{ width: 10, height: 10,  marginRight: 8 , marginBottom:5 }} />
-    <Text style={[styles.subtitle2, { fontWeight: 600, width: 40 }]}>
-      Type:
-    </Text>
-    <Text style={{ flex: 1,  color:'#6A6A6A' }}>
-      {projectDetails?.projectType?.name === 'Apartment'
-        ? 'Flat'
-        :projectDetails?.projectType?.name === 'Plots'
-        ? 'Plot'
-        : projectDetails?.projectType?.name === 'Villas'
-        ? 'Villa'
-        : ''}
-    </Text>
-  </View>
-</View>
-
-
-
-
-
-          </View>
-
-
-
-
-
-          <View style={[styles.col4, styles.cellBgHead, styles.mr15, styles.AllsmallFitter]}>
- 
-
-<View>
-
-  <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
-  <Image src={pdfimg9} style={{ width: 10, height: 10,  marginRight: 8 , marginBottom:5 }} />
-
-    <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
-      Unit Cost:
-    </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> ₹{selCustomerPayload?.T_total?.toLocaleString('en-IN')}</Text>
-  </View>
-
-
-  <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
-  <Image src={pdfimg10} style={{ width: 10, height: 10,  marginRight: 8 , marginBottom:5 }} />
-
-    <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
-      Current Status:
-    </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>{selCustomerPayload?.status}</Text>
-  </View>
-
-
-  <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
-  <Image src={pdfimg11} style={{ width: 10, height: 10,  marginRight: 8 , marginBottom:5 }} />
-
-    <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
-      Issued Date:
-    </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>{prettyDate(Timestamp.now().toMillis())}</Text>
-  </View>
-
-
-</View>
-
-
-          </View>
-
-
-
-
-
-
-        </View>
-
-
-        </View>
-
-
-
-
-
-
-
-    <View style={[styles.bgb,]}
-    onRender={(e) => handleTableRender(e, 1)}
-    >
-
-    <View style={[styles.topBoderRadius, styles.bottomBorderRadius, {border:'1px solid #CCCCCC',}]}>
-          <View style={[ styles.topBoderRadiusnew,   { backgroundColor:'#EDEDED' }]}>
-            <Text
+            style={[
+              styles.gridContainer,
+              styles.bottomBorderRadius,
+              styles.pt3,
+              styles.mb10,
+              { backgroundColor: '#EDEDED' },
+            ]}
+          >
+            <View
               style={[
-                // styles.subtitle1,
-                // styles.mb5,
-                styles.col,
-                styles.smallFitter,
-                // styles.pt2,
-                styles.mT1,
-                styles.ml2,
-                { color:'#3D3D3D', fontWeight: 450 , fontSize: 10,}
+                styles.col4,
+                styles.ml3,
+                styles.cellBgHead,
+                styles.AllsmallFitter,
+
+                // styles.mb10,
               ]}
             >
-              Transaction Sheet
-            </Text>
-            <Text
-              style={[
-                // styles.subtitle1,
-                styles.mb5,
-                styles.col,
-                styles.smallFitter,
-                styles.ml2,
-                {color: '#6A6A6A'}
-              ]}
-            >
-              Know your charges
-            </Text>
-
-          </View>
-
-
-{/* part-1 */}
-
-
-{/* <View style={[{ border:'2px solid #CCCCCC',}]}> */}
-
-
-<View style={[  styles.pt2, styles.mT1]}>
-            <Text
-              style={[
-                styles.subtitle1,
-                styles.mb5,
-                styles.col,
-                styles.smallFitter,
-                styles.ml2,
-
-              ]}
-            >
-              Payment History
-            </Text>
-          </View>
-          <View style={[styles.fitter]}>
-            <View style={[{ borderRadius: 8 }]}>
-              <View
-                style={[
-                  styles.subtitle1,
-                  styles.bg1,
-                  {
-                    backgroundColor: '#EDEDED',
-                    borderTopLeftRadius: 6,
-                    borderTopRightRadius: 6,
-                    border: '1 solid #e5e7eb ',
-                  },
-                ]}
-              >
+              <View>
                 <View
-                  style={[
-                    styles.tableHeader,
-                    styles.p4,
-                    styles.textcolorhead,
-                    {   paddingBottom: '2px' },
-                  ]}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginBottom: 5,
+                  }}
                 >
+                  <Image
+                    src={pdfimg1}
+                    style={{
+                      width: 10,
+                      height: 10,
+                      marginRight: 8,
+                      marginBottom: 5,
+                    }}
+                  />
 
-
-                  <View style={[styles.tableCell_10, styles.p12, { marginLeft:'14px' }]}>
-                    <Text style={styles.subtitle2}>
-
-                      Paid On
-
-                      
-                    </Text>
-                  </View>
-
-                  <View
-                    style={[
-                      styles.tableCell_10,
-                      styles.alignRight,
-                      styles.p12,
-                      styles.pr4,
-                      styles.ml1,
-                    ]}
+                  <Text
+                    style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}
                   >
-                    <Text style={styles.subtitle2}>Mode</Text>
-                  </View>
+                    Applicant Name:
+                  </Text>
+                  <Text style={[{ marginLeft: 15, color: '#6A6A6A' }]}>
+                    {selCustomerPayload?.customerDetailsObj?.customerName1}
+                  </Text>
+                </View>
 
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginBottom: 5,
+                  }}
+                >
+                  <Image
+                    src={pdfimg2}
+                    style={{
+                      width: 10,
+                      height: 10,
+                      marginRight: 8,
+                      marginBottom: 5,
+                    }}
+                  />
 
-
-                  <View
-                    style={[
-                      styles.tableCell_20,
-                      styles.alignCenter,
-                      styles.p12,
-                      styles.pr8,
-                      styles.ml2,
-                    ]}
+                  <Text
+                    style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}
                   >
-                    <Text style={styles.subtitle2}>Bank Ref Id
-                    </Text>
-                  </View>
+                    Customer ID:
+                  </Text>
+                  <Text style={[{ marginLeft: 15, color: '#6A6A6A' }]}>NA</Text>
+                </View>
 
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginBottom: 5,
+                  }}
+                >
+                  <Image
+                    src={pdfimg3}
+                    style={{
+                      width: 10,
+                      height: 10,
+                      marginRight: 8,
+                      marginBottom: 5,
+                    }}
+                  />
 
-                  <View
-                    style={[
-                      styles.tableCell_20,
-                      styles.alignCenter,
-                      styles.p12,
-                      styles.pr8,
-                      styles.ml2,
-                    ]}
+                  <Text
+                    style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}
                   >
-                    <Text style={styles.subtitle2}>Amount</Text>
-                  </View>
+                    Phone number:
+                  </Text>
+                  <Text style={[{ marginLeft: 15, color: '#6A6A6A' }]}>
+                    {selCustomerPayload?.customerDetailsObj?.phoneNo1}
+                  </Text>
+                </View>
 
-                  <View
-                    style={[
-                      styles.tableCell_10,
-                      styles.alignCenter,
-                      styles.p12,
-                      styles.pr8,
-                      styles.ml2,
-                    ]}
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginBottom: 5,
+                  }}
+                >
+                  <Image
+                    src={pdfimg5}
+                    style={{
+                      width: 10,
+                      height: 10,
+                      marginRight: 8,
+                      marginBottom: 5,
+                    }}
+                  />
+
+                  <Text
+                    style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}
                   >
-                    <Text style={styles.subtitle2}>Status</Text>
-                  </View>
-
-                  <View
-                    style={[styles.tableCell_150, styles.alignCenter, styles.p12, styles.pr8, ]}
-                  >
-                    <Text style={styles.subtitle2}>Accounts</Text>
-                  </View>
-
-
-                  <View
-                    style={[styles.tableCell_150, styles.alignRight, styles.p12, styles.pr8, ]}
-                  >
-                    <Text style={styles.subtitle2}>
-                    Reviewer
-                    </Text>
-                  </View>
+                    Email:
+                  </Text>
+                  <Text style={[{ marginLeft: 15, color: '#6A6A6A' }]}>
+                    {selCustomerPayload?.customerDetailsObj?.email1}
+                  </Text>
                 </View>
               </View>
+            </View>
 
+            <View
+              style={[styles.col4, styles.cellBgHead, styles.AllsmallFitter]}
+            >
               <View>
-                {/* {myObj?.map((item, index) => ( */}
-                {unitTransactionsA?.map((d1, inx) => (
-                                    // totalIs = 0
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginBottom: 5,
+                  }}
+                >
+                  <Image
+                    src={pdfimg5}
+                    style={{
+                      width: 10,
+                      height: 10,
+                      marginRight: 8,
+                      marginBottom: 5,
+                    }}
+                  />
+                  <Text
+                    style={[styles.subtitle2, { fontWeight: 600, width: 40 }]}
+                  >
+                    Unit No:
+                  </Text>
+                  <Text style={{ flex: 1, color: '#6A6A6A' }}>
+                    {selCustomerPayload?.unit_no}
+                  </Text>
+                </View>
 
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginBottom: 5,
+                  }}
+                >
+                  <Image
+                    src={pdfimg6}
+                    style={{
+                      width: 10,
+                      height: 10,
+                      marginRight: 8,
+                      marginBottom: 5,
+                    }}
+                  />
+                  <Text
+                    style={[styles.subtitle2, { fontWeight: 600, width: 40 }]}
+                  >
+                    Size:
+                  </Text>
+                  <Text style={{ flex: 1, color: '#6A6A6A' }}>
+                    {selUnitDetails?.size}{' '}
+                    <Text>
+                      {'('}
+                      {selCustomerPayload?.area} sqft{')'}
+                    </Text>
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginBottom: 5,
+                  }}
+                >
+                  <Image
+                    src={pdfimg7}
+                    style={{
+                      width: 10,
+                      height: 10,
+                      marginRight: 8,
+                      marginBottom: 5,
+                    }}
+                  />
+                  <Text
+                    style={[styles.subtitle2, { fontWeight: 600, width: 40 }]}
+                  >
+                    Facing:
+                  </Text>
+                  <Text style={{ flex: 1, color: '#6A6A6A' }}>
+                    {selCustomerPayload?.facing}
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginBottom: 5,
+                  }}
+                >
+                  <Image
+                    src={pdfimg8}
+                    style={{
+                      width: 10,
+                      height: 10,
+                      marginRight: 8,
+                      marginBottom: 5,
+                    }}
+                  />
+                  <Text
+                    style={[styles.subtitle2, { fontWeight: 600, width: 40 }]}
+                  >
+                    Type:
+                  </Text>
+                  <Text style={{ flex: 1, color: '#6A6A6A' }}>
+                    {projectDetails?.projectType?.name === 'Apartment'
+                      ? 'Flat'
+                      : projectDetails?.projectType?.name === 'Plots'
+                      ? 'Plot'
+                      : projectDetails?.projectType?.name === 'Villas'
+                      ? 'Villa'
+                      : ''}
+                  </Text>
+                </View>
+              </View>
+            </View>
+
+            <View
+              style={[
+                styles.col4,
+                styles.cellBgHead,
+                styles.mr15,
+                styles.AllsmallFitter,
+              ]}
+            >
+              <View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginBottom: 5,
+                  }}
+                >
+                  <Image
+                    src={pdfimg9}
+                    style={{
+                      width: 10,
+                      height: 10,
+                      marginRight: 8,
+                      marginBottom: 5,
+                    }}
+                  />
+
+                  <Text
+                    style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}
+                  >
+                    Unit Cost:
+                  </Text>
+                  <Text style={[{ marginLeft: 15, color: '#6A6A6A' }]}>
+                    {' '}
+                    ₹{selCustomerPayload?.T_total?.toLocaleString('en-IN')}
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginBottom: 5,
+                  }}
+                >
+                  <Image
+                    src={pdfimg10}
+                    style={{
+                      width: 10,
+                      height: 10,
+                      marginRight: 8,
+                      marginBottom: 5,
+                    }}
+                  />
+
+                  <Text
+                    style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}
+                  >
+                    Current Status:
+                  </Text>
+                  <Text style={[{ marginLeft: 15, color: '#6A6A6A' }]}>
+                    {selCustomerPayload?.status}
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginBottom: 5,
+                  }}
+                >
+                  <Image
+                    src={pdfimg11}
+                    style={{
+                      width: 10,
+                      height: 10,
+                      marginRight: 8,
+                      marginBottom: 5,
+                    }}
+                  />
+
+                  <Text
+                    style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}
+                  >
+                    Issued Date:
+                  </Text>
+                  <Text style={[{ marginLeft: 15, color: '#6A6A6A' }]}>
+                    {prettyDate(Timestamp.now().toMillis())}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+
+        <View style={[styles.bgb]} onRender={(e) => handleTableRender(e, 1)}>
+          <View
+            style={[
+              styles.topBoderRadius,
+              styles.bottomBorderRadius,
+              { border: '1px solid #CCCCCC' },
+            ]}
+          >
+            <View
+              style={[styles.topBoderRadiusnew, { backgroundColor: '#EDEDED' }]}
+            >
+              <Text
+                style={[
+                  // styles.subtitle1,
+                  // styles.mb5,
+                  styles.col,
+                  styles.smallFitter,
+                  // styles.pt2,
+                  styles.mT1,
+                  styles.ml2,
+                  { color: '#3D3D3D', fontWeight: 450, fontSize: 10 },
+                ]}
+              >
+                Transaction Sheet
+              </Text>
+              <Text
+                style={[
+                  // styles.subtitle1,
+                  styles.mb5,
+                  styles.col,
+                  styles.smallFitter,
+                  styles.ml2,
+                  { color: '#6A6A6A' },
+                ]}
+              >
+                Know your charges
+              </Text>
+            </View>
+
+            {/* part-1 */}
+
+            {/* <View style={[{ border:'2px solid #CCCCCC',}]}> */}
+
+            <View style={[styles.pt2, styles.mT1]}>
+              <Text
+                style={[
+                  styles.subtitle1,
+                  styles.mb5,
+                  styles.col,
+                  styles.smallFitter,
+                  styles.ml2,
+                ]}
+              >
+                Payment History
+              </Text>
+            </View>
+            <View style={[styles.fitter]}>
+              <View style={[{ borderRadius: 8 }]}>
+                <View
+                  style={[
+                    styles.subtitle1,
+                    styles.bg1,
+                    {
+                      backgroundColor: '#EDEDED',
+                      borderTopLeftRadius: 6,
+                      borderTopRightRadius: 6,
+                      border: '1 solid #e5e7eb ',
+                    },
+                  ]}
+                >
                   <View
                     style={[
-                      styles.tableRow,
-                      styles.textcolor,
-                      inx + 1 != selCustomerPayload.length ? styles.borderbottom : null,
-
-                      // {
-                      //   backgroundColor:
-                      //     index % 2 === 0 ? '#ffffff' : '#ffffff',
-                      // },
-                      {  borderBottom: '1px solid #e5e7eb',  marginTop: '2px', paddingTop: '4px' },
+                      styles.tableHeader,
+                      styles.p4,
+                      styles.textcolorhead,
+                      { paddingBottom: '2px' },
                     ]}
-                    key={d1.id}
                   >
                     <View
                       style={[
-                        styles.tableCell_1,
-                        styles.pl2,
-                        { marginTop: '-1px' },
+                        styles.tableCell_10,
+                        styles.p12,
+                        { marginLeft: '14px' },
                       ]}
                     >
-                      <Text>{inx + 1}</Text>
+                      <Text style={styles.subtitle2}>Paid On</Text>
                     </View>
 
-                    <View style={[styles.tableCell_10]}>
-                      <Text style={styles.subtitle2}>
-                      {prettyDate(d1?.txt_dated ||d1?.dated) }
-                      </Text>
-                    </View>
-
-                    <View style={[styles.tableCell_10, styles.alignCenter, styles.ml1]}>
-                      <Text>
-                        {d1?.mode}
-                      </Text>
+                    <View
+                      style={[
+                        styles.tableCell_10,
+                        styles.alignRight,
+                        styles.p12,
+                        styles.pr4,
+                        styles.ml1,
+                      ]}
+                    >
+                      <Text style={styles.subtitle2}>Mode</Text>
                     </View>
 
                     <View
                       style={[
                         styles.tableCell_20,
                         styles.alignCenter,
-                        
+                        styles.p12,
+                        styles.pr8,
+                        styles.ml2,
                       ]}
                     >
-                      <Text>   
-                        {d1?.bank_ref || d1?.chequeno}
-                        </Text>
+                      <Text style={styles.subtitle2}>Bank Ref Id</Text>
                     </View>
 
-
-
-                    <View style={[styles.tableCell_20, styles.alignCenter]}>
-                      <Text>
-                      ₹{d1?.totalAmount?.toLocaleString('en-IN') || d1?.amount?.toLocaleString('en-IN')}
-
-                      </Text>
+                    <View
+                      style={[
+                        styles.tableCell_20,
+                        styles.alignCenter,
+                        styles.p12,
+                        styles.pr8,
+                        styles.ml2,
+                      ]}
+                    >
+                      <Text style={styles.subtitle2}>Amount</Text>
                     </View>
 
-                    <View style={[styles.tableCell_10, styles.alignCenter]}>
-                      <Text>
-                      {d1?.status}
-                      </Text>
+                    <View
+                      style={[
+                        styles.tableCell_10,
+                        styles.alignCenter,
+                        styles.p12,
+                        styles.pr8,
+                        styles.ml2,
+                      ]}
+                    >
+                      <Text style={styles.subtitle2}>Status</Text>
                     </View>
 
-                
-
-
-                    <View style={[styles.tableCell_150, styles.alignCenter]}>
-                      <Text>
-                      {d1?.towards ||d1?.builderName}
-                     {d1?.customerName}
-                      </Text>
+                    <View
+                      style={[
+                        styles.tableCell_150,
+                        styles.alignCenter,
+                        styles.p12,
+                        styles.pr8,
+                      ]}
+                    >
+                      <Text style={styles.subtitle2}>Accounts</Text>
                     </View>
 
-
-                    <View style={[styles.tableCell_1500, styles.alignCenter]}>
-                      <Text>
-                      {d1?.Reviewer || "NA"}
-
-                      </Text>
+                    <View
+                      style={[
+                        styles.tableCell_150,
+                        styles.alignRight,
+                        styles.p12,
+                        styles.pr8,
+                      ]}
+                    >
+                      <Text style={styles.subtitle2}>Reviewer</Text>
                     </View>
-
-
                   </View>
-                ))}
-<View
-              style={[styles.tableRow, styles.textcolor, {  borderBottom: '1px solid #e5e7eb', marginTop: '2px', paddingTop: '4px'  }]}
-            >
-              <View style={[styles.tableCell_1, styles.pl2, styles.p10]}></View>
-              <View style={[styles.tableCell_35, styles.p10]}></View>
-              <View style={[styles.tableCell_20, styles.alignRight]}></View>
-            </View>            
+                </View>
+
+                <View>
+                  {/* {myObj?.map((item, index) => ( */}
+                  {unitTransactionsA?.map((d1, inx) => (
+                    // totalIs = 0
+
+                    <View
+                      style={[
+                        styles.tableRow,
+                        styles.textcolor,
+                        inx + 1 != selCustomerPayload.length
+                          ? styles.borderbottom
+                          : null,
+
+                        // {
+                        //   backgroundColor:
+                        //     index % 2 === 0 ? '#ffffff' : '#ffffff',
+                        // },
+                        {
+                          borderBottom: '1px solid #e5e7eb',
+                          marginTop: '2px',
+                          paddingTop: '4px',
+                        },
+                      ]}
+                      key={d1.id}
+                    >
+                      <View
+                        style={[
+                          styles.tableCell_1,
+                          styles.pl2,
+                          { marginTop: '-1px' },
+                        ]}
+                      >
+                        <Text>{inx + 1}</Text>
+                      </View>
+
+                      <View style={[styles.tableCell_10]}>
+                        <Text style={styles.subtitle2}>
+                          {prettyDate(d1?.txt_dated || d1?.dated)}
+                        </Text>
+                      </View>
+
+                      <View
+                        style={[
+                          styles.tableCell_10,
+                          styles.alignCenter,
+                          styles.ml1,
+                        ]}
+                      >
+                        <Text>{d1?.mode}</Text>
+                      </View>
+
+                      <View style={[styles.tableCell_20, styles.alignCenter]}>
+                        <Text>{d1?.bank_ref || d1?.chequeno}</Text>
+                      </View>
+
+                      <View style={[styles.tableCell_20, styles.alignCenter]}>
+                        <Text>
+                          ₹
+                          {d1?.totalAmount?.toLocaleString('en-IN') ||
+                            d1?.amount?.toLocaleString('en-IN')}
+                        </Text>
+                      </View>
+
+                      <View style={[styles.tableCell_10, styles.alignCenter]}>
+                        <Text>{d1?.status}</Text>
+                      </View>
+
+                      <View style={[styles.tableCell_150, styles.alignCenter]}>
+                        <Text>
+                          {d1?.towards || d1?.builderName}
+                          {d1?.customerName}
+                        </Text>
+                      </View>
+
+                      <View style={[styles.tableCell_1500, styles.alignCenter]}>
+                        <Text>{d1?.Reviewer || 'NA'}</Text>
+                      </View>
+                    </View>
+                  ))}
+                  <View
+                    style={[
+                      styles.tableRow,
+                      styles.textcolor,
+                      {
+                        borderBottom: '1px solid #e5e7eb',
+                        marginTop: '2px',
+                        paddingTop: '4px',
+                      },
+                    ]}
+                  >
+                    <View
+                      style={[styles.tableCell_1, styles.pl2, styles.p10]}
+                    ></View>
+                    <View style={[styles.tableCell_35, styles.p10]}></View>
+                    <View
+                      style={[styles.tableCell_20, styles.alignRight]}
+                    ></View>
+                  </View>
+                </View>
               </View>
             </View>
           </View>
-          </View>
-    </View>
+        </View>
       </Page>
     </Document>
   )
 }
-
-
-
-
 
 const PdfTransactionsGenerator = ({
   user,
@@ -1203,7 +1307,6 @@ const PdfTransactionsGenerator = ({
       <PDFDownloadLink
         document={
           <MyDocument
-
             user={user}
             selUnitDetails={selUnitDetails}
             streamUnitDetails={streamUnitDetails}
@@ -1221,20 +1324,21 @@ const PdfTransactionsGenerator = ({
             projectDetails={projectDetails}
             leadDetailsObj1={leadDetailsObj1}
             unitTransactionsA={unitTransactionsA}
-            custObj1={custObj1} 
+            custObj1={custObj1}
             totalIs={totalIs}
             PSa={PSa}
           />
         }
         // fileName="sample.pdf"
-          
+
         // fileName={`${projectDetails?.projectName || 'project_name'}_unit_${selCustomerPayload?.unit_no || 'unit_no'}_${selCustomerPayload?.customerDetailsObj?.customerName1 || 'customer_Name'}_Transactions.pdf`}
-        
 
-        fileName={`${selCustomerPayload?.unit_no || 'unit_no'}_${projectDetails?.projectName || 'project_name'}_${selCustomerPayload?.customerDetailsObj?.customerName1 || 'customer_Name'}_Transactions.pdf`}
-
-
-
+        fileName={`${selCustomerPayload?.unit_no || 'unit_no'}_${
+          projectDetails?.projectName || 'project_name'
+        }_${
+          selCustomerPayload?.customerDetailsObj?.customerName1 ||
+          'customer_Name'
+        }_Transactions.pdf`}
       >
         {/* {({ blob, url, loading, error }) =>
           loading ? (
@@ -1254,39 +1358,43 @@ const PdfTransactionsGenerator = ({
           )
         } */}
 
-               {({ blob, url, loading, error }) =>
-                  loading ? (
-                  //   <button className="flex items-center justify-center px-1 py-1 mt-4">
-                  //   <Loader texColor="text-blue-600" size="h-[20px] w-[14px]" />Cost Sheet
-                  // </button>
-                    <div
-                    className=" focus:outline-none px-1 py-1 mt-4  text-sm font-bold tracking-wider rounded-sm flex flex-row
+        {({ blob, url, loading, error }) =>
+          loading ? (
+            //   <button className="flex items-center justify-center px-1 py-1 mt-4">
+            //   <Loader texColor="text-blue-600" size="h-[20px] w-[14px]" />Cost Sheet
+            // </button>
+            <div
+              className=" focus:outline-none px-1 py-1 mt-4  text-sm font-bold tracking-wider rounded-sm flex flex-row
         
         
         
                    duration-200 ease-in-out
                    transition"
-                  >
-                     <Download style={{ height: '20px', width: '14px' }} className='mr-1 text-gray-200'/>
-        
-                  </div>
-                  ) : (
-                  //   <button className="flex items-center justify-center  px-1 py-1 mt-4">
-                  //   <Loader texColor="text-blue-600" size="h-[20px] w-[14px]"  />Cost Sheet
-                  // </button>
-                    <div
-                      className=" focus:outline-none px-1 py-1 mt-4 text-sm font-bold tracking-wider rounded-sm
+            >
+              <Download
+                style={{ height: '20px', width: '14px' }}
+                className="mr-1 text-gray-200"
+              />
+            </div>
+          ) : (
+            //   <button className="flex items-center justify-center  px-1 py-1 mt-4">
+            //   <Loader texColor="text-blue-600" size="h-[20px] w-[14px]"  />Cost Sheet
+            // </button>
+            <div
+              className=" focus:outline-none px-1 py-1 mt-4 text-sm font-bold tracking-wider rounded-sm
         
         
         
                      duration-200 ease-in-out
                      transition"
-                    >
-                  <Download style={{ height: '20px', width: '14px' }} className='mr-1'/>
-        
-                    </div>
-                  )
-                }
+            >
+              <Download
+                style={{ height: '20px', width: '14px' }}
+                className="mr-1"
+              />
+            </div>
+          )
+        }
       </PDFDownloadLink>
     </div>
   )

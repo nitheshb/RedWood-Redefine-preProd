@@ -36,7 +36,6 @@ const RecentActivity = ({ title, userTodayPerfA }) => {
         )}
         {recActA.map((item, i) => (
           <li className="flex flex-row mb-2 pb-2 border-b" key={i}>
-
             <section className="flex flex-col">
               <span className="font-bodyLato font-semibold text-xs">
                 {item?.tx}

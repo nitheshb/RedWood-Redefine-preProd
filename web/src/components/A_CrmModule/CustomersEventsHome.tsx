@@ -752,7 +752,7 @@ const CustomersEventsHome = () => {
           SALES
         </StyledButton>
       </Box>
-  
+
       <Box
         sx={{
           width: (2.3 / 3) * window.innerWidth,
@@ -772,7 +772,7 @@ const CustomersEventsHome = () => {
                   </StyledTableCell>
                 </StickyHeaderCell>
               )}
-      
+
               {[
                 {
                   cat: 'crm',
@@ -872,7 +872,6 @@ const CustomersEventsHome = () => {
             </StyledTableRow>
           </StyledTableHead>
           <TableBody>
-           
             {dummyData?.map((finData, i) => {
               const {
                 plotId,
@@ -1056,7 +1055,6 @@ const CustomersEventsHome = () => {
                       <h3 className=" css-5mn5yy text-xs text-center">
                         {tt_amountOutStanding?.amount}
                       </h3>
-        
                     </div>
                   </td>
                   <td className="border-b bg-[#FFF1E3]">
@@ -1064,7 +1062,6 @@ const CustomersEventsHome = () => {
                       <h3 className=" css-5mn5yy text-xs text-center">
                         {tt_amountElgible?.amount}
                       </h3>
-
                     </div>
                   </td>
                   <td className="border-b bg-[#FFF1E3]">
@@ -1079,7 +1076,6 @@ const CustomersEventsHome = () => {
                       <h3 className=" css-5mn5yy text-xs text-center">
                         {latePayment?.count}
                       </h3>
-      
                     </div>
                   </td>
                   <td className="border-b bg-[#FFF1E3]">
@@ -1087,12 +1083,10 @@ const CustomersEventsHome = () => {
                       <h3 className=" css-5mn5yy text-xs text-center">
                         {latePayment?.count}
                       </h3>
- 
                     </div>
                   </td>
                   <td className="border-b bg-[#E2FBFB]">
                     <div className="px-2 py-2  text-center border-r-[1px] border-[#eae7e7]">
-
                       <LinearProgress
                         variant="determinate"
                         value={constructionProgress?.percentage}

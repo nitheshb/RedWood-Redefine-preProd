@@ -517,9 +517,11 @@ const MyDocument = ({
           <View
             style={[styles.col6, styles.smallFitter, styles.pr3, styles.ml1]}
           >
+            <Image
+              src={projectDetails?.projectLogoUrl}
+              style={{ width: 85, height: 35, objectFit: 'contain' }}
+            />
 
-    <Image src={projectDetails?.projectLogoUrl} style={{ width: 85, height: 35, objectFit: 'contain'  }} />
-            
             {/* <Image source="/ps_logo.png" style={{ width: 85, height: 35 }} /> */}
             <Text style={[styles.h4, styles.pt3, styles.ml1]}>
               {projectDetails?.projectName}
@@ -542,15 +544,11 @@ const MyDocument = ({
           </View>
         </View>
 
-
-
-
         <View
           style={{
             flexDirection: 'row',
             backgroundColor: '#F5F5F5',
             padding: 30,
-
           }}
         >
           <View style={{ margin: 10, padding: 10, flexGrow: 1, width: '40%' }}>
@@ -560,8 +558,8 @@ const MyDocument = ({
               Thank you for your Payment!
             </Text>
             <Text style={{ fontSize: 8, marginBottom: 10 }}>
-              Your Payment will be processed within 24 hours during working days.
-              We will notify you by email about payment status.
+              Your Payment will be processed within 24 hours during working
+              days. We will notify you by email about payment status.
             </Text>
 
             <Text
@@ -569,27 +567,24 @@ const MyDocument = ({
                 fontSize: 9,
                 fontWeight: 'bold',
                 marginTop: 20,
-
               }}
             >
               Payee Details
             </Text>
-            <View style={[ ]}>
-
-            <View style={styles.col8}>
-            <Text style={{ fontSize: 11, marginBottom: 5 }}>
-            Unit No: {selUnitDetails?.unit_no}
-            </Text>
-
+            <View style={[]}>
+              <View style={styles.col8}>
+                <Text style={{ fontSize: 11, marginBottom: 5 }}>
+                  Unit No: {selUnitDetails?.unit_no}
+                </Text>
+              </View>
             </View>
-          </View>
-
 
             <Text style={{ fontSize: 11, marginBottom: 5 }}>
               Name: {selUnitDetails?.customerDetailsObj?.customerName1}
             </Text>
             <Text style={{ fontSize: 12, marginBottom: 5 }}>
-              Phone: {selUnitDetails?.customerDetailsObj?.countryCode1} {selUnitDetails?.customerDetailsObj?.phoneNo1}
+              Phone: {selUnitDetails?.customerDetailsObj?.countryCode1}{' '}
+              {selUnitDetails?.customerDetailsObj?.phoneNo1}
             </Text>
             <Text style={{ fontSize: 12, marginBottom: 5 }}>
               Email: {selUnitDetails?.customerDetailsObj?.email1 || '-NA-'}
@@ -612,23 +607,27 @@ const MyDocument = ({
               Payment Receipt
             </Text>
 
-
-
-
-{/* section - 2 */}
-               <View style={{flexDirection: 'row', justifyContent: 'space-between', }}>
-                <View>
-                   <Text style={{ fontSize: 14, fontWeight: 'bold' }}>₹{payementDetails?.amount?.toLocaleString('en-IN')}</Text>
-                   <Text style={{ fontSize: 10 }}>Total Payment</Text>
-                </View>
-                <View>
-                   <Text style={{ fontSize: 10 }}>Review</Text>
-                </View>
+            {/* section - 2 */}
+            <View
+              style={{ flexDirection: 'row', justifyContent: 'space-between' }}
+            >
+              <View>
+                <Text style={{ fontSize: 14, fontWeight: 'bold' }}>
+                  ₹{payementDetails?.amount?.toLocaleString('en-IN')}
+                </Text>
+                <Text style={{ fontSize: 10 }}>Total Payment</Text>
+              </View>
+              <View>
+                <Text style={{ fontSize: 10 }}>Review</Text>
+              </View>
             </View>
 
-{/* section - 3 */}
+            {/* section - 3 */}
 
-<View style={{flexDirection: 'row', justifyContent: 'space-between',
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
                 borderTopWidth: 1,
 
                 borderColor: '#CCCCCC',
@@ -636,55 +635,124 @@ const MyDocument = ({
                 paddingTop: 10,
 
                 // paddingBottom: 10,
-              }}>
-                <View style={{border: 0, borderColor: '#CCCCCC', borderRadius: 8, padding: 0, marginTop: 10}}>
-                   {payementDetails?.dated == undefined || '' ? null :<Text style={{ fontSize: 10, fontWeight: 'bold' }}> {fDate(prettyDate(payementDetails?.dated))}</Text>}
-                   <Text style={{ fontSize: 8, paddingLeft: 3 }}>Date</Text>
-                </View>
-                {/* <View style={{textAlign: 'right',border: 0, borderColor: '#CCCCCC', borderRadius: 8, padding: 0, marginTop: 10}}>
+              }}
+            >
+              <View
+                style={{
+                  border: 0,
+                  borderColor: '#CCCCCC',
+                  borderRadius: 8,
+                  padding: 0,
+                  marginTop: 10,
+                }}
+              >
+                {payementDetails?.dated == undefined || '' ? null : (
+                  <Text style={{ fontSize: 10, fontWeight: 'bold' }}>
+                    {' '}
+                    {fDate(prettyDate(payementDetails?.dated))}
+                  </Text>
+                )}
+                <Text style={{ fontSize: 8, paddingLeft: 3 }}>Date</Text>
+              </View>
+              {/* <View style={{textAlign: 'right',border: 0, borderColor: '#CCCCCC', borderRadius: 8, padding: 0, marginTop: 10}}>
                    <Text style={{textAlign: 'right',  fontSize: 10, fontWeight: 'bold' }}> {payementDetails?.bank_ref_no}</Text>
                    <Text style={{ textAlign: 'right',fontSize: 8,  }}>Reference No</Text>
                 </View> */}
-                 <View style={{textAlign: 'right',border: 0, borderColor: '#CCCCCC', borderRadius: 8, padding: 0,  marginTop: 10}}>
-                <Text style={{ textAlign: 'right',fontSize: 10, fontWeight: 'bold',
+              <View
+                style={{
+                  textAlign: 'right',
+                  border: 0,
+                  borderColor: '#CCCCCC',
+                  borderRadius: 8,
+                  padding: 0,
+                  marginTop: 10,
+                }}
+              >
+                <Text
+                  style={{
+                    textAlign: 'right',
+                    fontSize: 10,
+                    fontWeight: 'bold',
                     alignSelf: 'flex-end', // Aligns text to the right
                     marginLeft: 'auto', // Ensures right alignment
-                 }}> {payementDetails?.bank_ref_no}</Text>
-                <Text style={{ textAlign: 'right',fontSize: 8 , }}>Reference No</Text>
-                </View>
-                {/* <View>
+                  }}
+                >
+                  {' '}
+                  {payementDetails?.bank_ref_no}
+                </Text>
+                <Text style={{ textAlign: 'right', fontSize: 8 }}>
+                  Reference No
+                </Text>
+              </View>
+              {/* <View>
                    <Text style={{ fontSize: 10, fontWeight: 'bold' }}> {payementDetails?.builderName}</Text>
                    <Text style={{ fontSize: 8 }}>Bank</Text>
                 </View> */}
-
             </View>
-            <View style={{flexDirection: 'row', justifyContent: 'space-between',
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
 
                 // borderBottomWidth: 1,
                 // borderColor: '#CCCCCC',
 
-
                 // marginBottom: 10,
                 // paddingBottom: 10,
-              }}>
-                <View style={{border: 0, borderColor: '#CCCCCC', borderRadius: 8, padding: 0,  marginTop: 10}}>
-                <Text style={{ fontSize: 10, fontWeight: 'bold' }}> {payementDetails?.builderName}</Text>
-                <Text style={{ fontSize: 8,paddingLeft: 3 }}>Bank</Text>
-                </View>
-                <View style={{textAlign: 'right',border: 0, borderColor: '#CCCCCC', borderRadius: 8, padding: 0,  marginTop: 10}}>
-                <Text style={{ textAlign: 'right',fontSize: 10, fontWeight: 'bold',  alignSelf: 'flex-end', // Aligns text to the right
-                    marginLeft: 'auto', }}> {payementDetails?.mode}</Text>
-                <Text style={{ textAlign: 'right',fontSize: 8 , alignSelf: 'flex-end', // Aligns text to the right
-                    marginLeft: 'auto',}}>Mode</Text>
-                </View>
-                {/* <View>
+              }}
+            >
+              <View
+                style={{
+                  border: 0,
+                  borderColor: '#CCCCCC',
+                  borderRadius: 8,
+                  padding: 0,
+                  marginTop: 10,
+                }}
+              >
+                <Text style={{ fontSize: 10, fontWeight: 'bold' }}>
+                  {' '}
+                  {payementDetails?.builderName}
+                </Text>
+                <Text style={{ fontSize: 8, paddingLeft: 3 }}>Bank</Text>
+              </View>
+              <View
+                style={{
+                  textAlign: 'right',
+                  border: 0,
+                  borderColor: '#CCCCCC',
+                  borderRadius: 8,
+                  padding: 0,
+                  marginTop: 10,
+                }}
+              >
+                <Text
+                  style={{
+                    textAlign: 'right',
+                    fontSize: 10,
+                    fontWeight: 'bold',
+                    alignSelf: 'flex-end', // Aligns text to the right
+                    marginLeft: 'auto',
+                  }}
+                >
+                  {' '}
+                  {payementDetails?.mode}
+                </Text>
+                <Text
+                  style={{
+                    textAlign: 'right',
+                    fontSize: 8,
+                    alignSelf: 'flex-end', // Aligns text to the right
+                    marginLeft: 'auto',
+                  }}
+                >
+                  Mode
+                </Text>
+              </View>
+              {/* <View>
 
                 </View> */}
-
             </View>
-
-
-
 
             <View
               style={{
@@ -702,15 +770,13 @@ const MyDocument = ({
                 }}
               >
                 <Text style={{ fontSize: 10 }}>Paid for</Text>
-                <Text style={{ fontSize: 10 }}>{payementDetails?.payReason}</Text>
+                <Text style={{ fontSize: 10 }}>
+                  {payementDetails?.payReason}
+                </Text>
               </View>
-
-
-
             </View>
           </View>
         </View>
-
 
         <View
           style={[
@@ -719,14 +785,21 @@ const MyDocument = ({
             // styles.dashBorder,
             styles.cellBgHead,
             styles.headFitter,
-            {position: 'absolute', bottom: 0, left: 0, right: 0},
+            { position: 'absolute', bottom: 0, left: 0, right: 0 },
           ]}
         >
           <View
-            style={[ styles.smallFitter, styles.pr3, styles.ml1 ,{flexDirection: 'row'}]}
+            style={[
+              styles.smallFitter,
+              styles.pr3,
+              styles.ml1,
+              { flexDirection: 'row' },
+            ]}
           >
-
-<Image src={projectDetails?.projectLogoUrl} style={{ width: 85, height: 35, objectFit: 'contain'  }} />
+            <Image
+              src={projectDetails?.projectLogoUrl}
+              style={{ width: 85, height: 35, objectFit: 'contain' }}
+            />
 
             {/* <Image source="/ps_logo.png" style={{ width: 85, height: 35 }} /> */}
             {/* <Text style={[styles.h4, styles.ml1,      styles.mT1,
@@ -738,15 +811,9 @@ const MyDocument = ({
           </View>
           <View style={[styles.col6]}>
             <Text
-              style={[
-
-                styles.alignRight,
-                styles.mT1,
-                styles.pt5,
-                styles.pr3,
-              ]}
+              style={[styles.alignRight, styles.mT1, styles.pt5, styles.pr3]}
             >
-            {projectDetails?.address}-{projectDetails?.pincode}
+              {projectDetails?.address}-{projectDetails?.pincode}
             </Text>
             {/* <Text>{myObj} </Text> */}
           </View>
@@ -770,51 +837,28 @@ const PdfReceiptGenerator = ({
   setPartBTotal,
   projectDetails,
   leadDetailsObj1,
-  payementDetails
+  payementDetails,
 }) => {
   console.log('overall cost sheet is ', newPlotPS)
 
+  useEffect(() => {
+    getProjectFun()
+  }, [])
 
+  const [project, setProject] = useState({})
 
+  const { user: authUser } = useAuth()
 
+  const { orgId } = authUser
 
-
-
-
-
-
-    useEffect(() => {
-      getProjectFun()
-    }, [])
-
-    const [project, setProject] = useState({})
-
-       const { user: authUser } = useAuth()
-    
-
-    const { orgId } = authUser
-
-
-      
   const getProjectFun = async () => {
-    
-      
-    const steamLeadLogs = await getProject(
-      orgId,
-      selCustomerPayload?.pId
-    )
-    
+    const steamLeadLogs = await getProject(orgId, selCustomerPayload?.pId)
+
     await setProject(steamLeadLogs)
-  
-    return}
+
+    return
+  }
   return (
-
-
-
-
-
-
-
     <div>
       {' '}
       <PDFDownloadLink
@@ -838,9 +882,11 @@ const PdfReceiptGenerator = ({
           />
         }
         // fileName="sample.pdf"
-        fileName={`${projectDetails?.projectName || 'project_name'}_unit_${selUnitDetails?.unit_no || 'unit_no'}_${selUnitDetails?.customerDetailsObj?.customerName1 || 'customer_Name'}_PaymentReceipt.pdf`}
-
-
+        fileName={`${projectDetails?.projectName || 'project_name'}_unit_${
+          selUnitDetails?.unit_no || 'unit_no'
+        }_${
+          selUnitDetails?.customerDetailsObj?.customerName1 || 'customer_Name'
+        }_PaymentReceipt.pdf`}
       >
         {({ blob, url, loading, error }) =>
           loading ? (

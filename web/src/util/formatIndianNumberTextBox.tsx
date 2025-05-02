@@ -1,12 +1,12 @@
-import { NumbersOutlined } from "@mui/icons-material";
+import { NumbersOutlined } from '@mui/icons-material'
 
 export const formatIndianNumber = function (num) {
-  const [integerPart, decimalPart] = num.toString().replace(/,/g, '').split('.');
-  const lastThree = integerPart.slice(-3);
-  const otherNumbers = integerPart.slice(0, -3);
-  const formattedNumber = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ',');
-  const result = formattedNumber + (formattedNumber ? ',' : '') + lastThree;
-  return decimalPart ? `${result}.${decimalPart}` : result;
+  const [integerPart, decimalPart] = num.toString().replace(/,/g, '').split('.')
+  const lastThree = integerPart.slice(-3)
+  const otherNumbers = integerPart.slice(0, -3)
+  const formattedNumber = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ',')
+  const result = formattedNumber + (formattedNumber ? ',' : '') + lastThree
+  return decimalPart ? `${result}.${decimalPart}` : result
 }
 
 export function prettyDate(d) {
@@ -169,7 +169,7 @@ export function getNextThreeMonths() {
     {
       name: `${currentMonthName?.name}-${currentYear}`,
       count: currentMonthName?.value,
-      currentYear: currentYear //%100
+      currentYear: currentYear, //%100
     },
   ]
 
@@ -180,7 +180,7 @@ export function getNextThreeMonths() {
     nextMonths.push({
       name: `${nextMonthName?.name}-${currentYear}`,
       count: nextMonthName?.value,
-      currentYear: currentYear //%100 // high
+      currentYear: currentYear, //%100 // high
     })
   }
 

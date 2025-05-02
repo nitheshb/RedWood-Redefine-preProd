@@ -6,7 +6,7 @@ import { Router, Route, Redirect } from '@redwoodjs/router'
 
 import { USER_ROLES } from 'src/constants/userRoles'
 import { useAuth } from 'src/context/firebase-auth-context'
-import { messaging, getToken  } from 'src/context/firebaseConfig'
+import { messaging, getToken } from 'src/context/firebaseConfig'
 
 import FinanceHomePagePage from './pages/FinanceHomePagePage/FinanceHomePagePage'
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage/PrivacyPolicyPage'
@@ -41,16 +41,13 @@ const defaultRoutes = () => {
 const Routes = () => {
   const { user } = useAuth()
 
-
-
-
   useEffect(() => {
     if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
       navigator.serviceWorker
         .register('/firebase-messaging-sw.js')
         .then((registration) => {
           console.log('Service Worker registered:', registration)
-  
+
           Notification.requestPermission().then((permission) => {
             if (permission === 'granted') {
               getToken(messaging, { serviceWorkerRegistration: registration })
@@ -68,34 +65,25 @@ const Routes = () => {
         })
     }
   }, [])
-  
-
-
-
-
-
-
-
 
   console.log('user yo yo is ', user)
 
   // Request permission and get the token
 
-
-    Notification.requestPermission()
-  .then((permission) => {
-    if (permission === 'granted') {
-      return getToken(messaging);
-    } else {
-      throw new Error('Notification permission denied');
-    }
-  })
-  .then((token) => {
-    console.log('FCM Token:', token);
-  })
-  .catch((error) => {
-    console.log('Error:', error);
-  });
+  Notification.requestPermission()
+    .then((permission) => {
+      if (permission === 'granted') {
+        return getToken(messaging)
+      } else {
+        throw new Error('Notification permission denied')
+      }
+    })
+    .then((token) => {
+      console.log('FCM Token:', token)
+    })
+    .catch((error) => {
+      console.log('Error:', error)
+    })
   let UpdatedRoutes = defaultRoutes()
   if (user?.role == null) {
     console.log('user yo yo is it is ', user)
@@ -123,7 +111,6 @@ const Routes = () => {
         <Route path="/admin/administration-team" page={AdministrationTeamPage} name="administrationTeam" />
 
         <Route path="/privacyPolicy" page={PrivacyPolicyPage} name="privacyPolicy" />
-
       </>
     )
   } else if (user?.role?.includes(USER_ROLES.HR_MANAGER) || user?.role?.includes(USER_ROLES.HR_EXECUTIVE)) {
@@ -132,29 +119,24 @@ const Routes = () => {
         <Route path="/users-admin" page={UsersAdminPage} name="usersAdmin" />
       </>
     )
-  }
-  else if (user?.role?.includes(USER_ROLES.SALES_MANAGER) || user?.role?.includes(USER_ROLES.SALES_EXECUTIVE) || user?.role?.includes(USER_ROLES.CP_AGENT)) {
+  } else if (user?.role?.includes(USER_ROLES.SALES_MANAGER) || user?.role?.includes(USER_ROLES.SALES_EXECUTIVE) || user?.role?.includes(USER_ROLES.CP_AGENT)) {
     UpdatedRoutes = (
       <>
         <Route path="/leads-manager" page={LeadsManagerPage} name="leadsManager" />
         <Route path="/leads-caller-board" page={LeadsCallerBoardPage} name="leadsCallerBoard" />
       </>
     )
-  }
-  else if (user?.role?.includes(USER_ROLES.MARKETING_MANAGER) || user?.role?.includes(USER_ROLES.MARKETING_EXECUTIVE) || user?.role?.includes(USER_ROLES.CP_AGENT)) {
-
-  console.log(' user yo yo is it is')
+  } else if (user?.role?.includes(USER_ROLES.MARKETING_MANAGER) || user?.role?.includes(USER_ROLES.MARKETING_EXECUTIVE) || user?.role?.includes(USER_ROLES.CP_AGENT)) {
+    console.log(' user yo yo is it is')
     UpdatedRoutes = (
       <>
         <Route path="/marketing-module" page={MarketingModulePage} name="marketingModule" />
-{/*
+        {/*
         <Route path="/leads-manager" page={LeadsManagerPage} name="leadsManager" />
         <Route path="/leads-caller-board" page={LeadsCallerBoardPage} name="leadsCallerBoard" /> */}
       </>
     )
-  }
-
-  else if (user?.role?.includes(USER_ROLES.CRM_MANAGER) || user?.role?.includes(USER_ROLES.CRM_EXECUTIVE)) {
+  } else if (user?.role?.includes(USER_ROLES.CRM_MANAGER) || user?.role?.includes(USER_ROLES.CRM_EXECUTIVE)) {
     UpdatedRoutes = (
       <>
         <Route path="/crm-module" page={CrmHomePage} name="crmModule" />
@@ -172,17 +154,14 @@ const Routes = () => {
         <Route path="/legal-module" page={LegalHomePage} name="legalModule" />
       </>
     )
-  }
-  else if (user?.role?.includes(USER_ROLES.ADMIN_SUPPORT_MANAGER) || user?.role?.includes(USER_ROLES.ADMIN_SUPPORT_EXECUTIVE)) {
-   console.log('am i hre at admin support', USER_ROLES.ADMIN_SUPPORT_MANAGER)
+  } else if (user?.role?.includes(USER_ROLES.ADMIN_SUPPORT_MANAGER) || user?.role?.includes(USER_ROLES.ADMIN_SUPPORT_EXECUTIVE)) {
+    console.log('am i hre at admin support', USER_ROLES.ADMIN_SUPPORT_MANAGER)
     UpdatedRoutes = (
       <>
-                <Route path="/administration-team" page={AdministrationTeamPage} name="administrationTeam" />
-
+        <Route path="/administration-team" page={AdministrationTeamPage} name="administrationTeam" />
       </>
     )
-  }
-  else if (user?.role?.includes(USER_ROLES.PROJECT_MANAGER) || user?.role?.includes(USER_ROLES.PROJECT_EXECUTIVE)) {
+  } else if (user?.role?.includes(USER_ROLES.PROJECT_MANAGER) || user?.role?.includes(USER_ROLES.PROJECT_EXECUTIVE)) {
     UpdatedRoutes = (
       <>
         <Route path="/home" page={HomePage} name="home" />

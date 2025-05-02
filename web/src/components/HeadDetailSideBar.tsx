@@ -12,7 +12,6 @@ const HeadSideBarDetailView = ({
   setViewable,
   viewable,
 }) => {
-
   const { user } = useAuth()
 
   console.log('user i youy===>>>>>>>.', user)
@@ -27,13 +26,12 @@ const HeadSideBarDetailView = ({
       setUserAccess(access || [])
     }
   }, [user])
-console.log(viewable)
+  console.log(viewable)
   return (
     <div className="flex flex-col items-left w-16 min-w-[226px]   bg-white bg-opacity-75 bg-[#f0f3ff] ">
       <div className="bg-[#f0f3ff] overflow-auto no-scrollbar">
         <div className="pl-4 mr-6 border-l h-screen ">
           <ul className="mt-6 pt-4">
-         
             {sourceLink != 'projectsScreen' && (
               <>
                 <span
@@ -46,9 +44,7 @@ console.log(viewable)
                     <span className="text-md font-bold pl-1 ">Tasks</span>
                   </span>
                   <span className="flex ml-auto items-bottom">
-                    <span
-                      className="flex ml-auto items-bottom text-xs mt-2"
-                    ></span>
+                    <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                   </span>
                 </span>
                 <li className="relative ">
@@ -94,7 +90,6 @@ console.log(viewable)
                     </span>
                   </span>
                 </li>
-
               </>
             )}
             {['crmModule'].includes(sourceLink) && (
@@ -219,9 +214,7 @@ console.log(viewable)
                       <span className="text-sm pl-1">My Customers</span>
                     </span>
                     <span className="flex ml-auto items-bottom">
-                      <span
-                        className="flex ml-auto items-bottom text-xs mt-2"
-                      ></span>
+                      <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                     </span>
                   </span>
                 </li>
@@ -312,9 +305,7 @@ console.log(viewable)
                       <span className="text-sm pl-1">Transactions</span>
                     </span>
                     <span className="flex ml-auto items-bottom">
-                      <span
-                        className="flex ml-auto items-bottom text-xs mt-2"
-                      ></span>
+                      <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                     </span>
                   </span>
                 </li>
@@ -406,9 +397,7 @@ console.log(viewable)
                       <span className="text-sm pl-1">Ongoing Projects</span>
                     </span>
                     <span className="flex ml-auto items-bottom">
-                      <span
-                        className="flex ml-auto items-bottom text-xs mt-2"
-                      ></span>
+                      <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                     </span>
                   </span>
                 </li>
@@ -478,13 +467,11 @@ console.log(viewable)
                       </span>
                       <span className="text-sm pl-1">Hold</span>
                     </span>
- 
                   </span>
                 </li>
               </>
             )}
-          
-        
+
             {sourceLink === 'leadsScreen' && (
               <>
                 <li className="relative">
@@ -504,9 +491,7 @@ console.log(viewable)
                       </span>
                     </span>
                     <span className="flex ml-auto items-bottom">
-                      <span
-                        className="flex ml-auto items-bottom text-xs mt-2"
-                      ></span>
+                      <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                     </span>
                   </span>
                   <ul className="px-1 pt-2">
@@ -522,8 +507,6 @@ console.log(viewable)
                                 : '')
                             }
                             onClick={() => {
-              
-
                               switch (data) {
                                 case 'In Progress':
                                   return setViewable('inProgress')
@@ -553,9 +536,7 @@ console.log(viewable)
                               <span className="text-sm pl-[4px]">{data}</span>
                             </span>
                             <span className="flex ml-auto items-bottom">
-                              <span
-                                className="flex ml-auto items-bottom text-xs mt-2"
-                              ></span>
+                              <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                             </span>
                           </span>
                         </li>
@@ -577,9 +558,7 @@ console.log(viewable)
                       <span className="text-md font-bold pl-1 ">Reports</span>
                     </span>
                     <span className="flex ml-auto items-bottom">
-                      <span
-                        className="flex ml-auto items-bottom text-xs mt-2"
-                      ></span>
+                      <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                     </span>
                   </span>
                   <li className="relative">
@@ -673,9 +652,7 @@ console.log(viewable)
                       </span>
                     </span>
                     <span className="flex ml-auto items-bottom">
-                      <span
-                        className="flex ml-auto items-bottom text-xs mt-2"
-                      ></span>
+                      <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                     </span>
                   </span>
                   <ul className="px-1 pt-2">
@@ -712,9 +689,7 @@ console.log(viewable)
                             <span className="text-sm pl-[4px]">{data}</span>
                           </span>
                           <span className="flex ml-auto items-bottom">
-                            <span
-                              className="flex ml-auto items-bottom text-xs mt-2"
-                            ></span>
+                            <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                           </span>
                         </span>
                       </li>
@@ -736,9 +711,7 @@ console.log(viewable)
                       <span className="text-md font-bold pl-1 ">Reports</span>
                     </span>
                     <span className="flex ml-auto items-bottom">
-                      <span
-                        className="flex ml-auto items-bottom text-xs mt-2"
-                      ></span>
+                      <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                     </span>
                   </span>
                   <li className="relative">
@@ -831,9 +804,7 @@ console.log(viewable)
                       </span>
                     </span>
                     <span className="flex ml-auto items-bottom">
-                      <span
-                        className="flex ml-auto items-bottom text-xs mt-2"
-                      ></span>
+                      <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                     </span>
                   </span>
                   <ul className="px-1 pt-2">
@@ -870,9 +841,7 @@ console.log(viewable)
                             <span className="text-sm pl-[4px]">{data}</span>
                           </span>
                           <span className="flex ml-auto items-bottom">
-                            <span
-                              className="flex ml-auto items-bottom text-xs mt-2"
-                            ></span>
+                            <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                           </span>
                         </span>
                       </li>
@@ -894,9 +863,7 @@ console.log(viewable)
                       <span className="text-md font-bold pl-1 ">Reports</span>
                     </span>
                     <span className="flex ml-auto items-bottom">
-                      <span
-                        className="flex ml-auto items-bottom text-xs mt-2"
-                      ></span>
+                      <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                     </span>
                   </span>
 
@@ -937,7 +904,7 @@ console.log(viewable)
                 </li>
               </>
             )}
-          
+
             {[
               'crmModule',
               'leadsScreen',
@@ -956,9 +923,7 @@ console.log(viewable)
                     <span className="text-md font-bold pl-1 ">Inventory</span>
                   </span>
                   <span className="flex ml-auto items-bottom">
-                    <span
-                      className="flex ml-auto items-bottom text-xs mt-2"
-                    ></span>
+                    <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                   </span>
                 </Link>
                 <ul className="px-1">
@@ -1003,9 +968,7 @@ console.log(viewable)
                         </span>
                       </span>
                       <span className="flex ml-auto items-bottom">
-                        <span
-                          className="flex ml-auto items-bottom text-xs mt-1"
-                        ></span>
+                        <span className="flex ml-auto items-bottom text-xs mt-1"></span>
                       </span>
                     </span>
                   </li>
@@ -1024,9 +987,7 @@ console.log(viewable)
                     <span className="text-md font-bold pl-1 ">Add-ons</span>
                   </span>
                   <span className="flex ml-auto items-bottom">
-                    <span
-                      className="flex ml-auto items-bottom text-xs mt-2"
-                    ></span>
+                    <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                   </span>
                 </Link>
                 <ul className="px-1">
@@ -1133,7 +1094,6 @@ console.log(viewable)
                     >
                       <span className="flex items-center">
                         <span style={{ color: '#058527' }}>
-       
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="h-5 w-6"
@@ -1200,9 +1160,7 @@ console.log(viewable)
                     </span>
                   </span>
                   <span className="flex ml-auto items-bottom">
-                    <span
-                      className="flex ml-auto items-bottom text-xs mt-2"
-                    ></span>
+                    <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                   </span>
                 </Link>
                 <ul className="px-1">
@@ -1277,9 +1235,7 @@ console.log(viewable)
                         <span className="text-md font-bold pl-1 ">Reports</span>
                       </span>
                       <span className="flex ml-auto items-bottom">
-                        <span
-                          className="flex ml-auto items-bottom text-xs mt-2"
-                        ></span>
+                        <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                       </span>
                     </Link>
                     <li className="relative">
@@ -1369,14 +1325,11 @@ console.log(viewable)
                     <span className="text-md font-bold pl-1 ">HR</span>
                   </span>
                   <span className="flex ml-auto items-bottom">
-                    <span
-                      className="flex ml-auto items-bottom text-xs mt-2"
-                    ></span>
+                    <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                   </span>
                 </Link>
                 <ul className="px-1">
                   {' '}
-                 
                   <li className="relative">
                     <span
                       className={
@@ -1454,9 +1407,7 @@ console.log(viewable)
                         <span className="text-sm pl-[6px]">Link WhatsApp</span>
                       </span>
                       <span className="flex ml-auto items-bottom">
-                        <span
-                          className="flex ml-auto items-bottom text-xs mt-1"
-                        ></span>
+                        <span className="flex ml-auto items-bottom text-xs mt-1"></span>
                       </span>
                     </span>
                   </li>
@@ -1497,9 +1448,7 @@ console.log(viewable)
                     <span className="text-md font-bold pl-1 ">Extra Apps</span>
                   </span>
                   <span className="flex ml-auto items-bottom">
-                    <span
-                      className="flex ml-auto items-bottom text-xs mt-2"
-                    ></span>
+                    <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                   </span>
                 </Link>
                 <ul className="px-1">
@@ -1514,7 +1463,6 @@ console.log(viewable)
                     >
                       <span className="flex items-center">
                         <span style={{ color: '#058527' }}>
-        
                           <svg
                             width="24"
                             height="24"
@@ -1554,7 +1502,6 @@ console.log(viewable)
                     >
                       <span className="flex items-center">
                         <span style={{ color: '#058527' }}>
-
                           <svg
                             width="24"
                             height="24"
@@ -1577,9 +1524,7 @@ console.log(viewable)
                         </span>
                       </span>
                       <span className="flex ml-auto items-bottom">
-                        <span
-                          className="flex ml-auto items-bottom text-xs mt-1"
-                        ></span>
+                        <span className="flex ml-auto items-bottom text-xs mt-1"></span>
                       </span>
                     </span>
                   </li>
@@ -1594,5 +1539,3 @@ console.log(viewable)
 }
 
 export default HeadSideBarDetailView
-
-

@@ -7,7 +7,7 @@ import CampaingsTopBarsComponent from './Reports/Charts/marketingTopBars'
 const data = [
   { label: 'Desktop', value: 20, color: '#ff6347' },
   { label: 'Mobile', value: 30, color: '#4682b4' },
-  { label: 'Others', value: 40, color: '#32cd32' }, 
+  { label: 'Others', value: 40, color: '#32cd32' },
 ]
 
 const data1 = ['Inprogress']
@@ -16,7 +16,6 @@ const data3 = ['Site Visits ']
 const data4 = ['Followup']
 const data5 = ['Booking']
 const data6 = ['Highest volume(24h)']
-
 
 const totalProfit = '98,6543.53'
 const profitPercentage = '24.21%'
@@ -184,8 +183,8 @@ const MarketingAnalyticsHome = () => {
                   </div>
                 </div>
               </div>
-              <div className=''>
-              <CampaingsTopBarsComponent />
+              <div className="">
+                <CampaingsTopBarsComponent />
               </div>
               {/* section 2 */}
               <div className="bg-[#fff]  rounded-lg shadow-xl min-h-[340px] min-w-[200px] ">
@@ -623,18 +622,18 @@ const MarketingAnalyticsHome = () => {
                         scope="row"
                         className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
                       >
-                       <div className="relative  raxhy truncate w-[80%] rounded-r-2xl">
-                        <span
-                          className="block bg-[$e0e7ff] relative truncate w-full px-2"
-                          style={{ zIndex: '1' }}
-                        >
-                          preiline.co
-                        </span>
-                        <div
-                          className="absolute bg-[$e0e7ff] dark:bg-indigo-500/20"
-                          style={{ width: '100%', top: '0px', bottom: '0px' }}
-                        ></div>
-                      </div>
+                        <div className="relative  raxhy truncate w-[80%] rounded-r-2xl">
+                          <span
+                            className="block bg-[$e0e7ff] relative truncate w-full px-2"
+                            style={{ zIndex: '1' }}
+                          >
+                            preiline.co
+                          </span>
+                          <div
+                            className="absolute bg-[$e0e7ff] dark:bg-indigo-500/20"
+                            style={{ width: '100%', top: '0px', bottom: '0px' }}
+                          ></div>
+                        </div>
                       </th>
                       <td className="px-6 py-4 flex justify-end">
                         <div className="w-full mt-2 h-[6px] rounded-md bg-[#6366F1]"></div>
@@ -647,17 +646,17 @@ const MarketingAnalyticsHome = () => {
                         className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
                       >
                         <div className="relative  raxhy truncate w-[80%] rounded-r-2xl ">
-                        <span
-                          className="block bg-[$e0e7ff]  relative truncate w-full px-2"
-                          style={{ zIndex: '1' }}
-                        >
-                          Housing.com
-                        </span>
-                        <div
-                          className="absolute bg-[$e0e7ff] dark:bg-indigo-500/20"
-                          style={{ width: '100%', top: '0px', bottom: '0px' }}
-                        ></div>
-                      </div>
+                          <span
+                            className="block bg-[$e0e7ff]  relative truncate w-full px-2"
+                            style={{ zIndex: '1' }}
+                          >
+                            Housing.com
+                          </span>
+                          <div
+                            className="absolute bg-[$e0e7ff] dark:bg-indigo-500/20"
+                            style={{ width: '100%', top: '0px', bottom: '0px' }}
+                          ></div>
+                        </div>
                       </th>
                       <td className="px-6 py-4 flex justify-end">
                         <div className="w-[50%] mt-2 h-[6px] rounded-md bg-[#6366F1]"></div>
@@ -727,7 +726,6 @@ const MarketingAnalyticsHome = () => {
               </section>
             </section>
             {/* section-5 */}
-
 
             <section className="flex flex-col flex-wrap gap-2">
               <ul

@@ -36,8 +36,6 @@ const CrmSubMenuBar1 = ({
               {dat?.status === 'pending' && (
                 <ShieldExclamationIcon className="w-3 h-3 ml-[2px] mt-[2px] inline text-[##8e544d]" />
               )}
-
-
             </span>
           ))}
         </div>
@@ -50,7 +48,6 @@ const CrmSubMenuBar1 = ({
             >
               {finData?.customerName1}
             </span>
- 
           </section>
 
           <section

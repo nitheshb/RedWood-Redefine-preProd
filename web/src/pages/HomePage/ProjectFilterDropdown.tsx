@@ -1,8 +1,8 @@
-import React from 'react';
+import React from 'react'
 
 const ProjectFilterDropdown = ({ selectedFilter, setSelectedFilter }) => {
-  const filterOptions = ['All', 'Apartment', 'Plots', 'Villas','WeekendVillas'];
-  
+  const filterOptions = ['All', 'Apartment', 'Plots', 'Villas', 'WeekendVillas']
+
   return (
     <div className="flex  mr-4 border border-gray-300 rounded-md items-center hover:border-1 hover:border-gray-400">
       <select
@@ -16,9 +16,8 @@ const ProjectFilterDropdown = ({ selectedFilter, setSelectedFilter }) => {
           </option>
         ))}
       </select>
-
     </div>
-  );
-};
+  )
+}
 
-export default ProjectFilterDropdown;
+export default ProjectFilterDropdown

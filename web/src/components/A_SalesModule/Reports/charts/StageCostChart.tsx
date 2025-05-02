@@ -24,7 +24,7 @@
 //   return (
 //     <div className="bg-white p-6 rounded-lg shadow-md">
 //       <h2 className="text-xl font-semibold text-gray-800 mb-4">Stage Cost Breakdown</h2>
-      
+
 //       <div className="flex flex-col md:flex-row items-center">
 //         <div className="w-full md:w-1/2 h-64 mb-4 md:mb-0">
 //           <ResponsiveContainer width="100%" height="100%">
@@ -72,36 +72,39 @@
 
 // export default StageCostChart;
 
-
-
-
-
-import React from 'react';
-import { PieChart, Pie, Cell } from 'recharts';
+import React from 'react'
+import { PieChart, Pie, Cell } from 'recharts'
 
 const GaugeChart = ({ value = 50 }) => {
   // Data for the gauge - active, inactive, and transparent segments
   const data = [
     { name: 'Active', value: value, color: '#8884d8' },
     { name: 'Inactive', value: 100 - value, color: '#eee' },
-    { name: 'Transparent', value: 100, color: 'transparent' }
-  ];
+    { name: 'Transparent', value: 100, color: 'transparent' },
+  ]
 
   // Data for the dotted indicators
-  const indicators = Array.from({ length: 11 }, (_, i) => i * 10);
+  const indicators = Array.from({ length: 11 }, (_, i) => i * 10)
 
   return (
-    <div style={{ position: 'relative', width: '100%', maxWidth: '300px', margin: '0 auto' }}>
+    <div
+      style={{
+        position: 'relative',
+        width: '100%',
+        maxWidth: '300px',
+        margin: '0 auto',
+      }}
+    >
       {/* Main Pie Chart for the gauge */}
       <PieChart width={300} height={200}>
         {/* Dotted indicators along the arc */}
         <g>
           {indicators.map((val, index) => {
-            const angle = 180 - (val * 1.8); // Convert percentage to angle (0-180°)
-            const radian = (angle * Math.PI) / 180;
-            const x = 150 + 120 * Math.cos(radian);
-            const y = 200 - 120 * Math.sin(radian);
-            
+            const angle = 180 - val * 1.8 // Convert percentage to angle (0-180°)
+            const radian = (angle * Math.PI) / 180
+            const x = 150 + 120 * Math.cos(radian)
+            const y = 200 - 120 * Math.sin(radian)
+
             return (
               <circle
                 key={`indicator-${index}`}
@@ -110,10 +113,10 @@ const GaugeChart = ({ value = 50 }) => {
                 r={2}
                 fill="#999"
               />
-            );
+            )
           })}
         </g>
-        
+
         {/* Gauge segments */}
         <Pie
           data={data}
@@ -131,22 +134,24 @@ const GaugeChart = ({ value = 50 }) => {
           ))}
         </Pie>
       </PieChart>
-      
+
       {/* Percentage text in center */}
-      <div style={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        textAlign: 'center',
-        fontSize: '2rem',
-        fontWeight: 'bold',
-        color: '#8884d8'
-      }}>
+      <div
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          textAlign: 'center',
+          fontSize: '2rem',
+          fontWeight: 'bold',
+          color: '#8884d8',
+        }}
+      >
         {value}%
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default GaugeChart;
+export default GaugeChart

@@ -6,10 +6,7 @@ import { useSnackbar } from 'notistack'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { v4 as uuidv4 } from 'uuid'
 
-import {
-  csSections,
-  VillaCsSections,
-} from 'src/constants/projects'
+import { csSections, VillaCsSections } from 'src/constants/projects'
 import {
   addMastersFull,
   streamMasters,
@@ -17,13 +14,13 @@ import {
   deleteMasterOption,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
+import { ToastBar } from 'react-hot-toast'
 
 const StyledSelect = styled(SelectMAT)(({ theme }) => ({
-
   fontSize: '13px',
   '&.MuiInputBase-root': {
     width: '100%',
-    fontSize: '13px', 
+    fontSize: '13px',
   },
   '&.MuiOutlinedInput-root': {
     width: '100%',
@@ -240,7 +237,8 @@ const TermsConditionsEditableTable = ({
           : item
       )
       setReceiptA(updatedArr)
-    }   if (data?.title === 'Cost Sheet Estimation') {
+    }
+    if (data?.title === 'Cost Sheet Estimation') {
       const updatedArr = costSheetEstimationA.map((item) =>
         item.id === data.id
           ? {
@@ -255,7 +253,7 @@ const TermsConditionsEditableTable = ({
       )
       setCostSheetEstimationA(updatedArr)
     }
-     if (data?.title === 'Unit Summary') {
+    if (data?.title === 'Unit Summary') {
       const updatedArr = unitSummaryA.map((item) =>
         item.id === data.id
           ? {
@@ -280,16 +278,9 @@ const TermsConditionsEditableTable = ({
     setSaveWarn(true)
   }
 
-
-  const projectItems = [
-    'Receipt',
-    'Cost Sheet Estimation',
-    'Unit Summary',
-  ]
+  const projectItems = ['Receipt', 'Cost Sheet Estimation', 'Unit Summary']
 
   const crmItems = ['Lead Source', 'Booking By']
-
-
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -342,8 +333,6 @@ const TermsConditionsEditableTable = ({
   //   </li>
   // )
 
-
-
   const SidebarItem: React.FC<{ item: string }> = ({ item }) => (
     <li
       className={`border-l-2 ${
@@ -360,21 +349,17 @@ const TermsConditionsEditableTable = ({
             : 'text-gray-600 font-medium hover:text-[#0891B2]'
         }`}
         onClick={(e) => {
-          e.preventDefault();
-          handleClick(item); // This updates activeItem and scrolls
+          e.preventDefault()
+          handleClick(item) // This updates activeItem and scrolls
         }}
       >
         {item}
       </a>
     </li>
-  );
-  
+  )
 
-
-//   const contentRefs = useRef<{ [key: string]: HTMLElement | null }>({});
-// const [activeItem, setActiveItem] = useState<string>("");
-
-
+  //   const contentRefs = useRef<{ [key: string]: HTMLElement | null }>({});
+  // const [activeItem, setActiveItem] = useState<string>("");
 
   const [activeItem, setActiveItem] = useState(null)
   const contentRefs = useRef({})
@@ -386,7 +371,7 @@ const TermsConditionsEditableTable = ({
   const [deletedRows, setDeletedRows] = useState([])
   // step 1: declare useState for each title
   const [receiptA, setReceiptA] = useState([])
-  const [costSheetEstimationA,  setCostSheetEstimationA] = useState([])
+  const [costSheetEstimationA, setCostSheetEstimationA] = useState([])
   const [unitSummaryA, setUnitSummaryA] = useState([])
   const [approvalAuthorityA, setapprovalAuthority] = useState([])
   const [statesListA, setstatesList] = useState([])
@@ -404,7 +389,9 @@ const TermsConditionsEditableTable = ({
         // step 3: filter and set values to each title
         if (bankA?.length > 0) {
           const cA = bankA.filter((item) => item.title == 'Receipt')
-          const dA = bankA.filter((item) => item.title == 'Cost Sheet Estimation')
+          const dA = bankA.filter(
+            (item) => item.title == 'Cost Sheet Estimation'
+          )
           const eA = bankA.filter((item) => item.title == 'Unit Summary')
           setReceiptA(
             cA.sort((a, b) => {
@@ -484,16 +471,21 @@ const TermsConditionsEditableTable = ({
   const dataMapCopy1 = [
     {
       title: 'Receipt',
-      data: receiptA, 
-      
+      data: receiptA,
+
       desccription: 'Terms & Conditions to display on Payment Receipt',
     },
 
-    { title: 'Cost Sheet Estimation', data: costSheetEstimationA,       desccription: 'Terms & Conditions to display on Estimated Cost Sheet',
+    {
+      title: 'Cost Sheet Estimation',
+      data: costSheetEstimationA,
+      desccription: 'Terms & Conditions to display on Estimated Cost Sheet',
     },
-    { title: 'Unit Summary', data: unitSummaryA,       desccription: 'Terms & Conditions to display on Unit Summary Sheet',
+    {
+      title: 'Unit Summary',
+      data: unitSummaryA,
+      desccription: 'Terms & Conditions to display on Unit Summary Sheet',
     },
-
   ]
   const handleCellEdit = (key, rowIndex, column) => {
     setEditingCell({ key, rowIndex, column })
@@ -502,84 +494,70 @@ const TermsConditionsEditableTable = ({
   const handleCellChange = (e, key, rowIndex) => {
     console.log('handleCellChange', e, key, rowIndex)
     const newValue = e.target.value
-
   }
 
   const handleCellBlur = () => {
     setEditingCell(null)
   }
 
-
-
-
-
-
   const handleDeleteRow = (dataObj) => {
-    const title = dataObj?.title;
-    const id = dataObj?.id;
+    const title = dataObj?.title
+    const id = dataObj?.id
 
+    setDeletedRows((prev) => [...prev, dataObj])
 
-    setDeletedRows(prev => [...prev, dataObj]);
-
-  
     switch (title) {
       case 'Receipt':
-        setReceiptA(prevReceipts => {
+        setReceiptA((prevReceipts) => {
           const updatedReceipts = prevReceipts
-            .filter(item => item.id !== id)
+            .filter((item) => item.id !== id)
             .map((item, index) => ({
               ...item,
-              order: index
-            }));
-          return updatedReceipts;
-        });
-        break;
+              order: index,
+            }))
+          return updatedReceipts
+        })
+        break
 
       case 'Cost Sheet Estimation':
-        setCostSheetEstimationA(prevEstimations => {
+        setCostSheetEstimationA((prevEstimations) => {
           const updatedEstimations = prevEstimations
-            .filter(item => item.id !== id)
+            .filter((item) => item.id !== id)
             .map((item, index) => ({
               ...item,
-              order: index
-            }));
-          return updatedEstimations;
-        });
-        break;
+              order: index,
+            }))
+          return updatedEstimations
+        })
+        break
 
       case 'Unit Summary':
-        setUnitSummaryA(prevSummaries => {
+        setUnitSummaryA((prevSummaries) => {
           const updatedSummaries = prevSummaries
-            .filter(item => item.id !== id)
+            .filter((item) => item.id !== id)
             .map((item, index) => ({
               ...item,
-              order: index
-            }));
-          return updatedSummaries;
-        });
-        break;
+              order: index,
+            }))
+          return updatedSummaries
+        })
+        break
 
       default:
-        break;
+        break
     }
-  };
-
-
-
+  }
 
   const handleClick = (item: string) => {
-    setActiveItem(item); // Update the active item in state
+    setActiveItem(item) // Update the active item in state
     if (contentRefs.current[item]) {
       contentRefs.current[item]?.scrollIntoView({
         behavior: 'smooth', // Smooth scrolling
         block: 'start', // Align to top
-      });
+      })
     }
-    setCurrentSection(item); // Update current section if needed
-  };
-  
-
-
+    setCurrentSection(item) // Update current section if needed
+  }
 
   const handleSave = (dataObj) => {
     console.log('sectionKey', dataObj)
@@ -594,10 +572,12 @@ const TermsConditionsEditableTable = ({
     if (title === 'Receipt') {
       // setReceiptA([...receiptA, newRow])
       newDataIs.push(...receiptA)
-    } if (title === 'Cost Sheet Estimation') {
+    }
+    if (title === 'Cost Sheet Estimation') {
       // setReceiptA([...receiptA, newRow])
       newDataIs.push(...costSheetEstimationA)
-    } if (title === 'Unit Summary') {
+    }
+    if (title === 'Unit Summary') {
       // setReceiptA([...receiptA, newRow])
       newDataIs.push(...unitSummaryA)
     }
@@ -755,7 +735,6 @@ const TermsConditionsEditableTable = ({
     setConstGST(e.target.value)
   }
   const createDBFun = () => {
-
     dataMapCopy?.map((dataObj, key) => {
       const data = dataObj?.data?.map((data1, i) => {
         const data2 = {
@@ -770,9 +749,7 @@ const TermsConditionsEditableTable = ({
     })
   }
   const createDBFun2 = () => {
-
     dataMapCopy?.map((dataObj) => {
-  
       const data = dataObj?.data?.map((data1, i) => {
         const uId = uuidv4()
         const data2 = {
@@ -783,7 +760,7 @@ const TermsConditionsEditableTable = ({
           order: i,
         }
         console.log('data2 ==>', data2)
-        addMastersFull(orgId, uId, data2, enqueueSnackbar)
+        addMastersFull(orgId, uId, data2, ToastBar)
         return data2
       })
     })
@@ -806,7 +783,6 @@ const TermsConditionsEditableTable = ({
         <div className="flex h-screen">
           <div className="w-64 text-gray-900 bg-white p-4 overflow-auto">
             <div className="mb-6">
-
               <ul>
                 {projectItems.map((item) => (
                   <SidebarItem key={item} item={item} />
@@ -852,10 +828,10 @@ const TermsConditionsEditableTable = ({
                       <tbody>
                         {dataObj?.data?.map((data, i) => (
                           <tr key={`static-${i}`}>
-
-                            <td className="py-5 px-4 text-[#0891B2] text-md border-b">{i+1}</td>
+                            <td className="py-5 px-4 text-[#0891B2] text-md border-b">
+                              {i + 1}
+                            </td>
                             <td className="py-5 px-4 border-b text-md text-[#728195] italic">
-
                               <input
                                 type="text"
                                 value={data.label}
@@ -863,12 +839,10 @@ const TermsConditionsEditableTable = ({
                                   const rawValue = e.target.value
 
                                   handleChange1(dataObj?.title, data, rawValue)
-    
                                 }}
                                 className="w-full p-1 border text-left border-0 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                               />
                             </td>
-
 
                             <td className="py-5 px-4 text-md items-center align-middle border-b text-[#6b7280]">
                               <button
@@ -953,7 +927,6 @@ const TermsConditionsEditableTable = ({
             </div>
           </div>
         </div>
-
       </div>
     </>
   )

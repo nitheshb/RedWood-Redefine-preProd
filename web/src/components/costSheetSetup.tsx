@@ -21,7 +21,7 @@ const CostSheetSetup = ({ phase, source }) => {
   ])
 
   useEffect(() => {
-    console.log('values of it ', phase, source, phase?.projectType?.name )
+    console.log('values of it ', phase, source, phase?.projectType?.name)
     if (phase?.phase?.projectType?.name === 'Plots') {
       setOtherChargesA([
         { lab: 'Plot Other Charges', val: 'Plot_Other_Charges' },
@@ -31,7 +31,6 @@ const CostSheetSetup = ({ phase, source }) => {
 
   return (
     <div className="lg:col-span-10 w-full ">
-
       <AdditionalChargesForm
         blocksViewFeature={blocksViewFeature}
         title={''}

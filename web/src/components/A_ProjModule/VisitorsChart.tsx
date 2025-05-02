@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   AreaChart,
   Area,
@@ -7,7 +7,7 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-} from 'recharts';
+} from 'recharts'
 
 const data = [
   { name: 'Jan', value: 800 },
@@ -17,16 +17,19 @@ const data = [
   { name: 'May', value: 1200 },
   { name: 'Jun', value: 1300 },
   { name: 'Jul', value: 1337 },
-];
+]
 
 export function VisitorsChart() {
   return (
     <div className="h-[120px] w-full">
       <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={data} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
+        <AreaChart
+          data={data}
+          margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
+        >
           <CartesianGrid strokeDasharray="3 3" vertical={false} />
-          <XAxis 
-            dataKey="name" 
+          <XAxis
+            dataKey="name"
             axisLine={false}
             tickLine={false}
             tick={{ fontSize: 12, fill: '#9CA3AF' }}
@@ -41,9 +44,9 @@ export function VisitorsChart() {
                       {payload[0].value.toLocaleString()} visitors
                     </p>
                   </div>
-                );
+                )
               }
-              return null;
+              return null
             }}
           />
           <Area
@@ -56,5 +59,5 @@ export function VisitorsChart() {
         </AreaChart>
       </ResponsiveContainer>
     </div>
-  );
+  )
 }

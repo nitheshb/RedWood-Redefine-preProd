@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react'
 
-import {
-  PlusIcon,
-} from '@heroicons/react/outline'
+import { PlusIcon } from '@heroicons/react/outline'
 import { useParams } from '@redwoodjs/router'
 import Blockdetails from 'src/components/Blockdetails/Blockdetails'
 import DummyBodyLayout from 'src/components/DummyBodyLayout/DummyBodyLayout'
@@ -180,7 +178,6 @@ const ProjPhaseHome = ({
   }, [projectDetails])
 
   useEffect(() => {
-  
     getBlocks('phaseId')
   }, [phases, projectDetails])
 
@@ -269,7 +266,6 @@ const ProjPhaseHome = ({
                   selUnitDetails={selUnitDetails}
                 />
               )}
-   
 
               {!showCostSheetWindow && (
                 <section
@@ -329,7 +325,6 @@ const ProjPhaseHome = ({
                                       onClick={() => selCat(d.val, d?.subval)}
                                     >
                                       {`${d.lab} `}
-                
                                     </button>
                                   </li>
                                 )
@@ -343,7 +338,6 @@ const ProjPhaseHome = ({
                               alt=""
                               src="/m3.png"
                             ></img>
-                           
                           </div>
                         </div>
                       )}
@@ -391,8 +385,6 @@ const ProjPhaseHome = ({
                       {phaseViewFeature === 'Payment Schedule' && (
                         <PaymentScheduleSetup phase={phase} source={source} />
                       )}
-   
-
 
                       {phaseViewFeature === 'Blocks' &&
                         (selPhaseObj?.projectType?.name == 'Plots' ? (
@@ -452,28 +444,28 @@ const ProjPhaseHome = ({
                             ></img>
                             Blocks are not created yet{' '}
                             {/* {source === 'projectManagement' && ( */}
-                              <button
-                                onClick={() => {
-                                  setSliderInfo({
-                                    open: true,
-                                    title: 'Add Block',
-                                    sliderData: {
-                                      phase,
-                                      block: {},
-                                    },
-                                    widthClass: 'max-w-2xl',
-                                  })
-                                }}
-                                className={
-                                  'flex ml-2  cursor-pointer items-center h-6 px-3 text-xs font-semibold  rounded-full bg-pink-200 hover:bg-pink-300 hover:text-pink-800 text-pink-800 '
-                                }
-                              >
-                                <PlusIcon
-                                  className="h-3 w-3 mr-1"
-                                  aria-hidden="true"
-                                />
-                                Add block
-                              </button>
+                            <button
+                              onClick={() => {
+                                setSliderInfo({
+                                  open: true,
+                                  title: 'Add Block',
+                                  sliderData: {
+                                    phase,
+                                    block: {},
+                                  },
+                                  widthClass: 'max-w-2xl',
+                                })
+                              }}
+                              className={
+                                'flex ml-2  cursor-pointer items-center h-6 px-3 text-xs font-semibold  rounded-full bg-pink-200 hover:bg-pink-300 hover:text-pink-800 text-pink-800 '
+                              }
+                            >
+                              <PlusIcon
+                                className="h-3 w-3 mr-1"
+                                aria-hidden="true"
+                              />
+                              Add block
+                            </button>
                             {/* )} */}
                           </div>
                         ))}

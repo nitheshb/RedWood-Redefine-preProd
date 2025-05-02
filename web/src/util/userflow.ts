@@ -17,23 +17,20 @@ export const navigateBasedOnUser = async (userData) => {
   ) {
     console.log('where am i 2')
     await navigate(routes.home(), { replace: true })
-  }
-  else if (
+  } else if (
     userData.role.includes(USER_ROLES.MARKETING_EXECUTIVE) ||
     userData.role.includes(USER_ROLES.MARKETING_MANAGER)
   ) {
     console.log('where am i 3')
     await navigate(routes.marketingModule(), { replace: true })
-  }
-  else if (
+  } else if (
     userData.role.includes(USER_ROLES.SALES_MANAGER) ||
     userData.role.includes(USER_ROLES.SALES_EXECUTIVE) ||
     userData.role.includes(USER_ROLES.CP_AGENT)
   ) {
     console.log('where am i 3')
     await navigate(routes.leadsManager(), { replace: true })
-  }
-  else if (
+  } else if (
     userData.role.includes(USER_ROLES.HR_MANAGER) ||
     userData.role.includes(USER_ROLES.HR_EXECUTIVE)
   ) {
@@ -55,8 +52,7 @@ export const navigateBasedOnUser = async (userData) => {
     userData.role.includes(USER_ROLES.LEGAL_EXECUTIVE)
   ) {
     await navigate(routes.legalModule(), { replace: true })
-  }
-  else if (
+  } else if (
     userData.role.includes(USER_ROLES.ADMIN_SUPPORT_MANAGER) ||
     userData.role.includes(USER_ROLES.ADMIN_SUPPORT_EXECUTIVE)
   ) {

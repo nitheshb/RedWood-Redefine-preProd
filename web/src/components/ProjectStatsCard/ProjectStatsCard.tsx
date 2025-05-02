@@ -1,17 +1,9 @@
 import { ToWords } from 'to-words'
 
-
-
 const toWords = new ToWords({
   localeCode: 'en-IN',
 })
-const ProjectStatsCard = ({
-  kind,
-  iconP,
-  feedData,
-  bg,
-  currency,
-}) => {
+const ProjectStatsCard = ({ kind, iconP, feedData, bg, currency }) => {
   return (
     <div
       className="drop-shadow-md min-w-full z-10 flex flex-col  max-w-md p-4 mx-auto my-0 rounded-lg "
@@ -24,7 +16,6 @@ const ProjectStatsCard = ({
         </span>
       </div>
 
-
       <ul className="flex-1 p-0 mt-4 ml-2 mr-2 leading-7 text-gray-900 border-0 border-gray-200">
         {feedData.map((data, i) => {
           return (
@@ -33,7 +24,6 @@ const ProjectStatsCard = ({
               className="flex justify-between  w-full mb-2  font-semibold text-left border-dotted border-b border-gray-300 "
             >
               <span className="inline-flex">
-
                 <span className="text-[16px] text-gray-900 font-light  text-gray-900">
                   {' '}
                   {data.k}
@@ -58,7 +48,6 @@ const ProjectStatsCard = ({
                   >
                     <span className="italic">
                       {toWords?.convert(data?.v || 0, { currency: currency })}
-
                     </span>
                   </span>
                   <div
@@ -68,7 +57,6 @@ const ProjectStatsCard = ({
                 </div>
                 <span className="text-[16px] font-medium text-gray-900">
                   {data?.v?.toLocaleString('en-IN')}
-
                 </span>
               </div>
             </li>

@@ -7,7 +7,7 @@ import { storage } from 'src/context/firebaseConfig'
 import { updateProjectLogo } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 
-const ProjectLogoUploader = ({projectId, projectLogoURL}) => {
+const ProjectLogoUploader = ({ projectId, projectLogoURL }) => {
   const { user } = useAuth()
 
   const { orgId } = user
@@ -16,13 +16,9 @@ const ProjectLogoUploader = ({projectId, projectLogoURL}) => {
   const [error, setError] = useState('')
   const fileInputRef = React.useRef(null)
 
-
-
   useEffect(() => {
     setImageUrl(projectLogoURL)
-
   }, [projectLogoURL])
-
 
   const uploadToFirebase = async (file) => {
     setIsUploading(true)
@@ -46,8 +42,7 @@ const ProjectLogoUploader = ({projectId, projectLogoURL}) => {
         },
         async () => {
           const url = await getDownloadURL(uploadTask.snapshot.ref)
-          updateProjectLogo(orgId, projectId,  url, user.email)
-
+          updateProjectLogo(orgId, projectId, url, user.email)
 
           setImageUrl(url)
           setIsUploading(false)
@@ -129,7 +124,7 @@ const ProjectLogoUploader = ({projectId, projectLogoURL}) => {
           <svg
             width="20"
             height="20"
-             viewBox="0 0 30 30"
+            viewBox="0 0 30 30"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >

@@ -5,9 +5,7 @@ export function serialEmployeeLeadData(employeeListA, fullData) {
     const x = souceObj
     z = [...z, souceObj?.value]
     if (x.label === 'others') {
-      x.Total = fullData.filter(
-        (datObj) => !z.includes(datObj?.assignedTo)
-      )
+      x.Total = fullData.filter((datObj) => !z.includes(datObj?.assignedTo))
 
       x.inprogress = fullData.filter(
         (datObj) =>

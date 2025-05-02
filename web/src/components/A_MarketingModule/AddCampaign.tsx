@@ -9,9 +9,7 @@ import { Form, Formik, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import { useSnackbar } from 'notistack'
 
-import {
-  sourceList,
-} from 'src/constants/projects'
+import { sourceList } from 'src/constants/projects'
 import {
   addCampaign,
   checkIfCampaignAlreadyExists,
@@ -92,8 +90,6 @@ const AddCampaignForm = ({ mode, dialogOpen, campaignPaylaod }) => {
     return unsubscribe
   }, [])
 
-
-
   const devTypeA = [
     {
       name: 'Outright',
@@ -116,23 +112,38 @@ const AddCampaignForm = ({ mode, dialogOpen, campaignPaylaod }) => {
   const onSubmitFun = async (data, resetForm) => {
     // todo: check if campaign exists
     // const foundLength = await checkIfLeadAlreadyExists('spark_leads', mobileNo)
-    if(mode === 'add'){
+    if (mode === 'add') {
+      const { campaignTitle } = data
+      const foundLength = await checkIfCampaignAlreadyExists(
+        orgId,
+        campaignTitle
+      )
+      if (foundLength?.length > 0) {
+        console.log('foundLENGTH IS ', foundLength)
+        // setFoundDocs(foundLength)
+        setFormMessage('Campaign name already Exists')
+        setLoading(false)
+      } else {
+        data.start_date = startDate.getTime()
+        data.end_date = endDate.getTime()
 
-    const { campaignTitle } = data
-    const foundLength = await checkIfCampaignAlreadyExists(orgId, campaignTitle)
-    if (foundLength?.length > 0) {
-      console.log('foundLENGTH IS ', foundLength)
-      // setFoundDocs(foundLength)
-      setFormMessage('Campaign name already Exists')
-      setLoading(false)
+        data.priorities = prior ? 'high' : 'medium'
+        setLoading(true)
+        await addCampaign(orgId, data, user.email, 'msg')
+
+        await resetForm()
+        await setFormMessage('Campaign Created..!')
+        await setLoading(false)
+        await dialogOpen(false)
+        return
+      }
     } else {
       data.start_date = startDate.getTime()
       data.end_date = endDate.getTime()
 
       data.priorities = prior ? 'high' : 'medium'
       setLoading(true)
-      await addCampaign(orgId, data, user.email, 'msg')
-
+      await updateCampaign(orgId, campaignPaylaod?.docId, data, enqueueSnackbar)
 
       await resetForm()
       await setFormMessage('Campaign Created..!')
@@ -140,32 +151,15 @@ const AddCampaignForm = ({ mode, dialogOpen, campaignPaylaod }) => {
       await dialogOpen(false)
       return
     }
-  }else {
-    data.start_date = startDate.getTime()
-      data.end_date = endDate.getTime()
-
-      data.priorities = prior ? 'high' : 'medium'
-      setLoading(true)
-      await updateCampaign(orgId, campaignPaylaod?.docId, data, enqueueSnackbar)
-
-
-      await resetForm()
-      await setFormMessage('Campaign Created..!')
-      await setLoading(false)
-      await dialogOpen(false)
-      return
-  }
   }
 
   const validate = Yup.object({
     campaignTitle: Yup.string().required('Campaign Title is Required'),
 
     assignedTo: Yup.string().required('Required'),
-   
   })
   return (
     <div className="h-full flex flex-col pb-6 bg-white shadow-xl overflow-y-scroll no-scrollbar bg-gradient-to-r from-blue-200 to-cyan-200">
-
       <div className="">
         <section className="flex flex-row justify-between mx-4 pt-2 pb-2">
           <span className="ml-1 mt-[1px] ">
@@ -235,7 +229,6 @@ const AddCampaignForm = ({ mode, dialogOpen, campaignPaylaod }) => {
                                   value.target.value
                                 )
                               }}
-         
                               placeholder="Campaign name"
                               className={`w-full  pb-2 pt-1 outline-none text-[18px] font-bodyLato focus:border-blue-600 hover:border-blue-600  ${
                                 true ? ' text-[33475b] ' : ' text-[33475b]'
@@ -382,8 +375,11 @@ const AddCampaignForm = ({ mode, dialogOpen, campaignPaylaod }) => {
                                   type="text"
                                   value={formik.values.budget}
                                   onChange={(e) => {
-                                    const value = e.target.value.replace(/^0+/, '');
-                                    formik.setFieldValue('budget', value);
+                                    const value = e.target.value.replace(
+                                      /^0+/,
+                                      ''
+                                    )
+                                    formik.setFieldValue('budget', value)
                                   }}
                                 />
                               </div>
@@ -417,9 +413,7 @@ const AddCampaignForm = ({ mode, dialogOpen, campaignPaylaod }) => {
 
                           <div className=" mt-3"></div>
                         </section>
-     
                       </div>
-       
                     </div>
                   </div>
                   <div className="z-10 flex flex-row justify-between mt-4 pb-2 pr-6 bg-white shadow-lg absolute bottom-0  w-full">
@@ -442,10 +436,8 @@ const AddCampaignForm = ({ mode, dialogOpen, campaignPaylaod }) => {
                       >
                         <span className="ml-1 ">Add Campaign</span>
                       </button>
-        
 
                       <button
-
                         onClick={() => dialogOpen(false)}
                         className={`flex mt-2 ml- rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium `}
                       >

@@ -3,10 +3,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { useState, useEffect, useRef } from 'react'
-import {
-  CalendarIcon,
-  CheckCircleIcon,
-} from '@heroicons/react/outline'
+import { CalendarIcon, CheckCircleIcon } from '@heroicons/react/outline'
 import { FireIcon } from '@heroicons/react/solid'
 import { ArrowCircleDownIcon } from '@heroicons/react/solid'
 import { AttachFile } from '@mui/icons-material'
@@ -14,16 +11,11 @@ import CheckTwoToneIcon from '@mui/icons-material/CheckTwoTone'
 import SendTwoToneIcon from '@mui/icons-material/SendTwoTone'
 import { setHours, setMinutes } from 'date-fns'
 import { Timestamp } from 'firebase/firestore'
-import {
-  ref,
-  getDownloadURL,
-  uploadBytesResumable,
-} from 'firebase/storage'
+import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage'
 import { Form, Formik, Field, ErrorMessage } from 'formik'
 import Select from 'react-select'
 import { v4 as uuidv4 } from 'uuid'
 import * as Yup from 'yup'
-
 
 import {
   AddCommentTaskManData,
@@ -79,8 +71,6 @@ import {
   getDifferenceInMinutes,
   prettyDateTime,
 } from 'src/util/dateConverter'
-
-
 
 import Confetti from '../shared/confetti'
 
@@ -294,14 +284,13 @@ const ViewEditTaskManForm = ({ title, dialogOpen, taskManObj }) => {
     // uploadStuff(file)
   }
   const onSubmitFun = async (data, resetForm) => {
-    console.log('edit task and button taskManObj',startDate, taskManObj, data)
+    console.log('edit task and button taskManObj', startDate, taskManObj, data)
     data.id = taskManObj.id
     data.priorities = prior ? 'high' : 'medium'
     data.attachments = files
-    if(startDate instanceof Date){
+    if (startDate instanceof Date) {
       data.due_date = startDate.getTime()
     }
-
 
     await editTaskManData(orgId, data, user)
     await setFormMessage('Task Edited..!')
@@ -489,12 +478,7 @@ const ViewEditTaskManForm = ({ title, dialogOpen, taskManObj }) => {
                       onClick={() => {
                         // setActionMode('unitBookingMode')
                         setMyTaskStatus('InProgress')
-                        ReOpenTaskManData(
-                          orgId,
-                          taskManObj,
-                          user,
-                          'InProgress'
-                        )
+                        ReOpenTaskManData(orgId, taskManObj, user, 'InProgress')
                       }}
                       // disabled={loading}
                     >
@@ -582,8 +566,6 @@ const ViewEditTaskManForm = ({ title, dialogOpen, taskManObj }) => {
                       } bg-white`}
                     ></input>
 
-
-
                     <div>
                       <label
                         htmlFor="formFile1"
@@ -594,7 +576,7 @@ const ViewEditTaskManForm = ({ title, dialogOpen, taskManObj }) => {
                           style={{ fontSize: '18px' }}
                         />
                       </label>
-     
+
                       <input
                         type="file"
                         className="hidden"
@@ -621,7 +603,6 @@ const ViewEditTaskManForm = ({ title, dialogOpen, taskManObj }) => {
                               addCommentTitle === ''
                             )
                           ) {
-                 
                             const x = []
 
                             if (commentAttachUrl === '') {
@@ -659,7 +640,6 @@ const ViewEditTaskManForm = ({ title, dialogOpen, taskManObj }) => {
                         }  `}
                       >
                         <span className="text-md">
-       
                           {!closeTask &&
                             !addCommentPlusTask &&
                             !(
@@ -671,7 +651,6 @@ const ViewEditTaskManForm = ({ title, dialogOpen, taskManObj }) => {
                               addCommentTitle === 'undefined' ||
                               addCommentTitle === ''
                             ) && <CheckTwoToneIcon />}
-
                         </span>
                       </button>
                     )}
@@ -914,7 +893,6 @@ const ViewEditTaskManForm = ({ title, dialogOpen, taskManObj }) => {
                                     value.target.value
                                   )
                                 }}
-     
                                 placeholder="Things to do"
                                 className={`w-full  pb-2 pt-1 outline-none text-[18px] font-bodyLato focus:border-blue-600 hover:border-blue-600  ${
                                   true ? ' text-[33475b] ' : ' text-[33475b]'
@@ -1064,9 +1042,7 @@ const ViewEditTaskManForm = ({ title, dialogOpen, taskManObj }) => {
                                   </span>
                                 </div>
                               </div>
-                              <div className="w-full flex flex-row my-3 mt-6">
-
-                              </div>
+                              <div className="w-full flex flex-row my-3 mt-6"></div>
                             </div>
                             <div className=" mt-3">
                               <FileList files={files} removeFile={removeFile} />
@@ -1078,9 +1054,7 @@ const ViewEditTaskManForm = ({ title, dialogOpen, taskManObj }) => {
                               />
                             </div>
                           </section>
-
                         </div>
-       
                       </div>
                     </div>
                     <div className="flex flex-row z-10 justify-between mt-4 pb-2 pr-6 bg-white shadow-lg absolute bottom-0  w-full">
@@ -1103,10 +1077,8 @@ const ViewEditTaskManForm = ({ title, dialogOpen, taskManObj }) => {
                         >
                           <span className="ml-1 ">Save Task</span>
                         </button>
-     
 
                         <button
-             
                           onClick={() => dialogOpen(false)}
                           className={`flex mt-2 ml- rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium `}
                         >

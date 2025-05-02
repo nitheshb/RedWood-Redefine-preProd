@@ -14,7 +14,9 @@ export default function LeadsDropHomes({ title, pId, myPhase, myBlock }) {
     <div className="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
       <div className="px-4 sm:px-6  z-10 flex flex-row justify-between">
         <Dialog.Title className=" font-semibold text-xl mr-auto ml-3 text-[#053219] w-sreen ">
-          {['Import Apartment Units','Import Plot Units' ].includes(title)? 'Import Units' : title}
+          {['Import Apartment Units', 'Import Plot Units'].includes(title)
+            ? 'Import Units'
+            : title}
         </Dialog.Title>
         {title === 'Import Apartment Units' && (
           <div className="flex flex-row justify-between mr-8 ">
@@ -62,20 +64,20 @@ export default function LeadsDropHomes({ title, pId, myPhase, myBlock }) {
           </div>
         )}
         {title === 'ImportAssets' && (
-            <div className=" flex flex-row justify-between mr-8">
-              <span></span>
-              <a
-                download="unitTemplate.csv"
-                target="_blank"
-                href="/assetsTemplate.csv"
-              >
-                <span className="text-xs text-blue-500">
-                  <DownloadIcon className="h-3 w-3 mr-1 mb-1 inline-block" />
-                  Sample Assets Template
-                </span>
-              </a>
-            </div>
-          )}
+          <div className=" flex flex-row justify-between mr-8">
+            <span></span>
+            <a
+              download="unitTemplate.csv"
+              target="_blank"
+              href="/assetsTemplate.csv"
+            >
+              <span className="text-xs text-blue-500">
+                <DownloadIcon className="h-3 w-3 mr-1 mb-1 inline-block" />
+                Sample Assets Template
+              </span>
+            </a>
+          </div>
+        )}
       </div>
       <div className="grid  gap-8 grid-cols-1">
         {title === 'import Unit' && (
@@ -86,7 +88,6 @@ export default function LeadsDropHomes({ title, pId, myPhase, myBlock }) {
         <div className="flex flex-col  my-10 rounded-lg  px-4 m-4 mt-12">
           <Formik
             initialValues={{ files: null }}
-
             onSubmit={async (values) => {
               console.log('ehcek1', {
                 fileName: values.files[0].file.name,
@@ -120,7 +121,6 @@ export default function LeadsDropHomes({ title, pId, myPhase, myBlock }) {
                 })
               }
 
-
               return new Promise((res) => setTimeout(res, 2000))
             }}
           >
@@ -134,9 +134,7 @@ export default function LeadsDropHomes({ title, pId, myPhase, myBlock }) {
                     myPhase={myPhase}
                     myBlock={myBlock}
                   />
-
                 </Grid>
-       
               </Form>
             )}
           </Formik>

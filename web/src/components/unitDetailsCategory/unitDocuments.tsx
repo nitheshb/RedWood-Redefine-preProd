@@ -12,8 +12,6 @@ const UnitDocumentsBody = () => {
     <div>
       <section className="py-8 mb-8 leading-7 text-gray-900 bg-white sm:py-12 md:py-16 lg:py-18 rounded-lg">
         <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-full ">
-
-
           <div className="grid grid-cols-2 gap-7 mt-10">
             <span>
               <span>
@@ -73,7 +71,6 @@ const UnitDocumentsBody = () => {
               </span>
             </span>
           </div>
-         
         </div>
       </section>
     </div>

@@ -17,6 +17,4 @@ module.exports = {
   plugins: [require('tailwind-scrollbar')],
 }
 
-
 // default font of website then add font in file index.css
-

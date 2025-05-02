@@ -6,7 +6,6 @@ import { TextAreaField } from 'src/util/formFields/TextAreaField'
 import Loader from 'src/components/Loader/Loader'
 import { updateMoreDetails } from 'src/context/dbQueryFirebase'
 
-
 const MoreDetailsPhaseForm = ({ title, dialogOpen, data }) => {
   const [loading, setLoading] = useState(false)
   const { enqueueSnackbar } = useSnackbar()

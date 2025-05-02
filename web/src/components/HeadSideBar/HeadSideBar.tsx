@@ -17,8 +17,7 @@ const HeadSideBar = (props) => {
       <a
         className="flex items-center justify-center flex-shrink-0 w-full h-16  border-b"
         href="#"
-      >
-      </a>
+      ></a>
 
       <Link
         className={
@@ -27,7 +26,6 @@ const HeadSideBar = (props) => {
         }
         to={routes.home()}
       >
-
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-5 w-5"

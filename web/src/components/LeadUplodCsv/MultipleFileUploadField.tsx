@@ -30,7 +30,10 @@ import Loader from '../Loader/Loader'
 
 import { SingleFileUploadWithProgress } from './SingleFileUploadWithProgress'
 import { UploadError } from './UploadError'
-import { CalculateComponentTotal, computePartTotal } from 'src/util/unitCostSheetCalculator'
+import {
+  CalculateComponentTotal,
+  computePartTotal,
+} from 'src/util/unitCostSheetCalculator'
 
 let currentId = 0
 
@@ -77,8 +80,6 @@ const baseStyle = {
   outline: 'none',
   transition: 'border .24s ease-in-out',
   lineHeight: '70px',
-
-
 }
 
 const focusedStyle = {
@@ -113,7 +114,6 @@ export function MultipleFileUploadField({
   const [projectList, setprojectList] = useState([])
   const [salesTeamList, setSalesTeamList] = useState([])
   const [selPhaseObj, setSelPhaseObj] = useState({})
-
 
   const [uploadedUrl, setUploadedUrl] = useState('')
   const [loading, setLoading] = useState(false)
@@ -168,8 +168,6 @@ export function MultipleFileUploadField({
   }, [files])
 
   const getPhases = async (pId) => {
-
-
     try {
       const unsubscribe = getPhasesByProject(
         orgId,
@@ -178,7 +176,6 @@ export function MultipleFileUploadField({
           const phases = querySnapshot.docs.map((docSnapshot) =>
             docSnapshot.data()
           )
-
 
           phases.map((user) => {
             user.name = user.phaseName
@@ -283,8 +280,6 @@ export function MultipleFileUploadField({
   } = selPhaseObj
   function onUpload(file: File, url: string) {
     console.log('field uploaded successfully', file, url, uploadedUrl)
-
-
 
     parse(file, {
       header: true,
@@ -540,7 +535,8 @@ export function MultipleFileUploadField({
                   dRow['Construction Price per sqft*'] ||
                   0,
                 // super_built_up_area: dRow[''] || 0,
-                carpet_area_sqft: dRow['Carpet Area(sqft)'] ||  dRow['Carpet Area(sqft)*'] || 0,
+                carpet_area_sqft:
+                  dRow['Carpet Area(sqft)'] || dRow['Carpet Area(sqft)*'] || 0,
                 dimension: dRow['Dimension'],
 
                 // construct_price: dRow['Construction price'] || 0,
@@ -557,14 +553,20 @@ export function MultipleFileUploadField({
                 west_sch_by: dRow['West Schedule*'],
                 status: 'available',
                 release_status: dRow['Release Status*']?.toLowerCase() || '',
-                possession_status: dRow['Possession Status*']?.toLowerCase() || '',
+                possession_status:
+                  dRow['Possession Status*']?.toLowerCase() || '',
                 mortgage_type: dRow['Mortgage Type']?.toLowerCase() || '',
                 survey_no: dRow['Survey No'] || '',
                 Katha_no: dRow['Katha No'] || '',
                 PID_no: dRow['PID No'] || '',
-                sharing: dRow['Sharing'] || dRow['Sharing Type']|| '',
+                sharing: dRow['Sharing'] || dRow['Sharing Type'] || '',
                 intype: 'bulk',
-                unit_type: title==='Import Booked Villas' ? 'Villa' : title==='Import Booked Apartments' ? 'Apartment' : 'Plot',
+                unit_type:
+                  title === 'Import Booked Villas'
+                    ? 'Villa'
+                    : title === 'Import Booked Apartments'
+                    ? 'Apartment'
+                    : 'Plot',
                 by: user?.email,
               }
               return await computPlotObj
@@ -580,7 +582,13 @@ export function MultipleFileUploadField({
             serialData,
             fileRecords
           )
-        } else if (['Import Booked Villas','Import Booked Plots','Import Booked Apartments'].includes(title)) {
+        } else if (
+          [
+            'Import Booked Villas',
+            'Import Booked Plots',
+            'Import Booked Apartments',
+          ].includes(title)
+        ) {
           console.log('import stuff is ', records)
           const clean1 = records.filter((row) => {
             return (
@@ -590,17 +598,23 @@ export function MultipleFileUploadField({
             )
           })
 
-
-
           // set duplicate & valid records
           // check in db if record exists with matched phone Number & email
-
-
 
           const serialData = await Promise.all(
             clean1.map(async (dRow) => {
               const currentStatus = dRow['Unit Status']
-              let newCurrentStatus =[ 'booked','agreement_pipeline','ATS', 'registered', 'possession',  'customer_blocked', 'management_blocked', ].includes(currentStatus) ?   currentStatus :  'available'
+              let newCurrentStatus = [
+                'booked',
+                'agreement_pipeline',
+                'ATS',
+                'registered',
+                'possession',
+                'customer_blocked',
+                'management_blocked',
+              ].includes(currentStatus)
+                ? currentStatus
+                : 'available'
               // if (currentStatus == 'Available') {
               //   newCurrentStatus = 'available'
               // } else if (currentStatus == 'Sold') {
@@ -612,7 +626,6 @@ export function MultipleFileUploadField({
               // } else {
               //   newCurrentStatus = 'available'
               // }
-
 
               const foundLength = await checkIfUnitAlreadyExists(
                 `${orgId}_units`,
@@ -630,76 +643,90 @@ export function MultipleFileUploadField({
               }
               let x = []
               let constructionCS = []
-              let partB= []
-              let partD= []
+              let partB = []
+              let partD = []
               let onPossessionChargesA = []
               let partA_total = 0
-              let partC_total =0
-              let partD_total=0
-              let partE_total= 0
-              let plot_area_sqft = unitDetails?.area  || 0
+              let partC_total = 0
+              let partD_total = 0
+              let partE_total = 0
+              let plot_area_sqft = unitDetails?.area || 0
               let bua_sqft = unitDetails?.construct_area || 0
-              let construct_price_sqft = dRow['Construction Price per sqft']?.replace(/,/g, '') || 0
-              let const_plc_per_sqft = dRow['Construction PLC rate/sqft']?.replace(/,/g, '') || 0
-              let const_plc_sqft = dRow['Construction PLC(sqft)']?.replace(/,/g, '') || 0
-              let const_plc_rate = dRow['Construction PLC rate/sqft']?.replace(/,/g, '') || 0
+              let construct_price_sqft =
+                dRow['Construction Price per sqft']?.replace(/,/g, '') || 0
+              let const_plc_per_sqft =
+                dRow['Construction PLC rate/sqft']?.replace(/,/g, '') || 0
+              let const_plc_sqft =
+                dRow['Construction PLC(sqft)']?.replace(/,/g, '') || 0
+              let const_plc_rate =
+                dRow['Construction PLC rate/sqft']?.replace(/,/g, '') || 0
 
-              if(title==='Import Booked Villas'){
-                let plotValue = Number(dRow['Plot rate/sqft']?.replace(/,/g, '') || 0)* plot_area_sqft || 0
-                let plcSaleValue = Number(dRow['PLC rate/sqft']?.replace(/,/g, '') || 0)* plot_area_sqft || 0
+              if (title === 'Import Booked Villas') {
+                let plotValue =
+                  Number(dRow['Plot rate/sqft']?.replace(/,/g, '') || 0) *
+                    plot_area_sqft || 0
+                let plcSaleValue =
+                  Number(dRow['PLC rate/sqft']?.replace(/,/g, '') || 0) *
+                    plot_area_sqft || 0
                 let plc_gstValue = Math.round(plcSaleValue * 0)
-                let buaSaleValue = Number(bua_sqft)* Number(construct_price_sqft)
-                let bua__gst_percent =  selPhaseObj?.const_tax
-                let bua_gstValue = Math.round(buaSaleValue * (bua__gst_percent/100))
-                let constPlcSaleValue = Number(bua_sqft)* Number(const_plc_rate)
+                let buaSaleValue =
+                  Number(bua_sqft) * Number(construct_price_sqft)
+                let bua__gst_percent = selPhaseObj?.const_tax
+                let bua_gstValue = Math.round(
+                  buaSaleValue * (bua__gst_percent / 100)
+                )
+                let constPlcSaleValue =
+                  Number(bua_sqft) * Number(const_plc_rate)
                 let CplcGstIsPercent = 0
-                 x = [
-                   {
-                     myId: '1',
-                     units: {
-                       value: 'cost_per_sqft',
-                       label: 'Cost per Sqft',
-                     },
-                     component: {
-                       value: 'unit_cost_charges',
-                       label: 'Unit Cost',
-                     },
-                     others: Number(dRow['Plot rate/sqft']?.replace(/,/g, '') || 0),
-                     charges:
-                     Number(dRow['Plot rate/sqft']?.replace(/,/g, '') || 0),
-                     TotalSaleValue: plotValue ,
-                     gstValue: 0,
-                     gst: {
-                       label: "0",
-                       value: 0,
-                     },
-                     TotalNetSaleValueGsT: plotValue + 0,
-                   },
-                   {
-                     myId: '2',
-                     units: {
-                       value: 'cost_per_sqft',
-                       label: 'Cost per Sqft',
-                     },
-                     component: {
-                       value: 'plc_cost_sqft',
-                       label: 'PLC',
-                     },
-                     others: dRow['PLC rate/sqft'] || 0,
-                     charges:dRow['PLC rate/sqft'] || 0,
-                     TotalSaleValue: plcSaleValue,
-                     // charges: y,
-                     gstValue: plc_gstValue,
-                     gst: {
-                       label: '0',
-                       value: 0,
-                     },
-                     TotalNetSaleValueGsT: plcSaleValue + plc_gstValue,
-                   },
+                x = [
+                  {
+                    myId: '1',
+                    units: {
+                      value: 'cost_per_sqft',
+                      label: 'Cost per Sqft',
+                    },
+                    component: {
+                      value: 'unit_cost_charges',
+                      label: 'Unit Cost',
+                    },
+                    others: Number(
+                      dRow['Plot rate/sqft']?.replace(/,/g, '') || 0
+                    ),
+                    charges: Number(
+                      dRow['Plot rate/sqft']?.replace(/,/g, '') || 0
+                    ),
+                    TotalSaleValue: plotValue,
+                    gstValue: 0,
+                    gst: {
+                      label: '0',
+                      value: 0,
+                    },
+                    TotalNetSaleValueGsT: plotValue + 0,
+                  },
+                  {
+                    myId: '2',
+                    units: {
+                      value: 'cost_per_sqft',
+                      label: 'Cost per Sqft',
+                    },
+                    component: {
+                      value: 'plc_cost_sqft',
+                      label: 'PLC',
+                    },
+                    others: dRow['PLC rate/sqft'] || 0,
+                    charges: dRow['PLC rate/sqft'] || 0,
+                    TotalSaleValue: plcSaleValue,
+                    // charges: y,
+                    gstValue: plc_gstValue,
+                    gst: {
+                      label: '0',
+                      value: 0,
+                    },
+                    TotalNetSaleValueGsT: plcSaleValue + plc_gstValue,
+                  },
+                ]
 
-                 ]
-
-                 constructionCS = [
+                constructionCS = [
                   {
                     myId: '3',
                     units: {
@@ -719,8 +746,7 @@ export function MultipleFileUploadField({
                       label: bua__gst_percent,
                       value: bua__gst_percent,
                     },
-                    TotalNetSaleValueGsT:buaSaleValue + bua_gstValue,
-
+                    TotalNetSaleValueGsT: buaSaleValue + bua_gstValue,
                   },
                   {
                     myId: '4',
@@ -745,16 +771,15 @@ export function MultipleFileUploadField({
                   },
                 ]
 
-                 onPossessionChargesA =
-                selPhaseObj?.fullCs?.filter(
-                  (d) => d?.section?.value === 'possessionAdditionalCost'
-                ) || []
+                onPossessionChargesA =
+                  selPhaseObj?.fullCs?.filter(
+                    (d) => d?.section?.value === 'possessionAdditionalCost'
+                  ) || []
 
                 additonalChargesObj.map((additonalObj, inx) => {
                   const x = additonalObj?.component?.value
                   if (x === 'legal_charges') {
-                    additonalObj.charges = Number(dRow['Legal Charges']| 0)
-
+                    additonalObj.charges = Number(dRow['Legal Charges'] | 0)
                   }
                   if (x === 'garden_area_cost') {
                     additonalObj.charges = Number(dRow['Garden Area Cost'] || 0)
@@ -764,7 +789,7 @@ export function MultipleFileUploadField({
                 constructOtherChargesObj.map((dataObj, inx) => {
                   const x = dataObj?.component?.value
                   if (x === 'bescom_bwssb') {
-                    dataObj.charges = Number( dRow['BWSSB Cost'] || 0)
+                    dataObj.charges = Number(dRow['BWSSB Cost'] || 0)
                   }
                   if (x === 'clubhouse_membership') {
                     dataObj.charges = Number(dRow['Club House'] || 0)
@@ -776,18 +801,20 @@ export function MultipleFileUploadField({
                     dataObj.charges = Number(dRow['Club House'] || 0)
                   }
                   if (x === 'garden_area_cost') {
-                    dataObj.charges = Number(dRow['Garden Area Cost'] || dataObj.charges ||  0)
+                    dataObj.charges = Number(
+                      dRow['Garden Area Cost'] || dataObj.charges || 0
+                    )
                   }
                   return dataObj
                 })
                 onPossessionChargesA.map((dataObj, inx) => {
                   const x = dataObj?.component?.value
                   if (x === 'maintenancecharges') {
-                    dataObj.charges = Number( dRow['Maintenance Cost'] || 0)
+                    dataObj.charges = Number(dRow['Maintenance Cost'] || 0)
                   }
 
                   if (x === 'Maintenance') {
-                    dataObj.charges = Number( dRow['Maintenance Cost'] || 0)
+                    dataObj.charges = Number(dRow['Maintenance Cost'] || 0)
                   }
                   if (x === 'corpus_charges') {
                     dataObj.charges = Number(dRow['Corpus Fund'] || 0)
@@ -797,29 +824,36 @@ export function MultipleFileUploadField({
                     dataObj.charges = Number(dRow['Corpus Fund'] || 0)
                   }
 
-
-
-
                   return dataObj
                 })
                 partA_total = x.reduce(
-                  (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+                  (partialSum, obj) =>
+                    partialSum + Number(obj?.TotalNetSaleValueGsT),
                   0
                 )
                 partC_total = constructionCS.reduce(
-                  (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+                  (partialSum, obj) =>
+                    partialSum + Number(obj?.TotalNetSaleValueGsT),
                   0
                 )
 
-          partD_total=  await computePartTotal(constructOtherChargesObj, bua_sqft, selPhaseObj?.const_tax,)
+                partD_total = await computePartTotal(
+                  constructOtherChargesObj,
+                  bua_sqft,
+                  selPhaseObj?.const_tax
+                )
+              }
+              partE_total = await computePartTotal(
+                onPossessionChargesA,
+                bua_sqft,
+                18
+              )
 
-               }
-          partE_total=  await computePartTotal(onPossessionChargesA, bua_sqft, 18,)
-
-
-
-
-             let partB_total=  await computePartTotal(additonalChargesObj, plot_area_sqft, myPhase?.area_tax,)
+              let partB_total = await computePartTotal(
+                additonalChargesObj,
+                plot_area_sqft,
+                myPhase?.area_tax
+              )
               const computPlotObj = {
                 unit_no:
                   dRow['Unit No.*'] || dRow['Flat No.*'] || dRow['Villa No*'],
@@ -834,7 +868,6 @@ export function MultipleFileUploadField({
 
                 // status: dRow['Availablity Status'], //filter and send valid values
                 unitStatus: dRow['Unit Status'],
-
 
                 //filter and send valid values
                 // booked_on: dRow['Booking Date']?.getTime(),
@@ -867,7 +900,10 @@ export function MultipleFileUploadField({
                 loanStatus: dRow['Loan Status'],
 
                 customerName1: dRow['Applicant - 1 - Name']
-                  .replace(/(Mr\.|Mr.|Miss|Mrs\.|Mrs.|Ms\.|Dr\.|MR\.|MISS)/gi, '')
+                  .replace(
+                    /(Mr\.|Mr.|Miss|Mrs\.|Mrs.|Ms\.|Dr\.|MR\.|MISS)/gi,
+                    ''
+                  )
                   ?.trim(),
 
                 relation1: dRow['S/o_W/o_D/o_C/o-1'],
@@ -1048,7 +1084,9 @@ export function MultipleFileUploadField({
                 constructOtherChargesObj: constructOtherChargesObj,
                 constructPS: [],
                 plot_area_sqft: dRow['Plot Area(sqft)']?.replace(/,/g, '') || 0,
-                sqft_rate: Number(dRow['Plot rate/sqft']?.replace(/,/g, '') || 0),
+                sqft_rate: Number(
+                  dRow['Plot rate/sqft']?.replace(/,/g, '') || 0
+                ),
                 bua_sqft: bua_sqft,
                 construct_price_sqft: construct_price_sqft,
                 plc_per_sqft: dRow['PLC rate/sqft'],
@@ -1064,13 +1102,19 @@ export function MultipleFileUploadField({
                 partC_total: partC_total,
                 partD_total: partD_total,
                 partE_total: partE_total,
-                unit_cost: Number((partA_total + partB_total + partC_total + partD_total + partE_total).toFixed(2)),
+                unit_cost: Number(
+                  (
+                    partA_total +
+                    partB_total +
+                    partC_total +
+                    partD_total +
+                    partE_total
+                  ).toFixed(2)
+                ),
                 // partD_total: partD.reduce(
                 //   (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
                 //   0
                 // ),
-
-
 
                 T_received: Number(dRow['Collected']?.replace(/,/g, '') || 0),
 
@@ -1151,7 +1195,7 @@ export function MultipleFileUploadField({
           })
           // set duplicate & valid records
           // check in db if record exists with matched phone Number & email
-// valid
+          // valid
           const serialData = await Promise.all(
             clean1.map(async (dRow) => {
               const currentStatus = dRow['Availability Status']
@@ -1182,7 +1226,7 @@ export function MultipleFileUploadField({
               if (foundLength.length > 0) {
                 unitDetails = foundLength[0]
               }
-              console.log('my data value is ', foundLength,unitDetails,  dRow)
+              console.log('my data value is ', foundLength, unitDetails, dRow)
               const computPlotObj = {
                 unit_no:
                   dRow['Unit No.*'] || dRow['Flat No.*'] || dRow['Villa No*'],
@@ -1226,11 +1270,9 @@ export function MultipleFileUploadField({
           })
           // set duplicate & valid records
           // check in db if record exists with matched phone Number & email
-// valid
+          // valid
           const serialData = await Promise.all(
             clean1.map(async (dRow) => {
-
-
               const foundLength = await checkIfUnitAlreadyExists(
                 `${orgId}_units`,
                 pId,
@@ -1245,13 +1287,13 @@ export function MultipleFileUploadField({
               if (foundLength.length > 0) {
                 unitDetails = foundLength[0]
               }
-              console.log('my data value is ', foundLength,unitDetails,  dRow)
+              console.log('my data value is ', foundLength, unitDetails, dRow)
               const computPlotObj = {
                 unit_no:
                   dRow['Unit No.*'] || dRow['Flat No.*'] || dRow['Villa No*'],
                 mode: foundLength.length > 0 ? 'valid' : 'duplicate',
                 unitUid: unitDetails?.unitUid,
-                customerName : unitDetails?.customerDetailsObj?.customerName1,
+                customerName: unitDetails?.customerDetailsObj?.customerName1,
                 pId: pId,
                 date_of_entry: dRow['Date of Entry'],
                 payment_mode: dRow['Payment Mode'],

@@ -3,7 +3,6 @@ import { useState } from 'react'
 import { MetaTags } from '@redwoodjs/web'
 import TodayLeadsActivityListHomeView from './TodayLeadsAcivityListHome'
 
-
 const TodayLeadsHomePage = ({ taskType }) => {
   const [, setisImportLeadsOpen] = useState(false)
   const [ready, setReady] = useState(false)
@@ -18,8 +17,6 @@ const TodayLeadsHomePage = ({ taskType }) => {
       <div className="flex  flex-row  text-gray-700">
         <div className="flex-1 overflow-auto">
           <div className="px-1">
-
-
             <MetaTags title="ExecutiveHome" description="ExecutiveHome page" />
             {!ready && (
               <TodayLeadsActivityListHomeView

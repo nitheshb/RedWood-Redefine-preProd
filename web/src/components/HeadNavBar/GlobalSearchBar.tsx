@@ -39,7 +39,6 @@ export const GlobalSearchBar = (props) => {
       console.log('myresponse', res[0], res[0].id)
       dispatch(searchResponse({ ...res[0], id: res[0].id }))
       setshowLoader(false)
-
     }
   }
   const refContainer = React.useRef(null)
@@ -121,21 +120,20 @@ export const GlobalSearchBar = (props) => {
                             >
                               CRM
                             </Link>
-                  
+
                             <Link
                               to={routes.financeModule()}
                               className="text-xs underline mr-3 text-indigo-700"
                             >
                               Finance
                             </Link>
-              
+
                             <Link
                               to={routes.legalModule()}
                               className="text-xs underline mr-3 text-indigo-700"
                             >
                               Legal
                             </Link>
-
                           </div>
                           {searchData.length - 1 !== index && <hr></hr>}
                         </div>

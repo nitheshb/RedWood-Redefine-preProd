@@ -4,7 +4,7 @@ import { initializeApp } from 'firebase/app'
 import firebase from 'firebase/app'
 import { getAuth } from 'firebase/auth'
 import { initializeFirestore } from 'firebase/firestore'
-import { getMessaging, getToken, } from 'firebase/messaging'
+import { getMessaging, getToken } from 'firebase/messaging'
 import { getStorage } from 'firebase/storage'
 // import { initializeApp } from 'firebase-admin/app'
 // TODO: Add SDKs for Firebase products that you want to use
@@ -22,7 +22,6 @@ const firebaseConfig = {
   measurementId: 'G-C2BJ3N02SQ',
 }
 
-
 // Initialize Firebase
 
 const app = initializeApp(firebaseConfig)
@@ -37,49 +36,8 @@ const storage = getStorage()
 // const messagingF = messaging()
 const messaging = getMessaging(app)
 
-
-
-
-
-export const generateToken = async () => {
-  try {
-    const permission = await Notification.requestPermission();
-    console.log("Notification Permission:", permission);
-
-    if (permission === 'granted') {
-      const token = await getToken(messaging, {
-        vapidKey: "BCL02xokFwnyTqraN8ddYs01EzFNjJ2XCNPTpJjOPXipf8GANNmAuW08L7gGf-12JibqI0ASzkDzkd1zZDC0qzc",
-      });
-      
-      if (token) {
-        console.log("FCM Token:", token);
-        return token;
-      } else {
-        console.log("Failed to get FCM token.");
-        return null;
-      }
-    } else {
-      console.warn("Permission denied for notifications.");
-      return null;
-    }
-  } catch (error) {
-    console.error("Error generating FCM token:", error);
-    return null;
-  }
-};
-
-
-
-
-
-
-
-
-
 // export const auth = app.auth()
 const auth = getAuth()
 const analytics = getAnalytics(app)
 
-export { auth, db, storage, messaging, getToken, }
-
-
+export { auth, db, storage, messaging, getToken }

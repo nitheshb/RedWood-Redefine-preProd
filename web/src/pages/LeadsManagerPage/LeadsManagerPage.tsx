@@ -50,7 +50,6 @@ const LeadsManagerPage = (props) => {
     }
   }, [user])
 
-
   return (
     <>
       <div className="flex w-screen h-screen text-gray-700">
@@ -84,7 +83,11 @@ const LeadsManagerPage = (props) => {
             </div>
 
             <div className="flex-grow  items-center overflow-y-auto  overflow-auto no-scrollbar px-300  py-300">
-              <HeadNavBar2 selModule={selModule} setSelModule={setSelModule}   setViewable={setViewable}  />
+              <HeadNavBar2
+                selModule={selModule}
+                setSelModule={setSelModule}
+                setViewable={setViewable}
+              />
 
               {viewable === 'inProgress' && (
                 <ExecutiveHomeViewerPage
@@ -93,7 +96,7 @@ const LeadsManagerPage = (props) => {
                   setIsClicked={setIsClicked}
                 />
               )}
-             {viewable === 'userProfile' && <ProfileSummary />}
+              {viewable === 'userProfile' && <ProfileSummary />}
 
               {viewable === 'booked' && (
                 <ExecutiveHomeViewerPage leadsTyper={'booked'} />
@@ -105,20 +108,22 @@ const LeadsManagerPage = (props) => {
                 <LeadsLakeHomePage taskType={viewable} />
               )}
               {viewable === 'leadsController' && (
-                 <LeadsTransferHome
-                 project={{
-                   projectName: 'Projects',
-                 }}
-                 isEdit={undefined}
-               />
+                <LeadsTransferHome
+                  project={{
+                    projectName: 'Projects',
+                  }}
+                  isEdit={undefined}
+                />
               )}
               {viewable === 'units_inventory' && (
-                 <section className="mx-1"><UnitsInventoryHome
-                 project={{
-                   projectName: 'Projects',
-                 }}
-                 isEdit={undefined}
-               /></section>
+                <section className="mx-1">
+                  <UnitsInventoryHome
+                    project={{
+                      projectName: 'Projects',
+                    }}
+                    isEdit={undefined}
+                  />
+                </section>
               )}
               {viewable === 'Today1' && (
                 <TodayLeadsHomePage taskType={viewable} />

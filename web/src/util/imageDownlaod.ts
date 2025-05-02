@@ -1,5 +1,4 @@
 export const downloadImage = (imageUrl, filename) => {
-
   console.error('Error downloading image:', imageUrl)
   fetch(imageUrl)
     .then((response) => response.blob())

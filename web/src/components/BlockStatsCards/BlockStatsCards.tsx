@@ -59,7 +59,6 @@ const BlockStatsCards = ({
         >
           {kind}
         </h3>
-
       </div>
       <div className="flex flex-col justify-between px-2">
         {viewUnitStatusA.includes('Available') && (
@@ -97,8 +96,6 @@ const BlockStatsCards = ({
             </span>
           </span>
         )}
-
-
       </div>
       <SiderForm
         open={sliderInfo.open}

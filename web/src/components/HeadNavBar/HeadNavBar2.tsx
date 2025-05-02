@@ -67,7 +67,6 @@ const HeadNavBar2 = ({ selModule, setSelModule, setViewable }) => {
         >
           <button className="relative ml-2 text-sm focus:outline-none group  items-center justify-center h-10 text-sm font-medium">
             <div className=" w-9 h-9 mr-2 rounded-full ">
-
               <img
                 src={auth?.currentUser?.photoURL || '/avatar_1.png'}
                 alt=""

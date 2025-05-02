@@ -95,8 +95,6 @@ export default function LeadTaskFooter({
                   ></div>
                 </div>
                 <span className="font-bodyLato">
-
-
                   <span className="text-xs  text-gray-500 ml-2">
                     <CheckIcon className="w-4 h-4 inline text-gray-500" />{' '}
                     {'   '}
@@ -109,13 +107,8 @@ export default function LeadTaskFooter({
 
           {data?.sts != 'completed' && (
             <div className="flex flex-row">
-              <div
-                className="relative flex flex-col  group"
-              >
-                <div
-                  className="absolute bottom-0 flex-col items-center hidden mb-6 group-hover:flex z-100000"
-
-                >
+              <div className="relative flex flex-col  group">
+                <div className="absolute bottom-0 flex-col items-center hidden mb-6 group-hover:flex z-100000">
                   <span
                     className="rounded italian relative mr-2 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
                     style={{
@@ -145,7 +138,6 @@ export default function LeadTaskFooter({
                       : 'text-xs  text-gray-500'
                   }`}
                 >
-
                   <svg
                     width="12"
                     height="12"
@@ -166,7 +158,6 @@ export default function LeadTaskFooter({
                       {prettyDateTime(data?.schTime)}
                     </div>
                   </div>
-             
                 </span>
               </div>
             </div>
@@ -237,7 +228,6 @@ export default function LeadTaskFooter({
               />
             </svg>
           </span>
-
         </section>
       )}
     </section>

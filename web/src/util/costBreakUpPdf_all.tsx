@@ -59,7 +59,6 @@ const CostBreakUpPdfAll = ({
     const y = leadDetailsObj1[`${uid}_cs`]?.newSqftPrice || ''
     const z = leadDetailsObj1[`${uid}_cs`]?.newPLC || ''
 
-
     let x = []
     if (csMode === 'plot_cs') {
       setPartBPayload(additonalChargesObj)
@@ -145,7 +144,10 @@ const CostBreakUpPdfAll = ({
         },
       ]
     } else {
-      setPartBPayload([...additonalChargesObj || [], ...ConstructOtherChargesObj || []])
+      setPartBPayload([
+        ...(additonalChargesObj || []),
+        ...(ConstructOtherChargesObj || []),
+      ])
       setPSPayload(ConstructPayScheduleObj)
       x = [
         {
@@ -176,14 +178,12 @@ const CostBreakUpPdfAll = ({
             (Number.isFinite(y)
               ? Number(selUnitDetails?.super_built_up_area * y)
               : Number(
-                  selUnitDetails?.plot_Sqf *
-                    selUnitDetails?.rate_per_sqft
+                  selUnitDetails?.plot_Sqf * selUnitDetails?.rate_per_sqft
                 )) +
             (Number.isFinite(y)
               ? Number(selUnitDetails?.super_built_up_area * y)
               : Math.round(
-                  selUnitDetails?.plot_Sqf *
-                    selUnitDetails?.rate_per_sqft
+                  selUnitDetails?.plot_Sqf * selUnitDetails?.rate_per_sqft
                 ) * 0.05),
         },
         {
@@ -201,7 +201,8 @@ const CostBreakUpPdfAll = ({
           TotalSaleValue: Number.isFinite(y)
             ? Number(selUnitDetails?.super_built_up_area * y)
             : Number(
-                selUnitDetails?.super_built_up_area * selUnitDetails?.construct_cost_sqf
+                selUnitDetails?.super_built_up_area *
+                  selUnitDetails?.construct_cost_sqf
               ),
           // charges: y,
           gst: {
@@ -209,19 +210,22 @@ const CostBreakUpPdfAll = ({
             value: Number.isFinite(y)
               ? Number(selUnitDetails?.super_built_up_area * y)
               : Math.round(
-                  selUnitDetails?.super_built_up_area * selUnitDetails?.construct_cost_sqf
+                  selUnitDetails?.super_built_up_area *
+                    selUnitDetails?.construct_cost_sqf
                 ) * 0.05,
           },
           TotalNetSaleValueGsT:
             (Number.isFinite(y)
               ? Number(selUnitDetails?.super_built_up_area * y)
               : Number(
-                  selUnitDetails?.super_built_up_area * selUnitDetails?.construct_cost_sqf
+                  selUnitDetails?.super_built_up_area *
+                    selUnitDetails?.construct_cost_sqf
                 )) +
             (Number.isFinite(y)
               ? Number(selUnitDetails?.super_built_up_area * y)
               : Math.round(
-                  selUnitDetails?.super_built_up_area * selUnitDetails?.construct_cost_sqf
+                  selUnitDetails?.super_built_up_area *
+                    selUnitDetails?.construct_cost_sqf
                 ) * 0.05),
         },
         {
@@ -351,46 +355,49 @@ const CostBreakUpPdfAll = ({
   }, [netTotal, plotBookingAdv, csMode])
 
   const CreateNewPsFun = (netTotal, plotBookingAdv, csMode) => {
-    const newPs = psPayload.map( (d1, inx) => {
-        const z = d1
-        let flatLegalFixedCosts = 0
-          const filLegalCharges = psPayload?.filter(
-            (d) => d?.component?.value === 'legal_charges'
+    const newPs = psPayload.map((d1, inx) => {
+      const z = d1
+      let flatLegalFixedCosts = 0
+      const filLegalCharges = psPayload?.filter(
+        (d) => d?.component?.value === 'legal_charges'
+      )
+      if (filLegalCharges && filLegalCharges?.length > 0) {
+        flatLegalFixedCosts = filLegalCharges[0]?.TotalNetSaleValueGsT || 0
+      }
+
+      if ('plot_cs' === 'plot_cs') {
+        let applicablePlotCost = netTotal - flatLegalFixedCosts
+        //  if(inx ==1){
+        //   applicablePlotCost = (applicablePlotCost-bookingAdvanceCost)
+        //  }
+
+        if (!['costpersqft'].includes(d1?.units?.value)) {
+          z.value = ['fixedcost'].includes(d1?.units?.value)
+            ? Number(d1?.percentage)
+            : inx == 1
+            ? Number(
+                (applicablePlotCost * (d1?.percentage / 100)).toFixed(2) -
+                  plotBookingAdv
+              )
+            : Number((applicablePlotCost * (d1?.percentage / 100)).toFixed(2))
+          // z.value = applicablePlotCost
+        } else {
+          let calc = CalculateComponentTotal(
+            d1,
+            selUnitDetails?.area?.toString()?.replace(',', ''),
+            0,
+            Number(d1?.percentage)
           )
-          if(filLegalCharges && filLegalCharges?.length > 0){
-            flatLegalFixedCosts =filLegalCharges[0]?.TotalNetSaleValueGsT || 0
-          }
-
-            if ('plot_cs' === 'plot_cs') {
-                     let applicablePlotCost = netTotal- flatLegalFixedCosts
-                    //  if(inx ==1){
-                    //   applicablePlotCost = (applicablePlotCost-bookingAdvanceCost)
-                    //  }
-
-                    if(!['costpersqft'].includes(d1?.units?.value)){
-
-                      z.value = ['fixedcost'].includes(d1?.units?.value)
-                        ? Number(d1?.percentage)
-                        : inx ==1 ? Number(
-                          (((applicablePlotCost) * (d1?.percentage / 100)).toFixed(2) - plotBookingAdv))
-
-                        :  Number(
-                            ((applicablePlotCost) * (d1?.percentage / 100)).toFixed(2)
-                          )
-                          // z.value = applicablePlotCost
-                        }else {
-                          let calc =  CalculateComponentTotal(d1,selUnitDetails?.area?.toString()?.replace(',', '') ,0,Number(d1?.percentage))
-                          z.value = calc?.TotalNetSaleValueGsT
-                        }
-                      if (['fixedcost'].includes(d1?.units?.value)) {
-                        z.elgible = true
-                        z.elgFrom = Timestamp.now().toMillis()
-                        return z
-                      }
-                      return z
-                    }
-
-      })
+          z.value = calc?.TotalNetSaleValueGsT
+        }
+        if (['fixedcost'].includes(d1?.units?.value)) {
+          z.elgible = true
+          z.elgFrom = Timestamp.now().toMillis()
+          return z
+        }
+        return z
+      }
+    })
     setNewConstructPS(newPs)
   }
 
@@ -455,7 +462,7 @@ const CostBreakUpPdfAll = ({
       soldPrice: Number(soldPrice),
       costSheetA: newCostSheetA,
     }
-    console.log('my imported details is cs verification', newCostSheetA )
+    console.log('my imported details is cs verification', newCostSheetA)
     setCostSheet(newCostSheetA)
     updateLeadCostSheetDetailsTo(
       orgId,
@@ -468,10 +475,16 @@ const CostBreakUpPdfAll = ({
   }
   const changeOverallCostFun = async (inx, payload, newValue) => {
     const y = costSheetA
-    const gstTaxForProjA = selPhaseObj?.partATaxObj.filter((d)=> d?.component.value === 'sqft_cost_tax')
-    const gstTaxIs = gstTaxForProjA.length >0 ? gstTaxForProjA[0]?.gst?.value: 0
-    const plcGstForProjA = selPhaseObj?.partATaxObj.filter((d)=> d?.component.value === 'plc_tax')
-    const plcGstIs = plcGstForProjA.length >0 ? plcGstForProjA[0]?.gst?.value: 0
+    const gstTaxForProjA = selPhaseObj?.partATaxObj.filter(
+      (d) => d?.component.value === 'sqft_cost_tax'
+    )
+    const gstTaxIs =
+      gstTaxForProjA.length > 0 ? gstTaxForProjA[0]?.gst?.value : 0
+    const plcGstForProjA = selPhaseObj?.partATaxObj.filter(
+      (d) => d?.component.value === 'plc_tax'
+    )
+    const plcGstIs =
+      plcGstForProjA.length > 0 ? plcGstForProjA[0]?.gst?.value : 0
     const total = Math.round(selUnitDetails?.super_built_up_area * newValue)
     const gstTotal = Math.round(
       Number(selUnitDetails?.super_built_up_area * newValue) * gstTaxIs

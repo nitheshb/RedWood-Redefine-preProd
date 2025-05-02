@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useSnackbar } from 'notistack'
 import LogSkelton from 'src/components/shimmerLoaders/logSkelton'
-import {
-  streamEmpBookedLeads,
-} from 'src/context/dbQueryFirebase'
+import { streamEmpBookedLeads } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { prettyDate } from 'src/util/dateConverter'
 
@@ -62,14 +60,12 @@ const EmpBookingSideBody = ({
   return (
     <div className="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
       <div className="px-4 sm:px-6  z-10 flex flex-row justify-between">
-
         {subtitle || title} ({leadsFilA.length || 0})
       </div>
 
       <div className="grid  gap-8 grid-cols-1">
         <div className="flex flex-col m-4">
           <div className="flex flex-col mt-2 rounded-lg bg-white border border-gray-100 p-4 ">
-
             {loadingIcon ? (
               <LogSkelton />
             ) : (
@@ -142,7 +138,6 @@ const EmpBookingSideBody = ({
                           {data?.assignedToObj?.name}
                         </td>
 
-
                         <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
                           {data?.by}
                         </td>
@@ -161,5 +156,3 @@ const EmpBookingSideBody = ({
 }
 
 export default EmpBookingSideBody
-
-

@@ -220,7 +220,6 @@ export default function ReportMainCom() {
         return da.value == viewProjs?.value
       })
       setFiltProjectListTuned(z)
-   
     }
   }, [projectList, viewProjs])
 

@@ -54,7 +54,6 @@ const LeadBankSourceStats = ({ userTodayPerfA }) => {
       </Box>
 
       <Box mt={3}>
-
         <div className="flex flex-row align-middle justify-between">
           <h6 className="font-bodyLato font-semibold text-sm">
             {t('MagicBricks')}

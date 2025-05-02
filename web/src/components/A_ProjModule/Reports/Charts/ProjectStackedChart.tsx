@@ -98,9 +98,12 @@ const ProjectStackedChart = () => {
           axisLine={{ stroke: 'transparent' }}
           tickLine={false}
           tick={{ fill: '#9ca3af' }}
-
         />
-        <YAxis axisLine={{ stroke: 'transparent' }} tickLine={false}   tick={{ fill: '#9ca3af' }} />
+        <YAxis
+          axisLine={{ stroke: 'transparent' }}
+          tickLine={false}
+          tick={{ fill: '#9ca3af' }}
+        />
         <Tooltip content={<CustomTooltip />} />
         <Area
           type="linear"
@@ -109,7 +112,6 @@ const ProjectStackedChart = () => {
           stroke="#2563eb"
           fill="#b9ccf7"
           strokeWidth={2}
-
         />
         <Area
           type="linear"

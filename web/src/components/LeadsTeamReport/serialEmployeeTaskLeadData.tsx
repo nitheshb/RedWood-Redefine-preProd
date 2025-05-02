@@ -8,7 +8,7 @@ export function serialEmployeeTaskLeadData(employeeListA) {
   employeeListA.map(async (souceObj) => {
     const sou = {}
     z = [...z, souceObj?.value]
-    const { value, label,offPh } = souceObj
+    const { value, label, offPh } = souceObj
 
     const todoData = await getTodayTodoLeadsDataByUser(
       'maahomes',
@@ -16,7 +16,7 @@ export function serialEmployeeTaskLeadData(employeeListA) {
         let pro
         const y = []
         const Total = []
-        let tomorrowDay =[]
+        let tomorrowDay = []
         let sevenDays = []
         let twentyDays = []
         let thirtyDays = []
@@ -47,7 +47,7 @@ export function serialEmployeeTaskLeadData(employeeListA) {
           sou['label'] = label
           sou['Name'] = label
           sou['value'] = value
-          sou['offPh'] = offPh || ""
+          sou['offPh'] = offPh || ''
           sou['now'] = tomorrowDay
           sou['sevenDays'] = sevenDays
           sou['twentyDays'] = twentyDays
@@ -65,45 +65,53 @@ export function serialEmployeeTaskLeadData(employeeListA) {
 
             const tomorrowDateNEW = staDA.filter(
               (da) =>
-                x[da]['schTime'] < tomorrowDate  &&
-                x[da]['schTime'] >= todayDate && x[da]['sts'] === 'pending' && x[da]['assTo'] != undefined
+                x[da]['schTime'] < tomorrowDate &&
+                x[da]['schTime'] >= todayDate &&
+                x[da]['sts'] === 'pending' &&
+                x[da]['assTo'] != undefined
             )
 
             const sevenDaysNew = staDA.filter(
               (da) =>
-                ((x[da]['sts'] === 'pending') &&
-                (x[da]['schTime'] <todayDate ) &&
-                (x[da]['schTime'] >= sevenDaysDate ) &&
-              x[da]['assTo'] != undefined)
+                x[da]['sts'] === 'pending' &&
+                x[da]['schTime'] < todayDate &&
+                x[da]['schTime'] >= sevenDaysDate &&
+                x[da]['assTo'] != undefined
             )
             const twentyDaysNew = staDA.filter(
               (da) =>
-                ((x[da]['sts'] === 'pending') &&
-                (x[da]['schTime'] < sevenDaysDate) &&
-                (x[da]['schTime']  >=twentyDaysDate) && x[da]['assTo'] != undefined)
+                x[da]['sts'] === 'pending' &&
+                x[da]['schTime'] < sevenDaysDate &&
+                x[da]['schTime'] >= twentyDaysDate &&
+                x[da]['assTo'] != undefined
             )
             const thirtyDaysNew = staDA.filter(
               (da) =>
                 x[da]['schTime'] >= thirtyDaysDate &&
-                x[da]['schTime'] < twentyDaysDate   &&
-                x[da]['sts'] === 'pending' && x[da]['assTo'] != undefined
+                x[da]['schTime'] < twentyDaysDate &&
+                x[da]['sts'] === 'pending' &&
+                x[da]['assTo'] != undefined
             )
             const fourtyDaysNew = staDA.filter(
               (da) =>
                 x[da]['schTime'] >= fourtyDaysDate &&
-                x[da]['schTime'] < thirtyDaysDate  &&
-                x[da]['sts'] === 'pending' && x[da]['assTo'] != undefined
+                x[da]['schTime'] < thirtyDaysDate &&
+                x[da]['sts'] === 'pending' &&
+                x[da]['assTo'] != undefined
             )
             const fiftyDaysNew = staDA.filter(
               (da) =>
                 x[da]['schTime'] >= fiftyDaysDate &&
-                x[da]['schTime'] <  fourtyDaysDate &&
-                x[da]['sts'] === 'pending' && x[da]['assTo'] != undefined
+                x[da]['schTime'] < fourtyDaysDate &&
+                x[da]['sts'] === 'pending' &&
+                x[da]['assTo'] != undefined
             )
 
             const fiftyDaysMoreNew = staDA.filter(
               (da) =>
-                x[da]['schTime'] < fiftyDaysDate && x[da]['sts'] === 'pending' && x[da]['assTo'] != undefined
+                x[da]['schTime'] < fiftyDaysDate &&
+                x[da]['sts'] === 'pending' &&
+                x[da]['assTo'] != undefined
             )
             tomorrowDay = [...tomorrowDay, ...tomorrowDateNEW]
             sevenDays = [...sevenDays, ...sevenDaysNew]
@@ -112,11 +120,19 @@ export function serialEmployeeTaskLeadData(employeeListA) {
             fourtyDays = [...fourtyDays, ...fourtyDaysNew]
             fiftyDays = [...fiftyDays, ...fiftyDaysNew]
             fiftyDaysMore = [...fiftyDaysMore, ...fiftyDaysMoreNew]
-            TotalMore = [...TotalMore, ...tomorrowDateNEW, ...sevenDaysNew,...twentyDaysNew ,...thirtyDaysNew,...fourtyDaysNew,...fiftyDaysMoreNew  ]
+            TotalMore = [
+              ...TotalMore,
+              ...tomorrowDateNEW,
+              ...sevenDaysNew,
+              ...twentyDaysNew,
+              ...thirtyDaysNew,
+              ...fourtyDaysNew,
+              ...fiftyDaysMoreNew,
+            ]
             sou['label'] = label
             sou['Name'] = label
             sou['value'] = value
-            sou['offPh'] = offPh || ""
+            sou['offPh'] = offPh || ''
             sou['now'] = tomorrowDay
             sou['sevenDays'] = sevenDays
             sou['twentyDays'] = twentyDays
@@ -125,14 +141,13 @@ export function serialEmployeeTaskLeadData(employeeListA) {
             sou['sevenDays'] = sevenDays
             sou['fiftyDays'] = fiftyDays
             sou['fiftyDaysMore'] = fiftyDaysMore
-            sou['Total'] =TotalMore
+            sou['Total'] = TotalMore
 
             return sou
 
             // return x
           })
         }
-
       },
       { uid: value, type: 'today' },
       () => {

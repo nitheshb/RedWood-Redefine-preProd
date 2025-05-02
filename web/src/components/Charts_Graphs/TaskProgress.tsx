@@ -16,8 +16,6 @@ const TaskProgress = ({ userTodayPerfA }) => {
             {userTodayPerfA?.new_comp || 0}/{userTodayPerfA?.new}
           </span>
         </div>
-
-
       </Box>
       <Box mt={3}>
         <div className="flex flex-row align-middle justify-between">
@@ -43,7 +41,6 @@ const TaskProgress = ({ userTodayPerfA }) => {
       </Box>
 
       <Box mt={3}>
-
         <div className="flex flex-row align-middle justify-between">
           <h6 className="font-bodyLato font-semibold text-sm">
             {t('Visits Fixed')}

@@ -25,11 +25,9 @@ import { storage } from 'src/context/firebaseConfig'
 import { TextField2 } from 'src/util/formFields/TextField2'
 import { EyeIcon } from 'lucide-react'
 
-import { FaTools, FaHammer, FaRegFileAlt, FaArrowUp } from 'react-icons/fa';
+import { FaTools, FaHammer, FaRegFileAlt, FaArrowUp } from 'react-icons/fa'
 import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
 import { CustomSelect } from 'src/util/formFields/selectBoxField'
-
-
 
 const AddNewDemand = ({
   title,
@@ -166,10 +164,10 @@ const AddNewDemand = ({
     let y = {}
     y = data
 
-    const { mode, comments,dated, purpose,gst } = data
+    const { mode, comments, dated, purpose, gst } = data
     const amount = data?.amount.replace(/,/g, '')
-    const gstV = gst /100
-    const totalWithGst = Number(amount) + (Number(amount) * Number(gstV))
+    const gstV = gst / 100
+    const totalWithGst = Number(amount) + Number(amount) * Number(gstV)
     const x = {
       TotalNetSaleValueGsT: totalWithGst,
       TotalSaleValue: amount,
@@ -179,7 +177,7 @@ const AddNewDemand = ({
       purpose: purpose,
       type: 'modification',
       gst: { label: gst, value: gst },
-      gstValue: (Number(amount) * Number(gstV)),
+      gstValue: Number(amount) * Number(gstV),
       myId: 'uuid',
       units: { label: 'Fixed Cost', value: 'fixedcost' },
     }
@@ -207,39 +205,53 @@ const AddNewDemand = ({
       preCheck: totalWithGst,
     }
 
-    console.log('value is',  ps )
+    console.log('value is', ps)
 
-    const newConstAdditionalChargesCS = selUnitDetails?.constAdditionalChargesCS || []
+    const newConstAdditionalChargesCS =
+      selUnitDetails?.constAdditionalChargesCS || []
     newConstAdditionalChargesCS.push(x)
     let existingPs = selUnitDetails?.fullPs
     let newfullPs = selUnitDetails?.fullPs
-    if(data?.payment_choice_1==='last_milestone'){
-      let milestoneSub = newfullPs[newfullPs.length-1]?.subA || []
+    if (data?.payment_choice_1 === 'last_milestone') {
+      let milestoneSub = newfullPs[newfullPs.length - 1]?.subA || []
 
       milestoneSub.push(ps)
-      console.log('milestone sub is', milestoneSub, newfullPs[newfullPs.length-1], ps)
-      newfullPs[newfullPs.length-1].elgFrom = dated
-      newfullPs[newfullPs.length-1].value = newfullPs[newfullPs.length-1].value +  totalWithGst
-      newfullPs[newfullPs.length-1].subA =  milestoneSub
+      console.log(
+        'milestone sub is',
+        milestoneSub,
+        newfullPs[newfullPs.length - 1],
+        ps
+      )
+      newfullPs[newfullPs.length - 1].elgFrom = dated
+      newfullPs[newfullPs.length - 1].value =
+        newfullPs[newfullPs.length - 1].value + totalWithGst
+      newfullPs[newfullPs.length - 1].subA = milestoneSub
 
-      console.log('matter of it', newfullPs[newfullPs.length-1],milestoneSub,  ps)
-    } else if(data?.payment_choice_1==='split_equally'){
-    let z =   existingPs.filter((item)=>{ return item.elgible ==false})
-    const splittedAmount = Math.floor(totalWithGst/z.length)
-
-    if(z.length>0){
-      z.map((item)=>{
-        let subArray = item.subA || []
-        subArray.push(ps)
-        item.elgFrom = dated
-        item.value = item.value +  splittedAmount
-        item.subA =  subArray
+      console.log(
+        'matter of it',
+        newfullPs[newfullPs.length - 1],
+        milestoneSub,
+        ps
+      )
+    } else if (data?.payment_choice_1 === 'split_equally') {
+      let z = existingPs.filter((item) => {
+        return item.elgible == false
       })
-    }else{
-console.log('nothing found in subarray')
-      newfullPs.push(ps)
+      const splittedAmount = Math.floor(totalWithGst / z.length)
+
+      if (z.length > 0) {
+        z.map((item) => {
+          let subArray = item.subA || []
+          subArray.push(ps)
+          item.elgFrom = dated
+          item.value = item.value + splittedAmount
+          item.subA = subArray
+        })
+      } else {
+        console.log('nothing found in subarray')
+        newfullPs.push(ps)
+      }
     }
-  }
 
     // }
     // const newfullPs = selUnitDetails?.fullPs || []
@@ -250,11 +262,10 @@ console.log('nothing found in subarray')
       fullPs: newfullPs,
       T_balance: selUnitDetails?.T_balance + totalWithGst,
       T_total: selUnitDetails?.T_total + totalWithGst,
-      T_D: (selUnitDetails?.T_D|| 0) + totalWithGst,
-      T_elgible_balance: selUnitDetails?.T_elgible_balance + totalWithGst
+      T_D: (selUnitDetails?.T_D || 0) + totalWithGst,
+      T_elgible_balance: selUnitDetails?.T_elgible_balance + totalWithGst,
     }
-    console.log('value is', amount,totalWithGst )
-
+    console.log('value is', amount, totalWithGst)
 
     addNewUnitModification(
       orgId,
@@ -266,17 +277,13 @@ console.log('nothing found in subarray')
     )
     //
 
-
-
     await onSubmitFun(y, resetForm)
 
     await confettiRef?.current?.fire()
 
     return
 
-
     const { uid } = selUnitDetails
-
 
     console.log('check this value ', user, leadDetailsObj2)
     const { Status } = leadDetailsObj2
@@ -302,15 +309,7 @@ console.log('nothing found in subarray')
       'nitheshreddy.email@gmail.com',
       enqueueSnackbar
     )
-
   }
-
-
-
-
-
-
-
 
   const datee = new Date().getTime()
   const initialState = {
@@ -329,14 +328,12 @@ console.log('nothing found in subarray')
     payment_choice_1: {},
   }
 
-
-
   const submitFormFun = (formik) => {
     formik.handleSubmit()
   }
 
   const setValueFun = (value) => {
-    setPaymentModex(value);
+    setPaymentModex(value)
   }
 
   const setDateFun = (date) => {
@@ -387,7 +384,6 @@ console.log('nothing found in subarray')
                                     <article className="mt-5">
                                       <div className="flex flex-row justify-between">
                                         <section className="flex flex-row">
-      
                                           <div className="inline">
                                             <div className="mt-[4px]">
                                               <label className="text-[24px] font-medium text-[#000000]    mb-1  ">
@@ -398,83 +394,89 @@ console.log('nothing found in subarray')
                                               </label>
                                             </div>
 
-
-
                                             <div>
-                                            <p className='text-[#6A6A6A] font-normal  mt-2 text-[12px]'>Created demand will be added to existing payment schedule of this unit.</p>
+                                              <p className="text-[#6A6A6A] font-normal  mt-2 text-[12px]">
+                                                Created demand will be added to
+                                                existing payment schedule of
+                                                this unit.
+                                              </p>
+                                            </div>
                                           </div>
-                                          </div>
-
-
                                         </section>
-                                        <section className="flex flex-row justify-between">
-                        
-                                        </section>
+                                        <section className="flex flex-row justify-between"></section>
                                       </div>
                                     </article>
                                     {!bookingProgress && (
                                       <section>
-
-
-
                                         <div className="flex flex-wrap mt-3">
                                           <div className="justify-center w-full mx-auto">
-                                          <p className='text-[#6A6A6A] text-[14px]'> Category</p>
+                                            <p className="text-[#6A6A6A] text-[14px]">
+                                              {' '}
+                                              Category
+                                            </p>
                                           </div>
 
-
-
-
-
-<div className="w-full mb-8 mt-[12px] flex flex-wrap gap-x-4 gap-y-4">
-  {demandMode.map((dat, i) => {
-    return (
-      <button
-        type="button"
-        className={`border rounded-xl p-2 px-[10px] w-[100px] cursor-pointer hover:bg-[#F2F2F2] hover:text-[#484848] text-[10px] flex flex-col items-center ${
-          paymentModex === dat.value ? 'bg-[#F2F2F2] text-[#484848]' : ''
-        }`}
-        key={i}
-        onClick={() => {
-          setValueFun(dat.value)
-          formik.setFieldValue('mode', dat.value);
-        }}
-      >
-        <img src={dat.icon} alt={dat.label} className="h-4 w-4 mb-1" />
-        {dat.label}
-      </button>
-    );
-  })}
-</div>
-
-
+                                          <div className="w-full mb-8 mt-[12px] flex flex-wrap gap-x-4 gap-y-4">
+                                            {demandMode.map((dat, i) => {
+                                              return (
+                                                <button
+                                                  type="button"
+                                                  className={`border rounded-xl p-2 px-[10px] w-[100px] cursor-pointer hover:bg-[#F2F2F2] hover:text-[#484848] text-[10px] flex flex-col items-center ${
+                                                    paymentModex === dat.value
+                                                      ? 'bg-[#F2F2F2] text-[#484848]'
+                                                      : ''
+                                                  }`}
+                                                  key={i}
+                                                  onClick={() => {
+                                                    setValueFun(dat.value)
+                                                    formik.setFieldValue(
+                                                      'mode',
+                                                      dat.value
+                                                    )
+                                                  }}
+                                                >
+                                                  <img
+                                                    src={dat.icon}
+                                                    alt={dat.label}
+                                                    className="h-4 w-4 mb-1"
+                                                  />
+                                                  {dat.label}
+                                                </button>
+                                              )
+                                            })}
+                                          </div>
 
                                           <div className="w-full lg:w-4/12 pr-3">
-
-                                          <div className="relative w-full mb-5">
+                                            <div className="relative w-full mb-5">
                                               <TextField2
                                                 label="Amount"
                                                 name="amount"
                                                 type="text"
-                                                value={
-                                                  formik.values.amount.toLocaleString('en-IN')
+                                                value={formik.values.amount.toLocaleString(
+                                                  'en-IN'
+                                                )}
+                                                onChange={(e) => {
+                                                  const value =
+                                                    e.target.value.replace(
+                                                      /,/g,
+                                                      ''
+                                                    )
+                                                  if (!isNaN(value)) {
+                                                    const rawValue = Number(
+                                                      e.target.value.replace(
+                                                        /,/g,
+                                                        ''
+                                                      )
+                                                    )?.toLocaleString('en-IN')
+
+                                                    formik.setFieldValue(
+                                                      'amount',
+                                                      rawValue
+                                                    )
                                                   }
-                                                  onChange={(e) =>{
-                                                  const value = e.target.value.replace(/,/g, '')
-                                                    if(!isNaN(value)){
-                                                    const rawValue = Number(e.target.value.replace(/,/g, ''))?.toLocaleString('en-IN')
-
-
-                                                    formik.setFieldValue('amount', rawValue)
-}
-
-                                                  }}
-
-
+                                                }}
                                               />
-
                                             </div>
-
                                           </div>
 
                                           <div className="w-full lg:w-4/12 px-3">
@@ -483,18 +485,28 @@ console.log('nothing found in subarray')
                                                 label="GST %"
                                                 name="gst"
                                                 type="text"
-
                                                 onChange={(e) => {
                                                   let value = e.target.value
                                                     .replace(/[^0-9.]/g, '')
-                                                    .replace(/(\..*?)\..*/g, '$1');
+                                                    .replace(
+                                                      /(\..*?)\..*/g,
+                                                      '$1'
+                                                    )
 
-
-                                                  if (value === '0' || /^0\d/.test(value)) {
-                                                    value = value.replace(/^0+/, '');
+                                                  if (
+                                                    value === '0' ||
+                                                    /^0\d/.test(value)
+                                                  ) {
+                                                    value = value.replace(
+                                                      /^0+/,
+                                                      ''
+                                                    )
                                                   }
 
-                                                  formik.setFieldValue('gst', value);
+                                                  formik.setFieldValue(
+                                                    'gst',
+                                                    value
+                                                  )
                                                 }}
                                               />
                                             </div>
@@ -553,34 +565,59 @@ console.log('nothing found in subarray')
                                             </div>
                                           </div>
 
-                                             <div className="w-full lg:w-12/12 ">
-                                                              <div className="relative w-full mb-3 mt-">
-                                                                <div className="w-full flex flex-col mb-3 mt-2">
-                                                                  <CustomSelect
-                                                                    name="payment_choice_1"
-                                                                    label="Payment Choice"
-                                                                    className="input"
-                                                                    onChange={(value) => {
-                                                                      console.log('value is ', value.value)
-                                                                      formik.setFieldValue('payment_choice_1', value.value)
-                                                                    }}
-                                                                    value={formik.values.payment_choice_1}
-                                                                    options={[
-                                                                      {label:'At last milestone', value:'last_milestone'},
-                                                                      {label:'Split equally into available milestone', value:'split_equally'},
-                                                                      {label:'Immediate milestone', value:'immediate_milestone'},
-                                                                      {label: 'On possession', value: 'on_possession'},
-                                                                   ]}
-                                                                  />
-                                                                  <p
-                                                                    className="text-sm text-red-500 hidden mt-3"
-                                                                    id="error"
-                                                                  >
-                                                                    Please fill out this field.
-                                                                  </p>
-                                                                </div>
-                                                              </div>
-                                                            </div>
+                                          <div className="w-full lg:w-12/12 ">
+                                            <div className="relative w-full mb-3 mt-">
+                                              <div className="w-full flex flex-col mb-3 mt-2">
+                                                <CustomSelect
+                                                  name="payment_choice_1"
+                                                  label="Payment Choice"
+                                                  className="input"
+                                                  onChange={(value) => {
+                                                    console.log(
+                                                      'value is ',
+                                                      value.value
+                                                    )
+                                                    formik.setFieldValue(
+                                                      'payment_choice_1',
+                                                      value.value
+                                                    )
+                                                  }}
+                                                  value={
+                                                    formik.values
+                                                      .payment_choice_1
+                                                  }
+                                                  options={[
+                                                    {
+                                                      label:
+                                                        'At last milestone',
+                                                      value: 'last_milestone',
+                                                    },
+                                                    {
+                                                      label:
+                                                        'Split equally into available milestone',
+                                                      value: 'split_equally',
+                                                    },
+                                                    {
+                                                      label:
+                                                        'Immediate milestone',
+                                                      value:
+                                                        'immediate_milestone',
+                                                    },
+                                                    {
+                                                      label: 'On possession',
+                                                      value: 'on_possession',
+                                                    },
+                                                  ]}
+                                                />
+                                                <p
+                                                  className="text-sm text-red-500 hidden mt-3"
+                                                  id="error"
+                                                >
+                                                  Please fill out this field.
+                                                </p>
+                                              </div>
+                                            </div>
+                                          </div>
                                         </div>
                                         <div>
                                           <label
@@ -592,9 +629,9 @@ console.log('nothing found in subarray')
                                               style={{ fontSize: '14px' }}
                                             />
 
-                                            <span className="text-[#17B9FF] border-b border-[#17B9FF]">Add document</span>
-
-
+                                            <span className="text-[#17B9FF] border-b border-[#17B9FF]">
+                                              Add document
+                                            </span>
                                           </label>
                                           <input
                                             type="file"
@@ -618,7 +655,6 @@ console.log('nothing found in subarray')
                                             className="img-preview"
                                           />
                                         )}
-
                                       </section>
                                     )}
 

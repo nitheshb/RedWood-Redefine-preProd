@@ -499,13 +499,17 @@ const MyDocument = ({
 
         <View style={[styles.gridContainer, styles.mb20]}>
           <View style={[styles.col4, styles.ml4]}>
-            <Text style={[styles.subtitle2, styles.mb4]}>
-              Customer Name
+            <Text style={[styles.subtitle2, styles.mb4]}>Customer Name</Text>
+            <Text style={styles.body2}>
+              {selUnitDetails?.customerDetailsObj?.customerName1}
             </Text>
-            <Text style={styles.body2}>{selUnitDetails?.customerDetailsObj?.customerName1}</Text>
             {/* <Text style={styles.body2}>{selUnitDetails?.customerDetailsObj?.customerName1}</Text> */}
-            <Text style={styles.body2}>{selUnitDetails?.customerDetailsObj?.email1}</Text>
-            <Text style={styles.body2}>{selUnitDetails?.customerDetailsObj?.phoneNo1}</Text>
+            <Text style={styles.body2}>
+              {selUnitDetails?.customerDetailsObj?.email1}
+            </Text>
+            <Text style={styles.body2}>
+              {selUnitDetails?.customerDetailsObj?.phoneNo1}
+            </Text>
           </View>
 
           <View style={styles.col4}>
@@ -759,7 +763,10 @@ const MyDocument = ({
                     {' '}
                     {fCurrency(
                       Number(
-                        computeTotal(item, selUnitDetails?.area?.toString()?.replace(',', ''))
+                        computeTotal(
+                          item,
+                          selUnitDetails?.area?.toString()?.replace(',', '')
+                        )
                       )?.toLocaleString('en-IN')
                     )}
                   </Text>
@@ -844,7 +851,6 @@ const MyDocument = ({
                       partialSum + Number(obj?.TotalNetSaleValueGsT),
                     0
                   )}
-
                 </Text>
               </View>
               <View style={[styles.tableCell_3, styles.alignCenter]}>
@@ -873,18 +879,22 @@ const MyDocument = ({
                 <Text>
                   {fCurrency(netTotal)}
                   {selUnitDetails?.plotCS?.reduce(
-      (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),0) + selUnitDetails?.addChargesCS?.reduce(
                     (partialSum, obj) =>
-                      partialSum +
-                      Number(
-                        computeTotal(
-                          obj,
-                          selUnitDetails?.super_built_up_area ||
-                            selUnitDetails?.area?.toString()?.replace(',', '')
-                        )
-                      ),
+                      partialSum + Number(obj?.TotalNetSaleValueGsT),
                     0
-                  )}
+                  ) +
+                    selUnitDetails?.addChargesCS?.reduce(
+                      (partialSum, obj) =>
+                        partialSum +
+                        Number(
+                          computeTotal(
+                            obj,
+                            selUnitDetails?.super_built_up_area ||
+                              selUnitDetails?.area?.toString()?.replace(',', '')
+                          )
+                        ),
+                      0
+                    )}
                 </Text>
               </View>
             </View>
@@ -939,7 +949,7 @@ const MyDocument = ({
                 </View>
 
                 <View style={[styles.tableCell_3, styles.alignRight]}>
-                  <Text>{index===0 ? fCurrency(item?.T_review) : '₹0'}</Text>
+                  <Text>{index === 0 ? fCurrency(item?.T_review) : '₹0'}</Text>
                 </View>
               </View>
             ))}
@@ -955,19 +965,25 @@ const MyDocument = ({
               <View style={styles.tableCell_3}></View>
 
               <View style={[styles.tableCell_3, styles.alignRight]}>
-                <Text>{selUnitDetails?.plotCS?.reduce(
-      (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),0) + selUnitDetails?.addChargesCS?.reduce(
+                <Text>
+                  {selUnitDetails?.plotCS?.reduce(
                     (partialSum, obj) =>
-                      partialSum +
-                      Number(
-                        computeTotal(
-                          obj,
-                          selUnitDetails?.super_built_up_area ||
-                            selUnitDetails?.area?.toString()?.replace(',', '')
-                        )
-                      ),
+                      partialSum + Number(obj?.TotalNetSaleValueGsT),
                     0
-                  )}</Text>
+                  ) +
+                    selUnitDetails?.addChargesCS?.reduce(
+                      (partialSum, obj) =>
+                        partialSum +
+                        Number(
+                          computeTotal(
+                            obj,
+                            selUnitDetails?.super_built_up_area ||
+                              selUnitDetails?.area?.toString()?.replace(',', '')
+                          )
+                        ),
+                      0
+                    )}
+                </Text>
               </View>
             </View>
           </View>
@@ -1030,23 +1046,23 @@ const PdfUnitSummaryFile = ({
           loading ? (
             <button>Loading document...</button>
           ) : (
-            <span className='flex flex-row text-blue-500 text-xs cursor-pointer hover:underline'>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="w-4 h-4 pr-1"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"
-                    />
-                  </svg>
-                  <span className="text-[11px]">CUSTOMER SUMMARY</span>
-                </span>
+            <span className="flex flex-row text-blue-500 text-xs cursor-pointer hover:underline">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-4 h-4 pr-1"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"
+                />
+              </svg>
+              <span className="text-[11px]">CUSTOMER SUMMARY</span>
+            </span>
           )
         }
       </PDFDownloadLink>

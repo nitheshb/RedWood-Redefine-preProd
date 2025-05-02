@@ -1,6 +1,6 @@
-import { Box, Card, CardHeader } from '@mui/material';
-import React from 'react';
-import ReactApexChart from 'react-apexcharts';
+import { Box, Card, CardHeader } from '@mui/material'
+import React from 'react'
+import ReactApexChart from 'react-apexcharts'
 
 const ApexChart: React.FC = () => {
   const state = {
@@ -78,26 +78,30 @@ const ApexChart: React.FC = () => {
         y: {
           formatter: function (y: number) {
             if (typeof y !== 'undefined') {
-              return y.toFixed(0) + ' points';
+              return y.toFixed(0) + ' points'
             }
-            return y;
+            return y
           },
         },
       },
     },
-  };
+  }
 
   return (
     <div id="chart">
       <Card>
-      <CardHeader title="Website Visits" subheader="(+43%) than last year" />
-      <Box sx={{ p: 3, pb: 1 }}>
-      <ReactApexChart options={state.options} series={state.series} type="line" height={350} />
-      </Box>
-
+        <CardHeader title="Website Visits" subheader="(+43%) than last year" />
+        <Box sx={{ p: 3, pb: 1 }}>
+          <ReactApexChart
+            options={state.options}
+            series={state.series}
+            type="line"
+            height={350}
+          />
+        </Box>
       </Card>
     </div>
-  );
-};
+  )
+}
 
-export default ApexChart;
+export default ApexChart

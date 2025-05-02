@@ -3,9 +3,7 @@
 import * as React from 'react'
 
 // import '../../styles/myStyles.css'
-import {
-  Rating,
-} from '@mui/material'
+import { Rating } from '@mui/material'
 import Section from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import Table from '@mui/material/Table'
@@ -35,8 +33,6 @@ import CSVDownloader from 'src/util/csvDownload'
 import DropCompUnitStatus from 'src/components/dropDownUnitStatus'
 import { computeTotal } from 'src/util/computeCsTotals'
 
-
-
 // function createData(
 //   Date,
 //   Name,
@@ -60,10 +56,16 @@ import { computeTotal } from 'src/util/computeCsTotals'
 // }
 
 function descendingComparator(a, b, orderBy) {
-  if ((b[orderBy] || b['stsUpT'] || b['Date']) < (a[orderBy] || a['stsUpT'] || a['Date'])) {
+  if (
+    (b[orderBy] || b['stsUpT'] || b['Date']) <
+    (a[orderBy] || a['stsUpT'] || a['Date'])
+  ) {
     return -1
   }
-  if ((b[orderBy] || b['stsUpT'] || b['Date']) > (a[orderBy] || a['stsUpT'] || a['Date'])) {
+  if (
+    (b[orderBy] || b['stsUpT'] || b['Date']) >
+    (a[orderBy] || a['stsUpT'] || a['Date'])
+  ) {
     return 1
   }
   return 0
@@ -118,7 +120,6 @@ const headCells = [
     label: 'On units',
   },
 
-
   {
     id: 'received',
     numeric: false,
@@ -158,25 +159,19 @@ function EnhancedTableHead(props) {
   }
 
   const displayHeadersFun = (headCell) => {
-
-    if(['partA', 'legal', 'maintenance', 'club', 'infra'].includes(headCell)){
+    if (['partA', 'legal', 'maintenance', 'club', 'infra'].includes(headCell)) {
       return viewUnitStatusA.includes('Cost Split') ? '' : 'none'
-    }  else if(['avgsft', 'sv_sft', 'bmrda_strr'].includes(headCell)){
+    } else if (['avgsft', 'sv_sft', 'bmrda_strr'].includes(headCell)) {
       return viewUnitStatusA.includes('Avg sqft Cost') ? '' : 'none'
-    } else if(['crm_executive'].includes(headCell)){
+    } else if (['crm_executive'].includes(headCell)) {
       return viewUnitStatusA.includes('CRM Executive') ? '' : 'none'
-    }else if(['sale_executive'].includes(headCell)){
+    } else if (['sale_executive'].includes(headCell)) {
       return viewUnitStatusA.includes('Sales Executive') ? '' : 'none'
-    }else if(['Notes'].includes(headCell)){
+    } else if (['Notes'].includes(headCell)) {
       return viewUnitStatusA.includes('Remarks') ? '' : 'none'
-    }
-    else {
+    } else {
       return ''
     }
-
-
-
-
   }
   return (
     <TableHead style={{ height: '10px' }}>
@@ -200,14 +195,13 @@ function EnhancedTableHead(props) {
             marginRight: '10px',
           }}
         >
-
           <TableSortLabel>S.No</TableSortLabel>
         </TableCell>
         {headCells.map((headCell) => (
           <>
             <TableCell
               key={headCell.id}
-              align={headCell?.align ||  'left'}
+              align={headCell?.align || 'left'}
               padding={headCell.disablePadding ? 'none' : 'normal'}
               sortDirection={orderBy === headCell.id ? order : false}
               style={{
@@ -216,7 +210,7 @@ function EnhancedTableHead(props) {
                 height: '10px',
                 maxHeight: '10px',
                 lineHeight: '7px',
-                display: displayHeadersFun(headCell.id)
+                display: displayHeadersFun(headCell.id),
               }}
             >
               <TableSortLabel
@@ -285,7 +279,6 @@ const EnhancedTableToolbar = (props) => {
     setRowsAfterSearchKey(rows)
   }, [rows])
 
-
   React.useEffect(() => {
     const downRows = []
     rowsAfterSearchKey?.map((data) => {
@@ -315,10 +308,10 @@ const EnhancedTableToolbar = (props) => {
 
     setDownloadFormatRows(downRows)
   }, [rowsAfterSearchKey])
-React.useEffect(()=>{
-  setSearchKey(searchVal)
-  // searchKeyField({target:{value:searchVal}})
-},[searchVal])
+  React.useEffect(() => {
+    setSearchKey(searchVal)
+    // searchKeyField({target:{value:searchVal}})
+  }, [searchVal])
   const searchKeyField = (e) => {
     // console.log('searched values is ', e.target.value)
     setSearchKey(e.target.value)
@@ -342,13 +335,9 @@ React.useEffect(()=>{
       }
     })
     setRowsAfterSearchKey(rowsR)
-
   }
   return (
     <section className="flex flex-row justify-between pb pt-1 px-3 ">
-
-
-
       <span style={{ display: 'flex' }}>
         <section className="pt-1">
           <DropCompUnitStatus
@@ -359,7 +348,6 @@ React.useEffect(()=>{
             pickCustomViewer={pickCustomViewer}
           />
         </section>
-
 
         {numSelected > 0 ? (
           <Tooltip title="Delete">
@@ -372,8 +360,6 @@ React.useEffect(()=>{
           </Tooltip>
         ) : (
           <Tooltip title={`Download ${leadsFetchedData?.length} Row`}>
-
-
             <CSVDownloader
               className="mr-6 h-[20px] w-[20px]"
               downloadRows={leadsFetchedData}
@@ -416,7 +402,7 @@ export default function CreditNoteSummaryTableBody({
   leadsFetchedData,
   mySelRows,
   searchVal,
-  viewUnitStatusA
+  viewUnitStatusA,
 }) {
   const { user } = useAuth()
   const [order, setOrder] = React.useState('desc')
@@ -426,16 +412,14 @@ export default function CreditNoteSummaryTableBody({
   const [dense, setDense] = React.useState(false)
   const [rowsPerPage, setRowsPerPage] = React.useState(5)
   const [rows, setRows] = React.useState([])
-  const [searchKey, setSearchKey] = React.useState(searchVal?searchVal:'')
+  const [searchKey, setSearchKey] = React.useState(searchVal ? searchVal : '')
   const [dateRange, setDateRange] = React.useState([null, null])
   const [startDate, endDate] = dateRange
 
-  console.log(searchKey, "cdsvfeg", leadsFetchedData)
+  console.log(searchKey, 'cdsvfeg', leadsFetchedData)
   React.useEffect(() => {
     filterSearchString(rows)
   }, [searchKey])
-
-
 
   const filterSearchString = async (parent) => {
     return
@@ -443,7 +427,6 @@ export default function CreditNoteSummaryTableBody({
       if (item.Source.toLowerCase().includes(selStatus.toLowerCase())) {
         return item
       }
-
     })
     await setRows(x)
     await console.log('xo', x)
@@ -467,7 +450,6 @@ export default function CreditNoteSummaryTableBody({
   const handleClick = (event, row) => {
     const newSelected = []
 
-
     selUserProfileF('User Profile', row)
     setSelected(newSelected)
   }
@@ -479,11 +461,8 @@ export default function CreditNoteSummaryTableBody({
 
   const [selBlock, setSelBlock] = React.useState({})
 
-
-
   return (
     <Section sx={{ width: '100%' }} style={{ border: 'none', radius: 0 }}>
-
       <section
         style={{ borderTop: '1px solid #efefef', background: '#fefafb' }}
       >
@@ -506,114 +485,128 @@ export default function CreditNoteSummaryTableBody({
               viewUnitStatusA={viewUnitStatusA}
             />
             <TableBody>
-              {
+              {leadsFetchedData
+                ?.filter((item) => {
+                  if (searchKey == '' || !searchKey) {
+                    return item
+                  } else if (
+                    item.Email.toLowerCase().includes(
+                      searchKey.toLowerCase()
+                    ) ||
+                    item.Mobile.toLowerCase().includes(
+                      searchKey.toLowerCase()
+                    ) ||
+                    item.Name.toLowerCase().includes(searchKey.toLowerCase()) ||
+                    item.Source.toLowerCase().includes(searchKey.toLowerCase())
+                  ) {
+                    return item
+                  }
+                })
 
-                leadsFetchedData
-                  ?.filter((item) => {
-                    if (searchKey == '' || !searchKey) {
-                      return item
-                    }
-                    else if (
-                      item.Email.toLowerCase().includes(
-                        searchKey.toLowerCase()
-                      ) ||
-                      item.Mobile.toLowerCase().includes(
-                        searchKey.toLowerCase()
-                      ) ||
-                      item.Name.toLowerCase().includes(searchKey.toLowerCase()) ||
-                      item.Source.toLowerCase().includes(
-                        searchKey.toLowerCase()
-                      )
-                    ) {
-                      return item
-                    }
-                  })
+                .sort(getComparator(order, orderBy))
+                .map((row, index) => {
+                  const isItemSelected = isSelected(row.Name)
+                  const labelId = `enhanced-table-checkbox-${index}`
 
-
-                  .sort(getComparator(order, orderBy))
-                  .map((row, index) => {
-                    const isItemSelected = isSelected(row.Name)
-                    const labelId = `enhanced-table-checkbox-${index}`
-
-                    return (
-                      <TableRow
-                        hover
-                        onClick={(event) => handleClick(event, row)}
-                        aria-checked={isItemSelected}
-                        tabIndex={-1}
-                        key={index}
-                        selected={isItemSelected}
-                        style={{ cursor: 'pointer' }}
+                  return (
+                    <TableRow
+                      hover
+                      onClick={(event) => handleClick(event, row)}
+                      aria-checked={isItemSelected}
+                      tabIndex={-1}
+                      key={index}
+                      selected={isItemSelected}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <TableCell
+                        align="center"
+                        component="th"
+                        id={labelId}
+                        scope="row"
+                        padding="none"
+                        size="small"
+                        sx={{ whiteSpace: 'nowrap', background: '#fff' }}
                       >
-                        <TableCell
-                          align="center"
-                          component="th"
-                          id={labelId}
-                          scope="row"
-                          padding="none"
-                          size="small"
-                          sx={{ whiteSpace: 'nowrap',  background: "#fff",  }}
-                        >
-                          {index + 1}
-                        </TableCell>
+                        {index + 1}
+                      </TableCell>
 
-                        <TableCell
-                          component="th"
-                          id={labelId}
-                          scope="row"
-                          padding="none"
-                          sx={{ whiteSpace: 'nowrap',  paddingRight: '6px' , paddingLeft: '6px', background: "#fff",  }}
+                      <TableCell
+                        component="th"
+                        id={labelId}
+                        scope="row"
+                        padding="none"
+                        sx={{
+                          whiteSpace: 'nowrap',
+                          paddingRight: '6px',
+                          paddingLeft: '6px',
+                          background: '#fff',
+                        }}
+                      >
+                        <section>
+                          <div className="font-bodyLato">{row?.name}</div>
+                        </section>
+                      </TableCell>
 
-                        >
-                          <section>
-                            <div className="font-bodyLato">
-                            {row?.name}
-                            </div>
-             
-
-                          </section>
-                        </TableCell>
-
-
-                        <TableCell
-                          component="th"
-                          id={labelId}
-                          scope="row"
-                          padding="none"
-                          align="center"
-                          sx={{background: '#fff', paddingTop: '4px', paddingBottom:'4px', }}
-
-                        >
-                          <section>
-                            <span className="font-bodyLato">
+                      <TableCell
+                        component="th"
+                        id={labelId}
+                        scope="row"
+                        padding="none"
+                        align="center"
+                        sx={{
+                          background: '#fff',
+                          paddingTop: '4px',
+                          paddingBottom: '4px',
+                        }}
+                      >
+                        <section>
+                          <span className="font-bodyLato">
                             {row?.T_credit_note_units}
-                            </span>
-                          </section>
-                        </TableCell>
+                          </span>
+                        </section>
+                      </TableCell>
 
-                        <TableCell align="right" sx={{ whiteSpace: 'nowrap', background: "#fff", paddingRight: '6px' }} padding="none">
-        ₹{row?.T_credit_note_review?.toLocaleString('en-IN')}
-        </TableCell>
+                      <TableCell
+                        align="right"
+                        sx={{
+                          whiteSpace: 'nowrap',
+                          background: '#fff',
+                          paddingRight: '6px',
+                        }}
+                        padding="none"
+                      >
+                        ₹{row?.T_credit_note_review?.toLocaleString('en-IN')}
+                      </TableCell>
 
+                      <TableCell
+                        align="right"
+                        sx={{
+                          whiteSpace: 'nowrap',
+                          background: '#fff',
+                          paddingRight: '6px',
+                        }}
+                        padding="none"
+                      >
+                        ₹
+                        {row?.T_credit_note_approved?.toLocaleString('en-IN') ||
+                          0}
+                      </TableCell>
 
-       <TableCell align="right" sx={{ whiteSpace: 'nowrap', background: "#fff", paddingRight: '6px' }} padding="none" >
-        ₹{(row?.T_credit_note_approved?.toLocaleString('en-IN')) || 0}
-        </TableCell>
-
-
-        <TableCell align="center" sx={{background: "#fff"}} padding="none">
+                      <TableCell
+                        align="center"
+                        sx={{ background: '#fff' }}
+                        padding="none"
+                      >
                         <span className="px-2 uppercase inline-flex text-[10px] leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                           <HighlighterStyle
                             searchKey={searchKey}
                             source={row?.userStatus?.toString()}
                           />
                         </span>
-                        </TableCell>
-
-
-                      </TableRow>
-                    )
-                  })}
+                      </TableCell>
+                    </TableRow>
+                  )
+                })}
               {emptyRows > 0 && (
                 <TableRow
                   style={{

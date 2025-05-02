@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   BarChart,
   Bar,
@@ -6,8 +6,8 @@ import {
   YAxis,
   CartesianGrid,
   ResponsiveContainer,
-  Tooltip
-} from 'recharts';
+  Tooltip,
+} from 'recharts'
 
 const UnitsSoldDashboardthree = () => {
   const salesData = [
@@ -25,25 +25,25 @@ const UnitsSoldDashboardthree = () => {
     { name: 'May', value: 30500 },
     { name: 'May', value: 28500 },
     { name: 'Jun', value: 28000 },
-    { name: 'Jun', value: 7000 }
-  ];
+    { name: 'Jun', value: 7000 },
+  ]
 
   const timeFrameData = [
     { period: 'Today', amount: '₹ 199.98', orders: '2', highlight: true },
     { period: 'Yesterday', amount: '₹ 119.97', orders: '3' },
     { period: 'Last 7 Days', amount: '₹ 829.87', orders: '13' },
     { period: 'Last 30 Days', amount: '₹ 3.9k', orders: '62' },
-    { period: 'Last 90 Days', amount: '₹ 10.3k', orders: '164' }
-  ];
+    { period: 'Last 90 Days', amount: '₹ 10.3k', orders: '164' },
+  ]
 
   const formatCurrency = (value) => {
-    return `₹ ${(value / 1000).toFixed(1)}k`;
-  };
+    return `₹ ${(value / 1000).toFixed(1)}k`
+  }
 
   return (
     <div className="max-w-5xl mx-auto p-8 bg-white rounded-3xl shadow-lg">
       <h1 className="text-2xl font-bold mb-8">Units Sold</h1>
-      
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Left side - Table */}
         <div className="space-y-6">
@@ -51,16 +51,28 @@ const UnitsSoldDashboardthree = () => {
             <div className="text-gray-500">Total</div>
             <div className="text-gray-500">Orders</div>
           </div>
-          
+
           {timeFrameData.map((item, index) => (
             <div key={index} className="grid grid-cols-3 gap-4">
-              <div className={`text-lg ${item.highlight ? 'text-blue-500' : 'text-gray-500'}`}>
+              <div
+                className={`text-lg ${
+                  item.highlight ? 'text-blue-500' : 'text-gray-500'
+                }`}
+              >
                 {item.period}
               </div>
-              <div className={`text-lg font-medium ${item.highlight ? 'text-blue-500' : 'text-gray-600'}`}>
+              <div
+                className={`text-lg font-medium ${
+                  item.highlight ? 'text-blue-500' : 'text-gray-600'
+                }`}
+              >
                 {item.amount}
               </div>
-              <div className={`text-lg ${item.highlight ? 'text-blue-500' : 'text-gray-600'}`}>
+              <div
+                className={`text-lg ${
+                  item.highlight ? 'text-blue-500' : 'text-gray-600'
+                }`}
+              >
                 {item.orders}
               </div>
             </div>
@@ -71,46 +83,41 @@ const UnitsSoldDashboardthree = () => {
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={salesData} barSize={12}>
-              <CartesianGrid 
-                strokeDasharray="3 3" 
+              <CartesianGrid
+                strokeDasharray="3 3"
                 vertical={false}
                 stroke="#E5E7EB"
               />
-              <XAxis 
-                dataKey="name" 
+              <XAxis
+                dataKey="name"
                 axisLine={false}
                 tickLine={false}
                 tickMargin={8}
                 stroke="#6B7280"
               />
-              <YAxis 
+              <YAxis
                 tickFormatter={formatCurrency}
                 axisLine={false}
                 tickLine={false}
                 tickMargin={8}
                 stroke="#6B7280"
               />
-              <Tooltip 
+              <Tooltip
                 formatter={(value) => formatCurrency(value)}
                 contentStyle={{
                   backgroundColor: 'white',
                   border: 'none',
                   borderRadius: '8px',
-                  boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
                 }}
               />
-              <Bar 
-                dataKey="value" 
-                fill="#93C5FD"
-                radius={[2, 2, 0, 0]}
-              />
+              <Bar dataKey="value" fill="#93C5FD" radius={[2, 2, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default UnitsSoldDashboardthree;
-
+export default UnitsSoldDashboardthree

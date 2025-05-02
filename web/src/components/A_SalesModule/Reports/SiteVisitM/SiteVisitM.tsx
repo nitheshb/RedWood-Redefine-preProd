@@ -53,7 +53,7 @@ const SiteVisitM = ({ leadLogsRawData, showDrillDownFun }) => {
   console.log(show)
   return (
     <div
-    className='rounded-xl'
+      className="rounded-xl"
       style={{
         padding: '1rem',
         backgroundColor: 'white',
@@ -82,16 +82,12 @@ const SiteVisitM = ({ leadLogsRawData, showDrillDownFun }) => {
               <div className="text-white text-sm">during * days </div>
             </div>
             <div
-             className='rounded-b-lg'
+              className="rounded-b-lg"
               style={{
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-evenly',
                 alignItems: 'center',
-          
-             
-                
-                
               }}
             >
               {[
@@ -109,13 +105,12 @@ const SiteVisitM = ({ leadLogsRawData, showDrillDownFun }) => {
                     ).length
                   }`,
                 },
-
-
               ].map((item, i) => (
                 <div
                   key={i}
-                  className={`bg-[#3C7E7D] my-[0.5px] cursor-pointer ${i === 1 ? 'rounded-b-lg' : ''}`}
-                  
+                  className={`bg-[#3C7E7D] my-[0.5px] cursor-pointer ${
+                    i === 1 ? 'rounded-b-lg' : ''
+                  }`}
                   style={{
                     height: '4rem',
                     display: 'flex',
@@ -153,7 +148,7 @@ const SiteVisitM = ({ leadLogsRawData, showDrillDownFun }) => {
               }}
             >
               <div
-               className='shadow rounded-xl p-10 pl-4'
+                className="shadow rounded-xl p-10 pl-4"
                 style={{
                   display: 'flex',
                   justifyContent: 'space-between',
@@ -170,7 +165,6 @@ const SiteVisitM = ({ leadLogsRawData, showDrillDownFun }) => {
                 >
                   <PieChartComp pieVal={pieVals.val1} />
                   <div
-                  
                     style={{
                       position: 'absolute',
                       top: '40%',
@@ -201,13 +195,19 @@ const SiteVisitM = ({ leadLogsRawData, showDrillDownFun }) => {
                     onClick={() =>
                       showDrillDownFun(
                         'Total Visits Done',
-                        leadLogsRawData?.filter((datObj) => datObj?.to == 'visitdone')
+                        leadLogsRawData?.filter(
+                          (datObj) => datObj?.to == 'visitdone'
+                        )
                       )
                     }
                   >
-                    <span className="">{leadLogsRawData?.filter(
-                        (datObj) => datObj?.to == 'visitdone'
-                      ).length } </span>
+                    <span className="">
+                      {
+                        leadLogsRawData?.filter(
+                          (datObj) => datObj?.to == 'visitdone'
+                        ).length
+                      }{' '}
+                    </span>
                   </div>
                   <div
                     style={{
@@ -265,14 +265,23 @@ const SiteVisitM = ({ leadLogsRawData, showDrillDownFun }) => {
                     onClick={() =>
                       showDrillDownFun(
                         'Total Visits Done',
-                        leadLogsRawData?.filter((datObj) => datObj?.from == 'visitfixed' && datObj?.to == 'notinterested')
+                        leadLogsRawData?.filter(
+                          (datObj) =>
+                            datObj?.from == 'visitfixed' &&
+                            datObj?.to == 'notinterested'
+                        )
                       )
                     }
                   >
-                    <span className="">{
-                        leadLogsRawData?.filter((datObj) => datObj?.from == 'visitfixed' && datObj?.to == 'notinterested')
-
-                    .length } </span>
+                    <span className="">
+                      {
+                        leadLogsRawData?.filter(
+                          (datObj) =>
+                            datObj?.from == 'visitfixed' &&
+                            datObj?.to == 'notinterested'
+                        ).length
+                      }{' '}
+                    </span>
                   </div>
                   <div
                     style={{
@@ -330,14 +339,23 @@ const SiteVisitM = ({ leadLogsRawData, showDrillDownFun }) => {
                     onClick={() =>
                       showDrillDownFun(
                         'Total Visits Done',
-                        leadLogsRawData?.filter((datObj) => datObj?.from == 'visitfixed' && ['blocked', 'dead', 'junk'].includes(datObj?.to))
+                        leadLogsRawData?.filter(
+                          (datObj) =>
+                            datObj?.from == 'visitfixed' &&
+                            ['blocked', 'dead', 'junk'].includes(datObj?.to)
+                        )
                       )
                     }
                   >
-                    <span className="">{
-                        leadLogsRawData?.filter((datObj) => datObj?.from == 'visitfixed' && ['blocked', 'dead', 'junk'].includes(datObj?.to))
-
-                    .length } </span>
+                    <span className="">
+                      {
+                        leadLogsRawData?.filter(
+                          (datObj) =>
+                            datObj?.from == 'visitfixed' &&
+                            ['blocked', 'dead', 'junk'].includes(datObj?.to)
+                        ).length
+                      }{' '}
+                    </span>
                   </div>
                   <div
                     style={{
@@ -354,7 +372,6 @@ const SiteVisitM = ({ leadLogsRawData, showDrillDownFun }) => {
                   </div>
                 </div>
               </div>
-           
             </div>
           </div>
         </div>

@@ -40,9 +40,7 @@ export default function ProjectsDocsListView({
     bookedBy: '',
   }
 
-  const validateSchema = Yup.object({
-
-  })
+  const validateSchema = Yup.object({})
 
   return (
     <div className="h-full flex flex-col pb-6 bg-white  overflow-y-scroll overflow-auto no-scrollbar">
@@ -53,15 +51,11 @@ export default function ProjectsDocsListView({
               enableReinitialize={true}
               initialValues={initialState}
               validationSchema={validateSchema}
-              onSubmit={(values, { resetForm }) => {
-             
-              }}
+              onSubmit={(values, { resetForm }) => {}}
             >
               {(formik) => (
                 <Form>
                   <div className="form">
-                 
-
                     <section className="  bg-blueGray-50">
                       <div className="w-full mx-auto ">
                         <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-[#F9FBFB] border-0">
@@ -82,7 +76,6 @@ export default function ProjectsDocsListView({
                                 </div>
                               </div>
                             </div>
-
                           </div>
                           {selFeature === 'summary' && (
                             <div className="flex-auto px-2 py-4 ">
@@ -292,7 +285,6 @@ export default function ProjectsDocsListView({
                                       Unit Document
                                     </h2>
                                     1000
-
                                   </div>
                                   <p className="mr4">Date Created</p>
                                 </div>
@@ -332,7 +324,7 @@ export default function ProjectsDocsListView({
                                 <section
                                   key={i}
                                   onClick={() => {
-                                    setSliderInfo(  {
+                                    setSliderInfo({
                                       open: true,
                                       title: 'viewDocx',
                                       sliderData: {},

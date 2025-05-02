@@ -9,8 +9,6 @@ import {
 import { useAuth } from 'src/context/firebase-auth-context'
 import TodayLeadsActivitySearchView from '../TodayLeadsActivitySearchView'
 
-
-
 const rowsCounter = (parent, searchKey) => {
   return parent.filter((item) => {
     if (searchKey === 'all') {
@@ -40,14 +38,10 @@ const ProjectsTaskHome = ({
   const [searchKey, setSearchKey] = useState(['pending'])
   const [schLoading, setSchLoading] = useState(true)
 
-
-
   useEffect(() => {
     console.log('check if this is loading on new page check', user?.uid)
     getLeadsDataFun()
   }, [taskType, user])
-
-
 
   const getLeadsDataFun = async () => {
     const uid = user?.uid
@@ -139,7 +133,6 @@ const ProjectsTaskHome = ({
                 setSchLoading(false)
 
                 return
-
               }
             })
             if (projects.length > 0) {
@@ -176,30 +169,28 @@ const ProjectsTaskHome = ({
     // getValueByIdFun()
   }, [todaySchL])
 
-
-
   const filterTable = tableData.filter((item) =>
     value !== '' ? item.role.toLowerCase() === value : item.role
   )
   return (
     <div className="flex  flex-row  text-gray-700">
-    <div className="flex-1 overflow-auto">
-      <div className="p-0 px-1">
-    <TodayLeadsActivitySearchView
-    moduleName={"Project"}
-      data={filterTable}
-      searchKey={searchKey}
-      setSearchKey={setSearchKey}
-      handleDelete={{}}
-      selStatus={value}
-      todaySch={todaySchL}
-      schLoading={schLoading}
-      rowsParent={leadsFetchedData}
-      selUserProfileF={selUserProfileF}
-      taskType={taskType}
-    />
-    </div>
-    </div>
+      <div className="flex-1 overflow-auto">
+        <div className="p-0 px-1">
+          <TodayLeadsActivitySearchView
+            moduleName={'Project'}
+            data={filterTable}
+            searchKey={searchKey}
+            setSearchKey={setSearchKey}
+            handleDelete={{}}
+            selStatus={value}
+            todaySch={todaySchL}
+            schLoading={schLoading}
+            rowsParent={leadsFetchedData}
+            selUserProfileF={selUserProfileF}
+            taskType={taskType}
+          />
+        </div>
+      </div>
     </div>
   )
 }

@@ -23,7 +23,6 @@ const rowsCounter = (parent, searchKey) => {
 }
 
 const LegalHome = ({ setisImportLeadsOpen, selUserProfileF, taskType }) => {
-
   const { t } = useTranslation()
   const { user } = useAuth()
   const { orgId } = user
@@ -41,12 +40,9 @@ const LegalHome = ({ setisImportLeadsOpen, selUserProfileF, taskType }) => {
   }, [taskType, user])
   useEffect(() => {
     boot()
-
   }, [])
   const boot = async () => {
-    const unsubscribe = getAllLegalTasks(orgId, {
-
-    })
+    const unsubscribe = getAllLegalTasks(orgId, {})
 
     const y = await unsubscribe
     await console.log('value is ', y)
@@ -196,7 +192,7 @@ const LegalHome = ({ setisImportLeadsOpen, selUserProfileF, taskType }) => {
       <div className="flex-1 overflow-auto">
         <div className="p-0 px-1 ">
           <TodayLeadsActivitySearchView
-            moduleName={"Legal"}
+            moduleName={'Legal'}
             data={filterTable}
             searchKey={searchKey}
             setSearchKey={setSearchKey}

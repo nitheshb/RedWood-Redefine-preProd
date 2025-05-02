@@ -30,5 +30,4 @@ Your browser should open automatically to `http://localhost:8910` to see the web
 # redefine-rep-003
 
 
-A_CrmUnitSummary.tsx ==> line no 187
-costBreakUpSheet.tsx==> 571==> PdfInvoiceGenerator
+

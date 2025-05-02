@@ -7,7 +7,7 @@ export function serialProjecVisitFixedData(projectListA, fullData) {
     z = [...z, souceObj?.label]
     if (x.label == 'others') {
       x.Total = fullData?.filter((datObj) => {
-        return (datObj?.projectId == null || datObj?.projectId == '')
+        return datObj?.projectId == null || datObj?.projectId == ''
       })
 
       x.inprogress = fullData?.filter(

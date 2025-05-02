@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import BubbleChart from '@weknow/react-bubble-chart-d3';
+import React, { useEffect, useState } from 'react'
+import BubbleChart from '@weknow/react-bubble-chart-d3'
 
 const FinanceBubbleChart = () => {
   const data = [
-    { label: 'Desktop', value: 20, color: '#ff6347' }, 
-    { label: 'Mobile', value: 30, color: '#4682b4' }, 
-    { label: 'Others', value: 40, color: '#32cd32' }, 
-  ];
-  const [chartData, setChartData] = useState([]);
+    { label: 'Desktop', value: 20, color: '#ff6347' },
+    { label: 'Mobile', value: 30, color: '#4682b4' },
+    { label: 'Others', value: 40, color: '#32cd32' },
+  ]
+  const [chartData, setChartData] = useState([])
   useEffect(() => {
-    let isMounted = true;
+    let isMounted = true
 
     const fetchData = async () => {
       try {
@@ -17,22 +17,22 @@ const FinanceBubbleChart = () => {
           { label: 'Desktop', value: 20, color: '#ff6347' },
           { label: 'Mobile', value: 30, color: '#4682b4' },
           { label: 'Others', value: 40, color: '#32cd32' },
-        ];
+        ]
 
         if (isMounted) {
-          setChartData(data);
+          setChartData(data)
         }
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching data:', error)
       }
-    };
+    }
 
-    fetchData();
+    fetchData()
 
     return () => {
-      isMounted = false; 
-    };
-  }, []);
+      isMounted = false
+    }
+  }, [])
   return (
     <div style={{ width: '600px', height: '400px' }}>
       <BubbleChart
@@ -60,11 +60,7 @@ const FinanceBubbleChart = () => {
         data={chartData}
       />
     </div>
-  );
-};
-
-
-
-
+  )
+}
 
 export default FinanceBubbleChart
