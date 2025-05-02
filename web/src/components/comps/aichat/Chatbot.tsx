@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react'
 
+import DataTable from './DataTable'
+
 const Chatbot = () => {
   const settings = window?.chatbotSettings || {
-    position: 'right',
-    top: '5px',
-    right: '150px',
+    position: 'bottom',
+    bottom: '25px',
+    right: '25px',
+    // right: '120px',
     // showOnRoutes: ["/"],
   }
 
@@ -48,8 +51,9 @@ const Chatbot = () => {
     }),
     ...(settings.position === 'bottom' && {
       bottom: settings.bottom,
-      left: '50%',
-      transform: 'translateX(-50%)',
+      right: settings.right,
+      // left: '50%',
+      // transform: 'translateX(-50%)',
     }),
   }
 
@@ -98,45 +102,57 @@ const Chatbot = () => {
     </div>
   )
 
-  const appendMessage = (sender, text) => {
-    setMessages((prev) => [...prev, { sender, text }])
+  const appendMessage = (sender, text, type) => {
+    setMessages((prev) => [...prev, { sender, text, type }])
   }
 
   const handleUserMessage = async (userPrompt) => {
     if (!userPrompt.trim()) return
 
     setInputValue('')
-    appendMessage('user', userPrompt)
+    appendMessage('user', userPrompt, 'text')
     setIsTyping(true)
 
     try {
-      const response = await fetch('https://your-api-endpoint/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          message: userPrompt,
-        }),
-      })
+      const response = await fetch(
+        // 'https://ai-textto-sql-backend.vercel.app/redefine_supabase',
+        'https://ai-textto-sql-backend.vercel.app/redefine_firestore',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            query: userPrompt,
+          }),
+        }
+      )
 
       if (!response.ok) {
         throw new Error('API request failed')
       }
 
       const data = await response.json()
+
+      console.log('the mas', data, data?.response)
+
       setIsTyping(false)
-      appendMessage(
-        'bot',
-        data.response ||
-          "Of course! What's your query? How can I assist you today?"
-      )
+      if (Array.isArray(data?.response)) {
+        appendMessage('bot', JSON.stringify(data?.response), 'array')
+      } else {
+        appendMessage(
+          'bot',
+          'Oops! Something went wrong. Please try again later.',
+          'text'
+        )
+      }
     } catch (err) {
       console.error('Error generating response:', err)
       setIsTyping(false)
       appendMessage(
         'bot',
-        "I apologize, but I'm having trouble connecting right now. Please try again later."
+        "I apologize, but I'm having trouble connecting right now. Please try again later.",
+        'text'
       )
     }
   }
@@ -147,31 +163,100 @@ const Chatbot = () => {
     }
   }
 
+  const getTimeBasedGreeting = () => {
+    const hour = new Date().getHours()
+    if (hour >= 5 && hour < 12) return 'Good morning'
+    if (hour >= 12 && hour < 17) return 'Good afternoon'
+    if (hour >= 17 && hour < 22) return 'Good evening'
+    return 'Hello'
+  }
+
+  useEffect(() => {
+    console.log('the mas', messages)
+  }, [messages])
+
   return (
     <div>
       {/* Toggle Button */}
       <div id="chatbot-container" style={containerStyle}>
-        <div className="p-[2px] rounded-lg bg-gradient-to-r from-[#69499F] to-[#FCAE42] inline-block">
+        <div className="p-[2px] rounded-[22px] bg-gradient-to-r from-[#69499F] to-[#FCAE42] inline-block shadow-md">
           <button
             id="chatbot-toggle"
             onClick={toggleChat}
-            className="text-white rounded-lg bg-gradient-to-r from-[#69499F] to-[#FCAE42] px-4 py-2 flex items-center justify-center cursor-pointer transition "
+            className="flex items-center justify-center gap-[10px] h-[42px] px-[12px] py-[6px] text-[14px] font-medium text-black bg-white rounded-[22px] hover:bg-gray-50 transition-colors"
+            style={{ width: '128px' }}
           >
-            {/* <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 mr-2"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
-            />
-          </svg> */}
-            Copilot
+            <span className="flex-shrink-0 text-gray-600">Copilot</span>
+            <div className="relative flex items-center">
+              {/* <svg
+                width="30"
+                height="30"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="flex-shrink-0"
+              >
+                <defs>
+                  <linearGradient
+                    id="starGradient"
+                    x1="0"
+                    y1="0"
+                    x2="24"
+                    y2="24"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stopColor="#69499F" />
+                    <stop offset="1" stopColor="#FCAE42" />
+                  </linearGradient>
+                </defs>
+                <path
+                  d="M12 2C12.5523 2 13 4.68629 13 6C13 7.31371 14.6863 9 16 9C17.3137 9 20 9.44772 20 10C20 10.5523 17.3137 11 16 11C14.6863 11 13 12.6863 13 14C13 15.3137 12.5523 18 12 18C11.4477 18 11 15.3137 11 14C11 12.6863 9.31371 11 8 11C6.68629 11 4 10.5523 4 10C4 9.44772 6.68629 9 8 9C9.31371 9 11 7.31371 11 6C11 4.68629 11.4477 2 12 2Z"
+                  fill="none"
+                  stroke="url(#starGradient)"
+                  strokeWidth="1.5"
+                />
+                <path
+                  d="M19 3C19.4142 3 19.75 3.33579 19.75 3.75V4.25H20.25C20.6642 4.25 21 4.58579 21 5C21 5.41421 20.6642 5.75 20.25 5.75H19.75V6.25C19.75 6.66421 19.4142 7 19 7C18.5858 7 18.25 6.66421 18.25 6.25V5.75H17.75C17.3358 5.75 17 5.41421 17 5C17 4.58579 17.3358 4.25 17.75 4.25H18.25V3.75C18.25 3.33579 18.5858 3 19 3Z"
+                  fill="url(#starGradient)"
+                />
+              </svg> */}
+              {/* <svg
+                width="30"
+                height="30"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <defs>
+                  <linearGradient
+                    id="starGradient"
+                    x1="0"
+                    y1="0"
+                    x2="24"
+                    y2="24"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stopColor="#69499F" />
+                    <stop offset="1" stopColor="#FCAE42" />
+                  </linearGradient>
+                </defs>
+
+                <path
+                  d="M12 2C12.5 4 14 6 16 7C14 8 12.5 10 12 12C11.5 10 10 8 8 7C10 6 11.5 4 12 2Z"
+                  fill="none"
+                  stroke="url(#starGradient)"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+
+                <path
+                  d="M18.5 5.5C18.8 6.2 19.3 6.7 20 7C19.3 7.3 18.8 7.8 18.5 8.5C18.2 7.8 17.7 7.3 17 7C17.7 6.7 18.2 6.2 18.5 5.5Z"
+                  fill="url(#starGradient)"
+                />
+              </svg> */}
+              <img src="/mingcute_ai-line.svg" alt="ai line" />
+            </div>
           </button>
         </div>
       </div>
@@ -196,9 +281,7 @@ const Chatbot = () => {
               >
                 <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
               </svg>
-              <span className="ml-2 font-semibold text-gray-900">
-                Redefine Erp
-              </span>
+              <span className="ml-2 font-semibold text-gray-900">Redefine</span>
             </div>
           </div>
           <div className="flex items-center space-x-2">
@@ -266,6 +349,9 @@ const Chatbot = () => {
             id="chatbot-initial-view"
             className="flex-1 flex flex-col items-center justify-center p-8"
           >
+            <h3 className="text-xl text-gray-700 font-medium mb-4">
+              {getTimeBasedGreeting()}! 👋
+            </h3>
             <div className="w-16 h-16 mb-4">
               <svg
                 className="w-full h-full text-pink-500"
@@ -277,7 +363,7 @@ const Chatbot = () => {
             </div>
             <div className="flex flex-col items-center">
               <div className="flex items-center gap-2">
-                <h2 className="text-2xl font-semibold">Redefine Erp Copilot</h2>
+                <h2 className="text-2xl font-semibold">Redefine Copilot</h2>
                 <span
                   className="text-[10px] px-1.5 py-0.5 bg-pink-500 text-white rounded"
                   style={{ borderRadius: '4px' }}
@@ -286,7 +372,7 @@ const Chatbot = () => {
                 </span>
               </div>
               <p className="text-gray-600 text-center mt-2">
-                How can Redefine Erp Copilot help you?
+                How can Redefine Copilot help you?
               </p>
             </div>
           </div>
@@ -314,7 +400,12 @@ const Chatbot = () => {
                       </span>
                     </div>
                     <div className="message-bubble text-gray-900 text-sm mb-2">
-                      {msg.text}
+                      {msg?.type === 'array' ? (
+                        <DataTable response={JSON.parse(msg?.text)} />
+                      ) : (
+                        msg.text
+                      )}
+                      {/* {msg.text} */}
                     </div>
                     <div className="flex items-center gap-2 mt-1">
                       <button className="text-gray-400 hover:text-gray-600 p-1">
