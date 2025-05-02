@@ -20,7 +20,7 @@ import FloordetailsSearch from '../Floordetails/FloordetailsInSearch'
 
 import A_Crm_Map from '../A_CrmModule/A_Crm_Map'
 
-const UnitsInventoryHome = ({ project }) => {
+const UnitsInventoryHome = ({ project,  moduleType = 'crmModule' ,  }) => {
   const { user } = useAuth()
 
   const { orgId } = user
@@ -516,6 +516,33 @@ const UnitsInventoryHome = ({ project }) => {
     setAvailType(project)
   }
 
+
+
+
+
+
+
+const colorSchemes = {
+  salesModule: {
+    primary: '#eb8909', 
+    secondary: '#ecdbd1',
+    text: '#000000'
+  },
+  crmModule: {
+    primary: '#692fc2', 
+    secondary: '#e6d9f7',
+    text: '#000000'
+  }
+};
+
+const colors = colorSchemes[moduleType] || colorSchemes.crmModule;
+
+
+
+
+
+
+
   return (
     <section className=" mt-1  py-6 mb-8 leading-7 text-gray-900 bg-white  rounded-lg  ">
       <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-full  ">
@@ -525,7 +552,8 @@ const UnitsInventoryHome = ({ project }) => {
               className="flex items-center"
               // to={routes.projectEdit({ uid })}
             >
-              <span className="relative z-10 flex items-center w-auto text-md font-bold leading-none pl-0">
+              <span className="relative z-10 flex items-center w-auto text-md font-bold leading-none pl-0"
+              >
                 Inventory
               </span>
             </Link>
@@ -545,6 +573,8 @@ const UnitsInventoryHome = ({ project }) => {
                   pickCustomViewer={selProjctFun}
                   selProjectIs={projectDetails}
                   dropDownItemsA={customerRawData}
+                  primaryColor={colors.primary}
+                  secondaryColor={colors.secondary}
                 />
 
                 <DropDownSearchBar
@@ -556,6 +586,8 @@ const UnitsInventoryHome = ({ project }) => {
                   pickCustomViewer={selStatusFun}
                   selProjectIs={availType}
                   dropDownItemsA={availStatusA}
+                  primaryColor={colors.primary}
+                  secondaryColor={colors.secondary}
                 />
 
                 <DropDownSearchBar
@@ -571,6 +603,8 @@ const UnitsInventoryHome = ({ project }) => {
                       ? typeB
                       : typeA
                   }
+                  primaryColor={colors.primary}
+                  secondaryColor={colors.secondary}
                 />
                 <DropDownSearchBar
                   label={'Facing'}
@@ -581,6 +615,8 @@ const UnitsInventoryHome = ({ project }) => {
                   pickCustomViewer={selFacingFun}
                   selProjectIs={selFacing}
                   dropDownItemsA={FacingA}
+                  primaryColor={colors.primary}
+                  secondaryColor={colors.secondary}
                 />
                 <DropDownSearchBar
                   label={'Unit Size'}
@@ -592,6 +628,8 @@ const UnitsInventoryHome = ({ project }) => {
                   selProjectIs={selsize}
                   dropDownItemsA={sizeA}
                   noBorder={true}
+                  primaryColor={colors.primary}
+                  secondaryColor={colors.secondary}
                 />
               </section>
             </div>
@@ -640,6 +678,7 @@ const UnitsInventoryHome = ({ project }) => {
               leadDetailsObj={{}}
               setPhaseFun={setPhaseFun}
               selPhaseName={selPhaseName}
+              primaryColor={colors.primary}
             />
           </div>
         )}

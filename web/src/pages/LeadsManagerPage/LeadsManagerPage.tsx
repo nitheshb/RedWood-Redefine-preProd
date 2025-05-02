@@ -17,7 +17,7 @@ import UnitsInventoryHome from 'src/components/A_ProjModule/UnitsInvertoryHome'
 import LeadsTransferHome from 'src/components/A_SalesModule/leadsTransfer'
 import ProfileSummary from 'src/components/A_SalesModule/Reports/profileSummary'
 
-const LeadsManagerPage = (props) => {
+const LeadsManagerPage = (props, sourceLink) => {
   const { user } = useAuth()
   const [uploadedFileLink, handleFileUpload] = useFileUpload()
   const [loading, setLoading] = useState(true)
@@ -122,6 +122,8 @@ const LeadsManagerPage = (props) => {
                       projectName: 'Projects',
                     }}
                     isEdit={undefined}
+                     moduleType="crmModule"
+
                   />
                 </section>
               )}

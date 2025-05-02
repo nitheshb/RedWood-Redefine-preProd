@@ -2676,121 +2676,128 @@ export default function LeadProfileSideView({
                             {(formik1) => (
                               <Form>
 
-                                <div className='w-full max-w-[922px] h-auto md:h-[344px] p-5 gap-[30px] rounded-[14px] border bg-white shadow-[0px_4px_30px_0px_#0000000D] border-[#E7E7E9]'>
+                                <div className='box__bg relative rounded-[14px] e shadow-[0px_4px_30px_0px_#0000000D]  border-[#E7E7E9] mx-auto p-[1px]'>
 
 
-                                  <div className="flex items-start gap-4  max-w-4xl mx-auto">
+                                  
+                                <div className='w-full max-w-[922px]  h-auto md:h-[344px] p-5 gap-[30px] rounded-[14px] bg-white'>
 
 
-                                    <div className="p-2 rounded-lg bg-[#FFFFFF] shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
-                                      <img
-                                        src="/target-sale.svg"
-                                        alt="Target Sale Icon"
-                                        className="w-[18px] h-[18px]"
-                                      />
-                                    </div>
+<div className="flex items-start gap-4  max-w-4xl mx-auto">
 
 
-                                    <div className="flex flex-col gap-2 flex-1">
+  <div className="p-2 rounded-lg bg-[#FFFFFF] shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+    <img
+      src="/target-sale.svg"
+      alt="Target Sale Icon"
+      className="w-[18px] h-[18px]"
+    />
+  </div>
 
 
-                                      <div className="flex items-center">
-                                        <h2 className="font-normal text-[16px] leading-[100%] tracking-[0em] font-heading underline">
-                                          Heading
-                                        </h2>
-                                        <img
-                                          src="/edit-02.svg"
-                                          alt="Edit Icon"
-                                          className="w-5 h-5 cursor-pointer"
-                                          onClick={() => setisImportLeadsOpen(true)}
-                                        />
-                                      </div>
+  <div className="flex flex-col gap-2 flex-1">
 
 
-                                      <p className="font-normal text-[12px] leading-[100%] tracking-[0em] text-[#606062] font-heading">
-                                        Mark the visit done to open the next step: sharing lead experience.
-                                      </p>
+    <div className="flex items-center">
+      <h2 className="font-normal text-[16px] leading-[100%] tracking-[0em] font-heading underline">
+        Heading
+      </h2>
+      <img
+        src="/edit-02.svg"
+        alt="Edit Icon"
+        className="w-5 h-5 cursor-pointer"
+        onClick={() => setisImportLeadsOpen(true)}
+      />
+    </div>
 
-                                    </div>
 
-                                  </div>
+    <p className="font-normal text-[12px] leading-[100%] tracking-[0em] text-[#606062] font-heading">
+      Mark the visit done to open the next step: sharing lead experience.
+    </p>
+
+  </div>
+
+</div>
 
 
 
 
-                                  <div className=" form flex flex-col pt-0  mt-[10px] rounded bg-white">
-                                    <div className=" w-full max-w-[882px] h-auto p-3 md:p-2 gap-2.5   outline-none border border-[#E7E7E9] rounded-[8px] p-2 mt-2">
-                                      <ErrorMessage
-                                        component="div"
-                                        name="notesText"
-                                        className="error-message text-red-700 text-xs p-1"
-                                      />
-                                      <textarea
-                                        name="notesText"
-                                        value={takNotes}
-                                        onChange={(e) => {
-                                          console.log(
-                                            'what the matter',
-                                            e.target.value
-                                          )
-                                          formik1.setFieldValue(
-                                            'notesText',
-                                            e.target.value
-                                          )
-                                          setNotesTitle(e.target.value)
-                                        }}
-                                        placeholder="Type & make a notes"
-                                        className="w-full min-h-[161px]  text-[12px] outline-none  focus:border-blue-600 hover:border-blue-600 rounded bg-[#FFFFFF] "
-                                      ></textarea>
-                                    </div>
-                                    {/* <div className="flex flex-row  justify-end mt-1">
-                                      <button
-                                        type="submit"
-                                        className={`flex mt-2 rounded-[8px] items-center text-[12px]  pl-2 h-[36px] pr-4 px-4 py-4 text-sm font-medium text-black  sale_bg_color cursor-pointer   `}
-                                      >
-                                        <span className="ml-1 text-white text-[12px] ">Save</span>
-                                      </button>
-                                      <button
-                                        onClick={() => cancelResetStatusFun()}
-                                        type="submit"
-                                        className={`flex mt-2 ml-4 rounded-[8px] text-[12px] items-center  pl-2 h-[36px] pr-4 px-4 py-4 text-sm font-medium text-black  sale_bg_color cursor-pointer `}
-                                      >
-                                        <span className="ml-1 text-white text-[12px] ">
-                                          Save & Whats App
-                                        </span>
-                                      </button>
-                                      <button
-                                        onClick={() => cancelResetStatusFun()}
-                                        className={`flex mt-2 ml-4  rounded-[8px] items-center text-[12px]  pl-2 h-[36px] pr-4 px-4 py-4 text-sm font-medium border cursor-pointer `}
-                                      >
-                                        <span className="ml-1 text-[12px]  text-black">Cancel</span>
-                                      </button>
-                                    </div> */}
-                                    <div className="flex flex-wrap  justify-end gap-4 mt-5">
-                                      <button
-                                        type="submit"
-                                        className="flex items-center px-4 h-9 text-sm font-medium text-white sale_bg_color rounded-md"
-                                      >
-                                        Save
-                                      </button>
-                                      <button
-                                        type="submit"
-                                        onClick={cancelResetStatusFun}
-                                        className="flex items-center px-4 h-9 text-sm font-medium text-white sale_bg_color rounded-md"
-                                      >
-                                        Save & WhatsApp
-                                      </button>
-                                      <button
-                                        onClick={cancelResetStatusFun}
-                                        className="flex items-center px-4 h-9 text-sm font-medium text-black border rounded-md"
-                                      >
-                                        Cancel
-                                      </button>
-                                    </div>
+<div className=" form flex flex-col pt-0  mt-[10px] rounded bg-white">
+  <div className=" w-full max-w-[882px] h-auto p-3 md:p-2 gap-2.5   outline-none border border-[#E7E7E9] rounded-[8px] p-2 mt-2">
+    <ErrorMessage
+      component="div"
+      name="notesText"
+      className="error-message text-red-700 text-xs p-1"
+    />
+    <textarea
+      name="notesText"
+      value={takNotes}
+      onChange={(e) => {
+        console.log(
+          'what the matter',
+          e.target.value
+        )
+        formik1.setFieldValue(
+          'notesText',
+          e.target.value
+        )
+        setNotesTitle(e.target.value)
+      }}
+      placeholder="Type & make a notes"
+      className="w-full min-h-[161px]  text-[12px] outline-none  focus:border-blue-600 hover:border-blue-600 rounded bg-[#FFFFFF] "
+    ></textarea>
+  </div>
+  {/* <div className="flex flex-row  justify-end mt-1">
+    <button
+      type="submit"
+      className={`flex mt-2 rounded-[8px] items-center text-[12px]  pl-2 h-[36px] pr-4 px-4 py-4 text-sm font-medium text-black  sale_bg_color cursor-pointer   `}
+    >
+      <span className="ml-1 text-white text-[12px] ">Save</span>
+    </button>
+    <button
+      onClick={() => cancelResetStatusFun()}
+      type="submit"
+      className={`flex mt-2 ml-4 rounded-[8px] text-[12px] items-center  pl-2 h-[36px] pr-4 px-4 py-4 text-sm font-medium text-black  sale_bg_color cursor-pointer `}
+    >
+      <span className="ml-1 text-white text-[12px] ">
+        Save & Whats App
+      </span>
+    </button>
+    <button
+      onClick={() => cancelResetStatusFun()}
+      className={`flex mt-2 ml-4  rounded-[8px] items-center text-[12px]  pl-2 h-[36px] pr-4 px-4 py-4 text-sm font-medium border cursor-pointer `}
+    >
+      <span className="ml-1 text-[12px]  text-black">Cancel</span>
+    </button>
+  </div> */}
+  <div className="flex flex-wrap  justify-end gap-4 mt-5">
+    <button
+      type="submit"
+      className="flex items-center px-4 h-9 text-sm font-medium text-white sale_bg_color rounded-md"
+    >
+      Save
+    </button>
+    <button
+      type="submit"
+      onClick={cancelResetStatusFun}
+      className="flex items-center px-4 h-9 text-sm font-medium text-white sale_bg_color rounded-md"
+    >
+      Save & WhatsApp
+    </button>
+    <button
+      onClick={cancelResetStatusFun}
+      className="flex items-center px-4 h-9 text-sm font-medium text-black border rounded-md"
+    >
+      Cancel
+    </button>
+  </div>
 
-                                  </div>
+</div>
+
+</div>
 
                                 </div>
+
 
 
                               </Form>
