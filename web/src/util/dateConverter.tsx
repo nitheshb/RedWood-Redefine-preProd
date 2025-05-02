@@ -11,62 +11,49 @@
 //     timeZone: 'Asia/Kolkata', // Set the time zone to India
 //   }
 
-
-
 //   return d.toLocaleString('en-IN', options)
 // }
 
-
-
 export const timeConv = function (str: string): string {
-  const d = new Date(str);
+  const d = new Date(str)
 
   const options: Intl.DateTimeFormatOptions = {
-      month: 'short',
-      day: '2-digit',
-      year: '2-digit', // Correct type
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true,
-      timeZone: 'Asia/Kolkata', // Set the time zone to India
-  };
+    month: 'short',
+    day: '2-digit',
+    year: '2-digit', // Correct type
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
+    timeZone: 'Asia/Kolkata', // Set the time zone to India
+  }
 
-  return d.toLocaleString('en-IN', options);
+  return d.toLocaleString('en-IN', options)
 }
 
-
-
-
-
-
-
-
 export function prettyDate(d) {
-  if(d){
-  const date = new Date(d)
-  const months = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
-  ]
+  if (d === 'invalid') return 'InvalidDate-NaN'
+  if (d) {
+    const date = new Date(d)
+    const months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ]
 
- 
-  return (
-    months[date.getMonth()] + '-' +
-    date.getDate() + '-' +
-    date.getFullYear()
-  )
-  }else{
-    'NA'
+    return (
+      months[date.getMonth()] + '-' + date.getDate() + '-' + date.getFullYear()
+    )
+  } else {
+    ;('NA')
   }
 }
 
@@ -206,7 +193,7 @@ export function getNextThreeMonths() {
     {
       name: `${currentMonthName?.name}-${currentYear}`,
       count: currentMonthName?.value,
-      currentYear: currentYear //%100
+      currentYear: currentYear, //%100
     },
   ]
 
@@ -217,7 +204,7 @@ export function getNextThreeMonths() {
     nextMonths.push({
       name: `${nextMonthName?.name}-${currentYear}`,
       count: nextMonthName?.value,
-      currentYear: currentYear //%100 // high
+      currentYear: currentYear, //%100 // high
     })
   }
 
@@ -249,29 +236,29 @@ export function getLastThreeMonths() {
     {
       name: `${currentMonthName?.name}-${currentYear}`,
       count: currentMonthName?.value,
-      currentYear: currentYear //%100
+      currentYear: currentYear, //%100
     },
   ]
 
-// Get the names and counts of the last three months
-for (let i = 1; i <= 2; i++) {
-  let previousMonthIndex = (currentMonthIndex - i + 12) % 12;
-  let previousMonthName = months[previousMonthIndex];
+  // Get the names and counts of the last three months
+  for (let i = 1; i <= 2; i++) {
+    const previousMonthIndex = (currentMonthIndex - i + 12) % 12
+    const previousMonthName = months[previousMonthIndex]
 
-  // Adjust year when moving back to a previous year
-  let previousYear = currentYear;
-  if (currentMonthIndex - i < 0) {
-    previousYear = (currentYear - 1 + 100) % 100; // Handle the year transition
+    // Adjust year when moving back to a previous year
+    let previousYear = currentYear
+    if (currentMonthIndex - i < 0) {
+      previousYear = (currentYear - 1 + 100) % 100 // Handle the year transition
+    }
+
+    lastMonths.push({
+      name: `${previousMonthName.name}-${previousYear}`,
+      count: previousMonthName.value,
+      currentYear: previousYear,
+    })
   }
 
-  lastMonths.push({
-    name: `${previousMonthName.name}-${previousYear}`,
-    count: previousMonthName.value,
-    currentYear: previousYear,
-  });
-}
-
-return lastMonths.reverse();
+  return lastMonths.reverse()
 }
 
 export function getLastSevenMonths() {
@@ -301,46 +288,48 @@ export function getLastSevenMonths() {
       name: `${currentMonthName?.name}-${currentYear}`,
       count: currentMonthName?.value,
       month: currentMonthName?.value,
-      currentYear: currentYear //%100
+      currentYear: currentYear, //%100
     },
   ]
 
-// Get the names and counts of the last three months
-for (let i = 1; i < 7; i++) {
-  let previousMonthIndex = (currentMonthIndex - i + 12) % 12;
-  let previousMonthName = months[previousMonthIndex];
+  // Get the names and counts of the last three months
+  for (let i = 1; i < 7; i++) {
+    const previousMonthIndex = (currentMonthIndex - i + 12) % 12
+    const previousMonthName = months[previousMonthIndex]
 
-  // Adjust year when moving back to a previous year
-  let previousYear = currentYear;
-  if (currentMonthIndex - i < 0) {
-    previousYear = (currentYear - 1 + 100) % 100; // Handle the year transition
+    // Adjust year when moving back to a previous year
+    let previousYear = currentYear
+    if (currentMonthIndex - i < 0) {
+      previousYear = (currentYear - 1 + 100) % 100 // Handle the year transition
+    }
+
+    lastMonths.push({
+      name: `${previousMonthName.name}-${previousYear}`,
+      count: previousMonthName.value,
+      month: previousMonthName.value,
+
+      currentYear: previousYear,
+    })
   }
 
-  lastMonths.push({
-    name: `${previousMonthName.name}-${previousYear}`,
-    count: previousMonthName.value,
-    month: previousMonthName.value,
-
-    currentYear: previousYear,
-  });
-}
-
-return lastMonths.reverse();
+  return lastMonths.reverse()
 }
 
 export function getLastSevenWeeks() {
-  const currentDate = new Date();
+  const currentDate = new Date()
 
   // Function to get the week number of a given date
   function getWeekNumber(date) {
-    const startOfYear = new Date(date.getFullYear(), 0, 1);
-    const diff = date - startOfYear;
-    const oneWeek = 7 * 24 * 60 * 60 * 1000;
-    return Math.ceil((diff + startOfYear.getDay() * 24 * 60 * 60 * 1000) / oneWeek);
+    const startOfYear = new Date(date.getFullYear(), 0, 1)
+    const diff = date - startOfYear
+    const oneWeek = 7 * 24 * 60 * 60 * 1000
+    return Math.ceil(
+      (diff + startOfYear.getDay() * 24 * 60 * 60 * 1000) / oneWeek
+    )
   }
 
-  const currentYear = currentDate.getFullYear();
-  const currentWeek = getWeekNumber(currentDate);
+  const currentYear = currentDate.getFullYear()
+  const currentWeek = getWeekNumber(currentDate)
 
   const lastWeeks = [
     {
@@ -349,44 +338,41 @@ export function getLastSevenWeeks() {
       weekNumber: currentWeek,
       year: currentYear,
     },
-  ];
+  ]
 
   // Get the last 6 weeks
   for (let i = 1; i < 7; i++) {
-    let previousWeek = currentWeek - i;
-    let previousYear = currentYear;
+    let previousWeek = currentWeek - i
+    let previousYear = currentYear
 
     // Handle year transition if week number is less than 1
     if (previousWeek < 1) {
-      previousYear -= 1;
-      previousWeek = getWeekNumber(new Date(previousYear, 11, 31)) + previousWeek;
+      previousYear -= 1
+      previousWeek =
+        getWeekNumber(new Date(previousYear, 11, 31)) + previousWeek
     }
 
     lastWeeks.push({
-      name:`Week${previousWeek}`,
+      name: `Week${previousWeek}`,
       week: `Week${previousWeek}`,
       weekNumber: previousWeek,
       year: previousYear,
-    });
+    })
   }
 
-  return lastWeeks.reverse();
+  return lastWeeks.reverse()
 }
 
 export function getLastSixYears() {
-  const currentYear = new Date().getFullYear();
-  const lastYears = [];
+  const currentYear = new Date().getFullYear()
+  const lastYears = []
 
   for (let i = 0; i < 6; i++) {
-    lastYears.push(
-
-    {
+    lastYears.push({
       name: currentYear - i,
-      year: currentYear - i});
+      year: currentYear - i,
+    })
   }
 
-  return lastYears.reverse(); // Reverse to keep the latest year at the end
+  return lastYears.reverse() // Reverse to keep the latest year at the end
 }
-
-
-

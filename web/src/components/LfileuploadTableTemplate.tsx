@@ -1,4 +1,5 @@
 import * as React from 'react'
+
 import { Timestamp } from '@firebase/firestore'
 import RevertIcon from '@material-ui/icons/NotInterestedOutlined'
 import DeleteIcon from '@mui/icons-material/Delete'
@@ -23,9 +24,6 @@ import { useSnackbar } from 'notistack'
 import PropTypes from 'prop-types'
 import Highlighter from 'react-highlight-words'
 
-
-
-
 import {
   addLead,
   addPlotUnit,
@@ -41,7 +39,6 @@ import {
 import { useAuth } from 'src/context/firebase-auth-context'
 import { prettyDate } from 'src/util/dateConverter'
 import { CalculateComponentTotal } from 'src/util/unitCostSheetCalculator'
-
 
 // function createData(
 //   Date,
@@ -348,134 +345,212 @@ const EnhancedTableToolbar = (props) => {
     const costConstructSqftA = fullCs?.filter(
       (row) => row.component.value === 'sqft_construct_cost_tax'
     )
-    console.log(
-      'log it bro',
-      ConstructPayScheduleObj
-    )
+    console.log('log it bro', ConstructPayScheduleObj)
 
     // const mappedArry = await Promise.all(
-      for (const [index, data] of records.entries()) {
+    for (const [index, data] of records.entries()) {
       // records.map(async (data, index) => {
-        // setTimeout(async () => {
-        const {
-          sqft_rate,
-          plc_per_sqft,
-          plot_cost_sqf,
-          construct_cost_sqf,
-          construct_price_sqft,
-          constructCS,
-          constructOtherChargesObj,
-          possessionCS,
-          area,
-          construct_area,
-        } = data
+      // setTimeout(async () => {
+      const {
+        sqft_rate,
+        plc_per_sqft,
+        plot_cost_sqf,
+        construct_cost_sqf,
+        construct_price_sqft,
+        constructCS,
+        constructOtherChargesObj,
+        possessionCS,
+        area,
+        construct_area,
+      } = data
 
-        // console.log()
-        // await addPlotUnit(orgId, data, user?.email, `Unit Created by bulk `)
-        // await setUploadedUnitsCount(index + 1)
-        //   return await addUnit(orgId, newData, user?.email, 'Unit Created by csv')
+      // console.log()
+      // await addPlotUnit(orgId, data, user?.email, `Unit Created by bulk `)
+      // await setUploadedUnitsCount(index + 1)
+      //   return await addUnit(orgId, newData, user?.email, 'Unit Created by csv')
 
-        // cost sheet
-        // part A
+      // cost sheet
+      // part A
+      console.log(
+        'log it bro ===>',
+        data['unit_no'],
+        data?.corpus_fund,
+        data?.maintenance_cost,
+        ConstructPayScheduleObj,
+        possessionCS
+      )
+      const plotSaleValue = area * sqft_rate
+      const plcSaleValue = Math.round(area * plc_per_sqft || 0)
+      const plc_gstValue = Math.round(plcSaleValue * 0.0)
+      const plot_gstValue = Math.round(plotSaleValue * 0.0)
+      const constSaleValue =
+        Number(construct_price_sqft) * Number(construct_area)
+
+      // part A
+      const x = [
+        {
+          myId: '1',
+          units: {
+            value: 'fixedcost',
+            label: 'Fixed cost',
+          },
+          component: {
+            value: 'unit_cost_charges',
+            label: 'Unit Cost',
+          },
+          others: data?.sqft_rate,
+          charges: data?.sqft_rate,
+          TotalSaleValue: plotSaleValue,
+          gstValue: plot_gstValue,
+          gst: {
+            label: '0',
+            value: 0,
+          },
+          TotalNetSaleValueGsT: plotSaleValue + plot_gstValue,
+        },
+        {
+          myId: '2',
+          units: {
+            value: 'fixedcost',
+            label: 'Fixed cost',
+          },
+          component: {
+            value: 'plc_cost_sqft',
+            label: 'PLC',
+          },
+          others: data?.plc_per_sqft,
+          charges: data?.plc_per_sqft,
+
+          TotalSaleValue: plcSaleValue,
+          // charges: y,
+          gstValue: plc_gstValue,
+          gst: {
+            label: '0',
+            value: 0,
+          },
+          TotalNetSaleValueGsT: plcSaleValue + plc_gstValue,
+        },
+      ]
+      // part C
+
+      // const constructionCS = [
+      //   {
+      //     myId: '3',
+      //     units: {
+      //       value: 'fixedcost',
+      //       label: 'Fixed cost',
+      //     },
+      //     component: {
+      //       value: 'villa_construct_cost',
+      //       label: 'Villa Construction Cost  ',
+      //     },
+      //     others: construct_cost_sqf || construct_price_sqft,
+      //     charges: Number(construct_cost_sqf || construct_price_sqft),
+      //     TotalSaleValue: constSaleValue,
+      //     // charges: y,
+      //     gstValue: 0,
+      //     gst: {
+      //       label: '0',
+      //       value: 0,
+      //     },
+      //     TotalNetSaleValueGsT: Number(constSaleValue) + Number(0),
+      //   },
+      // ]
+      // part B
+      const gstTaxIs = 0
+      const partB = additonalChargesObj?.map((data1, inx) => {
+        const dataObj = { ...data1 }
+        //  check if data1  component a
+        // console.log('check the additonalCahrgesObj', data1)
+        const x = dataObj?.component?.value
+        if (x === 'garden_area_cost') {
+          let total = 0
+          let gstTotal = 0
+          console.log('found it', data['unit_no'], data)
+          total = data?.garden_area_cost || 0
+          gstTotal = Math.round(
+            data?.garden_area_cost * (Number(dataObj?.gst?.value) * 0.01)
+          )
+
+          dataObj.TotalSaleValue = total
+          dataObj.gst.label = gstTaxIs
+          // data.gst.value = gstTotal
+          dataObj.gstValue = gstTotal
+          dataObj.TotalNetSaleValueGsT = total + gstTotal
+          dataObj.totalSaleValued = total
+        }
+
+        if (x === 'legal_charges') {
+          let total = 0
+          let gstTotal = 0
+          total = Number(data?.legal_charges || 0)
+          gstTotal = Math.round(total * (Number(data1?.gst?.value) * 0.01))
+          console.log(
+            'found it',
+            data['unit_no'],
+            data1,
+            Number(data?.legal_charges || 0),
+            total,
+            data1.TotalSaleValue
+          )
+
+          dataObj.TotalSaleValue = Number(data?.legal_charges || 0)
+          dataObj.gst.label = gstTaxIs
+          // data.gst.value = gstTotal
+          dataObj.gstValue = gstTotal
+          dataObj.TotalNetSaleValueGsT = total + gstTotal
+          dataObj.totalSaleValued = Number(data?.legal_charges || 0)
+        }
+
+        const isChargedPerSqft = [
+          'costpersqft',
+          'cost_per_sqft',
+          'price_per_sft',
+        ].includes(data1?.units.value)
+
         console.log(
-          'log it bro ===>',
+          'found it ==>',
           data['unit_no'],
-          data?.corpus_fund ,
-          data?.maintenance_cost,
-          ConstructPayScheduleObj,
-          possessionCS,
+          data.legal_charges,
+          dataObj.TotalSaleValue,
+          dataObj
         )
-        const plotSaleValue = area * sqft_rate
-        const plcSaleValue = Math.round(area * plc_per_sqft || 0)
-        const plc_gstValue = Math.round(plcSaleValue * 0.0)
-        const plot_gstValue = Math.round(plotSaleValue * 0.0)
-        const constSaleValue =
-          Number(construct_price_sqft) * Number(construct_area)
+        return dataObj
+      })
+      let partD = constructOtherChargesObj
 
-        // part A
-        const x = [
-          {
-            myId: '1',
-            units: {
-              value: 'fixedcost',
-              label: 'Fixed cost',
-            },
-            component: {
-              value: 'unit_cost_charges',
-              label: 'Unit Cost',
-            },
-            others: data?.sqft_rate,
-            charges: data?.sqft_rate,
-            TotalSaleValue: plotSaleValue,
-            gstValue: plot_gstValue,
-            gst: {
-              label: '0',
-              value: 0,
-            },
-            TotalNetSaleValueGsT: plotSaleValue + plot_gstValue,
-          },
-          {
-            myId: '2',
-            units: {
-              value: 'fixedcost',
-              label: 'Fixed cost',
-            },
-            component: {
-              value: 'plc_cost_sqft',
-              label: 'PLC',
-            },
-            others: data?.plc_per_sqft,
-            charges: data?.plc_per_sqft,
+      const partB1 = projectDetails[0]?.additonalChargesObj?.map(
+        (dataObj, inx) => {
+          const x = dataObj?.component?.value
+          if (x === 'garden_area_cost') {
+            dataObj.charges = Number(data?.garden_area_cost || 0)
+          }
 
-            TotalSaleValue: plcSaleValue,
-            // charges: y,
-            gstValue: plc_gstValue,
-            gst: {
-              label: '0',
-              value: 0,
-            },
-            TotalNetSaleValueGsT: plcSaleValue + plc_gstValue,
-          },
-        ]
-        // part C
-
-        // const constructionCS = [
-        //   {
-        //     myId: '3',
-        //     units: {
-        //       value: 'fixedcost',
-        //       label: 'Fixed cost',
-        //     },
-        //     component: {
-        //       value: 'villa_construct_cost',
-        //       label: 'Villa Construction Cost  ',
-        //     },
-        //     others: construct_cost_sqf || construct_price_sqft,
-        //     charges: Number(construct_cost_sqf || construct_price_sqft),
-        //     TotalSaleValue: constSaleValue,
-        //     // charges: y,
-        //     gstValue: 0,
-        //     gst: {
-        //       label: '0',
-        //       value: 0,
-        //     },
-        //     TotalNetSaleValueGsT: Number(constSaleValue) + Number(0),
-        //   },
-        // ]
-        // part B
-        const gstTaxIs = 0
-        const partB = additonalChargesObj?.map((data1, inx) => {
-          const dataObj = { ...data1 }
+          if (x === 'legal_charges') {
+            dataObj.charges = Number(data?.legal_charges || 0)
+          }
+          const gstPercent = Number(dataObj?.gst?.value) || 0
+          return CalculateComponentTotal(
+            dataObj,
+            area?.toString()?.replace(',', ''),
+            gstPercent,
+            dataObj?.charges
+          )
+        }
+      )
+      const partB2 = projectDetails[0]?.additonalChargesObj?.map(
+        (data1, inx) => {
           //  check if data1  component a
           // console.log('check the additonalCahrgesObj', data1)
-          const x = dataObj?.component?.value
+          const dataObj = { ...data1 }
+          const x = data1?.component?.value
           if (x === 'garden_area_cost') {
             let total = 0
             let gstTotal = 0
             console.log('found it', data['unit_no'], data)
-            total = data?.garden_area_cost || 0
+            total = Number(data?.garden_area_cost || 0)
             gstTotal = Math.round(
-              data?.garden_area_cost * (Number(dataObj?.gst?.value) * 0.01)
+              data?.garden_area_cost * (Number(data1?.gst?.value) * 0.01)
             )
 
             dataObj.TotalSaleValue = total
@@ -522,345 +597,283 @@ const EnhancedTableToolbar = (props) => {
             dataObj
           )
           return dataObj
-        })
-        let partD = constructOtherChargesObj
+        }
+      )
 
-       const partB1 =       projectDetails[0]?.additonalChargesObj?.map( (dataObj, inx) => {
+      console.log('my additional charges', data['unite_no'], partB)
+      // part D
 
-        const x = dataObj?.component?.value
+      partD = constructOtherChargesObj?.map((data4, inx) => {
+        const x1 = data4?.component?.value
+        if (x1 === 'maintenancecharges') {
+          data4.charges = Number(data?.maintenance_cost || data4.charges || 0)
+        }
+        if (x1 === 'corpus_charges') {
+          data4.charges = Number(data?.corpus_fund || data4.charges || 0)
+        }
+
+        if (x1 === 'bescom_bwssb') {
+          data4.charges = Number(data?.bescom_bwssb || data4.charges || 0)
+        }
+        if (x1 === 'corpus_charges') {
+          data4.charges = Number(data?.corpus_fund || data4.charges || 0)
+        }
+        if (x1 === 'garden_area_cost') {
+          data4.charges = Number(data?.garden_area_cost || data4.charges || 0)
+        }
+
+        const gstPercent1 = Number(data4?.gst?.value) || 0
+        return CalculateComponentTotal(
+          data4,
+          construct_area?.toString()?.replace(',', ''),
+          gstPercent1,
+          data4?.charges
+        )
+
+        let total = 0
+        let gstTotal = 0
+        let charges = 0
+        const dataNewObj = { ...data4 }
+        const isChargedPerSqft = [
+          'costpersqft',
+          'cost_per_sqft',
+          'price_per_sft',
+        ].includes(data4?.units.value)
+
+        // const gstTaxIs =
+        //   gstTaxForProjA.length > 0 ? gstTaxForProjA[0]?.gst?.value : 0
+        const x = data4?.component?.value
+        if (x === 'bwssb_cost') {
+          console.log('found it')
+          total = Number(data?.bwssd_cost)
+          gstTotal = Math.round(total * (Number(data4?.gst?.value) * 0.01))
+
+          // gstTotal = data?.garden_area_cost * 0.12
+        }
+
         if (x === 'garden_area_cost') {
-          dataObj.charges = Number(data?.garden_area_cost || 0)
+          charges = Number(data?.garden_area_cost)
+          total = Number(data?.garden_area_cost)
+          gstTotal = Math.round(total * (Number(data4?.gst?.value) * 0.01))
         }
-
+        if (x === 'club_house') {
+          charges = Number(data?.club_house)
+          total = Number(data?.club_house)
+          gstTotal = Math.round(total * (Number(data4?.gst?.value) * 0.01))
+        }
         if (x === 'legal_charges') {
-          dataObj.charges = Number(data?.legal_charges || 0)
-
+          charges = Number(data?.legal_charges)
+          total = Number(data?.legal_charges)
+          gstTotal = Math.round(total * (Number(data4?.gst?.value) * 0.01))
         }
+
+        const gstPercent =
+          Number(data4?.gst?.value) > 1
+            ? Number(data4?.gst?.value) * 0.01
+            : Number(data4?.gst?.value)
+        // total = isChargedPerSqft
+        //   ? Number(construct_area) * Number(data4?.charges)
+        //   : Number(data4?.charges)
+
+        // gstTotal = Math.round(total * gstPercent)
+
+        console.log('myvalue is ', data4)
+        dataNewObj.charges = charges
+        dataNewObj.TotalSaleValue = total
+        dataNewObj.gst.label = gstTaxIs
+        // data.gst.value = gstTotal
+        dataNewObj.gstValue = gstTotal
+        dataNewObj.TotalNetSaleValueGsT = total + gstTotal
+        return dataNewObj
+      })
+
+      const partE = possessionCS?.map((dataObj, inx) => {
+        const x = dataObj?.component?.value
+        if (x === 'maintenancecharges') {
+          dataObj.charges = Number(data?.maintenance_cost || 0)
+        }
+        if (x === 'corpus_charges') {
+          dataObj.charges = Number(data?.corpus_fund || 0)
+        }
+
         const gstPercent = Number(dataObj?.gst?.value) || 0
-                return  CalculateComponentTotal(dataObj,area?.toString()?.replace(',', ''),gstPercent, dataObj?.charges)
-              })
-        const partB2 = projectDetails[0]?.additonalChargesObj?.map(
-          (data1, inx) => {
-            //  check if data1  component a
-            // console.log('check the additonalCahrgesObj', data1)
-            const dataObj = { ...data1 }
-            const x = data1?.component?.value
-            if (x === 'garden_area_cost') {
-              let total = 0
-              let gstTotal = 0
-              console.log('found it', data['unit_no'], data)
-              total = Number(data?.garden_area_cost || 0)
-              gstTotal = Math.round(
-                data?.garden_area_cost * (Number(data1?.gst?.value) * 0.01)
-              )
+        return CalculateComponentTotal(
+          dataObj,
+          construct_area?.toString()?.replace(',', ''),
+          gstPercent,
+          dataObj?.charges
+        )
+      })
 
-              dataObj.TotalSaleValue = total
-              dataObj.gst.label = gstTaxIs
-              // data.gst.value = gstTotal
-              dataObj.gstValue = gstTotal
-              dataObj.TotalNetSaleValueGsT = total + gstTotal
-              dataObj.totalSaleValued = total
-            }
+      // part E
+      // const partE = [
+      //   {
+      //     myId: '1',
+      //     units: {
+      //       value: 'fixedcost',
+      //       label: 'Fixed cost',
+      //     },
+      //     component: {
+      //       value: 'maintenance_cost',
+      //       label: 'Maintenance Cost',
+      //     },
+      //     others: 120,
+      //     charges: 120,
+      //     TotalSaleValue: Number(construct_area) * 120,
+      //     gstValue: Number(construct_area) * 120 * 0.18,
+      //     gst: {
+      //       label: '18',
+      //       value: 18,
+      //     },
+      //     TotalNetSaleValueGsT:
+      //       Number(construct_area) * 120 +
+      //       Number(construct_area) * 120 * 0.18,
+      //   },
+      //   {
+      //     myId: '2',
+      //     units: {
+      //       value: 'fixedcost',
+      //       label: 'Fixed cost',
+      //     },
+      //     component: {
+      //       value: 'corpus_fund',
+      //       label: 'Corpus Fund',
+      //     },
+      //     others: 50,
+      //     charges: 50,
 
-            if (x === 'legal_charges') {
-              let total = 0
-              let gstTotal = 0
-              total = Number(data?.legal_charges || 0)
-              gstTotal = Math.round(total * (Number(data1?.gst?.value) * 0.01))
-              console.log(
-                'found it',
-                data['unit_no'],
-                data1,
-                Number(data?.legal_charges || 0),
-                total,
-                data1.TotalSaleValue
-              )
+      //     TotalSaleValue: Number(construct_area) * 50,
+      //     // charges: y,
+      //     gstValue: 0,
+      //     gst: {
+      //       label: '0',
+      //       value: 0,
+      //     },
+      //     TotalNetSaleValueGsT: Number(construct_area) * 50,
+      //   },
+      // ]
+      // if (data.status === 'booked') {
+      //   // get cost sheet
+      // }
+      const partATotal = await x.reduce(
+        (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+        0
+      )
+      const partCTotal = await constructCS.reduce(
+        (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+        0
+      )
 
-              dataObj.TotalSaleValue = Number(data?.legal_charges || 0)
-              dataObj.gst.label = gstTaxIs
-              // data.gst.value = gstTotal
-              dataObj.gstValue = gstTotal
-              dataObj.TotalNetSaleValueGsT = total + gstTotal
-              dataObj.totalSaleValued = Number(data?.legal_charges || 0)
-            }
+      const partBTotal = await partB1.reduce(
+        (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+        0
+      )
+      const partDTotal = await constructOtherChargesObj?.reduce(
+        (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+        0
+      )
+      // const partDTotal = 0
+      // const partETotal = 0
+      const partETotal = await partE?.reduce(
+        (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+        0
+      )
 
-            const isChargedPerSqft = [
-              'costpersqft',
-              'cost_per_sqft',
-              'price_per_sft',
-            ].includes(data1?.units.value)
+      const plotTotalCost = partATotal + partBTotal
+      const constructTotalCost = partCTotal + partDTotal
+      let plotPs = []
+      let constructPs = []
+      const bookingAdvance = paymentScheduleObj?.filter(
+        (d) => d?.stage?.value === 'on_booking'
+      )
+      const filLegalCharges = partB1?.filter(
+        (d) => d?.component?.value === 'legal_charges'
+      )
+      console.log('Plot ps==>  befoer', paymentScheduleObj)
+      let flatLegalFixedCosts = 0
+      let bookingAdvanceCost = 0
+      if (filLegalCharges && filLegalCharges?.length > 0) {
+        flatLegalFixedCosts = filLegalCharges[0]?.TotalNetSaleValueGsT || 0
+      }
+      console.log('booking advance is', paymentScheduleObj, bookingAdvance)
+      // if(bookingAdvance && bookingAdvance?.length > 0){
+      //   console.log('booking advance is', bookingAdvance)
+      //   bookingAdvanceCost =bookingAdvance[0]?.percentage || 10
+      // }
+      if (paymentScheduleObj && paymentScheduleObj?.length > 0) {
+        console.log('booking advance is', bookingAdvance)
+        bookingAdvanceCost = paymentScheduleObj[0]?.percentage || 10
+      }
 
-            console.log(
-              'found it ==>',
-              data['unit_no'],
-              data.legal_charges,
-              dataObj.TotalSaleValue,
-              dataObj
-            )
-            return dataObj
-          }
+      plotPs = paymentScheduleObj?.map((d1, inx) => {
+        console.log('d1 is', d1)
+        const applicablePlotCost = plotTotalCost - flatLegalFixedCosts
+        const z = d1
+
+        console.log(
+          ' applicablePlotCost is',
+          applicablePlotCost,
+          flatLegalFixedCosts
         )
 
-        console.log('my additional charges', data['unite_no'], partB)
-        // part D
+        // z.value = ['fixedcost'].includes(d1?.units?.value)
+        //   ? Number(d1?.percentage)
 
-         partD = constructOtherChargesObj?.map(
-          (data4, inx) => {
-            const x1 = data4?.component?.value
-            if (x1 === 'maintenancecharges') {
-              data4.charges = Number(data?.maintenance_cost ||  data4.charges || 0)
-            }
-            if (x1 === 'corpus_charges') {
-              data4.charges = Number(data?.corpus_fund ||    data4.charges || 0)
-            }
-
-            if (x1 === 'bescom_bwssb') {
-              data4.charges = Number(data?.bescom_bwssb ||    data4.charges || 0)
-            }
-            if (x1 === 'corpus_charges') {
-              data4.charges = Number(data?.corpus_fund  ||    data4.charges|| 0)
-            }
-            if (x1 === 'garden_area_cost') {
-              data4.charges = Number(data?.garden_area_cost || data4.charges || 0)
-            }
-
-            const gstPercent1 = Number(data4?.gst?.value) || 0
-            return  CalculateComponentTotal(data4,construct_area?.toString()?.replace(',', ''),gstPercent1, data4?.charges)
-
-            let total = 0
-            let gstTotal = 0
-            let charges = 0
-            const dataNewObj = { ...data4 }
-            const isChargedPerSqft = [
-              'costpersqft',
-              'cost_per_sqft',
-              'price_per_sft',
-            ].includes(data4?.units.value)
-
-            // const gstTaxIs =
-            //   gstTaxForProjA.length > 0 ? gstTaxForProjA[0]?.gst?.value : 0
-            const x = data4?.component?.value
-            if (x === 'bwssb_cost') {
-              console.log('found it')
-              total = Number(data?.bwssd_cost)
-              gstTotal = Math.round(total * (Number(data4?.gst?.value) * 0.01))
-
-              // gstTotal = data?.garden_area_cost * 0.12
-            }
-
-            if (x === 'garden_area_cost') {
-              charges = Number(data?.garden_area_cost)
-              total = Number(data?.garden_area_cost)
-              gstTotal = Math.round(total * (Number(data4?.gst?.value) * 0.01))
-            }
-            if (x === 'club_house') {
-              charges = Number(data?.club_house)
-              total = Number(data?.club_house)
-              gstTotal = Math.round(total * (Number(data4?.gst?.value) * 0.01))
-            }
-            if (x === 'legal_charges') {
-              charges = Number(data?.legal_charges)
-              total = Number(data?.legal_charges)
-              gstTotal = Math.round(total * (Number(data4?.gst?.value) * 0.01))
-            }
-
-            const gstPercent =
-              Number(data4?.gst?.value) > 1
-                ? Number(data4?.gst?.value) * 0.01
-                : Number(data4?.gst?.value)
-            // total = isChargedPerSqft
-            //   ? Number(construct_area) * Number(data4?.charges)
-            //   : Number(data4?.charges)
-
-            // gstTotal = Math.round(total * gstPercent)
-
-            console.log('myvalue is ', data4)
-            dataNewObj.charges = charges
-            dataNewObj.TotalSaleValue = total
-            dataNewObj.gst.label = gstTaxIs
-            // data.gst.value = gstTotal
-            dataNewObj.gstValue = gstTotal
-            dataNewObj.TotalNetSaleValueGsT = total + gstTotal
-            return dataNewObj
-          }
-        )
-
-        const partE = possessionCS?.map( (dataObj, inx) => {
-          const x = dataObj?.component?.value
-          if (x === 'maintenancecharges') {
-            dataObj.charges = Number(data?.maintenance_cost || 0)
-          }
-          if (x === 'corpus_charges') {
-            dataObj.charges = Number(data?.corpus_fund || 0)
-          }
-
-          const gstPercent = Number(dataObj?.gst?.value) || 0
-          return  CalculateComponentTotal(dataObj,construct_area?.toString()?.replace(',', ''),gstPercent, dataObj?.charges)
-        })
-
-        // part E
-        // const partE = [
-        //   {
-        //     myId: '1',
-        //     units: {
-        //       value: 'fixedcost',
-        //       label: 'Fixed cost',
-        //     },
-        //     component: {
-        //       value: 'maintenance_cost',
-        //       label: 'Maintenance Cost',
-        //     },
-        //     others: 120,
-        //     charges: 120,
-        //     TotalSaleValue: Number(construct_area) * 120,
-        //     gstValue: Number(construct_area) * 120 * 0.18,
-        //     gst: {
-        //       label: '18',
-        //       value: 18,
-        //     },
-        //     TotalNetSaleValueGsT:
-        //       Number(construct_area) * 120 +
-        //       Number(construct_area) * 120 * 0.18,
-        //   },
-        //   {
-        //     myId: '2',
-        //     units: {
-        //       value: 'fixedcost',
-        //       label: 'Fixed cost',
-        //     },
-        //     component: {
-        //       value: 'corpus_fund',
-        //       label: 'Corpus Fund',
-        //     },
-        //     others: 50,
-        //     charges: 50,
-
-        //     TotalSaleValue: Number(construct_area) * 50,
-        //     // charges: y,
-        //     gstValue: 0,
-        //     gst: {
-        //       label: '0',
-        //       value: 0,
-        //     },
-        //     TotalNetSaleValueGsT: Number(construct_area) * 50,
-        //   },
-        // ]
-        // if (data.status === 'booked') {
-        //   // get cost sheet
-        // }
-        const partATotal = await x.reduce(
-          (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
-          0
-        )
-        const partCTotal = await constructCS.reduce(
-          (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
-          0
-        )
-
-        const partBTotal = await partB1.reduce(
-          (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
-          0
-        )
-        const partDTotal = await  constructOtherChargesObj?.reduce(
-          (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
-          0
-        )
-        // const partDTotal = 0
-        // const partETotal = 0
-        const partETotal = await partE?.reduce(
-          (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
-          0
-        )
-
-        const plotTotalCost = partATotal + partBTotal
-        const constructTotalCost = partCTotal + partDTotal
-        let plotPs = []
-        let constructPs = []
-        const bookingAdvance = paymentScheduleObj?.filter(
-          (d) => d?.stage?.value === 'on_booking'
-        )
-        const filLegalCharges = partB1?.filter(
-          (d) => d?.component?.value === 'legal_charges'
-        )
-        console.log('Plot ps==>  befoer', paymentScheduleObj)
-        let flatLegalFixedCosts = 0
-        let bookingAdvanceCost = 0
-        if(filLegalCharges && filLegalCharges?.length > 0){
-          flatLegalFixedCosts =filLegalCharges[0]?.TotalNetSaleValueGsT || 0
+        //   : Number((applicablePlotCost * (d1?.percentage / 100)).toFixed(2))
+        if (d1.stage.value === 'Legal Charges') {
+          d1.percentage = Number(data?.legal_charges || 0)
         }
-        console.log('booking advance is',paymentScheduleObj,  bookingAdvance)
-        // if(bookingAdvance && bookingAdvance?.length > 0){
-        //   console.log('booking advance is', bookingAdvance)
-        //   bookingAdvanceCost =bookingAdvance[0]?.percentage || 10
-        // }
-         if(paymentScheduleObj && paymentScheduleObj?.length > 0){
-          console.log('booking advance is', bookingAdvance)
-          bookingAdvanceCost =paymentScheduleObj[0]?.percentage || 10
+        if (!['costpersqft'].includes(d1?.units?.value)) {
+          z.value = ['fixedcost'].includes(d1?.units?.value)
+            ? Number(d1?.percentage)
+            : inx == 1
+            ? Number(
+                (applicablePlotCost * (d1?.percentage / 100)).toFixed(2) -
+                  bookingAdvanceCost
+              )
+            : Number((applicablePlotCost * (d1?.percentage / 100)).toFixed(2))
+          // z.value = applicablePlotCost
+        } else {
+          console.log('d1 is ', area, d1?.units?.value, Number(d1?.percentage))
+
+          const calc = CalculateComponentTotal(
+            d1,
+            area?.toString()?.replace(',', ''),
+            0,
+            Number(d1?.percentage)
+          )
+          z.value = calc?.TotalNetSaleValueGsT
         }
-
-        plotPs = paymentScheduleObj?.map((d1, inx) => {
-          console.log('d1 is', d1)
-          let applicablePlotCost = plotTotalCost- flatLegalFixedCosts
-          const z = d1
-
-          console.log(' applicablePlotCost is', applicablePlotCost, flatLegalFixedCosts)
-
-          // z.value = ['fixedcost'].includes(d1?.units?.value)
-          //   ? Number(d1?.percentage)
-
-
-          //   : Number((applicablePlotCost * (d1?.percentage / 100)).toFixed(2))
-          if (d1.stage.value === 'Legal Charges') {
-            d1.percentage = Number(data?.legal_charges || 0)
-
-          }
-          if(!['costpersqft'].includes(d1?.units?.value)){
-
-            z.value = ['fixedcost'].includes(d1?.units?.value)
-              ? Number(d1?.percentage)
-              : inx ==1 ? Number(
-                (((applicablePlotCost) * (d1?.percentage / 100)).toFixed(2) - bookingAdvanceCost))
-
-              :  Number(
-                  ((applicablePlotCost) * (d1?.percentage / 100)).toFixed(2)
-                )
-                // z.value = applicablePlotCost
-              }else {
-                console.log('d1 is ',area,  d1?.units?.value,Number(d1?.percentage))
-
-                let calc =  CalculateComponentTotal(d1,area?.toString()?.replace(',', '') ,0,Number(d1?.percentage))
-                z.value = calc?.TotalNetSaleValueGsT
-              }
-              // z.value = applicablePlotCost
-          z.schDate = data['booked_on'] +
-          ((Number(d1?.zeroDay || 0)) * 86400000)
-          if (['fixedcost'].includes(d1?.units?.value)) {
-            z.elgible = true
-            z.elgFrom = Timestamp.now().toMillis()
-            return z
-          }
-          // data['unitStatus'] = d1?.units?.value
-          if (data['unitStatus'] == 'Registered') {
-            z.elgible = true
-            z.elgFrom = Timestamp.now().toMillis()
-          }
-          if (data['unitStatus'] == 'Booked') {
-            if (inx < 1) {
-              z.elgible = true
-              z.elgFrom = Timestamp.now().toMillis()
-            }
-          }
-          if (data['unitStatus'] == 'ATS') {
-            if (inx < 2) {
-              z.elgible = true
-              z.elgFrom = Timestamp.now().toMillis()
-            }
-          }
-          z.category = 'plotPS'
-
+        // z.value = applicablePlotCost
+        z.schDate = data['booked_on'] + Number(d1?.zeroDay || 0) * 86400000
+        if (['fixedcost'].includes(d1?.units?.value)) {
+          z.elgible = true
+          z.elgFrom = Timestamp.now().toMillis()
           return z
-        })
-        constructPs = projectDetails[0]?.ConstructPayScheduleObj?.map((d1, inx) => {
+        }
+        // data['unitStatus'] = d1?.units?.value
+        if (data['unitStatus'] == 'Registered') {
+          z.elgible = true
+          z.elgFrom = Timestamp.now().toMillis()
+        }
+        if (data['unitStatus'] == 'Booked') {
+          if (inx < 1) {
+            z.elgible = true
+            z.elgFrom = Timestamp.now().toMillis()
+          }
+        }
+        if (data['unitStatus'] == 'ATS') {
+          if (inx < 2) {
+            z.elgible = true
+            z.elgFrom = Timestamp.now().toMillis()
+          }
+        }
+        z.category = 'plotPS'
+
+        return z
+      })
+      constructPs = projectDetails[0]?.ConstructPayScheduleObj?.map(
+        (d1, inx) => {
           console.log('d1 is => ', d1, constructTotalCost)
           const z = d1
           const z0 = { ...d1 }
@@ -868,9 +881,7 @@ const EnhancedTableToolbar = (props) => {
           z.value = ['fixedcost'].includes(d1?.units?.value)
             ? Number(d1?.percentage)
             : Number((plotTotalCost * (d1?.percentage / 100)).toFixed(2))
-          z0.schDate = data['booked_on'] +
-          ((Number(d1?.zeroDay || 0)) *
-          86400000)
+          z0.schDate = data['booked_on'] + Number(d1?.zeroDay || 0) * 86400000
           z0.myPercent = d1?.percentage / 100
           z0.trueCheck = ['fixedcost'].includes(d1?.units?.value)
           z0.check = Number(constructTotalCost * (d1?.percentage / 100))
@@ -881,16 +892,16 @@ const EnhancedTableToolbar = (props) => {
             ? Number(d1?.percentage)
             : Number((constructTotalCost * (d1?.percentage / 100)).toFixed(2))
           z0.value = z0.value1
-          if(inx=== ConstructPayScheduleObj?.length-1){
+          if (inx === ConstructPayScheduleObj?.length - 1) {
             z0.value = (z.value || 0) + partETotal
           }
           console.log(
             'log it bro ',
             data['unit_no'],
-            ConstructPayScheduleObj?.length-1,
+            ConstructPayScheduleObj?.length - 1,
             inx,
             partETotal,
-            z0.value,
+            z0.value
           )
 
           console.log(
@@ -907,297 +918,291 @@ const EnhancedTableToolbar = (props) => {
             z0
           )
           return z0
-        })
-
-
-
-
-          // putToDb(constructPs,data,pId, partATotal,partBTotal, partCTotal, partDTotal  )
-
-          const newTotal =
-            (partATotal || 0) +
-            (partBTotal || 0) +
-            (partCTotal || 0) +
-            (partDTotal || 0)
-          // constructionCS
-
-          const categorizedNewPlotPS = plotPs
-          const categorizedNewConstructPS =
-            constructPs?.map((item) => ({
-              ...item,
-              category: 'constructPS',
-            })) || []
-          const fullPs1 = [
-            ...categorizedNewPlotPS,
-            ...categorizedNewConstructPS,
-          ]
-          let T_elgible = 0
-          const T_transaction = 0
-          const T_review = data['T_received'] || 0
-          let stepsComp = 0
-          let T_balance = 0
-          let T_elgible_balance = 0
-          const T_total = newTotal
-
-          const paidAmount = data['paidAmount']
-          fullPs1?.map((dataObj) => {
-            if (dataObj?.elgible) {
-              T_elgible = dataObj?.value + T_elgible
-              stepsComp = stepsComp + 1
-              // T_transaction = T_transaction + (paidAmount || undefined)
-              // T_review = T_review + (paidAmount || undefined)
-            }
-          })
-
-          T_balance = newTotal - T_review
-          T_elgible_balance = T_elgible - T_review
-
-          data.plotCS = [...x]
-          data.addChargesCS = partB1
-          data.constAdditionalChargesCS = partD
-          data.constructCS = [...constructCS]
-          data.fullPs = fullPs1
-          data.plotPS = plotPs
-          data.constructPS = constructPs
-          data.possessionAdditionalCostObj = partE
-          data.T_possession = partETotal
-
-          data[`T_elgible`] = T_elgible
-          data[`stepsComp`] = stepsComp
-          data[`T_transaction`] = data['T_received']
-          data[`T_review`] = T_review
-          data[`T_balance`] = T_balance
-          data[`T_elgible_balance`] = T_elgible_balance
-          data['T_cleared'] = data['T_cleared'] || 0
-          data['T_rejected'] = data['T_rejected'] || 0
-
-          const finalUnitObj = {
-            // status: 'booked',
-            status: data['unitStatus'],
-            // unitStatus: data['unitStatus'],
-            Katha_no: data['Katha_no'] || '',
-            survey_no: data['survey_no'] || '',
-            landOwnerName: data['landOwnerName'] || '',
-            release_status: data['release_status']?.toLowerCase()|| '',
-            mortgage_type: data['mortgage_type']?.toLowerCase() || '',
-            T_total: newTotal,
-            T_balance: T_balance,
-            T_received: data['T_received'] || 0,
-            T_elgible: T_elgible,
-            T_elgible_balance: T_elgible_balance,
-            T_approved: data['T_received'] || 0,
-            T_transaction: data['T_received'] || 0,
-
-            T_review: 0,
-            T_A: partATotal,
-            T_B: partBTotal,
-            T_C: partCTotal,
-            T_D: partDTotal,
-            T_E: partETotal,
-            plotCS: [...x],
-            constructCS: [...constructCS],
-            addChargesCS: await partB1,
-            constAdditionalChargesCS: partD,
-            possessionAdditionalCostCS: partE,
-            plotPS: plotPs,
-            constructPS: constructPs,
-            fullPs: fullPs1,
-            PID_no: data['PID_no'] || '',
-            customerDetailsObj: {
-              phoneNo1: data['phoneNo1'] || '',
-              marital1: {
-                value: 'Single',
-                label: 'Single',
-              },
-              pincode1: '',
-              co_Name1: data['co_Name1'] || '',
-              city1: '',
-              address1: data['address1'],
-              phoneNo3: '',
-              aadharNo1: data['aadharNo1'],
-              email1: data['email1'],
-              annualIncome1: '',
-              panNo1: data['panNo1'],
-              state1: {
-                label: 'Karnataka',
-                value: 'KA',
-              },
-              aadharUrl1: '',
-              countryName1: 'country',
-              companyName1: '',
-              panDocUrl1: '',
-              relation1: {
-                label: data?.relation1?.toUpperCase() || 'S/O',
-                value: data?.relation1?.toUpperCase() || 'S/O',
-              },
-              dob1: data['dob1'],
-              occupation1: '',
-              countryCode1: '',
-              customerName1: data['customerName1'],
-              countryCode2: '',
-            },
-            secondaryCustomerDetailsObj: {
-              phoneNo1: data['phoneNo2'] || '',
-              marital1: {
-                value:  data?.marriedStatus1 ||'Single',
-                label:  data?.marriedStatus1 ||'Single',
-              },
-              pincode1: '',
-              // co_Name2: data['co_Name2'] ||'',
-              co_Name1: data['co_Name2'] ||'',
-              city1: '',
-              address1: data['address2'] || '',
-              phoneNo3: '',
-              aadharNo1: data['aadharNo2'] || '',
-              email1: data['email2'] || '',
-              annualIncome1: '',
-              panNo1: data['panNo2'] || '',
-              state1: {
-                label: 'Karnataka',
-                value: 'KA',
-              },
-              aadharUrl1: '',
-              countryName1: 'country',
-              companyName1: '',
-              panDocUrl1: '',
-              relation2: {
-                label: data?.relation2?.toUpperCase() || 'S/O',
-                value: data?.relation2?.toUpperCase() || 'S/O',
-              },
-              dob1: data['dob2'],
-              occupation1: '',
-              countryCode1: '',
-              customerName1: data['customerName2'],
-              countryCode2: '',
-            },
-            aggrementDetailsObj: {},
-            booked_on: data['booked_on'],
-            plc_per_sqft: data['plc_per_sqft'],
-            sqft_rate: data['sqft_rate'],
-            construct_price_sqft: data['construct_price_sqft'],
-            by: data['by'],
-            crm_executive: data['crm_executive'] || '',
-            ats_date: data['ats_date'],
-            atb_date: data['atb_date'],
-            sd_date: data['sd_date'],
-            ats_target_date: data['ats_target_date'],
-            sd_target_date: data['sd_target_date'],
-            source: data['source'],
-            sub_source: data['sub_source'],
-            remarks: data['remarks'],
-            fund_type: data['fund_type'],
-            Bank: data['Bank'],
-            loanStatus: data['loanStatus'],
-            annualIncome: data['annualIncome'] || '',
-            intype: 'Bulk',
-          }
-
-          // const x2 =  createBookedCustomer(
-          //   orgId,
-          //   id,
-          //   {
-          //     leadId: id,
-          //     projectName: leadDetailsObj2?.Project || projectDetails?.projectName,
-          //     ProjectId: leadDetailsObj2?.ProjectId || selUnitDetails?.pId,
-          //     // ...customerDetailsObj,
-          //     Name: customerDetailsObj?.customerName1,
-          //     Mobile: customerDetailsObj?.phoneNo1,
-          //     Email: customerDetailsObj?.email1,
-          //     secondaryCustomerDetailsObj: secondaryCustomerDetailsObj || {},
-          //     assets: arrayUnion(uid),
-
-          //     [`${uid}_unitDetails`]: selUnitDetails || {},
-          //     [`${uid}_plotCS`]: newPlotCostSheetA,
-          //     [`${uid}_AddChargesCS`]: newAdditonalChargesObj,
-          //     [`${uid}_constructCS`]: newConstructCostSheetA || [],
-          //     [`${uid}_fullPs`]: fullPs,
-          //     [`${uid}_newPlotPS`]: newPlotPS,
-          //     [`${uid}_newConstructPS`]: newConstructPS || [],
-          //     [`${uid}_T_elgible`]: T_elgible,
-          //     [`${uid}_stepsComp`]: stepsComp,
-          //     [`${uid}_T_transaction`]: T_transaction,
-          //     [`${uid}_T_review`]: T_review,
-          //     [`${uid}_T_balance`]: T_balance,
-          //     [`${uid}_T_elgible_balance`]: T_elgible_balance,
-
-          //     booked_on: data?.dated,
-          //     ct: Timestamp.now().toMillis(),
-          //     Date: Timestamp.now().toMillis(),
-
-          //     //paymentScheduleObj
-          //   },
-          //   user?.email,
-          //   enqueueSnackbar
-          // )
-
-          await uploadBookedUnitToDb(
-            orgId,
-            pId,
-            data['unitUid'],
-
-            finalUnitObj,
-            user?.email,
-
-          )
-          await setUploadedUnitsCount(index + 1)
-
-          console.log(
-            'finalUnitObj',
-            // partB1,
-            data['unit_no'],
-            data['T_received'],
-
-            newTotal,
-            partATotal,
-            partBTotal,
-            partCTotal,
-            partDTotal,
-            finalUnitObj
-          )
-          console.log(
-            'payment schedule is ',
-            data,
-            'plot-total',
-            partATotal,
-            'construct-total',
-            partCTotal,
-            'unit-total',
-            newTotal,
-            'plot-ps',
-            plotPs,
-            'construct-ps',
-            constructPs,
-            'payment-schedule',
-            paymentScheduleObj
-            // 'constructOtherChargesObj',
-            // index + 1,
-            // data['unit_no'],
-            // partATotal,
-
-            // partCTotal,
-            // partBTotal + partDTotal,
-            // newTotal,
-            // partD
-            // )
-            // constructPs,
-            // ConstructPayScheduleObj,
-            // paymentScheduleObj
-          )
-          console.log(
-            'am inside addLeadstoDB==>',
-            constructOtherChargesObj,
-            index + 1,
-            data['unit_no'],
-            partATotal,
-
-            partCTotal,
-            partBTotal + partDTotal,
-            newTotal,
-            partD
-          )
-        // }, 2500)
         }
-      // })
+      )
+
+      // putToDb(constructPs,data,pId, partATotal,partBTotal, partCTotal, partDTotal  )
+
+      const newTotal =
+        (partATotal || 0) +
+        (partBTotal || 0) +
+        (partCTotal || 0) +
+        (partDTotal || 0)
+      // constructionCS
+
+      const categorizedNewPlotPS = plotPs
+      const categorizedNewConstructPS =
+        constructPs?.map((item) => ({
+          ...item,
+          category: 'constructPS',
+        })) || []
+      const fullPs1 = [...categorizedNewPlotPS, ...categorizedNewConstructPS]
+      let T_elgible = 0
+      const T_transaction = 0
+      const T_review = data['T_received'] || 0
+      let stepsComp = 0
+      let T_balance = 0
+      let T_elgible_balance = 0
+      const T_total = newTotal
+
+      const paidAmount = data['paidAmount']
+      fullPs1?.map((dataObj) => {
+        if (dataObj?.elgible) {
+          T_elgible = dataObj?.value + T_elgible
+          stepsComp = stepsComp + 1
+          // T_transaction = T_transaction + (paidAmount || undefined)
+          // T_review = T_review + (paidAmount || undefined)
+        }
+      })
+
+      T_balance = newTotal - T_review
+      T_elgible_balance = T_elgible - T_review
+
+      data.plotCS = [...x]
+      data.addChargesCS = partB1
+      data.constAdditionalChargesCS = partD
+      data.constructCS = [...constructCS]
+      data.fullPs = fullPs1
+      data.plotPS = plotPs
+      data.constructPS = constructPs
+      data.possessionAdditionalCostObj = partE
+      data.T_possession = partETotal
+
+      data[`T_elgible`] = T_elgible
+      data[`stepsComp`] = stepsComp
+      data[`T_transaction`] = data['T_received']
+      data[`T_review`] = T_review
+      data[`T_balance`] = T_balance
+      data[`T_elgible_balance`] = T_elgible_balance
+      data['T_cleared'] = data['T_cleared'] || 0
+      data['T_rejected'] = data['T_rejected'] || 0
+
+      const finalUnitObj = {
+        // status: 'booked',
+        status: data['unitStatus'],
+        // unitStatus: data['unitStatus'],
+        Katha_no: data['Katha_no'] || '',
+        survey_no: data['survey_no'] || '',
+        landOwnerName: data['landOwnerName'] || '',
+        release_status: data['release_status']?.toLowerCase() || '',
+        mortgage_type: data['mortgage_type']?.toLowerCase() || '',
+        T_total: newTotal,
+        T_balance: T_balance,
+        T_received: data['T_received'] || 0,
+        T_elgible: T_elgible,
+        T_elgible_balance: T_elgible_balance,
+        T_approved: data['T_received'] || 0,
+        T_transaction: data['T_received'] || 0,
+
+        T_review: 0,
+        T_A: partATotal,
+        T_B: partBTotal,
+        T_C: partCTotal,
+        T_D: partDTotal,
+        T_E: partETotal,
+        plotCS: [...x],
+        constructCS: [...constructCS],
+        addChargesCS: await partB1,
+        constAdditionalChargesCS: partD,
+        possessionAdditionalCostCS: partE,
+        plotPS: plotPs,
+        constructPS: constructPs,
+        fullPs: fullPs1,
+        PID_no: data['PID_no'] || '',
+        customerDetailsObj: {
+          phoneNo1: data['phoneNo1'] || '',
+          marital1: {
+            value: 'Single',
+            label: 'Single',
+          },
+          pincode1: '',
+          co_Name1: data['co_Name1'] || '',
+          city1: '',
+          address1: data['address1'],
+          phoneNo3: '',
+          aadharNo1: data['aadharNo1'],
+          email1: data['email1'],
+          annualIncome1: '',
+          panNo1: data['panNo1'],
+          state1: {
+            label: 'Karnataka',
+            value: 'KA',
+          },
+          aadharUrl1: '',
+          countryName1: 'country',
+          companyName1: '',
+          panDocUrl1: '',
+          relation1: {
+            label: data?.relation1?.toUpperCase() || 'S/O',
+            value: data?.relation1?.toUpperCase() || 'S/O',
+          },
+          dob1: data['dob1'],
+          occupation1: '',
+          countryCode1: '',
+          customerName1: data['customerName1'],
+          countryCode2: '',
+        },
+        secondaryCustomerDetailsObj: {
+          phoneNo1: data['phoneNo2'] || '',
+          marital1: {
+            value: data?.marriedStatus1 || 'Single',
+            label: data?.marriedStatus1 || 'Single',
+          },
+          pincode1: '',
+          // co_Name2: data['co_Name2'] ||'',
+          co_Name1: data['co_Name2'] || '',
+          city1: '',
+          address1: data['address2'] || '',
+          phoneNo3: '',
+          aadharNo1: data['aadharNo2'] || '',
+          email1: data['email2'] || '',
+          annualIncome1: '',
+          panNo1: data['panNo2'] || '',
+          state1: {
+            label: 'Karnataka',
+            value: 'KA',
+          },
+          aadharUrl1: '',
+          countryName1: 'country',
+          companyName1: '',
+          panDocUrl1: '',
+          relation2: {
+            label: data?.relation2?.toUpperCase() || 'S/O',
+            value: data?.relation2?.toUpperCase() || 'S/O',
+          },
+          dob1: data['dob2'],
+          occupation1: '',
+          countryCode1: '',
+          customerName1: data['customerName2'],
+          countryCode2: '',
+        },
+        aggrementDetailsObj: {},
+        booked_on: data['booked_on'],
+        plc_per_sqft: data['plc_per_sqft'],
+        sqft_rate: data['sqft_rate'],
+        construct_price_sqft: data['construct_price_sqft'],
+        by: data['by'],
+        crm_executive: data['crm_executive'] || '',
+        ats_date: data['ats_date'],
+        atb_date: data['atb_date'],
+        sd_date: data['sd_date'],
+        ats_target_date: data['ats_target_date'],
+        sd_target_date: data['sd_target_date'],
+        source: data['source'],
+        sub_source: data['sub_source'],
+        remarks: data['remarks'],
+        fund_type: data['fund_type'],
+        Bank: data['Bank'],
+        loanStatus: data['loanStatus'],
+        annualIncome: data['annualIncome'] || '',
+        intype: 'Bulk',
+      }
+
+      // const x2 =  createBookedCustomer(
+      //   orgId,
+      //   id,
+      //   {
+      //     leadId: id,
+      //     projectName: leadDetailsObj2?.Project || projectDetails?.projectName,
+      //     ProjectId: leadDetailsObj2?.ProjectId || selUnitDetails?.pId,
+      //     // ...customerDetailsObj,
+      //     Name: customerDetailsObj?.customerName1,
+      //     Mobile: customerDetailsObj?.phoneNo1,
+      //     Email: customerDetailsObj?.email1,
+      //     secondaryCustomerDetailsObj: secondaryCustomerDetailsObj || {},
+      //     assets: arrayUnion(uid),
+
+      //     [`${uid}_unitDetails`]: selUnitDetails || {},
+      //     [`${uid}_plotCS`]: newPlotCostSheetA,
+      //     [`${uid}_AddChargesCS`]: newAdditonalChargesObj,
+      //     [`${uid}_constructCS`]: newConstructCostSheetA || [],
+      //     [`${uid}_fullPs`]: fullPs,
+      //     [`${uid}_newPlotPS`]: newPlotPS,
+      //     [`${uid}_newConstructPS`]: newConstructPS || [],
+      //     [`${uid}_T_elgible`]: T_elgible,
+      //     [`${uid}_stepsComp`]: stepsComp,
+      //     [`${uid}_T_transaction`]: T_transaction,
+      //     [`${uid}_T_review`]: T_review,
+      //     [`${uid}_T_balance`]: T_balance,
+      //     [`${uid}_T_elgible_balance`]: T_elgible_balance,
+
+      //     booked_on: data?.dated,
+      //     ct: Timestamp.now().toMillis(),
+      //     Date: Timestamp.now().toMillis(),
+
+      //     //paymentScheduleObj
+      //   },
+      //   user?.email,
+      //   enqueueSnackbar
+      // )
+
+      await uploadBookedUnitToDb(
+        orgId,
+        pId,
+        data['unitUid'],
+
+        finalUnitObj,
+        user?.email
+      )
+      await setUploadedUnitsCount(index + 1)
+
+      console.log(
+        'finalUnitObj',
+        // partB1,
+        data['unit_no'],
+        data['T_received'],
+
+        newTotal,
+        partATotal,
+        partBTotal,
+        partCTotal,
+        partDTotal,
+        finalUnitObj
+      )
+      console.log(
+        'payment schedule is ',
+        data,
+        'plot-total',
+        partATotal,
+        'construct-total',
+        partCTotal,
+        'unit-total',
+        newTotal,
+        'plot-ps',
+        plotPs,
+        'construct-ps',
+        constructPs,
+        'payment-schedule',
+        paymentScheduleObj
+        // 'constructOtherChargesObj',
+        // index + 1,
+        // data['unit_no'],
+        // partATotal,
+
+        // partCTotal,
+        // partBTotal + partDTotal,
+        // newTotal,
+        // partD
+        // )
+        // constructPs,
+        // ConstructPayScheduleObj,
+        // paymentScheduleObj
+      )
+      console.log(
+        'am inside addLeadstoDB==>',
+        constructOtherChargesObj,
+        index + 1,
+        data['unit_no'],
+        partATotal,
+
+        partCTotal,
+        partBTotal + partDTotal,
+        newTotal,
+        partD
+      )
+      // }, 2500)
+    }
+    // })
     // )
     // await setUnitUploadMessage(true)
   }
@@ -1229,7 +1234,8 @@ const EnhancedTableToolbar = (props) => {
         if (data?.status?.toLowerCase() === 'Cancelled') {
           data.status = 'cancelled'
           const date2 = new Date(data['cancelledDate'])
-          data.cancelledDate = data['Cancelled Date'] === '' ? '' : date2.getTime() + 21600000
+          data.cancelledDate =
+            data['Cancelled Date'] === '' ? '' : date2.getTime() + 21600000
         } else {
           data.status =
             data.status.toLowerCase() === 'active' ? 'received' : 'review'
@@ -1237,11 +1243,11 @@ const EnhancedTableToolbar = (props) => {
         const date = new Date(data['dated']) // some mock date
         const milliseconds = date.getTime() + 21600000
         const date1 = new Date(data['date_of_entry']) // some mock date
- // some mock date
+        // some mock date
 
         data.dated = milliseconds
         data.date_of_entry = date1.getTime() + 21600000
-        data.mode = data?.payment_mode  || ''
+        data.mode = data?.payment_mode || ''
 
         await capturePaymentS(
           orgId,
@@ -1263,7 +1269,6 @@ const EnhancedTableToolbar = (props) => {
   }
 
   const addUnitsToDB = async (records, pId) => {
-
     setUnitUploadMessage(false)
     // upload successfully
 
@@ -1290,7 +1295,7 @@ const EnhancedTableToolbar = (props) => {
         'Import Booked Apartments',
       ].includes(title)
     ) {
-      console.log('hello==> ',title, records)
+      console.log('hello==> ', title, records)
       insertBookedUnitToDb(records, projPayload)
     } else if (title === 'Upload Mortgage') {
       console.log('hello==>', records)
@@ -1410,7 +1415,7 @@ const EnhancedTableToolbar = (props) => {
           'Import Villas',
           'Import Booked Villas',
           'Upload Mortgage',
-          'Upload Unit Transactions'
+          'Upload Unit Transactions',
         ].includes(title) ? (
         <span style={{ display: 'flex' }}>
           {sourceTab === 'validR' && !unitUploadMessage && (
@@ -1499,6 +1504,7 @@ export default function LfileuploadTableTemplate({
   pId,
   myBlock,
 }) {
+  console.log('The finals', rowsParent)
   const [order, setOrder] = React.useState('asc')
   const [orderBy, setOrderBy] = React.useState('calories')
   const [selected, setSelected] = React.useState([])
@@ -1561,8 +1567,6 @@ export default function LfileuploadTableTemplate({
           align: 'left',
           format: (value) => value.toLocaleString('en-US'),
         },
-
-
 
         {
           id: 'area_sqm',
@@ -1911,7 +1915,6 @@ export default function LfileuploadTableTemplate({
           align: 'left',
           format: (value) => value.toLocaleString('en-US'),
         },
-
 
         {
           id: 'construct_area',
@@ -2271,7 +2274,12 @@ export default function LfileuploadTableTemplate({
           minWidth: 80,
           format: (value) => value.toLocaleString(),
         },
-        { id: 'bwssd_cost', label: 'BWSSD Cost', minWidth: 80, format: (value) => value.toLocaleString() },
+        {
+          id: 'bwssd_cost',
+          label: 'BWSSD Cost',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
         {
           id: 'maintenance_cost',
           label: 'Maintenance Cost',
@@ -2322,7 +2330,6 @@ export default function LfileuploadTableTemplate({
           minWidth: 100,
           // format: (value) => value.toLocaleString(),
         },
-
 
         {
           id: 'phoneNo1',
@@ -2601,6 +2608,41 @@ export default function LfileuploadTableTemplate({
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'SecondaryPhones',
+          label: 'Secondary Phones',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+          id: 'SecondaryEmail',
+          label: 'Secondary Email',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+          id: 'SiteIncharge',
+          label: 'Site Incharge',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+          id: 'NoOfProjects',
+          label: 'No Of Projects',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+          id: 'LeadSource',
+          label: 'Lead Source',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
         },
       ]
     }
