@@ -143,7 +143,7 @@ const CancelUnitForm = ({
     x.cancelledDate = datee
     x.cancelledBy = user?.email
     x.cancelReason = data?.payReason
-    cancelUnitDbFun(orgId, x, user,()=>{setOpen(false)},enqueueSnackbar)
+    cancelUnitDbFun(orgId, x, user, () => { setOpen(false) }, enqueueSnackbar)
   }
 
   const handleConfirmationYes = () => {
@@ -242,13 +242,13 @@ const CancelUnitForm = ({
                                     initialValues={initialState}
                                     validationSchema={validate}
                                     onSubmit={handleSubmit}
-                                    // onSubmit={(values, { resetForm }) => {
-                                    //   console.log('values is', values)
+                                  // onSubmit={(values, { resetForm }) => {
+                                  //   console.log('values is', values)
 
-                                    //   setBookingProgress(true)
-                                    //   onSubmitSupabase(values, resetForm)
-                                    //   console.log(values)
-                                    // }}
+                                  //   setBookingProgress(true)
+                                  //   onSubmitSupabase(values, resetForm)
+                                  //   console.log(values)
+                                  // }}
                                   >
                                     {(formik, setFieldValue) => (
                                       <Form>

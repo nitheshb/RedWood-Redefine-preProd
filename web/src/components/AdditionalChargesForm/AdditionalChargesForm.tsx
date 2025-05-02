@@ -125,8 +125,8 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
                 blocksViewFeature === 'Construction_Other_Charges'
                   ? csConstruAdditionalChargesA
                   : costSheetAdditionalChargesA.find(
-                      (option) => option.value === e.target.value
-                    )
+                    (option) => option.value === e.target.value
+                  )
               console.log(
                 'value is ',
                 selectedOptionObject,
@@ -142,10 +142,10 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
             {blocksViewFeature === 'Construction_Other_Charges'
               ? csConstruAdditionalChargesA
               : costSheetAdditionalChargesA.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
           </SelectMAT>
         )
       },
@@ -204,8 +204,8 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
             onChange={(e) =>
               rowData?.units?.value === 'percentage'
                 ? onChange(
-                    parseInt(e.target.value) > 100 ? 100 : e.target.value
-                  )
+                  parseInt(e.target.value) > 100 ? 100 : e.target.value
+                )
                 : onChange(e.target.value)
             }
             value={value}
@@ -405,8 +405,8 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
             onChange={(e) =>
               rowData?.units?.value === 'percentage'
                 ? onChange(
-                    parseInt(e.target.value) > 100 ? 100 : e.target.value
-                  )
+                  parseInt(e.target.value) > 100 ? 100 : e.target.value
+                )
                 : onChange(e.target.value)
             }
             value={value}

@@ -365,9 +365,9 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
       data.map((item) =>
         item.id === id
           ? {
-              ...item,
-              [field]: value,
-            }
+            ...item,
+            [field]: value,
+          }
           : item
       )
     )
@@ -544,11 +544,10 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
 
   const SidebarItem: React.FC<{ item: string }> = ({ item }) => (
     <li
-      className={`border-l-2 ${
-        activeItem === item
+      className={`border-l-2 ${activeItem === item
           ? 'border-red-600'
           : 'border-gray-300 hover:border-gray-600'
-      }`}
+        }`}
       style={{
         marginBottom: '2px',
         borderLeftWidth: '2px',
@@ -557,11 +556,10 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
     >
       <a
         href={`#${item.replace(/\s+/g, '-').toLowerCase()}`}
-        className={`block pl-4 pr-4 ${
-          activeItem === item
+        className={`block pl-4 pr-4 ${activeItem === item
             ? 'text-red-600 font-bold'
             : 'text-gray-700 hover:text-red-600'
-        }`}
+          }`}
         onClick={(e) => {
           e.preventDefault()
           handleClick(item)
