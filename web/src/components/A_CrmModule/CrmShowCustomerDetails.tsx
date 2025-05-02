@@ -34,6 +34,7 @@ const ShowCustomerDetails = ({
   selUnitDetails,
   dialogOpen,
   setShowApplicantEdit,
+  selCustomerPayload,
 }) => {
   const d = new window.Date()
   const { user } = useAuth()
@@ -591,7 +592,10 @@ const ShowCustomerDetails = ({
                     Current Balance
                   </p>
                   <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">
-                    0
+                  ₹{' '}
+                    {Math.round(
+                      Number(selCustomerPayload?.T_balance || 0)
+                    ).toLocaleString('en-IN')}
                   </h2>
                 </div>
               </div>

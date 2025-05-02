@@ -101,7 +101,11 @@ const CrmUnitPsHome = ({
                     Paid
                   </p>
                   <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">
-                    No Data
+                  ₹{' '}
+                {Math.round(
+                  (Number(selCustomerPayload?.T_review) || 0) +
+                    (Number(selCustomerPayload?.T_approved) || 0)
+                ).toLocaleString('en-IN')}
                   </h2>
                 </div>
                 <div className="text-center space-y-2">
@@ -109,7 +113,13 @@ const CrmUnitPsHome = ({
                     Unit Cost
                   </p>
                   <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">
-                    No Data
+                  ₹{' '}
+                    {Math.round(
+                      Number(
+                        selCustomerPayload?.T_total ||
+                          selCustomerPayload?.T_Total
+                      ) || 0
+                    ).toLocaleString('en-IN')}
                   </h2>
                 </div>
                 <div className="text-center space-y-2">
@@ -117,7 +127,10 @@ const CrmUnitPsHome = ({
                     Total Due
                   </p>
                   <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">
-                    No Data
+                  ₹{' '}
+                    {Math.round(
+                      Number(selCustomerPayload?.T_balance || 0)
+                    ).toLocaleString('en-IN')}
                   </h2>
                 </div>
               </div>

@@ -1502,6 +1502,8 @@ export default function UnitFullSummary({
                     selUnitDetails={selCustomerPayload}
                     leadDetailsObj2={selCustomerPayload}
                     setShowApplicantEdit={setShowApplicantEdit}
+                    selCustomerPayload={selCustomerPayload}
+                    
                   />
                 </div>
               )}
@@ -1536,14 +1538,10 @@ export default function UnitFullSummary({
             <>
               <div className="overflow-y-scroll w-full items-center justify-center mx-auto min-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
                 {/* <div className='overflow-y-scroll w-full items-center justify-center mx-auto max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300'> */}
-
                 <div className="relative min-h-screen mr-6">
                   {/*
          <h1 className="text-[#606062]  tracking-[0.06em] font-heading font-medium text-[12px]    mb-4">UNIT FEATURES</h1>
-
-
-
-        <img  alt="" src="/crmfinal.svg" className='w-full'></img> */}
+<img  alt="" src="/crmfinal.svg" className='w-full'></img> */}
 
                   <div className="relative z-0">
                     <h1 className="text-[#606062] mb-1  mx-auto w-full  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
@@ -1563,7 +1561,7 @@ export default function UnitFullSummary({
                             Booked On
                           </p>
                           <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">
-                            No Data
+                          {prettyDate(selCustomerPayload?.booked_on || 0)}
                           </h2>
                         </div>
                         <div className="text-center space-y-2">

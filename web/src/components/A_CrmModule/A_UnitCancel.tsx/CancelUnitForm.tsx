@@ -45,6 +45,9 @@ const CancelUnitForm = ({
   const [showConfirmation, setShowConfirmation] = useState(false)
   const [formValues, setFormValues] = useState(null)
   const [resetFormFn, setResetFormFn] = useState(null)
+  const [cancelledOn, setCancelledOn] = useState(selUnitDetails?.cancelledDate ? format(new Date(selUnitDetails.cancelledDate), 'MMM dd, yyyy') : 'No Data')
+  const [cancellationReason, setCancellationReason] = useState(selUnitDetails?.cancelReason || 'No Data')
+  const [cancelledBy, setCancelledBy] = useState(selUnitDetails?.cancelledBy || 'No Data')
 
   useEffect(() => {
     getAllTransactionsUnit()
@@ -143,6 +146,16 @@ const CancelUnitForm = ({
     x.cancelledDate = datee
     x.cancelledBy = user?.email
     x.cancelReason = data?.payReason
+
+
+
+    setCancelledOn(format(new Date(), 'MMM dd, yyyy'))
+    setCancellationReason(data?.payReason || 'No Data')
+    setCancelledBy(user?.email || 'No Data')
+
+
+
+
     cancelUnitDbFun(orgId, x, user, () => { setOpen(false) }, enqueueSnackbar)
   }
 
@@ -196,7 +209,7 @@ const CancelUnitForm = ({
                     Cancelled On
                   </p>
                   <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">
-                    No Data
+                  {cancelledOn}
                   </h2>
                 </div>
                 <div className="text-center space-y-2">
@@ -204,7 +217,7 @@ const CancelUnitForm = ({
                     Cancellation Reason
                   </p>
                   <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">
-                    No Data
+                  {cancellationReason}
                   </h2>
                 </div>
                 <div className="text-center space-y-2">
@@ -212,7 +225,7 @@ const CancelUnitForm = ({
                     Cancelled By
                   </p>
                   <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">
-                    No Data
+                  {cancelledBy}
                   </h2>
                 </div>
               </div>
