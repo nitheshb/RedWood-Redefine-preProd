@@ -1588,7 +1588,7 @@ const CaptureUnitPayment = ({
                               <div className="sticky bottom-0 bg-white  border-t border-gray-200">
                                 <div className="text-center my-3">
                                   <button
-                                    className="bg-[#EDE9FE] translate-y-1 text-[#0E0A1F] text-[12px] font-medium py-2.5 px-8  rounded-md inline-flex items-center"
+                                    className="crm_bg_color translate-y-1 text-[#0E0A1F] text-[12px] font-medium py-2.5 px-8  rounded-md inline-flex items-center"
                                     type="submit"
                                     disabled={loading}
                                   >

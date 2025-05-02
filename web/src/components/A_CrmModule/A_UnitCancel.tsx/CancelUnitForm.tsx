@@ -357,7 +357,7 @@ const CancelUnitForm = ({
 
                                                       <div className="text-center py-4">
                                                         <button
-                                                          className="bg-[#EDE9FE] text-[#0E0A1F] text-sm py-2.5 px-24 font-semibold rounded-md inline-flex items-center shadow-sm hover:bg-[#DBD3FD] transition-all duration-200 focus:outline-none "
+                                                          className="crm_bg_color text-[#0E0A1F] text-sm py-2.5 px-24 font-semibold rounded-md inline-flex items-center shadow-sm hover:bg-[#DBD3FD] transition-all duration-200 focus:outline-none "
                                                           type="submit"
                                                           disabled={loading}
                                                         >
@@ -533,7 +533,7 @@ const CancelUnitForm = ({
             <div className="flex space-x-4">
               <button
                 onClick={handleConfirmationNo}
-                className="flex-1 py-3 bg-[#EDE9FE] hover:bg-gray-200 text-gray-800 rounded-md font-medium"
+                className="flex-1 py-3 crm_bg_color hover:bg-gray-200 text-gray-800 rounded-md font-medium"
               >
                 No
               </button>

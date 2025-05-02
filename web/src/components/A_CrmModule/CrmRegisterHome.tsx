@@ -552,7 +552,7 @@ const CrmRegisterModeHome = ({ leadsTyper, customerDetails }) => {
                           <span
                             className={` ${
                               selCategory === d.val
-                                ? 'bg-[#EDE9FE] text-[#0E0A1F]'
+                                ? 'crm_bg_color text-[#0E0A1F]'
                                 : 'bg-[#E5E7EB] text-[#606062]'
                             } px-1.5 py-1.5 rounded-full ml-[4px] text-[12px] `}
                           >
@@ -1026,7 +1026,7 @@ const CrmRegisterModeHome = ({ leadsTyper, customerDetails }) => {
                                     <section className="flex flex-col   w-[100%]">
                                       <section className="flex flex-row justify-between">
                                         <div className="flex flex-row w-full">
-                                          <section className="bg-[#EDE9FE] items-center rounded-2xl shadow-xs flex flex-col px-2 py-1 min-w-[90px]">
+                                          <section className="crm_bg_color items-center rounded-2xl shadow-xs flex flex-col px-2 py-1 min-w-[90px]">
                                             <div className="font-semibold text-[#053219]  text-[22px]  mb-[1] tracking-wide">
                                               {unit_no}
                                             </div>

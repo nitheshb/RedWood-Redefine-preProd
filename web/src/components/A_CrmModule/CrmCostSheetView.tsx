@@ -173,20 +173,20 @@ const CrmUnitCostSheetView = ({
                 <div className=" p-[4px]">
                   <table className="w-[100%]  rounded-2xl overflow-hidden">
                     <thead className=" ">
-                      <tr className=" h-9 border-b-[0.2px] bg-[#EDE9FE]    w-[100%]">
-                        <th className="min-w-[33%] text-[12px] text-left text-[#0E0A1F]  font-medium   bg-[#EDE9FE]  tracking-wide pl-6">
+                      <tr className=" h-9 border-b-[0.2px] crm_bg_color    w-[100%]">
+                        <th className="min-w-[33%] text-[12px] text-left text-[#0E0A1F]  font-medium   crm_bg_color  tracking-wide pl-6">
                           Charges
                         </th>
-                        <th className="w-[15%] text-[12px] text-right  text-[#0E0A1F]  font-medium bg-[#EDE9FE] tracking-wide">
+                        <th className="w-[15%] text-[12px] text-right  text-[#0E0A1F]  font-medium crm_bg_color tracking-wide">
                           Rate/Sqft
                         </th>
-                        <th className="w-[15%] text-[12px] text-right  text-[#0E0A1F]  font-medium bg-[#EDE9FE] tracking-wide ">
+                        <th className="w-[15%] text-[12px] text-right  text-[#0E0A1F]  font-medium crm_bg_color tracking-wide ">
                           Sale Value
                         </th>
-                        <th className="w-[15%] text-[12px] text-right  text-[#0E0A1F]  font-medium bg-[#EDE9FE]  tracking-wide px-2">
+                        <th className="w-[15%] text-[12px] text-right  text-[#0E0A1F]  font-medium crm_bg_color  tracking-wide px-2">
                           GST
                         </th>
-                        <th className="w-[15%] text-[12px] text-right  text-[#0E0A1F]  font-medium bg-[#EDE9FE] rounded-tr-[10px] tracking-wide pr-6 ">
+                        <th className="w-[15%] text-[12px] text-right  text-[#0E0A1F]  font-medium crm_bg_color rounded-tr-[10px] tracking-wide pr-6 ">
                           Total
                         </th>
                       </tr>
@@ -247,19 +247,19 @@ const CrmUnitCostSheetView = ({
                   <table className="w-full mt-5  rounded-2xl overflow-hidden">
                     <thead>
                       <tr className=" h-9 border-b-[0.2px]  w-[100%]">
-                        <th className="min-w-[35%] text-[12px] text-left text-[#0E0A1F]  font-medium bg-[#EDE9FE]     tracking-wide  pl-6">
+                        <th className="min-w-[35%] text-[12px] text-left text-[#0E0A1F]  font-medium crm_bg_color     tracking-wide  pl-6">
                           Additional Charges
                         </th>
-                        <th className="w-[15%] text-[12px] text-right text-[#0E0A1F]  font-medium bg-[#EDE9FE]  tracking-wide">
+                        <th className="w-[15%] text-[12px] text-right text-[#0E0A1F]  font-medium crm_bg_color  tracking-wide">
                           Rate/Sqft
                         </th>
-                        <th className="w-[15%] text-[12px] text-right text-[#0E0A1F]  font-medium bg-[#EDE9FE]  tracking-wide ">
+                        <th className="w-[15%] text-[12px] text-right text-[#0E0A1F]  font-medium crm_bg_color  tracking-wide ">
                           Sale Value
                         </th>
-                        <th className="w-[15%] text-[12px] text-right text-[#0E0A1F]  font-medium bg-[#EDE9FE]   tracking-wide px-2">
+                        <th className="w-[15%] text-[12px] text-right text-[#0E0A1F]  font-medium crm_bg_color   tracking-wide px-2">
                           GST
                         </th>
-                        <th className="w-[15%] text-[12px] text-right text-[#0E0A1F]  font-medium bg-[#EDE9FE]     tracking-wide pr-6 ">
+                        <th className="w-[15%] text-[12px] text-right text-[#0E0A1F]  font-medium crm_bg_color     tracking-wide pr-6 ">
                           Total
                         </th>
                       </tr>
@@ -335,19 +335,19 @@ const CrmUnitCostSheetView = ({
                     <table className="w-[100%]  mt-5  rounded-2xl overflow-hidden">
                       <thead>
                         <tr className=" h-9  w-[100%]">
-                          <th className="min-w-[35%] text-[12px] text-left text-[#0E0A1F]  font-medium    bg-[#EDE9FE]  tracking-wide  pl-6">
+                          <th className="min-w-[35%] text-[12px] text-left text-[#0E0A1F]  font-medium    crm_bg_color  tracking-wide  pl-6">
                             Construction Charges
                           </th>
-                          <th className="w-[15%] text-[12px] text-right text-[#0E0A1F]   font-medium bg-[#EDE9FE] tracking-wide">
+                          <th className="w-[15%] text-[12px] text-right text-[#0E0A1F]   font-medium crm_bg_color tracking-wide">
                             Rate/Sqft
                           </th>
-                          <th className="w-[15%] text-[12px] text-right text-[#0E0A1F]  font-medium bg-[#EDE9FE] tracking-wide ">
+                          <th className="w-[15%] text-[12px] text-right text-[#0E0A1F]  font-medium crm_bg_color tracking-wide ">
                             Sale Value
                           </th>
-                          <th className="w-[15%] text-[12px] text-right text-[#0E0A1F]  font-medium bg-[#EDE9FE] tracking-wide px-2">
+                          <th className="w-[15%] text-[12px] text-right text-[#0E0A1F]  font-medium crm_bg_color tracking-wide px-2">
                             GST
                           </th>
-                          <th className="w-[15%] text-[12px] text-right text-[#0E0A1F]  font-medium bg-[#EDE9FE]    tracking-wide pr-6 ">
+                          <th className="w-[15%] text-[12px] text-right text-[#0E0A1F]  font-medium crm_bg_color    tracking-wide pr-6 ">
                             Total
                           </th>
                         </tr>
@@ -412,19 +412,19 @@ const CrmUnitCostSheetView = ({
                     <table className="w-[100%]  mt-5  rounded-2xl overflow-hidden">
                       <thead>
                         <tr className=" h-9  w-[100%]">
-                          <th className="min-w-[35%] text-[12px] text-left text-[#0E0A1F] font-medium bg-[#EDE9FE]  pl-6  tracking-wide  px-2">
+                          <th className="min-w-[35%] text-[12px] text-left text-[#0E0A1F] font-medium crm_bg_color  pl-6  tracking-wide  px-2">
                             Construction Additional Charges
                           </th>
-                          <th className="w-[15%] text-[12px] text-right text-[#0E0A1F] font-medium bg-[#EDE9FE] tracking-wide">
+                          <th className="w-[15%] text-[12px] text-right text-[#0E0A1F] font-medium crm_bg_color tracking-wide">
                             Rate/Sqft
                           </th>
-                          <th className="w-[15%] text-[12px] text-right text-[#0E0A1F] font-medium bg-[#EDE9FE] tracking-wide ">
+                          <th className="w-[15%] text-[12px] text-right text-[#0E0A1F] font-medium crm_bg_color tracking-wide ">
                             Sale Value
                           </th>
-                          <th className="w-[15%] text-[12px] text-right text-[#0E0A1F] font-medium bg-[#EDE9FE]  tracking-wide px-2">
+                          <th className="w-[15%] text-[12px] text-right text-[#0E0A1F] font-medium crm_bg_color  tracking-wide px-2">
                             GST
                           </th>
-                          <th className="w-[15%] text-[12px] text-right text-[#0E0A1F] font-medium bg-[#EDE9FE] pr-6  tracking-wide pr-6 ">
+                          <th className="w-[15%] text-[12px] text-right text-[#0E0A1F] font-medium crm_bg_color pr-6  tracking-wide pr-6 ">
                             Total
                           </th>
                         </tr>
@@ -498,19 +498,19 @@ const CrmUnitCostSheetView = ({
                     <table className="w-[100%]  mt-5  rounded-2xl overflow-hidden">
                       <thead>
                         <tr className=" h-9  w-[100%]">
-                          <th className="min-w-[35%] text-[12px] text-left text-[#0E0A1F] font-medium bg-[#EDE9FE]    tracking-wide  pl-6">
+                          <th className="min-w-[35%] text-[12px] text-left text-[#0E0A1F] font-medium crm_bg_color    tracking-wide  pl-6">
                             Possession Charges
                           </th>
-                          <th className="w-[15%] text-[12px] text-right text-[#0E0A1F] font-medium bg-[#EDE9FE] tracking-wide">
+                          <th className="w-[15%] text-[12px] text-right text-[#0E0A1F] font-medium crm_bg_color tracking-wide">
                             Rate/Sqft
                           </th>
-                          <th className="w-[15%] text-[12px] text-right text-[#0E0A1F] font-medium bg-[#EDE9FE] tracking-wide ">
+                          <th className="w-[15%] text-[12px] text-right text-[#0E0A1F] font-medium crm_bg_color tracking-wide ">
                             Sale Value
                           </th>
-                          <th className="w-[15%] text-[12px] text-right text-[#0E0A1F] font-medium bg-[#EDE9FE]  tracking-wide px-2">
+                          <th className="w-[15%] text-[12px] text-right text-[#0E0A1F] font-medium crm_bg_color  tracking-wide px-2">
                             GST
                           </th>
-                          <th className="w-[15%] text-[12px] text-right text-[#0E0A1F] font-medium bg-[#EDE9FE]    tracking-wide pr-6 ">
+                          <th className="w-[15%] text-[12px] text-right text-[#0E0A1F] font-medium crm_bg_color    tracking-wide pr-6 ">
                             Total
                           </th>
                         </tr>
@@ -583,20 +583,20 @@ const CrmUnitCostSheetView = ({
                       <table className="w-full  mt-5  rounded-2xl overflow-hidden">
                         <thead>
                           <tr className=" h-9 border-b-[0.2px]  w-[100%]">
-                            <th className="min-w-[35%] text-[12px] text-left text-[#0E0A1F] bg-[#EDE9FE]   rounded-tl-[10px]  tracking-wide  px-2">
+                            <th className="min-w-[35%] text-[12px] text-left text-[#0E0A1F] crm_bg_color   rounded-tl-[10px]  tracking-wide  px-2">
                               Modifications
                             </th>
 
-                            <th className="w-[15%] text-[12px] text-left text-[#0E0A1F] bg-[#EDE9FE]   tracking-wide px-2">
+                            <th className="w-[15%] text-[12px] text-left text-[#0E0A1F] crm_bg_color   tracking-wide px-2">
                               Comment
                             </th>
-                            <th className="w-[15%] text-[12px] text-right text-[#0E0A1F] bg-[#EDE9FE]  tracking-wide">
+                            <th className="w-[15%] text-[12px] text-right text-[#0E0A1F] crm_bg_color  tracking-wide">
                               Sale Value
                             </th>
-                            <th className="w-[15%] text-[12px] text-right text-[#0E0A1F] bg-[#EDE9FE]  tracking-wide">
+                            <th className="w-[15%] text-[12px] text-right text-[#0E0A1F] crm_bg_color  tracking-wide">
                               GST
                             </th>
-                            <th className="w-[15%] text-[12px] text-right text-[#0E0A1F] bg-[#EDE9FE] rounded-tr-[10px]  tracking-wide pr-2 ">
+                            <th className="w-[15%] text-[12px] text-right text-[#0E0A1F] crm_bg_color rounded-tr-[10px]  tracking-wide pr-2 ">
                               Total
                             </th>
                           </tr>

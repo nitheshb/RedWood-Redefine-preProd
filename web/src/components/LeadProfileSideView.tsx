@@ -4035,7 +4035,7 @@ export default function LeadProfileSideView({
                                           PROJECTS (3)
                                         </span>
                                         <div className="ml-auto">
-                                          <button className="bg-[#EDE9FE] p-2 rounded-lg text-white">
+                                          <button className="crm_bg_color p-2 rounded-lg text-white">
                                             <PlusCircle size={20} />
                                           </button>
                                         </div>

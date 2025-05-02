@@ -1172,7 +1172,7 @@ export default function UnitSideViewCRM({
                 <section className="flex flex-row pt-2 justify-between items-start">
                   <div className="flex flex-row items-start gap-2">
                     {/* Unit Number Box */}
-                    {/* <section className="bg-[#EDE9FE]  flex flex-col p-4 py-2 min-w-[50px] max-w-fit   items-center rounded-2xl shadow-xs flex flex-col px-2 py-1 shadow">
+                    {/* <section className="crm_bg_color  flex flex-col p-4 py-2 min-w-[50px] max-w-fit   items-center rounded-2xl shadow-xs flex flex-col px-2 py-1 shadow">
   <div className="font-semibold text-[#0E0A1F] text-[22px] tracking-wide">
     {selCustomerPayload?.unit_no}
   </div>
@@ -1311,7 +1311,7 @@ export default function UnitSideViewCRM({
                     user?.role.includes('crm-executive') ||
                     user?.role.includes('admin')) && (
                     <button
-                      className="text-[12px]  rounded-lg ml-2 bg-[#EDE9FE] px-5 border font-semibold  capitalize  border-[#E3BDFF] text-[#0E0A1F]"
+                      className="text-[12px]  rounded-lg ml-2 crm_bg_color px-5 border font-semibold  capitalize  border-[#E3BDFF] text-[#0E0A1F]"
                       onClickCapture={() => {
                         openPaymentFun()
                       }}
