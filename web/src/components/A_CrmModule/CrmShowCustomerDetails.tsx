@@ -643,7 +643,7 @@ const ShowCustomerDetails = ({
   <div className="w-[70px] h-[70px] rounded-full font-outfit overflow-hidden mr-6 flex items-center justify-center bg-gray-200">
     {leadDetailsObj2?.customerDetailsObj?.customerName1 ||
       leadDetailsObj2?.Name ? (
-      <span className="text-[30px] font-outfit font-medium text-gray-700">
+      <span className="text-[30px] capitalize  font-outfit font-medium text-gray-700">
         {(
           leadDetailsObj2?.customerDetailsObj
             ?.customerName1 ||
@@ -652,10 +652,13 @@ const ShowCustomerDetails = ({
         ).charAt(0)}
       </span>
     ) : (
-      <img
-        alt="Profile"
-        className="w-20 h-20 rounded-full object-cover"
-      />
+      // <img
+      //   alt="Profile"
+      //   className="w-20 h-20 rounded-full object-cover"
+      // />
+
+      <h2 className='text-[30px] capitalize font-medium text-gray-700'>NA</h2>
+
     )}
   </div>
 
@@ -913,7 +916,7 @@ Primary
                         <div className="w-[70px] h-[70px] rounded-full font-outfit overflow-hidden mr-6 flex items-center justify-center bg-gray-200">
                           {leadDetailsObj2?.secondaryCustomerDetailsObj
                             ?.customerName1 || leadDetailsObj2?.Name ? (
-                            <span className="text-[30px] font-medium text-gray-700">
+                            <span className="text-[30px] capitalize  font-medium text-gray-700">
                               {(
                                 leadDetailsObj2?.secondaryCustomerDetailsObj
                                   ?.customerName1 ||
@@ -922,10 +925,15 @@ Primary
                               ).charAt(0)}
                             </span>
                           ) : (
-                            <img
-                              alt="Profile"
-                              className="w-20 h-20 rounded-full object-cover"
-                            />
+                            // <img
+                            //   alt="Profile"
+                            //   className="w-20 h-20 rounded-full object-cover"
+                            // />
+
+
+                            <h2 className='text-[30px] font-medium text-gray-700'>NA</h2>
+
+
                           )}
                         </div>
 
