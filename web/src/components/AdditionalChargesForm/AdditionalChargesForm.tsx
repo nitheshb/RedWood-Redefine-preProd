@@ -716,8 +716,8 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
   })
 
   return (
-    <section className="">
-      <div className="py-2 px-4  rounded-2xl bg-[#FFFFFF]  mx-4 my-4">
+    <section className="mx-4 my-4">
+      <div className="py-2 px-4  rounded-2xl bg-[#FFFFFF]  ">
         <EditableTable
           phase={data?.phase || {}}
           partAData={partAData}

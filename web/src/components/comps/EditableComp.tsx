@@ -871,8 +871,8 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
           </>
         )}
 
-        <div className="">
-          <div className="mb-4 mt-2">
+        <div className="flex flex-col gap-4">
+          <div className="">
             <div className="inline">
               <div className="">
                 <label className="font-medium text-[12px] leading-[100%] tracking-[0.06em] uppercase text-[#606062]  mb-1  ">
@@ -1134,13 +1134,13 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
           <div className="flex justify-between">
             <button
               onClick={addRow}
-              className="mt-4 bg-[#0891B2]  text-white font-md py-1 px-2 rounded-lg focus:outline-none focus:shadow-outline transition-colors duration-150 ease-in-out"
+              className=" project_bg_color text-[#0E0A1F] text-sm py-2 rounded-lg  px-6 rounded focus:outline-none"
             >
               Add Charges
             </button>
             <button
               onClick={saveSetup}
-              className="mt-4 bg-[#0891B2] text-white font-md py-1 px-2 rounded-lg focus:outline-none focus:shadow-outline transition-colors duration-150 ease-in-out"
+              className=" project_bg_color text-[#0E0A1F] text-sm py-2 rounded-lg  px-6 rounded focus:outline-none"
             >
               Save
             </button>

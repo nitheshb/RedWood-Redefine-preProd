@@ -219,7 +219,7 @@ const ProjectDetailsFlowBody = ({ setProject, title, dialogOpen, project }) => {
               // onClick={() => dialogOpen(false)}
               onClick={() => goToPrevious()}
               type="button"
-              className="mb-4 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-sm hover:shadow-lg hover:bg-gray-100"
+              className="mb-4 md:mb-0 bg-white px-5 py-2 text-sm  font-medium tracking-wider border text-black rounded-[8px] hover:shadow-[8px] "
             >
               <section className="flex flex-row">
                 <ArrowLeftIcon className={` w-4 h-4 mt-[2px] mr-1`} />
@@ -227,14 +227,14 @@ const ProjectDetailsFlowBody = ({ setProject, title, dialogOpen, project }) => {
               </section>
             </button>
           </div>
-          <section className="w-[300px] mt-6 text-center flex flex-row text-red-400 ">
-            {selFlow?.indx + 1} of {projectDetailFlow.length} steps
+          <section className="w-[300px] mt-6 text-center flex flex-row text-black">
+            {selFlow?.indx + 1} of {projectDetailFlow.length} Steps
           </section>
 
           <div className="mt-5 w-full text-right md:space-x-3 md:block flex flex-row mb-6 justify-between w-full ">
             {selFlow.value === 'projectDetails' && (
               <button
-                className="mb-2 md:mb-0 bg-cyan-600 px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 "
+                className="mb-2 md:mb-0 project_bg_color px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-black  rounded-[8px] hover:shadow-[8px]"
                 type="submit"
                 onClick={() => {
                   setLoading(true)
@@ -248,7 +248,7 @@ const ProjectDetailsFlowBody = ({ setProject, title, dialogOpen, project }) => {
 
             {selFlow?.indx + 1 === projectDetailFlow.length && (
               <button
-                className="mb-2 md:mb-0 bg-cyan-600 px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 "
+                className="mb-2 md:mb-0 project_bg_color px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-black  rounded-[8px] hover:shadow-[8px]"
                 type="submit"
                 onClick={() => {
                   dialogOpen(false)
@@ -261,7 +261,7 @@ const ProjectDetailsFlowBody = ({ setProject, title, dialogOpen, project }) => {
             <button
               className={` ${
                 selFlow?.indx + 1 === projectDetailFlow.length ? 'hidden' : ''
-              }   mb-2 md:mb-0  bg-cyan-600 px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm hover:shadow-lg `}
+              }   mb-2 md:mb-0  project_bg_color px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-[#0E0A1F]  rounded-[8px] hover:shadow-[8px] `}
               disabled={loading}
               onClick={() => {
                 if (project?.uid) {
@@ -273,12 +273,12 @@ const ProjectDetailsFlowBody = ({ setProject, title, dialogOpen, project }) => {
                 }
               }}
             >
-              <section className="flex flex-row">
+              <section className="flex flex-row items-center space-x-1 gap-1">
                 Next:
                 {selFlow.indx === projectDetailFlow.length - 1
                   ? projectDetailFlow[0]['name']
                   : projectDetailFlow[selFlow.indx + 1]['name']}
-                <ArrowRightIcon className={` w-4 h-4 mt-1 ml-1`} />
+                <ArrowRightIcon className={` w-4 h-4`} />
               </section>
             </button>
           </div>
