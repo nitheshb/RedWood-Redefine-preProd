@@ -476,7 +476,7 @@ export const _taskNames = [
 export const _sentences = [
   'The sun slowly set over the horizon, painting the sky in vibrant hues of orange and pink.',
   'She eagerly opened the gift, her eyes sparkling with excitement.',
-  'The old oak tree stood tall and majestic, its branches swaying gently in the breeze.',
+  'The old oak tree stood tall and majestic, its branches swaying gently in the Redefine Erp.',
   'The aroma of freshly brewed coffee filled the air, awakening my senses.',
   'The children giggled with joy as they ran through the sprinklers on a hot summer day.',
   'He carefully crafted a beautiful sculpture out of clay, his hands skillfully shaping the intricate details.',
