@@ -114,7 +114,7 @@ const LeadsDisplayTable = ({
 
             <img className="w-8 h-8" alt="folder icon" src="/folder-library.svg" />
             <h2 className="ml-2 text-md font-semibold text-[#2B2B2B]">
-              Leads Bank box
+              Leads Bank
             </h2>
           </section>
 
