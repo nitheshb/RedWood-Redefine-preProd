@@ -374,7 +374,7 @@ const LLeadsTableView = ({
                           <span
                             className={`flex items-center justify-center min-w-6 h-6 px-2 text-xs font-medium rounded-full ${
                               value === d.val
-                                ? 'bg-[#EDE9FE] text-[#0E0A1F]'
+                                ? 'bg-[#FDEFE7] text-[#0E0A1F]'
                                 : 'bg-gray-200 text-gray-600'
                             }`}
                           >

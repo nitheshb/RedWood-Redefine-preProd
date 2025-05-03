@@ -112,7 +112,7 @@ export default function LeadsLakeHomeComponent({ todaySch, schLoading }) {
         <div className=" justify-center items-center text-gray-900">
           {/* <div className="flex flex-row justify-between pb-3">
             <section>
-              <h2 className="text-md text-gray-800 ">Leads Bank box</h2>
+              <h2 className="text-md text-gray-800 ">Leads Bank</h2>
             </section>
           </div> */}
 

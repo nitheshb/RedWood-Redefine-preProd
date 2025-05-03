@@ -1411,16 +1411,16 @@ export default function UnitFullSummary({
                             <table className="w-full rounded-2xl overflow-hidden">
                               <thead>
                                 <tr className="h-9">
-                                  <th className="w-[25%] text-[12px] text-center text-[#0E0A1F] bg-[#EDE9FE] tracking-wide">
+                                  <th className="w-[25%] text-[12px] text-center text-[#0E0A1F] crm_bg_color tracking-wide">
                                     User
                                   </th>
-                                  <th className="w-[25%] text-[12px] text-center text-[#0E0A1F] bg-[#EDE9FE] tracking-wide">
+                                  <th className="w-[25%] text-[12px] text-center text-[#0E0A1F] crm_bg_color tracking-wide">
                                     Date/Time
                                   </th>
-                                  <th className="w-[30%] text-[12px] text-center text-[#0E0A1F] bg-[#EDE9FE] tracking-wide">
+                                  <th className="w-[30%] text-[12px] text-center text-[#0E0A1F] crm_bg_color tracking-wide">
                                     Activity
                                   </th>
-                                  <th className="w-[20%] text-[12px] text-center text-[#0E0A1F] bg-[#EDE9FE] tracking-wide">
+                                  <th className="w-[20%] text-[12px] text-center text-[#0E0A1F] crm_bg_color tracking-wide">
                                     Status
                                   </th>
                                 </tr>
@@ -1502,6 +1502,8 @@ export default function UnitFullSummary({
                     selUnitDetails={selCustomerPayload}
                     leadDetailsObj2={selCustomerPayload}
                     setShowApplicantEdit={setShowApplicantEdit}
+                    selCustomerPayload={selCustomerPayload}
+                    
                   />
                 </div>
               )}
@@ -1536,14 +1538,10 @@ export default function UnitFullSummary({
             <>
               <div className="overflow-y-scroll w-full items-center justify-center mx-auto min-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
                 {/* <div className='overflow-y-scroll w-full items-center justify-center mx-auto max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300'> */}
-
                 <div className="relative min-h-screen mr-6">
                   {/*
          <h1 className="text-[#606062]  tracking-[0.06em] font-heading font-medium text-[12px]    mb-4">UNIT FEATURES</h1>
-
-
-
-        <img  alt="" src="/crmfinal.svg" className='w-full'></img> */}
+<img  alt="" src="/crmfinal.svg" className='w-full'></img> */}
 
                   <div className="relative z-0">
                     <h1 className="text-[#606062] mb-1  mx-auto w-full  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
@@ -1563,7 +1561,7 @@ export default function UnitFullSummary({
                             Booked On
                           </p>
                           <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">
-                            No Data
+                          {prettyDate(selCustomerPayload?.booked_on || 0)}
                           </h2>
                         </div>
                         <div className="text-center space-y-2">
@@ -2779,7 +2777,7 @@ export default function UnitFullSummary({
                                         <div className="flex space-x-2 mt-2">
                                           <button
                                             onClick={() => handleSave(d.key)}
-                                            className="p-1 text-sm bg-[#EDE9FE]  rounded-full"
+                                            className="p-1 text-sm crm_bg_color  rounded-full"
                                           >
                                             {/* Save */}
 
@@ -2800,7 +2798,7 @@ export default function UnitFullSummary({
                                           </button>
                                           <button
                                             onClick={handleCancel}
-                                            className="p-1 text-sm  bg-[#EDE9FE]  rounded-full"
+                                            className="p-1 text-sm  crm_bg_color  rounded-full"
                                           >
                                             <svg
                                               xmlns="http://www.w3.org/2000/svg"
@@ -3527,7 +3525,7 @@ export default function UnitFullSummary({
                 >
                   <div
                     className={`flex items-center text-[#0E0A1F] hover:bg-[#EEEAFE] p-3 my-1 font-bold rounded-r-md cursor-pointer  ${
-                      selFeature === d.val ? 'bg-[#EDE9FE]' : ''
+                      selFeature === d.val ? 'crm_bg_color' : ''
                     }`}
                     onClick={() => {
                       if(d.val == 'cancel_booking' ){

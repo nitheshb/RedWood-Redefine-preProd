@@ -616,9 +616,17 @@ const DialogFormBody = ({
                               <CustomRadioGroup
                                 label="Planning Authority Approval"
                                 value={planningApproval}
-                                options={chooseAuthorityApproval}
+                                // options={chooseAuthorityApproval}
                                 onChange={setPlanningApproval}
+                                options={[
+                                  { name: 'Yes' },
+                                  { name: 'No' },
+                                ]}
                               />
+
+
+
+
 
                               {planningApproval?.name === 'Yes' && (
                                 <>
@@ -692,8 +700,12 @@ const DialogFormBody = ({
                               <CustomRadioGroup
                                 label="Rera Approval"
                                 value={reraApproval}
-                                options={chooseReraApproval}
+                                // options={chooseReraApproval}
                                 onChange={setReraApproval}
+                                options={[
+                                  { name: 'Yes' },
+                                  { name: 'No' },
+                                ]}
                               />
                               {reraApproval?.name === 'Yes' && (
                                 <div className="md:flex md:flex-col pt-[10px] flex-col md:space-x-1 w-full text-xs">

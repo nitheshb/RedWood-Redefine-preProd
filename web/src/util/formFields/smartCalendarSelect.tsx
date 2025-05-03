@@ -396,6 +396,7 @@ export const SmartCalendarSelect = ({
   label,
   placeholder,
   defaultForTeamLeads = false,
+  customStyles,
 }) => {
   const d = new window.Date()
 
@@ -470,7 +471,9 @@ export const SmartCalendarSelect = ({
             label != '' ? 'mt-0' : ''
           } border-transparent border-0 p-0`}
           classNamePrefix="react-select"
-          styles={customStyles}
+          // styles={customStyles}
+          styles={customStyles || customStylesVerySmall}
+
         />
       ) : (
         <div className="flex" style={{ alignItems: 'flex-end' }}>

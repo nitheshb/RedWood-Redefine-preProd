@@ -189,34 +189,34 @@ const CrmUnitFinanceHistory = ({
               <thead className="">
                 {' '}
                 <tr className=" h-9 ">
-                  <th className="w-[15%] text-[12px]  text-left font-medium text-[#0E0A1F]    bg-[#EDE9FE]  tracking-wide  pl-4 ">
+                  <th className="w-[15%] text-[12px]  text-left font-medium text-[#0E0A1F]    crm_bg_color  tracking-wide  pl-4 ">
                     Paid On
                   </th>
-                  <th className="w-[8%] text-[12px] text-center font-medium text-[#0E0A1F] bg-[#EDE9FE]  tracking-wide  ">
+                  <th className="w-[8%] text-[12px] text-center font-medium text-[#0E0A1F] crm_bg_color  tracking-wide  ">
                     Mode
                   </th>
-                  <th className="w-[15%] text-[12px] text-center font-medium text-[#0E0A1F] bg-[#EDE9FE]   tracking-wide  ">
+                  <th className="w-[15%] text-[12px] text-center font-medium text-[#0E0A1F] crm_bg_color   tracking-wide  ">
                     Bank Ref Id
                   </th>
-                  <th className="w-[10%] text-[12px] text-right font-medium text-[#0E0A1F] bg-[#EDE9FE]   tracking-wide ">
+                  <th className="w-[10%] text-[12px] text-right font-medium text-[#0E0A1F] crm_bg_color   tracking-wide ">
                     Amount
                   </th>
 
-                  <th className="w-[10%] text-[12px] text-center font-medium text-[#0E0A1F] bg-[#EDE9FE]   tracking-wide  ">
+                  <th className="w-[10%] text-[12px] text-center font-medium text-[#0E0A1F] crm_bg_color   tracking-wide  ">
                     Status
                   </th>
 
-                  <th className="w-[17%] text-[12px] text font-medium text-[#0E0A1F] bg-[#EDE9FE]   tracking-wide  ">
+                  <th className="w-[17%] text-[12px] text font-medium text-[#0E0A1F] crm_bg_color   tracking-wide  ">
                     Accounts
                   </th>
                   {/* <th className="w-[15%] text-[10px] text-center text-gray-400 text-[#8993a4] font-bodyLato tracking-wide uppercase ">
                     Tx Id
                   </th> */}
-                  <th className="w-[10%] text-[12px] text-center font-medium text-[#0E0A1F bg-[#EDE9FE]  tracking-wide  ">
+                  <th className="w-[10%] text-[12px] text-center font-medium text-[#0E0A1F crm_bg_color  tracking-wide  ">
                     Reviewer
                   </th>
 
-                  <th className="w-[12%] text-[12px] text-center font-medium text-[#0E0A1F]  bg-[#EDE9FE]  tracking-wide  ">
+                  <th className="w-[12%] text-[12px] text-center font-medium text-[#0E0A1F]  crm_bg_color  tracking-wide  ">
                     Download
                   </th>
                 </tr>

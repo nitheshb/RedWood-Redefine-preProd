@@ -69,6 +69,7 @@ export const SlimSelectBox = ({
   name,
   label,
   placeholder,
+  customStyles,
   className,
 }) => {
   const defaultValue = (options, value) => {
@@ -95,7 +96,9 @@ export const SlimSelectBox = ({
           label != '' ? 'mt-1' : ''
         } border-transparent p-0`}
         classNamePrefix="react-select"
-        styles={customStyles}
+        // styles={customStyles}
+        styles={customStyles || customStylesVerySmall}
+
       />
       {/* <ErrorMessage
         component="div"
@@ -141,7 +144,8 @@ export const VerySlimSelectBox = ({
           label != '' ? '' : ''
         } border-transparent p-0`}
         classNamePrefix="react-select"
-        styles={customStylesVerySmall}
+        // styles={customStylesVerySmall}
+        styles={customStyles || customStylesVerySmall}
         theme={(theme) => ({
           ...theme,
 
@@ -163,6 +167,7 @@ export const SlimDateSelectBox = ({
   // name,
   label,
   placeholder,
+  customStyles,
   // className,
 }) => {
   {
@@ -245,7 +250,9 @@ export const SlimDateSelectBox = ({
             label != '' ? 'mt-1' : ''
           } border-transparent p-0`}
           classNamePrefix="react-select"
-          styles={customStyles}
+          // styles={customStyles}
+          styles={customStyles || customStylesVerySmall}
+
         />
       ) : (
         <div className="flex" style={{ alignItems: 'flex-end' }}>

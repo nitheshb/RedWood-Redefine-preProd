@@ -18,6 +18,8 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
   const [loading, setLoading] = useState(false)
   const [unitDetailsA, setUnitDetailsA] = useState([])
   const [unitTransactionsA, setUnitTransactionsA] = useState([])
+  const [lastModified, setLastModified] = useState('')
+  const [auditDoneBy, setAuditDoneBy] = useState('')
 
   const { enqueueSnackbar } = useSnackbar()
   const { user } = useAuth()
@@ -26,6 +28,10 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
   const auditFun = async () => {
     console.log('audit begin')
     setLoading(true)
+
+    const now = new Date().toLocaleString()
+    setLastModified(now)
+    setAuditDoneBy(user?.email || 'System')
 
     await setProjectComputedCounts()
   }
@@ -72,7 +78,7 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
         {
           projectId: projectDetails?.uid,
         },
-        () => {}
+        () => { }
       )
       return unsubscribe
     }
@@ -122,7 +128,7 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
       {
         projectId: projectDetails?.uid,
       },
-      () => {}
+      () => { }
     )
     const yo = {
       totalUnitCount: 0,
@@ -311,15 +317,15 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
                   Last Modified
                 </p>
                 <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">
-                  No Data
+                  {lastModified || 'No Data'}
                 </h2>
               </div>
               <div className="text-center space-y-2">
                 <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">
-                  More info here
+                  Unit Status
                 </p>
-                <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">
-                  No Data
+                <h2 className="font-outfit font-medium text-[22px]  capitalize leading-[100%] tracking-[1.32px]">
+                  {selUnitDetails?.status || 'No Data'}
                 </h2>
               </div>
               <div className="text-center space-y-2">
@@ -327,7 +333,7 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
                   Audit Done By
                 </p>
                 <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">
-                  No Data
+                  {auditDoneBy || 'No Data'}
                 </h2>
               </div>
             </div>

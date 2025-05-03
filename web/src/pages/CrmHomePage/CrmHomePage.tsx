@@ -20,7 +20,7 @@ import CrmAnalyticsHome from 'src/components/A_CrmModule/CrmAnalyticsHome'
 import CrmConstuctionModeHome from 'src/components/A_CrmModule/CrmConstructionHome'
 import ProfileSummary from 'src/components/A_SalesModule/Reports/profileSummary'
 
-const CrmHomePage = () => {
+const CrmHomePage = (sourceLink) => {
   const { user } = useAuth()
 
   const { orgId } = user
@@ -440,6 +440,8 @@ const CrmHomePage = () => {
                       projectName: 'Projects',
                     }}
                     isEdit={undefined}
+                    moduleType="salesModule"
+
                   />
                 )}
 

@@ -422,7 +422,7 @@ export default function LoanApplyFlowHome({
               //                 <div
               //                   className={`border border-gray-200  group relative flex items-center gap-x-2 rounded-lg p-1 pr-4  text-sm leading-6 hover:bg-gray-50 ${
               //                     preSanctionReview === 'In-Review'
-              //                       ? 'bg-[#EDE9FE]'
+              //                       ? 'crm_bg_color'
               //                       : ''
               //                   }`}
               //                   onClick={() => {
@@ -465,7 +465,7 @@ export default function LoanApplyFlowHome({
               //                 <div
               //                   className={`border border-gray-200 ml-2  group relative flex items-center gap-x-2 rounded-lg p-1 pr-4  text-sm leading-6 hover:bg-gray-50 ${
               //                     preSanctionReview === 'Approved'
-              //                       ? 'bg-[#EDE9FE]'
+              //                       ? 'crm_bg_color'
               //                       : ''
               //                   }`}
               //                   onClick={() => {
@@ -505,7 +505,7 @@ export default function LoanApplyFlowHome({
               //                 <div
               //                   className={`border border-gray-200 ml-2 group relative flex items-center gap-x-2 rounded-lg p-1 pr-4  text-sm leading-6 hover:bg-gray-50 ${
               //                     preSanctionReview === 'Rejected'
-              //                       ? 'bg-[#EDE9FE]'
+              //                       ? 'crm_bg_color'
               //                       : ''
               //                   }`}
               //                   onClick={() => {
@@ -617,7 +617,7 @@ export default function LoanApplyFlowHome({
                   <div
                     className={` group relative flex items-center gap-x-2 rounded-lg  p-2 px-4 text-sm leading-6 hover:bg-gray-50 ${
                       preSanctionReview === 'In-Review'
-                        ? 'bg-[#EDE9FE] border border-transparent'
+                        ? 'crm_bg_color border border-transparent'
                         : 'border border-[#0E0A1F]'
                     }`}
                     onClick={() => {
@@ -642,7 +642,7 @@ export default function LoanApplyFlowHome({
                   <div
                     className={` ml-2 group relative flex items-center gap-x-2 rounded-lg  p-2 px-2 pr-4 text-sm leading-6 hover:bg-gray-50 ${
                       preSanctionReview === 'Approved'
-                        ? 'bg-[#EDE9FE] border border-transparent'
+                        ? 'crm_bg_color border border-transparent'
                         : 'border border-[#0E0A1F]'
                     }`}
                     onClick={() => {
@@ -666,7 +666,7 @@ export default function LoanApplyFlowHome({
                   <div
                     className={` ml-2  p-2 px-4 group relative flex items-center gap-x-2 rounded-lg p-1 pr-4 text-sm leading-6 hover:bg-gray-50 ${
                       preSanctionReview === 'Rejected'
-                        ? 'bg-[#EDE9FE] border border-transparent'
+                        ? 'crm_bg_color border border-transparent'
                         : 'border border-[#0E0A1F]'
                     }`}
                     onClick={() => {
@@ -741,8 +741,8 @@ export default function LoanApplyFlowHome({
                           type="submit"
                           className={`${
                             rejectionReason.length > 0
-                              ? 'bg-[#EDE9FE]'
-                              : 'bg-[#EDE9FE]'
+                              ? 'crm_bg_color'
+                              : 'crm_bg_color'
                           } text-[#0E0A1F] font-medium px-6 py-2 text-md`}
                           onClick={() => {
                             if (rejectionReason !== '') {
@@ -920,7 +920,7 @@ export default function LoanApplyFlowHome({
                   <div
                     className={`border border-gray-200  group relative flex items-center gap-x-2 rounded-lg p-1 pr-4  text-sm leading-6 hover:bg-gray-50 ${
                       postSanctionReview === 'In-Review'
-                        ? 'bg-[#EDE9FE]'
+                        ? 'crm_bg_color'
                         : ''
                     }`}
                     onClick={() => {
@@ -961,7 +961,7 @@ export default function LoanApplyFlowHome({
                   <div
                     className={`border border-gray-200 ml-2  group relative flex items-center gap-x-2 rounded-lg p-1 pr-4  text-sm leading-6 hover:bg-gray-50 ${
                       postSanctionReview === 'Approved'
-                        ? 'bg-[#EDE9FE]'
+                        ? 'crm_bg_color'
                         : ''
                     }`}
                     onClick={() => {
@@ -1001,7 +1001,7 @@ export default function LoanApplyFlowHome({
                   <div
                     className={`border border-gray-200 ml-2 group relative flex items-center gap-x-2 rounded-lg p-1 pr-4  text-sm leading-6 hover:bg-gray-50 ${
                       postSanctionReview === 'Rejected'
-                        ? 'bg-[#EDE9FE]'
+                        ? 'crm_bg_color'
                         : ''
                     }`}
                     onClick={() => {
@@ -1076,7 +1076,7 @@ export default function LoanApplyFlowHome({
         <div className="mt-4">
           <button
             onClick={handleSaveLoanDetails}
-            className=" text-[#000000] px-4 py-2 rounded-md bg-[#EDE9FE]"
+            className=" text-[#000000] px-4 py-2 rounded-md crm_bg_color"
           >
             Save Loan Details
           </button>
@@ -1172,7 +1172,7 @@ export default function LoanApplyFlowHome({
                     <div
                       className={` group relative flex items-center gap-x-2 rounded-lg p-2 px-4 text-sm leading-6 hover:bg-gray-50 ${
                         postSanctionReview === 'In-Review'
-                          ? 'bg-[#EDE9FE] border border-transparent'
+                          ? 'crm_bg_color border border-transparent'
                           : 'border border-[#0E0A1F]'
                       }`}
                       onClick={() => {
@@ -1195,7 +1195,7 @@ export default function LoanApplyFlowHome({
                     <div
                       className={` ml-2 group relative flex items-center gap-x-2 rounded-lg p-2 px-4 text-sm leading-6 hover:bg-gray-50 ${
                         postSanctionReview === 'Approved'
-                          ? 'bg-[#EDE9FE] border border-transparent'
+                          ? 'crm_bg_color border border-transparent'
                           : 'border border-[#0E0A1F]'
                       }`}
                       onClick={() => {
@@ -1218,7 +1218,7 @@ export default function LoanApplyFlowHome({
                     <div
                       className={` ml-2 group relative flex items-center gap-x-2 rounded-lg p-2 px-4 text-sm leading-6 hover:bg-gray-50 ${
                         postSanctionReview === 'Rejected'
-                          ? 'bg-[#EDE9FE] border border-transparent'
+                          ? 'crm_bg_color border border-transparent'
                           : 'border border-[#0E0A1F]'
                       }`}
                       onClick={() => {
@@ -1283,7 +1283,7 @@ export default function LoanApplyFlowHome({
                         <div className="mt-4">
                           <button
                             onClick={handleSaveLoanDetails}
-                            className="text-[#000000] px-4 py-2 rounded-md bg-[#EDE9FE]"
+                            className="text-[#000000] px-4 py-2 rounded-md crm_bg_color"
                           >
                             Save Loan Details
                           </button>
@@ -1354,8 +1354,8 @@ export default function LoanApplyFlowHome({
                           type="submit"
                           className={`${
                             postRejectionReason.length > 0
-                              ? 'bg-[#EDE9FE]'
-                              : 'bg-[#EDE9FE]'
+                              ? 'crm_bg_color'
+                              : 'crm_bg_color'
                           } text-[#0E0A1F] font-medium px-6 py-2  text-md`}
                           onClick={() => {
                             if (postRejectionReason !== '') {

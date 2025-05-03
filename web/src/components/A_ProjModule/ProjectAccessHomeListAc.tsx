@@ -285,7 +285,7 @@ const ProjectAccessHomeList = ({
   return (
     <div className="h-full flex flex-col py-2  rounded-2xl  mx-4 my-4 ">
       {/* documents page */}
-      <div className="mx-4 my-4 py-2  bg-white  rounded-2xl flex flex-col justify-between">
+      <div className="  py-2  bg-white  rounded-2xl flex flex-col justify-between">
         <div className="ml-3 my-2 font-medium text-[12px] leading-[100%] tracking-[0.06em] uppercase text-[#606062]">
           Project Documents
         </div>
@@ -326,7 +326,7 @@ const ProjectAccessHomeList = ({
           </li>
         </ul>
       </div>
-      <div className="mx-4   py-2 bg-white rounded-2xl flex flex-col justify-between">
+      <div className="  my-4 py-2 bg-white rounded-2xl flex flex-col justify-between">
         <div className="ml-3 my-2 font-medium text-[12px] leading-[100%] tracking-[0.06em] uppercase text-[#606062]">
           Module Access Management
         </div>
@@ -367,7 +367,7 @@ const ProjectAccessHomeList = ({
           </li>
         </ul>
       </div>
-      <div className="mx-4 my-4 p-4 rounded-2xl  bg-white flex flex-row justify-between">
+      <div className="  p-4 rounded-2xl  bg-white flex flex-row justify-between">
         <section className="flex flex-col">
           <h2 className="font-medium text-[12px] leading-[100%] tracking-[0.06em] uppercase text-[#606062]">
             Project Audit
@@ -396,17 +396,17 @@ const ProjectAccessHomeList = ({
             onClick={() => {
               auditFun()
             }}
-            className={`inline-flex w-full justify-center rounded-sm mt-3 px-3 py-2 bg-cyan-600 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto`}
+            className={`inline-flex w-full justify-center rounded-[8px] mt-3 px-3 py-2 project_bg_color text-sm font-medium text-black shadow-sm  sm:ml-3 sm:w-auto`}
           >
             <TrashIcon
-              className="h-4 w-4 mr-1 ml- mt-[1px] inline text-white"
+              className="h-4 w-4 mr-1 ml- mt-[1px] inline text-black"
               aria-hidden="true"
             />{' '}
             Audit
           </button>
         </section>
       </div>
-      <div className="mx-4 mb-2 p-4 rounded-2xl bg-white  flex flex-row justify-between">
+      <div className="my-4  p-4 rounded-2xl bg-white  flex flex-row justify-between">
         <section className="flex flex-col">
           <h2 className="font-medium text-[12px] leading-[100%] tracking-[0.06em] uppercase text-[#606062]">
             Danger Zone
@@ -435,10 +435,10 @@ const ProjectAccessHomeList = ({
             onClick={() => {
               setOpen(true)
             }}
-            className={`inline-flex w-full justify-center rounded-sm mt-3 px-3 py-2 bg-cyan-600 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto`}
+            className={`inline-flex w-full justify-center rounded-[8px] mt-3 px-3 py-2 project_bg_color text-sm font-medium text-black shadow-sm hover:project_bg_color sm:ml-3 sm:w-auto`}
           >
             <TrashIcon
-              className="h-4 w-4 mr-1 ml- mt-[1px] inline text-white"
+              className="h-4 w-4 mr-1 ml- mt-[1px] inline text-black"
               aria-hidden="true"
             />{' '}
             Delete Project

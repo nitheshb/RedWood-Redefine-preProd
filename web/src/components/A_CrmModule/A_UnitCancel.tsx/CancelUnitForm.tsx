@@ -45,6 +45,9 @@ const CancelUnitForm = ({
   const [showConfirmation, setShowConfirmation] = useState(false)
   const [formValues, setFormValues] = useState(null)
   const [resetFormFn, setResetFormFn] = useState(null)
+  const [cancelledOn, setCancelledOn] = useState(selUnitDetails?.cancelledDate ? format(new Date(selUnitDetails.cancelledDate), 'MMM dd, yyyy') : 'No Data')
+  const [cancellationReason, setCancellationReason] = useState(selUnitDetails?.cancelReason || 'No Data')
+  const [cancelledBy, setCancelledBy] = useState(selUnitDetails?.cancelledBy || 'No Data')
 
   useEffect(() => {
     getAllTransactionsUnit()
@@ -143,7 +146,17 @@ const CancelUnitForm = ({
     x.cancelledDate = datee
     x.cancelledBy = user?.email
     x.cancelReason = data?.payReason
-    cancelUnitDbFun(orgId, x, user,()=>{setOpen(false)},enqueueSnackbar)
+
+
+
+    setCancelledOn(format(new Date(), 'MMM dd, yyyy'))
+    setCancellationReason(data?.payReason || 'No Data')
+    setCancelledBy(user?.email || 'No Data')
+
+
+
+
+    cancelUnitDbFun(orgId, x, user, () => { setOpen(false) }, enqueueSnackbar)
   }
 
   const handleConfirmationYes = () => {
@@ -196,7 +209,7 @@ const CancelUnitForm = ({
                     Cancelled On
                   </p>
                   <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">
-                    No Data
+                  {cancelledOn}
                   </h2>
                 </div>
                 <div className="text-center space-y-2">
@@ -204,7 +217,7 @@ const CancelUnitForm = ({
                     Cancellation Reason
                   </p>
                   <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">
-                    No Data
+                  {cancellationReason}
                   </h2>
                 </div>
                 <div className="text-center space-y-2">
@@ -212,7 +225,7 @@ const CancelUnitForm = ({
                     Cancelled By
                   </p>
                   <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">
-                    No Data
+                  {cancelledBy}
                   </h2>
                 </div>
               </div>
@@ -242,13 +255,13 @@ const CancelUnitForm = ({
                                     initialValues={initialState}
                                     validationSchema={validate}
                                     onSubmit={handleSubmit}
-                                    // onSubmit={(values, { resetForm }) => {
-                                    //   console.log('values is', values)
+                                  // onSubmit={(values, { resetForm }) => {
+                                  //   console.log('values is', values)
 
-                                    //   setBookingProgress(true)
-                                    //   onSubmitSupabase(values, resetForm)
-                                    //   console.log(values)
-                                    // }}
+                                  //   setBookingProgress(true)
+                                  //   onSubmitSupabase(values, resetForm)
+                                  //   console.log(values)
+                                  // }}
                                   >
                                     {(formik, setFieldValue) => (
                                       <Form>
@@ -357,7 +370,7 @@ const CancelUnitForm = ({
 
                                                       <div className="text-center py-4">
                                                         <button
-                                                          className="bg-[#EDE9FE] text-[#0E0A1F] text-sm py-2.5 px-24 font-semibold rounded-md inline-flex items-center shadow-sm hover:bg-[#DBD3FD] transition-all duration-200 focus:outline-none "
+                                                          className="crm_bg_color text-[#0E0A1F] text-sm py-2.5 px-24 font-semibold rounded-md inline-flex items-center shadow-sm hover:bg-[#DBD3FD] transition-all duration-200 focus:outline-none "
                                                           type="submit"
                                                           disabled={loading}
                                                         >
@@ -533,7 +546,7 @@ const CancelUnitForm = ({
             <div className="flex space-x-4">
               <button
                 onClick={handleConfirmationNo}
-                className="flex-1 py-3 bg-[#EDE9FE] hover:bg-gray-200 text-gray-800 rounded-md font-medium"
+                className="flex-1 py-3 crm_bg_color hover:bg-gray-200 text-gray-800 rounded-md font-medium"
               >
                 No
               </button>

@@ -365,9 +365,9 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
       data.map((item) =>
         item.id === id
           ? {
-              ...item,
-              [field]: value,
-            }
+            ...item,
+            [field]: value,
+          }
           : item
       )
     )
@@ -544,11 +544,10 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
 
   const SidebarItem: React.FC<{ item: string }> = ({ item }) => (
     <li
-      className={`border-l-2 ${
-        activeItem === item
+      className={`border-l-2 ${activeItem === item
           ? 'border-red-600'
           : 'border-gray-300 hover:border-gray-600'
-      }`}
+        }`}
       style={{
         marginBottom: '2px',
         borderLeftWidth: '2px',
@@ -557,11 +556,10 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
     >
       <a
         href={`#${item.replace(/\s+/g, '-').toLowerCase()}`}
-        className={`block pl-4 pr-4 ${
-          activeItem === item
+        className={`block pl-4 pr-4 ${activeItem === item
             ? 'text-red-600 font-bold'
             : 'text-gray-700 hover:text-red-600'
-        }`}
+          }`}
         onClick={(e) => {
           e.preventDefault()
           handleClick(item)
@@ -871,8 +869,8 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
           </>
         )}
 
-        <div className="">
-          <div className="mb-4 mt-2">
+        <div className="flex flex-col gap-4">
+          <div className="">
             <div className="inline">
               <div className="">
                 <label className="font-medium text-[12px] leading-[100%] tracking-[0.06em] uppercase text-[#606062]  mb-1  ">
@@ -1134,13 +1132,13 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
           <div className="flex justify-between">
             <button
               onClick={addRow}
-              className="mt-4 bg-[#0891B2]  text-white font-md py-1 px-2 rounded-lg focus:outline-none focus:shadow-outline transition-colors duration-150 ease-in-out"
+              className=" project_bg_color text-[#0E0A1F] text-sm py-2 rounded-lg  px-6 rounded focus:outline-none"
             >
               Add Charges
             </button>
             <button
               onClick={saveSetup}
-              className="mt-4 bg-[#0891B2] text-white font-md py-1 px-2 rounded-lg focus:outline-none focus:shadow-outline transition-colors duration-150 ease-in-out"
+              className=" project_bg_color text-[#0E0A1F] text-sm py-2 rounded-lg  px-6 rounded focus:outline-none"
             >
               Save
             </button>

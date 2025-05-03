@@ -18,104 +18,203 @@ export default function LeadTaskDisplayHead({
   setShowVisitFeedBackStatusFun,
 }) {
   const [comingSoonState, setComingSoonState] = useState(false)
+
+
+  
   useEffect(() => {
     let x =
       Math.abs(getDifferenceInHours(data?.schTime, '')) <= 24 &&
-      Math.abs(getDifferenceInHours(data?.schTime, '')) >= 0
+        Math.abs(getDifferenceInHours(data?.schTime, '')) >= 0
         ? true
         : false
     setComingSoonState(x)
   }, [data])
   return (
     <div>
-      {(data?.sts != 'completed' ||
-        Math.abs(getDifferenceInHours(data?.schTime, '')) <= 24) && (
-        <span
-          className={` px-2 py-1 ml-6 mb-2 ${
-            comingSoonState ? 'bg-green-400' : 'bg-red-400'
-          }  text-white text-[12px] text-center`}
-        >
-          {comingSoonState ? 'Starts in' : 'Delayed by'} {'  '}
-          {Math.abs(getDifferenceInMinutes(data?.schTime, '')) > 60
-            ? Math.abs(getDifferenceInMinutes(data?.schTime, '')) > 8640
-              ? `${Math.abs(getDifferenceInDays(data?.schTime, ''))} Days `
-              : `${Math.abs(getDifferenceInHours(data?.schTime, ''))} Hours `
-            : `${Math.abs(getDifferenceInMinutes(data?.schTime, ''))} Min`}{' '}
-        </span>
-      )}
-      <section className="flex flex-row justify-between">
-        <div
-          className={`${
-            data?.sts === 'completed' ? 'cursor-not-allowed ' : 'cursor-pointer'
-          }  mt-1 block w-full`}
-          onClick={() => {
-            if (data?.sts === 'pending') {
-              setAddTaskCommentObj(data)
-            }
-          }}
-        >
-          <label className="inline-flex items-center">
-            {data?.sts != 'completed' && (
-              <span
-                className="px-[2px] py-[2px]  rounded-full border border-2 cursor-pointer text-[#cdcdcd] hover:text-green-800 hover:border-green-700 hover:bg-green-100"
+
+
+
+      <div className='flex '>
+
+{/*         
+        <div className=''>
+
+          {data?.sts === 'completed' && (
+            // <CheckCircleIcon className="w-4 h-4 inline text-[#058527]" />
+            <img
+              src="/Checked.svg"
+              alt="Completed"
+              className="w-5 h-5 inline align-middle"
+            />
+          )}
+
+{data?.sts != 'completed' &&  data?.stsType !== 'visitfixed' &&  (
+ 
+
+                <img
+                src="/UnCheck.svg"
+                alt="Completed"
+                className="w-5 h-5 inline align-middle"
                 onClick={() => closeTaskFun(data)}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-2 w-2"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-              </span>
-            )}
-            {data?.sts === 'completed' && (
-              <CheckCircleIcon className="w-4 h-4 inline text-[#058527]" />
-            )}
-            <div
-              className={`${
-                data?.sts === 'completed' ? 'line-through' : 'cursor-pointer'
-              }  ml-2 text-[16px] inline font-bodyLato font-brand tracking-wider text-[#0091ae] text-[#0E0A1F]`}
-              onClick={() => {
-                if (data?.sts === 'pending') {
-                  setAddTaskCommentObj(data)
-                }
-              }}
-            >
-              {data?.notes}
-            </div>
-          </label>
-        </div>
-        {data?.sts != 'completed' && (
-          <section className="flex flex-row">
-            <span
-              onClick={() => {
+              />
+              )}
+
+        </div> */}
+
+
+
+  <div className={`${(data?.sts === 'completed' || Math.abs(getDifferenceInHours(data?.schTime, '')) > 24) ? 'mt-1 ml-0' : ''}`}>
+  {data?.sts === 'completed' && (
+    <img
+      src="/Checked.svg"
+      alt="Completed"
+      className="w-5 h-5 inline align-middle"
+    />
+  )}
+
+  {data?.sts != 'completed' && data?.stsType !== 'visitfixed' && (
+    <img
+      src="/UnCheck.svg"
+      alt="Completed"
+      className="w-5 h-5 inline align-middle"
+      onClick={() => closeTaskFun(data)}
+    />
+  )}
+</div>
+
+
+
+
+
+
+
+        <div className='flex flex-row justify-between ml-3 w-full' >
+
+        <section>
+
+{(data?.sts != 'completed' ||
+  Math.abs(getDifferenceInHours(data?.schTime, '')) <= 24) && (
+    <span
+      className={` px-3 py-1  mb-3  rounded-[4px] ${comingSoonState ? 'bg-[#DFF6E0] text-[#1B6600]' : 'bg-[#FDECEC] text-[#D20D0D]'
+        }   font-outfit font-medium text-[12px] leading-tight tracking-tight text-center`}
+    >
+      {comingSoonState ? 'Starts in' : 'Delayed by'} {'  '}
+      {Math.abs(getDifferenceInMinutes(data?.schTime, '')) > 60
+        ? Math.abs(getDifferenceInMinutes(data?.schTime, '')) > 8640
+          ? `${Math.abs(getDifferenceInDays(data?.schTime, ''))} Days `
+          : `${Math.abs(getDifferenceInHours(data?.schTime, ''))} Hours `
+        : `${Math.abs(getDifferenceInMinutes(data?.schTime, ''))} Min`}{' '}
+    </span>
+  )}
+
+
+
+<div
+            className={`${data?.sts === 'completed' ? 'cursor-not-allowed ' : 'cursor-pointer'
+              }  mt-1 block`}
+            onClick={() => {
+              if (data?.sts === 'pending') {
                 setAddTaskCommentObj(data)
-              }}
-              className="inline-flex  placeholder:font-thin text-[#0091ae]  cursor-pointer font-bodyLato text-[12px] ml-2 pt-1  hover:text-green-900"
-            >
-              <span className=" text-[#0091ae] border-b border-[#0091ae] font-medium w-20 cursor-pointer text-[12px]   ml-2 h-[18px]  hover:border-[#0091ae]  ">
-                Add Comment
-              </span>
-            </span>
-            {data?.stsType === 'visitfixed' && data?.sts != 'completed' && (
-              <span
-                className=" mt-1 w-[58px] h-[18px] ml-4 text-[#0091ae] border-b border-[#0091ae] font-medium hover:border-[#7BD500] text-[12px] ml-2 cursor-pointer "
-                onClick={() => setShowVisitFeedBackStatusFun(data, 'visitdone')}
+              }
+            }}
+          >
+            <label className="inline-flex gap-2 items-center">
+
+
+
+
+              <div
+                className={`${data?.sts === 'completed' ? 'line-through' : 'cursor-pointer'
+                  }   font-outfit font-medium text-[14px] leading-[14px] tracking-normal line-through text-[#2B2B2B] `}
+                onClick={() => {
+                  if (data?.sts === 'pending') {
+                    setAddTaskCommentObj(data)
+                  }
+                }}
               >
-                Visit Done
+                {data?.notes}
+              </div>
+
+
+{/* 
+              <div className='flex gap-2'> */}
+                
+  <span
+    className="text-[12px] font-medium px-2 py-[2px] rounded-[13px] bg-[#FDEFE7] sale_text_color"
+  >
+    {/* {data?.stsType === 'visitfixed' ? 'Visit Fixed' : data?.sts} */}
+    Status 
+  </span>
+
+
+  <img
+    src="/edit-02.svg" 
+    alt="Edit"
+    className="w-5 h-5 cursor-pointer"
+    onClick={() => { }}
+  />
+              {/* </div> */}
+
+
+
+
+
+
+
+
+
+
+            </label>
+          </div>
+
+
+</section>
+
+        {/* <section className="flex flex-row justify-between"> */}
+   
+
+
+          <div>
+          {data?.sts != 'completed' && (
+            <section className="flex gap-4 flex-row">
+              <span
+                onClick={() => {
+                  setAddTaskCommentObj(data)
+                }}
+                className=" px-3 py-2 rounded-[8px] border border-[#E7E7E9] text-[#000000] font-normal text-[12px] cursor-pointer hover:text-green-900 "
+                // className="inline-flex  placeholder:font-thin text-[#0091ae]  cursor-pointer font-bodyLato text-[12px]   hover:text-green-900"
+              >
+     
+                  Add Comment
+       
               </span>
-            )}
-          </section>
-        )}
-      </section>
+              {data?.stsType === 'visitfixed' && data?.sts != 'completed' && (
+                <span
+                  className="px-3 py-2 rounded-[8px] border border-[#E7E7E9] text-[#000000] font-normal text-[12px] cursor-pointer hover:text-green-900 "
+                  onClick={() => setShowVisitFeedBackStatusFun(data, 'visitdone')}
+                >
+                  Visit Done
+                </span>
+              )}
+            </section>
+          )}
+          </div>
+
+        {/* </section> */}
+
+
+
+
+
+
+
+
+        </div>
+
+      </div>
+
+
+
     </div>
   )
 }

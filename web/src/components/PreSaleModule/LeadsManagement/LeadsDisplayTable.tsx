@@ -100,24 +100,163 @@ const LeadsDisplayTable = ({
   return (
     <Box pb={4}>
       <div className=" w-full bg-white rounded-lg">
-        <div className="flex items-center flex-row flex-wrap justify-between  pb-5  px-3 py-3 bg-gray-50 rounded-t-md">
-          <section className="flex flex-row">
-            <img
+
+
+
+        <div className="flex items-center justify-between flex-wrap pb-5 px-4 py-4 bg-gray-50 rounded-t-md">
+
+          <section className="flex flex-row items-center">
+            {/* <img
               className="w-10 h-10"
               alt=""
-              src={
-                'https://static.hsappstatic.net/ui-images/static-2.758/optimized/categories-color.svg'
-              }
-            ></img>
+              src="https://static.hsappstatic.net/ui-images/static-2.758/optimized/categories-color.svg"
+            /> */}
 
-            <h2 className="ml-2 mt-2 text-md font-semibold text-black leading-light font-Playfair">
+            <img className="w-8 h-8" alt="folder icon" src="/folder-library.svg" />
+            <h2 className="ml-2 text-md font-semibold text-[#2B2B2B]">
               Leads Bank
             </h2>
           </section>
+
+      
+          <section className="flex items-center gap-2">
+            <SlimDateSelectBox
+              onChange={async (value) => {
+                console.log(value, 'ksdvnlfkjv')
+                setDateRange(value)
+              }}
+              label="This Month"
+
+
+              customStyles={{
+                option: (provided, state) => ({
+                  ...provided,
+                  backgroundColor: state.isSelected
+                    ? '#F25533'
+                    : state.isFocused
+                      ? '#FDEFE7' 
+                      : provided.backgroundColor,
+                  color: state.isSelected
+                    ? 'white'
+                    : state.isFocused
+                      ? '#2B2B2B' 
+                      : provided.color,
+                }),
+                control: (base) => ({
+                  ...base,
+                  height: 30,
+                  minHeight: 30,
+                  padding: 0,
+                  borderRadius: 8,
+                }),
+                valueContainer: (base) => ({
+                  ...base,
+                  alignItems: 'initial',
+                  paddingTop: 0,
+                  marginTop: 3,
+                }),
+                dropdownIndicator: (base) => ({
+                  ...base,
+                  paddingTop: 5,
+                }),
+                indicatorSeparator: (base) => ({
+                  ...base,
+                  marginTop: 6,
+                  marginBottom: 10,
+                }),
+                menu: (provided) => ({ ...provided, marginTop: 0, zIndex: 9999, borderRadius: 8,  }),
+                menuList: (provided, state) => ({
+                  ...provided,
+                  paddingTop: 0,
+                  paddingBottom: 0,
+                  borderRadius: 8, 
+                }),
+              }}
+
+              
+
+
+            />
+
+            <div className="w-40 mt-1">
+              <SlimSelectBox
+                name="project"
+                label=""
+                className="input"
+                onChange={(value) => {
+                  console.log('zoro condition changed one is', value)
+                  setSelProject(value)
+                }}
+                value={selProjectIs?.value}
+                options={[
+                  { label: 'All Projects', value: 'allprojects' },
+                  ...allProjectsA,
+                ]}
+
+
+
+                customStyles={{
+                  option: (provided, state) => ({
+                    ...provided,
+                    backgroundColor: state.isSelected
+                      ? '#F25533'
+                      : state.isFocused
+                        ? '#FDEFE7' 
+                        : provided.backgroundColor,
+                    color: state.isSelected
+                      ? 'white'
+                      : state.isFocused
+                        ? '#2B2B2B' 
+                        : provided.color,
+                  }),
+                  control: (base) => ({
+                    ...base,
+                    height: 30,
+                    minHeight: 30,
+                    padding: 0,
+                    borderRadius: 8,
+                  }),
+                  valueContainer: (base) => ({
+                    ...base,
+                    alignItems: 'initial',
+                    paddingTop: 0,
+                    marginTop: 3,
+                  }),
+                  dropdownIndicator: (base) => ({
+                    ...base,
+                    paddingTop: 5,
+                  }),
+                  indicatorSeparator: (base) => ({
+                    ...base,
+                    marginTop: 6,
+                    marginBottom: 10,
+                  }),
+                  menu: (provided) => ({ ...provided, marginTop: 0, zIndex: 9999, borderRadius: 8,  }),
+                  menuList: (provided, state) => ({
+                    ...provided,
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                    borderRadius: 8, 
+                  }),
+                }}
+              />
+            </div>
+
+            {/* Optional Download Button */}
+            {/* <Tooltip title={`Download ${leadsRawList?.length} Row`}>
+      <CSVDownloader
+        className="mr-6 h-[20px] w-[20px]"
+        downloadRows={leadsRawList}
+        style={{ height: '20px', width: '20px' }}
+        fromLeadsBank={true}
+      />
+    </Tooltip> */}
+          </section>
         </div>
 
+
         <div className="bg-white  py-4 md:py-7 px-4 md:px-4 xl:px-6 rounded">
-          <div className="sm:flex items-center  justify-between">
+          <div className="sm:flex items-center mb-1 border-b   border-[#e7eaee]  justify-between">
             {/* <div className="flex items-center">
               <a
                 className={`rounded-full focus:outline-none focus:ring-2  focus:bg-indigo-50 focus:ring-indigo-800`}
@@ -169,17 +308,15 @@ const LeadsDisplayTable = ({
 
             <div className="flex items-center">
               <a
-                className={` border-b-2 focus:outline-none ${
-                  searchKey.includes('all')
+                className={` border-b-2 focus:outline-none ${searchKey.includes('all')
                     ? ' border-b-2 border-[#0E0A1F] '
                     : 'border-transparent text-gray-600'
-                }`}
+                  }`}
                 onClick={() => setSearchKey(['all'])}
               >
                 <div
-                  className={` px-2 mb-1  hover:text-[#0E0A1F]  ${
-                    searchKey.includes('all') ? '' : ''
-                  }`}
+                  className={` px-2 mb-1  hover:text-[#0E0A1F]  ${searchKey.includes('all') ? '' : ''
+                    }`}
                 >
                   All
                 </div>
@@ -188,20 +325,18 @@ const LeadsDisplayTable = ({
               <div className="w-px h-5 mx-4 bg-gray-200"></div>
 
               <a
-                className={` border-b-2 focus:outline-none   ${
-                  searchKey.includes('unassigned') && searchKey.length === 1
+                className={` border-b-2 focus:outline-none   ${searchKey.includes('unassigned') && searchKey.length === 1
                     ? 'border-b-2 border-[#0E0A1F]'
                     : 'border-transparent text-gray-600'
-                }`}
+                  }`}
                 href="javascript:void(0)"
                 onClick={() => setSearchKey(['unassigned'])}
               >
                 <div
-                  className={` px-4 mb-1  hover:text-[#0E0A1F]   ${
-                    searchKey.includes('unassigned') && searchKey.length === 1
+                  className={` px-4 mb-1  hover:text-[#0E0A1F]   ${searchKey.includes('unassigned') && searchKey.length === 1
                       ? ''
                       : ''
-                  }`}
+                    }`}
                 >
                   <p>Unassigned</p>
                 </div>
@@ -210,29 +345,27 @@ const LeadsDisplayTable = ({
               <div className="w-px h-5 mx-4 bg-gray-200"></div>
 
               <a
-                className={` border-b-2 focus:outline-none   ${
-                  searchKey.includes('DUPLICATE_ENTRY') &&
-                  searchKey.length === 1
+                className={` border-b-2 focus:outline-none   ${searchKey.includes('DUPLICATE_ENTRY') &&
+                    searchKey.length === 1
                     ? 'border-b-2 border-[#0E0A1F]'
                     : 'border-transparent text-gray-600'
-                }`}
+                  }`}
                 href="javascript:void(0)"
                 onClick={() => setSearchKey(['DUPLICATE_ENTRY'])}
               >
                 <div
-                  className={` px-2 mb-1  hover:text-[#0E0A1F] ${
-                    searchKey.includes('DUPLICATE_ENTRY') &&
-                    searchKey.length === 1
+                  className={` px-2 mb-1  hover:text-[#0E0A1F] ${searchKey.includes('DUPLICATE_ENTRY') &&
+                      searchKey.length === 1
                       ? ''
                       : ''
-                  }`}
+                    }`}
                 >
                   <p>Bin</p>
                 </div>
               </a>
             </div>
 
-            <div className="flex items-center justify-between">
+            {/* <div className="flex items-center justify-between">
               <p
                 tabIndex={0}
                 className="focus:outline-none text-base sm:text-lg md:text-xl lg:text-2xl font-bold leading-normal text-gray-800"
@@ -264,19 +397,20 @@ const LeadsDisplayTable = ({
                     ]}
                   />
                 </div>
-                {/* <Tooltip title={`Download ${leadsRawList?.length} Row`}>
+                <Tooltip title={`Download ${leadsRawList?.length} Row`}>
                   <CSVDownloader
                     className="mr-6 h-[20px] w-[20px]"
                     downloadRows={leadsRawList}
                     style={{ height: '20px', width: '20px' }}
                     fromLeadsBank={true}
                   />
-                </Tooltip> */}
+                </Tooltip>
               </section>
-            </div>
+            </div> */}
+
           </div>
           {leadsRawList.length === 0 && (
-            <div className="py-8 px-8 mt-10 flex flex-col items-center bg-red-100 rounded">
+            <div className="py-8 px-8 mt-10 flex flex-col items-center sale_empty_page_bg_color rounded">
               <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
                 <img
                   className="w-[180px] h-[180px] inline"
@@ -285,10 +419,10 @@ const LeadsDisplayTable = ({
                 />
               </div>
               <h3 className="mb-1 text-sm font-semibold text-gray-900">
-                No Tasks Found
+                No Leads Found
               </h3>
               <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-                <span className="text-blue-600"> Add New Task</span>
+                <span className="text-blue-600"> Add Leads</span>
               </time>
             </div>
           )}
@@ -341,11 +475,10 @@ const LeadsDisplayTable = ({
                                 {responderEmail || 'NA'}
                               </p>
                               <p
-                                className={`text-[9px]  leading-none ${
-                                  user?.uid == dat?.leadUser?.assignedTo
+                                className={`text-[9px]  leading-none ${user?.uid == dat?.leadUser?.assignedTo
                                     ? 'text-green-800'
                                     : 'text-red-800 '
-                                }   mt-[6px] font-bodyLato  py-[4px]  rounded-full    mb-1 mr-2  `}
+                                  }   mt-[6px] font-bodyLato  py-[4px]  rounded-full    mb-1 mr-2  `}
                               >
                                 {dat?.leadUser?.assignedToObj?.name?.toUpperCase()}
                               </p>
@@ -386,11 +519,10 @@ const LeadsDisplayTable = ({
                       <td className="max-w-[150px] min-w-[150px] w-[150px]">
                         <div className="flex flex-row">
                           <button
-                            className={`py-[6px] px-[10px] min-w-[110px] rounded-full justify-between flex ${
-                              currentStatus == 'unassigned'
+                            className={`py-[6px] px-[10px] min-w-[110px] rounded-full justify-between flex ${currentStatus == 'unassigned'
                                 ? 'bg-[#FEe2e2] text-[#7f1d1d] '
                                 : 'bg-[#D1FAE5] text-[#064e3b]'
-                            } text-[10px] font-bodyLato font-semibold focus:outline-none leading-none  text-left`}
+                              } text-[10px] font-bodyLato font-semibold focus:outline-none leading-none  text-left`}
                           >
                             <span className="pl-1 uppercase mt-[2px]">
                               {currentStatus}

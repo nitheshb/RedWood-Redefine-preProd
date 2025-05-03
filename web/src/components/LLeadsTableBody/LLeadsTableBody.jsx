@@ -286,7 +286,11 @@ function EnhancedTableHead(props) {
             marginRight: '10px',
           }}
         >
-          <TableSortLabel>S.No</TableSortLabel>
+          <TableSortLabel
+            style={{
+              color: '#2B2B2B',
+            }}
+          >S.No</TableSortLabel>
         </TableCell>
         {headers.map((headCell) => (
           <>
@@ -315,7 +319,7 @@ function EnhancedTableHead(props) {
                   fontFamily: 'inherit',
                 }}
               >
-                <span className="text-black font-bodyLato whitespace-nowrap">
+                <span className="text-black font-outfit whitespace-nowrap">
                   {headCell.label}
                 </span>
                 {orderBy === headCell.id ? (
@@ -477,7 +481,7 @@ const EnhancedTableToolbar = (props) => {
         ) : (
           <Tooltip title={`Download ${leadsFetchedData?.length} Row`}>
             <CSVDownloader
-              className="mr-6 h-[20px] w-[20px]"
+              className="mr-6 h-[20px] bg-[#FDEFE7] w-[20px]"
               downloadRows={leadsFetchedData}
               sourceTab={'leadsList'}
               style={{ height: '20px', width: '20px' }}
@@ -532,7 +536,7 @@ export default function LLeadsTableBody({
   const [searchKey, setSearchKey] = React.useState(searchVal ? searchVal : '')
   const [dateRange, setDateRange] = React.useState([null, null])
   const [startDate, endDate] = dateRange
-  React.useEffect(() => {}, [selStatus, rowsParent])
+  React.useEffect(() => { }, [selStatus, rowsParent])
   console.log(searchKey, 'cdsvfeg')
   React.useEffect(() => {
     filterSearchString(rows)
@@ -545,8 +549,8 @@ export default function LLeadsTableBody({
       selStatus === 'all'
         ? parent['all']
         : selStatus === 'archieve_all'
-        ? parent['archieve_all']
-        : parent[selStatus]
+          ? parent['archieve_all']
+          : parent[selStatus]
 
     await setRows(newArray)
   }
@@ -568,7 +572,7 @@ export default function LLeadsTableBody({
         console.log(
           'iinside you1 x',
           item?.Date >= startDate?.getTime() &&
-            item?.Date <= startDate?.getTime() + 86400000,
+          item?.Date <= startDate?.getTime() + 86400000,
           startDate?.getTime() + 86399999,
           startDate?.getTime(),
           item.Name
@@ -578,7 +582,7 @@ export default function LLeadsTableBody({
           console.log(
             'inside you wjat os tjo filter',
             item?.Date >= startDate?.getTime() &&
-              item?.Date <= startDate?.getTime() + 86400000,
+            item?.Date <= startDate?.getTime() + 86400000,
             startDate?.getTime() + 86399999,
             startDate?.getTime(),
             item.Name
@@ -757,8 +761,8 @@ export default function LLeadsTableBody({
                         padding="none"
                       >
                         <section>
-                          <span className="font-bodyLato">
-                            {prettyDate(row?.Date)?.toLocaleString()}
+                          <span className="font-outfit">
+                            {prettyDate(row.Date).toLocaleString()}
                           </span>
                         </section>
                       </TableCell>
@@ -770,7 +774,7 @@ export default function LLeadsTableBody({
                         padding="none"
                       >
                         <section>
-                          <span className="font-bodyLato">
+                          <span className="font-outfit">
                             {row.assignT != undefined
                               ? prettyDate(row?.assignT)
                               : prettyDate(row?.Date)}
@@ -783,7 +787,7 @@ export default function LLeadsTableBody({
                           <div>
                             <div
                               className="relative flex flex-col  group"
-                              // style={{ alignItems: 'end' }}
+                            // style={{ alignItems: 'end' }}
                             >
                               <div
                                 className="absolute bottom-0 flex-col items-center hidden mb-6 group-hover:flex"
@@ -793,32 +797,32 @@ export default function LLeadsTableBody({
                                 <span
                                   className="rounded italian relative mr-2 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
                                   style={{
-                                    color: 'black',
-                                    background: '#e2c062',
+                                    color: '#F25533',
+                                    background: '#FCE6D9',
                                     maxWidth: '300px',
                                   }}
                                 >
                                   <div className="italic flex flex-col">
-                                    <div className="font-bodyLato">
+                                    <div className="font-outfit">
                                       <HighlighterStyle
                                         searchKey={searchKey}
                                         source={row.Name.toString()}
                                       />
                                     </div>
-                                    <div className="font-bodyLato">
+                                    <div className="font-outfit">
                                       <HighlighterStyle
                                         searchKey={searchKey}
                                         source={row.Email.toString()}
                                       />
                                     </div>
                                     <div>
-                                      <span className="font-bodyLato">
+                                      <span className="font-outfit">
                                         <HighlighterStyle
                                           searchKey={searchKey}
                                           source={row?.countryCode}
                                         />
                                       </span>{' '}
-                                      <span className="font-bodyLato">
+                                      <span className="font-outfit">
                                         <HighlighterStyle
                                           searchKey={searchKey}
                                           source={row?.Mobile?.toString()?.replace(
@@ -833,12 +837,12 @@ export default function LLeadsTableBody({
                                 <div
                                   className="w-3 h-3  -mt-2 rotate-45 bg-black"
                                   style={{
-                                    background: '#e2c062',
+                                    background: '#FCE6D9',
                                     marginRight: '12px',
                                   }}
                                 ></div>
                               </div>
-                              <span className="font-bodyLato">
+                              <span className="font-outfit">
                                 <HighlighterStyle
                                   searchKey={searchKey}
                                   source={row.Name.toString()}
@@ -848,7 +852,7 @@ export default function LLeadsTableBody({
                           </div>
                           {viewUnitStatusA.includes('Email Id') && (
                             <div>
-                              <span className="font-bodyLato">
+                              <span className="font-outfit">
                                 <HighlighterStyle
                                   searchKey={searchKey}
                                   source={row.Email.toString()}
@@ -858,13 +862,13 @@ export default function LLeadsTableBody({
                           )}
                           {viewUnitStatusA.includes('Phone No') && (
                             <div>
-                              <span className="font-bodyLato">
+                              <span className="font-outfit">
                                 <HighlighterStyle
                                   searchKey={searchKey}
                                   source={row?.countryCode}
                                 />
                               </span>{' '}
-                              <span className="font-bodyLato">
+                              <span className="font-outfit">
                                 <HighlighterStyle
                                   searchKey={searchKey}
                                   source={row?.Mobile?.toString()?.replace(
@@ -885,7 +889,7 @@ export default function LLeadsTableBody({
 
                       {viewUnitStatusA.includes('Assigned To') && (
                         <TableCell align="left">
-                          <span className="font-bodyLato">
+                          <span className="font-outfit">
                             {row?.assignedToObj?.label}
                           </span>
                         </TableCell>
@@ -902,12 +906,21 @@ export default function LLeadsTableBody({
                             size="small"
                             precision={0.5}
                             readOnly
+
+                            sx={{
+                              '& .MuiRating-iconFilled': {
+                                color: '#FF9529',
+                              },
+                              '& .MuiRating-iconHover': {
+                                color: '#FF9529',
+                              },
+                            }}
                           />
                         </section>
                       </TableCell>
 
                       <TableCell align="left">
-                        <span className="px-2 uppercase inline-flex text-[10px] leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                        <span className="px-3 py-2 uppercase inline-flex  font-[500] text-[12px] leading-[100%] tracking-[0%] font-outfit rounded-[13px] leading-5  bg-[#FDEFE7] sale_text_color">
                           <HighlighterStyle
                             searchKey={searchKey}
                             source={row.Status.toString()}
@@ -930,31 +943,30 @@ export default function LLeadsTableBody({
                                 )
                               ) > 60
                                 ? Math.abs(
-                                    getDifferenceInMinutes(
+                                  getDifferenceInMinutes(
+                                    row?.leadUpT || row?.stsUpT,
+                                    ''
+                                  )
+                                ) > 1440
+                                  ? `${Math.abs(
+                                    getDifferenceInDays(
                                       row?.leadUpT || row?.stsUpT,
                                       ''
                                     )
-                                  ) > 1440
-                                  ? `${Math.abs(
-                                      getDifferenceInDays(
-                                        row?.leadUpT || row?.stsUpT,
-                                        ''
-                                      )
-                                    )} Days `
+                                  )} Days `
                                   : `${Math.abs(
-                                      getDifferenceInHours(
-                                        row?.leadUpT || row?.stsUpT,
-                                        ''
-                                      )
-                                    )} Hours `
-                                : `${
-                                    Math.abs(
-                                      getDifferenceInMinutes(
-                                        row?.leadUpT || row?.stsUpT,
-                                        ''
-                                      )
-                                    ) || 0
-                                  } Min`}{' '}
+                                    getDifferenceInHours(
+                                      row?.leadUpT || row?.stsUpT,
+                                      ''
+                                    )
+                                  )} Hours `
+                                : `${Math.abs(
+                                  getDifferenceInMinutes(
+                                    row?.leadUpT || row?.stsUpT,
+                                    ''
+                                  )
+                                ) || 0
+                                } Min`}{' '}
                               {/* in above line I have added 0 to take Nan value */}
                               {getDifferenceInMinutes(
                                 row?.leadUpT || row?.stsUpT,
@@ -979,17 +991,17 @@ export default function LLeadsTableBody({
                                 getDifferenceInMinutes(row?.schTime, '')
                               ) > 60
                                 ? Math.abs(
-                                    getDifferenceInMinutes(row?.schTime, '')
-                                  ) > 1440
+                                  getDifferenceInMinutes(row?.schTime, '')
+                                ) > 1440
                                   ? `${Math.abs(
-                                      getDifferenceInDays(row?.schTime, '')
-                                    )} Days `
+                                    getDifferenceInDays(row?.schTime, '')
+                                  )} Days `
                                   : `${Math.abs(
-                                      getDifferenceInHours(row?.schTime, '')
-                                    )} Hours `
+                                    getDifferenceInHours(row?.schTime, '')
+                                  )} Hours `
                                 : `${Math.abs(
-                                    getDifferenceInMinutes(row?.schTime, '')
-                                  )} Min`}{' '}
+                                  getDifferenceInMinutes(row?.schTime, '')
+                                )} Min`}{' '}
                               {getDifferenceInMinutes(row?.schTime, '') < 0
                                 ? 'ago'
                                 : 'Left'}
@@ -1007,7 +1019,7 @@ export default function LLeadsTableBody({
                       >
                         {' '}
                         <span
-                          className="font-bodyLato"
+                          className="font-outfit"
                           style={{
                             maxWidth: '100px',
                             maxHeight: '100px',

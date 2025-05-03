@@ -259,9 +259,9 @@ const EditablePaymentTable = ({
       data.map((item) =>
         item.id === id
           ? {
-              ...item,
-              [field]: value,
-            }
+            ...item,
+            [field]: value,
+          }
           : item
       )
     )
@@ -383,13 +383,13 @@ const EditablePaymentTable = ({
       },
     },
   ])
-  useEffect(() => {}, [])
+  useEffect(() => { }, [])
 
   return (
     <>
-      <div className="py-2 px-4  rounded-2xl bg-[#FFFFFF]  mx-4 my-4">
-        <div className="">
-          <div className="py-2 pb-1 mb-4">
+      <div className=" mx-4 my-4 rounded-2xl bg-[#FFFFFF]">
+        <div className=" flex px-4 py-4 flex-col gap-4">
+          <div className="">
             <p className="font-medium text-[12px] leading-[100%] tracking-[0.06em] uppercase text-[#606062]">
               {title}
             </p>
@@ -585,13 +585,13 @@ const EditablePaymentTable = ({
           <div className="flex justify-between">
             <button
               onClick={addRow}
-              className="mt-4 bg-[#57C0D0]  text-white font-md py-1 px-2 rounded focus:outline-none focus:shadow-outline transition-colors duration-150 ease-in-out"
+              className=" project_bg_color text-[#0E0A1F] text-sm py-2 rounded-lg  px-6 rounded focus:outline-none"
             >
               Add Schedule
             </button>
             <button
               onClick={saveSetup}
-              className="mt-4 bg-[#57C0D0] text-white font-md py-1 px-2 rounded focus:outline-none focus:shadow-outline transition-colors duration-150 ease-in-out"
+              className=" project_bg_color text-[#0E0A1F] text-sm py-2  rounded-lg  px-6 rounded focus:outline-none"
             >
               Save
             </button>
@@ -602,4 +602,28 @@ const EditablePaymentTable = ({
   )
 }
 
+
+
+
+
+
+
+
+
+
+
+
+<button className="
+  w-full sm:w-40 h-10         
+  py-2.5 px-3.5                
+  gap-2.5                      
+  rounded-lg                   
+  flex items-center justify-center 
+  transition-colors            
+  hover:bg-[#45a8b0]           
+  active:scale-95              
+  focus:outline-none focus:ring-2 focus:ring-[#57C0D0] 
+">
+  Button
+</button>
 export default EditablePaymentTable

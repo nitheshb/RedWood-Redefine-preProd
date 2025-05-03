@@ -146,7 +146,7 @@ const CrmActivityLog = ({ selUnitPayload, title, type }) => {
       className="rounded w-[420px]  flex flex-col overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300"
       style={{ height: `calc(100vh - 60px)` }}
     >
-      <div className="flex flex-col bg-[#EDE9FE] rounded-lg p-3">
+      <div className="flex flex-col crm_bg_color rounded-lg p-3">
         <div className="flex flex-row ">
           <img
             src="https://static.ambitionbox.com/static/benefits/WFH.svg"

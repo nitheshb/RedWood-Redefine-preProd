@@ -10,7 +10,7 @@ const CrmPaymentSummary = ({ selCustomerPayload }) => {
     <section className="flex flex-col  rounded-md ">
       <>
         <div className="flex flex-col bg-white shadow rounded-xl my-1  px-2  pt-2 min-w-[260px]">
-          <div className="flex flex-row justify-between tracking-wide mx-">
+          <div className="flex flex-row justify-between tracking-wide">
             <h6 className="font-bodyLato font-semibold text-xs m-1 flex flex-col">
               <span className="tracking-wide  font-semibold text-[16px]">
                 ₹{' '}
@@ -20,7 +20,7 @@ const CrmPaymentSummary = ({ selCustomerPayload }) => {
                       Number(selCustomerPayload?.T_elgible_balance) || 0
                     ).toLocaleString('en-IN')}
               </span>
-              <span className="text-[#637381] tracking-wide font-thin">
+              <span className="text-[#637381] tracking-wide">
                 Stage Balance{' '}
               </span>
             </h6>

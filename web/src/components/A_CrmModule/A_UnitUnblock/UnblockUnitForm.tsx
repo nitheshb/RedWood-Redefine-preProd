@@ -157,7 +157,7 @@ const UnblockUnitForm = ({
                         />
                         <button
                           type="submit"
-                          className=" bg-[#EDE9FE] rounded-[8px] px-[5px] text-[12px] py-[8px] gap-[10px]  h-9 w-[120px]"
+                          className=" crm_bg_color rounded-[8px] px-[5px] text-[12px] py-[8px] gap-[10px]  h-9 w-[120px]"
                         >
                           Unblock Unit
                         </button>
