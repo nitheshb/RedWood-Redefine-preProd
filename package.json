@@ -156,6 +156,8 @@
         "react-select-search": "^3.0.9",
         "react-table": "^7.7.0",
         "react-use": "^17.3.2",
+        "react-virtualized-auto-sizer": "^1.0.26",
+        "react-window": "^1.8.11",
         "recharts": "^2.1.9",
         "reselect": "^4.1.5",
         "simplebar-react": "^2.3.5",
