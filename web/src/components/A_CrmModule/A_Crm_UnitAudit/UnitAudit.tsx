@@ -292,12 +292,129 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
     })
   }
   return (
-    <div className="overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
+
+
+
+    <>
+
+
+
+
+
+
+
+    
+    <div className="overflow-y-scroll w-full items-center justify-center mx-auto min-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
+        
+        
+        <div className="relative min-h-screen mr-6">
+          <div className="max-w-6xl bg-white rounded-[16px] mx-auto p-6">
+            <h1 className="font-[Outfit] font-semibold text-[16px] leading-[100%] tracking-[0%] mb-6">Last Completed</h1>
+            
+            {/* Top summary card */}
+            <div className="max-w-5xl mx-auto my-4 p-4 bg-white border border-[#e7e7e9] shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] rounded-[16px]">
+              <div className="flex flex-row divide-x divide-gray-200">
+                <div className="flex-1 p-2 px-6 text-center">
+                  <div className="font-[Outfit] font-normal leading-[100%] tracking-[0%] mb-2">
+                  Last Modified
+                  </div>
+                  <div className="font-medium text-[14px] leading-[100%] tracking-[0%] text-[#606062] text-center">
+                  {lastModified || 'No Data'}
+
+                  </div>
+                </div>
+                
+                <div className="flex-1 p-2 px-6 text-center">
+                  <div className="font-[Outfit] font-normal leading-[100%] tracking-[0%] mb-2">  Unit Status </div>
+                  <div className="font-medium text-[14px] leading-[100%] tracking-[0%] text-[#606062] text-center">
+                  {selUnitDetails?.status || 'No Data'}
+
+                  </div>
+                </div>
+                
+                <div className="flex-1 p-2 px-6 text-center">
+                  <div className="font-[Outfit] font-normal leading-[100%] tracking-[0%] mb-2">
+                  Audit Done By
+                  </div>
+                  <div className="font-medium text-[14px] leading-[100%] tracking-[0%] text-[#606062] text-center">
+                  {auditDoneBy || 'No Data'}
+
+    
+                  </div>
+                </div>
+              </div>
+            </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+            
+            {/* Main details card */}
+
+
+            <div className="w-full h-full flex justify-center  z-10 relative">
+          <div className=" max-w-4xl mx-auto px-4 w-full">
+            {/* <h1 className="text-[#606062] tracking-[0.06em]  font-medium text-[12px] uppercase  pl-4">Unit Analysis  </h1> */}
+
+            <div className="flex flex-col mt-2 space-y-4">
+              {/* <h2 className="text-xl font-semibold text-[#213343]">Unit Information</h2> */}
+
+              <div className="grid gap-8 grid-cols-1">
+                <div className="flex flex-col bg-[#FFFFFF] p-6 rounded-2xl  border border-[#E7E7E9]  shadow-[0px_4px_30px_rgba(0,0,0,0.05)]  ">
+                  <div className="mt-0">
+                    <p className="text-gray-700 font-outfit">
+                      Review and recalculate unit details to ensure all data is
+                      accurate and up-to-date.
+                    </p>
+                    <button
+                      className="bg-[#E8E6FE] px-6 py-2 mt-4 text-sm shadow-sm font-medium tracking-wider text-black hover:text-black rounded-lg hover:shadow-md hover:bg-[#DBD3FD] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-400 flex items-center justify-center"
+                      type="submit"
+                      onClick={() => auditFun()}
+                      disabled={loading}
+                    >
+                      {loading && <Loader />}
+                      <span>Audit Unit-{selUnitDetails?.unit_no}</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+    
+    
+    
+          </div>
+        </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+    {/* <div className="overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
       <div className="relative min-h-screen mr-6">
-        {/* Background image */}
-        {/* <div className="">
-      <img alt="CRM Background" src="/crmfinal.svg" className="w-full h-auto" />
-    </div> */}
+
 
         <div className="relative z-0">
           <h1 className="text-[#606062] font-outfit mb-1  mx-auto w-full tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
@@ -342,10 +459,8 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
 
         <div className="w-full h-full flex justify-center mt-[-70px] z-10 relative">
           <div className=" max-w-4xl mx-auto px-4 w-full">
-            {/* <h1 className="text-[#606062] tracking-[0.06em]  font-medium text-[12px] uppercase  pl-4">Unit Analysis  </h1> */}
 
             <div className="flex flex-col mt-2 space-y-4">
-              {/* <h2 className="text-xl font-semibold text-[#213343]">Unit Information</h2> */}
 
               <div className="grid gap-8 grid-cols-1">
                 <div className="flex flex-col bg-[#FFFFFF] p-6 rounded-2xl  ">
@@ -370,7 +485,25 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
           </div>
         </div>
       </div>
-    </div>
+    </div> */}
+    
+    
+    
+    
+    
+    
+    
+    </>
+
+
+
+
+
+
+
+
+
+
   )
 }
 

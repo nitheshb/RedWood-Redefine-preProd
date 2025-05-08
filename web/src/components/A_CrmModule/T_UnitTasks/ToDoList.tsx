@@ -238,7 +238,410 @@ const ToDoList = ({ selUnitPayload }) => {
     // write query to update task status in supabase
   }
   return (
-    <div className="overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
+
+
+
+<>
+
+
+
+
+<div className="overflow-y-scroll w-full items-center justify-center mx-auto min-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
+    
+    
+    <div className="relative min-h-screen mr-6">
+      <div className="max-w-6xl bg-white rounded-[16px] mx-auto p-6">
+        <h1 className="font-[Outfit] font-semibold text-[16px] leading-[100%] tracking-[0%] mb-6">Last Completed</h1>
+        
+        {/* Top summary card */}
+        <div className="max-w-5xl mx-auto my-4 p-4 bg-white border border-[#e7e7e9] shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] rounded-[16px]">
+          <div className="flex flex-row divide-x divide-gray-200">
+            <div className="flex-1 p-2 px-6 text-center">
+              <div className="font-[Outfit] font-normal leading-[100%] tracking-[0%] mb-2">   Last Completed</div>
+              <div className="font-medium text-[14px] leading-[100%] tracking-[0%] text-[#606062] text-center">
+              {unitFetchedActivityData?.filter(t => t.status === 'Done').length > 0
+                    ? unitFetchedActivityData
+                      .filter(t => t.status === 'Done')
+                      .sort((a, b) => new Date(b.completedAt) - new Date(a.completedAt))[0]?.title?.substring(0, 15) + '...' || 'Completed Task'
+                    : 'No Data'}
+              </div>
+            </div>
+            
+            <div className="flex-1 p-2 px-6 text-center">
+              <div className="font-[Outfit] font-normal leading-[100%] tracking-[0%] mb-2">   Next Due Task</div>
+              <div className="font-medium text-[14px] leading-[100%] tracking-[0%] text-[#606062] text-center">
+              {unitFetchedActivityData?.filter(t => t.status !== 'Done' && t.due_date).length > 0
+                    ? unitFetchedActivityData
+                      .filter(t => t.status !== 'Done' && t.due_date)
+                      .sort((a, b) => new Date(a.due_date) - new Date(b.due_date))[0]?.title?.substring(0, 15) + '...' || 'Upcoming Task'
+                    : 'No Data'}
+              </div>
+            </div>
+            
+            <div className="flex-1 p-2 px-6 text-center">
+              <div className="font-[Outfit] font-normal leading-[100%] tracking-[0%] mb-2">
+              Urgent Tasks
+              </div>
+              <div className="font-medium text-[14px] leading-[100%] tracking-[0%] text-[#606062] text-center">
+
+              {unitFetchedActivityData?.filter(t => t.priorities === 'high').length || '0'}
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        {/* Main details card */}
+        <div className="relative w-full max-w-7xl mx-auto px-4  z-10">
+          <div className="bg-white rounded-2xl p-6">
+            <section className="flex flex-row justify-between">
+              {/* <h1 className="text-2xl font-bold text-gray-800 mb-6">Unit Tasks</h1> */}
+            </section>
+
+            <div className="flex flex-row justify-between ">
+              <div className="flex flex-row bg-white rounded-xl border ">
+                <div
+                  className={` py-1 pr-4 pl-4 pt-0 min-w-[62px] ${selFilterVal === 'all' ? 'bg-[#EDE9FE]' : ''
+                    } rounded-xl rounded-r-none`}
+                  onClick={() => setSelFilterVal('all')}
+                >
+                  <span className="mr-1 text-[13px] ">All</span>
+
+                  <span className="mr-1 text-[12px] ">
+                    {
+                      unitFetchedActivityData.filter(
+                        (d) => d?.due_date != undefined
+                      ).length
+                    }
+                  </span>
+                </div>
+                <div
+                  className={` py-1 pr-4 pl-4  pt-0 min-w-[62px] border-x ${selFilterVal === 'pending' ? 'bg-[#EDE9FE]' : ''
+                    } `}
+                  onClick={() => setSelFilterVal('pending')}
+                >
+                  {/* <CheckCircleIcon className="w-4 h-4  inline text-[#cdcdcd]" /> */}
+                  <span className="mr-1 text-[13px] ">Pending</span>
+                  <span className=" text-[12px] ">
+                    {' '}
+                    {
+                      unitFetchedActivityData?.filter(
+                        (d) => d?.status === 'InProgress'
+                      ).length
+                    }
+                  </span>
+                </div>
+                <div
+                  className={` py-1 pr-4 pt-0 pl-4 min-w-[62px] ${selFilterVal === 'completed' ? 'bg-[#EDE9FE]' : ''
+                    }  rounded-xl rounded-l-none`}
+                  onClick={() => setSelFilterVal('completed')}
+                >
+                  {/* <CheckCircleIcon className="w-4 h-4 inline text-[#058527]" /> */}
+                  <span className="mr-1 text-[12px]  ">Completed</span>
+
+                  <span className="mr-1 text-[12px] ">
+                    {' '}
+                    {
+                      leadSchFetchedData?.filter((d) => d?.sts === 'completed')
+                        .length
+                    }
+                  </span>
+                </div>
+              </div>
+              <section>
+                {!showAddTask && (
+                  <span
+                    className="ml-2 mt-1 text-[#0E0A1F] cursor-pointer "
+                    onClick={() => {
+                      setShowAddTask(!showAddTask)
+                    }}
+                  >
+                    Create Task
+                  </span>
+                )}
+                {showAddTask && (
+                  <span
+                    className="ml-2 mt-1 text-blue-800 cursor-pointer"
+                    onClick={() => {
+                      setShowAddTask(!showAddTask)
+                    }}
+                  >
+                    Close Task
+                  </span>
+                )}
+              </section>
+            </div>
+
+            {showAddTask && (
+              <div className="flex flex-col pt-0 my-10  mt-4 ">
+                <Formik
+                  enableReinitialize={true}
+                  initialValues={initialState}
+                  validationSchema={validateSchema}
+                  onSubmit={async (data, { resetForm }) => {
+                    data.due_date = startDate
+                    data.priorities = prior ? 'high' : 'medium'
+                    // data.attachments = files
+                    data.Uuid = selUnitPayload?.id
+                    await addLegalClarificationTicket(orgId, data, user)
+                    setShowAddTask(false)
+                    return
+                  }}
+                >
+                  {(formik) => (
+                    <Form>
+                      <div className=" form outline-none border rounded-lg  py-4">
+                        <section className=" px-4">
+                          <div className="text-xs font-bodyLato text-[#516f90] mb-[4px]">
+                            Task Title
+                            <ErrorMessage
+                              component="div"
+                              name="taskTitle"
+                              className="error-message text-red-700 text-xs p-1"
+                            />
+                          </div>
+                          <input
+                            autoFocus
+                            name="taskTitle"
+                            type="text"
+                            value={takTitle}
+                            onChange={(e) => {
+                              formik.setFieldValue('taskTitle', e.target.value)
+                              setTitleFun(e)
+                            }}
+                            placeholder="Enter a short title"
+                            className="w-full h-full pb-1 outline-none text-sm font-bodyLato focus:border-blue-600 hover:border-blue-600  border-b border-[#cdcdcd] text-[33475b]  "
+                          ></input>
+                          <div className="flex flex-row ">
+                            <div className="flex flex-row mt-3">
+                              <section>
+                                <span className="text-xs font-bodyLato text-[#516f90]">
+                                  <span className="">
+                                    {tempLeadStatus.charAt(0).toUpperCase() +
+                                      tempLeadStatus.slice(1)}{' '}
+                                  </span>
+                                  Due Date
+                                </span>
+                                <div className="bg-green   pl-   flex flex-row ">
+                                  <span className="inline">
+                                    <CustomDatePicker
+                                      className=" mt-[2px] pl- px- min-w-[240px] inline text-xs text-[#0091ae] "
+                                      selected={startDate}
+                                      onChange={(date) => setStartDate(date)}
+                                      showTimeSelect
+                                      timeFormat="HH:mm"
+                                      injectTimes={[
+                                        setHours(setMinutes(d, 1), 0),
+                                        setHours(setMinutes(d, 5), 12),
+                                        setHours(setMinutes(d, 59), 23),
+                                      ]}
+                                      dateFormat="MMM d, yyyy h:mm aa"
+                                    />
+                                  </span>
+                                </div>
+                              </section>
+                            </div>
+                            <div className="flex flex-row mt-3">
+                              <section>
+                                <span className="text-xs font-bodyLato text-[#516f90]">
+                                  <span className="">
+                                    {tempLeadStatus.charAt(0).toUpperCase() +
+                                      tempLeadStatus.slice(1)}{' '}
+                                  </span>
+                                  Priority
+                                </span>
+                                <div className="bg-green   pl-   flex flex-row  ">
+                                  <span className="inline">
+                                    <input
+                                      data-bx-id="task-edit-priority-cb"
+                                      type="checkbox"
+                                      name="priorities"
+                                      value={prior}
+                                      className="mb-[5px]"
+                                      onChange={(value) => {
+                                        setPrior(!prior)
+                                        const priorTxt = prior
+                                          ? 'high'
+                                          : 'medium'
+                                        formik.setFieldValue(
+                                          'priorities',
+                                          priorTxt
+                                        )
+                                        console.log(
+                                          'is this checked ',
+                                          priorTxt
+                                        )
+                                      }}
+                                    />
+                                  </span>
+                                  <div className="w-[85px] ml-1 mt-[1px] text-sm text-[#00000080]">
+                                    High Priority
+                                  </div>
+                                </div>
+                              </section>
+                            </div>
+                          </div>
+                        </section>
+                        <div className="flex flex-row mt-4 justify-between pr-4 border-t pt-1">
+                          <section>
+                            <span>{''}</span>
+                          </section>
+                          <section className="flex">
+                            <button
+                              type="submit"
+                              className={`flex mt-2 cursor-pointer rounded-xs crm_bg_color  items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium   text-[#0E0A1F] rounded-lg   `}
+                            >
+                              <span className="ml-1 ">
+                                Create{' '}
+                                {tempLeadStatus != streamCurrentStatus &&
+                                  tempLeadStatus}{' '}
+                                Task
+                              </span>
+                            </button>
+                            <button
+                              // onClick={() => cancelResetStatusFun()}
+                              className={`flex mt-2 ml-4 rounded-lg items-center pl-2 h-[36px] pr-4 py-2 text-sm font-medium border text-[#0E0A1F]  `}
+                            >
+                              <span className="ml-1 ">Cancel</span>
+                            </button>
+                          </section>
+                        </div>
+                      </div>
+                    </Form>
+                  )}
+                </Formik>
+              </div>
+            )}
+            <div className="">
+              {unitFetchedActivityData.map((task) => (
+                <div key={task.id} className="p-4 border-b">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <div
+                        className={`text-md font-medium ${task?.completed
+                            ? 'line-through text-gray-400'
+                            : 'text-gray-800'
+                          }`}
+                      >
+                        {task?.title}
+                      </div>
+                      <section className="flex flex-row mt-[3px]">
+                        <div className="text-xs text-gray-500 ">
+                          Due:{prettyDateTime(task?.due_date)}
+                        </div>
+                        <div className="w-[2px] mx-2 mt-[4px] h-[8px] border-0 border-r"></div>
+                        <div className="text-xs  text-gray-500">
+                          CreatedBy:{task?.by_name || 'NA'}
+                        </div>
+                        <div className="w-[2px] mx-2 mt-[4px] h-[8px] border-0 border-r"></div>
+                        <div className="text-xs  text-gray-500">
+                          AssignedTo:{task?.to_name || 'NA'}
+                        </div>
+                      </section>
+                    </div>
+                    <div className="flex items-center space-x-4">
+                      <div className="relative group">
+                        <span
+                          className={`${getPriorityColor(
+                            task.priority
+                          )} text-xs px-3 py-1 rounded-full cursor-pointer`}
+                        >
+                          {task.priority}
+                        </span>
+                        <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg hidden group-hover:block z-10">
+                          <div className="py-1">
+                            {priorityOptions.map((option) => (
+                              <button
+                                key={option.value}
+                                className={`${option.color} block w-full text-left px-4 py-2 text-sm`}
+                                onClick={() =>
+                                  editTaskPriority(task.id, option.value)
+                                }
+                              >
+                                {option.value}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                      <input
+                        type="checkbox"
+                        checked={false}
+                        onChange={() => updateTaskStatus(d1)}
+                        className="h-5 w-5 text-black accent-black  border-gray-300 rounded focus:ring-black"
+                      />
+                      <div
+                        className={`w-6 h-6 border-2 rounded cursor-pointer ${task.completed
+                            ? 'bg-blue-500 border-blue-500'
+                            : 'border-gray-300'
+                          }`}
+                        onClick={() => toggleTaskCompletion(task.id)}
+                      >
+                        {task.completed && (
+                          <input
+                            type="checkbox"
+                            checked={false}
+                            //  onChange={() => triggerPaymentScheudlefun(d1)}
+                            className="h-5 w-5 text-black accent-black  border-gray-300 rounded focus:ring-black"
+                          />
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              {!showAddTask && (
+                <button
+                  className="w-full p-3 border mt-4 border-dashed border-gray-300 text-gray-500 rounded-lg flex items-center justify-center"
+                  onClick={() => setShowAddTask(true)}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5 mr-2"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  Add New Task
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+        </div>
+
+
+
+
+
+
+
+
+{/* <div className="overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
       <div className="relative min-h-screen mr-6">
         <div className="relative z-0">
           <h1 className="text-[#606062] font-outfit mb-1   mx-auto w-full  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
@@ -254,30 +657,7 @@ const ToDoList = ({ selUnitPayload }) => {
           <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
             <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
 
-              {/* <div className="text-center space-y-2">
-                <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">
-                  Last Task
-                </p>
-                <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">
-                  No Data
-                </h2>
-              </div>
-              <div className="text-center space-y-2">
-                <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">
-                  Next Task
-                </p>
-                <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">
-                  No Data
-                </h2>
-              </div>
-              <div className="text-center space-y-2">
-                <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">
-                  
-                </p>
-                <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">
-                  No Data
-                </h2>
-              </div> */}
+
 
 
               <div className="text-center space-y-2">
@@ -330,7 +710,6 @@ const ToDoList = ({ selUnitPayload }) => {
         <div className="relative w-full max-w-7xl mx-auto px-4 mt-[-70px] z-10">
           <div className="bg-white rounded-2xl p-6">
             <section className="flex flex-row justify-between">
-              {/* <h1 className="text-2xl font-bold text-gray-800 mb-6">Unit Tasks</h1> */}
             </section>
 
             <div className="flex flex-row justify-between ">
@@ -355,7 +734,6 @@ const ToDoList = ({ selUnitPayload }) => {
                     } `}
                   onClick={() => setSelFilterVal('pending')}
                 >
-                  {/* <CheckCircleIcon className="w-4 h-4  inline text-[#cdcdcd]" /> */}
                   <span className="mr-1 text-[13px] ">Pending</span>
                   <span className=" text-[12px] ">
                     {' '}
@@ -371,7 +749,6 @@ const ToDoList = ({ selUnitPayload }) => {
                     }  rounded-xl rounded-l-none`}
                   onClick={() => setSelFilterVal('completed')}
                 >
-                  {/* <CheckCircleIcon className="w-4 h-4 inline text-[#058527]" /> */}
                   <span className="mr-1 text-[12px]  ">Completed</span>
 
                   <span className="mr-1 text-[12px] ">
@@ -649,7 +1026,10 @@ const ToDoList = ({ selUnitPayload }) => {
           </div>
         </div>
       </div>
-    </div>
+    </div> */}
+
+
+</>
   )
 }
 

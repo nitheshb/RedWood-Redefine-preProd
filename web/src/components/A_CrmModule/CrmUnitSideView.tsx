@@ -177,6 +177,8 @@ export default function UnitSideViewCRM({
   const [fetchedUsersList, setfetchedUsersList] = useState([])
   const [usersList, setusersList] = useState([])
 
+  const [hoverId, setHoverId] = useState(null);
+
   const [selFeature, setFeature] = useState('summary')
   const [tempLeadStatus, setLeadStatus] = useState('')
   const [assignerName, setAssignerName] = useState('')
@@ -514,7 +516,7 @@ export default function UnitSideViewCRM({
     )
     return toast.promise(
       (async () => {
-        try{
+        try {
           await Promise.all(
             selCustomerPayload?.fullPs.map(async (ps) => {
               console.log('my values are', ps)
@@ -531,18 +533,18 @@ export default function UnitSideViewCRM({
               return 'Employee projection updated'
             })
           )
-}
-    catch (error) {
-      console.log('error in uploading file with data', error);
-      throw error; // Rethrow to let toast.promise handle it
-    }
-  })(),
-  {
-    loading: 'Updating projections to new CRM Owner...',
-    success: (message) => message,
-    error: 'Employee projections updation failed'
-  }
-);
+        }
+        catch (error) {
+          console.log('error in uploading file with data', error);
+          throw error; // Rethrow to let toast.promise handle it
+        }
+      })(),
+      {
+        loading: 'Updating projections to new CRM Owner...',
+        success: (message) => message,
+        error: 'Employee projections updation failed'
+      }
+    );
 
 
     const msgPayload = {
@@ -1085,18 +1087,23 @@ export default function UnitSideViewCRM({
 
   return (
     <div
-      className={`bg-[#F6F5F8]  max-h-screen ${
-        openUserProfile ? 'hidden' : ''
-      } overflow-y-scroll overflow-x-hidden `}
+      className={`  bg-[#F6F5F8]  max-h-screen ${openUserProfile ? 'hidden' : ''
+        } overflow-y-scroll overflow-x-hidden `}
     >
-      <div className=" pb-[2px] px-3 pb-30 mt-0 rounded-xs  bg-[#F6F5F8]">
-        {/* <hr className="pb-[2px] px-3 mt-0 rounded-md bg-[#000] relative overflow-hidden border border-b border-transparent before:absolute before:inset-0 before:rounded-md before:border-[1px] before:border-transparent before:bg-gradient-to-r before:from-transparent before:via-gray-300 before:to-transparent before:pointer-events-none"/> */}
 
-        <div className="-mx-3 flex  sm:-mx-4 px-3">
-          <div className="w-full   ">
-            <div className="flex flex-col justify-between">
-              <section className="flex flex-row justify-between bg-[#F6F5F8] px-3 py-1  rounded-md ">
-                {/* <section>
+
+
+      <div className='flex bg-white  flex-col'>
+
+
+        <div className=" pb-[2px] px-3 pb-30 mt-0 rounded-xs ">
+          {/* <hr className="pb-[2px] px-3 mt-0 rounded-md bg-[#000] relative overflow-hidden border border-b border-transparent before:absolute before:inset-0 before:rounded-md before:border-[1px] before:border-transparent before:bg-gradient-to-r before:from-transparent before:via-gray-300 before:to-transparent before:pointer-events-none"/> */}
+
+          <div className="-mx-3 flex  sm:-mx-4 px-3">
+            <div className="w-full   ">
+              <div className="flex flex-col justify-between">
+                <section className="flex flex-row justify-between bg-white px-3 py-1  rounded-md ">
+                  {/* <section>
                 <section className="flex flex-row   pt-2 justify-between">
                                   <div className="flex flex-row">
                                     <section className="bg-violet-100  items-center rounded-2xl shadow-xs flex flex-col px-2 py-1 shadow">
@@ -1169,10 +1176,10 @@ export default function UnitSideViewCRM({
 
                 </section> */}
 
-                <section className="flex flex-row pt-2 justify-between items-start">
-                  <div className="flex flex-row items-start gap-2">
-                    {/* Unit Number Box */}
-                    {/* <section className="crm_bg_color  flex flex-col p-4 py-2 min-w-[50px] max-w-fit   items-center rounded-2xl shadow-xs flex flex-col px-2 py-1 shadow">
+                  <section className="flex flex-row pt-2 justify-between items-start">
+                    <div className="flex flex-row items-start gap-2">
+                      {/* Unit Number Box */}
+                      {/* <section className="crm_bg_color  flex flex-col p-4 py-2 min-w-[50px] max-w-fit   items-center rounded-2xl shadow-xs flex flex-col px-2 py-1 shadow">
   <div className="font-semibold text-[#0E0A1F] text-[22px] tracking-wide">
     {selCustomerPayload?.unit_no}
   </div>
@@ -1180,220 +1187,344 @@ export default function UnitSideViewCRM({
 
 </section> */}
 
-                    <section className="bg-violet-100  items-center rounded-2xl shadow-xs flex flex-col px-2 py-1 shadow">
-                      <div className="font-semibold text-[#053219]  text-[22px]  mb-[1] tracking-wide">
-                        {selCustomerPayload?.unit_no}
+                      <section className="bg-violet-100  items-center rounded-2xl shadow-xs flex flex-col px-2 py-1 shadow">
+                        <div className="font-semibold text-[#053219]  text-[22px]  mb-[1] tracking-wide">
+                          {selCustomerPayload?.unit_no}
+                        </div>
+
+                        <span
+                          className={`items-center h-6   font-outfit text-xs font-semibold text-gray-500  rounded-full
+                      `}
+                        >
+                          Unit No
+                        </span>
+                      </section>
+
+                      {/* Customer & Property Details */}
+                      <div className="flex flex-col mt-1">
+                        {/* Customer Name & Phone Number */}
+                        <div>
+                          <p className="text-[16px] font-outfit font-semibold text-[#000000]">
+                            {selCustomerPayload?.customerDetailsObj
+                              ?.customerName1 || 'NA'}
+                          </p>
+                          <p className="text-[12px] font-outfit text-[#606062] font-medium">
+                            {selCustomerPayload?.customerDetailsObj?.phoneNo1}
+                          </p>
+                        </div>
+
+                        {/* Property Details */}
+
+                        <section className="flex flex-wrap items-center">
+                          {selCustomerPayload?.block_no !== undefined && (
+                            <h2 className="text-[12px] text-[#606062] font-medium border border-[#ECFDF5] py-1 rounded-md relative after:content-['|'] after:mx-2 after:text-[#606062] last:after:content-none">
+                              Block:{' '}
+                              {selCustomerPayload?.block_no?.toLocaleString(
+                                'en-IN'
+                              )}
+                            </h2>
+                          )}
+                          {selCustomerPayload?.floor_no !== undefined && (
+                            <span className="text-[12px] text-[#606062] font-medium border border-[#ECFDF5] py-1 rounded-md relative after:content-['|'] after:mx-2 after:text-[#606062] last:after:content-none">
+                              Floor:{' '}
+                              {selCustomerPayload?.floor_no?.toLocaleString(
+                                'en-IN'
+                              )}
+                            </span>
+                          )}
+                          <h2 className="text-[12px] font-outfit text-[#606062] font-medium py-1 rounded-md relative after:content-['|'] after:mx-2 after:text-[#606062] last:after:content-none">
+                            Size:{' '}
+                            {selCustomerPayload?.area?.toLocaleString('en-IN')}{' '}
+                            sqft
+                          </h2>
+                          {selCustomerPayload?.construct_area !== undefined && (
+                            <h2 className="text-[12px]  font-outfit text-[#606062] font-medium py-1 rounded-md relative after:content-['|'] after:mx-2 after:text-[#606062] last:after:content-none">
+                              BUA:{' '}
+                              {selCustomerPayload?.construct_area?.toLocaleString(
+                                'en-IN'
+                              )}{' '}
+                              sqft
+                            </h2>
+                          )}
+                          <span className="text-[12px] font-outfit text-[#606062] font-medium py-1 rounded-md relative after:content-['|'] after:mx-2 after:text-[#606062] last:after:content-none">
+                            Facing: {selCustomerPayload?.facing}
+                          </span>
+                          <span className="text-[12px] font-outfit text-[#606062] font-medium py-1 rounded-md">
+                            Booked:{' '}
+                            {prettyDate(selCustomerPayload?.booked_on || 0)}
+                          </span>
+                        </section>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section className="flex flex-row  h-[28px] mt-6">
+                    <section
+                      style={{ padding: '14px 10px' }}
+                      className="flex group  flow-row justify-between bg-white  py-[15px]  mr-2   border border-[#E7E7E9]  text-black rounded-lg items-center align-middle text-xs cursor-pointer  hover:bg-[#E5E7EB]"
+                    >
+                      <div className="font-medium text-sm text-[#000000] tracking-wide pr-2 mr-1 relative after:content-[''] after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[1px] after:h-[10px] after:bg-gray-300 group-hover:after:bg-white">
+                        CRM Owner
+                      </div>
+                      <div className="font-md ml-2 text-xs tracking-wide font-semibold text-[#000000] ">
+                        {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
+                          <div className="">
+                            <AssigedToDropCompCrm
+                              assignerName={assignerName}
+                              id={id}
+                              setAssigner={setAssignerFun}
+                              usersList={usersList}
+                              align={undefined}
+                            />
+                          </div>
+                        )}
+                        {user?.role?.includes(USER_ROLES.CP_AGENT) && (
+                          <span className="text-left text-sm">
+                            {' '}
+                            {assignerName}
+                          </span>
+                        )}
+                      </div>
+                    </section>
+                    <section
+                      style={{ padding: '14px 10px' }}
+                      className="flex group flow-row justify-between  py-[15px] mr-2   border border-[#E7E7E9]   px-[15px] bg-white text-black rounded-lg items-center align-middle text-xs cursor-pointer hover:bg-[#E5E7EB]"
+                    >
+                      <div className="font-medium text-sm text-[#000000] tracking-wide pr-2 mr-1 relative after:content-[''] after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[0.8px] after:h-[10px] after:bg-gray-300 group-hover:after:bg-white">
+                        Status
+                      </div>
+                      <div className="font-md  ml-2  text-xs tracking-wide font-semibold text-[#000000] ">
+                        {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
+                          <div className="">
+                            <AssigedToDropCompCrm
+                              assignerName={unitStatusLabel}
+                              id={id}
+                              setAssigner={setStatusFun}
+                              usersList={StatusListA}
+                              align={undefined}
+                            />
+                          </div>
+                        )}
+
+                        {user?.role?.includes(USER_ROLES.CP_AGENT) && (
+                          <span className="text-left text-sm">
+                            {' '}
+                            {assignerName}
+                          </span>
+                        )}
+                      </div>
+                    </section>
+
+
+
+
+
+
+
+
+                    {(user?.role.includes('crm-manager') ||
+                      user?.role.includes('crm-executive') ||
+                      user?.role.includes('admin')) && (
+                        <button
+                          className="text-[12px]  rounded-lg ml-2 crm_bg_color px-5 border font-semibold  capitalize  border-[#E3BDFF] text-[#0E0A1F]"
+                          onClickCapture={() => {
+                            openPaymentFun()
+                          }}
+                        >
+                          Capture Payment
+                        </button>
+                      )}
+
+                    {customerDetails?.man_cs_approval === 'approved' && (
+                      <button
+                        className=" text-[12px]  rounded-lg ml-2 bg-white px-5 border font-semibold capitalize  border-[#E3BDFF] "
+                        onClickCapture={() => {
+                          openDemandFun()
+                        }}
+                      >
+                        Modifications
+                      </button>
+                    )}
+                  </section>
+                </section>
+              </div>
+            </div>
+          </div>
+          {statusValidError && (
+            <div className=" border-b border-[#ffe6bc]  bg-[#ffe6bc]">
+              <div className="w-full border-b border-[#ffe6bc]  bg-[#f69c10] "></div>
+              <div className=" w-full flex flex-row justify-between pt-1 font-md text-xs text-gray-500 mb-[2px] tracking-wide mr-4 ml-1 flex flex-row">
+                {' '}
+                <section>
+                  <span className="font-Rubik font-sanF text-[#844b00] font-[500]   text-[11px]  py-[6px]">
+                    {newStatusErrorList}
+                  </span>
+                </section>
+                <XIcon
+                  className="h-4 w-4 mr-2 inline text-green"
+                  aria-hidden="true"
+                />
+              </div>
+            </div>
+          )}
+
+          {timeHide && (
+            <>
+              <div className="w-full border-b border-[#ebebeb]"></div>
+              <div className=" w-full  pt-1 font-md text-xs text-gray-500 mb-[2px] tracking-wide mr-4 ml-1 flex flex-row justify-between">
+                {' '}
+                <section>
+                  <span className="font-thin   font-bodyLato text-[9px]  py-[6px]">
+                    Created On
+                    <span className="text-[#867777] ck ml-2">
+                      {CT != undefined
+                        ? prettyDateTime(CT)
+                        : prettyDateTime(Date)}
+                    </span>
+                  </span>
+                </section>
+                <section>
+                  <span className="font-thin   font-bodyLato text-[9px]  py-[6px]">
+                    Updated On :
+                    <span className="text-[#867777] ck ml-2">
+                      {stsUpT === undefined
+                        ? 'NA'
+                        : prettyDateTime(stsUpT) || 'NA'}
+                    </span>
+                  </span>
+                </section>
+                <section>
+                  <span className="font-thin text-[#867777]   font-bodyLato text-[9px]  py-[6px]">
+                    Assigned On
+                    <span className="text-[#867777] ck ml-2">
+                      {assignT != undefined
+                        ? prettyDateTime(assignT)
+                        : prettyDateTime(Date)}
+                    </span>
+                  </span>
+                </section>
+              </div>
+            </>
+          )}
+        </div>
+
+
+
+
+        <section className="flex group  flow-row justify-center items-center py-[15px] mr-2  px-[15px]  text-black rounded-lg text-xs cursor-pointer ">
+          <div className="flex-1 ml-2">
+            {!user?.role?.includes(USER_ROLES.CP_AGENT) ? (
+              <div className="flex flex-row justify-between pb-0 pt-0 relative">
+                {StatusListA.map((statusFlowObj, i) => {
+                  const currentStatusIndex = StatusListA.findIndex(s => s.value === unitPayload?.status);
+                  const isCompleted = i < currentStatusIndex;
+                  const isCurrent = i === currentStatusIndex;
+
+                  return (
+                    <div key={i} className="flex-1 flex flex-col items-center relative">
+                      <div
+                        className={`w-6 h-6 flex items-center justify-center rounded-full border transition-all duration-200 mb-1 z-10 ${isCurrent
+                            ? ' bg-white   border-[#7152F4] shadow-[0_0_0_3px_rgba(113,82,244,1)]'
+                            : isCompleted
+                              ? 'bg-[#7152F4] border-[#7152F4]'
+                              : 'bg-white border-gray-300'
+                          } ${hoverId === i ? 'ring-2 ring-offset-2 ring-[#7152F4]' : ''
+                          }`}
+                        onClick={() => setStatusFun(id, statusFlowObj)}
+                        onMouseEnter={() => setHoverId(i)}
+                        onMouseLeave={() => setHoverId(null)}
+                        style={{
+                          cursor: 'pointer',
+                        }}
+                      >
+                        {isCurrent ? (
+                          <div className="h-2 w-2 rounded-full bg-black" />
+                        ) : isCompleted ? (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-3 w-3 text-white"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M5 13l4 4L19 7"
+                            />
+                          </svg>
+                        ) : (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-3 w-3 text-gray-400"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M6 18L18 6M6 6l12 12"
+                            />
+                          </svg>
+                        )}
                       </div>
 
                       <span
-                        className={`items-center h-6   font-outfit text-xs font-semibold text-gray-500  rounded-full
-                      `}
+                        className={`text-[11px] font-normal px-2 py-1 z-10 text-center ${isCurrent
+                            ? 'text-[13px] text-black font-semibold'
+                            : isCompleted
+                              ? 'text-[11px] text-[#7152F4] font-medium'
+                              : 'text-[11px] text-gray-500'
+                          }`}
                       >
-                        Unit No
+                        {statusFlowObj.label}
                       </span>
-                    </section>
 
-                    {/* Customer & Property Details */}
-                    <div className="flex flex-col mt-1">
-                      {/* Customer Name & Phone Number */}
-                      <div>
-                        <p className="text-[16px] font-outfit font-semibold text-[#000000]">
-                          {selCustomerPayload?.customerDetailsObj
-                            ?.customerName1 || 'NA'}
-                        </p>
-                        <p className="text-[12px] font-outfit text-[#606062] font-medium">
-                          {selCustomerPayload?.customerDetailsObj?.phoneNo1}
-                        </p>
-                      </div>
-
-                      {/* Property Details */}
-
-                      <section className="flex flex-wrap items-center">
-                        {selCustomerPayload?.block_no !== undefined && (
-                          <h2 className="text-[12px] text-[#606062] font-medium border border-[#ECFDF5] py-1 rounded-md relative after:content-['|'] after:mx-2 after:text-[#606062] last:after:content-none">
-                            Block:{' '}
-                            {selCustomerPayload?.block_no?.toLocaleString(
-                              'en-IN'
-                            )}
-                          </h2>
-                        )}
-                        {selCustomerPayload?.floor_no !== undefined && (
-                          <span className="text-[12px] text-[#606062] font-medium border border-[#ECFDF5] py-1 rounded-md relative after:content-['|'] after:mx-2 after:text-[#606062] last:after:content-none">
-                            Floor:{' '}
-                            {selCustomerPayload?.floor_no?.toLocaleString(
-                              'en-IN'
-                            )}
-                          </span>
-                        )}
-                        <h2 className="text-[12px] font-outfit text-[#606062] font-medium py-1 rounded-md relative after:content-['|'] after:mx-2 after:text-[#606062] last:after:content-none">
-                          Size:{' '}
-                          {selCustomerPayload?.area?.toLocaleString('en-IN')}{' '}
-                          sqft
-                        </h2>
-                        {selCustomerPayload?.construct_area !== undefined && (
-                          <h2 className="text-[12px]  font-outfit text-[#606062] font-medium py-1 rounded-md relative after:content-['|'] after:mx-2 after:text-[#606062] last:after:content-none">
-                            BUA:{' '}
-                            {selCustomerPayload?.construct_area?.toLocaleString(
-                              'en-IN'
-                            )}{' '}
-                            sqft
-                          </h2>
-                        )}
-                        <span className="text-[12px] font-outfit text-[#606062] font-medium py-1 rounded-md relative after:content-['|'] after:mx-2 after:text-[#606062] last:after:content-none">
-                          Facing: {selCustomerPayload?.facing}
-                        </span>
-                        <span className="text-[12px] font-outfit text-[#606062] font-medium py-1 rounded-md">
-                          Booked:{' '}
-                          {prettyDate(selCustomerPayload?.booked_on || 0)}
-                        </span>
-                      </section>
-                    </div>
-                  </div>
-                </section>
-
-                <section className="flex flex-row  h-[28px] mt-6">
-                  <section
-                    style={{ padding: '14px 10px' }}
-                    className="flex group  flow-row justify-between bg-white  py-[15px]  mr-2   border border-[#E7E7E9]  text-black rounded-lg items-center align-middle text-xs cursor-pointer  hover:bg-[#E5E7EB]"
-                  >
-                    <div className="font-medium text-sm text-[#000000] tracking-wide pr-2 mr-1 relative after:content-[''] after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[1px] after:h-[10px] after:bg-gray-300 group-hover:after:bg-white">
-                      CRM Owner
-                    </div>
-                    <div className="font-md ml-2 text-xs tracking-wide font-semibold text-[#000000] ">
-                      {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
-                        <div className="">
-                          <AssigedToDropCompCrm
-                            assignerName={assignerName}
-                            id={id}
-                            setAssigner={setAssignerFun}
-                            usersList={usersList}
-                            align={undefined}
-                          />
-                        </div>
-                      )}
-                      {user?.role?.includes(USER_ROLES.CP_AGENT) && (
-                        <span className="text-left text-sm">
-                          {' '}
-                          {assignerName}
-                        </span>
+                      {i < StatusListA.length - 1 && (
+                        <div
+                          className={`absolute top-3 left-[calc(50%+0.5rem)] h-[1px] w-[calc(100%-1rem)] ${isCompleted ? 'bg-[#7152F4]' : 'bg-gray-300'
+                            }`}
+                          style={{ transform: 'translateY(-50%)' }}
+                        />
                       )}
                     </div>
-                  </section>
-                  <section
-                    style={{ padding: '14px 10px' }}
-                    className="flex group flow-row justify-between  py-[15px] mr-2   border border-[#E7E7E9]   px-[15px] bg-white text-black rounded-lg items-center align-middle text-xs cursor-pointer hover:bg-[#E5E7EB]"
-                  >
-                    <div className="font-medium text-sm text-[#000000] tracking-wide pr-2 mr-1 relative after:content-[''] after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[0.8px] after:h-[10px] after:bg-gray-300 group-hover:after:bg-white">
-                      Status
-                    </div>
-                    <div className="font-md  ml-2  text-xs tracking-wide font-semibold text-[#000000] ">
-                      {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
-                        <div className="">
-                          <AssigedToDropCompCrm
-                            assignerName={unitStatusLabel}
-                            id={id}
-                            setAssigner={setStatusFun}
-                            usersList={StatusListA}
-                            align={undefined}
-                          />
-                        </div>
-                      )}
-
-                      {user?.role?.includes(USER_ROLES.CP_AGENT) && (
-                        <span className="text-left text-sm">
-                          {' '}
-                          {assignerName}
-                        </span>
-                      )}
-                    </div>
-                  </section>
-                  {(user?.role.includes('crm-manager') ||
-                    user?.role.includes('crm-executive') ||
-                    user?.role.includes('admin')) && (
-                    <button
-                      className="text-[12px]  rounded-lg ml-2 crm_bg_color px-5 border font-semibold  capitalize  border-[#E3BDFF] text-[#0E0A1F]"
-                      onClickCapture={() => {
-                        openPaymentFun()
-                      }}
-                    >
-                      Capture Payment
-                    </button>
-                  )}
-
-                  {customerDetails?.man_cs_approval === 'approved' && (
-                    <button
-                      className=" text-[12px]  rounded-lg ml-2 bg-white px-5 border font-semibold capitalize  border-[#E3BDFF] "
-                      onClickCapture={() => {
-                        openDemandFun()
-                      }}
-                    >
-                      Modifications
-                    </button>
-                  )}
-                </section>
-              </section>
-            </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <span className="text-left text-sm">
+                {unitStatusLabel || 'No Status'}
+              </span>
+            )}
           </div>
-        </div>
-        {statusValidError && (
-          <div className=" border-b border-[#ffe6bc]  bg-[#ffe6bc]">
-            <div className="w-full border-b border-[#ffe6bc]  bg-[#f69c10] "></div>
-            <div className=" w-full flex flex-row justify-between pt-1 font-md text-xs text-gray-500 mb-[2px] tracking-wide mr-4 ml-1 flex flex-row">
-              {' '}
-              <section>
-                <span className="font-Rubik font-sanF text-[#844b00] font-[500]   text-[11px]  py-[6px]">
-                  {newStatusErrorList}
-                </span>
-              </section>
-              <XIcon
-                className="h-4 w-4 mr-2 inline text-green"
-                aria-hidden="true"
-              />
-            </div>
-          </div>
-        )}
+        </section>
 
-        {timeHide && (
-          <>
-            <div className="w-full border-b border-[#ebebeb]"></div>
-            <div className=" w-full  pt-1 font-md text-xs text-gray-500 mb-[2px] tracking-wide mr-4 ml-1 flex flex-row justify-between">
-              {' '}
-              <section>
-                <span className="font-thin   font-bodyLato text-[9px]  py-[6px]">
-                  Created On
-                  <span className="text-[#867777] ck ml-2">
-                    {CT != undefined
-                      ? prettyDateTime(CT)
-                      : prettyDateTime(Date)}
-                  </span>
-                </span>
-              </section>
-              <section>
-                <span className="font-thin   font-bodyLato text-[9px]  py-[6px]">
-                  Updated On :
-                  <span className="text-[#867777] ck ml-2">
-                    {stsUpT === undefined
-                      ? 'NA'
-                      : prettyDateTime(stsUpT) || 'NA'}
-                  </span>
-                </span>
-              </section>
-              <section>
-                <span className="font-thin text-[#867777]   font-bodyLato text-[9px]  py-[6px]">
-                  Assigned On
-                  <span className="text-[#867777] ck ml-2">
-                    {assignT != undefined
-                      ? prettyDateTime(assignT)
-                      : prettyDateTime(Date)}
-                  </span>
-                </span>
-              </section>
-            </div>
-          </>
-        )}
+
       </div>
 
-      <hr className="h-[1px]  bg-gradient-to-r from-[#F6F5F8]/100 via-[#B1B1B1] to-[#F6F5F8]/100 border-0 my-4" />
+
+
+
+
+      {/* <hr className="h-[1px]  bg-gradient-to-r from-[#F6F5F8]/100 via-[#B1B1B1] to-[#F6F5F8]/100 border-0 my-4" /> */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       {/* <hr className="h-[1px] bg-gradient-to-r from-[#F6F5F8]/100 via-[#B1B1B1] to-[#F6F5F8]/100 border-0 my-4" /> */}
 
@@ -1677,31 +1808,39 @@ changed her */}
 
       {/* changed her end */}
 
-      <UnitFullSummary
-        setOpen={setOpen}
-        customerDetails={customerDetails}
-        selCustomerPayload={selCustomerPayload}
-      />
 
-      {selFeature === 'legal_info' && <></>}
-      <SiderForm
-        open={openCapturePayment}
-        setOpen={setOpenCapturePayment}
-        title={'capturePayment'}
-        unitsViewMode={false}
-        widthClass="max-w-xl"
-        selUnitDetails={selCustomerPayload}
-        paymentCaptureFun={paymentCaptureFun}
-      />
-      <SiderForm
-        open={newDemand}
-        setOpen={setOpenNewDemand}
-        title={'newDemand'}
-        unitsViewMode={false}
-        widthClass="max-w-xl"
-        selUnitDetails={selCustomerPayload}
-        paymentCaptureFun={demandCaptureFun}
-      />
+      <div className='my-4'>
+
+
+        <UnitFullSummary
+          setOpen={setOpen}
+          customerDetails={customerDetails}
+          selCustomerPayload={selCustomerPayload}
+        />
+
+        {selFeature === 'legal_info' && <></>}
+        <SiderForm
+          open={openCapturePayment}
+          setOpen={setOpenCapturePayment}
+          title={'capturePayment'}
+          unitsViewMode={false}
+          widthClass="max-w-xl"
+          selUnitDetails={selCustomerPayload}
+          paymentCaptureFun={paymentCaptureFun}
+        />
+        <SiderForm
+          open={newDemand}
+          setOpen={setOpenNewDemand}
+          title={'newDemand'}
+          unitsViewMode={false}
+          widthClass="max-w-xl"
+          selUnitDetails={selCustomerPayload}
+          paymentCaptureFun={demandCaptureFun}
+        />
+
+      </div>
+
+
     </div>
   )
 }
