@@ -52,6 +52,10 @@ import { serialMyData } from './LeadsTeamReport/SourceLeads'
 import ReportSideWindow from './SiderForm/ReportSideView'
 import SiderForm from './SiderForm/SiderForm'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
+import Chatbot from './comps/aichat/Chatbot'
+
+
+
 
 const valueFeedData = [
   { k: 'Total', v: 300, pic: '' },

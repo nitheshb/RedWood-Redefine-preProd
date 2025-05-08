@@ -776,8 +776,8 @@ export default function LLeadsTableBody({
                         <section>
                           <span className="font-outfit">
                             {row.assignT != undefined
-                              ? prettyDate(row.assignT)
-                              : prettyDate(row.Date)}
+                              ? prettyDate(row?.assignT)
+                              : prettyDate(row?.Date)}
                           </span>
                         </section>
                       </TableCell>
@@ -909,10 +909,10 @@ export default function LLeadsTableBody({
 
                             sx={{
                               '& .MuiRating-iconFilled': {
-                                color: '#FF9529', 
+                                color: '#FF9529',
                               },
                               '& .MuiRating-iconHover': {
-                                color: '#FF9529', 
+                                color: '#FF9529',
                               },
                             }}
                           />
