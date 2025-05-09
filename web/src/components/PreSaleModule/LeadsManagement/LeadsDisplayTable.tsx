@@ -16,6 +16,7 @@ import {
   SlimSelectBox,
 } from 'src/util/formFields/slimSelectBoxField'
 import CSVDownloader from '../../../util/csvDownload'
+import L_AutoAllocator from './LeadsAutoAllocator'
 
 const torrowDate = new Date(
   +new Date().setHours(0, 0, 0, 0) + 86400000
@@ -106,19 +107,13 @@ const LeadsDisplayTable = ({
         <div className="flex items-center justify-between flex-wrap pb-5 px-4 py-4 bg-gray-50 rounded-t-md">
 
           <section className="flex flex-row items-center">
-            {/* <img
-              className="w-10 h-10"
-              alt=""
-              src="https://static.hsappstatic.net/ui-images/static-2.758/optimized/categories-color.svg"
-            /> */}
-
             <img className="w-8 h-8" alt="folder icon" src="/folder-library.svg" />
             <h2 className="ml-2 text-md font-semibold text-[#2B2B2B]">
               Leads Bank
             </h2>
           </section>
 
-      
+
           <section className="flex items-center gap-2">
             <SlimDateSelectBox
               onChange={async (value) => {
@@ -134,12 +129,12 @@ const LeadsDisplayTable = ({
                   backgroundColor: state.isSelected
                     ? '#F25533'
                     : state.isFocused
-                      ? '#FDEFE7' 
+                      ? '#FDEFE7'
                       : provided.backgroundColor,
                   color: state.isSelected
                     ? 'white'
                     : state.isFocused
-                      ? '#2B2B2B' 
+                      ? '#2B2B2B'
                       : provided.color,
                 }),
                 control: (base) => ({
@@ -169,11 +164,11 @@ const LeadsDisplayTable = ({
                   ...provided,
                   paddingTop: 0,
                   paddingBottom: 0,
-                  borderRadius: 8, 
+                  borderRadius: 8,
                 }),
               }}
 
-              
+
 
 
             />
@@ -201,12 +196,12 @@ const LeadsDisplayTable = ({
                     backgroundColor: state.isSelected
                       ? '#F25533'
                       : state.isFocused
-                        ? '#FDEFE7' 
+                        ? '#FDEFE7'
                         : provided.backgroundColor,
                     color: state.isSelected
                       ? 'white'
                       : state.isFocused
-                        ? '#2B2B2B' 
+                        ? '#2B2B2B'
                         : provided.color,
                   }),
                   control: (base) => ({
@@ -236,7 +231,7 @@ const LeadsDisplayTable = ({
                     ...provided,
                     paddingTop: 0,
                     paddingBottom: 0,
-                    borderRadius: 8, 
+                    borderRadius: 8,
                   }),
                 }}
               />
@@ -257,55 +252,6 @@ const LeadsDisplayTable = ({
 
         <div className="bg-white  py-4 md:py-7 px-4 md:px-4 xl:px-6 rounded">
           <div className="sm:flex items-center mb-1 border-b   border-[#e7eaee]  justify-between">
-            {/* <div className="flex items-center">
-              <a
-                className={`rounded-full focus:outline-none focus:ring-2  focus:bg-indigo-50 focus:ring-indigo-800`}
-                onClick={() => setSearchKey(['all'])}
-              >
-                <div
-                  className={`py-2 px-8 rounded-full hover:text-indigo-700 hover:bg-indigo-100  ${
-                    searchKey.includes('all')
-                      ? 'bg-indigo-100 text-indigo-700'
-                      : 'text-gray-600'
-                  }`}
-                >
-                  All
-                </div>
-              </a>
-
-              <a
-                className="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 ml-4 sm:ml-8"
-                href="javascript:void(0)"
-                onClick={() => setSearchKey(['unassigned'])}
-              >
-                <div
-                  className={`py-2 px-8 rounded-full hover:text-indigo-700 hover:bg-indigo-100  ${
-                    searchKey.includes('unassigned') && searchKey.length === 1
-                      ? 'bg-indigo-100 text-indigo-700'
-                      : 'text-gray-600'
-                  }`}
-                >
-                  <p>Unassigned</p>
-                </div>
-              </a>
-              <a
-                className="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 ml-4 sm:ml-8"
-                href="javascript:void(0)"
-                onClick={() => setSearchKey(['DUPLICATE_ENTRY'])}
-              >
-                <div
-                  className={`py-2 px-8 rounded-full hover:text-indigo-700 hover:bg-indigo-100  ${
-                    searchKey.includes('DUPLICATE_ENTRY') &&
-                    searchKey.length === 1
-                      ? 'bg-indigo-100 text-indigo-700'
-                      : 'text-gray-600'
-                  }`}
-                >
-                  <p>Bin</p>
-                </div>
-              </a>
-            </div> */}
-
             <div className="flex items-center">
               <a
                 className={` border-b-2 focus:outline-none ${searchKey.includes('all')
@@ -364,52 +310,24 @@ const LeadsDisplayTable = ({
                 </div>
               </a>
             </div>
-
-            {/* <div className="flex items-center justify-between">
-              <p
-                tabIndex={0}
-                className="focus:outline-none text-base sm:text-lg md:text-xl lg:text-2xl font-bold leading-normal text-gray-800"
-              ></p>
-
-              <section className="flex gap-2 flex-row">
-                <SlimDateSelectBox
-                  onChange={async (value) => {
-                    console.log(value, 'ksdvnlfkjv')
-                    setDateRange(value)
-                  }}
-                  label="This Month"
-                />
-                <div className=" flex flex-col mt-1 w-40">
-                  <SlimSelectBox
-                    name="project"
-                    label=""
-                    className="input "
-                    onChange={(value) => {
-                      console.log('zoro condition changed one  is', value)
-                      setSelProject(value)
-                      // formik.setFieldValue('project', value.value)
-                    }}
-                    value={selProjectIs?.value}
-                    // options={aquaticCreatures}
-                    options={[
-                      ...[{ label: 'All Projects', value: 'allprojects' }],
-                      ...allProjectsA,
-                    ]}
-                  />
+            <div className="flex items-center">
+              <a
+                className={` border-b-2 focus:outline-none ${searchKey.includes('settings')
+                    ? ' border-b-2 border-[#0E0A1F] '
+                    : 'border-transparent text-gray-600'
+                  }`}
+                onClick={() => setSearchKey(['settings'])}
+              >
+                <div
+                  className={` px-2 mb-1  hover:text-[#0E0A1F]  ${searchKey.includes('settings') ? '' : ''
+                    }`}
+                >
+                  Auto Allocations
                 </div>
-                <Tooltip title={`Download ${leadsRawList?.length} Row`}>
-                  <CSVDownloader
-                    className="mr-6 h-[20px] w-[20px]"
-                    downloadRows={leadsRawList}
-                    style={{ height: '20px', width: '20px' }}
-                    fromLeadsBank={true}
-                  />
-                </Tooltip>
-              </section>
-            </div> */}
-
+              </a>
+            </div>
           </div>
-          {leadsRawList.length === 0 && (
+          {!searchKey.includes('settings') &&leadsRawList.length === 0 && (
             <div className="py-8 px-8 mt-10 flex flex-col items-center sale_empty_page_bg_color rounded">
               <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
                 <img
@@ -426,7 +344,7 @@ const LeadsDisplayTable = ({
               </time>
             </div>
           )}
-          <div className="mt-7 overflow-x-auto">
+       {!searchKey.includes('settings') &&    <div className="mt-7 overflow-x-auto">
             <table className="w-full whitespace-nowrap">
               <tbody>
                 {sortedList.map((dat, i) => {
@@ -580,6 +498,10 @@ const LeadsDisplayTable = ({
               </tbody>
             </table>
           </div>
+}
+          <div className="mt-7 overflow-x-auto">
+           {searchKey.includes('settings') &&   <L_AutoAllocator />}
+        </div>
         </div>
       </div>
     </Box>

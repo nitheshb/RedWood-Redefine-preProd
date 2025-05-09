@@ -178,9 +178,11 @@ export default function CustomerSideViewCRM({
         console.log('unit is ', unit)
         const y = await unit
         y.id = d
+  
         return y
       }) || []
     )
+
     setUnitsOverviewA(x)
   }
   useEffect(() => {
