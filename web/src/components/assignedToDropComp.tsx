@@ -23,18 +23,18 @@ export default function AssigedToDropComp({
   const chevronColor = isSpecial ? 'text-black' : 'text-black'
 
   return (
-    <div className="text-right inline-block ">
-      <Menu as="div" className="relative inline-block text-left">
+    <div className="text-right inline-block w-full">
+      <Menu as="div" className="relative inline-block text-left w-full">
         <div>
           <Menu.Button
-            className={`inline-flex justify-center w-full px-0 py-0 text-sm font-semibold text-black-500 bg- rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75  ${buttonStyles} ${buttonClassName}`}
+            className={`inline-flex justify-between w-full px-0 py-0 text-sm font-semibold text-black-500 bg- rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75  ${buttonStyles} ${buttonClassName}`}
           >
             {id === 'id' ? (
               <span className="tracking-wide text-black-600 text-sm font-medium">
                 {assignerName}
               </span>
             ) : (
-              <span className="font-medium tracking-wide text-[#053219] text-left">
+              <span className="font-medium tracking-wide text-[#053219] text-left whitespace-nowrap max-w-[143px] overflow-hidden overflow-ellipsis">
                 {assignerName}
               </span>
             )}
