@@ -20,7 +20,7 @@ export default function LeadTaskDisplayHead({
   const [comingSoonState, setComingSoonState] = useState(false)
 
 
-  
+
   useEffect(() => {
     let x =
       Math.abs(getDifferenceInHours(data?.schTime, '')) <= 24 &&
@@ -36,7 +36,7 @@ export default function LeadTaskDisplayHead({
 
       <div className='flex '>
 
-{/*         
+{/*
         <div className=''>
 
           {data?.sts === 'completed' && (
@@ -49,7 +49,7 @@ export default function LeadTaskDisplayHead({
           )}
 
 {data?.sts != 'completed' &&  data?.stsType !== 'visitfixed' &&  (
- 
+
 
                 <img
                 src="/UnCheck.svg"
@@ -125,7 +125,7 @@ export default function LeadTaskDisplayHead({
 
               <div
                 className={`${data?.sts === 'completed' ? 'line-through' : 'cursor-pointer'
-                  }   font-outfit font-medium text-[14px] leading-[14px] tracking-normal line-through text-[#2B2B2B] `}
+                  }   font-outfit font-medium text-[14px] leading-[14px] tracking-normal  text-[#0091ae] `}
                 onClick={() => {
                   if (data?.sts === 'pending') {
                     setAddTaskCommentObj(data)
@@ -136,19 +136,19 @@ export default function LeadTaskDisplayHead({
               </div>
 
 
-{/* 
+{/*
               <div className='flex gap-2'> */}
-                
+
   <span
     className="text-[12px] font-medium px-2 py-[2px] rounded-[13px] bg-[#FDEFE7] sale_text_color"
   >
     {/* {data?.stsType === 'visitfixed' ? 'Visit Fixed' : data?.sts} */}
-    Status 
+    Status
   </span>
 
 
   <img
-    src="/edit-02.svg" 
+    src="/edit-02.svg"
     alt="Edit"
     className="w-5 h-5 cursor-pointer"
     onClick={() => { }}
@@ -171,7 +171,7 @@ export default function LeadTaskDisplayHead({
 </section>
 
         {/* <section className="flex flex-row justify-between"> */}
-   
+
 
 
           <div>
@@ -184,9 +184,9 @@ export default function LeadTaskDisplayHead({
                 className=" px-3 py-2 rounded-[8px] border border-[#E7E7E9] text-[#000000] font-normal text-[12px] cursor-pointer hover:text-green-900 "
                 // className="inline-flex  placeholder:font-thin text-[#0091ae]  cursor-pointer font-bodyLato text-[12px]   hover:text-green-900"
               >
-     
+
                   Add Comment
-       
+
               </span>
               {data?.stsType === 'visitfixed' && data?.sts != 'completed' && (
                 <span

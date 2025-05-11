@@ -566,7 +566,7 @@ const AddLeadForm = ({
                           </label>
                         </div>
 
-                        <div className="border-t-4 rounded-xl w-16 mt-1 border-[#F25533]"></div>
+                        <div className="border-t-4 rounded-xl w-16 mt-1 border-[#94B5ED]"></div>
                       </div>
                     </div>
                     <div className="md:flex flex-row md:space-x-4 w-full text-xs mt-2">
@@ -739,7 +739,7 @@ const AddLeadForm = ({
                             More Details<abbr title="required">*</abbr>
                           </label>
                         </div>
-                        <div className="border-t-4 rounded-xl w-16 mt-1  border-[#F25533]"></div>
+                        <div className="border-t-4 rounded-xl w-16 mt-1  border-[#94B5ED]"></div>
                         {/* 3 */}
                         <div className="md:flex md:flex-row md:space-x-4 w-full text-xs ">
                           <div className="w-full flex flex-col mb-3 mt-2">
@@ -806,7 +806,7 @@ const AddLeadForm = ({
                             Advanced<abbr title="required"></abbr>
                           </label>
                         </div>
-                        <div className="border-t-4 rounded-xl w-16 mt-1 border-[#F25533]"></div>
+                        <div className="border-t-4 rounded-xl w-16 mt-1 border-[#94B5ED]"></div>
 
                         <div className="">
                           <div className=" flex flex-col  mt-4  px-1 py-1 ">

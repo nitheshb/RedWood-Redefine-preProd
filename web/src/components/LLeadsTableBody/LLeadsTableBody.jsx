@@ -290,7 +290,9 @@ function EnhancedTableHead(props) {
             style={{
               color: '#2B2B2B',
             }}
-          >S.No</TableSortLabel>
+          >
+            S.No
+          </TableSortLabel>
         </TableCell>
         {headers.map((headCell) => (
           <>
@@ -536,7 +538,7 @@ export default function LLeadsTableBody({
   const [searchKey, setSearchKey] = React.useState(searchVal ? searchVal : '')
   const [dateRange, setDateRange] = React.useState([null, null])
   const [startDate, endDate] = dateRange
-  React.useEffect(() => { }, [selStatus, rowsParent])
+  React.useEffect(() => {}, [selStatus, rowsParent])
   console.log(searchKey, 'cdsvfeg')
   React.useEffect(() => {
     filterSearchString(rows)
@@ -549,8 +551,8 @@ export default function LLeadsTableBody({
       selStatus === 'all'
         ? parent['all']
         : selStatus === 'archieve_all'
-          ? parent['archieve_all']
-          : parent[selStatus]
+        ? parent['archieve_all']
+        : parent[selStatus]
 
     await setRows(newArray)
   }
@@ -572,7 +574,7 @@ export default function LLeadsTableBody({
         console.log(
           'iinside you1 x',
           item?.Date >= startDate?.getTime() &&
-          item?.Date <= startDate?.getTime() + 86400000,
+            item?.Date <= startDate?.getTime() + 86400000,
           startDate?.getTime() + 86399999,
           startDate?.getTime(),
           item.Name
@@ -582,7 +584,7 @@ export default function LLeadsTableBody({
           console.log(
             'inside you wjat os tjo filter',
             item?.Date >= startDate?.getTime() &&
-            item?.Date <= startDate?.getTime() + 86400000,
+              item?.Date <= startDate?.getTime() + 86400000,
             startDate?.getTime() + 86399999,
             startDate?.getTime(),
             item.Name
@@ -787,7 +789,7 @@ export default function LLeadsTableBody({
                           <div>
                             <div
                               className="relative flex flex-col  group"
-                            // style={{ alignItems: 'end' }}
+                              // style={{ alignItems: 'end' }}
                             >
                               <div
                                 className="absolute bottom-0 flex-col items-center hidden mb-6 group-hover:flex"
@@ -797,7 +799,7 @@ export default function LLeadsTableBody({
                                 <span
                                   className="rounded italian relative mr-2 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
                                   style={{
-                                    color: '#F25533',
+                                    color: '#94B5ED',
                                     background: '#FCE6D9',
                                     maxWidth: '300px',
                                   }}
@@ -906,7 +908,6 @@ export default function LLeadsTableBody({
                             size="small"
                             precision={0.5}
                             readOnly
-
                             sx={{
                               '& .MuiRating-iconFilled': {
                                 color: '#FF9529',
@@ -943,30 +944,31 @@ export default function LLeadsTableBody({
                                 )
                               ) > 60
                                 ? Math.abs(
-                                  getDifferenceInMinutes(
-                                    row?.leadUpT || row?.stsUpT,
-                                    ''
-                                  )
-                                ) > 1440
+                                    getDifferenceInMinutes(
+                                      row?.leadUpT || row?.stsUpT,
+                                      ''
+                                    )
+                                  ) > 1440
                                   ? `${Math.abs(
-                                    getDifferenceInDays(
-                                      row?.leadUpT || row?.stsUpT,
-                                      ''
-                                    )
-                                  )} Days `
+                                      getDifferenceInDays(
+                                        row?.leadUpT || row?.stsUpT,
+                                        ''
+                                      )
+                                    )} Days `
                                   : `${Math.abs(
-                                    getDifferenceInHours(
-                                      row?.leadUpT || row?.stsUpT,
-                                      ''
-                                    )
-                                  )} Hours `
-                                : `${Math.abs(
-                                  getDifferenceInMinutes(
-                                    row?.leadUpT || row?.stsUpT,
-                                    ''
-                                  )
-                                ) || 0
-                                } Min`}{' '}
+                                      getDifferenceInHours(
+                                        row?.leadUpT || row?.stsUpT,
+                                        ''
+                                      )
+                                    )} Hours `
+                                : `${
+                                    Math.abs(
+                                      getDifferenceInMinutes(
+                                        row?.leadUpT || row?.stsUpT,
+                                        ''
+                                      )
+                                    ) || 0
+                                  } Min`}{' '}
                               {/* in above line I have added 0 to take Nan value */}
                               {getDifferenceInMinutes(
                                 row?.leadUpT || row?.stsUpT,
@@ -991,17 +993,17 @@ export default function LLeadsTableBody({
                                 getDifferenceInMinutes(row?.schTime, '')
                               ) > 60
                                 ? Math.abs(
-                                  getDifferenceInMinutes(row?.schTime, '')
-                                ) > 1440
+                                    getDifferenceInMinutes(row?.schTime, '')
+                                  ) > 1440
                                   ? `${Math.abs(
-                                    getDifferenceInDays(row?.schTime, '')
-                                  )} Days `
+                                      getDifferenceInDays(row?.schTime, '')
+                                    )} Days `
                                   : `${Math.abs(
-                                    getDifferenceInHours(row?.schTime, '')
-                                  )} Hours `
+                                      getDifferenceInHours(row?.schTime, '')
+                                    )} Hours `
                                 : `${Math.abs(
-                                  getDifferenceInMinutes(row?.schTime, '')
-                                )} Min`}{' '}
+                                    getDifferenceInMinutes(row?.schTime, '')
+                                  )} Min`}{' '}
                               {getDifferenceInMinutes(row?.schTime, '') < 0
                                 ? 'ago'
                                 : 'Left'}

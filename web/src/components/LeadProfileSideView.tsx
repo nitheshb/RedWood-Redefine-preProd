@@ -9,6 +9,9 @@ import {
   DeviceMobileIcon,
   MailIcon,
   PhoneIcon,
+  ChatIcon,
+  ChatAlt2Icon,
+  ChatAltIcon
 } from '@heroicons/react/outline'
 import {
   CheckCircleIcon,
@@ -112,6 +115,7 @@ import {
 import SemicircleProgressChart from './A_SalesModule/Reports/charts/SemiCircleProgress'
 import toast, { ToastBar } from 'react-hot-toast'
 import { use } from 'i18next'
+import GradientSlider from './A_SalesModule/LeadProfileSideView/gradientSlider/gradientSlider'
 
 // interface iToastInfo {
 //   open: boolean
@@ -185,11 +189,6 @@ const siteVisitFeedbackOptions = [
   { label: 'Others', value: 'others' },
 ]
 
-
-
-
-
-
 const lookingAtBudgetRange = [
   { label: 'less than 25 lakhs', value: 'less25L', str: 10 },
   { label: 'less than 50 lakhs', value: 'less50L', str: 20 },
@@ -218,28 +217,13 @@ const preferredArea = [
   { label: 'South Banglore ', value: 'southBanglore', str: 40 },
 ]
 
-
-
-
-
-
-
-
-
 const labelImages = {
   Happy: '/path/to/images/happy.png',
   Sad: '/path/to/images/sad.png',
   Neutral: '/path/to/images/neutral.png',
   Others: '/path/to/images/others.png',
   'Want More option': '/path/to/images/more.png', // Replace with the image you want for this option
-};
-
-
-
-
-
-
-
+}
 
 const torrowDate = new Date(
   +new Date().setHours(0, 0, 0, 0) + 86400000
@@ -359,12 +343,10 @@ export default function LeadProfileSideView({
   const [addCommentPlusTask, setAddCommentPlusTask] = useState(false)
   const [addCommentTitle, setAddCommentTitle] = useState('')
 
-
-
-  const [budget, setBudget] = useState('');
-  const [configuration, setConfiguration] = useState('');
-  const [reasonLeft, setReasonLeft] = useState('');
-  const [reasonRight, setReasonRight] = useState('');
+  const [budget, setBudget] = useState('')
+  const [configuration, setConfiguration] = useState('')
+  const [reasonLeft, setReasonLeft] = useState('')
+  const [reasonRight, setReasonRight] = useState('')
 
   const [addCommentTime, setAddCommentTime] = useState(d.getTime() + 60000)
   const {
@@ -410,9 +392,9 @@ export default function LeadProfileSideView({
   useEffect(() => {
     setopstr(
       optionvalues.asstr +
-      optionvalues.astr +
-      optionvalues.bstr +
-      optionvalues.pstr
+        optionvalues.astr +
+        optionvalues.bstr +
+        optionvalues.pstr
     )
   }, [optionvalues])
 
@@ -532,12 +514,13 @@ export default function LeadProfileSideView({
       const x = leadSchFilteredData[0]
       let y =
         Math.abs(getDifferenceInHours(x?.schTime, '')) <= 24 &&
-          Math.abs(getDifferenceInHours(x?.schTime, '')) >= 0
+        Math.abs(getDifferenceInHours(x?.schTime, '')) >= 0
           ? true
           : false
       x.comingSoon = y
       setLeadNextTaskObj(x)
     }
+
   }, [leadSchFilteredData])
   useEffect(() => {
     setAssignedTo(customerDetails?.assignedTo)
@@ -636,7 +619,7 @@ export default function LeadProfileSideView({
 
     return unsubscribe
   }
-  useEffect(() => { }, [customerDetails])
+  useEffect(() => {}, [customerDetails])
 
   const setAssigner = (leadDocId, value) => {
     const projId = selProjectIs?.uid || ProjectId
@@ -752,7 +735,8 @@ export default function LeadProfileSideView({
         )
       } else if (newStatus === 'visitfixed') {
         await setTakTitle(
-          `${customerDetails?.Project || 'Site'} visit @${customerDetails?.Name || 'Customer'
+          `${customerDetails?.Project || 'Site'} visit @${
+            customerDetails?.Name || 'Customer'
           }   `
         )
       } else if (newStatus === 'visitdone') {
@@ -1647,15 +1631,15 @@ export default function LeadProfileSideView({
   return (
     <>
       <div
-        className={`   h-screen  bg-[#FFFFFF]  shadow-[0px_4px_30px_0px_rgba(0,_0,_0,_0.05)]  ${openUserProfile ? 'hidden' : ''} `}
-      // style={{
-      //   background: 'linear-gradient(to left, #EEF0F9, #E1F2F2, #DBE6F0)',
-      // }}
+        className={`   h-screen  bg-[#FFFFFF]  shadow-[0px_4px_30px_0px_rgba(0,_0,_0,_0.05)]  ${
+          openUserProfile ? 'hidden' : ''
+        } `}
+        // style={{
+        //   background: 'linear-gradient(to left, #EEF0F9, #E1F2F2, #DBE6F0)',
+        // }}
       >
         <div className="h-screen overflow-y-auto scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
-
-          <div className='  bg-white '>
-
+          <div className="  bg-white ">
             <div className=" pb-[2px] px-3      mt-0 rounded-xs">
               <div className="flex  justify-between">
                 <div className="w-full pl-1 pt-[2px]">
@@ -1663,36 +1647,88 @@ export default function LeadProfileSideView({
                     <div className="font-semibold text-[#053219] text-sm mt-3 mb-1 tracking-wide">
                       <div className="flex gap-4 flex-row">
                         <div>
-                          <span className="w-12 h-12 bg-[#F8F5F0] rounded-full flex items-center justify-center font-semibold sale_text_color uppercase text-[21px]">
+                          <span className="w-12 h-12 sale_bg_color rounded-lg flex items-center justify-center font-semibold sale_text_color uppercase text-[21px]">
                             {Name?.[0]}
                           </span>
                         </div>
                         <div className="flex flex-col">
                           <div className="flex items-center gap-1">
                             <div className="flex items-center gap-2">
-                              <span className="text-[16px] uppercase">
-                                {Name}
-                              </span>
+                              <span className="s_h16 uppercase">{Name}</span>
                             </div>
                             <img
                               src="/edit-02.svg"
                               alt="edit"
-                              className="w-5 h-5 cursor-pointer fill-[#F25533]"
+                              className="w-5 h-5 cursor-pointer fill-[#414141]"
                               onClick={() => setisImportLeadsOpen(true)}
                             />
-                            {/* <div className="text-sm ml-1 px-1 rounded text-[#FF8C02]">
-                {currentStatusDispFun(leadDetailsObj?.Status)}
-              </div> */}
+                            <div
+                              style={{
+                                paddingLeft: 12,
+                                paddingRight: 12,
+                                paddingTop: 12,
+                                paddingBottom: 12,
+                                overflow: 'hidden',
+                                borderRadius: 18,
+                                outline:
+                                  '1px var(--Secondary-Stroke, #E7E7E9) solid',
+                                outlineOffset: '-1px',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                gap: 5,
+                                display: 'inline-flex',
+                                height: '20px',
+                              }}
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="12"
+                                height="13"
+                                viewBox="0 0 12 13"
+                                fill="none"
+                              >
+                                <g clip-path="url(#clip0_8776_20781)">
+                                  <path
+                                    d="M6.92803 11.5703C13.0391 10.0703 9.61692 4.07031 5.46137 1.57031C4.97265 3.32031 4.23919 3.82031 2.77248 5.57031C0.830607 7.88726 1.79475 10.5703 4.48359 11.5703C4.0762 11.0703 3.02479 10.0207 3.75 8.57031C4 8.07031 4.5 7.57031 4.25 6.57031C4.73889 6.82031 5.75 7.07031 6 8.32031C6.40738 7.82031 6.83022 6.77031 6.43915 5.57031C9.5 7.82031 8.25 10.0703 6.92803 11.5703Z"
+                                    fill="#D60000"
+                                    stroke="#D60000"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                  />
+                                </g>
+                                <defs>
+                                  <clipPath id="clip0_8776_20781">
+                                    <rect
+                                      width="16"
+                                      height="16"
+                                      fill="white"
+                                      transform="translate(0 0.570312)"
+                                    />
+                                  </clipPath>
+                                </defs>
+                              </svg>
+                              <div
+                                style={{
+                                  color: 'var(--Black, #0D0A1E)',
+                                  fontSize: 12,
+                                  fontFamily: 'Outfit',
+                                  fontWeight: '500',
+                                  wordWrap: 'break-word',
+                                }}
+                              >
+                                Cold
+                              </div>
+                            </div>
                           </div>
 
-                          <div className="flex mt-2 flex-row">
-                            <div className="flex items-center gap-2">
+                          <div className="flex mt-[4px] flex-row">
+                            <div className="flex items-center gap-[6px]">
                               <img
                                 src="/phone.svg"
-                                className="w-4 h-4"
+                                className="w-[14px]"
                                 alt="Phone Icon"
                               />
-                              <span className="font-[Outfit] font-normal text-[14px] leading-[100%] tracking-[0.06em] text-[#0E0A1F]">
+                              <span className="font-[Outfit]  s_h12">
                                 {Mobile?.replace(
                                   /(\d{3})(\d{3})(\d{4})/,
                                   '$1-$2-$3'
@@ -1700,16 +1736,28 @@ export default function LeadProfileSideView({
                               </span>
                             </div>
 
-                            <div className="w-[2px] mx-2 mt-[4px] h-[8px] border-0 border-r"></div>
+                            <div className="s_divider_small"></div>
 
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-[6px]">
                               <img
                                 src="/mail.svg"
-                                className="w-4 h-4"
+                                className="w-[14px]"
                                 alt="Mail Icon"
                               />
-                              <span className="font-[Outfit] font-normal text-[14px] leading-[100%] tracking-[0.06em] text-[#0E0A1F]">
-                                {Email}
+                              <span className="font-[Outfit] s_h12">
+                                {selProjectIs?.projectName}
+                              </span>
+                            </div>
+                            <div className="s_divider_small"></div>
+
+                            <div className="flex items-center gap-[6px]">
+                              <img
+                                src="/mail.svg"
+                                className="w-[14px]"
+                                alt="Mail Icon"
+                              />
+                              <span className="font-[Outfit] s_h12">
+                                {assignerName}
                               </span>
                             </div>
                           </div>
@@ -1719,41 +1767,27 @@ export default function LeadProfileSideView({
                   </div>
                 </div>
 
-
-
-
-
                 <div className="mt-3">
                   <div className="ml-2">
                     <div className="flex flex-row p-4 py-2">
                       <section className="">
-
-                        <div className="box__bg relative rounded-[14px] shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)] mx-auto p-[1px]">
-
-                          <div className="bg-white flex flex-col justify-center px-2.5 py-3 rounded-[13px]">
-                            <div className="flex items-center gap-3">
-                              <div className="flex items-center cursor-pointer">
-                                <div
-                                  className="bg-[#FFFF] p-2 rounded-lg flex items-center justify-center shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]"
-                                  onClick={() => {
-                                    console.log('Call button clicked for lead:', Name, Mobile)
-                                    handleCallButtonClick(user?.uid, Name, Mobile)
-                                  }}
-                                >
-                                  <img
-                                    src="/call.svg"
-                                    alt="Call Icon"
-                                    className="w-[18px] h-[18px] min-w-[18px]"
-                                  />
-                                </div>
-                              </div>
+                        <div className=" border rounded-[10px] border-[#3D7DC3]">
+                          <div className="flex flex-col justify-center px-3 py-2  ">
+                            <div
+                              className="flex items-center "
+                              onClick={() => {
+                                console.log(
+                                  'Call button clicked for lead:',
+                                  Name,
+                                  Mobile
+                                )
+                                handleCallButtonClick(user?.uid, Name, Mobile)
+                              }}
+                            >
                               <div>
-                                <h2 className="font-semibold text-[14px] leading-[100%] tracking-[6%] mb-1 text-[#2B2B2B]">
-                                  {streamCurrentStatus}
+                                <h2 className="font-['Outfit'] text-[14px] font-semibold  text-blue-500 ">
+                                  Call
                                 </h2>
-                                <p className="font-normal whitespace-nowrap text-[12px] leading-[100%]  cursor-pointer text-[#960000] decoration-solid">
-                                  Starts in 3min
-                                </p>
                               </div>
                             </div>
                           </div>
@@ -1762,7 +1796,6 @@ export default function LeadProfileSideView({
                     </div>
                   </div>
                 </div>
-
               </div>
 
               {/* <hr className="h-[1px]  bg-gradient-to-r from-[#F6F5F8]/100 via-[#B1B1B1] to-[#F6F5F8]/100 border-0 my-3" /> */}
@@ -1809,20 +1842,26 @@ export default function LeadProfileSideView({
 
             {/* <hr className="h-[1px]  bg-gradient-to-r from-[#F6F5F8]/100 via-[#B1B1B1] to-[#F6F5F8]/100 border-0 py-[1px]" /> */}
             <div className="  ">
-              <div className="flex flex-row bg-white justify-between pb-3 pt-5 mb-0 relative rounded-b-[20px] [box-shadow:0px_4px_4px_0px_rgba(0,0,0,0.1)]">
+              <div className="flex flex-row bg-white justify-between pb-3 pt-5 mb-0 relative [box-shadow:0px_4px_4px_0px_rgba(0,0,0,0.1)]">
                 {StatusListA.map((statusFlowObj, i) => (
                   <div
                     key={i}
                     className="flex-1 flex flex-col items-center relative"
                   >
                     <div
-                      className={`w-6 h-6 flex items-center justify-center rounded-full border transition-all duration-200 mb-1 z-10 ${streamCoveredA.includes(statusFlowObj.value)
-                        ? 'sale_bg_color text-white  '
-                        : statusFlowObj.value === streamCurrentStatus ||
-                          statusFlowObj.value === tempLeadStatus
-                          ? 'bg-white border-[#F25533]  shadow-[0_0_0_3px_rgba(251,203,193,1)]  text-black '
+                      className={`w-6 h-6 flex items-center justify-center rounded-full border transition-all duration-200 mb-1 z-10 ${
+                        streamCurrentStatus === statusFlowObj.value &&
+                        'animate-pulse-blue'
+                      } ${
+                        streamCoveredA.includes(statusFlowObj.value) ||
+                        (streamCurrentStatus === 'new' &&
+                          statusFlowObj.value === 'new')
+                          ? 'sale_bg_color text-white  '
+                          : statusFlowObj.value === streamCurrentStatus ||
+                            statusFlowObj.value === tempLeadStatus
+                          ? 'bg-white border-[#94B5ED]  shadow-[0_0_0_3px_rgba(251,203,193,1)]  text-black '
                           : 'bg-white border-gray-300 text-gray-300'
-                        }`}
+                      }`}
                       onClick={() => setStatusFun(id, statusFlowObj.value)}
                       onMouseEnter={() => {
                         hoverEffectFun(i)
@@ -1837,17 +1876,19 @@ export default function LeadProfileSideView({
                         cursor: 'pointer',
                       }}
                     >
-
-
-                      {statusFlowObj.value === streamCurrentStatus || statusFlowObj.value === tempLeadStatus ? (
+                      {statusFlowObj.value === streamCurrentStatus ||
+                      statusFlowObj.value === tempLeadStatus ? (
                         <div
-                          className={`h-2 w-2 rounded-full ${statusFlowObj.value === streamCurrentStatus ? 'bg-black ' : 'bg-white'
-                            }`}
+                          className={`h-1 w-1 rounded-full ${
+                            statusFlowObj.value === streamCurrentStatus
+                              ? 'bg-white '
+                              : 'bg-white'
+                          }`}
                         />
                       ) : streamCoveredA.includes(statusFlowObj.value) ? (
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          className="h-3 w-3 text-white"
+                          className="h-3 w-3 text-[#414141]"
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"
@@ -1875,25 +1916,26 @@ export default function LeadProfileSideView({
                           />
                         </svg>
                       )}
-
                     </div>
 
                     <span
-                      className={` text-[11px]  font-normal px-2 py-1 z-10 text-center ${statusFlowObj.value === streamCurrentStatus ||
+                      className={` text-[11px]  font-normal px-2 py-1 z-10 text-center ${
+                        statusFlowObj.value === streamCurrentStatus ||
                         statusFlowObj.value === tempLeadStatus
-                        ? 'text-[13px] text-black'
-                        : 'text-[11px] text-black'
-                        }`}
+                          ? 'text-[13px] text-black'
+                          : 'text-[11px] text-black'
+                      }`}
                     >
                       {statusFlowObj.label}
                     </span>
 
                     {i < StatusListA.length - 1 && (
                       <div
-                        className={`absolute top-3 left-[calc(50%+0.5rem)] h-[1px] w-[calc(100%-1rem)] ${streamCoveredA.includes(StatusListA[i + 1].value)
-                          ? 'bg-[#F25533]'
-                          : 'bg-gray-300'
-                          }`}
+                        className={`absolute top-3 left-[calc(50%+0.5rem)] h-[1px] w-[calc(100%-1rem)] ${
+                          streamCoveredA.includes(StatusListA[i + 1].value)
+                            ? 'bg-[#6E85E6]'
+                            : 'bg-[#CCCCCC]'
+                        }`}
                         style={{ transform: 'translateY(-50%)' }}
                       />
                     )}
@@ -1901,13 +1943,9 @@ export default function LeadProfileSideView({
                 ))}
               </div>
             </div>
-
           </div>
 
-
-
           {/* border line */}
-          <div className='shadow-[0px_4px_30px_0px_rgba(0,_0,_0,_0.05)]'></div>
 
           {/*
         <div
@@ -1964,7 +2002,7 @@ export default function LeadProfileSideView({
           )}
           {!unitsViewMode && (
             <>
-              <section className=" pb-8 px-5 py-2  rounded-xs  bg-[#FCFCFC]">
+              <section className=" pb-8 px-5 py-2  rounded-xs  ">
                 <div className="">
                   <div className="">
                     <div className="flex flex-row justify-between  mt-2">
@@ -1985,10 +2023,11 @@ export default function LeadProfileSideView({
                             <div key={i} className="flex items-center">
                               <li className="" role="presentation">
                                 <button
-                                  className={`inline-block pb-1 text-sm font-medium text-center text-[#606062] rounded-t-lg border-b-2  hover:text-black hover:border-gray-300   ${selFeature === d.val
-                                    ? 'border-black text-black'
-                                    : 'text-[#606062] border-none'
-                                    }`}
+                                  className={`inline-block pb-1 text-xs font-medium text-center text-[#606062] rounded-t-lg border-b-2  hover:text-black hover:border-gray-300   ${
+                                    selFeature === d.val
+                                      ? 'border-zinc-800 text-zinc-800'
+                                      : 'text-[#606062] border-none'
+                                  }`}
                                   type="button"
                                   role="tab"
                                   onClick={() => setFeature(d.val)}
@@ -2005,7 +2044,7 @@ export default function LeadProfileSideView({
                       </ul>
                       {selFeature != 'lead_strength' && (
                         <span
-                          className=" px-[10px] py-[11px] gap-[8px] font-outfit font-semibold text-[14px] leading-[100%] underline underline-offset-[25%] decoration-[0%] sale_text_color cursor-pointer"
+                          className="s_h14 px-[10px] py-[11px] gap-[8px] font-['outfit'] font-medium  underline underline-offset-[25%] decoration-[0%] s_text_color_1 cursor-pointer"
                           onClick={() => setFeature('lead_strength')}
                         >
                           Lead requirement
@@ -2013,7 +2052,7 @@ export default function LeadProfileSideView({
                       )}
                       {selFeature == 'lead_strength' && (
                         <span
-                          className="px-[10px] py-[11px] gap-[8px] font-outfit font-semibold text-[14px] leading-[100%] underline underline-offset-[25%] decoration-[0%] sale_text_color cursor-pointer"
+                          className="px-[10px] py-[11px] gap-[8px] font-outfit font-medium text-[14px] leading-[100%] underline underline-offset-[25%] decoration-[0%] s_text_color_1 cursor-pointer"
                           onClick={() => setFeature('appointments')}
                         >
                           Close
@@ -2029,7 +2068,7 @@ export default function LeadProfileSideView({
                             reasonPurchase: '',
                             preferredArea: '',
                           }}
-                          onSubmit={(values, { resetForm }) => { }}
+                          onSubmit={(values, { resetForm }) => {}}
                         >
                           {(formik) => (
                             <div className="flex flex-col mt-4  ">
@@ -2047,7 +2086,7 @@ export default function LeadProfileSideView({
                                   aria-label="Default"
                                   valueLabelDisplay="auto"
                                   sx={{
-                                    color: '#F25533', // Changes the active track color
+                                    color: '#94B5ED', // Changes the active track color
                                     '& .MuiSlider-thumb': {
                                       '&:hover, &.Mui-focusVisible': {
                                         boxShadow: '0px 0px 0px 8px rgba(242, 85, 51, 0.16)',
@@ -2057,51 +2096,43 @@ export default function LeadProfileSideView({
                                       },
                                     },
                                     '& .MuiSlider-valueLabel': {
-                                      backgroundColor: '#F25533',
+                                      backgroundColor: '#94B5ED',
                                     },
                                   }}
                                 />
                                 </div> */}
 
-
                                 <div className="mt-8">
                                   <Slider
-                                    onChange={(e) => setopstr(e.target.value)}
+                                    // onChange={(e) => setopstr(e.target.value)}
                                     value={opstr}
                                     defaultValue={opstr}
                                     aria-label="Default"
                                     valueLabelDisplay="auto"
                                     sx={{
-                                      color: '#F25533', // Active track color
-                                      height: 8, // Increase overall slider height
+                                      height: 8,
                                       '& .MuiSlider-track': {
-                                        height: 8, // Height of the selected (active) part
+                                        background:
+                                          'linear-gradient(to right, #ff6a00, #ee0979) !important', // Replace with your desired gradient
+                                        border: 'none !important',
                                       },
                                       '& .MuiSlider-rail': {
-                                        height: 8, // Height of the background (unselected) part
+                                        backgroundColor: '#EAEAEA',
+                                        opacity: 1,
                                       },
                                       '& .MuiSlider-thumb': {
-                                        width: 24,
                                         height: 24,
-                                        '&:hover, &.Mui-focusVisible': {
-                                          boxShadow: '0px 0px 0px 8px rgba(242, 85, 51, 0.16)',
-                                        },
-                                        '&.Mui-active': {
-                                          boxShadow: '0px 0px 0px 14px rgba(242, 85, 51, 0.16)',
-                                        },
-                                      },
-                                      '& .MuiSlider-valueLabel': {
-                                        backgroundColor: '#F25533',
+                                        width: 24,
+                                        backgroundColor: '#fff',
+                                        border: '2px solid currentColor',
+                                        '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible':
+                                          {
+                                            boxShadow: 'inherit',
+                                          },
                                       },
                                     }}
                                   />
                                 </div>
-
-
-
-
-
-
                               </div>
                               <div className="grid grid-cols-2 gap-8 pt-3 mx-3  mt-2">
                                 <div className="mt-2">
@@ -2113,7 +2144,7 @@ export default function LeadProfileSideView({
                                         <RoundedProgressBar
                                           progress={optionvalues.asstr}
                                           height={8}
-                                          fillColor="#F25533"
+                                          fillColor="#94B5ED"
                                           showLabels={false}
                                         />
                                       </div>
@@ -2144,7 +2175,7 @@ export default function LeadProfileSideView({
                                         <RoundedProgressBar
                                           progress={optionvalues.pstr}
                                           height={8}
-                                          fillColor="#F25533"
+                                          fillColor="#94B5ED"
                                           showLabels={false}
                                         />
                                       </div>
@@ -2175,7 +2206,7 @@ export default function LeadProfileSideView({
                                         <RoundedProgressBar
                                           progress={optionvalues.astr}
                                           height={8}
-                                          fillColor="#F25533"
+                                          fillColor="#94B5ED"
                                           showLabels={false}
                                         />
                                       </div>
@@ -2199,8 +2230,6 @@ export default function LeadProfileSideView({
                                 </div>
                               </div>
 
-
-
                               <div className=" p-4">
                                 <div className="grid grid-cols-2 gap-6">
                                   {/* Budget Section */}
@@ -2214,22 +2243,30 @@ export default function LeadProfileSideView({
                                         />
                                       </div>
 
-                                      <h2 className=" font-normal text-[16px] leading-[100%] tracking-[0%] text-[#000000]">Budget?*</h2>
+                                      <h2 className=" font-normal text-[16px] leading-[100%] tracking-[0%] text-[#000000]">
+                                        Budget?*
+                                      </h2>
                                     </div>
 
                                     <div className="grid grid-cols-1 gap-4">
                                       <div className="grid grid-cols-2 gap-4">
                                         <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${budget === '10-50' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color' : 'bg-white hover:bg-gray-50'
-                                            }`}
+                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
+                                            budget === '10-50'
+                                              ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color'
+                                              : 'bg-white hover:bg-gray-50'
+                                          }`}
                                           onClick={() => setBudget('10-50')}
                                         >
                                           10 lacs - 50 lacs
                                         </button>
 
                                         <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${budget === '50-1' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color ' : 'bg-white hover:bg-gray-50'
-                                            }`}
+                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
+                                            budget === '50-1'
+                                              ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
+                                              : 'bg-white hover:bg-gray-50'
+                                          }`}
                                           onClick={() => setBudget('50-1')}
                                         >
                                           50 lacs - 1 cr
@@ -2238,16 +2275,22 @@ export default function LeadProfileSideView({
 
                                       <div className="grid grid-cols-2 gap-4">
                                         <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${budget === '1-2' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color ' : 'bg-white hover:bg-gray-50'
-                                            }`}
+                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
+                                            budget === '1-2'
+                                              ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
+                                              : 'bg-white hover:bg-gray-50'
+                                          }`}
                                           onClick={() => setBudget('1-2')}
                                         >
                                           1 cr - 2 cr
                                         </button>
 
                                         <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${budget === '2+' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color ' : 'bg-white hover:bg-gray-50'
-                                            }`}
+                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
+                                            budget === '2+'
+                                              ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
+                                              : 'bg-white hover:bg-gray-50'
+                                          }`}
                                           onClick={() => setBudget('2+')}
                                         >
                                           2 cr and above
@@ -2269,23 +2312,35 @@ export default function LeadProfileSideView({
                                           className="w-[18px] h-[18px]"
                                         />
                                       </div>
-                                      <h2 className=" font-normal text-[16px] leading-[100%] tracking-[0%] text-[#000000]">Configuration ?*</h2>
+                                      <h2 className=" font-normal text-[16px] leading-[100%] tracking-[0%] text-[#000000]">
+                                        Configuration ?*
+                                      </h2>
                                     </div>
 
                                     <div className="grid grid-cols-1 gap-4">
                                       <div className="grid grid-cols-2 gap-4">
                                         <button
-                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${configuration === '1BHK' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color ' : 'bg-white hover:bg-gray-50'
-                                            }`}
-                                          onClick={() => setConfiguration('1BHK')}
+                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
+                                            configuration === '1BHK'
+                                              ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
+                                              : 'bg-white hover:bg-gray-50'
+                                          }`}
+                                          onClick={() =>
+                                            setConfiguration('1BHK')
+                                          }
                                         >
                                           1 BHK
                                         </button>
 
                                         <button
-                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${configuration === '2BHK' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color ' : 'bg-white hover:bg-gray-50'
-                                            }`}
-                                          onClick={() => setConfiguration('2BHK')}
+                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
+                                            configuration === '2BHK'
+                                              ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
+                                              : 'bg-white hover:bg-gray-50'
+                                          }`}
+                                          onClick={() =>
+                                            setConfiguration('2BHK')
+                                          }
                                         >
                                           2 BHK
                                         </button>
@@ -2293,25 +2348,40 @@ export default function LeadProfileSideView({
 
                                       <div className="grid grid-cols-3 gap-4">
                                         <button
-                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${configuration === '3BHK' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color ' : 'bg-white hover:bg-gray-50'
-                                            }`}
-                                          onClick={() => setConfiguration('3BHK')}
+                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
+                                            configuration === '3BHK'
+                                              ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
+                                              : 'bg-white hover:bg-gray-50'
+                                          }`}
+                                          onClick={() =>
+                                            setConfiguration('3BHK')
+                                          }
                                         >
                                           3 BHK
                                         </button>
 
                                         <button
-                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${configuration === '4BHK' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color ' : 'bg-white hover:bg-gray-50'
-                                            }`}
-                                          onClick={() => setConfiguration('4BHK')}
+                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
+                                            configuration === '4BHK'
+                                              ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
+                                              : 'bg-white hover:bg-gray-50'
+                                          }`}
+                                          onClick={() =>
+                                            setConfiguration('4BHK')
+                                          }
                                         >
                                           4 BHK
                                         </button>
 
                                         <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${configuration === 'Others' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color ' : 'bg-white hover:bg-gray-50'
-                                            }`}
-                                          onClick={() => setConfiguration('Others')}
+                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
+                                            configuration === 'Others'
+                                              ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
+                                              : 'bg-white hover:bg-gray-50'
+                                          }`}
+                                          onClick={() =>
+                                            setConfiguration('Others')
+                                          }
                                         >
                                           Others
                                         </button>
@@ -2330,22 +2400,32 @@ export default function LeadProfileSideView({
                                         />
                                       </div>
 
-                                      <h2 className=" font-normal text-[16px] leading-[100%] tracking-[0%] text-[#000000]">Reason</h2>
+                                      <h2 className=" font-normal text-[16px] leading-[100%] tracking-[0%] text-[#000000]">
+                                        Reason
+                                      </h2>
                                     </div>
 
                                     <div className="grid grid-cols-1 gap-4">
                                       <div className="grid grid-cols-2 gap-4">
                                         <button
-                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${reasonLeft === 'Apartment & Villas' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color ' : 'bg-white hover:bg-gray-50'
-                                            }`}
-                                          onClick={() => setReasonLeft('Apartment & Villas')}
+                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
+                                            reasonLeft === 'Apartment & Villas'
+                                              ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
+                                              : 'bg-white hover:bg-gray-50'
+                                          }`}
+                                          onClick={() =>
+                                            setReasonLeft('Apartment & Villas')
+                                          }
                                         >
                                           Apartment & Villas
                                         </button>
 
                                         <button
-                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${reasonLeft === 'Plot' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color ' : 'bg-white hover:bg-gray-50'
-                                            }`}
+                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
+                                            reasonLeft === 'Plot'
+                                              ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
+                                              : 'bg-white hover:bg-gray-50'
+                                          }`}
                                           onClick={() => setReasonLeft('Plot')}
                                         >
                                           Plot
@@ -2354,16 +2434,24 @@ export default function LeadProfileSideView({
 
                                       <div className="grid grid-cols-2 gap-4">
                                         <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${reasonLeft === 'Apartment' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color ' : 'bg-white hover:bg-gray-50'
-                                            }`}
-                                          onClick={() => setReasonLeft('Apartment')}
+                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
+                                            reasonLeft === 'Apartment'
+                                              ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
+                                              : 'bg-white hover:bg-gray-50'
+                                          }`}
+                                          onClick={() =>
+                                            setReasonLeft('Apartment')
+                                          }
                                         >
                                           Apartment
                                         </button>
 
                                         <button
-                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${reasonLeft === 'Villa' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color ' : 'bg-white hover:bg-gray-50'
-                                            }`}
+                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
+                                            reasonLeft === 'Villa'
+                                              ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
+                                              : 'bg-white hover:bg-gray-50'
+                                          }`}
                                           onClick={() => setReasonLeft('Villa')}
                                         >
                                           Villa
@@ -2382,22 +2470,32 @@ export default function LeadProfileSideView({
                                           className="w-[18px] h-[18px]"
                                         />
                                       </div>
-                                      <h2 className=" font-normal text-[16px] leading-[100%] tracking-[0%] text-[#000000]">Reason</h2>
+                                      <h2 className=" font-normal text-[16px] leading-[100%] tracking-[0%] text-[#000000]">
+                                        Reason
+                                      </h2>
                                     </div>
 
                                     <div className="grid grid-cols-1 gap-4">
                                       <div className="grid grid-cols-2 gap-4">
                                         <button
-                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${reasonRight === 'Apartment & Villas' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color ' : 'bg-white hover:bg-gray-50'
-                                            }`}
-                                          onClick={() => setReasonRight('Apartment & Villas')}
+                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
+                                            reasonRight === 'Apartment & Villas'
+                                              ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
+                                              : 'bg-white hover:bg-gray-50'
+                                          }`}
+                                          onClick={() =>
+                                            setReasonRight('Apartment & Villas')
+                                          }
                                         >
                                           Apartment & Villas
                                         </button>
 
                                         <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${reasonRight === 'Plot' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color ' : 'bg-white hover:bg-gray-50'
-                                            }`}
+                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
+                                            reasonRight === 'Plot'
+                                              ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
+                                              : 'bg-white hover:bg-gray-50'
+                                          }`}
                                           onClick={() => setReasonRight('Plot')}
                                         >
                                           Plot
@@ -2406,17 +2504,27 @@ export default function LeadProfileSideView({
 
                                       <div className="grid grid-cols-2 gap-4">
                                         <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${reasonRight === 'Apartment' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color ' : 'bg-white hover:bg-gray-50'
-                                            }`}
-                                          onClick={() => setReasonRight('Apartment')}
+                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
+                                            reasonRight === 'Apartment'
+                                              ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
+                                              : 'bg-white hover:bg-gray-50'
+                                          }`}
+                                          onClick={() =>
+                                            setReasonRight('Apartment')
+                                          }
                                         >
                                           Apartment
                                         </button>
 
                                         <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${reasonRight === 'Villa' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color ' : 'bg-white hover:bg-gray-50'
-                                            }`}
-                                          onClick={() => setReasonRight('Villa')}
+                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
+                                            reasonRight === 'Villa'
+                                              ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
+                                              : 'bg-white hover:bg-gray-50'
+                                          }`}
+                                          onClick={() =>
+                                            setReasonRight('Villa')
+                                          }
                                         >
                                           Villa
                                         </button>
@@ -2430,21 +2538,22 @@ export default function LeadProfileSideView({
 
                               <div className="flex flex-row justify-end mt-6">
                                 <section className="flex flex-row gap-4">
-
-
                                   <button
                                     onClick={() => setFeature('appointments')}
                                     className={`w-[77px] h-[40px] px-6 py-2.5 gap-[10px] rounded-[8px] border border-[#E7E7E9]   flex justify-center items-center `}
                                   >
-                                    <span className="font-semibold text-[12px] leading-[100%] tracking-[0.06em]">Cancel</span>
+                                    <span className="font-semibold text-[12px] leading-[100%] tracking-[0.06em]">
+                                      Cancel
+                                    </span>
                                   </button>
-
 
                                   <button
                                     onClick={() => LeadStrengthFun()}
                                     className={`w-[77px] h-[40px] px-6 py-2.5 gap-[10px] sale_bg_color rounded-[8px]   flex justify-center items-center`}
                                   >
-                                    <span className="font-semibold text-[12px] leading-[100%]  text-white tracking-[0.06em]">Save</span>
+                                    <span className="font-semibold text-[12px] leading-[100%]  text-white tracking-[0.06em]">
+                                      Save
+                                    </span>
                                   </button>
                                 </section>
                               </div>
@@ -2612,33 +2721,22 @@ export default function LeadProfileSideView({
                       //   )}
                       // </div>
 
-
                       <div className="flex flex-col justify-between  pt-6">
                         {leadNotesFetchedData.length === 0 && !addNote && (
-
                           <div>
-
-
                             <div className="flex items-center justify-between mb-4">
-                              <h3 className="font-medium text-[16px] leading-[100%] tracking-[0em]">Add notes</h3>
+                              <h3 className="font-medium text-[16px] leading-[100%] tracking-[0em]">
+                                Add notes
+                              </h3>
 
                               <button onClick={() => selFun()}>
                                 <span className="inline-flex items-center justify-center px-4 py-3 rounded-[8px] sale_bg_color text-white font-medium text-[14px] leading-[100%] tracking-[0.06em] font-outfit">
-
                                   Add Notes
                                 </span>
                               </button>
                             </div>
 
-
-
                             <div className="py-8 px-8  flex flex-col items-center mt-5">
-
-
-
-
-
-
                               <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
                                 <img
                                   className="w-[180px] h-[180px] inline"
@@ -2650,19 +2748,9 @@ export default function LeadProfileSideView({
                                 No Helpful Notes{addNote}
                               </h3>
 
-
-
-
-
-
-
-
-
                               <Confetti />
                             </div>
-
                           </div>
-
                         )}
                         {addNote && (
                           <Formik
@@ -2675,79 +2763,65 @@ export default function LeadProfileSideView({
                           >
                             {(formik1) => (
                               <Form>
+                                <div className="box__bg relative rounded-[14px] e shadow-[0px_4px_30px_0px_#0000000D]  border-[#E7E7E9] mx-auto p-[1px]">
+                                  <div className="w-full max-w-[922px]  h-auto md:h-[344px] p-5 gap-[30px] rounded-[14px] bg-white">
+                                    <div className="flex items-start gap-4  max-w-4xl mx-auto">
+                                      <div className="p-2 rounded-lg bg-[#FFFFFF] shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+                                        <img
+                                          src="/target-sale.svg"
+                                          alt="Target Sale Icon"
+                                          className="w-[18px] h-[18px]"
+                                        />
+                                      </div>
 
-                                <div className='box__bg relative rounded-[14px] e shadow-[0px_4px_30px_0px_#0000000D]  border-[#E7E7E9] mx-auto p-[1px]'>
+                                      <div className="flex flex-col gap-2 flex-1">
+                                        <div className="flex items-center">
+                                          <h2 className="font-normal text-[16px] leading-[100%] tracking-[0em] font-heading underline">
+                                            Heading
+                                          </h2>
+                                          <img
+                                            src="/edit-02.svg"
+                                            alt="Edit Icon"
+                                            className="w-5 h-5 cursor-pointer"
+                                            onClick={() =>
+                                              setisImportLeadsOpen(true)
+                                            }
+                                          />
+                                        </div>
 
+                                        <p className="font-normal text-[12px] leading-[100%] tracking-[0em] text-[#606062] font-heading">
+                                          Mark the visit done to open the next
+                                          step: sharing lead experience.
+                                        </p>
+                                      </div>
+                                    </div>
 
-                                  
-                                <div className='w-full max-w-[922px]  h-auto md:h-[344px] p-5 gap-[30px] rounded-[14px] bg-white'>
-
-
-<div className="flex items-start gap-4  max-w-4xl mx-auto">
-
-
-  <div className="p-2 rounded-lg bg-[#FFFFFF] shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
-    <img
-      src="/target-sale.svg"
-      alt="Target Sale Icon"
-      className="w-[18px] h-[18px]"
-    />
-  </div>
-
-
-  <div className="flex flex-col gap-2 flex-1">
-
-
-    <div className="flex items-center">
-      <h2 className="font-normal text-[16px] leading-[100%] tracking-[0em] font-heading underline">
-        Heading
-      </h2>
-      <img
-        src="/edit-02.svg"
-        alt="Edit Icon"
-        className="w-5 h-5 cursor-pointer"
-        onClick={() => setisImportLeadsOpen(true)}
-      />
-    </div>
-
-
-    <p className="font-normal text-[12px] leading-[100%] tracking-[0em] text-[#606062] font-heading">
-      Mark the visit done to open the next step: sharing lead experience.
-    </p>
-
-  </div>
-
-</div>
-
-
-
-
-<div className=" form flex flex-col pt-0  mt-[10px] rounded bg-white">
-  <div className=" w-full max-w-[882px] h-auto p-3 md:p-2 gap-2.5   outline-none border border-[#E7E7E9] rounded-[8px] p-2 mt-2">
-    <ErrorMessage
-      component="div"
-      name="notesText"
-      className="error-message text-red-700 text-xs p-1"
-    />
-    <textarea
-      name="notesText"
-      value={takNotes}
-      onChange={(e) => {
-        console.log(
-          'what the matter',
-          e.target.value
-        )
-        formik1.setFieldValue(
-          'notesText',
-          e.target.value
-        )
-        setNotesTitle(e.target.value)
-      }}
-      placeholder="Type & make a notes"
-      className="w-full min-h-[161px]  text-[12px] outline-none  focus:border-blue-600 hover:border-blue-600 rounded bg-[#FFFFFF] "
-    ></textarea>
-  </div>
-  {/* <div className="flex flex-row  justify-end mt-1">
+                                    <div className=" form flex flex-col pt-0  mt-[10px] rounded bg-white">
+                                      <div className=" w-full max-w-[882px] h-auto p-3 md:p-2 gap-2.5   outline-none border border-[#E7E7E9] rounded-[8px] p-2 mt-2">
+                                        <ErrorMessage
+                                          component="div"
+                                          name="notesText"
+                                          className="error-message text-red-700 text-xs p-1"
+                                        />
+                                        <textarea
+                                          name="notesText"
+                                          value={takNotes}
+                                          onChange={(e) => {
+                                            console.log(
+                                              'what the matter',
+                                              e.target.value
+                                            )
+                                            formik1.setFieldValue(
+                                              'notesText',
+                                              e.target.value
+                                            )
+                                            setNotesTitle(e.target.value)
+                                          }}
+                                          placeholder="Type & make a notes"
+                                          className="w-full min-h-[161px]  text-[12px] outline-none  focus:border-blue-600 hover:border-blue-600 rounded bg-[#FFFFFF] "
+                                        ></textarea>
+                                      </div>
+                                      {/* <div className="flex flex-row  justify-end mt-1">
     <button
       type="submit"
       className={`flex mt-2 rounded-[8px] items-center text-[12px]  pl-2 h-[36px] pr-4 px-4 py-4 text-sm font-medium text-black  sale_bg_color cursor-pointer   `}
@@ -2770,36 +2844,30 @@ export default function LeadProfileSideView({
       <span className="ml-1 text-[12px]  text-black">Cancel</span>
     </button>
   </div> */}
-  <div className="flex flex-wrap  justify-end gap-4 mt-5">
-    <button
-      type="submit"
-      className="flex items-center px-4 h-9 text-sm font-medium text-white sale_bg_color rounded-md"
-    >
-      Save
-    </button>
-    <button
-      type="submit"
-      onClick={cancelResetStatusFun}
-      className="flex items-center px-4 h-9 text-sm font-medium text-white sale_bg_color rounded-md"
-    >
-      Save & WhatsApp
-    </button>
-    <button
-      onClick={cancelResetStatusFun}
-      className="flex items-center px-4 h-9 text-sm font-medium text-black border rounded-md"
-    >
-      Cancel
-    </button>
-  </div>
-
-</div>
-
-</div>
-
+                                      <div className="flex flex-wrap  justify-end gap-4 mt-5">
+                                        <button
+                                          type="submit"
+                                          className="flex items-center px-4 h-9 text-sm font-medium text-white sale_bg_color rounded-md"
+                                        >
+                                          Save
+                                        </button>
+                                        <button
+                                          type="submit"
+                                          onClick={cancelResetStatusFun}
+                                          className="flex items-center px-4 h-9 text-sm font-medium text-white sale_bg_color rounded-md"
+                                        >
+                                          Save & WhatsApp
+                                        </button>
+                                        <button
+                                          onClick={cancelResetStatusFun}
+                                          className="flex items-center px-4 h-9 text-sm font-medium text-black border rounded-md"
+                                        >
+                                          Cancel
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </div>
                                 </div>
-
-
-
                               </Form>
                             )}
                           </Formik>
@@ -2855,19 +2923,24 @@ export default function LeadProfileSideView({
 
                             <ol className="space-y-4 bg-white rounded-xl shadow-md">
                               {leadNotesFetchedData.map((data, i) => (
-                                <li key={i} className="border-b border-gray-100 py-4 last:border-none">
+                                <li
+                                  key={i}
+                                  className="border-b border-gray-100 py-4 last:border-none"
+                                >
                                   <div className="px-6">
                                     <div className="flex justify-between items-start">
                                       <div>
-                                        <h3 className="text-sm font-medium text-gray-800">Heading</h3>
+                                        <h3 className="text-sm font-medium text-gray-800">
+                                          Heading
+                                        </h3>
                                       </div>
-
-
 
                                       <div>
                                         <div className="flex items-center text-xs text-gray-500 space-x-1">
                                           <ClockIcon className="w-3 h-3" />
-                                          <span>{prettyDateTime(data?.ct)}</span>
+                                          <span>
+                                            {prettyDateTime(data?.ct)}
+                                          </span>
                                         </div>
                                       </div>
                                     </div>
@@ -2876,17 +2949,17 @@ export default function LeadProfileSideView({
                                     <hr className="border-t-1 border-[#E7E7E9] my-4 w-full" />
 
                                     <div>
-                                      <h3 className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062]">{data?.notes}</h3>
-                                      <p className="mt-2 text-sm text-gray-600">{data?.txt}</p>
+                                      <h3 className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062]">
+                                        {data?.notes}
+                                      </h3>
+                                      <p className="mt-2 text-sm text-gray-600">
+                                        {data?.txt}
+                                      </p>
                                     </div>
                                   </div>
                                 </li>
                               ))}
                             </ol>
-
-
-
-
                           </div>
                         )}
                       </div>
@@ -3251,8 +3324,8 @@ export default function LeadProfileSideView({
                                 <ClockIcon className="mr-1 w-3 h-3" />
                                 {data?.type == 'ph'
                                   ? timeConv(
-                                    Number(data?.time)
-                                  ).toLocaleString()
+                                      Number(data?.time)
+                                    ).toLocaleString()
                                   : timeConv(data?.T).toLocaleString()}
                                 {'    '}
                                 <span className="text-red-900 ml-4 mr-4">
@@ -3273,144 +3346,182 @@ export default function LeadProfileSideView({
                 {selFeature === 'lead_summary' && (
                   <>
                     <div className="max-w-5xl mx-auto space-y-4 mt-4">
-
                       {/* </div> */}
 
                       <div>
                         <div className="grid grid-cols-1 lg:grid-cols-1 gap-4 ">
-
-
-                          <div className="relative rounded-[16px] box__bg overflow-hidden">
-                            {/* Animated border line */}
-                            {/* <div className="absolute inset-0 rounded-[16px] p-[10px]">
-                              <div className="w-full h-full  rounded-[10px] bg-[conic-gradient(from_90deg_at_50%_50%,#3B82F6_0%,#8B5CF6_50%,#3B82F6_100%)] animate-border-spin"></div>
-                            </div> */}
-
+                          <div className="relative rounded-[8px] border border-[#F0F0F5]  bg-[#FFFFFF] overflow-hidden">
                             {/* Card content */}
-                            <div className="relative z-10 m-[1px] rounded-[16px] bg-white p-6  shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] flex flex-col gap-3">
-                              <div className="flex flex-col  justify-between">
+                            <div className="relative z-10 m-[1px] rounded-[8px] bg-white   shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] flex flex-col">
+                              <div className="flex flex-col  justify-between my-[20px] px-6">
                                 <div className="flex  justify-between gap-3">
-                                  <div className='flex gap-3'>
-                                    <div className="mt-1">
-                                      <input
-                                        type="checkbox"
-                                        className="h-4 w-4 rounded-sm border-2 border-gray-400"
-                                      />
-                                    </div>
+                                  <section className="flex flex-col ">
+                                    <div className="flex gap-3">
+                                      <div className="mt-1">
 
-                                    <div className="flex items-center space-x-3">
-                                      <h3 className="text-lg font-medium text-gray-800">
-                                        Get into Introduction Call with customer
-                                      </h3>
-                                      <div className="inline-flex items-center px-3 py-1 bg-[#E8E8E8] text-gray-700 rounded-[13px] font-[Outfit] font-medium text-[12px]">
-                                        Follow Up
+
+      <label className="flex items-center space-x-3 cursor-pointer">
+        <div className="gradient-border-container">
+          <input
+            type="checkbox"
+            className="custom-checkbox"
+            // checked={false}
+            // onChange={handleChange}
+          />
+        </div>
+      </label>
+
+                                      </div>
+
+                                      <div className="flex  items-start">
+                                        <h3 className="text-[16px] font-medium text-[#0091ae] mt-[2px]">
+                                          {leadNextTaskObj?.notes}
+                                          {}
+                                        </h3>
+
+                                        <div className="inline-flex items-center px-2  mt-[4px] h-[20px] text-[#606062] rounded-[8px] font-[Outfit] font-medium text-[14px] tracking-[0.25px] ">
+                                          #{streamCurrentStatus}
+                                        </div>
+
                                       </div>
                                     </div>
 
-                                  </div>
+                                    <div className="flex flex-wrap mt-1 font-[Outfit] s_h12 ml-[34px]">
+                                      <div className=" s_h12 text-[#606062] font-[300]">
+                                        Assigned date :{' '}
+                                        {prettyDateTime(
+                                          leadNextTaskObj?.schTime
+                                        )}
+                                      </div>
+                                      <div className="s_divider_small"></div>
+                                      <div className=" s_h12 text-[#606062] font-[300]">
+                                        Assigned to: {leadNextTaskObj.by}
+                                      </div>
 
 
+                                    </div>
+                                    <div className="mt-[12px] ml-[36px]">
+                                  <button className="font-[Outfit] font-['opensans'] text-[#606062] text-[12px] underline underline-offset-[25%]">
+                                   + Add Comment
+                                  </button>
+                                </div>
+                                  </section>
 
-
-                                  <div className=''>
-
-
-
+                                  <div className="flex flex-col items-end">
                                     <div
-                                      className={`bg-white border rounded-full px-3 py-1 flex items-center gap-1 ${leadNextTaskObj?.comingSoon
-                                        ? 'bg-green-400'
-                                        : 'border-red-700 text-red-700'
-                                        }`}
+                                      className={`w-9 h-9 px-3 py-3 mb-[8px] rounded-full sale_bg_color text-blue-700 `}
                                     >
                                       <Phone size={14} />
-                                      <span className="font-medium text-[12px] tracking-[0%]">
-                                        {(leadNextTaskObj?.sts !== 'completed' ||
-                                          Math.abs(getDifferenceInHours(leadNextTaskObj?.schTime, '')) <= 24) && (
-                                            <span
-                                              className={`py-1 mb-2 ${leadNextTaskObj?.comingSoon
-                                                ? 'text-[#D60000]'
-                                                : 'text-[#D60000]'
-                                                } text-[12px] text-center`}
-                                            >
-                                              {leadNextTaskObj?.comingSoon ? 'Starts in' : 'Delayed by'}{' '}
-                                              {Math.abs(getDifferenceInMinutes(leadNextTaskObj?.schTime, '')) > 60
-                                                ? Math.abs(getDifferenceInMinutes(leadNextTaskObj?.schTime, '')) > 8640
-                                                  ? `${Math.abs(getDifferenceInDays(leadNextTaskObj?.schTime, ''))} Days `
-                                                  : `${Math.abs(getDifferenceInHours(leadNextTaskObj?.schTime, ''))} Hours `
-                                                : `${Math.abs(getDifferenceInMinutes(leadNextTaskObj?.schTime, ''))} Min`}
-                                            </span>
-                                          )}
-                                      </span>
                                     </div>
+                                    <span className="font-medium text-[12px] tracking-[0%]">
+                                      {(leadNextTaskObj?.sts !== 'completed' ||
+                                        Math.abs(
+                                          getDifferenceInHours(
+                                            leadNextTaskObj?.schTime,
+                                            ''
+                                          )
+                                        ) <= 24) && (
+                                        <span
+                                          className={`py-1 mb-2 ${
+                                            leadNextTaskObj?.comingSoon
+                                              ? 'text-[#ffa274]'
+                                              : 'text-[#ffa274]'
+                                          } text-[12px] text-center`}
+                                        >
+                                          {leadNextTaskObj?.comingSoon
+                                            ? 'Starts in'
+                                            : 'Delayed by'}{' '}
+                                          {Math.abs(
+                                            getDifferenceInMinutes(
+                                              leadNextTaskObj?.schTime,
+                                              ''
+                                            )
+                                          ) > 60
+                                            ? Math.abs(
+                                                getDifferenceInMinutes(
+                                                  leadNextTaskObj?.schTime,
+                                                  ''
+                                                )
+                                              ) > 8640
+                                              ? `${Math.abs(
+                                                  getDifferenceInDays(
+                                                    leadNextTaskObj?.schTime,
+                                                    ''
+                                                  )
+                                                )} Days `
+                                              : `${Math.abs(
+                                                  getDifferenceInHours(
+                                                    leadNextTaskObj?.schTime,
+                                                    ''
+                                                  )
+                                                )} Hours `
+                                            : `${Math.abs(
+                                                getDifferenceInMinutes(
+                                                  leadNextTaskObj?.schTime,
+                                                  ''
+                                                )
+                                              )} Min`}
+                                        </span>
+                                      )}
+                                    </span>
                                   </div>
-
-
-                                </div>
-
-                                <div className="flex flex-wrap mt-2 text-sm text-gray-500">
-                                  <div className="pr-3">Assigned date : 20 Mar 2025, 12:22</div>
-                                  <div className="px-3 border-l border-gray-300">Assigned to: vishal@gmail.com</div>
-                                  <div className="px-3 border-l border-gray-300">Call duration: 100 min (2)</div>
                                 </div>
                               </div>
 
-                              <div className="mt-5">
-                                {/* <div className="flex items-start justify-between">
-                                  <div className="flex items-start ml-6 gap-2">
-                                    <img src="/comment.svg" alt="" className="w-4 h-4" />
-                                    <div className="flex flex-row">
-                                      <span className="font-[Outfit] text-[14px] text-[#2B2B2B]">
-                                        {leadDetailsObj?.Remarks || 'NA'}
-                                      </span>
-                                      <span className="ml-2 font-[Outfit] text-[12px] text-[#606062]">
-                                        {leadDetailsObj?.Remarks_T && prettyDateTime(leadDetailsObj?.Remarks_T)}
-                                      </span>
-                                    </div>
-                                  </div>
-                                  <button className="text-gray-500 text-sm">View 2 comments</button>
-                                </div> */}
-
-                                <div className="flex items-center justify-between">
-                                  <div className="flex items-center  gap-2">
-                                    <img src="/comment.svg" alt="" className="w-4 h-4" />
+                              <div className=" border-t">
+                                <div className="flex items-center justify-between my-[10px] px-6">
+                                  <div className="flex items-center gap-2 ">
+                                    {/* <img
+                                      src="/comment.svg"
+                                      alt=""
+                                      className="w-4 h-4"
+                                    /> */}
+                                    <ChatAlt2Icon className="w-4 h-4 inline text-gray-500" />
                                     <div className="flex gap-2">
                                       <span className="font-[Outfit] text-[14px] text-[#2B2B2B]">
                                         {leadDetailsObj?.Remarks || 'NA'}
                                       </span>
-                                      <span className="text-[12px] text-[#606062] font-[Outfit]">
-                                        {leadDetailsObj?.Remarks_T && prettyDateTime(leadDetailsObj?.Remarks_T)}
+                                      <span className="text-[12px] text-[#606062] font-[Outfit] mt-[2px]">
+                                        {leadDetailsObj?.Remarks_T &&
+                                          prettyDateTime(
+                                            leadDetailsObj?.Remarks_T
+                                          )}
                                       </span>
                                     </div>
                                   </div>
-                                  <button className="text-gray-500 text-sm ">View 2 comments</button>
-                                </div>
-
-                                <div className="mt-3">
-                                  <button className="font-[Outfit] text-[#606062] text-[12px] underline underline-offset-[25%]">
-                                    Add Comment
+                                  <button className="text-[12px] text-[#606062] font-[Outfit]  ">
+                                    View {leadNextTaskObj?.comments?.length} comments
                                   </button>
                                 </div>
+
+
                               </div>
                             </div>
                           </div>
 
-
-
-
-
-
-                          <div className="flex flex-wrap gap-3">
+                          <div className=" grid grid-cols-3">
                             {/* Project Name */}
-                            <div className="relative bg-white shadow-[0px_1px_15px_0px_rgba(0,_0,_0,_0.01)] w-[200.5px] h-[95px] pt-[10px] pr-[10px] pb-[20px] pl-[10px] gap-[12px] rounded-[14px] border-[1px] border-[#E7E7E9] overflow-visible">
-                              <div className='p-2'>
-                                <div className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0%] text-[#606062] mb-2">Project Name:</div>
+                            <div className="relative bg-white shadow-[0px_1px_15px_0px_rgba(0,_0,_0,_0.01)]  h-[95px] pt-[10px] pr-[10px] pb-[20px] pl-[10px] gap-[12px] rounded-l-[8px] border-[1px] border-[#E7E7E9] overflow-ellipsis">
+                              <div className="p-2">
+                                <section className='flex flex-row justify-between'>
+                                <div className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0%] text-[#616162] mb-2">
+                                  Project Name
+                                </div>
+                                <div className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0%] text-[#9A9A9A] mb-2">
+                                  {CT != undefined
+                                  ? prettyDateTime(CT)
+                                  : prettyDateTime(Date)}
+                                </div>
+                                </section>
 
-                                <div className="h-px w-[130px] bg-gradient-to-r from-gray-400/90 to-gray-300/50 my-2"></div>
+                                {/* <div className="h-px w-[130px] bg-gradient-to-r from-gray-400/90 to-gray-300/50 my-2"></div> */}
 
-                                <div className="flex items-center justify-between">
-                                  <div className="font-normal text-[14px] leading-[100%] tracking-[0%] text-[#2B2B2B] flex items-center gap-1">
+                                <div className="mt-4">
+                                  <div className="font-normal text-[14px]  text-[#2B2B2B] flex items-center ">
                                     <AssigedToDropComp
-                                      assignerName={selProjectIs?.projectName || Project}
+                                      assignerName={
+                                        selProjectIs?.projectName || Project
+                                      }
                                       id={id}
                                       align="right"
                                       setAssigner={setNewProject}
@@ -3421,20 +3532,30 @@ export default function LeadProfileSideView({
                                 </div>
                               </div>
 
-                              {/* Decoration Image (bottom right) */}
-                              <img src="/limg1.svg" alt="decor" className="absolute bottom-0 right-0 w-[59] h-[60] opacity-20" />
+
                             </div>
 
-                            {/* Second Project Name */}
-                            <div className="relative bg-white shadow-[0px_1px_15px_0px_rgba(0,0,0,0.01)] w-[200.5px] h-[95px] pt-[10px] pr-[10px] pb-[20px] pl-[10px] gap-[12px] rounded-[14px] border-[1px] border-[#E7E7E9] overflow-visible">
-                              <div className='p-2'>
-                                <div className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0%] text-[#606062] mb-2">Assigned To</div>
+                            {/* Assigned To */}
+                            <div className="relative bg-white shadow-[0px_1px_15px_0px_rgba(0,0,0,0.01)]  h-[95px] pt-[10px] pr-[10px] pb-[20px] pl-[10px] gap-[12px]  border-y-[1px] border-[#E7E7E9] overflow-visible">
+                              <div className="p-2">
+                                <section className='flex flex-row justify-between'>
+                                <div className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0%] text-[#616162] mb-2">
+                                  Assigned To
+                                </div>
+                                <div className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0%] text-[#9A9A9A] mb-2">
+                                  {CT != undefined
+                                  ? prettyDateTime(CT)
+                                  : prettyDateTime(Date)}
+                                </div>
+                                </section>
 
-                                <div className="h-px w-[130px] bg-gradient-to-r from-gray-400/90 to-gray-300/50 my-2"></div>
 
-                                <div className="flex items-center justify-between">
+
+                                <div className="flex items-center justify-between mt-4">
                                   <div className="font-normal text-[14px] leading-[100%] tracking-[0%] text-[#2B2B2B] flex items-center gap-1">
-                                    {!user?.role?.includes(USER_ROLES.CP_AGENT) ? (
+                                    {!user?.role?.includes(
+                                      USER_ROLES.CP_AGENT
+                                    ) ? (
                                       <div className="font-[Outfit] font-semibold text-[14px] text-[#0E0A1F] tracking-wide overflow-ellipsis">
                                         <AssigedToDropComp
                                           assignerName={assignerName}
@@ -3454,36 +3575,26 @@ export default function LeadProfileSideView({
                                 </div>
                               </div>
 
-                              {/* Decoration Image (bottom right) */}
-                              <img src="/limg2.svg" alt="decor" className="absolute bottom-0 right-0 w-[59] h-[60] opacity-20" />
+
                             </div>
 
-                            {/* Latest Update */}
-                            <div className="relative bg-white shadow-[0px_1px_15px_0px_rgba(0,_0,_0,_0.01)] w-[200.5px] h-[95px] pt-[10px] pr-[10px] pb-[20px] pl-[10px] gap-[12px] rounded-[14px] border-[1px] bg-[#E7E7E9] overflow-visible">
-                              <div className='p-2'>
-                                <div className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0%] text-[#606062] mb-2">Lead Created</div>
-
-                                <div className="h-px w-[130px] bg-gradient-to-r from-gray-400/90 to-gray-300/50 my-2"></div>
-
-                                <div className="flex items-center justify-between">
-                                  <div className="font-normal text-[14px] leading-[100%] tracking-[0%] text-[#2B2B2B] flex items-center gap-1">
-                                    latest Update
-                                  </div>
+                            {/* Lead Created */}
+                            <div className="relative bg-white shadow-[0px_1px_15px_0px_rgba(0,_0,_0,_0.01)]  h-[95px] pt-[10px] pr-[10px] pb-[20px] pl-[10px] gap-[12px] rounded-r-[8px] border-[1px] bg-[#E7E7E9] overflow-visible">
+                              <div className="p-2">
+                                <section className='flex flex-row justify-between'>
+                                <div className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0%] text-[#616162] mb-2">
+                                  Source
                                 </div>
-                              </div>
+                                <div className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0%] text-[#9A9A9A] mb-2">
+                                  {CT != undefined
+                                  ? prettyDateTime(CT)
+                                  : prettyDateTime(Date)}
+                                </div>
+                                </section>
 
-                              {/* Decoration Image (bottom right) */}
-                              <img src="/limg3.svg" alt="decor" className="absolute bottom-0 right-0 w-[59] h-[60] opacity-20" />
-                            </div>
 
-                            {/* Source */}
-                            <div className="relative bg-white shadow-[0px_1px_15px_0px_rgba(0,_0,_0,_0.01)] w-[200.5px] h-[95px] pt-[10px] pr-[10px] pb-[20px] pl-[10px] gap-[12px] rounded-[14px] border-[1px] border-[#E7E7E9] overflow-visible">
-                              <div className='p-2'>
-                                <div className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0%] text-[#606062] mb-2">Source</div>
 
-                                <div className="h-px w-[130px] bg-gradient-to-r from-gray-400/90 to-gray-300/50 my-2"></div>
-
-                                <div className="flex items-center justify-between">
+                                <div className="flex items-center justify-between mt-5">
                                   <div className="font-normal text-[14px] leading-[100%] tracking-[0%] text-[#2B2B2B] flex items-center gap-1">
                                     {Source?.toString() || 'NA'}
                                   </div>
@@ -3491,22 +3602,25 @@ export default function LeadProfileSideView({
                               </div>
 
                               {/* Decoration Image (bottom right) */}
-                              <img src="/limg4.svg" alt="decor" className="absolute bottom-0 right-0 w-[59] h-[60] opacity-20" />
+                              <img
+                                src="/limg3.svg"
+                                alt="decor"
+                                className="absolute bottom-0 right-0 w-[59] h-[60] opacity-20"
+                              />
                             </div>
+
+                            {/* Source */}
+
                           </div>
-
-
-
-
-
 
                           <div>
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 ">
                               {/* Left Column */}
                               <div className="space-y-4">
-                                <div className=" rounded-[16px] p-4  bg-[#FFFFFF]  border border-[#F0F0F5]  shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] max-w-lg">
-                                  <div className="flex items-center mb-8">
-                                    <div className="bg-[#FFFFFF] p-1.5 rounded-lg mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+                                <div className=" rounded-[8px] py-[16px]  bg-[#FFFFFF]  border border-[#F0F0F5]  shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] max-w-lg">
+                                  <div className="flex items-center mb-8 border-b border-gray-200 px-4 pb-[16px]">
+                                  <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+                                    <div className="bg-[#E3F1FA] p-1 rounded-full">
                                       {/* <Clock className="text-purple-500 w-5 h-5" /> */}
                                       <img
                                         src="/fire.svg"
@@ -3514,72 +3628,21 @@ export default function LeadProfileSideView({
                                         className="w-[18px] h-[18px]"
                                       />
                                     </div>
+                                    </div>
 
-                                    <span className="font-semibold text-[12px] leading-[100%] tracking-[0.06em] text-[#696990]">
-                                      LEAD STRENGTH
+                                    <span className="font-medium text-[16px]  text-[#0D0A1E]">
+                                      Lead strength
                                     </span>
                                   </div>
 
-                                  {/* <div className="relative h-3 bg-gray-100 rounded-full mb-6">
-        <div
-          className="absolute top-0 left-0 h-full bg-indigo-500 rounded-full"
-          style={{ width: '50%' }}
-        >
-        </div>
-        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-          <span className="text-xs font-medium text-white z-10">50%</span>
-        </div>
-      </div> */}
-
-                                  <div className="mb-6">
-                                    {/* <Slider
-      onChange={(e) => setopstr(e.target.value)} // Use the same handler to set value
-      value={opstr}
-      defaultValue={opstr}
-      aria-label="Lead Strength Slider"
-      valueLabelDisplay="auto"
-      min={0}
-      max={100}
-    /> */}
+<section className=" px-4">
+                                  <div className="mb-2">
 
 
-
-                                    <div className="mt-8">
-                                      <Slider
-                                        onChange={(e) => setopstr(e.target.value)}
-                                        value={opstr}
-                                        defaultValue={opstr}
-                                        aria-label="Default"
-                                        valueLabelDisplay="on"
-                                        sx={{
-                                          color: '#F25533',
-                                          height: 8,
-                                          '& .MuiSlider-track': {
-                                            height: 8,
-                                          },
-                                          '& .MuiSlider-rail': {
-                                            height: 8,
-                                          },
-                                          '& .MuiSlider-thumb': {
-                                            width: 24,
-                                            height: 24,
-                                            '&:hover, &.Mui-focusVisible': {
-                                              boxShadow: '0px 0px 0px 8px rgba(242, 85, 51, 0.16)',
-                                            },
-                                            '&.Mui-active': {
-                                              boxShadow: '0px 0px 0px 14px rgba(242, 85, 51, 0.16)',
-                                            },
-                                          },
-                                          '& .MuiSlider-valueLabel': {
-                                            backgroundColor: '#F25533',
-                                          },
-                                        }}
-                                      />
+                                    <div className="mb-4">
+                                      <GradientSlider opstr={opstr} setopstr={setopstr} />
                                     </div>
-
-
                                   </div>
-
 
                                   <div className="flex justify-between items-center mb-6">
                                     <div className="font-normal text-[12px] leading-[100%] tracking-[0%] text-[#606062]">
@@ -3591,7 +3654,7 @@ export default function LeadProfileSideView({
                                   </div>
 
                                   <div className="flex flex-wrap gap-3">
-                                    <div className="bg-white rounded-[4px] border border-[#E7E7E9]  px-2 py-1 flex items-center">
+                                    <div className="bg-white rounded-2xl border border-[#E7E7E9]  px-2 py-1 flex items-center">
                                       {/* <Clock className="w-5 h-5 mr-2 text-gray-600" /> */}
                                       <img
                                         src="/Rup.svg"
@@ -3603,7 +3666,7 @@ export default function LeadProfileSideView({
                                       </span>
                                     </div>
 
-                                    <div className="bg-white rounded-[4px] border border-[#E7E7E9] px-2 py-1 flex items-center">
+                                    <div className="bg-white rounded-2xl border border-[#E7E7E9] px-2 py-1 flex items-center">
                                       <img
                                         src="/Rup.svg"
                                         alt=""
@@ -3614,39 +3677,44 @@ export default function LeadProfileSideView({
                                       </span>
                                     </div>
 
-                                    <div className="bg-white rounded-[4px] border border-[#E7E7E9] px-2 py-1 flex items-center">
+                                    <div className="bg-white rounded-2xl border border-[#E7E7E9] px-2 py-1 flex items-center">
                                       <img
                                         src="/Rup.svg"
                                         alt=""
                                         className="w-5 h-5"
                                       />
                                       <span className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#606062]">
-                                        Max: 5.12cr
+                                        Max: 5.
                                       </span>
                                     </div>
 
-                                    {[1, 2, 3, 4, 5].map((index) => (
-                                      <div
-                                        key={index}
-                                        className="bg-white border border-[#E7E7E9] rounded-[4px] px-2 py-1 flex items-center h-[28px]"
-                                      >
-                                        <img
-                                          src="/Rup.svg"
-                                          alt=""
-                                          className="w-5 h-5 mr-1"
-                                        />
 
-                                        <span className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#606062]">
-                                          Call
-                                        </span>
-                                      </div>
-                                    ))}
 
-                                    {/* Add button */}
-                                    <div className="bg-[#E7E7E9] rounded-full p-1 flex items-center justify-center">
-                                      <Plus className="w-5 h-5 text-[#2B2B2B]" />
-                                    </div>
+                                    {/* View more button */}
+                                    <button
+
+                                    className="mt-4 font-medium text-xs leading-tight tracking-normal text-[#606062] underline decoration-solid decoration-0 decoration-offset-[25%] decoration-thick decoration-skip-ink-auto flex items-center"
+                                  >
+                                    View {isExpanded ? 'less' : 'more'}
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="20"
+                                      height="20"
+                                      viewBox="0 0 24 24"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      strokeWidth="2"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      className={`ml-1 transition-transform ${
+                                        isExpanded ? 'rotate-180' : ''
+                                      }`}
+                                    >
+                                      <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                  </button>
                                   </div>
+                                  </section>
                                 </div>
 
                                 {/* Lead Strength Card */}
@@ -3673,48 +3741,55 @@ export default function LeadProfileSideView({
     </div>
   </div> */}
 
-                                <div className="border border-[#F0F0F5] bg-[#FFFFFF] p-3 shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] rounded-[14px] ">
+                                <div className="border border-[#F0F0F5] bg-[#FFFFFF] p-3 shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] rounded-[8px] ">
                                   <div className="flex justify-between">
-                                    <div className="flex flex-col ">
-                                      <div className="flex items-center mb-4">
-                                        <div className="bg-[#FFFFFF] p-1.5 rounded-lg mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
-                                          <img
-                                            src="/location.svg"
-                                            alt=""
-                                            className="w-[18px] h-[18px]"
-                                          />
-                                        </div>
+                                    <div className="flex flex-col w-full ">
+                                      <div className="flex items-center mb-4 justify-between pb-[16px] pt-[8px] border-b border-[#F0F0F5]">
+                                        <section className="flex items-center">
+
+                                        <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+                                    <div className="bg-[#E3F1FA] p-1 rounded-full">
+                                      {/* <Clock className="text-purple-500 w-5 h-5" /> */}
+                                      <img
+                                        src="/location.svg"
+                                        alt=""
+                                        className="w-[18px] h-[18px]"
+                                      />
+                                    </div>
+                                    </div>
                                         <span className="font-semibold text-[12px] leading-[100%] tracking-[6%] uppercase text-[#2B2B2B]">
-                                          SITE VISIT (
+                                          Site visit (
                                           {projectData.siteVisit.count})
                                         </span>
+                                        </section>
+                                        <div className="flex flex-row items-center font-medium text-[14px] text-[#0E0A1F] mr-[8px]">
+                                      <img
+                                        src="/good.svg"
+                                        alt="icon"
+                                        className="mb-1 w-8 h-8 mr-[8px]"
+                                      />
+                                      Good
+                                    </div>
                                       </div>
 
-                                      <div>
-                                        <p className="font-normal text-[14px] text-[#606062]">
+                                      <div className='flex flex-row justify-between'>
+                                        <p className="font-normal text-[12px] text-[#0D0A1E]">
                                           Visit Date:{' '}
                                           {projectData.siteVisit.date}
                                         </p>
-                                        <p className="font-normal text-[14px] text-[#606062]">
+                                        <p className="font-normal text-[12px] text-[#0D0A1E]">
                                           Site In-charge:{' '}
                                           {projectData.siteVisit.inCharge}
                                         </p>
                                       </div>
                                     </div>
 
-                                    <div className="flex flex-col items-center font-semibold text-[14px] text-[#0E0A1F]">
-                                      <img
-                                        src="/good.svg"
-                                        alt="icon"
-                                        className="mb-1 w-16 h-16"
-                                      />
-                                      Good
-                                    </div>
+
                                   </div>
                                 </div>
 
                                 {/*
-  <div className="border border-[#E7E7E9] bg-[#FFFFFF] p-4 rounded-[16px]">
+  <div className="border border-[#E7E7E9] bg-[#FFFFFF] p-4 rounded-[8px]">
   <div className="flex items-center mb-4">
     <div className="bg-[#FFFFFF] p-1.5 rounded-lg mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
       <img src="/quill_clock.svg" alt="" className='w-[18px] h-[18px]' />
@@ -3745,15 +3820,19 @@ export default function LeadProfileSideView({
 
 </div> */}
 
-                                <div className="border border-[#F0F0F5] bg-[#FFFFFF] shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] p-4 rounded-[14px] cursor-pointer">
+                                <div className="border border-[#F0F0F5] bg-[#FFFFFF] shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] p-4 rounded-[8px] cursor-pointer">
                                   <div className="flex items-center mb-4">
-                                    <div className="bg-[#FFFFFF] p-1.5 rounded-lg mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+                                    <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+                                    <div className="bg-[#E3F1FA] p-1 rounded-full">
+                                      {/* <Clock className="text-purple-500 w-5 h-5" /> */}
                                       <img
                                         src="/target-sale.svg"
-                                        alt="Clock Icon"
+                                        alt=""
                                         className="w-[18px] h-[18px]"
                                       />
                                     </div>
+                                    </div>
+
                                     <span className="font-semibold text-[12px] leading-[100%] tracking-[6%] uppercase text-[#2B2B2B]">
                                       TASK LOGS
                                     </span>
@@ -3786,22 +3865,20 @@ export default function LeadProfileSideView({
                                     ].map((item, index, array) => (
                                       <div
                                         key={item.label}
-                                        className={`${index !== array.length - 1
-                                          ? 'border-b pb-3 mb-3'
-                                          : ''
-                                          }`}
+                                        className={`${
+                                          index !== array.length - 1
+                                            ? ' pb-3'
+                                            : ''
+                                        }`}
                                       >
                                         <div className="flex justify-between  items-center">
                                           <div className="flex gap-2 items-center">
-                                            <img
-                                              src="/fileicon.svg"
-                                              alt="File Icon"
-                                              className="w-5 h-5"
-                                            />
-                                            <span className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062]">
+
+                                            <span className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062] whitespace-nowrap">
                                               {item.label}
                                             </span>
                                           </div>
+                                          <div className="w-full mx-4 mt-[3px] h-[0.60px] relative custom-dash-border border-neutral-300"></div>
                                           <span className="font-outfit font-normal text-xs leading-tight tracking-tight text-[#606062]">
                                             {item.value}
                                           </span>
@@ -3814,26 +3891,29 @@ export default function LeadProfileSideView({
 
                               {/* Right Column */}
                               <div className="space-y-4">
-                                <div className=" rounded-[14px] p-4  bg-[#FDEFE7] shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)]  border border-[#F0F0F5]  max-w-lg">
-                                  <div className="flex items-center mb-4">
-                                    {/* <div className="bg-purple-50 p-3 rounded-full mr-3">
-          <Clock className="text-purple-600 w-5 h-5" />
-        </div> */}
-                                    <div className="bg-[#FFFFFF] p-1.5 rounded-lg mr-3 backdrop-blur-[26.4px] shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+                                <div className=" rounded-[8px] py-[16px]   shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)]  border border-[#F0F0F5]  max-w-lg">
+
+                                <div className="flex items-center mb-8 border-b border-gray-200 px-4 pb-[16px]">
+                                  <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+                                    <div className="bg-[#E3F1FA] p-1 rounded-full">
+                                      {/* <Clock className="text-purple-500 w-5 h-5" /> */}
                                       <img
                                         src="/folder-library.svg"
                                         alt=""
                                         className="w-[18px] h-[18px]"
                                       />
+                                  </div>
                                     </div>
-                                    <span className="font-semibold text-[12px] leading-[100%] tracking-[6%] uppercase text-[#2B2B2B]">
-                                      PROJECT
+
+                                    <span className="font-medium text-[16px]  text-[#0D0A1E]">
+                                      Project
                                     </span>
                                   </div>
 
+                                  <section className=" px-4">
                                   <div className="mb-4">
                                     <div className="flex justify-between items-center mb-4">
-                                      <h2 className="font-medium text-base leading-tight tracking-normal text-[#404040]">
+                                      <h2 className="font-medium text-2xl  leading-tight tracking-normal text-[#404040]">
                                         {' '}
                                         {selProjectFullDetails?.projectName}
                                       </h2>
@@ -3850,19 +3930,13 @@ export default function LeadProfileSideView({
                                       </a>
                                     </div>
 
-
-
-
-
                                     <div className="flex flex-wrap gap-2">
-
-
                                       <div className="bg-[#F3E1D8] rounded-[15px] py-1 px-2 flex gap-2 items-center">
-
                                         <div>
                                           <img
                                             src={
-                                              selProjectFullDetails?.planningApproval?.toLowerCase() === 'yes'
+                                              selProjectFullDetails?.planningApproval?.toLowerCase() ===
+                                              'yes'
                                                 ? '/yessale.svg'
                                                 : '/nosale.svg'
                                             }
@@ -3876,13 +3950,12 @@ export default function LeadProfileSideView({
                                         </span>
                                       </div>
 
-
                                       <div className="bg-[#F3E1D8] rounded-[15px] py-1 px-2 flex gap-2 items-center">
-
                                         <div>
                                           <img
                                             src={
-                                              selProjectFullDetails?.reraApproval?.toLowerCase() === 'yes'
+                                              selProjectFullDetails?.reraApproval?.toLowerCase() ===
+                                              'yes'
                                                 ? '/yessale.svg'
                                                 : '/nosale.svg'
                                             }
@@ -3896,23 +3969,11 @@ export default function LeadProfileSideView({
                                         </span>
                                       </div>
 
-
                                       {/* Amenities */}
                                       <div className="border bg-[#F3E1D8] rounded-[15px] py-1 px-2 font-outfit font-normal text-xs leading-tight tracking-normal text-[#606062] flex items-center justify-center">
                                         +21 Amenities
                                       </div>
                                     </div>
-
-
-
-
-
-
-
-
-
-
-
                                   </div>
 
                                   {isExpanded && (
@@ -3958,27 +4019,33 @@ export default function LeadProfileSideView({
                                       strokeWidth="2"
                                       strokeLinecap="round"
                                       strokeLinejoin="round"
-                                      className={`ml-1 transition-transform ${isExpanded ? 'rotate-180' : ''
-                                        }`}
+                                      className={`ml-1 transition-transform ${
+                                        isExpanded ? 'rotate-180' : ''
+                                      }`}
                                     >
                                       <polyline points="6 9 12 15 18 9"></polyline>
                                     </svg>
                                   </button>
+                                  </section>
                                 </div>
 
+
                                 {/* Projects Card */}
-                                <div className="border border-[#F0F0F5] shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] bg-[#FFFFFF] p-4 rounded-[14px] ">
+                                <div className="border border-[#F0F0F5] shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] bg-[#FFFFFF] p-4 rounded-[8px] ">
                                   {!isProjectsExpanded && (
                                     <div>
                                       <div className="flex items-center mb-4">
-                                        <div className="bg-[#FFFFFF] p-1.5 rounded-lg mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
-                                          {/* <Clock className="text-purple-600" size={20} /> */}
-                                          <img
-                                            src="/quill_clock.svg"
-                                            alt=""
-                                            className="w-[18px] h-[18px]"
-                                          />
-                                        </div>
+
+                                        <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+                                    <div className="bg-[#E3F1FA] p-1 rounded-full">
+                                      {/* <Clock className="text-purple-500 w-5 h-5" /> */}
+                                      <img
+                                        src="/quill_clock.svg"
+                                        alt=""
+                                        className="w-[18px] h-[18px]"
+                                      />
+                                    </div>
+                                    </div>
                                         <span className="font-semibold text-[12px] leading-[100%] tracking-[6%] uppercase text-[#2B2B2B]">
                                           PROJECTS (3)
                                         </span>
@@ -4023,14 +4090,17 @@ export default function LeadProfileSideView({
                                   {isProjectsExpanded && (
                                     <div>
                                       <div className="flex items-center mb-4">
-                                        <div className="border border-[#E7E7E9] bg-[#FFFFFF] p-1.5 rounded-[16px] mr-3">
-                                          {/* <Clock className="text-purple-600" size={20} /> */}
-                                          <img
-                                            src="/quill_clock.svg"
-                                            alt=""
-                                            className="w-[18px] h-[18px]"
-                                          />
-                                        </div>
+
+                                        <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+                                    <div className="bg-[#E3F1FA] p-1 rounded-full">
+                                      {/* <Clock className="text-purple-500 w-5 h-5" /> */}
+                                      <img
+                                        src="/quill_clock.svg"
+                                        alt=""
+                                        className="w-[18px] h-[18px]"
+                                      />
+                                    </div>
+                                    </div>
                                         <span className="font-semibold text-[12px] leading-[100%] tracking-[6%] uppercase text-[#2B2B2B]">
                                           PROJECTS (3)
                                         </span>
@@ -4073,64 +4143,7 @@ export default function LeadProfileSideView({
                                   )}
                                 </div>
 
-                                <div className="border border-[#F0F0F5] shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] bg-[#FFFFFF] p-4 rounded-[14px] ">
-                                  <div className="flex items-center mb-4">
-                                    <div className="bg-[#FFFFFF] p-1.5 rounded-lg mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
-                                      <img
-                                        src="/quill_clock.svg"
-                                        alt=""
-                                        className="w-[18px] h-[18px]"
-                                      />
-                                    </div>
-                                    <span className="font-semibold text-[12px] leading-[100%] tracking-[6%] uppercase text-[#2B2B2B]">
-                                      ASSIGNED TO
-                                    </span>
-                                  </div>
 
-                                  <div className="flex flex-col gap-2">
-                                    <div
-                                      className="flex justify-between items-center cursor-pointer"
-                                      onClick={toggleAssignedExpand}
-                                    >
-                                      {!user?.role?.includes(
-                                        USER_ROLES.CP_AGENT
-                                      ) ? (
-                                        <div className="font-semibold text-sm text-slate-900 tracking-wide w-full">
-                                          <AssigedToDropComp
-                                            assignerName={assignerName}
-                                            id={id}
-                                            setAssigner={setAssigner}
-                                            usersList={usersList}
-                                            align={undefined}
-                                          />
-                                        </div>
-                                      ) : (
-                                        <span className="text-left text-sm font-medium text-[#404040]">
-                                          {assignerName}
-                                        </span>
-                                      )}
-
-                                      {isAssignedExpanded ? (
-                                        <ChevronUp
-                                          size={20}
-                                          className="text-gray-500"
-                                        />
-                                      ) : (
-                                        <ChevronDown
-                                          size={20}
-                                          className="text-gray-500"
-                                        />
-                                      )}
-                                    </div>
-
-                                    {/* Date display - shown for all users */}
-                                    <div className="font-normal text-[12px] leading-[100%] tracking-[0em] text-[#666666]">
-                                      {assignT != undefined
-                                        ? prettyDateTime(assignT)
-                                        : prettyDateTime(Date)}
-                                    </div>
-                                  </div>
-                                </div>
 
                                 {/* More Details Card */}
                                 {/* <div className="bg-white p-6 rounded-lg shadow-sm">
@@ -4156,18 +4169,22 @@ export default function LeadProfileSideView({
   </div> */}
 
                                 {/* Call Activity Card */}
-                                <div className="border border-[#F0F0F5] shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] bg-[#FFFFFF] cursor-pointer p-4 rounded-[14px] ">
+                                <div className="border border-[#F0F0F5] shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] bg-[#FFFFFF] cursor-pointer p-4 rounded-[8px] ">
                                   <div className="flex items-center justify-between mb-6">
                                     <div className="flex items-center">
-                                      <div className="bg-[#FFFFFF] p-1.5 rounded-lg mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
-                                        <img
-                                          src="/call.svg"
-                                          alt="Clock Icon"
-                                          className="w-[18px] h-[18px]"
-                                        />
-                                      </div>
+
+                                      <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+                                    <div className="bg-[#E3F1FA] p-1 rounded-full">
+                                      {/* <Clock className="text-purple-500 w-5 h-5" /> */}
+                                      <img
+                                        src="/call.svg"
+                                        alt=""
+                                        className="w-[18px] h-[18px]"
+                                      />
+                                    </div>
+                                    </div>
                                       <h2 className="font-semibold text-[12px] leading-[100%] tracking-[6%] uppercase text-[#2B2B2B]">
-                                        CALL ACTIVITY
+                                        Call Activity
                                       </h2>
                                     </div>
                                     <img
@@ -4194,41 +4211,41 @@ export default function LeadProfileSideView({
                                     ].map((item, index, array) => (
                                       <div
                                         key={item.label}
-                                        className={`flex justify-between items-center ${index !== array.length - 1
-                                          ? 'pb-3 border-b border-gray-200'
-                                          : ''
-                                          }`}
+                                        className={`flex justify-between items-center ${
+                                          index !== array.length - 1
+                                            ? 'pb-3'
+                                            : ''
+                                        }`}
                                       >
-                                        <div className="flex items-center">
-                                          <div className="mr-3">
-                                            <img
-                                              src="/fileicon.svg"
-                                              alt="Icon"
-                                              className="w-5 h-5"
-                                            />
-                                          </div>
-                                          <p className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062]">
-                                            {item.label}
-                                          </p>
-                                        </div>
-                                        <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0em] text-[#616162]">
-                                          {item.value}
-                                        </p>
-                                      </div>
+                                    <div className="flex gap-2 items-center">
+
+                                    <span className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062] whitespace-nowrap">
+                                      {item.label}
+                                    </span>
+                                    </div>
+                                    <div className="w-full mx-4 mt-[3px] h-[0.60px] relative custom-dash-border border-neutral-300"></div>
+                                    <span className="font-outfit font-normal text-xs leading-tight tracking-tight text-[#606062] whitespace-nowrap">
+                                    {item.value}
+                                    </span>
+                                    </div>
+
                                     ))}
                                   </div>
                                 </div>
 
-                                <div className="border border-[#F0F0F5] shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] bg-[#FFFFFF] cursor-pointer p-4 rounded-[14px] ">
+                                <div className="border border-[#F0F0F5] shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] bg-[#FFFFFF] cursor-pointer p-4 rounded-[8px] ">
                                   <div className="flex items-center justify-between mb-6">
                                     <div className="flex items-center">
-                                      <div className="bg-[#FFFFFF] p-1.5 rounded-lg mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
-                                        <img
-                                          src="/quill_clock.svg"
-                                          alt="Clock Icon"
-                                          className="w-[18px] h-[18px]"
-                                        />
-                                      </div>
+                                      <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+                                    <div className="bg-[#E3F1FA] p-1 rounded-full">
+                                      {/* <Clock className="text-purple-500 w-5 h-5" /> */}
+                                      <img
+                                        src="/quill_clock.svg"
+                                        alt=""
+                                        className="w-[18px] h-[18px]"
+                                      />
+                                    </div>
+                                    </div>
                                       <h2 className="font-semibold text-[12px] leading-[100%] tracking-[6%] uppercase text-[#2B2B2B]">
                                         Dates
                                       </h2>
@@ -4241,40 +4258,30 @@ export default function LeadProfileSideView({
                                   </div>
 
                                   <div className="space-y-4 px-4">
-                                    <div className="flex justify-between items-center pb-3 border-b border-gray-200">
+                                    <div className="flex justify-between items-center pb-3  border-gray-200">
                                       <div className="flex items-center">
-                                        <div className="mr-3">
-                                          <img
-                                            src="/fileicon.svg"
-                                            alt="Icon"
-                                            className="w-5 h-5"
-                                          />
-                                        </div>
-                                        <p className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062]">
+
+                                        <p className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062] whitespace-nowrap">
                                           Created On
                                         </p>
                                       </div>
-                                      <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0em] text-[#616162]">
+                                      <div className="w-full mx-4 mt-[3px] h-[0.60px] relative custom-dash-border border-neutral-300"></div>
+                                      <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0em] text-[#616162] whitespace-nowrap">
                                         {CT != undefined
                                           ? prettyDateTime(CT)
                                           : prettyDateTime(Date)}
                                       </p>
                                     </div>
 
-                                    <div className="flex justify-between items-center pb-3 border-b border-gray-200">
+                                    <div className="flex justify-between items-center pb-3  border-gray-200">
                                       <div className="flex items-center">
-                                        <div className="mr-3">
-                                          <img
-                                            src="/fileicon.svg"
-                                            alt="Icon"
-                                            className="w-5 h-5"
-                                          />
-                                        </div>
-                                        <p className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062]">
+
+                                        <p className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062] whitespace-nowrap">
                                           Updated On :
                                         </p>
                                       </div>
-                                      <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0em] text-[#616162]">
+                                      <div className="w-full mx-4 mt-[3px] h-[0.60px] relative custom-dash-border border-neutral-300"></div>
+                                      <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0em] text-[#616162] whitespace-nowrap">
                                         {stsUpT === undefined
                                           ? 'NA'
                                           : prettyDateTime(stsUpT) || 'NA'}
@@ -4283,18 +4290,13 @@ export default function LeadProfileSideView({
 
                                     <div className="flex justify-between items-center">
                                       <div className="flex items-center">
-                                        <div className="mr-3">
-                                          <img
-                                            src="/fileicon.svg"
-                                            alt="Icon"
-                                            className="w-5 h-5"
-                                          />
-                                        </div>
-                                        <p className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062]">
+
+                                        <p className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062] whitespace-nowrap">
                                           Assigned On
                                         </p>
                                       </div>
-                                      <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0em] text-[#616162]">
+                                      <div className="w-full mx-4 mt-[3px] h-[0.60px] relative custom-dash-border border-neutral-300"></div>
+                                      <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0em] text-[#616162] whitespace-nowrap">
                                         {assignT != undefined
                                           ? prettyDateTime(assignT)
                                           : prettyDateTime(Date)}
@@ -4324,9 +4326,10 @@ export default function LeadProfileSideView({
                                   <div className="w-full flex flex-col mb-3 mt-2">
                                     <CustomSelect
                                       name="source"
-                                      label={`Why  ${customerDetails?.Name?.toLocaleUpperCase() ||
+                                      label={`Why  ${
+                                        customerDetails?.Name?.toLocaleUpperCase() ||
                                         'Customer'
-                                        } is  not Interested *`}
+                                      } is  not Interested *`}
                                       className="input mt-3"
                                       onChange={(value) => {
                                         setNotInterestType(value.value)
@@ -4408,8 +4411,9 @@ export default function LeadProfileSideView({
                             <div className="flex flex-row ">
                               <div className="flex flex-row bg-white rounded-xl border ">
                                 <div
-                                  className={` py-1 pr-4 pl-4 min-w-[62px] ${selFilterVal === 'all' ? 'bg-[#E8E8E8]' : ''
-                                    } rounded-xl rounded-r-none`}
+                                  className={` py-1 pr-4 pl-4 min-w-[62px] ${
+                                    selFilterVal === 'all' ? 'bg-[#E8E8E8]' : ''
+                                  } rounded-xl rounded-r-none`}
                                   onClick={() => setSelFilterVal('all')}
                                 >
                                   <span className="mr-1 text-[10px] ">All</span>
@@ -4421,10 +4425,11 @@ export default function LeadProfileSideView({
                                   }
                                 </div>
                                 <div
-                                  className={` py-1 pr-4 pl-4 min-w-[62px] border-x ${selFilterVal === 'pending'
-                                    ? 'bg-[#E8E8E8] text-[0E0A1F]'
-                                    : ''
-                                    } `}
+                                  className={` py-1 pr-4 pl-4 min-w-[62px] border-x ${
+                                    selFilterVal === 'pending'
+                                      ? 'bg-[#E8E8E8] text-[0E0A1F]'
+                                      : ''
+                                  } `}
                                   onClick={() => setSelFilterVal('pending')}
                                 >
                                   {/* <CheckCircleIcon className="w-4 h-3  inline " /> */}
@@ -4444,10 +4449,11 @@ export default function LeadProfileSideView({
                                   </span>
                                 </div>
                                 <div
-                                  className={` py-1 pr-4 pl-4 min-w-[62px] ${selFilterVal === 'completed'
-                                    ? 'bg-[#E8E8E8]'
-                                    : ''
-                                    }  rounded-xl rounded-l-none`}
+                                  className={` py-1 pr-4 pl-4 min-w-[62px] ${
+                                    selFilterVal === 'completed'
+                                      ? 'bg-[#E8E8E8]'
+                                      : ''
+                                  }  rounded-xl rounded-l-none`}
                                   onClick={() => setSelFilterVal('completed')}
                                 >
                                   {/* <CheckCircleIcon className="w-4 h-3 inline text-[#058527]" /> */}
@@ -4465,20 +4471,15 @@ export default function LeadProfileSideView({
                             </div>
                           </div>
 
-                          <div
-                            className='relative'
-                          >
-
+                          <div className="relative">
                             <div>
-
                               {loader && (
                                 <div
                                   id="toast-success"
-                                  // className="flex items-center w-[96.4%] mx-4 rounded-t-lg p-2 text-white"  
+                                  // className="flex items-center w-[96.4%] mx-4 rounded-t-lg p-2 text-white"
                                   className="flex items-center w-full px-4 rounded-t-lg p-2 text-white"
                                   role="alert"
                                 >
-
                                   {/* <div className="flex items-center mb-4"></div> */}
 
                                   <div className="bg-[#FFFFFF] p-1.5 rounded-lg mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
@@ -4555,7 +4556,6 @@ export default function LeadProfileSideView({
                                               className="w-full h-full py-3 px-2 outline-none text-sm   border-b border-[#E7E7E9] text-[33475b]"
                                             ></input>
 
-
                                             {/* <div className="flex flex-row mt-3">
                                           <section>
                                             <span className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162]">
@@ -4599,9 +4599,6 @@ export default function LeadProfileSideView({
 
                                         </div> */}
 
-
-
-
                                             <div className="grid grid-cols-2 gap-6">
                                               <div>
                                                 {/* <label className="block text-gray-600 mb-2">Edit Due Date</label> */}
@@ -4610,14 +4607,13 @@ export default function LeadProfileSideView({
                                                     {tempLeadStatus
                                                       .charAt(0)
                                                       .toUpperCase() +
-                                                      tempLeadStatus.slice(1)}{' '}
+                                                      tempLeadStatus.slice(
+                                                        1
+                                                      )}{' '}
                                                   </span>
                                                   Due Date
                                                 </span>
-                                                <div className="w-full  border-b border-[#E7E7E9] bg-transparent focus:outline-none focus:border-blue-500"
-                                                >
-
-
+                                                <div className="w-full  border-b border-[#E7E7E9] bg-transparent focus:outline-none focus:border-blue-500">
                                                   <div className="bg-green    flex flex-row ">
                                                     <span className="inline">
                                                       <CustomDatePicker
@@ -4647,31 +4643,30 @@ export default function LeadProfileSideView({
                                                     </span>
                                                   </div>
                                                 </div>
-
                                               </div>
 
                                               <div>
-                                                <label className="block font-[Outfit] block font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162] mb-2">Assign task to Site operators</label>
+                                                <label className="block font-[Outfit] block font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162] mb-2">
+                                                  Assign task to Site operators
+                                                </label>
                                                 <div className="relative">
-                                                  <div
-                                                    className="w-full  border-b border-[#E7E7E9] bg-transparent flex justify-between items-center cursor-pointer"
-                                                  >
-
-
+                                                  <div className="w-full  border-b border-[#E7E7E9] bg-transparent flex justify-between items-center cursor-pointer">
                                                     <AssigedToDropComp
-                                                      assignerName={selProjectIs?.projectName || Project}
+                                                      assignerName={
+                                                        selProjectIs?.projectName ||
+                                                        Project
+                                                      }
                                                       id={id}
                                                       align="right"
-                                                      setAssigner={setNewProject}
+                                                      setAssigner={
+                                                        setNewProject
+                                                      }
                                                       usersList={projectList}
                                                       className="absolute top-[100%]  z-[999]"
                                                     />
                                                   </div>
-
                                                 </div>
                                               </div>
-
-
                                             </div>
                                           </section>
                                           <div className="flex flex-row mt-4 justify-between pr-4">
@@ -4710,13 +4705,7 @@ export default function LeadProfileSideView({
                                 </div>
                               )}
                             </div>
-
-
                           </div>
-
-
-
-
 
                           {leadSchLoading &&
                             [1, 2, 3].map((data, i) => <LogSkelton key={i} />)}
@@ -4752,7 +4741,7 @@ export default function LeadProfileSideView({
                                 // <div className=''>
                                 <section
                                   key={i}
-                                  className="py-3 border-b  last:border-none"
+                                  className="py-1 border-b  last:border-none"
                                   onMouseEnter={() => {
                                     hoverEffectTaskFun(data?.ct)
                                   }}
@@ -4760,10 +4749,8 @@ export default function LeadProfileSideView({
                                     hoverEffectTaskFun(2000)
                                   }}
                                 >
-
-                                  <div className='py-1 px-5'>
-
-                                    <div className='mb-3'>
+                                  <div className="py-1 px-5">
+                                    <div className="mb-3">
                                       {editTaskObj?.ct === data?.ct ? (
                                         <EditLeadTask
                                           editTaskObj={editTaskObj}
@@ -4779,7 +4766,6 @@ export default function LeadProfileSideView({
                                         />
                                       ) : null}
                                     </div>
-
 
                                     <>
                                       {' '}
@@ -4805,7 +4791,9 @@ export default function LeadProfileSideView({
                                           setShowNotInterestedFun={
                                             setShowNotInterestedFun
                                           }
-                                          setAddCommentTitle={setAddCommentTitle}
+                                          setAddCommentTitle={
+                                            setAddCommentTitle
+                                          }
                                           addCommentTitle={addCommentTitle}
                                           addCommentTime={addCommentTime}
                                           setPostPoneToFuture={
@@ -4820,16 +4808,14 @@ export default function LeadProfileSideView({
                                             cancelResetStatusFun
                                           }
                                           addTaskCommentFun={addTaskCommentFun}
-                                          addCommentPlusTask={addCommentPlusTask}
+                                          addCommentPlusTask={
+                                            addCommentPlusTask
+                                          }
                                           setSelType={setSelType}
                                           selType={selType}
                                           d={d}
                                         />
                                       )}
-
-
-
-
                                       {/* <div className='ml-7 border-b border-[#E7E7E9] py-2 min-h-[1px]'>
                                         {addTaskCommentObj?.ct != data?.ct && (
                                           <LeadTaskFooter
@@ -4842,36 +4828,31 @@ export default function LeadProfileSideView({
                                           />
                                         )}
                                       </div> */}
-
-
                                       <div
-                                        className={`${data?.stsType === 'visitfixed' && data?.sts !== 'completed' ? 'ml-3' : 'ml-7'
-                                          } border-b border-[#E7E7E9] py-1 min-h-[1px]`}
+                                        className={`${
+                                          data?.stsType === 'visitfixed' &&
+                                          data?.sts !== 'completed'
+                                            ? 'ml-3'
+                                            : 'ml-7'
+                                        }  pb-[8px] min-h-[1px]`}
                                       >
                                         {addTaskCommentObj?.ct != data?.ct && (
                                           <LeadTaskFooter
                                             data={data}
                                             hoverTasId={hoverTasId}
-                                            EditTaskOpenWindowFun={EditTaskOpenWindowFun}
+                                            EditTaskOpenWindowFun={
+                                              EditTaskOpenWindowFun
+                                            }
                                             delFun={delFun}
                                           />
                                         )}
                                       </div>
-
-
-
-
-
-
-                                      {/* 
+                                      {/*
 {data?.comments?.length > 0 && (
   <p className="font-outfit font-medium text-[12px] leading-[100%] tracking-[0%] text-[#606062] mt-4 mb-2 ml-6 mb-2">
     {data.comments.length} Comment{data.comments.length > 1 ? 's' : ''}
   </p>
 )} */}
-
-
-
                                       {/* {data?.comments?.length > 0 && (
   <div className="flex items-center mt-4 mb-2 ml-6">
     <div className="w-4 h-px bg-[#E7E7E9] mr-2" />
@@ -4880,25 +4861,24 @@ export default function LeadProfileSideView({
     </p>
   </div>
 )} */}
-
-
-
-
                                       {data?.comments?.length > 0 && (
                                         <div
-                                          className={`flex items-center mt-4 mb-2 ${data?.stsType === 'visitfixed' && data?.sts !== 'completed' ? 'ml-1' : 'ml-6'
-                                            }`}
+                                          className={`flex items-center mt-[12px] mb-2 ${
+                                            data?.stsType === 'visitfixed' &&
+                                            data?.sts !== 'completed'
+                                              ? 'ml-[2px]'
+                                              : 'ml-[15px]'
+                                          }`}
                                         >
-                                          <div className="w-4 h-px bg-[#E7E7E9] mr-2" />
-                                          <p className="font-outfit font-medium text-[12px] leading-[100%] tracking-[0%] text-[#606062]">
-                                            {data.comments.length} Comment{data.comments.length > 1 ? 's' : ''}
+
+                                          <p className="font-outfit font-medium text-[12px] leading-[100%] tracking-[0%] text-[#606062] ml-[16px]">
+                                            {data.comments.length} Comment
+                                            {data.comments.length > 1
+                                              ? 's'
+                                              : ''}
                                           </p>
                                         </div>
                                       )}
-
-
-
-
                                       {data?.comments?.map((commentObj, k) => {
                                         return (
                                           <li
@@ -4908,28 +4888,23 @@ export default function LeadProfileSideView({
                                             //   : ''
                                             //   }`}
 
-
-                                            className={`ml-6 ${data?.stsType === 'visitfixed' && data?.sts !== 'completed' ? 'pl-0' : 'pl-6'} py-2 text-[14px] text-[#7E92A2] tracking-wide ${data?.comments?.length - 1 === k ? 'mb-1' : ''
-                                              }`}
+                                            className={` ml-[29px] ${
+                                              data?.stsType === 'visitfixed' &&
+                                              data?.sts !== 'completed'
+                                                ? 'pl-0'
+                                                : 'pl-0'
+                                            } py-[4px] text-[14px] text-[#7E92A2] tracking-wide ${
+                                              data?.comments?.length - 1 === k
+                                                ? 'mb-1'
+                                                : ''
+                                            }`}
                                           >
-
-
-
-
-
-
-
                                             <section className="flex flex-row justify-between items-center w-full">
-                                              <div className='flex items-center space-x-2'>
-
+                                              <div className="flex items-center space-x-2">
                                                 {/* <span>
                                               {' '}
 
                                               {' '} */}
-
-
-
-
 
                                                 <img
                                                   src="/material-symbols-light_add-task-rounded.svg"
@@ -4937,16 +4912,10 @@ export default function LeadProfileSideView({
                                                   className="w-[14px] h-[14px]"
                                                 />
 
-
-
-
-
-
-                                                <span className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#0E0A1F]">
+                                                <span className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#7E92A2]">
                                                   {commentObj?.c}
                                                 </span>
                                                 {/* </span> */}
-
                                               </div>
                                               <p className="text-[12px] font-normal leading-[14px] tracking-normal text-[#606062]">
                                                 {' '}
@@ -4963,9 +4932,10 @@ export default function LeadProfileSideView({
                                             {showNotInterested && (
                                               <div className="w-full flex flex-col mb-3 mt-2">
                                                 <SelectDropDownComp
-                                                  label={`Why  ${customerDetails?.Name?.toLocaleUpperCase() ||
+                                                  label={`Why  ${
+                                                    customerDetails?.Name?.toLocaleUpperCase() ||
                                                     'Customer'
-                                                    } is  not Interested*`}
+                                                  } is  not Interested*`}
                                                   options={notInterestOptions}
                                                   value={fbTitle}
                                                   onChange={(value) => {
@@ -4974,7 +4944,6 @@ export default function LeadProfileSideView({
                                                 />
                                               </div>
                                             )}
-
 
                                             {/* {showVisitFeedBackStatus && (
                                               <div className="w-full flex flex-col mb-3 mt-2">
@@ -4993,29 +4962,40 @@ export default function LeadProfileSideView({
 
                                             {showVisitFeedBackStatus && (
                                               <div className="w-full flex  flex-col mb-3 mt-2">
-                                                <label className="mb-4 font-outfit font-normal text-xs leading-[100%] tracking-[0%] text-[#606062]">Sites Visit Feedback *</label>
+                                                <label className="mb-4 font-outfit font-normal text-xs leading-[100%] tracking-[0%] text-[#606062]">
+                                                  Sites Visit Feedback *
+                                                </label>
                                                 <div className="flex space-x-4">
-                                                  {siteVisitFeedbackOptions.map((option) => (
-                                                    <button
-                                                      key={option.value}
-                                                      className={`py-2 px-8 text-[12px] flex border border-[#E7E7E9] rounded-lg items-center space-x-1 rounded-md ${fbTitle === option.value
-                                                        ? 'sale_bg_color text-white'
-                                                        : 'bg-white text-gray-700'
+                                                  {siteVisitFeedbackOptions.map(
+                                                    (option) => (
+                                                      <button
+                                                        key={option.value}
+                                                        className={`py-2 px-8 text-[12px] flex border border-[#E7E7E9] rounded-lg items-center space-x-1 rounded-md ${
+                                                          fbTitle ===
+                                                          option.value
+                                                            ? 'sale_bg_color text-white'
+                                                            : 'bg-white text-gray-700'
                                                         }`}
-                                                      onClick={() => setFbTitle(option.value)}
-                                                    >
-                                                      <img
-                                                        src={`/${option.value}.svg`}
-                                                        alt={option.label}
-                                                        className="w-5 h-5"
-                                                      />
-                                                      <span>{option.label}</span>
-                                                    </button>
-                                                  ))}
+                                                        onClick={() =>
+                                                          setFbTitle(
+                                                            option.value
+                                                          )
+                                                        }
+                                                      >
+                                                        <img
+                                                          src={`/${option.value}.svg`}
+                                                          alt={option.label}
+                                                          className="w-5 h-5"
+                                                        />
+                                                        <span>
+                                                          {option.label}
+                                                        </span>
+                                                      </button>
+                                                    )
+                                                  )}
                                                 </div>
                                               </div>
                                             )}
-
 
                                             <div className=" w-full max-w-[882px]  h-auto p-3 md:p-2 gap-2.5   outline-none border border-[#E7E7E9] rounded-[8px] p-2 mt-2">
                                               <textarea
@@ -5045,10 +5025,8 @@ export default function LeadProfileSideView({
                                                 }}
                                                 // className={`flex mt-2 rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-balck  bg-[#7bd2ea]  hover:bg-gray-700 hover:text-white `}
                                                 className="flex items-center px-4 h-9 text-sm font-medium text-white sale_bg_color rounded-md"
-
                                               >
                                                 Save
-
                                               </button>
                                               <button
                                                 onClick={() => {
@@ -5072,11 +5050,8 @@ export default function LeadProfileSideView({
                                                 }}
                                                 // className={`flex mt-2 ml-4 rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-balck  bg-[#7bd2ea]  hover:bg-gray-700 hover:text-white `}
                                                 className="flex items-center px-4 h-9 text-sm font-medium text-white sale_bg_color rounded-md"
-
                                               >
-
                                                 Save & Whats App
-
                                               </button>
                                               <button
                                                 onClick={() =>
@@ -5084,23 +5059,13 @@ export default function LeadProfileSideView({
                                                 }
                                                 // className={`flex mt-2 ml-4  rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700 hover:text-white  `}
                                                 className="flex items-center px-4 h-9 text-sm font-medium text-black border rounded-md"
-
                                               >
                                                 Cancel
                                               </button>
                                             </div>
                                           </div>
                                         )}
-
-
-
-
-
-
-
-
-
-                                      {/* 
+                                      {/*
 {(showNotInterested || showVisitFeedBackStatus) && selSchGrpO?.ct === data?.ct && (
   <div className="flex flex-col p-6 my-10 mx-2 rounded-md border shadow-sm bg-white">
     <div className="text-lg font-semibold mb-2">Get into Introduction Call with customer</div>
@@ -5120,7 +5085,7 @@ export default function LeadProfileSideView({
           <span className="text-sm">{label}</span>
         </button>
       ))}
-    </div> 
+    </div>
 
 
 
@@ -5183,11 +5148,8 @@ export default function LeadProfileSideView({
   </div>
 )}
   */}
+                                      {/*
 
-
-
-                                      {/*  
- 
 {(showNotInterested || showVisitFeedBackStatus) && selSchGrpO?.ct === data?.ct && (
   <div className="flex flex-col p-6 my-10 mx-2 rounded-md border shadow-sm bg-white">
     <div className="text-lg font-semibold mb-2">Get into Introduction Call with customer</div>
@@ -5211,7 +5173,7 @@ export default function LeadProfileSideView({
           <span className="text-sm">{label}</span>
         </button>
       ))}
-    </div> 
+    </div>
 
     <textarea
       value={fbNotes || ''}
@@ -5270,20 +5232,6 @@ export default function LeadProfileSideView({
     </div>
   </div>
 )}  */}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                                       {/* {addTaskCommentObj?.ct != data?.ct && (
                                       <LeadTaskFooter
                                         data={data}
@@ -5295,18 +5243,10 @@ export default function LeadProfileSideView({
                                       />
                                     )} */}
                                     </>
-
-
                                   </div>
-
-
-
-
-
                                 </section>
 
                                 // </div>
-
                               ))}{' '}
                             </ol>
                           </div>
@@ -5462,40 +5402,33 @@ export default function LeadProfileSideView({
                         ))}
                       </ol> */}
 
-
                       <div className="max-w-4xl mx-auto bg-white  rounded-[14px] border border-[#E7E7E9] p-[20px] shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)]">
                         <div className="relative">
-
-                          <div className="absolute top-0 bottom-0 left-[22px] w-0.5 bg-[#E17059]" style={{ height: "100%" }}></div>
-
+                          <div
+                            className="absolute top-0 bottom-0 left-[22px] w-0.5 bg-[#E17059]"
+                            style={{ height: '100%' }}
+                          ></div>
 
                           <div className="space-y-3">
                             {filterData?.map((data, i) => (
                               <div key={i} className="relative pl-16">
-
                                 <div className="absolute left-0 top-0">
                                   <div className="w-12 h-12 flex items-center justify-center">
                                     <div className="w-8 h-8  rounded-md flex items-center justify-center  z-10">
-                                      {data?.type === "ph" ? (
-
+                                      {data?.type === 'ph' ? (
                                         <img
                                           src="/timelineo.svg"
                                           alt="Completed"
                                           className="w-4 h-4"
-
                                         />
-
-
+                                      ) : (
                                         // <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                                         //   <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                                         // </svg>
-                                      ) : (
-
                                         <img
                                           src="/timelineo.svg"
                                           alt="Completed"
                                           className="w-4 h-4"
-
                                         />
                                         // <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                         //   <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1z" clipRule="evenodd"></path>
@@ -5505,10 +5438,7 @@ export default function LeadProfileSideView({
                                   </div>
                                 </div>
 
-
                                 <div className="border-b border-gray-100 py-2">
-
-
                                   <a
                                     href="#"
                                     className="block items-center  sm:flex "
@@ -5558,16 +5488,19 @@ export default function LeadProfileSideView({
                                             <ClockIcon className="mr-1 w-3 h-3" />
                                             {data?.type == 'ph'
                                               ? timeConv(
-                                                Number(data?.time)
-                                              ).toLocaleString()
-                                              : timeConv(data?.T).toLocaleString()}
+                                                  Number(data?.time)
+                                                ).toLocaleString()
+                                              : timeConv(
+                                                  data?.T
+                                                ).toLocaleString()}
                                             {'    '}
                                             <span className="text-red-900 ml-4 mr-4">
                                               {Number(data?.duration)} sec
                                             </span>
                                             or
                                             <span className="text-red-900 ml-4">
-                                              {parseInt(data?.duration / 60)} min
+                                              {parseInt(data?.duration / 60)}{' '}
+                                              min
                                             </span>
                                           </span>
                                         </div>
@@ -5604,9 +5537,11 @@ export default function LeadProfileSideView({
                                           <span className="text-xs  text-gray-500 ml-1">
                                             {data?.type == 'ph'
                                               ? timeConv(
-                                                Number(data?.time)
-                                              ).toLocaleString()
-                                              : timeConv(data?.T).toLocaleString()}
+                                                  Number(data?.time)
+                                                ).toLocaleString()
+                                              : timeConv(
+                                                  data?.T
+                                                ).toLocaleString()}
                                           </span>
 
                                           <div className="w-[2px] mx-2 mt-[4px] h-[8px] border-0 border-r"></div>
@@ -5621,11 +5556,7 @@ export default function LeadProfileSideView({
                                       </div>
                                     )}
                                   </a>
-
                                 </div>
-
-
-
                               </div>
                             ))}
                           </div>

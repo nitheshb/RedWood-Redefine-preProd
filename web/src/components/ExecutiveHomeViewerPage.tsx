@@ -242,17 +242,17 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
           status:
             leadsTyper === 'inProgress'
               ? [
-                'new',
-                'followup',
-                'unassigned',
-                'visitfixed',
-                '',
+                  'new',
+                  'followup',
+                  'unassigned',
+                  'visitfixed',
+                  '',
 
-                'negotiation',
-              ]
+                  'negotiation',
+                ]
               : leadsTyper === 'booked'
-                ? ['booked']
-                : archieveFields,
+              ? ['booked']
+              : archieveFields,
           projAccessA: projAccessA,
         },
         (error) => setLeadsFetchedData([])
@@ -276,21 +276,21 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
         status:
           leadsTyper === 'inProgress'
             ? [
-              'new',
-              'followup',
-              'unassigned',
-              'visitfixed',
-              '',
-              'visitdone',
-              'visitcancel',
-              'negotiation',
-              'reassign',
-              'RNR',
-              // 'booked',
-            ]
+                'new',
+                'followup',
+                'unassigned',
+                'visitfixed',
+                '',
+                'visitdone',
+                'visitcancel',
+                'negotiation',
+                'reassign',
+                'RNR',
+                // 'booked',
+              ]
             : leadsTyper === 'booked'
-              ? ['booked']
-              : archieveFields,
+            ? ['booked']
+            : archieveFields,
         projAccessA: projAccessA,
         isCp: user?.role?.includes(USER_ROLES.CP_AGENT),
       },
@@ -317,21 +317,21 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
         status:
           leadsTyper === 'inProgress'
             ? [
-              'new',
-              'followup',
-              'unassigned',
-              'visitfixed',
-              'visitcancel',
-              '',
-              'visitdone',
-              'negotiation',
-              'reassign',
-              'RNR',
-              // 'booked',
-            ]
+                'new',
+                'followup',
+                'unassigned',
+                'visitfixed',
+                'visitcancel',
+                '',
+                'visitdone',
+                'negotiation',
+                'reassign',
+                'RNR',
+                // 'booked',
+              ]
             : leadsTyper === 'booked'
-              ? ['booked']
-              : archieveFields,
+            ? ['booked']
+            : archieveFields,
       },
       (error) => setLeadsFetchedData([])
     )
@@ -378,18 +378,18 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
           status:
             leadsTyper === 'inProgress'
               ? [
-                'new',
-                'followup',
-                'unassigned',
-                'visitfixed',
-                '',
-                'visitdone',
-                'visitcancel',
-                'negotiation',
-              ]
+                  'new',
+                  'followup',
+                  'unassigned',
+                  'visitfixed',
+                  '',
+                  'visitdone',
+                  'visitcancel',
+                  'negotiation',
+                ]
               : leadsTyper === 'booked'
-                ? ['booked']
-                : archieveFields,
+              ? ['booked']
+              : archieveFields,
           projAccessA: projAccessA,
         },
         (error) => setLeadsFetchedData([])
@@ -411,20 +411,20 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
           status:
             leadsTyper === 'inProgress'
               ? [
-                'new',
-                'followup',
-                'unassigned',
-                'visitfixed',
-                '',
-                'visitdone',
-                'visitcancel',
-                'negotiation',
-                'reassign',
-                'RNR',
-              ]
+                  'new',
+                  'followup',
+                  'unassigned',
+                  'visitfixed',
+                  '',
+                  'visitdone',
+                  'visitcancel',
+                  'negotiation',
+                  'reassign',
+                  'RNR',
+                ]
               : leadsTyper === 'booked'
-                ? ['booked']
-                : archieveFields,
+              ? ['booked']
+              : archieveFields,
           projAccessA: projAccessA,
           isCp: true,
         },
@@ -630,40 +630,40 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
           <div className=" bg-white rounded-lg ">
             <div className="bg-white rounded-lg  ">
               <div className="flex flex-wrap items-center justify-between gap-3 p-4 bg-gray-50 rounded-t-md">
-
                 <section className="flex items-center">
-                  <img className="w-8 h-8" alt="folder icon" src="/folder-library.svg" />
+               
                   <h2 className="ml-2 text-md font-semibold text-[#2B2B2B] ">
                     Leads Management
                   </h2>
                 </section>
 
-
                 <div className="flex flex-wrap items-center gap-3">
-
                   <VerySlimSelectBox
                     name="project"
                     label=""
                     className="w-40 rounded-lg"
                     onChange={(value) => {
-                      console.log('changed value is ', value.value);
-                      setSelProject(value);
+                      console.log('changed value is ', value.value)
+                      setSelProject(value)
                     }}
                     value={selProjectIs?.value}
-                    options={[{ label: 'All Projects', value: 'allprojects' }, ...projectList]}
+                    options={[
+                      { label: 'All Projects', value: 'allprojects' },
+                      ...projectList,
+                    ]}
                     customStyles={{
                       option: (provided, state) => ({
                         ...provided,
                         backgroundColor: state.isSelected
-                          ? '#F25533'
+                          ? '#94B5ED'
                           : state.isFocused
-                            ? '#FDEFE7' 
-                            : provided.backgroundColor,
+                          ? '#FDEFE7'
+                          : provided.backgroundColor,
                         color: state.isSelected
                           ? 'white'
                           : state.isFocused
-                            ? '#2B2B2B' 
-                            : provided.color,
+                          ? '#2B2B2B'
+                          : provided.color,
                       }),
                       control: (base) => ({
                         ...base,
@@ -687,16 +687,21 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                         marginTop: 6,
                         marginBottom: 10,
                       }),
-                      menu: (provided) => ({ ...provided, marginTop: 0, zIndex: 9999, borderRadius: 8,  }),
+                      menu: (provided) => ({
+                        ...provided,
+                        marginTop: 0,
+                        zIndex: 9999,
+                        borderRadius: 8,
+                      }),
                       menuList: (provided, state) => ({
                         ...provided,
                         paddingTop: 0,
                         paddingBottom: 0,
-                        borderRadius: 8, 
+                        borderRadius: 8,
                       }),
                     }}
                   />
-{/* 
+                  {/*
                   <VerySlimSelectBox
                     name="project"
                     label=""
@@ -710,7 +715,6 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
 
                   /> */}
 
-
                   {access?.includes('manage_leads') && (
                     <VerySlimSelectBox
                       name="leadType"
@@ -718,8 +722,8 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                       placeholder="My Leads"
                       className="w-40 rounded-lg"
                       onChange={(value) => {
-                        console.log('changed value is ', value.value);
-                        setSelLeadsOf(value);
+                        console.log('changed value is ', value.value)
+                        setSelLeadsOf(value)
                       }}
                       value={selLeadsOf?.value}
                       options={[
@@ -728,20 +732,19 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                         { label: 'Cp Leads', value: 'cpleads' },
                         ...usersList,
                       ]}
-
                       customStyles={{
                         option: (provided, state) => ({
                           ...provided,
                           backgroundColor: state.isSelected
-                            ? '#F25533'
+                            ? '#94B5ED'
                             : state.isFocused
-                              ? '#FDEFE7' 
-                              : provided.backgroundColor,
+                            ? '#FDEFE7'
+                            : provided.backgroundColor,
                           color: state.isSelected
                             ? 'white'
                             : state.isFocused
-                              ? '#2B2B2B' 
-                              : provided.color,
+                            ? '#2B2B2B'
+                            : provided.color,
                         }),
                         control: (base) => ({
                           ...base,
@@ -765,111 +768,125 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                           marginTop: 6,
                           marginBottom: 10,
                         }),
-                        menu: (provided) => ({ ...provided, marginTop: 0, zIndex: 9999, borderRadius: 8,  }),
+                        menu: (provided) => ({
+                          ...provided,
+                          marginTop: 0,
+                          zIndex: 9999,
+                          borderRadius: 8,
+                        }),
                         menuList: (provided, state) => ({
                           ...provided,
                           paddingTop: 0,
                           paddingBottom: 0,
-                          borderRadius: 8, 
+                          borderRadius: 8,
                         }),
                       }}
                     />
                   )}
 
-
                   <SmartCalendarSelect
                     onChange={(value) => {
-                      console.log(value, 'Selected Date Range');
-                      setShortDateRange(value);
+                      console.log(value, 'Selected Date Range')
+                      setShortDateRange(value)
                     }}
                     label="All Dates"
                     defaultForTeamLeads={selLeadsOf?.value === 'teamleads'}
-
-                            customStyles={{
-                        option: (provided, state) => ({
-                          ...provided,
-                          backgroundColor: state.isSelected
-                            ? '#F25533'
-                            : state.isFocused
-                              ? '#FDEFE7' 
-                              : provided.backgroundColor,
-                          color: state.isSelected
-                            ? 'white'
-                            : state.isFocused
-                              ? '#2B2B2B' 
-                              : provided.color,
-                        }),
-                        control: (base) => ({
-                          ...base,
-                          height: 30,
-                          minHeight: 30,
-                          padding: 0,
-                          borderRadius: 8,
-                        }),
-                        valueContainer: (base) => ({
-                          ...base,
-                          alignItems: 'initial',
-                          paddingTop: 0,
-                          marginTop: 3,
-                        }),
-                        dropdownIndicator: (base) => ({
-                          ...base,
-                          paddingTop: 5,
-                        }),
-                        indicatorSeparator: (base) => ({
-                          ...base,
-                          marginTop: 6,
-                          marginBottom: 10,
-                        }),
-                        menu: (provided) => ({ ...provided, marginTop: 0, zIndex: 9999, borderRadius: 8,  }),
-                        menuList: (provided, state) => ({
-                          ...provided,
-                          paddingTop: 0,
-                          paddingBottom: 0,
-                          borderRadius: 8, 
-                        }),
-                      }}
-
-
-
+                    customStyles={{
+                      option: (provided, state) => ({
+                        ...provided,
+                        backgroundColor: state.isSelected
+                          ? '#94B5ED'
+                          : state.isFocused
+                          ? '#FDEFE7'
+                          : provided.backgroundColor,
+                        color: state.isSelected
+                          ? 'white'
+                          : state.isFocused
+                          ? '#2B2B2B'
+                          : provided.color,
+                      }),
+                      control: (base) => ({
+                        ...base,
+                        height: 30,
+                        minHeight: 30,
+                        padding: 0,
+                        borderRadius: 8,
+                      }),
+                      valueContainer: (base) => ({
+                        ...base,
+                        alignItems: 'initial',
+                        paddingTop: 0,
+                        marginTop: 3,
+                      }),
+                      dropdownIndicator: (base) => ({
+                        ...base,
+                        paddingTop: 5,
+                      }),
+                      indicatorSeparator: (base) => ({
+                        ...base,
+                        marginTop: 6,
+                        marginBottom: 10,
+                      }),
+                      menu: (provided) => ({
+                        ...provided,
+                        marginTop: 0,
+                        zIndex: 9999,
+                        borderRadius: 8,
+                      }),
+                      menuList: (provided, state) => ({
+                        ...provided,
+                        paddingTop: 0,
+                        paddingBottom: 0,
+                        borderRadius: 8,
+                      }),
+                    }}
                   />
-
 
                   <button
                     onClick={() => fSetLeadsType('Add Lead')}
-                    className="flex items-center px-4 py-1 gap-1 text-sm font-medium text-white sale_bg_color border-2 border-[#F25533] rounded-lg"
+                    className="flex items-center px-4 py-1 gap-1 text-sm font-medium  sale_bg_color s_btn_txt_color  rounded-lg"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4 stroke-white"
+                      className="h-4 w-4 blue_stroke"
                       fill="none"
                       viewBox="0 0 22 22"
                     >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                      />
                     </svg>
                     <span className="text-sm">Add Lead</span>
                   </button>
 
-
                   {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
                     <button
                       onClick={() => fSetLeadsType('Import Leads')}
-                      className="flex items-center gap-1 px-4 py-1 text-sm font-medium text-black border-2 border-[#F25533] rounded-lg"
+                      className="flex items-center gap-1 px-4 py-1 text-sm font-medium text-black border-2 border-[#94B5ED] rounded-lg"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-4 w-4 stroke-[#F25533]"
+                        className="h-4 w-4 blue_stroke"
                         fill="none"
                         viewBox="0 0 22 22"
                       >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                        />
                       </svg>
-                      <span className="text-sm sale_text_color">Import Lead</span>
+                      <span className="text-sm sale_text_color">
+                        Import Lead
+                      </span>
                     </button>
                   )}
                 </div>
               </div>
-
 
               <MetaTags
                 title="ExecutiveHome"

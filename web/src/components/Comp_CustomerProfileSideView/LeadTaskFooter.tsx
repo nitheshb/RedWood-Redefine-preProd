@@ -29,7 +29,7 @@ export default function LeadTaskFooter({
                   <span
                     className="rounded  relative mr-2 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
                     style={{
-                      color: '#F25533',
+                      color: '#94B5ED',
                       background: '#FCE6D9',
                       maxWidth: '100%',
                     }}
@@ -78,7 +78,7 @@ export default function LeadTaskFooter({
                   <span
                     className="rounded italian relative mr-2 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
                     style={{
-                      color: '#F25533',
+                      color: '#94B5ED',
                       background: '#FCE6D9',
                       maxWidth: '100%',
                     }}
@@ -99,15 +99,12 @@ export default function LeadTaskFooter({
                 </div>
                 <span className="">
                   <span className="flex items-center gap-1 font-outfit font-normal text-xs leading-tight tracking-tight text-[#606062]">
-
-                  <img
-                src="/hugeicons_note-done.svg"
-                alt="Completed"
-                className="w-4 h-4"
-              
-              />
+                    <img
+                      src="/hugeicons_note-done.svg"
+                      alt="Completed"
+                      className="w-4 h-4"
+                    />
                     {/* <CheckIcon className="w-4 h-4 inline text-gray-500" />{' '} */}
-                    
                     {'   '}
                     {prettyDateTime(data?.comT)}{' '}
                   </span>
@@ -123,7 +120,7 @@ export default function LeadTaskFooter({
                   <span
                     className="rounded italian relative mr-2 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
                     style={{
-                      color: '#F25533',
+                      color: '#94B5ED',
                       background: '#FCE6D9',
                       width: '100%',
                     }}
@@ -143,10 +140,11 @@ export default function LeadTaskFooter({
                   ></div>
                 </div>
                 <span
-                  className={`font-bodyLato flex  gap-1 flex-row ${getDifferenceInMinutes(data?.schTime, '') >= 0
+                  className={`font-bodyLato flex  gap-1 flex-row ${
+                    getDifferenceInMinutes(data?.schTime, '') >= 0
                       ? 'text-xs  text-gray-500'
                       : 'text-xs  text-gray-500'
-                    }`}
+                  }`}
                 >
                   {/* <svg
                     width="12"
@@ -163,12 +161,11 @@ export default function LeadTaskFooter({
                       fill="currentColor"
                     ></path>
                   </svg> */}
-                                    <img
-                src="/gg_calendar-due.svg"
-                alt="date"
-                className="w-4 h-4"
-              
-              />
+                  <img
+                    src="/gg_calendar-due.svg"
+                    alt="date"
+                    className="w-4 h-4"
+                  />
                   <div className=" mr-2 inline">
                     <div className="font-bodyLato">
                       {prettyDateTime(data?.schTime)}
@@ -187,13 +184,13 @@ export default function LeadTaskFooter({
             <span
               className="rounded italian relative mr-2 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
               style={{
-                color: '#F25533',
+                color: '#94B5ED',
                 background: '#FCE6D9',
                 maxWidth: '100%',
               }}
             >
               <div className="italic flex flex-col">
-                <div className="font-bodyLato">Assigned To  {data?.by}</div>
+                <div className="font-bodyLato">Assigned To {data?.by}</div>
               </div>
             </span>
             <div
@@ -206,7 +203,6 @@ export default function LeadTaskFooter({
           </div>
 
           <div className="w-px h-3 bg-gray-300 mx-2 "></div>
-
 
           <span className="flex items-center font-outfit font-normal text-xs leading-tight tracking-tight text-[#606062]">
             {/* <svg

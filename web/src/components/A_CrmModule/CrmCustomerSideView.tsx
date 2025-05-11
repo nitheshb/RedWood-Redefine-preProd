@@ -69,19 +69,16 @@ import 'react-datepicker/dist/react-datepicker.css'
 import { setHours, setMinutes } from 'date-fns'
 import { Timestamp } from 'firebase/firestore'
 
-import Loader from './Loader/Loader'
-import AddBookingForm from './bookingForm'
+
 
 import { useSnackbar } from 'notistack'
 
 import SiderForm from '../SiderForm/SiderForm'
 
-import CrmUnitSummary from './A_CrmUnitSummary'
-import CrmPaymentSummary from './CrmPaymentSummary'
 
-import AssigedToDropComp from '../assignedToDropComp'
 
-import { USER_ROLES } from 'src/constants/userRoles'
+
+
 import UnitFullSummary from './CrmUnitFullSummary'
 
 // interface iToastInfo {
@@ -178,7 +175,7 @@ export default function CustomerSideViewCRM({
         console.log('unit is ', unit)
         const y = await unit
         y.id = d
-  
+
         return y
       }) || []
     )

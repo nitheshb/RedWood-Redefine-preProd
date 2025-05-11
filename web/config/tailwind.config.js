@@ -11,11 +11,22 @@ module.exports = {
         sanF: ['Public Sans', 'sans-serif'],
         interF: ['Inter', 'sans-serif'],
         outfit: ['Outfit', 'sans-serif'],
+        ibm: ['"IBM Plex Sans"', 'sans-serif'],
+        poppins: ['Poppins', 'sans-serif'],
+
       },
 
+      animation: {
+        'pulse-blue': 'pulseBlue 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+      },
+      keyframes: {
+        pulseBlue: {
+          '0%, 100%': { boxShadow: '0 0 0 0 rgba(59, 130, 246, 0.5)' },
+          '50%': { boxShadow: '0 0 0 10px rgba(59, 130, 246, 0)' },
+        },
+      }
 
 
-   
 
 
       // animation: {
@@ -28,7 +39,7 @@ module.exports = {
       //   },
       // },
 
-    
+
 
 
     },
