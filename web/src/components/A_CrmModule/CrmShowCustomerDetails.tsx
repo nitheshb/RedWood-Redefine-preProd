@@ -1224,13 +1224,11 @@ secondary
 
 
 
-
+{/* 
 
       <div className="overflow-y-scroll  min-h-screen mx-auto scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
         <div className="relative min-h-screen mr-6 ">
-          {/* <div className="">
-      <img alt="CRM Background" src="/crmfinal.svg" className="w-full h-auto" />
-    </div> */}
+
 
           <div className="relative z-0">
             <h1 className="text-[#606062] font-outfit mb-1  mx-auto w-full  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
@@ -1301,10 +1299,7 @@ secondary
         ).charAt(0)}
       </span>
     ) : (
-      // <img
-      //   alt="Profile"
-      //   className="w-20 h-20 rounded-full object-cover"
-      // />
+
 
       <h2 className='text-[30px] capitalize font-medium text-gray-700'>NA</h2>
 
@@ -1546,7 +1541,6 @@ Primary
 
 
 
-{/* secoundary part */}
 
 
 
@@ -1574,10 +1568,7 @@ Primary
                               ).charAt(0)}
                             </span>
                           ) : (
-                            // <img
-                            //   alt="Profile"
-                            //   className="w-20 h-20 rounded-full object-cover"
-                            // />
+             
 
 
                             <h2 className='text-[30px] font-medium text-gray-700'>NA</h2>
@@ -1816,7 +1807,7 @@ secondary
 
 
 
-{/* end part */}
+
 
 
 
@@ -1829,7 +1820,7 @@ secondary
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   )
 }
