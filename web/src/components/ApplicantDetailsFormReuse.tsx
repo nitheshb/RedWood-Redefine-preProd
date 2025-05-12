@@ -1928,7 +1928,8 @@ const EmailForm = ({
   const searchFun = async (formik) => {
     const foundLength = await checkIfLeadAlreadyExists(
       `${orgId}_leads`,
-      givenPhNo1
+      givenPhNo1,
+      'projectId'
     )
     if (foundLength?.length > 0) {
       console.log('foundLength', foundLength)

@@ -1385,7 +1385,8 @@ export function MultipleFileUploadField({
               console.log('found row is ', dRow)
               const foundLength = await checkIfLeadAlreadyExists(
                 `${orgId}_leads`,
-                dRow['Mobile']
+                dRow['Mobile'],
+                pId
               )
               // modify date
               const date = new Date(dRow['Date']) // some mock date

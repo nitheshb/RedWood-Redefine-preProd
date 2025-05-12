@@ -393,7 +393,7 @@ const SiderForm = ({
                     leadDetailsObj={leadDetailsObj}
                   />
                 )}
-                {title === 'User Profile' && (
+                {title === 'Lead Profile' && (
                   <LeadProfileSideView
                     openUserProfile={false}
                     customerDetails={customerDetails}

@@ -265,14 +265,24 @@ const ProjectsMHomeBody = ({
               </div>
 
               <div className="flex gap-2 mt-1">
-                <div className="flex items-center gap-1 border  rounded-full  border-[#E7E7E9]  px-3 py-1 rounded-full">
+                <div className="flex items-center gap-1 border    border-[#E7E7E9]  px-3 py-1 rounded-full">
                   <span className="text-[12px]">Planning Approval</span>
-                  <CheckCircle size={16} className="text-green-500" />
+                 {typeof project?.planningApproval ==='string'
+                && project?.planningApproval?.toLowerCase() ===
+                                             'yes'
+                                                ? <CheckCircle size={16} className="text-green-500" />
+                                                : <XCircle size={16} className="text-red-500" />
+                                            }
                 </div>
 
-                <div className="flex items-center gap-1 border  rounded-full  border-[#E7E7E9]  px-3 py-1 rounded-full">
+                <div className="flex items-center gap-1 border   border-[#E7E7E9]  px-3 py-1 rounded-full">
                   <span className="text-[12px]">Rera Approval</span>
-                  <XCircle size={16} className="text-red-500" />
+                          {
+                                              typeof project?.reraApproval ==='string' && project?.reraApproval?.toLowerCase() ===    'yes'
+
+                                                ? <CheckCircle size={16} className="text-green-500" />
+                                                : <XCircle size={16} className="text-red-500" />
+                                            }
                 </div>
               </div>
             </div>

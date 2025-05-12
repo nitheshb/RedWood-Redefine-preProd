@@ -57,6 +57,7 @@ import {
   decreCountOnResheduleOtherDay,
   sendCallNotification,
   updateLeadsStrength,
+  checkIfLeadAlreadyExists,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { db, storage } from 'src/context/firebaseConfig'
@@ -116,6 +117,9 @@ import SemicircleProgressChart from './A_SalesModule/Reports/charts/SemiCirclePr
 import toast, { ToastBar } from 'react-hot-toast'
 import { use } from 'i18next'
 import GradientSlider from './A_SalesModule/LeadProfileSideView/gradientSlider/gradientSlider'
+import DuplicateLeadCard from './A_SalesModule/duplicateLeadCard'
+import { VerySlimSelectBox } from 'src/util/formFields/slimSelectBoxField'
+import AssigedToDropCompCrm from './assignedToDropCompCrm'
 
 // interface iToastInfo {
 //   open: boolean
@@ -250,7 +254,7 @@ export default function LeadProfileSideView({
   const [usersList, setusersList] = useState([])
   const [uploadFile, setUploadFile] = useState()
   const [postPoneToFuture, setPostPoneToFuture] = useState('present')
-
+  const [founDocs, setFoundDocs] = useState([])
   const [selFeature, setFeature] = useState('lead_summary')
   const [myStatus, setMyStatus] = useState('')
   const [tempLeadStatus, setLeadStatus] = useState('')
@@ -673,13 +677,31 @@ export default function LeadProfileSideView({
       }
     }
   }
-  const setNewProject = (leadDocId, value) => {
+  const setNewProject = async (leadDocId, value) => {
     const x = {
       Project: value.projectName,
       ProjectId: value.uid,
     }
-    setSelProjectIs(value)
-    updateLeadProject(orgId, leadDocId, x)
+
+    console.log('my stuff ', x, value)
+       const foundLength = await checkIfLeadAlreadyExists(
+          `${orgId}_leads`,
+          Mobile,
+          value.uid
+        )
+       if (foundLength?.length > 0) {
+        console.log('foundLENGTH IS ', foundLength,   value.uid)
+          toast.error('Duplicate project.. use other lead')
+          setFoundDocs(foundLength)
+
+        }else{
+          setFoundDocs([])
+          console.log('foundLENGTH IS ', foundLength,   value.uid)
+          toast.success('Project updated')
+          setSelProjectIs(value)
+          updateLeadProject(orgId, leadDocId, x)
+        }
+
   }
 
   const setShowNotInterestedFun = (scheduleData, value) => {
@@ -1745,21 +1767,10 @@ export default function LeadProfileSideView({
                                 alt="Mail Icon"
                               />
                               <span className="font-[Outfit] s_h12">
-                                {selProjectIs?.projectName}
+                                {Email || '-'}
                               </span>
                             </div>
-                            <div className="s_divider_small"></div>
 
-                            <div className="flex items-center gap-[6px]">
-                              <img
-                                src="/mail.svg"
-                                className="w-[14px]"
-                                alt="Mail Icon"
-                              />
-                              <span className="font-[Outfit] s_h12">
-                                {assignerName}
-                              </span>
-                            </div>
                           </div>
                         </div>
                       </div>
@@ -1767,36 +1778,88 @@ export default function LeadProfileSideView({
                   </div>
                 </div>
 
-                <div className="mt-3">
-                  <div className="ml-2">
-                    <div className="flex flex-row p-4 py-2">
-                      <section className="">
-                        <div className=" border rounded-[10px] border-[#3D7DC3]">
-                          <div className="flex flex-col justify-center px-3 py-2  ">
-                            <div
-                              className="flex items-center "
-                              onClick={() => {
-                                console.log(
-                                  'Call button clicked for lead:',
-                                  Name,
-                                  Mobile
-                                )
-                                handleCallButtonClick(user?.uid, Name, Mobile)
-                              }}
-                            >
-                              <div>
-                                <h2 className="font-['Outfit'] text-[14px] font-semibold  text-blue-500 ">
-                                  Call
-                                </h2>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </section>
-                    </div>
-                  </div>
+                  {!unitsViewMode &&  <section className="flex flex-row  h-[28px] mt-4">
+                                  <section
+
+                                    className="flex group  flow-row justify-between bg-white px-[10px] pr-[18px] py-[14px]  mr-2   border border-[#E7E7E9]  text-black rounded-lg items-center align-middle text-xs cursor-pointer  hover:bg-[#E5E7EB]"
+                                  >
+                                          <img
+                                src="/mail.svg"
+                                className="w-[14px]"
+                                alt="Mail Icon"
+                              />
+                                    <div className="font-medium text-sm text-[#000000] tracking-wide pr-2 mr-1 relative after:content-[''] after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[1px] after:h-[10px] after:bg-gray-300 group-hover:after:bg-white">
+
+                                    </div>
+
+                                    <div className="font-md ml-2 text-xs tracking-wide font-semibold text-[#000000] ">
+                                      {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
+                                        <div className="">
+                                          <AssigedToDropCompCrm
+                                            assignerName={assignerName}
+                                            id={id}
+                                            setAssigner={setAssigner}
+                                            usersList={usersList}
+                                            align={undefined}
+                                          />
+                                        </div>
+                                      )}
+                                      {user?.role?.includes(USER_ROLES.CP_AGENT) && (
+                                        <span className="text-left text-sm">
+                                          {' '}
+                                          {assignerName}
+                                        </span>
+                                      )}
+                                    </div>
+                                  </section>
+                                  <section
+                                    className="flex group flow-row justify-between  px-[10px] pr-[18px] py-[14px]  mr-2   border border-[#E7E7E9]    bg-white text-black rounded-lg items-center align-middle text-xs cursor-pointer hover:bg-[#E5E7EB]"
+                                  >
+                                          <img
+                                src="/mail.svg"
+                                className="w-[14px]"
+                                alt="Mail Icon"
+                              />
+                                    <div className="font-medium text-sm text-[#000000] tracking-wide pr-2 mr-1 relative after:content-[''] after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[0.8px] after:h-[10px] after:bg-gray-300 group-hover:after:bg-white">
+
+                                    </div>
+                                    <div className="font-md  ml-2  text-xs tracking-wide font-semibold text-[#000000] ">
+
+                                        <div className="">
+                                          <AssigedToDropCompCrm
+                                            assignerName={selProjectIs?.projectName || Project}
+                                            id={id}
+                                            setAssigner={setNewProject}
+                                            usersList={projectList}
+                                            align={undefined}
+                                          />
+                                        </div>
+                                    </div>
+                                  </section>
+
+                                    <button
+                                      className="text-[12px]  rounded-lg ml-2  px-5 border font-semibold  capitalize  border-[#3D7DC3] text-blue-500"
+                                      onClickCapture={() => {
+                                        handleCallButtonClick(user?.uid, Name, Mobile)
+
+                                      }}
+                                    >
+                                      Call
+                                    </button>
+
+
+
+                                </section>}
+                                {unitsViewMode &&  <section className="flex flex-row  h-[28px] mt-4">                                    <button
+                                      className="text-[12px]  rounded-lg ml-2  px-5 border font-semibold  capitalize  border-[#3D7DC3] text-blue-500"
+                                      onClickCapture={() => {
+                                        setUnitsViewMode(!false)
+                                      }}
+                                    >
+                                      Hide Units
+                                    </button>
+                                </section>}
                 </div>
-              </div>
 
               {/* <hr className="h-[1px]  bg-gradient-to-r from-[#F6F5F8]/100 via-[#B1B1B1] to-[#F6F5F8]/100 border-0 my-3" /> */}
 
@@ -1989,7 +2052,17 @@ export default function LeadProfileSideView({
           ))}
         </div>
         */}
-
+        {/* displays the list of duplicate leads */}
+        {founDocs?.length >0 && (
+                                  <section className=" flex  flex-col text-md text-pink-800  mx-5">
+                                    <span className="mt-2">{'Duplicate lead found with same project'}</span>
+                                    {founDocs.map((customDetails, i) => {
+                                      return (
+                                        <DuplicateLeadCard leadDetailsO={customDetails} usersList={usersList} projectList={projectList}/>
+                                      )
+                                    })}
+                                  </section>
+                                )}
           {unitsViewMode && (
             <>
               <ProjPhaseHome
@@ -2002,7 +2075,7 @@ export default function LeadProfileSideView({
           )}
           {!unitsViewMode && (
             <>
-              <section className=" pb-8 px-5 py-2  rounded-xs  ">
+              <section className=" pb-8 px-5 py-2  rounded-xs bg-[#fbfbfb]  ">
                 <div className="">
                   <div className="">
                     <div className="flex flex-row justify-between  mt-2">
@@ -3400,11 +3473,48 @@ export default function LeadProfileSideView({
 
 
                                     </div>
-                                    <div className="mt-[12px] ml-[36px]">
-                                  <button className="font-[Outfit] font-['opensans'] text-[#606062] text-[12px] underline underline-offset-[25%]">
+                                    <div className="mt-[12px] ml-[34px]">
+                                  <button className="font-[Outfit] font-['opensans'] text-[#606062] text-[12px] underline underline-offset-[25%]" onClick={()=> setAddTaskCommentObj(leadNextTaskObj)}>
                                    + Add Comment
                                   </button>
                                 </div>
+                                {addTaskCommentObj?.ct === leadNextTaskObj?.ct && (
+                                      <section className="flex flex-col ml-[20px]">
+                                       <AddLeadTaskComment
+                                          closeTask={closeTask}
+                                          data={leadNextTaskObj}
+                                          setShowVisitFeedBackStatusFun={
+                                            setShowVisitFeedBackStatusFun
+                                          }
+                                          setShowNotInterestedFun={
+                                            setShowNotInterestedFun
+                                          }
+                                          setAddCommentTitle={
+                                            setAddCommentTitle
+                                          }
+                                          addCommentTitle={addCommentTitle}
+                                          addCommentTime={addCommentTime}
+                                          setPostPoneToFuture={
+                                            setPostPoneToFuture
+                                          }
+                                          setClosePrevious={setClosePrevious}
+                                          setAddCommentPlusTask={
+                                            setAddCommentPlusTask
+                                          }
+                                          setAddCommentTime={setAddCommentTime}
+                                          cancelResetStatusFun={
+                                            cancelResetStatusFun
+                                          }
+                                          addTaskCommentFun={addTaskCommentFun}
+                                          addCommentPlusTask={
+                                            addCommentPlusTask
+                                          }
+                                          setSelType={setSelType}
+                                          selType={selType}
+                                          d={d}
+                                        />
+                                      </section>
+                                      )}
                                   </section>
 
                                   <div className="flex flex-col items-end">
@@ -3497,120 +3607,6 @@ export default function LeadProfileSideView({
 
                               </div>
                             </div>
-                          </div>
-
-                          <div className=" grid grid-cols-3">
-                            {/* Project Name */}
-                            <div className="relative bg-white shadow-[0px_1px_15px_0px_rgba(0,_0,_0,_0.01)]  h-[95px] pt-[10px] pr-[10px] pb-[20px] pl-[10px] gap-[12px] rounded-l-[8px] border-[1px] border-[#E7E7E9] overflow-ellipsis">
-                              <div className="p-2">
-                                <section className='flex flex-row justify-between'>
-                                <div className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0%] text-[#616162] mb-2">
-                                  Project Name
-                                </div>
-                                <div className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0%] text-[#9A9A9A] mb-2">
-                                  {CT != undefined
-                                  ? prettyDateTime(CT)
-                                  : prettyDateTime(Date)}
-                                </div>
-                                </section>
-
-                                {/* <div className="h-px w-[130px] bg-gradient-to-r from-gray-400/90 to-gray-300/50 my-2"></div> */}
-
-                                <div className="mt-4">
-                                  <div className="font-normal text-[14px]  text-[#2B2B2B] flex items-center ">
-                                    <AssigedToDropComp
-                                      assignerName={
-                                        selProjectIs?.projectName || Project
-                                      }
-                                      id={id}
-                                      align="right"
-                                      setAssigner={setNewProject}
-                                      usersList={projectList}
-                                      className="absolute top-[100%] mt-2 z-[999]" // Dropdown below the container
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-
-
-                            </div>
-
-                            {/* Assigned To */}
-                            <div className="relative bg-white shadow-[0px_1px_15px_0px_rgba(0,0,0,0.01)]  h-[95px] pt-[10px] pr-[10px] pb-[20px] pl-[10px] gap-[12px]  border-y-[1px] border-[#E7E7E9] overflow-visible">
-                              <div className="p-2">
-                                <section className='flex flex-row justify-between'>
-                                <div className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0%] text-[#616162] mb-2">
-                                  Assigned To
-                                </div>
-                                <div className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0%] text-[#9A9A9A] mb-2">
-                                  {CT != undefined
-                                  ? prettyDateTime(CT)
-                                  : prettyDateTime(Date)}
-                                </div>
-                                </section>
-
-
-
-                                <div className="flex items-center justify-between mt-4">
-                                  <div className="font-normal text-[14px] leading-[100%] tracking-[0%] text-[#2B2B2B] flex items-center gap-1">
-                                    {!user?.role?.includes(
-                                      USER_ROLES.CP_AGENT
-                                    ) ? (
-                                      <div className="font-[Outfit] font-semibold text-[14px] text-[#0E0A1F] tracking-wide overflow-ellipsis">
-                                        <AssigedToDropComp
-                                          assignerName={assignerName}
-                                          id={id}
-                                          setAssigner={setAssigner}
-                                          usersList={usersList}
-                                          align={undefined}
-                                          className="absolute top-[100%] mt-2 z-[999]"
-                                        />
-                                      </div>
-                                    ) : (
-                                      <span className="text-[14px] text-[#0E0A1F] font-[Outfit]">
-                                        {assignerName}
-                                      </span>
-                                    )}
-                                  </div>
-                                </div>
-                              </div>
-
-
-                            </div>
-
-                            {/* Lead Created */}
-                            <div className="relative bg-white shadow-[0px_1px_15px_0px_rgba(0,_0,_0,_0.01)]  h-[95px] pt-[10px] pr-[10px] pb-[20px] pl-[10px] gap-[12px] rounded-r-[8px] border-[1px] bg-[#E7E7E9] overflow-visible">
-                              <div className="p-2">
-                                <section className='flex flex-row justify-between'>
-                                <div className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0%] text-[#616162] mb-2">
-                                  Source
-                                </div>
-                                <div className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0%] text-[#9A9A9A] mb-2">
-                                  {CT != undefined
-                                  ? prettyDateTime(CT)
-                                  : prettyDateTime(Date)}
-                                </div>
-                                </section>
-
-
-
-                                <div className="flex items-center justify-between mt-5">
-                                  <div className="font-normal text-[14px] leading-[100%] tracking-[0%] text-[#2B2B2B] flex items-center gap-1">
-                                    {Source?.toString() || 'NA'}
-                                  </div>
-                                </div>
-                              </div>
-
-                              {/* Decoration Image (bottom right) */}
-                              <img
-                                src="/limg3.svg"
-                                alt="decor"
-                                className="absolute bottom-0 right-0 w-[59] h-[60] opacity-20"
-                              />
-                            </div>
-
-                            {/* Source */}
-
                           </div>
 
                           <div>
@@ -3954,7 +3950,7 @@ export default function LeadProfileSideView({
                                         <div>
                                           <img
                                             src={
-                                              selProjectFullDetails?.reraApproval?.toLowerCase() ===
+                                              selProjectFullDetails?.planningApproval?.toLowerCase() ===
                                               'yes'
                                                 ? '/yessale.svg'
                                                 : '/nosale.svg'
@@ -4471,13 +4467,13 @@ export default function LeadProfileSideView({
                             </div>
                           </div>
 
-                          <div className="relative">
+                         {addSch && <div className="relative rounded-[14px] border border-[#E7E7E9] bg-[#ffffff] py-2 ">
                             <div>
                               {loader && (
                                 <div
                                   id="toast-success"
                                   // className="flex items-center w-[96.4%] mx-4 rounded-t-lg p-2 text-white"
-                                  className="flex items-center w-full px-4 rounded-t-lg p-2 text-white"
+                                  className="flex items-center w-full  rounded-t-lg p-2 px-8 pb-3 text-white border-b "
                                   role="alert"
                                 >
                                   {/* <div className="flex items-center mb-4"></div> */}
@@ -4519,7 +4515,7 @@ export default function LeadProfileSideView({
                                 </div>
                               )}
                               {addSch && (
-                                <div className="flex flex-col pt-0 my-10 mx-4 mt-[0px] ">
+                                <div className="flex flex-col pt-0  mx-4 mt-[0px] ">
                                   <Formik
                                     enableReinitialize={true}
                                     initialValues={initialState}
@@ -4530,8 +4526,9 @@ export default function LeadProfileSideView({
                                   >
                                     {(formik) => (
                                       <Form>
-                                        <div className=" form pt-[30px] pb-[30px] gap-[20px] rounded-[14px] border border-[#E7E7E9] bg-[#ffffff] py-4">
+                                        <div className=" form pt-[30px] pb-[30px] gap-[20px] ">
                                           <section className=" flex flex-col gap-6 px-4">
+                                           <div>
                                             <div className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162]">
                                               Task Title
                                               <ErrorMessage
@@ -4553,8 +4550,9 @@ export default function LeadProfileSideView({
                                                 setTitleFun(e)
                                               }}
                                               placeholder="Enter a short title"
-                                              className="w-full h-full py-3 px-2 outline-none text-sm   border-b border-[#E7E7E9] text-[33475b]"
+                                              className="w-full h-full pt-3 pb-[2px] outline-none text-sm   border-b border-[#E7E7E9] text-[33475b]"
                                             ></input>
+                                            </div>
 
                                             {/* <div className="flex flex-row mt-3">
                                           <section>
@@ -4645,28 +4643,22 @@ export default function LeadProfileSideView({
                                                 </div>
                                               </div>
 
-                                              <div>
+                                            {tempLeadStatus === 'visitfixed' && <div className="">
                                                 <label className="block font-[Outfit] block font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162] mb-2">
-                                                  Assign task to Site operators
+                                                  Assign lead to Site Incharge
                                                 </label>
                                                 <div className="relative">
                                                   <div className="w-full  border-b border-[#E7E7E9] bg-transparent flex justify-between items-center cursor-pointer">
                                                     <AssigedToDropComp
-                                                      assignerName={
-                                                        selProjectIs?.projectName ||
-                                                        Project
-                                                      }
+                                                      assignerName={assignerName}
                                                       id={id}
-                                                      align="right"
-                                                      setAssigner={
-                                                        setNewProject
-                                                      }
-                                                      usersList={projectList}
+                                                      setAssigner={setAssigner}
+                                                      usersList={usersList}
                                                       className="absolute top-[100%]  z-[999]"
                                                     />
                                                   </div>
                                                 </div>
-                                              </div>
+                                              </div>}
                                             </div>
                                           </section>
                                           <div className="flex flex-row mt-4 justify-between pr-4">
@@ -4705,7 +4697,7 @@ export default function LeadProfileSideView({
                                 </div>
                               )}
                             </div>
-                          </div>
+                          </div>}
 
                           {leadSchLoading &&
                             [1, 2, 3].map((data, i) => <LogSkelton key={i} />)}
@@ -4735,10 +4727,9 @@ export default function LeadProfileSideView({
                                 </time>
                               </div>
                             )}
-                          <div className="py-4">
-                            <ol className="relative  rounded-[14px] border-[1px]  border-[#E7E7E9] shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] ">
+                          <div className="py-2">
+                            <ol className="relative  rounded-[8px] border-[1px]  border-[#E7E7E9] shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] ">
                               {leadSchFilteredData.map((data, i) => (
-                                // <div className=''>
                                 <section
                                   key={i}
                                   className="py-1 border-b  last:border-none"
@@ -4750,7 +4741,7 @@ export default function LeadProfileSideView({
                                   }}
                                 >
                                   <div className="py-1 px-5">
-                                    <div className="mb-3">
+                                    <div className="pb-3">
                                       {editTaskObj?.ct === data?.ct ? (
                                         <EditLeadTask
                                           editTaskObj={editTaskObj}
@@ -4779,6 +4770,9 @@ export default function LeadProfileSideView({
                                         undoFun={undoFun}
                                         setShowVisitFeedBackStatusFun={
                                           setShowVisitFeedBackStatusFun
+                                        }
+                                        EditTaskOpenWindowFun={
+                                          EditTaskOpenWindowFun
                                         }
                                       />
                                       {addTaskCommentObj?.ct === data?.ct && (
@@ -4829,12 +4823,7 @@ export default function LeadProfileSideView({
                                         )}
                                       </div> */}
                                       <div
-                                        className={`${
-                                          data?.stsType === 'visitfixed' &&
-                                          data?.sts !== 'completed'
-                                            ? 'ml-3'
-                                            : 'ml-7'
-                                        }  pb-[8px] min-h-[1px]`}
+                                        className={`ml-7 pb-[8px] min-h-[1px]`}
                                       >
                                         {addTaskCommentObj?.ct != data?.ct && (
                                           <LeadTaskFooter
@@ -4863,10 +4852,10 @@ export default function LeadProfileSideView({
 )} */}
                                       {data?.comments?.length > 0 && (
                                         <div
-                                          className={`flex items-center mt-[12px] mb-2 ${
+                                          className={`flex items-center mt-[2px] mb-1 ${
                                             data?.stsType === 'visitfixed' &&
                                             data?.sts !== 'completed'
-                                              ? 'ml-[2px]'
+                                              ? 'ml-[15px]'
                                               : 'ml-[15px]'
                                           }`}
                                         >

@@ -351,7 +351,7 @@ export default function FinanceTableBody({
     const newSelected = []
 
     console.log('is row clicked', row)
-    selUserProfileF('User Profile', row)
+    selUserProfileF('Lead Profile', row)
 
     setSelected(newSelected)
   }

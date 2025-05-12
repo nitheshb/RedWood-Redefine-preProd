@@ -246,7 +246,7 @@ const AddTaskForm = ({ title, dialogOpen }) => {
     } = data
     // updateUserRole(uid, deptVal, myRole, email, 'nitheshreddy.email@gmail.com')
 
-    const foundLength = await checkIfLeadAlreadyExists('spark_leads', mobileNo)
+    const foundLength = await checkIfLeadAlreadyExists('spark_leads', mobileNo, projectId)
     const leadData = {
       Date: Timestamp.now().toMillis(),
       Email: email,

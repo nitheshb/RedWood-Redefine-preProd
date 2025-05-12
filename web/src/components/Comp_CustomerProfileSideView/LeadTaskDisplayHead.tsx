@@ -16,6 +16,7 @@ export default function LeadTaskDisplayHead({
   hoverTasId,
   undoFun,
   setShowVisitFeedBackStatusFun,
+  EditTaskOpenWindowFun
 }) {
   const [comingSoonState, setComingSoonState] = useState(false)
 
@@ -34,7 +35,7 @@ export default function LeadTaskDisplayHead({
 
 
 
-      <div className='flex '>
+      <div className='flex items-start '>
 
 {/*
         <div className=''>
@@ -63,37 +64,29 @@ export default function LeadTaskDisplayHead({
 
 
 
-  <div className={`${(data?.sts === 'completed' || Math.abs(getDifferenceInHours(data?.schTime, '')) > 24) ? 'mt-1 ml-0' : ''}`}>
   {data?.sts === 'completed' && (
     <img
       src="/Checked.svg"
       alt="Completed"
-      className="w-5 h-5 inline align-middle"
+      className="w-5 h-5 inline align-middle mt-2"
     />
   )}
 
-  {data?.sts != 'completed' && data?.stsType !== 'visitfixed' && (
+  {data?.sts != 'completed' && (
     <img
       src="/UnCheck.svg"
       alt="Completed"
-      className="w-5 h-5 inline align-middle"
+      className="w-5 h-5 inline align-middle mt-1"
       onClick={() => closeTaskFun(data)}
     />
   )}
-</div>
-
-
-
-
-
-
 
         <div className='flex flex-row justify-between ml-3 w-full' >
 
         <section>
 
-{(data?.sts != 'completed' ||
-  Math.abs(getDifferenceInHours(data?.schTime, '')) <= 24) && (
+
+  {(data?.sts != 'completed' ) && (
     <span
       className={` px-3 py-1  mb-3  rounded-[4px] ${comingSoonState ? 'bg-[#DFF6E0] text-[#1B6600]' : 'bg-[#FDECEC] text-[#D20D0D]'
         }   font-outfit font-medium text-[12px] leading-tight tracking-tight text-center`}
@@ -107,10 +100,7 @@ export default function LeadTaskDisplayHead({
     </span>
   )}
 
-
-
-<div
-            className={`${data?.sts === 'completed' ? 'cursor-not-allowed ' : 'cursor-pointer'
+<div className={`${data?.sts === 'completed' ? 'cursor-not-allowed ' : 'cursor-pointer'
               }  mt-1 block`}
             onClick={() => {
               if (data?.sts === 'pending') {
@@ -119,13 +109,9 @@ export default function LeadTaskDisplayHead({
             }}
           >
             <label className="inline-flex gap-2 items-center">
-
-
-
-
               <div
                 className={`${data?.sts === 'completed' ? 'line-through' : 'cursor-pointer'
-                  }   font-outfit font-medium text-[14px] leading-[14px] tracking-normal  text-[#0091ae] `}
+                  }   font-outfit font-medium text-[16px] leading-[14px] tracking-normal  text-[#0091ae] `}
                 onClick={() => {
                   if (data?.sts === 'pending') {
                     setAddTaskCommentObj(data)
@@ -139,36 +125,24 @@ export default function LeadTaskDisplayHead({
 {/*
               <div className='flex gap-2'> */}
 
-  <span
-    className="text-[12px] font-medium px-2 py-[2px] rounded-[13px] bg-[#FDEFE7] sale_text_color"
-  >
-    {/* {data?.stsType === 'visitfixed' ? 'Visit Fixed' : data?.sts} */}
-    Status
-  </span>
+                <span
+                  className="text-[14px] font-medium px-2 py-[2px] rounded-[13px]  text-[#606062]"
+                >
+                  #{data?.stsType === 'visitfixed' ? 'Visit Fixed' : data?.stsType|| 'New'}
+                </span>
+
+              {data?.sts != 'completed' && <img
+                  src="/edit-02.svg"
+                  alt="Edit"
+                  className="w-6 h-6 cursor-pointer"
+                  onClick={() => { EditTaskOpenWindowFun(data) }}
+                />}
+
+                          </label>
+                        </div>
 
 
-  <img
-    src="/edit-02.svg"
-    alt="Edit"
-    className="w-5 h-5 cursor-pointer"
-    onClick={() => { }}
-  />
-              {/* </div> */}
-
-
-
-
-
-
-
-
-
-
-            </label>
-          </div>
-
-
-</section>
+              </section>
 
         {/* <section className="flex flex-row justify-between"> */}
 
@@ -202,18 +176,8 @@ export default function LeadTaskDisplayHead({
 
         {/* </section> */}
 
-
-
-
-
-
-
-
         </div>
-
       </div>
-
-
 
     </div>
   )

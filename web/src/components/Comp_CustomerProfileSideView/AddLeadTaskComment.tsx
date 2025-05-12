@@ -104,7 +104,7 @@ export default function AddLeadTaskComment({
       <div className="flex flex-row justify-between ">
         <section className="w-full flex  flex-col gap-4">
           {addCommentTitle === '' && !clicked && !addCommentPlusTask && (
-            <section className="flex flex-row mt-2">
+            <section className='flex flex-row mt-2'>
               {[
                 {
                   type: 'reschedule',
@@ -167,7 +167,7 @@ export default function AddLeadTaskComment({
           )}
           {clicked && selType === 'reschedule' && !addCommentPlusTask && (
             <section className="flex flex-row items-center">
-              <span className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#0E0A1F]">
+              <span className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#0E0A1F] whitespace-nowrap">
                 {' '}
                 Reschedule to:
               </span>
@@ -268,9 +268,12 @@ export default function AddLeadTaskComment({
             </section>
 
           )}
+           {addCommentTitle != '' && selType != 'reschedule' && !addCommentPlusTask && ( <section className='flex flex-row mt-5'>
+          </section>)}
+
           <section className="w-full flex flex-row  min-h-[36px]">
 
-{/* 
+{/*
           {!(addCommentTitle === 'undefined' || addCommentTitle === '') && (
               <XIcon
                 className="h-4 w-4 mt-2 inline cursor-pointer"
@@ -300,7 +303,7 @@ export default function AddLeadTaskComment({
               }}
 
 
- 
+
               placeholder="Add Comment"
               className={`w-full flex justify-between px-2 py-2 text-[12px] rounded-[8px] border border-solid border-[1px]${hover ? ' text-[33475b] ' : ' text-[33475b]'
                 } bg-white`}
@@ -354,7 +357,7 @@ export default function AddLeadTaskComment({
                     addTaskCommentFun(data)
                   }
                 }}
-                className={` flex justify-between  px-2 py-2 text-[12px] rounded-[8px] ${addCommentTitle === 'undefined' || addCommentTitle === ''
+                className={`flex justify-between  px-2 py-2 text-[12px] rounded-[8px] ${addCommentTitle === 'undefined' || addCommentTitle === ''
                     ? 'bg-[#FAFAFA]'
                     : 'bg-[#FAFAFA]'
                   }  `}
@@ -389,7 +392,7 @@ export default function AddLeadTaskComment({
 
             {!(addCommentTitle === 'undefined' || addCommentTitle === '') && (
               <XIcon
-                className="h-4 w-4 mt-2 inline cursor-pointer"
+                className="h-6 w-6 mt-[9px] ml-2 inline cursor-pointer"
                 onClick={() => {
                   setClicked(false)
                   setSelType('')

@@ -377,7 +377,7 @@ const LeadsDisplayTable = ({
                         onClick={() => {
                           console.log('macho 1', dat?.leadUser, dat)
 
-                          selUserProfileF('User Profile', dat)
+                          selUserProfileF('Lead Profile', dat)
                         }}
                       >
                         <td className="max-w-[50px] min-w-[50px] w-[50px]">
