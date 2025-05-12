@@ -111,7 +111,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
   useEffect(() => {
     Object.keys(searchData).length &&
       isClicked &&
-      selUserProfileF('User Profile', searchData)
+      selUserProfileF('Lead Profile', searchData)
   }, [searchData, isClicked])
   const archieveFields = ['Dead', 'RNR', 'blocked', 'notinterested', 'junk']
   // useEffect(() => {
@@ -631,7 +631,6 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
             <div className="bg-white rounded-lg  ">
               <div className="flex flex-wrap items-center justify-between gap-3 p-4 bg-gray-50 rounded-t-md">
                 <section className="flex items-center">
-               
                   <h2 className="ml-2 text-md font-semibold text-[#2B2B2B] ">
                     Leads Management
                   </h2>

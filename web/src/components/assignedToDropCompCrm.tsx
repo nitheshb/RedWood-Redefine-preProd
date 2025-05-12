@@ -15,11 +15,11 @@ export default function AssigedToDropCompCrm({
         <div>
           <Menu.Button className="inline-flex justify-center w-full px-0 py-0 mt-4 text-[12px] font-semibold text-black-500 bg- rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
             {id === 'id' ? (
-              <span className="tracking-wide text-black-600 text-[14px] font-bold">
+              <span className="tracking-wide text-black-600 text-[14px] font-bold whitespace-nowrap">
                 {assignerName}
               </span>
             ) : (
-              <span className="font-medium tracking-wide text-[14px] text-[#053219] ">
+              <span className="font-medium tracking-wide text-[14px] text-[#053219] whitespace-nowrap">
                 {assignerName}
               </span>
             )}

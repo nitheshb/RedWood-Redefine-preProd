@@ -34,7 +34,7 @@ export default function EditLeadTask({
   }, [takTitle])
 
   return (
-    <div className=" form outline-none  py-4">
+    <div className=" form   py-4 border rounded-lg">
       <section className=" px-4">
         <div className="font-[Outfit] py-2 font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162]">
           Edit Title
@@ -60,7 +60,7 @@ export default function EditLeadTask({
             <span className="font-[Outfit] py-2 font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162]">
               Edit Due Date
             </span>
-      
+
 
             <div className="w-full border-b border-gray-300">
   <DatePicker
@@ -81,7 +81,7 @@ export default function EditLeadTask({
   />
 </div>
 
-       
+
           </section>
         </div>
       </section>
@@ -98,7 +98,7 @@ export default function EditLeadTask({
                 editTaskFun(editTaskObj)
               }
             }}
-            className={`flex mt-2 cursor-pointer rounded-lg items-center justify-center  h-[36px]  py-2 px-6 text-sm font-medium sale_bg_color text-white    `}
+            className={`flex mt-2 cursor-pointer rounded-lg items-center justify-center  h-[36px]  py-2 px-6 text-sm font-medium sale_bg_color sales_text_color  `}
           >
             <span className="">Save Task</span>
           </button>

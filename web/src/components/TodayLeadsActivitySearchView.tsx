@@ -815,7 +815,7 @@ export default function TodayLeadsActivitySearchView({
                           className="flex-1 px-4 py-2 mt-2  bg-white  cursor-pointer focus:outline-none border border-gray-100 rounded "
                           onClick={() => {
                             console.log('macho 0', leadUser)
-                            selUserProfileF('User Profile', leadUser)
+                            selUserProfileF('Lead Profile', leadUser)
                           }}
                         >
                           <div className="flex  w-full mx-4 py-2 border-b mt-4 ">
@@ -901,7 +901,7 @@ export default function TodayLeadsActivitySearchView({
                                           key={inx}
                                           onClick={() =>
                                             selUserProfileF(
-                                              'User Profile',
+                                              'Lead Profile',
                                               leadUser
                                             )
                                           }

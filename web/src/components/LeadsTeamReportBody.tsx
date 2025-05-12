@@ -54,9 +54,6 @@ import SiderForm from './SiderForm/SiderForm'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 import Chatbot from './comps/aichat/Chatbot'
 
-
-
-
 const valueFeedData = [
   { k: 'Total', v: 300, pic: '' },
   { k: 'Progress', v: 100, pic: '' },
@@ -4003,7 +4000,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
           <SiderForm
             open={isImportLeadsOpen}
             setOpen={setisImportLeadsOpen}
-            title={'User Profile'}
+            title={'Lead Profile'}
             customerDetails={customerDetails}
             widthClass="max-w-4xl"
             pId={undefined}

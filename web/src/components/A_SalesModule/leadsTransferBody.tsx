@@ -3824,7 +3824,7 @@ const LeadsTransferBody = ({
           <SiderForm
             open={isImportLeadsOpen}
             setOpen={setisImportLeadsOpen}
-            title={'User Profile'}
+            title={'Lead Profile'}
             customerDetails={customerDetails}
             widthClass="max-w-4xl"
             pId={undefined}

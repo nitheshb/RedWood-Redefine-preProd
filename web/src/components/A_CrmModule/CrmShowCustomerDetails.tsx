@@ -220,7 +220,7 @@ const ShowCustomerDetails = ({
     } = data
     // updateUserRole(uid, deptVal, myRole, email, 'nitheshreddy.email@gmail.com')
 
-    const foundLength = await checkIfLeadAlreadyExists('spark_leads', mobileNo)
+    const foundLength = await checkIfLeadAlreadyExists('spark_leads', mobileNo, project?.id)
     const leadData = {
       Date: Timestamp.now().toMillis(),
       Email: email,
@@ -634,7 +634,7 @@ const ShowCustomerDetails = ({
               <div className=" justify-between max-w-4xl items-center  border border-[#E7E7E9] my-4 bg-white rounded-2xl cursor-pointer text-gray-700 text-sm">
         <div className="flex items-center justify-between bg-white rounded-2xl p-3 w-full">
           <div className="flex items-center gap-2">
- 
+
             <div className="text-[#0E0A1F] text-[14px] font-medium  font-outfit">
             <div className=''>
 
@@ -774,10 +774,10 @@ const ShowCustomerDetails = ({
           </div>
 
           <div className="flex items-center gap-3">
-    
 
 
- 
+
+
 
 <button className=" text-[#0E0A1F] text-sm py-2 rounded-lg  px-6 rounded focus:outline-none bg-[#EDE9FE] flex items-center text-center">
 Primary
@@ -908,7 +908,7 @@ Primary
 <div className=" justify-between max-w-4xl items-center  rounded-lg cursor-pointer text-gray-700 text-sm">
         <div className="flex items-center justify-between  border border-[#E7E7E9] bg-white rounded-2xl p-3 w-full">
           <div className="flex items-center gap-2">
- 
+
             <div className="text-[#0E0A1F] text-[14px] font-medium  font-outfit">
             <div className=''>
 
@@ -1047,16 +1047,16 @@ Primary
           </div>
 
           <div className="flex items-center gap-3">
-    
 
 
- 
+
+
 
 <button className=" text-[#0E0A1F] text-sm py-2 rounded-lg  px-6 rounded focus:outline-none bg-[#EDE9FE] flex items-center text-center">
 secondary
                           </button>
 
-        
+
                           <button
                                   onClick={toggleDropdownone}
                                   className="flex items-center justify-center"

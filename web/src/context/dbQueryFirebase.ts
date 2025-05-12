@@ -2082,12 +2082,12 @@ export const getUser = async (uid: string) => {
   }
 }
 
-export const checkIfLeadAlreadyExists = async (cName, matchVal) => {
+export const checkIfLeadAlreadyExists = async (cName, matchVal, projectId) => {
   // db.collection(`${orgId}_leads`).doc().set(data)
   // db.collection('')
 
   console.log('matchVal', matchVal)
-  const q = await query(collection(db, cName), where('Mobile', '==', matchVal))
+  const q = await query(collection(db, cName), where('Mobile', '==', matchVal), where('ProjectId', '==', projectId))
   const parentDocs = []
   const cpDocs = []
 
@@ -2879,7 +2879,6 @@ export const addCustomer = async (orgId, data, by, resetForm) => {
 
 
     await setDoc(doc(db, `${orgId}_customers`, did), data)
-
     toast.success('Customer Details added successfully')
     resetForm()
     return

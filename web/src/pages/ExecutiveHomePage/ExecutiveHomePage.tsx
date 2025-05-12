@@ -438,7 +438,7 @@ const ExecutiveHomePage = () => {
                   <div className="border-b">
                     <div className="p-3 flex justify-between">
                       <span className="text-md font-semibold">
-                        User Profile
+                        Lead Profile
                       </span>
                       <XIcon className="w-5 h-5 mt-[2px]" />
                     </div>

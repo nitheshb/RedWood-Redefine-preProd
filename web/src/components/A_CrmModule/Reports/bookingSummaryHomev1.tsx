@@ -150,7 +150,7 @@ const UnitBookingSummaryHomePage1 = ({
   useEffect(() => {
     Object.keys(searchData).length &&
       isClicked &&
-      selUserProfileF('User Profile', searchData)
+      selUserProfileF('Lead Profile', searchData)
   }, [searchData, isClicked])
 
   const selUserProfileF = (title, data) => {

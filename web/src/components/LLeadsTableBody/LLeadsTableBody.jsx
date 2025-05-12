@@ -391,7 +391,7 @@ const EnhancedTableToolbar = (props) => {
       } else {
         remark = data?.Remarks
       }
-      row.Date = prettyDate(data?.Date).toLocaleString()
+      row.Date = prettyDate(data?.Date)?.toLocaleString()
       row.Name = data?.Name
       row.countryCode = data?.countryCode
       row.Mobile = data?.Mobile
@@ -629,7 +629,7 @@ export default function LLeadsTableBody({
   const handleClick = (event, row) => {
     let newSelected = []
 
-    selUserProfileF('User Profile', row)
+    selUserProfileF('Lead Profile', row)
     setSelected(newSelected)
   }
 
@@ -764,7 +764,7 @@ export default function LLeadsTableBody({
                       >
                         <section>
                           <span className="font-outfit">
-                            {prettyDate(row.Date).toLocaleString()}
+                            {prettyDate(row?.Date)?.toLocaleString()}
                           </span>
                         </section>
                       </TableCell>

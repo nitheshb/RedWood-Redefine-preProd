@@ -618,17 +618,10 @@ const DialogFormBody = ({
                                 value={planningApproval}
                                 // options={chooseAuthorityApproval}
                                 onChange={setPlanningApproval}
-                                options={[
-                                  { name: 'Yes' },
-                                  { name: 'No' },
-                                ]}
+                                options={[{ name: 'Yes' }, { name: 'No' }]}
                               />
 
-
-
-
-
-                              {planningApproval?.name === 'Yes' && (
+                              {planningApproval === 'Yes' && (
                                 <>
                                   <div className=" bg-white   mt-2 p-2 rounded-md ">
                                     <div className=" ">
@@ -702,12 +695,9 @@ const DialogFormBody = ({
                                 value={reraApproval}
                                 // options={chooseReraApproval}
                                 onChange={setReraApproval}
-                                options={[
-                                  { name: 'Yes' },
-                                  { name: 'No' },
-                                ]}
+                                options={[{ name: 'Yes' }, { name: 'No' }]}
                               />
-                              {reraApproval?.name === 'Yes' && (
+                              {reraApproval === 'Yes' && (
                                 <div className="md:flex md:flex-col pt-[10px] flex-col md:space-x-1 w-full text-xs">
                                   <div className=" bg-white p-2 rounded-md ">
                                     <div className="mt-2 w-full">

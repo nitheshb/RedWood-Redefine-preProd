@@ -822,7 +822,7 @@ const TodoListView = ({
                               const y = dat.leadUser
                               y.id = dat?.uid
                               console.log('macho 1', y)
-                              selUserProfileF('User Profile', y)
+                              selUserProfileF('Lead Profile', y)
                             }}
                           >
                             <td>

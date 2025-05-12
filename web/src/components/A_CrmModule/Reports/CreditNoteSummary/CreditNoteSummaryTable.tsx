@@ -450,7 +450,7 @@ export default function CreditNoteSummaryTableBody({
   const handleClick = (event, row) => {
     const newSelected = []
 
-    selUserProfileF('User Profile', row)
+    selUserProfileF('Lead Profile', row)
     setSelected(newSelected)
   }
 
