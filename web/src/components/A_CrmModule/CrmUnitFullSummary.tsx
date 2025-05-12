@@ -1053,8 +1053,8 @@ export default function UnitFullSummary({
 
   return (
     //bg-[#F9F9FA]
-    <div className={`bg-[#F6F5F8]  mb-10 h-screen      `}>
-      <section className="flex ml-6 	">
+    <div className={` `}>
+      <section className="flex ml-6  mt-4	">
         <div className="w-full">
           <div className="rounded-t  mb-0">
             <>
@@ -4385,7 +4385,7 @@ export default function UnitFullSummary({
           )}
 
           {selFeature === 'summary' && (
-            <div className="   no-scrollbar  h-[100%] overflow-y-scroll">
+            <div className="">
               <CrmUnitSummary
                 selCustomerPayload={selCustomerPayload}
                 assets={selCustomerPayload?.assets}

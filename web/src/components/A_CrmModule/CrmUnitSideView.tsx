@@ -1087,22 +1087,22 @@ export default function UnitSideViewCRM({
 
   return (
     <div
-      className={`  bg-[#F6F5F8]  max-h-screen ${openUserProfile ? 'hidden' : ''
+      className={` bg-[#F9F9F9]  max-h-screen ${openUserProfile ? 'hidden' : ''
         } overflow-y-scroll overflow-x-hidden `}
     >
 
 
 
-      <div className='flex bg-white  flex-col'>
+      <div className='flex flex-col  '>
 
 
-        <div className=" pb-[2px] px-3 pb-30 mt-0 rounded-xs ">
+        <div className=" mt-0 rounded-xs ">
           {/* <hr className="pb-[2px] px-3 mt-0 rounded-md bg-[#000] relative overflow-hidden border border-b border-transparent before:absolute before:inset-0 before:rounded-md before:border-[1px] before:border-transparent before:bg-gradient-to-r before:from-transparent before:via-gray-300 before:to-transparent before:pointer-events-none"/> */}
 
           <div className="-mx-3 flex  sm:-mx-4 px-3">
             <div className="w-full   ">
               <div className="flex flex-col justify-between">
-                <section className="flex flex-row justify-between bg-white px-3 py-1  rounded-md ">
+                <section className="flex flex-row justify-between bg-[#FFFFFF]  px-3 py-1  rounded-md ">
                   {/* <section>
                 <section className="flex flex-row   pt-2 justify-between">
                                   <div className="flex flex-row">
@@ -1411,7 +1411,7 @@ export default function UnitSideViewCRM({
 
 
 
-        <section className="flex group  flow-row justify-center items-center py-[15px] mr-2  px-[15px]  text-black rounded-lg text-xs cursor-pointer ">
+        <section className="flex group  flow-row justify-center bg-[#FFFFFF] items-center py-[15px]   px-[15px]  text-black rounded-lg text-xs cursor-pointer ">
           <div className="flex-1 ml-2">
             {!user?.role?.includes(USER_ROLES.CP_AGENT) ? (
               <div className="flex flex-row justify-between pb-0 pt-0 relative">
@@ -1809,7 +1809,7 @@ changed her */}
       {/* changed her end */}
 
 
-      <div className='my-4'>
+      <div className=''>
 
 
         <UnitFullSummary

@@ -12,7 +12,7 @@ import CrmPaymentSummary from './CrmPaymentSummary'
 import CrmUnitPaymentGraph from './CrmUnitPaymentGraph'
 import { crmActivieLogNamer } from 'src/util/CrmActivityLogHelper'
 import PdfUniteSummary from 'src/util/PdfUniteSummary'
-import { BellIcon, ChevronDownIcon, Clock } from 'lucide-react'
+import { BellIcon, CheckCircle, ChevronDownIcon, Clock, MessageSquare, Phone } from 'lucide-react'
 import { Cell, Pie, PieChart } from 'recharts'
 import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
 import { calculatePercentages } from 'src/util/areaConverter'
@@ -72,6 +72,10 @@ const CrmUnitSummary = ({
   const [netTotal, setNetTotal] = useState(0)
   const [partATotal, setPartATotal] = useState(0)
   const [partBTotal, setPartBTotal] = useState(0)
+
+
+  const [isHovered, setIsHovered] = useState(false);
+
 
   useEffect(() => {
     console.log('unit dta is ', selUnitPayload, selUnitPayload?.id)
@@ -287,107 +291,115 @@ const CrmUnitSummary = ({
   return (
     <PDFExport paperSize="A4" margin="1cm" ref={pdfUnitSummaryComp}>
       <div
-        className=" rounded-lg  border border-gray-100   overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300"
+        className="overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300"
         style={{}}
       >
         {/* <div className="py-1 px-1 m-2 mt-[1px] rounded-lg border border-gray-100  overflow-y-scroll" style={{ height: `calc(100vh - 120px)` }}> */}
 
-        <div className='p-4 bg-white rounded-[16px] mr-6'>
-
-
+        <div className='p-4  mr-6'>
         <div className="min-h-screen ">
           <div className="max-w-5xl mx-auto space-y-4">
 
 
-            <div className="max-w-5xl mx-auto border border-[#E7E7E9] shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] mb-4 p-4 bg-white rounded-[16px]">
-              <div className="flex flex-row divide-x divide-gray-200">
-                <div className="flex-1  p-2 px-6 text-center">
-                  <div className="font-[Outfit] font-normal leading-[100%] tracking-[0%] mb-2">Eligible Due</div>
-                  <div className="font-medium text-[14px] leading-[100%] tracking-[0%] text-[#606062] text-center">₹ 1,22,32,000</div>
-                </div>
-
-                <div className="flex-1  p-2 px-6 text-center">
-                  <div className="font-[Outfit] font-normal leading-[100%] tracking-[0%] mb-2">Next Milestone</div>
-                  <div className="font-medium text-[14px] leading-[100%] tracking-[0%] text-[#606062] text-center">Registration in 2 Days</div>
-                </div>
-
-                <div className="flex-1  p-2 px-6 text-center">
-                  <div className="font-[Outfit] font-normal leading-[100%] tracking-[0%] mb-2">Upcoming Milestone</div>
-                  <div className="font-medium text-[14px] leading-[100%] tracking-[0%] text-[#606062] text-center">Video KYC</div>
-                </div>
-              </div>
-            </div>
 
 
+              <div className="max-w-5xl mx-auto bg-[#FFFFFF] rounded-[14px] border border-[#EFEFF0] shadow-[0px_4px_30px_0px_#0000000D] pt-6 ">
 
 
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 w-full max-w-6xl mx-auto">
-      {/* First Card */}
-      <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center px-6">
+        <div>
+          <p className="font-normal text-[14px]   text-[#D68836] mb-2">Balance due in 2 days</p>
+          <h2 className="font-semibold text-[24px] bg-gradient-to-r from-[#856FF3] via-[#799AF8] to-[#9596F6] [background-image:linear-gradient(77.2deg,#856FF3_8.14%,#799AF8_81.2%,#9596F6_88.21%)] text-transparent bg-clip-text">₹ 22,12,22,32,000</h2>
+        </div>
         
-      <div className="flex justify-between items-center mb-4 overflow-visible">
-          {/* Left section */}
-          <div className="flex items-center">
-            <div className="bg-[#FFFFFF] p-1.5 rounded-lg mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
-              <img
-                src="/fire.svg"
-                alt=""
-                className="w-[18px] h-[18px]"
-              />
-            </div>
-            <span className="font-semibold text-[12px] leading-[100%] tracking-[0.06em] text-[#696990]">
-              COST SHEET
-            </span>
-          </div>
+<button 
+  className="flex items-center justify-center md:mt-0 w-[132px] h-[34px] gap-[10px] rounded-[8px] px-[14px] py-[10px] 
+             [background-image:linear-gradient(75.3deg,#D4DEFC_-12.88%,#EAE7FC_53.9%)] 
+             text-[12px] text-[#0D0A1E]"
+  onMouseEnter={() => setIsHovered(true)}
+  onMouseLeave={() => setIsHovered(false)}
+>
+  Capture Payment
+</button>
 
+      </div>
+      
+      <div className="flex items-center gap-2 px-6 py-4 border-b border-gray-200">
+
+<div className="flex items-center justify-between w-auto h-[27px] gap-[6px] rounded-[30px] p-[6px] border border-[#E7E7E9]">
+  <div className="bg-gray-100 rounded-full p-1">
+    <CheckCircle size={18} className="text-gray-600" />
+  </div>
+  <span className="font-outfit font-normal text-[12px] mr-3">Paid</span>
+  <span className="font-bold text-[12px] text-[#0D0A1E] ">12,22,32,000</span>
+</div>
+
+
+
+        <div className="font-outfit font-normal text-[12px]  text-black">On Completion of Second slab</div>
+      </div>
+      
+      <div className="flex flex-col md:flex-row justify-between px-6 py-2 items-start md:items-center">
+        <div className="flex items-center">
+          <MessageSquare size={13} className="text-gray-600 mr-2" />
+          <p className="font-outfit font-normal text-[12px]  text-[#0D0A1E]">Customer will make the payment tomorrow evening</p>
+          <span className=" font-normal text-[10px] leading-[100%] tracking-[0] text-[#404040] ml-2">/ 2 days ago</span>
         </div>
-
-        <div className="font-semibold text-[20px] leading-[100%] tracking-[0em]  text-[#0E0A1F]">
-          ₹ 1,22,32,000
+        
+        <div className="flex items-center mt-3 md:mt-0">
+          <Phone size={13} className="text-gray-600 mr-1" />
+          <span className="font-outfit font-normal text-[12px]  text-[#0D0A1E]">Total Dials: 2</span>
         </div>
       </div>
 
-      {/* Second Card */}
-      <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
 
-      <div className="flex justify-between items-center mb-4 overflow-visible">
-          {/* Left section */}
-          <div className="flex items-center">
-            <div className="bg-[#FFFFFF] p-1.5 rounded-lg mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
-              <img
-                src="/fire.svg"
-                alt=""
-                className="w-[18px] h-[18px]"
-              />
-            </div>
-            <span className="font-semibold text-[12px] leading-[100%] tracking-[0.06em] text-[#696990]">
-              COST SHEET
-            </span>
-          </div>
+    </div>
 
-        </div>
 
-        <div className="font-semibold text-[20px] leading-[100%] tracking-[0em]  text-[#0E0A1F]">
-          Registration in 2 Days
-        </div>
-      </div>
 
-      {/* Third Card */}
-      <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-        <div className="flex items-center mb-4">
-          <div className="bg-purple-50 p-2 rounded-full mr-3">
-            <Clock className="text-purple-600 h-5 w-5" />
-          </div>
-          <span className="font-semibold text-[12px] leading-[100%] tracking-[0.06em] uppercase text-[#616162]">
-            ELIGIBLE DUE
-          </span>
-        </div>
-        <div className="font-semibold text-[20px] leading-[100%] tracking-[0em]  text-[#0E0A1F] ">
-          Video KYC
+
+
+
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+  {/* Card 1 */}
+  <div className="relative bg-[#FFFFFF]  border border-[#EFEFF0] shadow-[0px_4px_30px_0px_#0000000D] w-full h-[95px] p-[10px] rounded-[14px] border border-[#E7E7E9] overflow-visible">
+    <div className="p-2">
+      <div className="font-[Outfit] font-normal text-[12px] text-[#606062] mb-2">Project Name:</div>
+      <div className="h-px w-[210px] bg-gradient-to-r from-gray-400/90 to-gray-300/50 my-2"></div>
+      <div className="flex items-center justify-between">
+        <div className="font-normal text-[14px] text-[#2B2B2B] flex items-center gap-1">
+          Delete
         </div>
       </div>
     </div>
+  </div>
+
+  {/* Card 3 */}
+  <div className="relative bg-[#FFFFFF]  border border-[#EFEFF0] shadow-[0px_4px_30px_0px_#0000000D] w-full h-[95px] p-[10px] rounded-[14px] border bg-[#E7E7E9] overflow-visible">
+    <div className="p-2">
+      <div className="font-[Outfit] font-normal text-[12px] text-[#606062] mb-2">Lead Created</div>
+      <div className="h-px w-[210px] bg-gradient-to-r from-gray-400/90 to-gray-300/50 my-2"></div>
+      <div className="flex items-center justify-between">
+        <div className="font-normal text-[14px] text-[#2B2B2B] flex items-center gap-1">
+          Latest Update
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {/* Card 4 */}
+  <div className="relative bg-[#FFFFFF]  border border-[#EFEFF0] shadow-[0px_4px_30px_0px_#0000000D] w-full h-[95px] p-[10px] rounded-[14px] border border-[#E7E7E9] overflow-visible">
+    <div className="p-2">
+      <div className="font-[Outfit] font-normal text-[12px] text-[#606062] mb-2">Source</div>
+      <div className="h-px w-[210px] bg-gradient-to-r from-gray-400/90 to-gray-300/50 my-2"></div>
+      <div className="flex items-center justify-between">
+        <div className="font-normal text-[14px] text-[#2B2B2B] flex items-center gap-1">
+          Tabel
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 
@@ -639,7 +651,7 @@ const CrmUnitSummary = ({
                 </div>
               </div>
             </div>
-
+{/* 
             <div
               className="grid grid-cols-1 md:grid-cols-2 gap-4 cursor-pointer"
               onClick={() => setFeature('agreement_info')}
@@ -648,7 +660,7 @@ const CrmUnitSummary = ({
 
 
               <div className="flex justify-between items-center mb-4 overflow-visible">
-                      {/* Left section */}
+            
                       <div className="flex items-center">
                         <div className="bg-[#FFFFFF] p-1.5 rounded-lg mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
                           <img
@@ -663,7 +675,7 @@ const CrmUnitSummary = ({
                         </span>
                       </div>
 
-                      {/* Right section */}
+                
                       <div className="">
 
                       <svg
@@ -707,13 +719,7 @@ const CrmUnitSummary = ({
                         </span>
                       </div>
                     </div>
-                    // <div key={index} className="flex items-center justify-between py-3 border-b border-gray-200">
-                    //   <div className="flex items-center gap-3">
-                    //     <img src="/IconSetsdoc.svg" alt="Document" className="h-5 w-5 object-contain" />
-                    //     <span className="font-medium">{doc.name}</span>
-                    //   </div>
-                    //   <span className="text-gray-600">{doc.uploadedCount} Document</span>
-                    // </div>
+
                   ))}
                 </div>
               </div>
@@ -727,7 +733,7 @@ const CrmUnitSummary = ({
 
 
 <div className="flex justify-between items-center mb-4 overflow-visible">
-                      {/* Left section */}
+         
                       <div className="flex items-center">
                         <div className="bg-[#FFFFFF] p-1.5 rounded-lg mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
                           <img
@@ -742,7 +748,7 @@ const CrmUnitSummary = ({
                         </span>
                       </div>
 
-                      {/* Right section */}
+                  
                       <div className="">
 
 
@@ -777,7 +783,7 @@ const CrmUnitSummary = ({
                   ))}
                 </div>
               </div>
-            </div>
+            </div> */}
 
             <div className='grid grid-cols-1 md:grid-cols-2 gap-4 cursor-pointer'>
 
