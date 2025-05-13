@@ -1028,56 +1028,47 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
             <div className="flex justify-between items-center mb-6">
               <div>
                 <section className="flex flex-row mt-3">
-                  <img
-                    className="w-12 h-12"
-                    alt=""
-                    src={
-                      'https://static.hsappstatic.net/ui-images/static-2.758/optimized/payments-subscriptions.svg'
-                    }
-                  ></img>
 
-                  <h2 className="ml-2 mt-2 text-md font-semibold text-black leading-light font-Playfair">
-                    Sales Reports
+
+                  <h2 className="ml-2 mt-2 text-md  text-[#0D0A1E] leading-light font-Playfair">
+                    Sales Report
                   </h2>
-                  {/* <h1 className="text-2xl mt-2 font-semibold mb-2">
-                Sales Reports
-                </h1> */}
+
                 </section>
                 {/* <p className="text-gray-600">This area is usually used to setting up values for the dropdowns and other resuable options</p> */}
               </div>
             </div>
 
-            <div className="flex items-center space-x-1 mb-6 border-b">
+            <div className="flex items-center space-x-1 mb-6 ">
               {[
-                { label: 'Leads Performance', value: 'lead_perf' },
+                { label: 'Lead Performance', value: 'lead_perf' },
                 { label: 'Source Performance', value: 'source_perf' },
                 { label: 'Site Visits', value: 'site_visits' },
                 { label: 'Employee Performance', value: 'emp_tasks' },
                 { label: 'Booking Performance', value: 'booking_perf' },
+                { label: 'Home', value: 'sale_report_home' },
+                { label: 'Marketing', value: 'marketing_Dashboard' },
 
-                // { label: 'Home', value: 'sale_report_home' },
-                // { label: 'Marketing', value: 'marketing_Dashboard' },
-
-                // { label: 'Top Bar', value: 'bar_tasks' },
-                // { label: 'Profile', value: 'profile_tasks' },
+                { label: 'Top Bar', value: 'bar_tasks' },
+                { label: 'Profile', value: 'profile_tasks' },
               ].map((data, i) => (
                 <button
                   key={i}
                   onClick={() => setSelCat(data.value)}
                   className={`px-4 py-2 ${
                     selCat === data.value
-                      ? 'border-b-2 border-black text-black'
+                      ? 'border-b-2 border-[#27A1CD] text-[#27A1CD]'
                       : 'text-gray-500 hover:text-black'
                   }`}
                 >
                   <span
                     className={`flex items-center   text-sm   ${
                       selCat === data.value
-                        ? 'font-semibold text-green-800 '
+                        ? 'font-semibold text-[#27A1CD] '
                         : 'font-medium text-black-100 '
                     }  rounded-full`}
                   >
-                    <img alt="" src="/temp2.png" className="h-5 w-5 mr-1" />
+
                     {data?.label}
                   </span>
                 </button>
@@ -1085,7 +1076,191 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
             </div>
           </div>
           {selCat === 'lead_perf' && (
-            <div className="flex flex-col  mt-2 drop-shadow-md rounded-lg  px-4">
+            <div className="flex flex-col drop-shadow-md rounded-lg  px-4 font-['outfit']">
+              <section>
+              <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                      }}
+                      className=" text-md font-bold leading-none pl-0   pb-4 mb-[20px] "
+                    >
+                      <div>Lead Performance</div>
+                      <div className="flex flex-row">
+                        {orgId == 'spark' && (
+                          <div
+                            className="mt-3 mr-2 cursor-pointer"
+                            onClick={() =>
+                              updateAgreegatedValues(projectFilList)
+                            }
+                          >
+                            Calculate
+                          </div>
+                        )}
+
+                        <section className="flex mb-2 border rounded-lg">
+                          {!isEdit && (
+                            // <Link to={routes.projectEdit({ uid })}>
+                            <button
+                              onClick={() => {
+                                setSourceDateRange(startOfDay(d).getTime())
+                              }}
+                            >
+                              <span
+                                className={`flex ml-2  items-center h-6 px-3 text-xs ${
+                                  sourceDateRange === startOfDay(d).getTime()
+                                    ? ' btn_blue  '
+                                    : 'text-[#4C0053] hover:bg-[#E0E3FF] active:bg-[#E0E3FF]     '
+                                } rounded-lg`}
+                              >
+
+                                Today
+                              </span>
+                            </button>
+                            // </Link>
+                          )}
+
+                          <button
+                            onClick={() => {
+                              setSourceDateRange(startOfWeek(d).getTime())
+                            }}
+                          >
+                            <span
+                              className={`flex ml-2  items-center h-6 px-3 text-xs ${
+                                sourceDateRange === startOfWeek(d).getTime()
+                                  ? 'btn_blue '
+                                  : 'text-[#4C0053] hover:bg-[#E0E3FF] active:bg-[#E0E3FF]  '
+                              }rounded-lg`}
+                            >
+
+                              This Week
+                            </span>
+                          </button>
+                          <button
+                            onClick={() => {
+                              setSourceDateRange(startOfMonth(d).getTime())
+                            }}
+                          >
+                            <span
+                              className={`flex ml-2  items-center h-6 px-3 text-xs ${
+                                sourceDateRange === startOfMonth(d).getTime()
+                                  ? 'btn_blue '
+                                  : '   text-[#4C0053]   rounded-full '
+                              } rounded-lg`}
+                            >
+
+                              This Month
+                            </span>
+                          </button>
+                          <button
+                            onClick={() => {
+                              setSourceDateRange(
+                                subMonths(startOfMonth(d), 6).getTime()
+                              )
+                            }}
+                          >
+                            <span
+                              className={`flex ml-2  items-center h-6 px-3 text-xs ${
+                                sourceDateRange ===
+                                subMonths(startOfMonth(d), 6).getTime()
+                                  ? ' btn_blue  '
+                                  : '  text-[#4C0053] hover:bg-[#E0E3FF] active:bg-[#E0E3FF]  rounded-full '
+                              }rounded-lg`}
+                            >
+
+                              Last 6 Months
+                            </span>
+                          </button>
+                          <span className="max-h-[42px]  ml-3">
+                            <label className="bg-green   pl-   flex flex-row cursor-pointer">
+                              {!isOpened && (
+                                <span
+                                  className={`flex ml-1 mt-[6px] items-center h-6 px-3 text-xs ${
+                                    sourceDateRange === startDate?.getTime()
+                                      ? 'btn_blue  '
+                                      : '   text-[#4C0053] hover:bg-[#E0E3FF] active:bg-[#E0E3FF]  '
+                                  } rounded-lg`}
+                                  onClick={() => {
+                                    setIsOpened(true)
+                                  }}
+                                >
+                                  <CalendarIcon
+                                    className="h-4 w-4 mr-1"
+                                    aria-hidden="true"
+                                  />
+                                  {startDate == null ? 'Custom' : ''}
+                                  {/* {sourceDateRange} -- {startDate?.getTime()} */}
+                                  {startDate != null
+                                    ? prettyDate(
+                                        startDate?.getTime() + 21600000
+                                      )
+                                    : ''}
+                                  {endDate != null ? '-' : ''}
+                                  {endDate != null
+                                    ? prettyDate(endDate?.getTime() + 21600000)
+                                    : ''}
+                                </span>
+                              )}
+                              {
+                                <span
+                                  className="inline"
+                                  style={{
+                                    display: isOpened ? '' : 'none',
+                                  }}
+                                >
+                                  <CustomDatePicker
+                                    className={`z-10 pl- py-1 px-3 mt-[7px] inline text-xs text-[#0091ae] placeholder-blue-800 cursor-pointer  max-w-fit   ${
+                                      sourceDateRange === startDate?.getTime()
+                                        ? 'btn_blue '
+                                        : 'btn_blue '
+                                    } rounded-lg`}
+                                    onCalendarClose={() => setIsOpened(false)}
+                                    placeholderText="&#128467;	 Custom"
+                                    onChange={(update) => {
+                                      setDateRange(update)
+
+                                      console.log(
+                                        'was this updated',
+                                        update,
+                                        dateRange,
+                                        startDate,
+                                        endDate
+                                      )
+                                    }}
+                                    selectsRange={true}
+                                    startDate={startDate}
+                                    endDate={endDate}
+                                    isClearable={true}
+                                    onClear={() => {
+                                      console.log('am i cleared')
+                                    }}
+                                    // dateFormat="MMM d, yyyy "
+                                    //dateFormat="d-MMMM-yyyy"
+                                    dateFormat="MMM dd, yyyy"
+                                  />
+                                </span>
+                              }
+                            </label>
+                          </span>
+
+                          <span style={{ display: '' }}>
+                            <CSVDownloader
+                              className="mr-6 h-[20px] w-[20px]"
+                              downloadRows={sourceRawFilData}
+                              style={{ height: '20px', width: '20px' }}
+                            />
+                          </span>
+                        </section>
+                      </div>
+                    </div>
+              </section>
+              <LeadsCoversionGraphs
+                      sourceRawFilData={sourceRawFilData}
+                      showDrillDownFun={showDrillDownFun}
+                      projectFilList={projectListTuned}
+                      leadsFetchedRawData={leadsFetchedRawData}
+                    />
               <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div
                   className="py-2 inline-block  sm:px-6 lg:px-8"
