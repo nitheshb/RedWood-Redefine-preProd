@@ -1377,72 +1377,94 @@ export function MultipleFileUploadField({
           // upload pdf to cloud
         } else {
           const clean1 = records.filter((row) => row['Date'] != '')
-
           // set duplicate & valid records
           // check in db if record exists with matched phone Number & email
           const serialData = await Promise.all(
             clean1.map(async (dRow) => {
               console.log('found row is ', dRow)
-              const foundLength = await checkIfLeadAlreadyExists(
-                `${orgId}_leads`,
-                dRow['Mobile'],
-                pId
-              )
-              // modify date
-              const date = new Date(dRow['Date']) // some mock date
-              const milliseconds = date.getTime() + 21600000 // adding 21600000 ms == 6hrs to match local time with utc + 6hrs
-              console.log('milliseconds is', milliseconds)
-              // dRow['Date'] = prettyDate(milliseconds).toLocaleString()
-              dRow['Date'] = milliseconds
-              dRow['Status'] = dRow['Status']?.toLowerCase() || ''
-              dRow['Source'] = dRow['Source']?.toLowerCase() || ''
-              dRow['mode'] = await makeMode(foundLength)
-              if (dRow['mode'] === 'valid' && dRow['EmpId'] != '') {
-                console.log('found row is 1', dRow)
-                // check & get employee details and push it to dRow
-                // project Id
-                const MatchedValA = await salesTeamList.filter((data) => {
-                  return data.empId == dRow['EmpId']
-                })
-                if (MatchedValA.length === 1) {
-                  console.log('found row is 2', dRow)
-                  const { offPh } = MatchedValA[0]
-                  dRow['assignedTo'] = MatchedValA[0]['uid']
-                  dRow['assignedToObj'] = {
-                    empId: MatchedValA[0]['empId'],
-                    label: MatchedValA[0]['name'],
-                    name: MatchedValA[0]['name'],
-                    offPh: offPh || 0,
-                  }
-                }
-              }
-
+          // get the project Id, if projectId does not exist then push it to invalid record
+          // get the assigne Name, if assigne Name does not exist then push it to invalid record
+          const date = new Date(dRow['Date']) // some mock date
+          const milliseconds = date.getTime() + 21600000 // adding 21600000 ms == 6hrs to match local time with utc + 6hrs
+          console.log('milliseconds is', milliseconds)
+          // dRow['Date'] = prettyDate(milliseconds).toLocaleString()
+          dRow['Date'] = milliseconds
+          dRow['Status'] = dRow['Status']?.toLowerCase() || ''
+          dRow['Source'] = dRow['Source']?.toLowerCase() || ''
+          dRow['CT'] = Timestamp.now().toMillis()
+          if(dRow['Project'] != '' || ![
+            'new',
+            'followup',
+            'visitfixed',
+            'visitdone',
+            'negotiation',
+            'booked',
+            'notinterested',
+            'junk',
+          ].includes(dRow['Status'])){
+          if (dRow['Project'] != '') {
+            console.log('found row is 3', dRow, projectList)
+            const projectFilA = projectList.filter((data) => {
+              console.log('found row is 3.1', data)
+              return data.projectName == dRow['Project']
+            })
+            if (projectFilA.length >= 1) {
+              console.log('found row is 4', dRow)
+              dRow['ProjectId'] = projectFilA[0]['uid']
               if (dRow['Status'] == '' || dRow['Status'] === undefined) {
                 dRow['Status'] = 'unassigned'
               }
+                  const foundLength = await checkIfLeadAlreadyExists(
+                    `${orgId}_leads`,
+                    dRow['Mobile'],
+                    dRow['ProjectId']
+                  )
+                  // modify date
 
-              if (dRow['Project'] != '') {
-                console.log('found row is 3', dRow, projectList)
-                const projectFilA = projectList.filter((data) => {
-                  console.log('found row is 3.1', data)
-                  return data.projectName == dRow['Project']
-                })
-                if (projectFilA.length >= 1) {
-                  console.log('found row is 4', dRow)
-                  dRow['ProjectId'] = projectFilA[0]['uid']
-                }
-              }
+                  console.log('found row is 5', dRow)
+                  await console.log(
+                    'foundLength is',
+                    foundLength,
+                    dRow,
+                    foundLength,
+                    dRow['Mobile']
+                  )
+                  dRow['mode'] = await makeMode(foundLength)
+                  if (dRow['mode'] === 'valid' && dRow['EmpId'] != '') {
+                    console.log('found row is 1', dRow)
+                    // check & get employee details and push it to dRow
+                    // project Id
+                    const MatchedValA = await salesTeamList.filter((data) => {
+                      return data.empId == dRow['EmpId']
+                    })
+                    console.log('found row is MatchedValA', MatchedValA.length, MatchedValA,dRow['EmpId'])
+                    if (MatchedValA.length >0) {
+                      console.log('found row is 2', dRow)
+                      const { offPh } = MatchedValA[0]
+                      dRow['assignedTo'] = MatchedValA[0]['uid']
+                      dRow['assignedToObj'] = {
+                        empId: MatchedValA[0]['empId'],
+                        label: MatchedValA[0]['name'],
+                        name: MatchedValA[0]['name'],
+                        offPh: offPh || 0,
+                      }
+                      dRow['EmpId'] = MatchedValA[0]['name']
+                    }else{
+                      dRow['mode'] = 'invalid'
+                      return dRow
+                    }
+                  }
+                  return await dRow
+            }else{
+              dRow['mode'] = 'invalid'
+              return dRow
+            }
+          }
+        }
 
-              dRow['CT'] = Timestamp.now().toMillis()
-              console.log('found row is 5', dRow)
-              await console.log(
-                'foundLength is',
-                foundLength,
-                dRow,
-                foundLength,
-                dRow['Mobile']
-              )
-              return await dRow
+
+
+
             })
           )
 
@@ -1504,7 +1526,7 @@ export function MultipleFileUploadField({
   )
 
   const resetter = () => {
-    setSelected({})
+    // setSelected({})
     setFormMessage('')
   }
 
@@ -1618,11 +1640,16 @@ export function MultipleFileUploadField({
         files.map((fileWrapper, inx) => (
           <div className="mt-6 p-6 bg-white border border-gray-100" key={inx}>
             {fileWrapper.errors.length ? (
-              <UploadError
-                file={fileWrapper.file}
-                errors={fileWrapper.errors}
-                onDelete={onDelete}
-              />
+              // <UploadError
+              //   file={fileWrapper.file}
+              //   errors={fileWrapper.errors}
+              //   onDelete={onDelete}
+              // />
+              <div className="text-red-500">
+                {fileWrapper.errors.map((error, index) => (
+                  <p key={index}>{error}</p>
+                ))}
+            </div>
             ) : (
               <section>
                 <SingleFileUploadWithProgress

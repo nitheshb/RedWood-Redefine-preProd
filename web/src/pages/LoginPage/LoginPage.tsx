@@ -120,7 +120,7 @@ const LoginPage = () => {
           <div className="absolute flex justify-center w-full bottom-20">
             <div className="max-w-md text-center">
               <span className="text-3xl font-bold leading-loose text-white">
-                Control Bussiness
+                Control Business
               </span>
               <p className="font-light leading-7 text-gray-400">
                 Redefine Erp is the most comprehensive field service & asset
@@ -252,7 +252,7 @@ const LoginPage = () => {
                 </Submit>
                 <div className="my-[4%] md:hidden lg:hidden">
                   <h1 className="text-center text-blue-900 font-semibold text-[1.5rem] ">
-                    Control Bussiness
+                    Control Business
                   </h1>
                   <p className="text-center  text-gray-500 font-semibold text-sm ">
                     Redefine Erp is the most comprehensive field service & asset

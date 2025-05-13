@@ -236,7 +236,9 @@ const EnhancedTableToolbar = (props) => {
   }, [rows])
 
   React.useEffect(() => {
+    if(pId){
     getProjectDetails(pId)
+    }
   }, [])
   const { user } = useAuth()
 

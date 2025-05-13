@@ -4,104 +4,7 @@ import { useTranslation } from 'react-i18next'
 import uniqueId from '../util/generatedId'
 import LfileuploadTableTemplate from './LfileuploadTableTemplate'
 
-const tableData2 = [
-  {
-    id: uniqueId(),
-    avatar: '/static/avatar/001-man.svg',
-    name: 'Zachary Gomez',
-    username: 'zachary-gomez',
-    email: 'zachary-gomez@gmail.com',
-    role: 'Editor',
-  },
-  {
-    id: uniqueId(),
-    avatar: '/static/avatar/002-girl.svg',
-    name: 'Amanda Montgomery',
-    username: 'amanda-montgomery',
-    email: 'montgomery@ya.com',
-    role: 'Subscriber',
-  },
-  {
-    id: uniqueId(),
-    avatar: '/static/avatar/003-boy.svg',
-    name: 'Lester Holland',
-    username: 'lester-holland',
-    email: 'lester75@gmail.com',
-    role: 'Subscriber',
-  },
-  {
-    id: uniqueId(),
-    avatar: '/static/avatar/004-woman.svg',
-    name: 'Max Allison',
-    username: 'max-allison',
-    email: 'max-allison@pochta.io',
-    role: 'Subscriber',
-  },
-  {
-    id: uniqueId(),
-    avatar: '/static/avatar/005-man-1.svg',
-    name: 'Richard Gregory',
-    username: 'r.gregory',
-    email: 'gregory@gmail.com',
-    role: 'Subscriber',
-  },
-  {
-    id: uniqueId(),
-    avatar: '/static/avatar/006-woman-1.svg',
-    name: 'Clifford Caldwell',
-    username: 'clifford-caldwell',
-    email: 'clifford-c@gmail.com',
-    role: 'Author',
-  },
-  {
-    id: uniqueId(),
-    avatar: '/static/avatar/007-boy-1.svg',
-    name: 'Lester Holland',
-    username: 'zlester-holland',
-    email: 'lester75@gmail.com',
-    role: 'Subscriber',
-  },
-  {
-    id: uniqueId(),
-    avatar: '/static/avatar/008-clown.svg',
-    name: 'Richard Gregory',
-    username: 'r.gregory',
-    email: 'gregory@gmail.com',
-    role: 'Subscriber',
-  },
-  {
-    id: uniqueId(),
-    avatar: '/static/avatar/009-firefighter.svg',
-    name: 'Max Allison',
-    username: 'max-allison',
-    email: 'max-allison@pochta.io',
-    role: 'Subscriber',
-  },
-  {
-    id: uniqueId(),
-    avatar: '/static/avatar/010-girl-1.svg',
-    name: 'Zachary Gomez',
-    username: 'zachary-gomez',
-    email: 'zachary-gomez@gmail.com',
-    role: 'Editor',
-  },
-  {
-    id: uniqueId(),
-    avatar: '/static/avatar/011-man-2.svg',
-    name: 'Zachary Gomez',
-    username: 'zachary-gomez',
-    email: 'zachary-gomez@gmail.com',
-    role: 'Editor',
-  },
-  {
-    id: uniqueId(),
-    avatar: '/static/avatar/012-woman-2.svg',
-    name: 'Zachary Gomez',
-    username: 'zachary-gomez',
-    email: 'zachary-gomez@gmail.com',
-    role: 'Editor',
-  },
-]
+const tableData2 = []
 
 function createData(
   id,
@@ -154,7 +57,8 @@ const LfileUploadTableHome = ({ fileRecords, title, pId, myBlock }) => {
     console.log('table data is ', tableData2)
     let dummyValid = fileRecords.filter((rw) => rw['mode'] === 'valid')
     const dupMode = fileRecords.filter((rw) => rw['mode'] === 'duplicate')
-    let invalidA = []
+    const invalidA = fileRecords.filter((rw) => rw['mode'] === 'invalid')
+    // let invalidA = []
     let validA = []
     if (title === 'Import Leads') {
       dummyValid.map((d) => {
