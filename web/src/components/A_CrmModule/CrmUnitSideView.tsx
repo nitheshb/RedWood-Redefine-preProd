@@ -171,7 +171,6 @@ export default function UnitSideViewCRM({
   console.log('my user is ', user)
   const { enqueueSnackbar } = useSnackbar()
 
-
   const { orgId } = user
   const [fetchedUsersList, setfetchedUsersList] = useState([])
   const [usersList, setusersList] = useState([])
@@ -334,7 +333,7 @@ export default function UnitSideViewCRM({
       (error) => setfetchedUsersList([])
     )
 
-    return unsubscribe
+    return
   }, [])
   useEffect(() => {
     if (selSubMenu) {
@@ -426,7 +425,7 @@ export default function UnitSideViewCRM({
       },
       () => setDocsList([])
     )
-    return unsubscribe
+    return
   }
 
   const getProjectsListFun = () => {
@@ -447,7 +446,7 @@ export default function UnitSideViewCRM({
       (error) => setfetchedUsersList([])
     )
 
-    return unsubscribe
+    return
   }
   useEffect(() => {
     getAllTransactionsUnit()
@@ -474,7 +473,7 @@ export default function UnitSideViewCRM({
       },
       () => setUnitTransactionsA([])
     )
-    return unsubscribe
+    return
   }
   useEffect(() => {
     setLeadStatus(status?.toLowerCase())
@@ -513,7 +512,7 @@ export default function UnitSideViewCRM({
     )
     return toast.promise(
       (async () => {
-        try{
+        try {
           await Promise.all(
             selCustomerPayload?.fullPs.map(async (ps) => {
               console.log('my values are', ps)
@@ -530,19 +529,17 @@ export default function UnitSideViewCRM({
               return 'Employee projection updated'
             })
           )
-}
-    catch (error) {
-      console.log('error in uploading file with data', error);
-      throw error; // Rethrow to let toast.promise handle it
-    }
-  })(),
-  {
-    loading: 'Updating projections to new CRM Owner...',
-    success: (message) => message,
-    error: 'Employee projections updation failed'
-  }
-);
-
+        } catch (error) {
+          console.log('error in uploading file with data', error)
+          throw error // Rethrow to let toast.promise handle it
+        }
+      })(),
+      {
+        loading: 'Updating projections to new CRM Owner...',
+        success: (message) => message,
+        error: 'Employee projections updation failed',
+      }
+    )
 
     const msgPayload = {
       projectName: Project,
@@ -853,7 +850,7 @@ export default function UnitSideViewCRM({
       (error) => setLeadsFetchedSchData([])
     )
 
-    return unsubscribe
+    return
   }
   const getLeadNotesFun = async () => {
     console.log('ami triggered')
@@ -876,7 +873,7 @@ export default function UnitSideViewCRM({
       },
       (error) => setLeadsFetchedActivityData([])
     )
-    return unsubscribe
+    return
   }
   const fAddSchedule = async () => {
     console.log('start time is ', startDate)

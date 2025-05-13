@@ -50,7 +50,7 @@ const HomePage = () => {
       },
       () => setProjects([])
     )
-    return unsubscribe
+    return
   }
 
   const getSalesReportsDataFun = async () => {
@@ -64,7 +64,7 @@ const HomePage = () => {
       },
       () => setProjects([])
     )
-    return unsubscribe
+    return
   }
 
   useEffect(() => {

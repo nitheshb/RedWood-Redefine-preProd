@@ -78,7 +78,7 @@ const AddApplicantDetails = ({
       }
     })
 
-    return unsubscribe
+    return
   }, [])
 
   useEffect(() => {
@@ -146,7 +146,7 @@ const AddApplicantDetails = ({
       (error) => setfetchedUsersList([])
     )
 
-    return unsubscribe
+    return
   }, [])
   useEffect(() => {
     console.log('new customer object', leadPayload)
@@ -170,7 +170,7 @@ const AddApplicantDetails = ({
       (error) => setfetchedUsersList([])
     )
 
-    return unsubscribe
+    return
   }, [])
 
   const downloadImage = (imageUrl, filename) => {
@@ -351,16 +351,16 @@ const AddApplicantDetails = ({
     relation1: leadPayload?.customerDetailsObj?.relation1 ||
       selUnitDetails?.customerDetailsObj?.relation1 ||
       customerInfo?.customerDetailsObj?.relation1 || {
-      label: 'S/O',
-      value: 'S/O',
-    },
+        label: 'S/O',
+        value: 'S/O',
+      },
 
     relation2: customerInfo?.secondaryCustomerDetailsObj?.relation2 ||
       selUnitDetails?.secondaryCustomerDetailsObj?.relation2 ||
       leadPayload?.secondaryCustomerDetailsObj?.relation2 || {
-      label: 'S/O',
-      value: 'S/O',
-    },
+        label: 'S/O',
+        value: 'S/O',
+      },
 
     co_Name1:
       leadPayload?.customerDetailsObj?.co_Name1 ||
@@ -411,8 +411,8 @@ const AddApplicantDetails = ({
     dob1: isValidDate(selUnitDetails?.customerDetailsObj?.dob1)
       ? selUnitDetails.customerDetailsObj.dob1
       : leadPayload?.customerDetailsObj?.dob1 ||
-      customerInfo?.customerDetailsObj?.dob1 ||
-      datee,
+        customerInfo?.customerDetailsObj?.dob1 ||
+        datee,
     dob2:
       leadPayload?.secondaryCustomerDetailsObj?.dob2 ||
       selUnitDetails?.secondaryCustomerDetailsObj?.dob2 ||
@@ -421,15 +421,15 @@ const AddApplicantDetails = ({
     marital1: leadPayload?.customerDetailsObj?.marital1 ||
       selUnitDetails?.customerDetailsObj?.marital1 ||
       customerInfo?.customerDetailsObj?.marital1 || {
-      label: 'Single',
-      value: 'Single',
-    },
+        label: 'Single',
+        value: 'Single',
+      },
     marital2: leadPayload?.secondaryCustomerDetailsObj?.marital2 ||
       selUnitDetails?.secondaryCustomerDetailsObj?.marital2 ||
       customerInfo?.secondaryCustomerDetailsObj?.marital2 || {
-      label: 'Single',
-      value: 'Single',
-    },
+        label: 'Single',
+        value: 'Single',
+      },
     address1:
       leadPayload?.customerDetailsObj?.address1 ||
       selUnitDetails?.customerDetailsObj?.address1 ||
@@ -503,15 +503,15 @@ const AddApplicantDetails = ({
     state1: leadPayload?.customerDetailsObj?.state1 ||
       selUnitDetails?.customerDetailsObj?.state1 ||
       customerInfo?.customerDetailsObj?.state1 || {
-      value: 'KA',
-      label: 'Karnataka',
-    },
+        value: 'KA',
+        label: 'Karnataka',
+      },
     state2: leadPayload?.secondaryCustomerDetailsObj?.state2 ||
       selUnitDetails?.secondaryCustomerDetailsObj?.state2 ||
       customerInfo?.secondaryCustomerDetailsObj?.state2 || {
-      value: 'KA',
-      label: 'Karnataka',
-    },
+        value: 'KA',
+        label: 'Karnataka',
+      },
 
     panNo1:
       leadPayload?.customerDetailsObj?.panNo1 ||

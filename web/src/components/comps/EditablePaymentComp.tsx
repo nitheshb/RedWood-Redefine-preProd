@@ -249,7 +249,7 @@ const EditablePaymentTable = ({
         (error) => setRows([])
       )
 
-      return unsubscribe
+      return
     }
   }, [fullCs, dataPayload])
   const categories = ['Food', 'Drink', 'Electronics', 'Clothing']
@@ -259,9 +259,9 @@ const EditablePaymentTable = ({
       data.map((item) =>
         item.id === id
           ? {
-            ...item,
-            [field]: value,
-          }
+              ...item,
+              [field]: value,
+            }
           : item
       )
     )
@@ -383,7 +383,7 @@ const EditablePaymentTable = ({
       },
     },
   ])
-  useEffect(() => { }, [])
+  useEffect(() => {}, [])
 
   return (
     <>
@@ -602,28 +602,19 @@ const EditablePaymentTable = ({
   )
 }
 
-
-
-
-
-
-
-
-
-
-
-
-<button className="
-  w-full sm:w-40 h-10         
-  py-2.5 px-3.5                
-  gap-2.5                      
-  rounded-lg                   
-  flex items-center justify-center 
-  transition-colors            
-  hover:bg-[#45a8b0]           
-  active:scale-95              
-  focus:outline-none focus:ring-2 focus:ring-[#57C0D0] 
-">
+;<button
+  className="
+  w-full sm:w-40 h-10
+  py-2.5 px-3.5
+  gap-2.5
+  rounded-lg
+  flex items-center justify-center
+  transition-colors
+  hover:bg-[#45a8b0]
+  active:scale-95
+  focus:outline-none focus:ring-2 focus:ring-[#57C0D0]
+"
+>
   Button
 </button>
 export default EditablePaymentTable

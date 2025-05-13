@@ -51,7 +51,7 @@ const PaymentScheduleSheet = ({
       (error) => setfetchedUsersList([])
     )
 
-    return unsubscribe
+    return
   }, [])
   useEffect(() => {
     console.log('new customer object', leadDetailsObj2)
@@ -75,7 +75,7 @@ const PaymentScheduleSheet = ({
       (error) => setfetchedUsersList([])
     )
 
-    return unsubscribe
+    return
   }, [])
 
   const devTypeA = [

@@ -49,7 +49,7 @@ const SourceAddTable = ({ title, data, source, blocksViewFeature }) => {
       },
       (error) => setLeadSourcesList([])
     )
-    return unsubscribe
+    return
   }
   const { enqueueSnackbar } = useSnackbar()
   const defaultValue = (options, value) => {

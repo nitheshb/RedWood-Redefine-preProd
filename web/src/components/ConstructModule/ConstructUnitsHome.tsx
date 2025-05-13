@@ -51,7 +51,7 @@ const ConstructUnitsHome = ({ project }) => {
       },
       () => setProjects([])
     )
-    return unsubscribe
+    return
   }
   const selProjctFun = (project) => {
     setProjectDetails(project)
@@ -100,7 +100,7 @@ const ConstructUnitsHome = ({ project }) => {
           setPhasesList([])
         }
       )
-      return unsubscribe
+      return
     } catch (error) {
       console.log('error at getting phases', error)
     }

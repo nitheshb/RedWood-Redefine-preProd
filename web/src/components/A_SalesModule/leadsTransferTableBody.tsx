@@ -78,7 +78,7 @@ const LeadsTransferTableBody = ({
       (error) => setprojectList([])
     )
 
-    return unsubscribe
+    return
   }
   useEffect(() => {
     let projectFilAarray = [...leadsLogsPayload]
@@ -221,7 +221,7 @@ const LeadsTransferTableBody = ({
       (error) => setusersList([])
     )
 
-    return unsubscribe
+    return
   }, [])
 
   const selLeadFun = (data) => {

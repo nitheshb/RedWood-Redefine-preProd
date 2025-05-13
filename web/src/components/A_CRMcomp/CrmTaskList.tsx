@@ -266,7 +266,7 @@ const CrmTaskList = ({ leadsTyper }) => {
       (error) => setprojectList([])
     )
 
-    return unsubscribe
+    return
   }, [])
   const [getStatus, setGetStatus] = useState([])
 
@@ -326,7 +326,7 @@ const CrmTaskList = ({ leadsTyper }) => {
         },
         () => setLeadsFetchedData([])
       )
-      return unsubscribe
+      return
     } else {
       const unsubscribe = getCRMCustomerByProject(
         orgId,
@@ -355,7 +355,7 @@ const CrmTaskList = ({ leadsTyper }) => {
         },
         () => setLeadsFetchedData([])
       )
-      return unsubscribe
+      return
     }
   }
 

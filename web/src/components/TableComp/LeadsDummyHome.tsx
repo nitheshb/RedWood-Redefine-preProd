@@ -104,7 +104,7 @@ const LeadsDummyHome = ({ leadsTyper }) => {
       },
       (error) => setLeadsFetchedData([])
     )
-    return unsubscribe
+    return
     return
     if (access?.includes('manage_leads')) {
       const unsubscribe = getFinanceTransactionsByStatus(
@@ -133,7 +133,7 @@ const LeadsDummyHome = ({ leadsTyper }) => {
         },
         (error) => setLeadsFetchedData([])
       )
-      return unsubscribe
+      return
     } else {
       const unsubscribe = getFinanceTransactionsByStatus(
         orgId,
@@ -161,7 +161,7 @@ const LeadsDummyHome = ({ leadsTyper }) => {
         },
         (error) => setLeadsFetchedData([])
       )
-      return unsubscribe
+      return
     }
   }
 

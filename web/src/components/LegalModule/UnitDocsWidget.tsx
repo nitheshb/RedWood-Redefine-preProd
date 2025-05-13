@@ -82,7 +82,7 @@ const UnitDocsWidget = ({
       },
       () => setDocsList([])
     )
-    return unsubscribe
+    return
   }
 
   const handleFileUploadFun = async (file, type) => {

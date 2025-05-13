@@ -89,7 +89,7 @@ const CrmInventorySummaryTable = ({ projects }) => {
       },
       (error) => setprojectList([])
     )
-    return unsubscribe
+    return
   }
   useEffect(() => {
     setLeadsFetchedData(tableData)
@@ -138,7 +138,7 @@ const CrmInventorySummaryTable = ({ projects }) => {
       },
       () => setTableData([])
     )
-    return unsubscribe
+    return
   }
   function updateBookingData(myDbDataIs) {
     // Month mapping for easy lookup

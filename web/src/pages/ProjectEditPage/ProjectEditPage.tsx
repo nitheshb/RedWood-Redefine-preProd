@@ -44,7 +44,7 @@ const ProjectEditPage = ({
           projectName: '',
         })
     )
-    return unsubscribe
+    return
   }
   useEffect(() => {
     getProjectDetails(uid)

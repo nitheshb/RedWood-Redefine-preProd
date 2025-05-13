@@ -98,7 +98,7 @@ const AddPaymentDetailsForm = ({
       (error) => setBankDetailsA([])
     )
 
-    return unsubscribe
+    return
   }, [])
 
   const createNewCustoreSupa = async (data) => {
@@ -122,12 +122,7 @@ const AddPaymentDetailsForm = ({
         remaining_money: 0,
         utilized_money: 0,
       }
-      addCustomer(
-        orgId,
-        customerD,
-        email,
-        () => ({})
-      )
+      addCustomer(orgId, customerD, email, () => ({}))
     }
     if (custObj2) {
       const customerD = {
@@ -142,12 +137,7 @@ const AddPaymentDetailsForm = ({
         remaining_money: 0,
         utilized_money: 0,
       }
-      addCustomer(
-        orgId,
-        customerD,
-        email,
-        () => ({}),
-      )
+      addCustomer(orgId, customerD, email, () => ({}))
     }
     return await createNewCustomerS(
       orgId,
@@ -275,9 +265,9 @@ const AddPaymentDetailsForm = ({
     const { uid } = selUnitDetails
 
     // customerfbA
-console.log('customerfbA', customerfbA)
+    console.log('customerfbA', customerfbA)
     let custNo
-    if (await(customerfbA?.length) > 0) {
+    if ((await customerfbA?.length) > 0) {
       custNo = customerfbA[0].id
     } else {
       return
@@ -291,7 +281,7 @@ console.log('customerfbA', customerfbA)
       phoneNo = phoneNo1
     }
 
-  console.log('check if mode is not equal to wallet', data)
+    console.log('check if mode is not equal to wallet', data)
     await setBookCurentStep(['payment_captured'])
     let y
     // check if mode is not equal to 'wallet'

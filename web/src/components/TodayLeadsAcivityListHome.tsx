@@ -47,7 +47,7 @@ const TodayLeadsActivityListHomeView = ({
   useEffect(() => {
     console.log('check if this is loading on new page check', user?.uid)
     getLeadsDataFun()
-  }, [taskType, user])
+  }, [taskType, user,orgId])
 
   const getLeadsDataFun = async () => {
     const uid = user?.uid

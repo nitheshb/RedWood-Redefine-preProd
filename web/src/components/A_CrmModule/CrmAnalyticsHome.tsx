@@ -52,29 +52,28 @@ const CrmAnalyticsHome = ({ project }) => {
       },
       () => setProjects([])
     )
-    return unsubscribe
+    return
   }
 
   return (
-    <div className='bg-white rounded-md border-[40px] border-white mx-1 mt-1'>
+    <div className="bg-white rounded-md border-[40px] border-white mx-1 mt-1">
+      <Chatbot />
 
-      <Chatbot/>
-
-<div className='flex    w-[100%]  flex-row justify-between border-b '>
-      <ul
-                className="flex flex-wrap -mb-px "
-                id="myTab"
-                data-tabs-toggle="#myTabContent"
-                role="tablist"
-              >
-                {[
-          { label: 'Booking Summary', value: 'booking_summary-v1' },
-          { label: 'Collections', value: 'collection_performance' },
-          { label: 'CRM Inventory', value: 'crm_table' },
-          {
-            label: 'Collection Projections',
-            value: 'crm_projection_report',
-          },
+      <div className="flex    w-[100%]  flex-row justify-between border-b ">
+        <ul
+          className="flex flex-wrap -mb-px "
+          id="myTab"
+          data-tabs-toggle="#myTabContent"
+          role="tablist"
+        >
+          {[
+            { label: 'Booking Summary', value: 'booking_summary-v1' },
+            { label: 'Collections', value: 'collection_performance' },
+            { label: 'CRM Inventory', value: 'crm_table' },
+            {
+              label: 'Collection Projections',
+              value: 'crm_projection_report',
+            },
 
             { label: 'Project Summary', value: 'proj_summary' },
             { label: 'Mortgage Details', value: 'mortgage_details' },

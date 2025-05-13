@@ -215,7 +215,7 @@ const UnitBookingSummaryHomePage1 = ({
       },
       () => setTableData([])
     )
-    return unsubscribe
+    return
   }
   useEffect(() => {
     // unitsFetchData
@@ -247,7 +247,7 @@ const UnitBookingSummaryHomePage1 = ({
       },
       (error) => setprojectList([])
     )
-    return unsubscribe
+    return
   }
   useEffect(() => {
     const unsubscribe = getMyProjects(
@@ -276,7 +276,7 @@ const UnitBookingSummaryHomePage1 = ({
       }
     )
 
-    return unsubscribe
+    return
   }, [])
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setVal(newValue)

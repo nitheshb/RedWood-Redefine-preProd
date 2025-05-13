@@ -361,7 +361,7 @@ export default function TodayLeadsActivitySearchView({
       (error) => setUserTodayPerfA([])
     )
 
-    return unsubscribe
+    return
   }
 
   useEffect(() => {
@@ -382,7 +382,7 @@ export default function TodayLeadsActivitySearchView({
       (error) => setprojectList([])
     )
 
-    return unsubscribe
+    return
   }, [])
 
   useEffect(() => {
@@ -404,7 +404,7 @@ export default function TodayLeadsActivitySearchView({
       (error) => setusersList([])
     )
 
-    return unsubscribe
+    return
   }, [])
 
   const sorterFilterFun = async (todaySch) => {

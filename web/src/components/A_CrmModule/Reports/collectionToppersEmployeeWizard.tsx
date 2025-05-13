@@ -246,7 +246,7 @@ const CRMCollectionTopEmpWizard = ({ projects }) => {
       },
       (error) => setCRMEmployees([])
     )
-    return unsubscribe
+    return
   }
 
   const filteredData = reportData?.filter((item) => {

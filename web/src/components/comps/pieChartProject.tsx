@@ -25,7 +25,7 @@ const PieChartProject = ({ reportPayload }) => {
       },
       () => setProjects([])
     )
-    return unsubscribe
+    return
   }
 
   let data = [

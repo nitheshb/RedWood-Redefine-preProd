@@ -424,7 +424,7 @@ const CRMCollectionReportKPI = ({ projects }) => {
       },
       () => setProjectsPayload([])
     )
-    return unsubscribe
+    return
   }
 
   const getCRMemployees = async () => {
@@ -445,7 +445,7 @@ const CRMCollectionReportKPI = ({ projects }) => {
       },
       (error) => setCRMEmployees([])
     )
-    return unsubscribe
+    return
   }
   useEffect(() => {
     calMonthlyValueNew(projects)

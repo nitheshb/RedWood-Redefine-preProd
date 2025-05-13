@@ -310,7 +310,7 @@ const EnhancedTableToolbar = (props) => {
         })
     )
 
-    return unsubscribe
+    return
   }
   const insertPlotToDb = async (records) => {
     console.log('check it', records.length)

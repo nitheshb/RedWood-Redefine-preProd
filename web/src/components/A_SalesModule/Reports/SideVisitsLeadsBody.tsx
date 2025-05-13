@@ -76,7 +76,7 @@ const SideVisitLeadsBody = ({
       (error) => setprojectList([])
     )
 
-    return unsubscribe
+    return
   }
   useEffect(() => {
     let projectFilAarray = [...leadsLogsPayload]
@@ -209,7 +209,7 @@ const SideVisitLeadsBody = ({
       (error) => setusersList([])
     )
 
-    return unsubscribe
+    return
   }, [])
 
   const selLeadFun = (data) => {

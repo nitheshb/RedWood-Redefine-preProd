@@ -78,9 +78,9 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
         {
           projectId: projectDetails?.uid,
         },
-        () => { }
+        () => {}
       )
-      return unsubscribe
+      return
     }
   }
 
@@ -128,7 +128,7 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
       {
         projectId: projectDetails?.uid,
       },
-      () => { }
+      () => {}
     )
     const yo = {
       totalUnitCount: 0,
@@ -173,7 +173,7 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
     })
 
     await updateProjectComputedData(orgId, projectDetails?.uid, yo)
-    return unsubscribe
+    return
 
     // await console.log('leadsData', leadsData)
   }

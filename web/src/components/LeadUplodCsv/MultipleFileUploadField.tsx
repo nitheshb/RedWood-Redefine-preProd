@@ -195,7 +195,7 @@ export function MultipleFileUploadField({
           setSelPhaseObj({})
         }
       )
-      return unsubscribe
+      return
     } catch (error) {
       console.log('error at getting phases', error)
     }

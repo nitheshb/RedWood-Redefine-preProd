@@ -33,7 +33,7 @@ const CrmUnitFinanceHistory = ({
           projectName: '',
         })
     )
-    return unsubscribe
+    return
   }
   useEffect(() => {
     getProjectDetails(selCustomerPayload?.pId)
@@ -41,10 +41,10 @@ const CrmUnitFinanceHistory = ({
 
   return (
     <>
-      {/* 
+      {/*
 <div className="relative w-full h-[220px] bg-white flex items-center justify-center">
   <div className="absolute inset-0 pointer-events-none">
-  
+
     <div className="absolute inset-0">
       {[...Array(4)].map((_, i) => (
         <div
@@ -59,10 +59,10 @@ const CrmUnitFinanceHistory = ({
           <div
             className="absolute w-full h-full"
             style={{
-              background: `linear-gradient(to right, 
-                rgba(217,217,217,0.05) 0%, 
-                rgba(217,217,217,0.4) 10%, 
-                rgba(217,217,217,0.4) 90%, 
+              background: `linear-gradient(to right,
+                rgba(217,217,217,0.05) 0%,
+                rgba(217,217,217,0.4) 10%,
+                rgba(217,217,217,0.4) 90%,
                 rgba(217,217,217,0.05) 100%)`,
             }}
           />
@@ -85,10 +85,10 @@ const CrmUnitFinanceHistory = ({
           <div
             className="absolute w-full h-full"
             style={{
-              background: `linear-gradient(to bottom, 
-                rgba(217,217,217,0.05) 0%, 
-                rgba(217,217,217,0.4) 10%, 
-                rgba(217,217,217,0.4) 90%, 
+              background: `linear-gradient(to bottom,
+                rgba(217,217,217,0.05) 0%,
+                rgba(217,217,217,0.4) 10%,
+                rgba(217,217,217,0.4) 90%,
                 rgba(217,217,217,0.05) 100%)`,
             }}
           />
@@ -111,7 +111,7 @@ const CrmUnitFinanceHistory = ({
     className="absolute w-full flex justify-between px-6 text-gray-700 text-sm font-medium"
     style={{
       bottom: `${(1) * (100 / 5)}%`,
-      transform: "translateY(50%)", 
+      transform: "translateY(50%)",
     }}
   >
     <span className="mt-4 text-[#606062] text-[14px] font-medium">TRANSACTIONS</span>

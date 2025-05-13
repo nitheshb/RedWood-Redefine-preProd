@@ -79,7 +79,7 @@ const CrmBucketList = ({ leadsTyper }) => {
         },
         (error) => setLeadsFetchedData([])
       )
-      return unsubscribe
+      return
     } else {
       const unsubscribe = getCrmUnitsByStatus(
         orgId,
@@ -107,7 +107,7 @@ const CrmBucketList = ({ leadsTyper }) => {
         },
         (error) => setLeadsFetchedData([])
       )
-      return unsubscribe
+      return
     }
   }
 

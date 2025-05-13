@@ -113,7 +113,7 @@ const CreditNoteSummaryHomePage = ({ leadsTyper, isClicked, setIsClicked }) => {
       },
       () => setUnitsFetchData([])
     )
-    return unsubscribe
+    return
   }
   useEffect(() => {
     console.log('values are', unitsFetchData.length, selProjectIs?.uid)
@@ -144,7 +144,7 @@ const CreditNoteSummaryHomePage = ({ leadsTyper, isClicked, setIsClicked }) => {
       },
       (error) => setprojectList([])
     )
-    return unsubscribe
+    return
   }
 
   const [projects, setProjects] = useState([

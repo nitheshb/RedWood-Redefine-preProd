@@ -170,7 +170,7 @@ export default function UserListView() {
       },
       () => setTableData([])
     )
-    return unsubscribe
+    return
   }
   const getProjectsListFun = () => {
     const unsubscribe = getAllProjects(
@@ -192,7 +192,7 @@ export default function UserListView() {
       },
       (error) => setprojectList([])
     )
-    return unsubscribe
+    return
   }
   const handleFilters = useCallback(
     (name: string, value: IUserTableFilterValue) => {

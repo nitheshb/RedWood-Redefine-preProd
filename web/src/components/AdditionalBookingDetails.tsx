@@ -62,7 +62,7 @@ const AdditonalBookingDetails = ({
       (error) => setusersList([])
     )
 
-    return unsubscribe
+    return
   }, [])
   useEffect(() => {
     console.log('new customer object', leadDetailsObj2)
@@ -135,7 +135,7 @@ const AdditonalBookingDetails = ({
       (error) => setRows([])
     )
 
-    return unsubscribe
+    return
   }, [])
 
   // Custom PAN card validation function

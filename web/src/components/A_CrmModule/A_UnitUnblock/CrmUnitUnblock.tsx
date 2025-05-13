@@ -271,7 +271,7 @@ export default function UnitBookingUnblockCRM({
       (error) => setfetchedUsersList([])
     )
 
-    return unsubscribe
+    return
   }, [])
   useEffect(() => {
     if (selSubMenu) {
@@ -363,7 +363,7 @@ export default function UnitBookingUnblockCRM({
       },
       () => setDocsList([])
     )
-    return unsubscribe
+    return
   }
 
   const getProjectsListFun = () => {
@@ -384,7 +384,7 @@ export default function UnitBookingUnblockCRM({
       (error) => setfetchedUsersList([])
     )
 
-    return unsubscribe
+    return
   }
   useEffect(() => {
     getAllTransactionsUnit()
@@ -411,7 +411,7 @@ export default function UnitBookingUnblockCRM({
       },
       () => setUnitTransactionsA([])
     )
-    return unsubscribe
+    return
   }
   useEffect(() => {
     setLeadStatus(status?.toLowerCase())
@@ -658,7 +658,7 @@ export default function UnitBookingUnblockCRM({
       (error) => setLeadsFetchedSchData([])
     )
 
-    return unsubscribe
+    return
   }
   const getLeadNotesFun = async () => {
     console.log('ami triggered')
@@ -681,7 +681,7 @@ export default function UnitBookingUnblockCRM({
       },
       (error) => setLeadsFetchedActivityData([])
     )
-    return unsubscribe
+    return
   }
   const fAddSchedule = async () => {
     console.log('start time is ', startDate)

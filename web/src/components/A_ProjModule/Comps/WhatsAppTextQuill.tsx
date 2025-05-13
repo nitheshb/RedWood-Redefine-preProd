@@ -48,7 +48,7 @@ const WhatsAppTextQuillForm = ({ wbPayload }) => {
       (error) => setprojectList([])
     )
 
-    return unsubscribe
+    return
   }, [])
 
   useEffect(() => {

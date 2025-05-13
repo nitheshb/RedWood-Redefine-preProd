@@ -56,7 +56,7 @@ const AllBankDetailsView = ({ title, pId, data }) => {
           console.log('error', e)
         }
       )
-      return unsubscribe
+      return
     } else if (title === 'Virtual Accounts') {
       const unsubscribe = steamVirtualAccountsList(
         orgId,
@@ -71,7 +71,7 @@ const AllBankDetailsView = ({ title, pId, data }) => {
           console.log('error', e)
         }
       )
-      return unsubscribe
+      return
     }
   }
   const deleteAssetFun = async (docId, accountName, usedIn) => {

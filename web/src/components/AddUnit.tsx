@@ -132,7 +132,7 @@ const AddUnit = ({
       (error) => setRows([])
     )
 
-    return unsubscribe
+    return
   }, [])
 
   console.log('inside it ', {
@@ -165,7 +165,7 @@ const AddUnit = ({
       (error) => setfetchedUsersList([])
     )
 
-    return unsubscribe
+    return
   }, [])
 
   useEffect(() => {
@@ -249,7 +249,7 @@ const AddUnit = ({
       (error) => setfetchedUsersList([])
     )
 
-    return unsubscribe
+    return
   }, [])
   useEffect(() => {
     phaseFeed?.map((user) => {

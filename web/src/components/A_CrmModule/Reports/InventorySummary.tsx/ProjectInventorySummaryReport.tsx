@@ -103,7 +103,7 @@ const ProjectInventorySummaryReport = ({
       (error) => setprojectList([])
     )
 
-    return unsubscribe
+    return
   }
 
   useEffect(() => {
@@ -123,7 +123,7 @@ const ProjectInventorySummaryReport = ({
       (error) => setusersList([])
     )
 
-    return unsubscribe
+    return
   }, [])
 
   const selLeadFun = (data) => {
