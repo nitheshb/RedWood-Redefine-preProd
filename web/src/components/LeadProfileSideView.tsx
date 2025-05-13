@@ -1838,9 +1838,9 @@ export default function LeadProfileSideView({
                   <section className="flex flex-row  h-[28px] mt-4">
                     {' '}
                     <button
-                      className="text-[12px]  rounded-lg ml-2  px-5 border font-semibold  capitalize  border-[#3D7DC3] text-blue-500"
+                      className="text-[12px]  rounded-lg ml-2  px-5 border font-semibold    border-[#3D7DC3] text-blue-500 whitespace-nowrap"
                       onClickCapture={() => {
-                        setUnitsViewMode(!false)
+                        setUnitsViewMode(false)
                       }}
                     >
                       Hide Units
