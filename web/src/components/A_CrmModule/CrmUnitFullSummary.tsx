@@ -4770,73 +4770,73 @@ export default function UnitFullSummary({
 
 
 
-<div className="w-[210px] min-w-[210px] mx-6 bg-white rounded-2xl h-[80%] overflow-auto">
+<div className="w-[210px] min-w-[210px] mx-6 bg-[#FFFFFF] border border-[#EFEFF0] shadow-[0px_4px_30px_0px_#0000000D] rounded-[14px] h-[80%] overflow-auto">
   <div className="py-4">
     <ul className="flex flex-col" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
       {[
         {
-          icon: "/icons/summary-icon.svg",
-          selectedIcon: "/icons/summary-icon-selected.svg",
+          icon: "/strock_summarys.svg",
+          selectedIcon: "/summary_filled.svg",
           lab: 'Summary',
           val: 'summary',
         },
         {
-          icon: "/icons/applicant-icon.svg",
-          selectedIcon: "/icons/applicant-icon-selected.svg",
+          icon: "/strock_applicant details.svg",
+          selectedIcon: "/Applicant_filled.svg",
           lab: 'Applicant Details',
           val: 'applicant_info',
         },
         {
-          icon: "/icons/unit-icon.svg",
-          selectedIcon: "/icons/unit-icon-selected.svg",
+          icon: "/strock_Unit details.svg",
+          selectedIcon: "/Unitdetails_filled.svg",
           lab: 'Unit Details',
           val: 'unit_information',
         },
         {
-          icon: "/icons/cost-icon.svg",
-          selectedIcon: "/icons/cost-icon-selected.svg",
+          icon: "/strock_cost_and_payment.svg",
+          selectedIcon: "/Cost_ sheet_filled.svg",
           lab: 'Cost & Payments',
           val: 'finance_info',
         },
         {
-          icon: "/icons/documents-icon.svg",
-          selectedIcon: "/icons/documents-icon-selected.svg",
+          icon: "/strock_Documents.svg",
+          selectedIcon: "/legal_filled.svg",
           lab: 'Documents',
           val: 'agreement_info',
         },
         {
-          icon: "/icons/loan-icon.svg",
-          selectedIcon: "/icons/loan-icon-selected.svg",
+          icon: "/strock_Documents.svg",
+          selectedIcon: "/legal_filled.svg",
           lab: 'Loan Details',
           val: 'loan_info',
         },
         {
-          icon: "/icons/brokerage-icon.svg",
-          selectedIcon: "/icons/brokerage-icon-selected.svg",
+          icon: "/strock_Brokerage details.svg",
+          selectedIcon: "/Brokerage_filled.svg",
           lab: 'Brokerage Details',
           val: 'brokerage_info',
         },
         {
-          icon: "/icons/tasks-icon.svg",
-          selectedIcon: "/icons/tasks-icon-selected.svg",
+          icon: "/strock_task.svg",
+          selectedIcon: "/Task_filled.svg",
           lab: 'Tasks',
           val: 'tasks',
         },
         {
-          icon: "/icons/timeline-icon.svg",
-          selectedIcon: "/icons/timeline-icon-selected.svg",
+          icon: "/strock_timeline.svg",
+          selectedIcon: "/timeline_filled.svg",
           lab: 'Timeline',
           val: 'timeline',
         },
         {
-          icon: "/icons/cancel-icon.svg",
-          selectedIcon: "/icons/cancel-icon-selected.svg",
+          icon: "/strock_canecel.svg",
+          selectedIcon: "/Cancel_booking_filled.svg",
           lab: 'Cancel Booking',
           val: 'cancel_booking',
         },
         {
-          icon: "/icons/audit-icon.svg",
-          selectedIcon: "/icons/audit-icon-selected.svg",
+          icon: "/strock_unit audit.svg",
+          selectedIcon: "/Unit_audit_filled.svg",
           lab: 'Unit Audit',
           val: 'unit_audit',
         },
@@ -4860,7 +4860,7 @@ export default function UnitFullSummary({
           >
 
             {selFeature === d.val && (
-              <div className="absolute left-0 top-0 h-full w-[6px] bg-[#6F3FF5] rounded-r-lg"></div>
+              <div className="absolute left-0 top-0 h-full w-[6px] bg-[#A693FC] rounded-r-lg"></div>
             )}
             
     
@@ -4872,10 +4872,10 @@ export default function UnitFullSummary({
             
      
             <span
-              className={`ml-3 font-outfit text-[14px] font-medium ${
+              className={`ml-3 font-outfit font-normal text-[14px]  text-[#606062] ${
                 selFeature === d.val
-                  ? 'text-[#0E0A1F]'
-                  : 'text-[#606062] hover:text-[#0E0A1F]'
+                  ? 'text-[#A693FC]'
+                  : 'text-[#606062]'
               }`}
             >
               {d.lab}

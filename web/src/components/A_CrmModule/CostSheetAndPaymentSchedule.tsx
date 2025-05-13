@@ -55,14 +55,14 @@ export default function CostSheetAndPaymentSchedule({
         <div className="flex justify-between items-center mb-4 overflow-visible">
           {/* Left section */}
           <div className="flex items-center">
-            <div className="bg-[#FFFFFF] p-1.5 rounded-lg mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+            <div className="bg-[#FFFFFF] p-1.5 mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
               <img
-                src="/fire.svg"
+                src="/COST_SHEET_CARD.svg"
                 alt=""
                 className="w-[18px] h-[18px]"
               />
             </div>
-            <span className="font-semibold text-[12px] leading-[100%] tracking-[0.06em] text-[#696990]">
+            <span className="font-semibold text-[12px] leading-[100%] tracking-[6%] text-[#2B2B2B]">
               COST SHEET
             </span>
           </div>
@@ -115,14 +115,14 @@ export default function CostSheetAndPaymentSchedule({
 <div className="flex justify-between items-center mb-4 overflow-visible">
           {/* Left section */}
           <div className="flex items-center">
-            <div className="bg-[#FFFFFF] p-1.5 rounded-lg mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+            <div className="bg-[#FFFFFF] p-1.5  mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
               <img
-                src="/fire.svg"
+                src="/PAYMENT_SCHEDULE_CARD_ICON.svg"
                 alt=""
                 className="w-[18px] h-[18px]"
               />
             </div>
-            <span className="font-semibold text-[12px] leading-[100%] tracking-[0.06em] text-[#696990]">
+            <span className="font-semibold text-[12px] leading-[100%] tracking-[6%] text-[#2B2B2B]">
             PAYMENT SCHEDULE
             </span>
           </div>

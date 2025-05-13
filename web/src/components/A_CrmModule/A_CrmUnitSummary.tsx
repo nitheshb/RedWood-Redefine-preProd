@@ -362,43 +362,97 @@ const CrmUnitSummary = ({
 
 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
   {/* Card 1 */}
-  <div className="relative bg-[#FFFFFF]  border border-[#EFEFF0] shadow-[0px_4px_30px_0px_#0000000D] w-full h-[95px] p-[10px] rounded-[14px] border border-[#E7E7E9] overflow-visible">
-    <div className="p-2">
-      <div className="font-[Outfit] font-normal text-[12px] text-[#606062] mb-2">Project Name:</div>
-      <div className="h-px w-[210px] bg-gradient-to-r from-gray-400/90 to-gray-300/50 my-2"></div>
-      <div className="flex items-center justify-between">
-        <div className="font-normal text-[14px] text-[#2B2B2B] flex items-center gap-1">
-          Delete
-        </div>
+    <div className="relative bg-[#FFFFFF] w-full  p-[10px] rounded-[14px] border border-[#EFEFF0] shadow-[0px_2px_20px_0px_#00000008] overflow-visible">
+  <div className="">
+    <div className="flex items-center justify-between	 gap-2 font-[Outfit] font-normal text-[12px] text-[#606062] mb-2">
+      {/* Example icon: FontAwesome or emoji or custom SVG */}
+   
+      <span>Upcoming Activity</span>
+         <span className='w-[32px] h-[32px] gap-[10px] flex items-center  justify-center rounded-[30px]  bg-[#F2F0FD]'>
+      
+           <img src="/clock-crm.svg" alt="" className='w-[22px] h-[22px]' />
+          </span> 
+    </div>
+
+    <div className="h-px w-[240px] bg-gradient-to-r from-gray-400/90 to-gray-300/50 my-2"></div>
+
+    <div className="flex items-center justify-between">
+      <div className="text-center font-medium text-[16px]  text-[#0D0A1E]">
+        Latest Update
       </div>
     </div>
   </div>
+</div>
+
+
+
+
 
   {/* Card 3 */}
-  <div className="relative bg-[#FFFFFF]  border border-[#EFEFF0] shadow-[0px_4px_30px_0px_#0000000D] w-full h-[95px] p-[10px] rounded-[14px] border bg-[#E7E7E9] overflow-visible">
-    <div className="p-2">
-      <div className="font-[Outfit] font-normal text-[12px] text-[#606062] mb-2">Lead Created</div>
-      <div className="h-px w-[210px] bg-gradient-to-r from-gray-400/90 to-gray-300/50 my-2"></div>
-      <div className="flex items-center justify-between">
-        <div className="font-normal text-[14px] text-[#2B2B2B] flex items-center gap-1">
-          Latest Update
-        </div>
+    <div className="relative bg-[#FFFFFF] w-full  p-[10px] rounded-[14px] border border-[#EFEFF0] shadow-[0px_2px_20px_0px_#00000008] overflow-visible">
+  <div className="">
+    <div className="flex items-center justify-between	 gap-2 font-[Outfit] font-normal text-[12px] text-[#606062] mb-2">
+      {/* Example icon: FontAwesome or emoji or custom SVG */}
+   
+      <span>Upcoming Event</span>
+         <span className='w-[32px] h-[32px] gap-[10px] flex items-center  justify-center rounded-[30px]  bg-[#F2F0FD]'>
+          <img src="/calendar-crm.svg" alt="" className='w-[22px] h-[22px]' />
+          
+          </span> 
+    </div>
+
+    <div className="h-px w-[240px] bg-gradient-to-r from-gray-400/90 to-gray-300/50 my-2"></div>
+
+    <div className="flex items-center justify-between">
+      <div className="text-center font-medium text-[16px]  text-[#0D0A1E] ">
+        Latest Update
       </div>
     </div>
   </div>
+</div>
+
+
+
+
 
   {/* Card 4 */}
-  <div className="relative bg-[#FFFFFF]  border border-[#EFEFF0] shadow-[0px_4px_30px_0px_#0000000D] w-full h-[95px] p-[10px] rounded-[14px] border border-[#E7E7E9] overflow-visible">
-    <div className="p-2">
-      <div className="font-[Outfit] font-normal text-[12px] text-[#606062] mb-2">Source</div>
-      <div className="h-px w-[210px] bg-gradient-to-r from-gray-400/90 to-gray-300/50 my-2"></div>
-      <div className="flex items-center justify-between">
-        <div className="font-normal text-[14px] text-[#2B2B2B] flex items-center gap-1">
-          Tabel
-        </div>
+    <div className="relative bg-[#FFFFFF] w-full p-[10px] rounded-[14px] border border-[#EFEFF0] shadow-[0px_2px_20px_0px_#00000008] overflow-visible">
+  <div className="">
+    <div className="flex items-center justify-between	 gap-2 font-[Outfit] font-normal text-[12px] text-[#606062] mb-2">
+      {/* Example icon: FontAwesome or emoji or custom SVG */}
+   
+      <span>Upcoming Milestone</span>
+         <span className='w-[32px] h-[32px] gap-[10px] flex items-center  justify-center rounded-[30px] bg-[#F2F0FD]'>
+             <img src="/start-up.svg" alt="" className='w-[22px] h-[22px]' />
+          </span> 
+    </div>
+
+    <div className="h-px w-[240px] bg-gradient-to-r from-gray-400/90 to-gray-300/50 my-2"></div>
+
+    <div className="flex items-center justify-between">
+      <div className="text-center font-medium text-[16px]  text-[#0D0A1E] ">
+        Latest Update
       </div>
     </div>
   </div>
+</div>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </div>
 
 
@@ -422,7 +476,7 @@ const CrmUnitSummary = ({
                           />
                         </div>
 
-                        <span className="font-semibold text-[12px] leading-[100%] tracking-[0.06em] text-[#696990]">
+                        <span className="font-semibold text-[12px] leading-[100%] tracking-[6%] text-[#2B2B2B]">
                         LAST TRANSACTION
                         </span>
                       </div>
@@ -464,13 +518,13 @@ const CrmUnitSummary = ({
                       <div className="flex items-center">
                         <div className="bg-[#FFFFFF] p-1.5 rounded-lg mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
                           <img
-                            src="/fire.svg"
+                            src="/Application_card_icon.svg"
                             alt=""
                             className="w-[18px] h-[18px]"
                           />
                         </div>
 
-                        <span className="font-semibold text-[12px] leading-[100%] tracking-[0.06em] text-[#696990]">
+                        <span className="font-semibold text-[12px] leading-[100%] tracking-[6%] text-[#2B2B2B]">
                         APPLICANT DETAILS
                         </span>
                       </div>
@@ -503,12 +557,12 @@ const CrmUnitSummary = ({
                           <div className="w-full h-full bg-gray-300"></div>
                         </div>
                       </div>
-                      <span className="ml-5 text-[16px] text-[#0E0A1F] font-medium">
-                        2 applicants
+                      <span className="ml-5  font-normal text-[16px]  text-[#606062]">
+                        2 Applicants
                       </span>
                     </div>
-                    <div className="h-6 w-px bg-gray-300 mx-4"></div>
-                    <div className="text-[#960000] text-[14px] font-medium text-right whitespace-nowrap">
+
+                    <div className="font-medium  text-[12px]  text-[#D68836] text-right whitespace-nowrap">
                       KYC{' '}
                       {selCustomerPayload?.kyc_status === 'approved'
                         ? 'Completed'
@@ -537,7 +591,7 @@ const CrmUnitSummary = ({
                           />
                         </div>
 
-                        <span className="font-semibold text-[12px] leading-[100%] tracking-[0.06em] text-[#696990]">
+                        <span className="font-semibold text-[12px] leading-[100%] tracking-[6%] text-[#2B2B2B]">
                         RECENT ACTIVITY ({unitFetchedActivityData.length})
                         </span>
                       </div>
@@ -598,7 +652,7 @@ const CrmUnitSummary = ({
                           />
                         </div>
 
-                        <span className="font-semibold text-[12px] leading-[100%] tracking-[0.06em] text-[#696990]">
+                        <span className="font-semibold text-[12px] leading-[100%] tracking-[6%] text-[#2B2B2B]">
                         ACTIVE MILESTONE ({selCustomerPayload?.fullPs?.length})
                         </span>
                       </div>
