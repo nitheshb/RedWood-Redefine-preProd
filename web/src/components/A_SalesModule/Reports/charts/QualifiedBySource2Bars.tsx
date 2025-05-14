@@ -44,8 +44,8 @@ const chartConfig = {
   mobile: {
     label: "Mobile",
     color: "#60A8FB",
-  },
-}  ChartConfig
+  }
+}
 
 export default function QualifiedBySource2Bars() {
   return (

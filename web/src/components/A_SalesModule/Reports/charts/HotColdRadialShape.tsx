@@ -51,7 +51,7 @@ const chartConfig = {
     label: "Safari",
     color: "#3b82f680",
   },
-}  ChartConfig
+} 
 
 export default function HotColdRadialShape() {
   return (
