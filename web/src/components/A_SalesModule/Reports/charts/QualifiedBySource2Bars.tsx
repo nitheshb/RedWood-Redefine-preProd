@@ -45,12 +45,12 @@ const chartConfig = {
     label: "Mobile",
     color: "#60A8FB",
   },
-} satisfies ChartConfig
+}  ChartConfig
 
 export default function QualifiedBySource2Bars() {
   return (
     <Card className="border-0">
-   
+
       <CardContent className="border-0">
         <ChartContainer config={chartConfig} className="border-0">
           <BarChart accessibilityLayer data={chartData}>

@@ -17,7 +17,7 @@
         "format": "prettier --write \"{api,web}/**/*.{js,jsx,ts,tsx,json,css,scss,md}\""
     },
     "devDependencies": {
-        "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+        // "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
         "@redwoodjs/core": "^2.2.4",
         "redux-devtools-extension": "^2.13.9"
     },
