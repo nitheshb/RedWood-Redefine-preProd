@@ -1,5 +1,5 @@
 [build]
-command = "yarn rc deploy netlify"
+command = "yarn global add @redwoodjs/cli && yarn rw deploy netlify"
 publish = "web/dist"
 functions = "api/dist/functions"
 
