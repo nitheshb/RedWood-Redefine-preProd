@@ -277,7 +277,7 @@ const CrmRegisterModeHome = ({ leadsTyper, customerDetails }) => {
       },
       (error) => setprojectList([])
     )
-    return unsubscribe
+    return
   }
 
   useEffect(() => {}, [selCategory])
@@ -312,7 +312,7 @@ const CrmRegisterModeHome = ({ leadsTyper, customerDetails }) => {
       },
       () => setCrmCustomerDBData([])
     )
-    return unsubscribe
+    return
   }
   const getLeadsDataFun = async (projectList, statusFil) => {
     const { access, uid } = user
@@ -371,7 +371,7 @@ const CrmRegisterModeHome = ({ leadsTyper, customerDetails }) => {
       },
       () => setCrmCustomerDBData([])
     )
-    return unsubscribe
+    return
   }
 
   useEffect(() => {

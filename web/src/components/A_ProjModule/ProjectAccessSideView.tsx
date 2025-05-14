@@ -63,7 +63,7 @@ const ProjectAccessSideView = ({
         console.log('error', e)
       }
     )
-    return unsubscribe
+    return
   }
   useEffect(() => {
     getProjects()
@@ -105,7 +105,7 @@ const ProjectAccessSideView = ({
       },
       () => setProjects([])
     )
-    return unsubscribe
+    return
   }
   const handleDelete = async () => {
     // projectDetails.uid

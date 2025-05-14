@@ -485,7 +485,7 @@ export default function UnitSummaryTableBodyV1({
       },
       () => setProjectsPayload([])
     )
-    return unsubscribe
+    return
   }
 
   function updateBookingData(myDbDataIs) {
@@ -566,7 +566,7 @@ export default function UnitSummaryTableBodyV1({
       },
       (error) => setprojectList([])
     )
-    return unsubscribe
+    return
   }
   useEffect(() => {
     console.log('valure are', leadsFetchedData)

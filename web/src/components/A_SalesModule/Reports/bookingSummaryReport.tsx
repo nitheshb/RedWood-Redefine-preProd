@@ -154,7 +154,7 @@ const BookingSummaryReport = () => {
       },
       () => setProjects([])
     )
-    return unsubscribe
+    return
   }
   const getEmployees = async () => {
     const unsubscribe = steamUsersListByRole(
@@ -172,7 +172,7 @@ const BookingSummaryReport = () => {
       },
       () => setusersList([])
     )
-    return unsubscribe
+    return
   }
   const getNextMonths = (startMonthOffset, monthCount) => {
     const months = []

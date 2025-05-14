@@ -154,7 +154,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
       (error) => setusersList([])
     )
 
-    return unsubscribe
+    return
   }, [])
 
   useEffect(() => {
@@ -211,7 +211,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
       }
     )
 
-    return unsubscribe
+    return
   }, [])
   const [getStatus, setGetStatus] = useState([])
   useEffect(() => {
@@ -257,7 +257,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
         },
         (error) => setLeadsFetchedData([])
       )
-      return unsubscribe
+      return
     }
   }
   const getMyTeamLeads = async () => {
@@ -335,7 +335,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
       },
       (error) => setLeadsFetchedData([])
     )
-    return unsubscribe
+    return
   }
 
   const getCpTeamLeads = async () => {
@@ -394,7 +394,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
         },
         (error) => setLeadsFetchedData([])
       )
-      return unsubscribe
+      return
     } else if (access?.includes('manage_leads')) {
       const unsubscribe = await getLeadsByStatus(
         orgId,
@@ -449,7 +449,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
       },
       (error) => setLeadsFetchedData([])
     )
-    return unsubscribe1
+    return1
   }
   const filter_Leads_Projects_Users_Fun = () => {
     setFetchLeadsLoader(true)

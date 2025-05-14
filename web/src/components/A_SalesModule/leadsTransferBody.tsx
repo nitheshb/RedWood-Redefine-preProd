@@ -492,7 +492,7 @@ const LeadsTransferBody = ({
       (error) => setusersList([])
     )
 
-    return unsubscribe
+    return
   }
 
   // const DateSourceComponent = () => {
@@ -520,7 +520,7 @@ const LeadsTransferBody = ({
       (error) => setusersCleanList([])
     )
 
-    return unsubscribe
+    return
   }
   const getProjectsListFun = async () => {
     const unsubscribe = getAllProjects(
@@ -544,7 +544,7 @@ const LeadsTransferBody = ({
       (error) => setprojectList([])
     )
 
-    return unsubscribe
+    return
   }
 
   const getTransferLeadsDB = async () => {
@@ -588,7 +588,7 @@ const LeadsTransferBody = ({
       },
       () => {}
     )
-    return unsubscribe
+    return
   }
 
   const getLeadsDataFun = async () => {
@@ -617,7 +617,7 @@ const LeadsTransferBody = ({
         'by_source'
       )
       await setSourceListTuned(y)
-      return unsubscribe
+      return
     }
   }
 

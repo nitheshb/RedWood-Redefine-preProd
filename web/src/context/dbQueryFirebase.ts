@@ -2319,7 +2319,7 @@ export const getProjectByUid = async (orgId, uid: string, snapshot, error) => {
     )
     return onSnapshot(getAllProjectByIdQuery, snapshot, error)
   } catch (error) {
-    console.log('error in db', error)
+    console.log('error in db', error, uid)
   }
 }
 

@@ -49,7 +49,7 @@ const LeadsManagementHome = () => {
       },
       (error) => setLeadsFetchedData([])
     )
-    return unsubscribe
+    return
   }
 
   useEffect(() => {

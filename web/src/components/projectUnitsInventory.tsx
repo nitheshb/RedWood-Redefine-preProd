@@ -65,7 +65,7 @@ const ProjectsUnitInventory = ({
       },
       () => setProjects([])
     )
-    return unsubscribe
+    return
   }
   const selProjctFun = (project) => {
     setIsOpenSideView(!isOpenSideView)

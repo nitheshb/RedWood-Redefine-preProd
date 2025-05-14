@@ -205,7 +205,7 @@ const AddCustomerWallet = ({
       (error) => setBankDetailsA([])
     )
 
-    return unsubscribe
+    return
   }
   return (
     <div className="bg-white h-full">

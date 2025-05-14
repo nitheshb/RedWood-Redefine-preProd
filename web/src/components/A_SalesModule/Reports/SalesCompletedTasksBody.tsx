@@ -43,7 +43,7 @@ const SalesCompletedTasksBody = ({
     })
     const y = await unsubscribe
     setLeadsFetchedData(y)
-    return unsubscribe
+    return
   }
   const selLeadFun = (data) => {
     console.log('data is ', data)

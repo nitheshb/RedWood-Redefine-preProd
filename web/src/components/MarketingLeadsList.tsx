@@ -55,7 +55,7 @@ const CampaignTable = ({ campaigns }) => {
       },
       () => setfetchedCampaignsList([])
     )
-    return unsubscribe
+    return
   }, [])
 
   return (

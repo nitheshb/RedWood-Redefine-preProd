@@ -11,7 +11,7 @@ import {
   PhoneIcon,
   ChatIcon,
   ChatAlt2Icon,
-  ChatAltIcon
+  ChatAltIcon,
 } from '@heroicons/react/outline'
 import {
   CheckCircleIcon,
@@ -499,7 +499,7 @@ export default function LeadProfileSideView({
       (error) => setfetchedUsersList([])
     )
 
-    return unsubscribe
+    return
   }, [])
   useEffect(() => {
     let x = []
@@ -524,7 +524,6 @@ export default function LeadProfileSideView({
       x.comingSoon = y
       setLeadNextTaskObj(x)
     }
-
   }, [leadSchFilteredData])
   useEffect(() => {
     setAssignedTo(customerDetails?.assignedTo)
@@ -601,7 +600,7 @@ export default function LeadProfileSideView({
       },
       () => setDocsList([])
     )
-    return unsubscribe
+    return
   }
 
   const getProjectsListFun = () => {
@@ -621,7 +620,7 @@ export default function LeadProfileSideView({
       (error) => setfetchedUsersList([])
     )
 
-    return unsubscribe
+    return
   }
   useEffect(() => {}, [customerDetails])
 
@@ -684,24 +683,22 @@ export default function LeadProfileSideView({
     }
 
     console.log('my stuff ', x, value)
-       const foundLength = await checkIfLeadAlreadyExists(
-          `${orgId}_leads`,
-          Mobile,
-          value.uid
-        )
-       if (foundLength?.length > 0) {
-        console.log('foundLENGTH IS ', foundLength,   value.uid)
-          toast.error('Duplicate project.. use other lead')
-          setFoundDocs(foundLength)
-
-        }else{
-          setFoundDocs([])
-          console.log('foundLENGTH IS ', foundLength,   value.uid)
-          toast.success('Project updated')
-          setSelProjectIs(value)
-          updateLeadProject(orgId, leadDocId, x)
-        }
-
+    const foundLength = await checkIfLeadAlreadyExists(
+      `${orgId}_leads`,
+      Mobile,
+      value.uid
+    )
+    if (foundLength?.length > 0) {
+      console.log('foundLENGTH IS ', foundLength, value.uid)
+      toast.error('Duplicate project.. use other lead')
+      setFoundDocs(foundLength)
+    } else {
+      setFoundDocs([])
+      console.log('foundLENGTH IS ', foundLength, value.uid)
+      toast.success('Project updated')
+      setSelProjectIs(value)
+      updateLeadProject(orgId, leadDocId, x)
+    }
   }
 
   const setShowNotInterestedFun = (scheduleData, value) => {
@@ -848,7 +845,7 @@ export default function LeadProfileSideView({
       (error) => setLeadsFetchedSchData([])
     )
 
-    return unsubscribe
+    return
   }
   const getLeadNotesFun = async () => {
     console.log('ami triggered')
@@ -872,7 +869,7 @@ export default function LeadProfileSideView({
       },
       (error) => setLeadsFetchedActivityData([])
     )
-    return unsubscribe
+    return
   }
   const fAddSchedule = async () => {
     const y = takTitle === '' ? addCommentTitle : takTitle
@@ -1770,7 +1767,6 @@ export default function LeadProfileSideView({
                                 {Email || '-'}
                               </span>
                             </div>
-
                           </div>
                         </div>
                       </div>
@@ -1778,88 +1774,80 @@ export default function LeadProfileSideView({
                   </div>
                 </div>
 
-                  {!unitsViewMode &&  <section className="flex flex-row  h-[28px] mt-4">
-                                  <section
+                {!unitsViewMode && (
+                  <section className="flex flex-row  h-[28px] mt-4">
+                    <section className="flex group  flow-row justify-between bg-white px-[10px] pr-[18px] py-[14px]  mr-2   border border-[#E7E7E9]  text-black rounded-lg items-center align-middle text-xs cursor-pointer  hover:bg-[#E5E7EB]">
+                      <img
+                        src="/mail.svg"
+                        className="w-[14px]"
+                        alt="Mail Icon"
+                      />
+                      <div className="font-medium text-sm text-[#000000] tracking-wide pr-2 mr-1 relative after:content-[''] after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[1px] after:h-[10px] after:bg-gray-300 group-hover:after:bg-white"></div>
 
-                                    className="flex group  flow-row justify-between bg-white px-[10px] pr-[18px] py-[14px]  mr-2   border border-[#E7E7E9]  text-black rounded-lg items-center align-middle text-xs cursor-pointer  hover:bg-[#E5E7EB]"
-                                  >
-                                          <img
-                                src="/mail.svg"
-                                className="w-[14px]"
-                                alt="Mail Icon"
-                              />
-                                    <div className="font-medium text-sm text-[#000000] tracking-wide pr-2 mr-1 relative after:content-[''] after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[1px] after:h-[10px] after:bg-gray-300 group-hover:after:bg-white">
+                      <div className="font-md ml-2 text-xs tracking-wide font-semibold text-[#000000] ">
+                        {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
+                          <div className="">
+                            <AssigedToDropCompCrm
+                              assignerName={assignerName}
+                              id={id}
+                              setAssigner={setAssigner}
+                              usersList={usersList}
+                              align={undefined}
+                            />
+                          </div>
+                        )}
+                        {user?.role?.includes(USER_ROLES.CP_AGENT) && (
+                          <span className="text-left text-sm">
+                            {' '}
+                            {assignerName}
+                          </span>
+                        )}
+                      </div>
+                    </section>
+                    <section className="flex group flow-row justify-between  px-[10px] pr-[18px] py-[14px]  mr-2   border border-[#E7E7E9]    bg-white text-black rounded-lg items-center align-middle text-xs cursor-pointer hover:bg-[#E5E7EB]">
+                      <img
+                        src="/mail.svg"
+                        className="w-[14px]"
+                        alt="Mail Icon"
+                      />
+                      <div className="font-medium text-sm text-[#000000] tracking-wide pr-2 mr-1 relative after:content-[''] after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[0.8px] after:h-[10px] after:bg-gray-300 group-hover:after:bg-white"></div>
+                      <div className="font-md  ml-2  text-xs tracking-wide font-semibold text-[#000000] ">
+                        <div className="">
+                          <AssigedToDropCompCrm
+                            assignerName={selProjectIs?.projectName || Project}
+                            id={id}
+                            setAssigner={setNewProject}
+                            usersList={projectList}
+                            align={undefined}
+                          />
+                        </div>
+                      </div>
+                    </section>
 
-                                    </div>
-
-                                    <div className="font-md ml-2 text-xs tracking-wide font-semibold text-[#000000] ">
-                                      {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
-                                        <div className="">
-                                          <AssigedToDropCompCrm
-                                            assignerName={assignerName}
-                                            id={id}
-                                            setAssigner={setAssigner}
-                                            usersList={usersList}
-                                            align={undefined}
-                                          />
-                                        </div>
-                                      )}
-                                      {user?.role?.includes(USER_ROLES.CP_AGENT) && (
-                                        <span className="text-left text-sm">
-                                          {' '}
-                                          {assignerName}
-                                        </span>
-                                      )}
-                                    </div>
-                                  </section>
-                                  <section
-                                    className="flex group flow-row justify-between  px-[10px] pr-[18px] py-[14px]  mr-2   border border-[#E7E7E9]    bg-white text-black rounded-lg items-center align-middle text-xs cursor-pointer hover:bg-[#E5E7EB]"
-                                  >
-                                          <img
-                                src="/mail.svg"
-                                className="w-[14px]"
-                                alt="Mail Icon"
-                              />
-                                    <div className="font-medium text-sm text-[#000000] tracking-wide pr-2 mr-1 relative after:content-[''] after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[0.8px] after:h-[10px] after:bg-gray-300 group-hover:after:bg-white">
-
-                                    </div>
-                                    <div className="font-md  ml-2  text-xs tracking-wide font-semibold text-[#000000] ">
-
-                                        <div className="">
-                                          <AssigedToDropCompCrm
-                                            assignerName={selProjectIs?.projectName || Project}
-                                            id={id}
-                                            setAssigner={setNewProject}
-                                            usersList={projectList}
-                                            align={undefined}
-                                          />
-                                        </div>
-                                    </div>
-                                  </section>
-
-                                    <button
-                                      className="text-[12px]  rounded-lg ml-2  px-5 border font-semibold  capitalize  border-[#3D7DC3] text-blue-500"
-                                      onClickCapture={() => {
-                                        handleCallButtonClick(user?.uid, Name, Mobile)
-
-                                      }}
-                                    >
-                                      Call
-                                    </button>
-
-
-
-                                </section>}
-                                {unitsViewMode &&  <section className="flex flex-row  h-[28px] mt-4">                                    <button
-                                      className="text-[12px]  rounded-lg ml-2  px-5 border font-semibold  capitalize  border-[#3D7DC3] text-blue-500"
-                                      onClickCapture={() => {
-                                        setUnitsViewMode(!false)
-                                      }}
-                                    >
-                                      Hide Units
-                                    </button>
-                                </section>}
-                </div>
+                    <button
+                      className="text-[12px]  rounded-lg ml-2  px-5 border font-semibold  capitalize  border-[#3D7DC3] text-blue-500"
+                      onClickCapture={() => {
+                        handleCallButtonClick(user?.uid, Name, Mobile)
+                      }}
+                    >
+                      Call
+                    </button>
+                  </section>
+                )}
+                {unitsViewMode && (
+                  <section className="flex flex-row  h-[28px] mt-4">
+                    {' '}
+                    <button
+                      className="text-[12px]  rounded-lg ml-2  px-5 border font-semibold    border-[#3D7DC3] text-blue-500 whitespace-nowrap"
+                      onClickCapture={() => {
+                        setUnitsViewMode(false)
+                      }}
+                    >
+                      Hide Units
+                    </button>
+                  </section>
+                )}
+              </div>
 
               {/* <hr className="h-[1px]  bg-gradient-to-r from-[#F6F5F8]/100 via-[#B1B1B1] to-[#F6F5F8]/100 border-0 my-3" /> */}
 
@@ -2052,17 +2040,23 @@ export default function LeadProfileSideView({
           ))}
         </div>
         */}
-        {/* displays the list of duplicate leads */}
-        {founDocs?.length >0 && (
-                                  <section className=" flex  flex-col text-md text-pink-800  mx-5">
-                                    <span className="mt-2">{'Duplicate lead found with same project'}</span>
-                                    {founDocs.map((customDetails, i) => {
-                                      return (
-                                        <DuplicateLeadCard leadDetailsO={customDetails} usersList={usersList} projectList={projectList}/>
-                                      )
-                                    })}
-                                  </section>
-                                )}
+          {/* displays the list of duplicate leads */}
+          {founDocs?.length > 0 && (
+            <section className=" flex  flex-col text-md text-pink-800  mx-5">
+              <span className="mt-2">
+                {'Duplicate lead found with same project'}
+              </span>
+              {founDocs.map((customDetails, i) => {
+                return (
+                  <DuplicateLeadCard
+                    leadDetailsO={customDetails}
+                    usersList={usersList}
+                    projectList={projectList}
+                  />
+                )
+              })}
+            </section>
+          )}
           {unitsViewMode && (
             <>
               <ProjPhaseHome
@@ -3431,19 +3425,16 @@ export default function LeadProfileSideView({
                                   <section className="flex flex-col ">
                                     <div className="flex gap-3">
                                       <div className="mt-1">
-
-
-      <label className="flex items-center space-x-3 cursor-pointer">
-        <div className="gradient-border-container">
-          <input
-            type="checkbox"
-            className="custom-checkbox"
-            // checked={false}
-            // onChange={handleChange}
-          />
-        </div>
-      </label>
-
+                                        <label className="flex items-center space-x-3 cursor-pointer">
+                                          <div className="gradient-border-container">
+                                            <input
+                                              type="checkbox"
+                                              className="custom-checkbox"
+                                              // checked={false}
+                                              // onChange={handleChange}
+                                            />
+                                          </div>
+                                        </label>
                                       </div>
 
                                       <div className="flex  items-start">
@@ -3455,7 +3446,6 @@ export default function LeadProfileSideView({
                                         <div className="inline-flex items-center px-2  mt-[4px] h-[20px] text-[#606062] rounded-[8px] font-[Outfit] font-medium text-[14px] tracking-[0.25px] ">
                                           #{streamCurrentStatus}
                                         </div>
-
                                       </div>
                                     </div>
 
@@ -3470,17 +3460,21 @@ export default function LeadProfileSideView({
                                       <div className=" s_h12 text-[#606062] font-[300]">
                                         Assigned to: {leadNextTaskObj.by}
                                       </div>
-
-
                                     </div>
                                     <div className="mt-[12px] ml-[34px]">
-                                  <button className="font-[Outfit] font-['opensans'] text-[#606062] text-[12px] underline underline-offset-[25%]" onClick={()=> setAddTaskCommentObj(leadNextTaskObj)}>
-                                   + Add Comment
-                                  </button>
-                                </div>
-                                {addTaskCommentObj?.ct === leadNextTaskObj?.ct && (
+                                      <button
+                                        className="font-[Outfit] font-['opensans'] text-[#606062] text-[12px] underline underline-offset-[25%]"
+                                        onClick={() =>
+                                          setAddTaskCommentObj(leadNextTaskObj)
+                                        }
+                                      >
+                                        + Add Comment
+                                      </button>
+                                    </div>
+                                    {addTaskCommentObj?.ct ===
+                                      leadNextTaskObj?.ct && (
                                       <section className="flex flex-col ml-[20px]">
-                                       <AddLeadTaskComment
+                                        <AddLeadTaskComment
                                           closeTask={closeTask}
                                           data={leadNextTaskObj}
                                           setShowVisitFeedBackStatusFun={
@@ -3514,7 +3508,7 @@ export default function LeadProfileSideView({
                                           d={d}
                                         />
                                       </section>
-                                      )}
+                                    )}
                                   </section>
 
                                   <div className="flex flex-col items-end">
@@ -3600,11 +3594,10 @@ export default function LeadProfileSideView({
                                     </div>
                                   </div>
                                   <button className="text-[12px] text-[#606062] font-[Outfit]  ">
-                                    View {leadNextTaskObj?.comments?.length} comments
+                                    View {leadNextTaskObj?.comments?.length}{' '}
+                                    comments
                                   </button>
                                 </div>
-
-
                               </div>
                             </div>
                           </div>
@@ -3615,15 +3608,15 @@ export default function LeadProfileSideView({
                               <div className="space-y-4">
                                 <div className=" rounded-[8px] py-[16px]  bg-[#FFFFFF]  border border-[#F0F0F5]  shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] max-w-lg">
                                   <div className="flex items-center mb-8 border-b border-gray-200 px-4 pb-[16px]">
-                                  <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
-                                    <div className="bg-[#E3F1FA] p-1 rounded-full">
-                                      {/* <Clock className="text-purple-500 w-5 h-5" /> */}
-                                      <img
-                                        src="/fire.svg"
-                                        alt=""
-                                        className="w-[18px] h-[18px]"
-                                      />
-                                    </div>
+                                    <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+                                      <div className="bg-[#E3F1FA] p-1 rounded-full">
+                                        {/* <Clock className="text-purple-500 w-5 h-5" /> */}
+                                        <img
+                                          src="/fire.svg"
+                                          alt=""
+                                          className="w-[18px] h-[18px]"
+                                        />
+                                      </div>
                                     </div>
 
                                     <span className="font-medium text-[16px]  text-[#0D0A1E]">
@@ -3631,85 +3624,81 @@ export default function LeadProfileSideView({
                                     </span>
                                   </div>
 
-<section className=" px-4">
-                                  <div className="mb-2">
-
-
-                                    <div className="mb-4">
-                                      <GradientSlider opstr={opstr} setopstr={setopstr} />
-                                    </div>
-                                  </div>
-
-                                  <div className="flex justify-between items-center mb-6">
-                                    <div className="font-normal text-[12px] leading-[100%] tracking-[0%] text-[#606062]">
-                                      Requirement : 10/12
-                                    </div>
-                                    <div className="font-normal text-[12px] leading-[100%] tracking-[0%] text-[#606062]">
-                                      Updated : 27 Mar, 4:30 pm
-                                    </div>
-                                  </div>
-
-                                  <div className="flex flex-wrap gap-3">
-                                    <div className="bg-white rounded-2xl border border-[#E7E7E9]  px-2 py-1 flex items-center">
-                                      {/* <Clock className="w-5 h-5 mr-2 text-gray-600" /> */}
-                                      <img
-                                        src="/Rup.svg"
-                                        alt=""
-                                        className="w-5 h-5"
-                                      />
-                                      <span className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#606062]">
-                                        Shuba Ecosone Ph 2
-                                      </span>
+                                  <section className=" px-4">
+                                    <div className="mb-2">
+                                      <div className="mb-4">
+                                        <GradientSlider
+                                          opstr={opstr}
+                                          setopstr={setopstr}
+                                        />
+                                      </div>
                                     </div>
 
-                                    <div className="bg-white rounded-2xl border border-[#E7E7E9] px-2 py-1 flex items-center">
-                                      <img
-                                        src="/Rup.svg"
-                                        alt=""
-                                        className="w-5 h-5"
-                                      />
-                                      <span className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#606062]">
-                                        Min: 2.12cr
-                                      </span>
+                                    <div className="flex justify-between items-center mb-6">
+                                      <div className="font-normal text-[12px] leading-[100%] tracking-[0%] text-[#606062]">
+                                        Requirement : 10/12
+                                      </div>
+                                      <div className="font-normal text-[12px] leading-[100%] tracking-[0%] text-[#606062]">
+                                        Updated : 27 Mar, 4:30 pm
+                                      </div>
                                     </div>
 
-                                    <div className="bg-white rounded-2xl border border-[#E7E7E9] px-2 py-1 flex items-center">
-                                      <img
-                                        src="/Rup.svg"
-                                        alt=""
-                                        className="w-5 h-5"
-                                      />
-                                      <span className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#606062]">
-                                        Max: 5.
-                                      </span>
+                                    <div className="flex flex-wrap gap-3">
+                                      <div className="bg-white rounded-2xl border border-[#E7E7E9]  px-2 py-1 flex items-center">
+                                        {/* <Clock className="w-5 h-5 mr-2 text-gray-600" /> */}
+                                        <img
+                                          src="/Rup.svg"
+                                          alt=""
+                                          className="w-5 h-5"
+                                        />
+                                        <span className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#606062]">
+                                          Shuba Ecosone Ph 2
+                                        </span>
+                                      </div>
+
+                                      <div className="bg-white rounded-2xl border border-[#E7E7E9] px-2 py-1 flex items-center">
+                                        <img
+                                          src="/Rup.svg"
+                                          alt=""
+                                          className="w-5 h-5"
+                                        />
+                                        <span className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#606062]">
+                                          Min: 2.12cr
+                                        </span>
+                                      </div>
+
+                                      <div className="bg-white rounded-2xl border border-[#E7E7E9] px-2 py-1 flex items-center">
+                                        <img
+                                          src="/Rup.svg"
+                                          alt=""
+                                          className="w-5 h-5"
+                                        />
+                                        <span className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#606062]">
+                                          Max: 5.
+                                        </span>
+                                      </div>
+
+                                      {/* View more button */}
+                                      <button className="mt-4 font-medium text-xs leading-tight tracking-normal text-[#606062] underline decoration-solid decoration-0 decoration-offset-[25%] decoration-thick decoration-skip-ink-auto flex items-center">
+                                        View {isExpanded ? 'less' : 'more'}
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          width="20"
+                                          height="20"
+                                          viewBox="0 0 24 24"
+                                          fill="none"
+                                          stroke="currentColor"
+                                          strokeWidth="2"
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                          className={`ml-1 transition-transform ${
+                                            isExpanded ? 'rotate-180' : ''
+                                          }`}
+                                        >
+                                          <polyline points="6 9 12 15 18 9"></polyline>
+                                        </svg>
+                                      </button>
                                     </div>
-
-
-
-                                    {/* View more button */}
-                                    <button
-
-                                    className="mt-4 font-medium text-xs leading-tight tracking-normal text-[#606062] underline decoration-solid decoration-0 decoration-offset-[25%] decoration-thick decoration-skip-ink-auto flex items-center"
-                                  >
-                                    View {isExpanded ? 'less' : 'more'}
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="20"
-                                      height="20"
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      strokeWidth="2"
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      className={`ml-1 transition-transform ${
-                                        isExpanded ? 'rotate-180' : ''
-                                      }`}
-                                    >
-                                      <polyline points="6 9 12 15 18 9"></polyline>
-                                    </svg>
-                                  </button>
-                                  </div>
                                   </section>
                                 </div>
 
@@ -3742,33 +3731,32 @@ export default function LeadProfileSideView({
                                     <div className="flex flex-col w-full ">
                                       <div className="flex items-center mb-4 justify-between pb-[16px] pt-[8px] border-b border-[#F0F0F5]">
                                         <section className="flex items-center">
-
-                                        <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
-                                    <div className="bg-[#E3F1FA] p-1 rounded-full">
-                                      {/* <Clock className="text-purple-500 w-5 h-5" /> */}
-                                      <img
-                                        src="/location.svg"
-                                        alt=""
-                                        className="w-[18px] h-[18px]"
-                                      />
-                                    </div>
-                                    </div>
-                                        <span className="font-semibold text-[12px] leading-[100%] tracking-[6%] uppercase text-[#2B2B2B]">
-                                          Site visit (
-                                          {projectData.siteVisit.count})
-                                        </span>
+                                          <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+                                            <div className="bg-[#E3F1FA] p-1 rounded-full">
+                                              {/* <Clock className="text-purple-500 w-5 h-5" /> */}
+                                              <img
+                                                src="/location.svg"
+                                                alt=""
+                                                className="w-[18px] h-[18px]"
+                                              />
+                                            </div>
+                                          </div>
+                                          <span className="font-semibold text-[12px] leading-[100%] tracking-[6%] uppercase text-[#2B2B2B]">
+                                            Site visit (
+                                            {projectData.siteVisit.count})
+                                          </span>
                                         </section>
                                         <div className="flex flex-row items-center font-medium text-[14px] text-[#0E0A1F] mr-[8px]">
-                                      <img
-                                        src="/good.svg"
-                                        alt="icon"
-                                        className="mb-1 w-8 h-8 mr-[8px]"
-                                      />
-                                      Good
-                                    </div>
+                                          <img
+                                            src="/good.svg"
+                                            alt="icon"
+                                            className="mb-1 w-8 h-8 mr-[8px]"
+                                          />
+                                          Good
+                                        </div>
                                       </div>
 
-                                      <div className='flex flex-row justify-between'>
+                                      <div className="flex flex-row justify-between">
                                         <p className="font-normal text-[12px] text-[#0D0A1E]">
                                           Visit Date:{' '}
                                           {projectData.siteVisit.date}
@@ -3779,8 +3767,6 @@ export default function LeadProfileSideView({
                                         </p>
                                       </div>
                                     </div>
-
-
                                   </div>
                                 </div>
 
@@ -3819,14 +3805,14 @@ export default function LeadProfileSideView({
                                 <div className="border border-[#F0F0F5] bg-[#FFFFFF] shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] p-4 rounded-[8px] cursor-pointer">
                                   <div className="flex items-center mb-4">
                                     <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
-                                    <div className="bg-[#E3F1FA] p-1 rounded-full">
-                                      {/* <Clock className="text-purple-500 w-5 h-5" /> */}
-                                      <img
-                                        src="/target-sale.svg"
-                                        alt=""
-                                        className="w-[18px] h-[18px]"
-                                      />
-                                    </div>
+                                      <div className="bg-[#E3F1FA] p-1 rounded-full">
+                                        {/* <Clock className="text-purple-500 w-5 h-5" /> */}
+                                        <img
+                                          src="/target-sale.svg"
+                                          alt=""
+                                          className="w-[18px] h-[18px]"
+                                        />
+                                      </div>
                                     </div>
 
                                     <span className="font-semibold text-[12px] leading-[100%] tracking-[6%] uppercase text-[#2B2B2B]">
@@ -3869,7 +3855,6 @@ export default function LeadProfileSideView({
                                       >
                                         <div className="flex justify-between  items-center">
                                           <div className="flex gap-2 items-center">
-
                                             <span className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062] whitespace-nowrap">
                                               {item.label}
                                             </span>
@@ -3888,17 +3873,16 @@ export default function LeadProfileSideView({
                               {/* Right Column */}
                               <div className="space-y-4">
                                 <div className=" rounded-[8px] py-[16px]   shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)]  border border-[#F0F0F5]  max-w-lg">
-
-                                <div className="flex items-center mb-8 border-b border-gray-200 px-4 pb-[16px]">
-                                  <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
-                                    <div className="bg-[#E3F1FA] p-1 rounded-full">
-                                      {/* <Clock className="text-purple-500 w-5 h-5" /> */}
-                                      <img
-                                        src="/folder-library.svg"
-                                        alt=""
-                                        className="w-[18px] h-[18px]"
-                                      />
-                                  </div>
+                                  <div className="flex items-center mb-8 border-b border-gray-200 px-4 pb-[16px]">
+                                    <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+                                      <div className="bg-[#E3F1FA] p-1 rounded-full">
+                                        {/* <Clock className="text-purple-500 w-5 h-5" /> */}
+                                        <img
+                                          src="/folder-library.svg"
+                                          alt=""
+                                          className="w-[18px] h-[18px]"
+                                        />
+                                      </div>
                                     </div>
 
                                     <span className="font-medium text-[16px]  text-[#0D0A1E]">
@@ -3907,141 +3891,145 @@ export default function LeadProfileSideView({
                                   </div>
 
                                   <section className=" px-4">
-                                  <div className="mb-4">
-                                    <div className="flex justify-between items-center mb-4">
-                                      <h2 className="font-medium text-2xl  leading-tight tracking-normal text-[#404040]">
-                                        {' '}
-                                        {selProjectFullDetails?.projectName}
-                                      </h2>
-                                      <a
-                                        href="#"
-                                        className="font-medium text-xs leading-tight tracking-normal sale_text_color underline decoration-solid decoration-0 decoration-offset-[25%] decoration-thick decoration-skip-ink-auto"
-                                        onClick={() => {
-                                          setUnitsViewMode(!unitsViewMode)
-                                        }}
-                                      >
-                                        View Units (
-                                        {selProjectFullDetails?.availableCount}/
-                                        {selProjectFullDetails?.totalUnitCount})
-                                      </a>
-                                    </div>
+                                    <div className="mb-4">
+                                      <div className="flex justify-between items-center mb-4">
+                                        <h2 className="font-medium text-2xl  leading-tight tracking-normal text-[#404040]">
+                                          {' '}
+                                          {selProjectFullDetails?.projectName}
+                                        </h2>
+                                        <a
+                                          href="#"
+                                          className="font-medium text-xs leading-tight tracking-normal sale_text_color underline decoration-solid decoration-0 decoration-offset-[25%] decoration-thick decoration-skip-ink-auto"
+                                          onClick={() => {
+                                            setUnitsViewMode(!unitsViewMode)
+                                          }}
+                                        >
+                                          View Units (
+                                          {
+                                            selProjectFullDetails?.availableCount
+                                          }
+                                          /
+                                          {
+                                            selProjectFullDetails?.totalUnitCount
+                                          }
+                                          )
+                                        </a>
+                                      </div>
 
-                                    <div className="flex flex-wrap gap-2">
-                                      <div className="bg-[#F3E1D8] rounded-[15px] py-1 px-2 flex gap-2 items-center">
-                                        <div>
-                                          <img
-                                            src={
-                                              selProjectFullDetails?.planningApproval?.toLowerCase() ===
-                                              'yes'
-                                                ? '/yessale.svg'
-                                                : '/nosale.svg'
-                                            }
-                                            alt=""
-                                            className="w-3 h-3"
-                                          />
+                                      <div className="flex flex-wrap gap-2">
+                                        <div className="bg-[#F3E1D8] rounded-[15px] py-1 px-2 flex gap-2 items-center">
+                                          <div>
+                                            <img
+                                              src={
+                                                selProjectFullDetails?.planningApproval?.toLowerCase() ===
+                                                'yes'
+                                                  ? '/yessale.svg'
+                                                  : '/nosale.svg'
+                                              }
+                                              alt=""
+                                              className="w-3 h-3"
+                                            />
+                                          </div>
+
+                                          <span className="mr-2 font-outfit font-normal text-xs leading-tight tracking-normal text-[#606062]">
+                                            Planning Approval
+                                          </span>
                                         </div>
 
-                                        <span className="mr-2 font-outfit font-normal text-xs leading-tight tracking-normal text-[#606062]">
-                                          Planning Approval
-                                        </span>
-                                      </div>
+                                        <div className="bg-[#F3E1D8] rounded-[15px] py-1 px-2 flex gap-2 items-center">
+                                          <div>
+                                            <img
+                                              src={
+                                                selProjectFullDetails?.planningApproval?.toLowerCase() ===
+                                                'yes'
+                                                  ? '/yessale.svg'
+                                                  : '/nosale.svg'
+                                              }
+                                              alt=""
+                                              className="w-3 h-3"
+                                            />
+                                          </div>
 
-                                      <div className="bg-[#F3E1D8] rounded-[15px] py-1 px-2 flex gap-2 items-center">
-                                        <div>
-                                          <img
-                                            src={
-                                              selProjectFullDetails?.planningApproval?.toLowerCase() ===
-                                              'yes'
-                                                ? '/yessale.svg'
-                                                : '/nosale.svg'
-                                            }
-                                            alt=""
-                                            className="w-3 h-3"
-                                          />
+                                          <span className="mr-2 font-outfit font-normal text-xs leading-tight tracking-normal text-[#606062]">
+                                            RERA Approval
+                                          </span>
                                         </div>
 
-                                        <span className="mr-2 font-outfit font-normal text-xs leading-tight tracking-normal text-[#606062]">
-                                          RERA Approval
-                                        </span>
-                                      </div>
-
-                                      {/* Amenities */}
-                                      <div className="border bg-[#F3E1D8] rounded-[15px] py-1 px-2 font-outfit font-normal text-xs leading-tight tracking-normal text-[#606062] flex items-center justify-center">
-                                        +21 Amenities
+                                        {/* Amenities */}
+                                        <div className="border bg-[#F3E1D8] rounded-[15px] py-1 px-2 font-outfit font-normal text-xs leading-tight tracking-normal text-[#606062] flex items-center justify-center">
+                                          +21 Amenities
+                                        </div>
                                       </div>
                                     </div>
-                                  </div>
 
-                                  {isExpanded && (
-                                    <div className="mt-4 pt-4 border-t">
-                                      <h3 className="font-medium text-base leading-tight tracking-normal text-[#404040] mb-2">
-                                        Additional Information
-                                      </h3>
-                                      <p className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062]">
-                                        This is the second phase of the Shuba
-                                        Ecosone development featuring
-                                        eco-friendly design, sustainable
-                                        materials, and energy-efficient
-                                        construction. The project includes
-                                        studio, 1 BHK, and 2 BHK apartments with
-                                        modern amenities.
-                                      </p>
-                                      <div className="mt-3">
-                                        <h4 className="font-medium text-base leading-tight tracking-normal text-[#404040] mb-1">
-                                          Key Features:
-                                        </h4>
-                                        <ul className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062]">
-                                          <li>Solar-powered common areas</li>
-                                          <li>Rainwater harvesting</li>
-                                          <li>Organic waste composting</li>
-                                          <li>EV charging stations</li>
-                                        </ul>
+                                    {isExpanded && (
+                                      <div className="mt-4 pt-4 border-t">
+                                        <h3 className="font-medium text-base leading-tight tracking-normal text-[#404040] mb-2">
+                                          Additional Information
+                                        </h3>
+                                        <p className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062]">
+                                          This is the second phase of the Shuba
+                                          Ecosone development featuring
+                                          eco-friendly design, sustainable
+                                          materials, and energy-efficient
+                                          construction. The project includes
+                                          studio, 1 BHK, and 2 BHK apartments
+                                          with modern amenities.
+                                        </p>
+                                        <div className="mt-3">
+                                          <h4 className="font-medium text-base leading-tight tracking-normal text-[#404040] mb-1">
+                                            Key Features:
+                                          </h4>
+                                          <ul className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062]">
+                                            <li>Solar-powered common areas</li>
+                                            <li>Rainwater harvesting</li>
+                                            <li>Organic waste composting</li>
+                                            <li>EV charging stations</li>
+                                          </ul>
+                                        </div>
                                       </div>
-                                    </div>
-                                  )}
+                                    )}
 
-                                  <button
-                                    onClick={toggleExpand}
-                                    className="mt-4 font-medium text-xs leading-tight tracking-normal text-[#606062] underline decoration-solid decoration-0 decoration-offset-[25%] decoration-thick decoration-skip-ink-auto flex items-center"
-                                  >
-                                    View {isExpanded ? 'less' : 'more'}
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="20"
-                                      height="20"
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      strokeWidth="2"
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      className={`ml-1 transition-transform ${
-                                        isExpanded ? 'rotate-180' : ''
-                                      }`}
+                                    <button
+                                      onClick={toggleExpand}
+                                      className="mt-4 font-medium text-xs leading-tight tracking-normal text-[#606062] underline decoration-solid decoration-0 decoration-offset-[25%] decoration-thick decoration-skip-ink-auto flex items-center"
                                     >
-                                      <polyline points="6 9 12 15 18 9"></polyline>
-                                    </svg>
-                                  </button>
+                                      View {isExpanded ? 'less' : 'more'}
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        className={`ml-1 transition-transform ${
+                                          isExpanded ? 'rotate-180' : ''
+                                        }`}
+                                      >
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                      </svg>
+                                    </button>
                                   </section>
                                 </div>
-
 
                                 {/* Projects Card */}
                                 <div className="border border-[#F0F0F5] shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] bg-[#FFFFFF] p-4 rounded-[8px] ">
                                   {!isProjectsExpanded && (
                                     <div>
                                       <div className="flex items-center mb-4">
-
                                         <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
-                                    <div className="bg-[#E3F1FA] p-1 rounded-full">
-                                      {/* <Clock className="text-purple-500 w-5 h-5" /> */}
-                                      <img
-                                        src="/quill_clock.svg"
-                                        alt=""
-                                        className="w-[18px] h-[18px]"
-                                      />
-                                    </div>
-                                    </div>
+                                          <div className="bg-[#E3F1FA] p-1 rounded-full">
+                                            {/* <Clock className="text-purple-500 w-5 h-5" /> */}
+                                            <img
+                                              src="/quill_clock.svg"
+                                              alt=""
+                                              className="w-[18px] h-[18px]"
+                                            />
+                                          </div>
+                                        </div>
                                         <span className="font-semibold text-[12px] leading-[100%] tracking-[6%] uppercase text-[#2B2B2B]">
                                           PROJECTS (3)
                                         </span>
@@ -4086,17 +4074,16 @@ export default function LeadProfileSideView({
                                   {isProjectsExpanded && (
                                     <div>
                                       <div className="flex items-center mb-4">
-
                                         <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
-                                    <div className="bg-[#E3F1FA] p-1 rounded-full">
-                                      {/* <Clock className="text-purple-500 w-5 h-5" /> */}
-                                      <img
-                                        src="/quill_clock.svg"
-                                        alt=""
-                                        className="w-[18px] h-[18px]"
-                                      />
-                                    </div>
-                                    </div>
+                                          <div className="bg-[#E3F1FA] p-1 rounded-full">
+                                            {/* <Clock className="text-purple-500 w-5 h-5" /> */}
+                                            <img
+                                              src="/quill_clock.svg"
+                                              alt=""
+                                              className="w-[18px] h-[18px]"
+                                            />
+                                          </div>
+                                        </div>
                                         <span className="font-semibold text-[12px] leading-[100%] tracking-[6%] uppercase text-[#2B2B2B]">
                                           PROJECTS (3)
                                         </span>
@@ -4139,8 +4126,6 @@ export default function LeadProfileSideView({
                                   )}
                                 </div>
 
-
-
                                 {/* More Details Card */}
                                 {/* <div className="bg-white p-6 rounded-lg shadow-sm">
     <div className="flex items-center justify-between mb-6">
@@ -4168,17 +4153,16 @@ export default function LeadProfileSideView({
                                 <div className="border border-[#F0F0F5] shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] bg-[#FFFFFF] cursor-pointer p-4 rounded-[8px] ">
                                   <div className="flex items-center justify-between mb-6">
                                     <div className="flex items-center">
-
                                       <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
-                                    <div className="bg-[#E3F1FA] p-1 rounded-full">
-                                      {/* <Clock className="text-purple-500 w-5 h-5" /> */}
-                                      <img
-                                        src="/call.svg"
-                                        alt=""
-                                        className="w-[18px] h-[18px]"
-                                      />
-                                    </div>
-                                    </div>
+                                        <div className="bg-[#E3F1FA] p-1 rounded-full">
+                                          {/* <Clock className="text-purple-500 w-5 h-5" /> */}
+                                          <img
+                                            src="/call.svg"
+                                            alt=""
+                                            className="w-[18px] h-[18px]"
+                                          />
+                                        </div>
+                                      </div>
                                       <h2 className="font-semibold text-[12px] leading-[100%] tracking-[6%] uppercase text-[#2B2B2B]">
                                         Call Activity
                                       </h2>
@@ -4213,18 +4197,16 @@ export default function LeadProfileSideView({
                                             : ''
                                         }`}
                                       >
-                                    <div className="flex gap-2 items-center">
-
-                                    <span className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062] whitespace-nowrap">
-                                      {item.label}
-                                    </span>
-                                    </div>
-                                    <div className="w-full mx-4 mt-[3px] h-[0.60px] relative custom-dash-border border-neutral-300"></div>
-                                    <span className="font-outfit font-normal text-xs leading-tight tracking-tight text-[#606062] whitespace-nowrap">
-                                    {item.value}
-                                    </span>
-                                    </div>
-
+                                        <div className="flex gap-2 items-center">
+                                          <span className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062] whitespace-nowrap">
+                                            {item.label}
+                                          </span>
+                                        </div>
+                                        <div className="w-full mx-4 mt-[3px] h-[0.60px] relative custom-dash-border border-neutral-300"></div>
+                                        <span className="font-outfit font-normal text-xs leading-tight tracking-tight text-[#606062] whitespace-nowrap">
+                                          {item.value}
+                                        </span>
+                                      </div>
                                     ))}
                                   </div>
                                 </div>
@@ -4233,15 +4215,15 @@ export default function LeadProfileSideView({
                                   <div className="flex items-center justify-between mb-6">
                                     <div className="flex items-center">
                                       <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
-                                    <div className="bg-[#E3F1FA] p-1 rounded-full">
-                                      {/* <Clock className="text-purple-500 w-5 h-5" /> */}
-                                      <img
-                                        src="/quill_clock.svg"
-                                        alt=""
-                                        className="w-[18px] h-[18px]"
-                                      />
-                                    </div>
-                                    </div>
+                                        <div className="bg-[#E3F1FA] p-1 rounded-full">
+                                          {/* <Clock className="text-purple-500 w-5 h-5" /> */}
+                                          <img
+                                            src="/quill_clock.svg"
+                                            alt=""
+                                            className="w-[18px] h-[18px]"
+                                          />
+                                        </div>
+                                      </div>
                                       <h2 className="font-semibold text-[12px] leading-[100%] tracking-[6%] uppercase text-[#2B2B2B]">
                                         Dates
                                       </h2>
@@ -4256,7 +4238,6 @@ export default function LeadProfileSideView({
                                   <div className="space-y-4 px-4">
                                     <div className="flex justify-between items-center pb-3  border-gray-200">
                                       <div className="flex items-center">
-
                                         <p className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062] whitespace-nowrap">
                                           Created On
                                         </p>
@@ -4271,7 +4252,6 @@ export default function LeadProfileSideView({
 
                                     <div className="flex justify-between items-center pb-3  border-gray-200">
                                       <div className="flex items-center">
-
                                         <p className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062] whitespace-nowrap">
                                           Updated On :
                                         </p>
@@ -4286,7 +4266,6 @@ export default function LeadProfileSideView({
 
                                     <div className="flex justify-between items-center">
                                       <div className="flex items-center">
-
                                         <p className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062] whitespace-nowrap">
                                           Assigned On
                                         </p>
@@ -4467,32 +4446,33 @@ export default function LeadProfileSideView({
                             </div>
                           </div>
 
-                         {addSch && <div className="relative rounded-[14px] border border-[#E7E7E9] bg-[#ffffff] py-2 ">
-                            <div>
-                              {loader && (
-                                <div
-                                  id="toast-success"
-                                  // className="flex items-center w-[96.4%] mx-4 rounded-t-lg p-2 text-white"
-                                  className="flex items-center w-full  rounded-t-lg p-2 px-8 pb-3 text-white border-b "
-                                  role="alert"
-                                >
-                                  {/* <div className="flex items-center mb-4"></div> */}
+                          {addSch && (
+                            <div className="relative rounded-[14px] border border-[#E7E7E9] bg-[#ffffff] py-2 ">
+                              <div>
+                                {loader && (
+                                  <div
+                                    id="toast-success"
+                                    // className="flex items-center w-[96.4%] mx-4 rounded-t-lg p-2 text-white"
+                                    className="flex items-center w-full  rounded-t-lg p-2 px-8 pb-3 text-white border-b "
+                                    role="alert"
+                                  >
+                                    {/* <div className="flex items-center mb-4"></div> */}
 
-                                  <div className="bg-[#FFFFFF] p-1.5 rounded-lg mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
-                                    <img
-                                      src="/target-sale.svg"
-                                      alt="Clock Icon"
-                                      className="w-[18px] h-[18px]"
-                                    />
-                                  </div>
-                                  <div className="font-normal text-[16px] leading-[100%] tracking-[0] text-[#000000] tight-wider">
-                                    Hey, Plan your{' '}
-                                    <span className="font-normal text-[16px] leading-[100%] tracking-[0] text-[#000000] tight-wider ">
-                                      {tempLeadStatus.toLocaleUpperCase()}{' '}
-                                    </span>
-                                    ..!
-                                  </div>
-                                  {/* <button
+                                    <div className="bg-[#FFFFFF] p-1.5 rounded-lg mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+                                      <img
+                                        src="/target-sale.svg"
+                                        alt="Clock Icon"
+                                        className="w-[18px] h-[18px]"
+                                      />
+                                    </div>
+                                    <div className="font-normal text-[16px] leading-[100%] tracking-[0] text-[#000000] tight-wider">
+                                      Hey, Plan your{' '}
+                                      <span className="font-normal text-[16px] leading-[100%] tracking-[0] text-[#000000] tight-wider ">
+                                        {tempLeadStatus.toLocaleUpperCase()}{' '}
+                                      </span>
+                                      ..!
+                                    </div>
+                                    {/* <button
                                 type="button"
                                 className="ml-auto -mx-0.5 -my-0.5  text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 "
                                 data-dismiss-target="#toast-success"
@@ -4512,49 +4492,49 @@ export default function LeadProfileSideView({
                                   ></path>
                                 </svg>
                               </button> */}
-                                </div>
-                              )}
-                              {addSch && (
-                                <div className="flex flex-col pt-0  mx-4 mt-[0px] ">
-                                  <Formik
-                                    enableReinitialize={true}
-                                    initialValues={initialState}
-                                    validationSchema={validateSchema}
-                                    onSubmit={(values, { resetForm }) => {
-                                      fAddSchedule()
-                                    }}
-                                  >
-                                    {(formik) => (
-                                      <Form>
-                                        <div className=" form pt-[30px] pb-[30px] gap-[20px] ">
-                                          <section className=" flex flex-col gap-6 px-4">
-                                           <div>
-                                            <div className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162]">
-                                              Task Title
-                                              <ErrorMessage
-                                                component="div"
-                                                name="taskTitle"
-                                                className="error-message text-red-700 text-xs p-1"
-                                              />
-                                            </div>
-                                            <input
-                                              autoFocus
-                                              name="taskTitle"
-                                              type="text"
-                                              value={takTitle}
-                                              onChange={(e) => {
-                                                formik.setFieldValue(
-                                                  'taskTitle',
-                                                  e.target.value
-                                                )
-                                                setTitleFun(e)
-                                              }}
-                                              placeholder="Enter a short title"
-                                              className="w-full h-full pt-3 pb-[2px] outline-none text-sm   border-b border-[#E7E7E9] text-[33475b]"
-                                            ></input>
-                                            </div>
+                                  </div>
+                                )}
+                                {addSch && (
+                                  <div className="flex flex-col pt-0  mx-4 mt-[0px] ">
+                                    <Formik
+                                      enableReinitialize={true}
+                                      initialValues={initialState}
+                                      validationSchema={validateSchema}
+                                      onSubmit={(values, { resetForm }) => {
+                                        fAddSchedule()
+                                      }}
+                                    >
+                                      {(formik) => (
+                                        <Form>
+                                          <div className=" form pt-[30px] pb-[30px] gap-[20px] ">
+                                            <section className=" flex flex-col gap-6 px-4">
+                                              <div>
+                                                <div className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162]">
+                                                  Task Title
+                                                  <ErrorMessage
+                                                    component="div"
+                                                    name="taskTitle"
+                                                    className="error-message text-red-700 text-xs p-1"
+                                                  />
+                                                </div>
+                                                <input
+                                                  autoFocus
+                                                  name="taskTitle"
+                                                  type="text"
+                                                  value={takTitle}
+                                                  onChange={(e) => {
+                                                    formik.setFieldValue(
+                                                      'taskTitle',
+                                                      e.target.value
+                                                    )
+                                                    setTitleFun(e)
+                                                  }}
+                                                  placeholder="Enter a short title"
+                                                  className="w-full h-full pt-3 pb-[2px] outline-none text-sm   border-b border-[#E7E7E9] text-[33475b]"
+                                                ></input>
+                                              </div>
 
-                                            {/* <div className="flex flex-row mt-3">
+                                              {/* <div className="flex flex-row mt-3">
                                           <section>
                                             <span className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162]">
                                               <span className="">
@@ -4597,107 +4577,116 @@ export default function LeadProfileSideView({
 
                                         </div> */}
 
-                                            <div className="grid grid-cols-2 gap-6">
-                                              <div>
-                                                {/* <label className="block text-gray-600 mb-2">Edit Due Date</label> */}
-                                                <span className="font-[Outfit] block font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162] mb-2">
-                                                  <span className="">
-                                                    {tempLeadStatus
-                                                      .charAt(0)
-                                                      .toUpperCase() +
-                                                      tempLeadStatus.slice(
-                                                        1
-                                                      )}{' '}
-                                                  </span>
-                                                  Due Date
-                                                </span>
-                                                <div className="w-full  border-b border-[#E7E7E9] bg-transparent focus:outline-none focus:border-blue-500">
-                                                  <div className="bg-green    flex flex-row ">
-                                                    <span className="inline">
-                                                      <CustomDatePicker
-                                                        className="inline text-xs text-[#2B2B2B]"
-                                                        selected={startDate}
-                                                        onChange={(date) =>
-                                                          setStartDate(date)
-                                                        }
-                                                        showTimeSelect
-                                                        timeFormat="HH:mm"
-                                                        injectTimes={[
-                                                          setHours(
-                                                            setMinutes(d, 1),
-                                                            0
-                                                          ),
-                                                          setHours(
-                                                            setMinutes(d, 5),
-                                                            12
-                                                          ),
-                                                          setHours(
-                                                            setMinutes(d, 59),
-                                                            23
-                                                          ),
-                                                        ]}
-                                                        dateFormat="MMM d, yyyy h:mm aa"
-                                                      />
+                                              <div className="grid grid-cols-2 gap-6">
+                                                <div>
+                                                  {/* <label className="block text-gray-600 mb-2">Edit Due Date</label> */}
+                                                  <span className="font-[Outfit] block font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162] mb-2">
+                                                    <span className="">
+                                                      {tempLeadStatus
+                                                        .charAt(0)
+                                                        .toUpperCase() +
+                                                        tempLeadStatus.slice(
+                                                          1
+                                                        )}{' '}
                                                     </span>
+                                                    Due Date
+                                                  </span>
+                                                  <div className="w-full  border-b border-[#E7E7E9] bg-transparent focus:outline-none focus:border-blue-500">
+                                                    <div className="bg-green    flex flex-row ">
+                                                      <span className="inline">
+                                                        <CustomDatePicker
+                                                          className="inline text-xs text-[#2B2B2B]"
+                                                          selected={startDate}
+                                                          onChange={(date) =>
+                                                            setStartDate(date)
+                                                          }
+                                                          showTimeSelect
+                                                          timeFormat="HH:mm"
+                                                          injectTimes={[
+                                                            setHours(
+                                                              setMinutes(d, 1),
+                                                              0
+                                                            ),
+                                                            setHours(
+                                                              setMinutes(d, 5),
+                                                              12
+                                                            ),
+                                                            setHours(
+                                                              setMinutes(d, 59),
+                                                              23
+                                                            ),
+                                                          ]}
+                                                          dateFormat="MMM d, yyyy h:mm aa"
+                                                        />
+                                                      </span>
+                                                    </div>
                                                   </div>
                                                 </div>
-                                              </div>
 
-                                            {tempLeadStatus === 'visitfixed' && <div className="">
-                                                <label className="block font-[Outfit] block font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162] mb-2">
-                                                  Assign lead to Site Incharge
-                                                </label>
-                                                <div className="relative">
-                                                  <div className="w-full  border-b border-[#E7E7E9] bg-transparent flex justify-between items-center cursor-pointer">
-                                                    <AssigedToDropComp
-                                                      assignerName={assignerName}
-                                                      id={id}
-                                                      setAssigner={setAssigner}
-                                                      usersList={usersList}
-                                                      className="absolute top-[100%]  z-[999]"
-                                                    />
+                                                {tempLeadStatus ===
+                                                  'visitfixed' && (
+                                                  <div className="">
+                                                    <label className="block font-[Outfit] block font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162] mb-2">
+                                                      Assign lead to Site
+                                                      Incharge
+                                                    </label>
+                                                    <div className="relative">
+                                                      <div className="w-full  border-b border-[#E7E7E9] bg-transparent flex justify-between items-center cursor-pointer">
+                                                        <AssigedToDropComp
+                                                          assignerName={
+                                                            assignerName
+                                                          }
+                                                          id={id}
+                                                          setAssigner={
+                                                            setAssigner
+                                                          }
+                                                          usersList={usersList}
+                                                          className="absolute top-[100%]  z-[999]"
+                                                        />
+                                                      </div>
+                                                    </div>
                                                   </div>
-                                                </div>
-                                              </div>}
+                                                )}
+                                              </div>
+                                            </section>
+                                            <div className="flex flex-row mt-4 justify-between pr-4">
+                                              <section>
+                                                <span>{''}</span>
+                                              </section>
+                                              <section className="flex">
+                                                <button
+                                                  type="submit"
+                                                  className={`flex mt-2 cursor-pointer rounded-lg items-center justify-center pl-2 h-[36px] pr-4 py-2 px-6 text-sm font-medium sale_bg_color text-white `}
+                                                >
+                                                  <span className="ml-1 ">
+                                                    Create{' '}
+                                                    {tempLeadStatus !=
+                                                      streamCurrentStatus &&
+                                                      tempLeadStatus}{' '}
+                                                    Task
+                                                  </span>
+                                                </button>
+                                                <button
+                                                  onClick={() =>
+                                                    cancelResetStatusFun()
+                                                  }
+                                                  className={`flex mt-2 ml-4 rounded-lg items-center text-bodyLato pl-2 h-[36px] pr-4 py-2 text-sm font-medium border `}
+                                                >
+                                                  <span className="ml-1 ">
+                                                    Cancel
+                                                  </span>
+                                                </button>
+                                              </section>
                                             </div>
-                                          </section>
-                                          <div className="flex flex-row mt-4 justify-between pr-4">
-                                            <section>
-                                              <span>{''}</span>
-                                            </section>
-                                            <section className="flex">
-                                              <button
-                                                type="submit"
-                                                className={`flex mt-2 cursor-pointer rounded-lg items-center justify-center pl-2 h-[36px] pr-4 py-2 px-6 text-sm font-medium sale_bg_color text-white `}
-                                              >
-                                                <span className="ml-1 ">
-                                                  Create{' '}
-                                                  {tempLeadStatus !=
-                                                    streamCurrentStatus &&
-                                                    tempLeadStatus}{' '}
-                                                  Task
-                                                </span>
-                                              </button>
-                                              <button
-                                                onClick={() =>
-                                                  cancelResetStatusFun()
-                                                }
-                                                className={`flex mt-2 ml-4 rounded-lg items-center text-bodyLato pl-2 h-[36px] pr-4 py-2 text-sm font-medium border `}
-                                              >
-                                                <span className="ml-1 ">
-                                                  Cancel
-                                                </span>
-                                              </button>
-                                            </section>
                                           </div>
-                                        </div>
-                                      </Form>
-                                    )}
-                                  </Formik>
-                                </div>
-                              )}
+                                        </Form>
+                                      )}
+                                    </Formik>
+                                  </div>
+                                )}
+                              </div>
                             </div>
-                          </div>}
+                          )}
 
                           {leadSchLoading &&
                             [1, 2, 3].map((data, i) => <LogSkelton key={i} />)}
@@ -4859,7 +4848,6 @@ export default function LeadProfileSideView({
                                               : 'ml-[15px]'
                                           }`}
                                         >
-
                                           <p className="font-outfit font-medium text-[12px] leading-[100%] tracking-[0%] text-[#606062] ml-[16px]">
                                             {data.comments.length} Comment
                                             {data.comments.length > 1

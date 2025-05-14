@@ -90,7 +90,7 @@ const PlanDiagramView = ({
         console.log('error', e)
       }
     )
-    return unsubscribe
+    return
   }
   const deleteAssetFun = async (docId) => {
     console.log('assert details ', docId)

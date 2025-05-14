@@ -286,7 +286,7 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
       },
       (error) => setprojectList([])
     )
-    return unsubscribe
+    return
   }
 
   useEffect(() => {}, [selCategory])
@@ -329,7 +329,7 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
       },
       () => setCrmCustomerDBData([])
     )
-    return unsubscribe
+    return
   }
   const getLeadsDataFun = async (projectList, statusFil) => {
     console.log('login role detials', user)
@@ -394,7 +394,7 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
       },
       () => setCrmCustomerDBData([])
     )
-    return unsubscribe
+    return
 
     // await console.log('leadsData', leadsData)
   }

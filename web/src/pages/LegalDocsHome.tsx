@@ -97,7 +97,7 @@ const LegalDocsHome = ({ project }) => {
           console.error('Error fetching projects:', error)
         }
       )
-      return unsubscribe
+      return
     }
 
     fetchProjects()
@@ -128,7 +128,7 @@ const LegalDocsHome = ({ project }) => {
             console.error('Error fetching phases:', error)
           }
         )
-        return unsubscribe
+        return
       }
       fetchPhases()
     }
@@ -158,7 +158,7 @@ const LegalDocsHome = ({ project }) => {
             console.error('Error fetching blocks:', error)
           }
         )
-        return unsubscribe
+        return
       }
       fetchBlocks()
     }
@@ -193,7 +193,7 @@ const LegalDocsHome = ({ project }) => {
             console.error('Error fetching units:', error)
           }
         )
-        return unsubscribe
+        return
       }
       fetchUnits()
     }

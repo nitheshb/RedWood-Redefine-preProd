@@ -188,7 +188,7 @@ export default function CrmUnitSideView({
       (error) => setfetchedUsersList([])
     )
 
-    return unsubscribe
+    return
   }, [])
   useEffect(() => {
     let x = []
@@ -265,7 +265,7 @@ export default function CrmUnitSideView({
       },
       () => setDocsList([])
     )
-    return unsubscribe
+    return
   }
 
   const getProjectsListFun = () => {
@@ -286,7 +286,7 @@ export default function CrmUnitSideView({
       (error) => setfetchedUsersList([])
     )
 
-    return unsubscribe
+    return
   }
   useEffect(() => {
     setLeadStatus(Status?.toLowerCase())
@@ -361,7 +361,7 @@ export default function CrmUnitSideView({
       },
       (error) => setLeadsFetchedActivityData([])
     )
-    return unsubscribe
+    return
   }
   const fAddSchedule = async () => {
     console.log('start time is ', startDate)

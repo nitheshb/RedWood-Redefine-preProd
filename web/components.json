@@ -1,0 +1,6 @@
+{
+  "components": "src/components/ui",
+  "utils": "src/lib/utils.ts",
+  "tailwindCss": "web/config/tailwind.config.js",
+  "tsConfig": "web/tsconfig.json"
+}

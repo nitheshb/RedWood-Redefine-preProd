@@ -50,7 +50,7 @@ const BookedLeadsSideViewBody = ({
       },
       () => setLeadsFetchedData([])
     )
-    return unsubscribe
+    return
   }
   const selLeadFun = (data) => {
     console.log('data is ', data)

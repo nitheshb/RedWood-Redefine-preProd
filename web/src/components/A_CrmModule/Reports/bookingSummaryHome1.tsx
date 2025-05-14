@@ -133,7 +133,7 @@ const UnitBookingSummaryHomePage = ({
       },
       () => setTableData([])
     )
-    return unsubscribe
+    return
   }
   useEffect(() => {
     console.log('values are', unitsFetchData.length, selProjectIs.uid)
@@ -164,7 +164,7 @@ const UnitBookingSummaryHomePage = ({
       },
       (error) => setprojectList([])
     )
-    return unsubscribe
+    return
   }
   useEffect(() => {
     const unsubscribe = getMyProjects(
@@ -193,7 +193,7 @@ const UnitBookingSummaryHomePage = ({
       }
     )
 
-    return unsubscribe
+    return
   }, [])
 
   return (

@@ -57,7 +57,7 @@ const MyActivityHome = ({ source }) => {
         },
         (error) => setLeadsFetchedData([])
       )
-      return unsubscribe
+      return
     } else {
       const unsubscribe = steamUsersActivityOfUser(
         orgId,
@@ -69,7 +69,7 @@ const MyActivityHome = ({ source }) => {
         },
         (error) => setLeadsFetchedData([])
       )
-      return unsubscribe
+      return
     }
   }
 

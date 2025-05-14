@@ -368,7 +368,7 @@ export default function ReportMainCom() {
       (error) => setprojectList([])
     )
 
-    return unsubscribe
+    return
   }
 
   const getLeadsDataFun = async (
@@ -400,7 +400,7 @@ export default function ReportMainCom() {
         console.log(y, 'dataY')
         await setSourceListTuned(y)
       }
-      return unsubscribe
+      return
     }
   }
   const getUsersDataFun = async () => {
@@ -425,7 +425,7 @@ export default function ReportMainCom() {
       (error) => setusersList([])
     )
 
-    return unsubscribe
+    return
   }
 
   const sourceDropDown = () => {

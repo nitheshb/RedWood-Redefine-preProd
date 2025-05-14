@@ -91,7 +91,7 @@ const CrmMortgageSummaryTable = ({ projects }) => {
       () => setFetchMortUnitsList([])
     )
 
-    return unsubscribe
+    return
   }, [projects])
 
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' })

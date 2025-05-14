@@ -121,7 +121,7 @@ const AddTaskForm = ({ title, dialogOpen }) => {
       (error) => setfetchedUsersList([])
     )
 
-    return unsubscribe
+    return
   }, [])
   useEffect(() => {
     const unsubscribe = getAllProjects(
@@ -141,7 +141,7 @@ const AddTaskForm = ({ title, dialogOpen }) => {
       (error) => setfetchedUsersList([])
     )
 
-    return unsubscribe
+    return
   }, [])
 
   const aquaticCreatures = [
@@ -246,7 +246,11 @@ const AddTaskForm = ({ title, dialogOpen }) => {
     } = data
     // updateUserRole(uid, deptVal, myRole, email, 'nitheshreddy.email@gmail.com')
 
-    const foundLength = await checkIfLeadAlreadyExists('spark_leads', mobileNo, projectId)
+    const foundLength = await checkIfLeadAlreadyExists(
+      'spark_leads',
+      mobileNo,
+      projectId
+    )
     const leadData = {
       Date: Timestamp.now().toMillis(),
       Email: email,

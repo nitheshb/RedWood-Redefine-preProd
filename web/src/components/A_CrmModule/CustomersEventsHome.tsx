@@ -477,7 +477,7 @@ const CustomersEventsHome = () => {
       },
       () => setProjects([])
     )
-    return unsubscribe
+    return
   }
 
   const getAllRoleAccessDocs = async () => {
@@ -591,7 +591,7 @@ const CustomersEventsHome = () => {
         },
         () => setLeadsFetchedData([])
       )
-      return unsubscribe
+      return
     } else {
       const unsubscribe = getCRMCustomerByProject(
         orgId,
@@ -620,7 +620,7 @@ const CustomersEventsHome = () => {
         },
         () => setLeadsFetchedData([])
       )
-      return unsubscribe
+      return
     }
 
     // await console.log('leadsData', leadsData)

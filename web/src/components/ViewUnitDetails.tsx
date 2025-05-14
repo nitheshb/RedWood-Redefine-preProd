@@ -68,7 +68,7 @@ const ViewUnitDetails = ({
       (error) => setfetchedUsersList([])
     )
 
-    return unsubscribe
+    return
   }, [])
   useEffect(() => {
     const unsubscribe = getAllProjects(
@@ -88,7 +88,7 @@ const ViewUnitDetails = ({
       (error) => setfetchedUsersList([])
     )
 
-    return unsubscribe
+    return
   }, [])
   useEffect(() => {
     phaseFeed.map((user) => {

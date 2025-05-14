@@ -61,7 +61,7 @@ const ProjectAccessHomeList = ({
         console.log('error', e)
       }
     )
-    return unsubscribe
+    return
   }
   useEffect(() => {
     getProjects()
@@ -118,7 +118,7 @@ const ProjectAccessHomeList = ({
         },
         () => {}
       )
-      return unsubscribe
+      return
     }
 
     // await console.log('leadsData', leadsData)
@@ -206,7 +206,7 @@ const ProjectAccessHomeList = ({
 
     console.log('Total Unit details are ', yo)
     await AuditProjectComputedData(orgId, projectDetails?.uid, yo)
-    return unsubscribe
+    return
 
     // await console.log('leadsData', leadsData)
   }
@@ -247,7 +247,7 @@ const ProjectAccessHomeList = ({
       },
       () => setProjects([])
     )
-    return unsubscribe
+    return
   }
   const handleDelete = async () => {
     if (

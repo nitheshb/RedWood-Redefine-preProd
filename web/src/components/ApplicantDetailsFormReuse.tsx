@@ -93,7 +93,7 @@
 //       () => {}
 //     )
 
-//     return unsubscribe
+//     return
 //   }, [])
 //   const isValidDate = (time) => {
 //     return !isNaN(new Date(time).getTime())
@@ -1636,7 +1636,7 @@ const EmailForm = ({
       () => {}
     )
 
-    return unsubscribe
+    return
   }, [])
   const isValidDate = (time) => {
     return !isNaN(new Date(time).getTime())

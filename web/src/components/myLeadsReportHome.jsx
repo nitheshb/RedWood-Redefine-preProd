@@ -202,7 +202,7 @@ const MyLeadsReportHome = ({ project, onSliderOpen = () => {}, isEdit }) => {
 
     await setSourceListTuned(y)
     await console.log('whati is the data ', y, z)
-    return unsubscribe
+    return
   }
   const getProjectsListFun = async () => {
     const unsubscribe = getAllProjects(
@@ -226,7 +226,7 @@ const MyLeadsReportHome = ({ project, onSliderOpen = () => {}, isEdit }) => {
       (error) => setprojectList([])
     )
 
-    return unsubscribe
+    return
   }
 
   const sorterFilterFun = async (todaySch) => {

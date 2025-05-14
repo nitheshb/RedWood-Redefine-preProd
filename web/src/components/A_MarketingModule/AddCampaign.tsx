@@ -67,7 +67,7 @@ const AddCampaignForm = ({ mode, dialogOpen, campaignPaylaod }) => {
       () => setfetchedUsersList([])
     )
 
-    return unsubscribe
+    return
   }, [])
   useEffect(() => {
     const unsubscribe = getAllProjects(
@@ -87,7 +87,7 @@ const AddCampaignForm = ({ mode, dialogOpen, campaignPaylaod }) => {
       () => setfetchedUsersList([])
     )
 
-    return unsubscribe
+    return
   }, [])
 
   const devTypeA = [

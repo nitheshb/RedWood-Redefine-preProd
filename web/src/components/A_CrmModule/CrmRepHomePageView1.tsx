@@ -122,7 +122,7 @@ const CrmRepHomePageView1 = ({ leadsTyper }) => {
         },
         () => setLeadsFetchedData([])
       )
-      return unsubscribe
+      return
     } else {
       const unsubscribe = getFinanceTransactionsByStatus(
         orgId,
@@ -151,7 +151,7 @@ const CrmRepHomePageView1 = ({ leadsTyper }) => {
         },
         () => setLeadsFetchedData([])
       )
-      return unsubscribe
+      return
     }
 
     // await console.log('leadsData', leadsData)

@@ -53,7 +53,7 @@ const AssetsManageTable = ({ editEmployeeFun, showCompletedTasks }) => {
         },
         () => setLeadsFetchedData([])
       )
-      return unsubscribe
+      return
     } else {
       const unsubscribe = steamUsersList(
         orgId,
@@ -65,7 +65,7 @@ const AssetsManageTable = ({ editEmployeeFun, showCompletedTasks }) => {
         },
         () => setLeadsFetchedData([])
       )
-      return unsubscribe
+      return
     }
   }
 

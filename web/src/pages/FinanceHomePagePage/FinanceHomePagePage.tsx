@@ -39,7 +39,7 @@ const FinanceHomePagePage = () => {
       },
       () => setProjects([])
     )
-    return unsubscribe
+    return
   }
 
   const data = [

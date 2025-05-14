@@ -170,7 +170,7 @@ const DialogFormBody = ({
       }
     })
 
-    return unsubscribe
+    return
   }, [])
 
   const onSubmit = async (data, resetForm) => {
@@ -269,7 +269,7 @@ const DialogFormBody = ({
       (error) => setBankDetailsA([])
     )
 
-    return unsubscribe
+    return
   }, [])
 
   const closeAddNewFun = () => {

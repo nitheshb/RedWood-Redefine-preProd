@@ -76,7 +76,7 @@ export default function CSManagerApprovalBody({
           setPhases([])
         }
       )
-      return unsubscribe
+      return
     } catch (error) {
       console.log('error at getting phases', error)
     }

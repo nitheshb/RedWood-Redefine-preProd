@@ -49,7 +49,7 @@ const PaymentLeadAccess = ({ title, data, dept, source }) => {
       (error) => setsalesPeopleList([])
     )
 
-    return unsubscribe
+    return
   }, [])
 
   const addRemoveProjectAccessFun = async (value) => {

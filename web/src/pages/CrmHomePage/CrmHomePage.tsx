@@ -44,7 +44,7 @@ const CrmHomePage = (sourceLink) => {
       },
       () => setProjects([])
     )
-    return unsubscribe
+    return
   }
 
   const data = [
@@ -441,7 +441,6 @@ const CrmHomePage = (sourceLink) => {
                     }}
                     isEdit={undefined}
                     moduleType="salesModule"
-
                   />
                 )}
 

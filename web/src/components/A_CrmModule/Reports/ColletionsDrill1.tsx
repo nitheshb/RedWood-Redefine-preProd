@@ -98,7 +98,7 @@ const CollectionsDrillI = ({
       (error) => setprojectList([])
     )
 
-    return unsubscribe
+    return
   }
 
   const getProjectTransactionsDataFun = async () => {
@@ -222,7 +222,7 @@ const CollectionsDrillI = ({
       (error) => setusersList([])
     )
 
-    return unsubscribe
+    return
   }, [])
 
   const selLeadFun = (data) => {

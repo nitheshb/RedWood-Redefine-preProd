@@ -905,7 +905,7 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
       (error) => setRows([])
     )
 
-    return unsubscribe
+    return
   }, [])
 
   const appendRow = (key) => {

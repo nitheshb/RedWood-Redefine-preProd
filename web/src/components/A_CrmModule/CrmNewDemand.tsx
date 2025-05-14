@@ -100,7 +100,7 @@ const AddNewDemand = ({
       (error) => setBankDetailsA([])
     )
 
-    return unsubscribe
+    return
   }, [])
 
   useEffect(() => {
@@ -123,7 +123,7 @@ const AddNewDemand = ({
       (error) => setCreditNoters([])
     )
 
-    return unsubscribe
+    return
   }, [])
   const handleFileUploadFun = async (file, type) => {
     console.log('am i inside handle FileUpload')

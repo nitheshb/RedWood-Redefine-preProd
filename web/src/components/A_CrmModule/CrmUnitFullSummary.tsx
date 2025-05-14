@@ -283,7 +283,7 @@ export default function UnitFullSummary({
       (error) => setfetchedUsersList([])
     )
 
-    return unsubscribe
+    return
   }, [])
   useEffect(() => {
     if (selSubMenu) {
@@ -375,7 +375,7 @@ export default function UnitFullSummary({
       },
       () => setDocsList([])
     )
-    return unsubscribe
+    return
   }
 
   const getProjectsListFun = () => {
@@ -396,7 +396,7 @@ export default function UnitFullSummary({
       (error) => setfetchedUsersList([])
     )
 
-    return unsubscribe
+    return
   }
   useEffect(() => {
     const channel = supabase
@@ -478,7 +478,7 @@ export default function UnitFullSummary({
       },
       () => setUnitTransactionsA([])
     )
-    return unsubscribe
+    return
   }
   useEffect(() => {
     setLeadStatus(Status?.toLowerCase())
@@ -584,7 +584,7 @@ export default function UnitFullSummary({
       (error) => setLeadsFetchedSchData([])
     )
 
-    return unsubscribe
+    return
   }
   const getLeadNotesFun = async () => {
     console.log('ami triggered')
@@ -607,7 +607,7 @@ export default function UnitFullSummary({
       },
       (error) => setLeadsFetchedActivityData([])
     )
-    return unsubscribe
+    return
   }
   const fAddSchedule = async () => {
     console.log('start time is ', startDate)
@@ -1503,7 +1503,6 @@ export default function UnitFullSummary({
                     leadDetailsObj2={selCustomerPayload}
                     setShowApplicantEdit={setShowApplicantEdit}
                     selCustomerPayload={selCustomerPayload}
-                    
                   />
                 </div>
               )}
@@ -1561,7 +1560,7 @@ export default function UnitFullSummary({
                             Booked On
                           </p>
                           <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">
-                          {prettyDate(selCustomerPayload?.booked_on || 0)}
+                            {prettyDate(selCustomerPayload?.booked_on || 0)}
                           </h2>
                         </div>
                         <div className="text-center space-y-2">
@@ -3528,18 +3527,27 @@ export default function UnitFullSummary({
                       selFeature === d.val ? 'crm_bg_color' : ''
                     }`}
                     onClick={() => {
-                      if(d.val == 'cancel_booking' ){
-                          if(['booked','agreement_pipeline', 'allotment', 'ATS', 'sd_pipeline'].includes(selCustomerPayload?.status)){
-                      setFeature(d.val)
-                    }else{
-                      toast.error('You can not cancel booking for this status')
-                    }
-                    }
-                      else{
+                      if (d.val == 'cancel_booking') {
+                        if (
+                          [
+                            'booked',
+                            'agreement_pipeline',
+                            'allotment',
+                            'ATS',
+                            'sd_pipeline',
+                          ].includes(selCustomerPayload?.status)
+                        ) {
+                          setFeature(d.val)
+                        } else {
+                          toast.error(
+                            'You can not cancel booking for this status'
+                          )
+                        }
+                      } else {
                         setFeature(d.val)
                       }
-                      }}>
-
+                    }}
+                  >
                     <span
                       className={` ml-6 hover:text-[#484848] font-bold ${
                         selFeature === d.val

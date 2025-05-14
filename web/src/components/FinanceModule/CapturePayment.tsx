@@ -34,9 +34,6 @@ import {
   validate_captureWalletPayment,
 } from '../Schemas'
 
-
-
-
 const CaptureUnitPayment = ({
   title,
   customerInfo,
@@ -88,7 +85,7 @@ const CaptureUnitPayment = ({
           projectName: '',
         })
     )
-    return unsubscribe
+    return
   }
   useEffect(() => {
     getProjectDetails(selUnitDetails?.pId)
@@ -195,7 +192,7 @@ const CaptureUnitPayment = ({
       (error) => setCreditNoters([])
     )
 
-    return unsubscribe
+    return
   }, [])
   useEffect(() => {
     const unsubscribe = streamCustomersList(
@@ -230,7 +227,7 @@ const CaptureUnitPayment = ({
       (error) => setWalletCustomers([])
     )
 
-    return unsubscribe
+    return
   }, [])
   const handleFileUploadFun = (file, type) => {
     try {
@@ -307,8 +304,6 @@ const CaptureUnitPayment = ({
     await onSubmitFun(y, resetForm)
 
     await confettiRef?.current?.fire()
-
-  
 
     return
 

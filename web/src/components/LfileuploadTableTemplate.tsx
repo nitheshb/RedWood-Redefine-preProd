@@ -236,7 +236,9 @@ const EnhancedTableToolbar = (props) => {
   }, [rows])
 
   React.useEffect(() => {
+    if(pId){
     getProjectDetails(pId)
+    }
   }, [])
   const { user } = useAuth()
 
@@ -310,7 +312,7 @@ const EnhancedTableToolbar = (props) => {
         })
     )
 
-    return unsubscribe
+    return
   }
   const insertPlotToDb = async (records) => {
     console.log('check it', records.length)

@@ -413,7 +413,7 @@ const TermsConditionsEditableTable = ({
       (error) => setRows([])
     )
 
-    return unsubscribe
+    return
   }, [])
 
   const appendRow = (key) => {

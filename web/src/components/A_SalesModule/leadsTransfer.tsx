@@ -125,7 +125,7 @@ const LeadsTransferHome = ({ project }) => {
       (error) => setUsersAllList([])
     )
 
-    return unsubscribe
+    return
   }, [])
 
   useEffect(() => {
@@ -146,7 +146,7 @@ const LeadsTransferHome = ({ project }) => {
       (error) => setusersList([])
     )
 
-    return unsubscribe
+    return
   }, [])
 
   useEffect(() => {
@@ -183,7 +183,7 @@ const LeadsTransferHome = ({ project }) => {
       },
       () => setCustomerRawData([])
     )
-    return unsubscribe
+    return
   }
 
   const serealizeData = (array) => {
@@ -236,7 +236,7 @@ const LeadsTransferHome = ({ project }) => {
       },
       (error) => setLeadsFetchedData([])
     )
-    return unsubscribe
+    return
   }
 
   const selProjctFun = (project) => {

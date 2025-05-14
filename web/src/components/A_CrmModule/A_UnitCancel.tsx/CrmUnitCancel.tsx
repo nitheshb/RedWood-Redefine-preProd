@@ -270,7 +270,7 @@ export default function UnitBookingCancelCRM({
       (error) => setfetchedUsersList([])
     )
 
-    return unsubscribe
+    return
   }, [])
   useEffect(() => {
     if (selSubMenu) {
@@ -362,7 +362,7 @@ export default function UnitBookingCancelCRM({
       },
       () => setDocsList([])
     )
-    return unsubscribe
+    return
   }
 
   const getProjectsListFun = () => {
@@ -383,7 +383,7 @@ export default function UnitBookingCancelCRM({
       (error) => setfetchedUsersList([])
     )
 
-    return unsubscribe
+    return
   }
   useEffect(() => {
     getAllTransactionsUnit()
@@ -410,7 +410,7 @@ export default function UnitBookingCancelCRM({
       },
       () => setUnitTransactionsA([])
     )
-    return unsubscribe
+    return
   }
   useEffect(() => {
     setLeadStatus(status?.toLowerCase())
@@ -662,7 +662,7 @@ export default function UnitBookingCancelCRM({
       (error) => setLeadsFetchedSchData([])
     )
 
-    return unsubscribe
+    return
   }
   const getLeadNotesFun = async () => {
     console.log('ami triggered')
@@ -685,7 +685,7 @@ export default function UnitBookingCancelCRM({
       },
       (error) => setLeadsFetchedActivityData([])
     )
-    return unsubscribe
+    return
   }
   const fAddSchedule = async () => {
     console.log('start time is ', startDate)

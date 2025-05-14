@@ -68,7 +68,7 @@ const ProjectAuditHome = ({ title, dialogOpen, data, projectDetails }) => {
         },
         () => {}
       )
-      return unsubscribe
+      return
     }
 
     // await console.log('leadsData', leadsData)
@@ -143,7 +143,7 @@ const ProjectAuditHome = ({ title, dialogOpen, data, projectDetails }) => {
     })
 
     await updateProjectComputedData(orgId, projectDetails?.uid, yo)
-    return unsubscribe
+    return
   }
   return (
     <div className="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">

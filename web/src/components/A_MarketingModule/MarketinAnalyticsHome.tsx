@@ -754,7 +754,7 @@ const MarketingAnalyticsHome = () => {
                     digit: '50,402',
                   },
                   {
-                    lab: 'Avg. engagement time',
+                    lab: 'Avg. engagement times',
                     val: 'avg_engagement_time',
                     color: '#9333EA',
                     digit: '2m 25s',

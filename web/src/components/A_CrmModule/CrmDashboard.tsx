@@ -112,7 +112,7 @@ const CrmDashboardHome = ({ project }) => {
       },
       () => setProjects([])
     )
-    return unsubscribe
+    return
   }
   const selProjctFun = (project) => {
     setIsOpenSideView(!isOpenSideView)

@@ -484,7 +484,7 @@ ${x?.length > 0 ? `${personalFinalText}` : ''}\n \n
       },
       () => setEmpsFetchedData([])
     )
-    return unsubscribe
+    return
   }
 
   const triggerWhatsAppTasksCountAlert = async () => {

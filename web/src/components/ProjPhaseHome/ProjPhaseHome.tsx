@@ -137,7 +137,7 @@ const ProjPhaseHome = ({
           setPhases([])
         }
       )
-      return unsubscribe
+      return
     } catch (error) {
       console.log('error at getting phases', error)
     }
@@ -168,7 +168,7 @@ const ProjPhaseHome = ({
         setBlocks({ ...blocks, [phaseId]: [] })
       }
     )
-    return unsubscribe
+    return
   }
 
   useEffect(() => {

@@ -161,7 +161,7 @@ const ViewEditTaskManForm = ({ title, dialogOpen, taskManObj }) => {
       (error) => setfetchedUsersList([])
     )
 
-    return unsubscribe
+    return
   }, [])
   useEffect(() => {
     setMyTaskObj(taskManObj?.comments || [])
@@ -188,7 +188,7 @@ const ViewEditTaskManForm = ({ title, dialogOpen, taskManObj }) => {
       (error) => setfetchedUsersList([])
     )
 
-    return unsubscribe
+    return
   }, [])
 
   const [takTitle, setTakTitle] = useState('')

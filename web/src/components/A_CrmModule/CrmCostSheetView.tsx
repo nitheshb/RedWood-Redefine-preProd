@@ -59,7 +59,7 @@ const CrmUnitCostSheetView = ({
           projectName: '',
         })
     )
-    return unsubscribe
+    return
   }
   useEffect(() => {
     getProjectDetails(selCustomerPayload?.pId)

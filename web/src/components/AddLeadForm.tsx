@@ -169,7 +169,7 @@ const AddLeadForm = ({
       (error) => setfetchedUsersList([])
     )
 
-    return unsubscribe
+    return
   }, [])
   useEffect(() => {
     const unsubscribe = getAllProjects(
@@ -189,7 +189,7 @@ const AddLeadForm = ({
       (error) => setfetchedUsersList([])
     )
 
-    return unsubscribe
+    return
   }, [])
 
   const budgetList = [
@@ -950,7 +950,11 @@ const AddLeadForm = ({
                               <span className="mt-2">{formMessage}</span>
                               {founDocs.map((customDetails, i) => {
                                 return (
-                                  <DuplicateLeadCard leadDetailsO={customDetails} usersList={usersList} projectList={projectList}/>
+                                  <DuplicateLeadCard
+                                    leadDetailsO={customDetails}
+                                    usersList={usersList}
+                                    projectList={projectList}
+                                  />
                                 )
                               })}
                             </p>

@@ -91,7 +91,7 @@ const CustomersSearchHome2 = ({ project }) => {
       () => setCustomerRawData([]),
       (error) => setCustomerRawData([])
     )
-    return unsubscribe
+    return
   }
   const selProjctFun = (project) => {
     setIsOpenSideView(!isOpenSideView)

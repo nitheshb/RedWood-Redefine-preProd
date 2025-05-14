@@ -16,9 +16,13 @@
     "@redwoodjs/forms": "^2.2.4",
     "@redwoodjs/router": "^2.2.4",
     "@redwoodjs/web": "^2.2.4",
+    "class-variance-authority": "^0.7.1",
+    "lucide-react": "^0.510.0",
     "prop-types": "15.8.1",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "tailwind-merge": "^3.3.0",
+    "tailwind-variants": "^1.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.2",

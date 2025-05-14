@@ -64,7 +64,7 @@ export default function LeadsLakeHomeComponent({ todaySch, schLoading }) {
       { dateRange }
     )
 
-    return unsubscribe
+    return
   }, [dateRange])
   useEffect(() => {
     const unsubscribe = getAllProjects(
@@ -86,7 +86,7 @@ export default function LeadsLakeHomeComponent({ todaySch, schLoading }) {
       (error) => setAllProjectsA([])
     )
 
-    return unsubscribe
+    return
   }, [])
 
   const selUserProfileF = (title, data) => {

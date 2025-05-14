@@ -1266,3 +1266,12 @@ body {
     transform: rotate(1turn);
   }
 }
+
+
+
+/* sales report css */
+
+.btn_blue{
+  background-color: #bedef6;
+  color: #0d0a1e
+}
