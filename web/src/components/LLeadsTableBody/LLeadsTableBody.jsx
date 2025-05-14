@@ -686,7 +686,7 @@ export default function LLeadsTableBody({
         searchVal={searchVal}
       />
       <section
-        style={{ borderTop: '1px solid #efefef', background: '#fefafb' }}
+        style={{ borderTop: '1px solid #efefef', background: '#FFFFFF' }}
       >
         <TableContainer sx={{ maxHeight: 640 }}>
           <Table
@@ -799,8 +799,8 @@ export default function LLeadsTableBody({
                                 <span
                                   className="rounded italian relative mr-2 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
                                   style={{
-                                    color: '#94B5ED',
-                                    background: '#FCE6D9',
+                                    color: '#0D0A1E',
+                                    background: '#EEF4FE',
                                     maxWidth: '300px',
                                   }}
                                 >
@@ -839,7 +839,7 @@ export default function LLeadsTableBody({
                                 <div
                                   className="w-3 h-3  -mt-2 rotate-45 bg-black"
                                   style={{
-                                    background: '#FCE6D9',
+                                    background: '#EEF4FE',
                                     marginRight: '12px',
                                   }}
                                 ></div>
@@ -921,7 +921,7 @@ export default function LLeadsTableBody({
                       </TableCell>
 
                       <TableCell align="left">
-                        <span className="px-3 py-2 uppercase inline-flex  font-[500] text-[12px] leading-[100%] tracking-[0%] font-outfit rounded-[13px] leading-5  bg-[#FDEFE7] sale_text_color">
+                        <span className="px-3 py-2 uppercase inline-flex  font-[500] text-[12px] leading-[100%] tracking-[0%] font-outfit rounded-[13px] leading-5  bg-[#EEF4FE] text-[#0D0A1E]">
                           <HighlighterStyle
                             searchKey={searchKey}
                             source={row.Status.toString()}

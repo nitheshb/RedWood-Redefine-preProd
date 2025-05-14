@@ -396,9 +396,9 @@ export default function LeadProfileSideView({
   useEffect(() => {
     setopstr(
       optionvalues.asstr +
-        optionvalues.astr +
-        optionvalues.bstr +
-        optionvalues.pstr
+      optionvalues.astr +
+      optionvalues.bstr +
+      optionvalues.pstr
     )
   }, [optionvalues])
 
@@ -518,7 +518,7 @@ export default function LeadProfileSideView({
       const x = leadSchFilteredData[0]
       let y =
         Math.abs(getDifferenceInHours(x?.schTime, '')) <= 24 &&
-        Math.abs(getDifferenceInHours(x?.schTime, '')) >= 0
+          Math.abs(getDifferenceInHours(x?.schTime, '')) >= 0
           ? true
           : false
       x.comingSoon = y
@@ -622,7 +622,7 @@ export default function LeadProfileSideView({
 
     return
   }
-  useEffect(() => {}, [customerDetails])
+  useEffect(() => { }, [customerDetails])
 
   const setAssigner = (leadDocId, value) => {
     const projId = selProjectIs?.uid || ProjectId
@@ -754,8 +754,7 @@ export default function LeadProfileSideView({
         )
       } else if (newStatus === 'visitfixed') {
         await setTakTitle(
-          `${customerDetails?.Project || 'Site'} visit @${
-            customerDetails?.Name || 'Customer'
+          `${customerDetails?.Project || 'Site'} visit @${customerDetails?.Name || 'Customer'
           }   `
         )
       } else if (newStatus === 'visitdone') {
@@ -1650,12 +1649,11 @@ export default function LeadProfileSideView({
   return (
     <>
       <div
-        className={`   h-screen  bg-[#FFFFFF]  shadow-[0px_4px_30px_0px_rgba(0,_0,_0,_0.05)]  ${
-          openUserProfile ? 'hidden' : ''
-        } `}
-        // style={{
-        //   background: 'linear-gradient(to left, #EEF0F9, #E1F2F2, #DBE6F0)',
-        // }}
+        className={`   h-screen  bg-[#FFFFFF]  shadow-[0px_4px_30px_0px_rgba(0,_0,_0,_0.05)]  ${openUserProfile ? 'hidden' : ''
+          } `}
+      // style={{
+      //   background: 'linear-gradient(to left, #EEF0F9, #E1F2F2, #DBE6F0)',
+      // }}
       >
         <div className="h-screen overflow-y-auto scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
           <div className="  bg-white ">
@@ -1900,19 +1898,17 @@ export default function LeadProfileSideView({
                     className="flex-1 flex flex-col items-center relative"
                   >
                     <div
-                      className={`w-6 h-6 flex items-center justify-center rounded-full border transition-all duration-200 mb-1 z-10 ${
-                        streamCurrentStatus === statusFlowObj.value &&
+                      className={`w-6 h-6 flex items-center justify-center rounded-full border transition-all duration-200 mb-1 z-10 ${streamCurrentStatus === statusFlowObj.value &&
                         'animate-pulse-blue'
-                      } ${
-                        streamCoveredA.includes(statusFlowObj.value) ||
-                        (streamCurrentStatus === 'new' &&
-                          statusFlowObj.value === 'new')
+                        } ${streamCoveredA.includes(statusFlowObj.value) ||
+                          (streamCurrentStatus === 'new' &&
+                            statusFlowObj.value === 'new')
                           ? 'sale_bg_color text-white  '
                           : statusFlowObj.value === streamCurrentStatus ||
                             statusFlowObj.value === tempLeadStatus
-                          ? 'bg-white border-[#94B5ED]  shadow-[0_0_0_3px_rgba(251,203,193,1)]  text-black '
-                          : 'bg-white border-gray-300 text-gray-300'
-                      }`}
+                            ? 'bg-white border-[#94B5ED]  shadow-[0_0_0_3px_rgba(251,203,193,1)]  text-black '
+                            : 'bg-white border-gray-300 text-gray-300'
+                        }`}
                       onClick={() => setStatusFun(id, statusFlowObj.value)}
                       onMouseEnter={() => {
                         hoverEffectFun(i)
@@ -1928,13 +1924,12 @@ export default function LeadProfileSideView({
                       }}
                     >
                       {statusFlowObj.value === streamCurrentStatus ||
-                      statusFlowObj.value === tempLeadStatus ? (
+                        statusFlowObj.value === tempLeadStatus ? (
                         <div
-                          className={`h-1 w-1 rounded-full ${
-                            statusFlowObj.value === streamCurrentStatus
+                          className={`h-1 w-1 rounded-full ${statusFlowObj.value === streamCurrentStatus
                               ? 'bg-white '
                               : 'bg-white'
-                          }`}
+                            }`}
                         />
                       ) : streamCoveredA.includes(statusFlowObj.value) ? (
                         <svg
@@ -1970,23 +1965,21 @@ export default function LeadProfileSideView({
                     </div>
 
                     <span
-                      className={` text-[11px]  font-normal px-2 py-1 z-10 text-center ${
-                        statusFlowObj.value === streamCurrentStatus ||
-                        statusFlowObj.value === tempLeadStatus
+                      className={` text-[11px]  font-normal px-2 py-1 z-10 text-center ${statusFlowObj.value === streamCurrentStatus ||
+                          statusFlowObj.value === tempLeadStatus
                           ? 'text-[13px] text-black'
                           : 'text-[11px] text-black'
-                      }`}
+                        }`}
                     >
                       {statusFlowObj.label}
                     </span>
 
                     {i < StatusListA.length - 1 && (
                       <div
-                        className={`absolute top-3 left-[calc(50%+0.5rem)] h-[1px] w-[calc(100%-1rem)] ${
-                          streamCoveredA.includes(StatusListA[i + 1].value)
+                        className={`absolute top-3 left-[calc(50%+0.5rem)] h-[1px] w-[calc(100%-1rem)] ${streamCoveredA.includes(StatusListA[i + 1].value)
                             ? 'bg-[#6E85E6]'
                             : 'bg-[#CCCCCC]'
-                        }`}
+                          }`}
                         style={{ transform: 'translateY(-50%)' }}
                       />
                     )}
@@ -2090,11 +2083,10 @@ export default function LeadProfileSideView({
                             <div key={i} className="flex items-center">
                               <li className="" role="presentation">
                                 <button
-                                  className={`inline-block pb-1 text-xs font-medium text-center text-[#606062] rounded-t-lg border-b-2  hover:text-black hover:border-gray-300   ${
-                                    selFeature === d.val
+                                  className={`inline-block pb-1 text-xs font-medium text-center text-[#606062] rounded-t-lg border-b-2  hover:text-black hover:border-gray-300   ${selFeature === d.val
                                       ? 'border-zinc-800 text-zinc-800'
                                       : 'text-[#606062] border-none'
-                                  }`}
+                                    }`}
                                   type="button"
                                   role="tab"
                                   onClick={() => setFeature(d.val)}
@@ -2135,7 +2127,7 @@ export default function LeadProfileSideView({
                             reasonPurchase: '',
                             preferredArea: '',
                           }}
-                          onSubmit={(values, { resetForm }) => {}}
+                          onSubmit={(values, { resetForm }) => { }}
                         >
                           {(formik) => (
                             <div className="flex flex-col mt-4  ">
@@ -2193,9 +2185,9 @@ export default function LeadProfileSideView({
                                         backgroundColor: '#fff',
                                         border: '2px solid currentColor',
                                         '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible':
-                                          {
-                                            boxShadow: 'inherit',
-                                          },
+                                        {
+                                          boxShadow: 'inherit',
+                                        },
                                       },
                                     }}
                                   />
@@ -2318,22 +2310,20 @@ export default function LeadProfileSideView({
                                     <div className="grid grid-cols-1 gap-4">
                                       <div className="grid grid-cols-2 gap-4">
                                         <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
-                                            budget === '10-50'
+                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${budget === '10-50'
                                               ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color'
                                               : 'bg-white hover:bg-gray-50'
-                                          }`}
+                                            }`}
                                           onClick={() => setBudget('10-50')}
                                         >
                                           10 lacs - 50 lacs
                                         </button>
 
                                         <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
-                                            budget === '50-1'
+                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${budget === '50-1'
                                               ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
                                               : 'bg-white hover:bg-gray-50'
-                                          }`}
+                                            }`}
                                           onClick={() => setBudget('50-1')}
                                         >
                                           50 lacs - 1 cr
@@ -2342,22 +2332,20 @@ export default function LeadProfileSideView({
 
                                       <div className="grid grid-cols-2 gap-4">
                                         <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
-                                            budget === '1-2'
+                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${budget === '1-2'
                                               ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
                                               : 'bg-white hover:bg-gray-50'
-                                          }`}
+                                            }`}
                                           onClick={() => setBudget('1-2')}
                                         >
                                           1 cr - 2 cr
                                         </button>
 
                                         <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
-                                            budget === '2+'
+                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${budget === '2+'
                                               ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
                                               : 'bg-white hover:bg-gray-50'
-                                          }`}
+                                            }`}
                                           onClick={() => setBudget('2+')}
                                         >
                                           2 cr and above
@@ -2387,11 +2375,10 @@ export default function LeadProfileSideView({
                                     <div className="grid grid-cols-1 gap-4">
                                       <div className="grid grid-cols-2 gap-4">
                                         <button
-                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
-                                            configuration === '1BHK'
+                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${configuration === '1BHK'
                                               ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
                                               : 'bg-white hover:bg-gray-50'
-                                          }`}
+                                            }`}
                                           onClick={() =>
                                             setConfiguration('1BHK')
                                           }
@@ -2400,11 +2387,10 @@ export default function LeadProfileSideView({
                                         </button>
 
                                         <button
-                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
-                                            configuration === '2BHK'
+                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${configuration === '2BHK'
                                               ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
                                               : 'bg-white hover:bg-gray-50'
-                                          }`}
+                                            }`}
                                           onClick={() =>
                                             setConfiguration('2BHK')
                                           }
@@ -2415,11 +2401,10 @@ export default function LeadProfileSideView({
 
                                       <div className="grid grid-cols-3 gap-4">
                                         <button
-                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
-                                            configuration === '3BHK'
+                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${configuration === '3BHK'
                                               ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
                                               : 'bg-white hover:bg-gray-50'
-                                          }`}
+                                            }`}
                                           onClick={() =>
                                             setConfiguration('3BHK')
                                           }
@@ -2428,11 +2413,10 @@ export default function LeadProfileSideView({
                                         </button>
 
                                         <button
-                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
-                                            configuration === '4BHK'
+                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${configuration === '4BHK'
                                               ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
                                               : 'bg-white hover:bg-gray-50'
-                                          }`}
+                                            }`}
                                           onClick={() =>
                                             setConfiguration('4BHK')
                                           }
@@ -2441,11 +2425,10 @@ export default function LeadProfileSideView({
                                         </button>
 
                                         <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
-                                            configuration === 'Others'
+                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${configuration === 'Others'
                                               ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
                                               : 'bg-white hover:bg-gray-50'
-                                          }`}
+                                            }`}
                                           onClick={() =>
                                             setConfiguration('Others')
                                           }
@@ -2475,11 +2458,10 @@ export default function LeadProfileSideView({
                                     <div className="grid grid-cols-1 gap-4">
                                       <div className="grid grid-cols-2 gap-4">
                                         <button
-                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
-                                            reasonLeft === 'Apartment & Villas'
+                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${reasonLeft === 'Apartment & Villas'
                                               ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
                                               : 'bg-white hover:bg-gray-50'
-                                          }`}
+                                            }`}
                                           onClick={() =>
                                             setReasonLeft('Apartment & Villas')
                                           }
@@ -2488,11 +2470,10 @@ export default function LeadProfileSideView({
                                         </button>
 
                                         <button
-                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
-                                            reasonLeft === 'Plot'
+                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${reasonLeft === 'Plot'
                                               ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
                                               : 'bg-white hover:bg-gray-50'
-                                          }`}
+                                            }`}
                                           onClick={() => setReasonLeft('Plot')}
                                         >
                                           Plot
@@ -2501,11 +2482,10 @@ export default function LeadProfileSideView({
 
                                       <div className="grid grid-cols-2 gap-4">
                                         <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
-                                            reasonLeft === 'Apartment'
+                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${reasonLeft === 'Apartment'
                                               ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
                                               : 'bg-white hover:bg-gray-50'
-                                          }`}
+                                            }`}
                                           onClick={() =>
                                             setReasonLeft('Apartment')
                                           }
@@ -2514,11 +2494,10 @@ export default function LeadProfileSideView({
                                         </button>
 
                                         <button
-                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
-                                            reasonLeft === 'Villa'
+                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${reasonLeft === 'Villa'
                                               ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
                                               : 'bg-white hover:bg-gray-50'
-                                          }`}
+                                            }`}
                                           onClick={() => setReasonLeft('Villa')}
                                         >
                                           Villa
@@ -2545,11 +2524,10 @@ export default function LeadProfileSideView({
                                     <div className="grid grid-cols-1 gap-4">
                                       <div className="grid grid-cols-2 gap-4">
                                         <button
-                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
-                                            reasonRight === 'Apartment & Villas'
+                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${reasonRight === 'Apartment & Villas'
                                               ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
                                               : 'bg-white hover:bg-gray-50'
-                                          }`}
+                                            }`}
                                           onClick={() =>
                                             setReasonRight('Apartment & Villas')
                                           }
@@ -2558,11 +2536,10 @@ export default function LeadProfileSideView({
                                         </button>
 
                                         <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
-                                            reasonRight === 'Plot'
+                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${reasonRight === 'Plot'
                                               ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
                                               : 'bg-white hover:bg-gray-50'
-                                          }`}
+                                            }`}
                                           onClick={() => setReasonRight('Plot')}
                                         >
                                           Plot
@@ -2571,11 +2548,10 @@ export default function LeadProfileSideView({
 
                                       <div className="grid grid-cols-2 gap-4">
                                         <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
-                                            reasonRight === 'Apartment'
+                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${reasonRight === 'Apartment'
                                               ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
                                               : 'bg-white hover:bg-gray-50'
-                                          }`}
+                                            }`}
                                           onClick={() =>
                                             setReasonRight('Apartment')
                                           }
@@ -2584,11 +2560,10 @@ export default function LeadProfileSideView({
                                         </button>
 
                                         <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
-                                            reasonRight === 'Villa'
+                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${reasonRight === 'Villa'
                                               ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
                                               : 'bg-white hover:bg-gray-50'
-                                          }`}
+                                            }`}
                                           onClick={() =>
                                             setReasonRight('Villa')
                                           }
@@ -2832,7 +2807,7 @@ export default function LeadProfileSideView({
                               <Form>
                                 <div className="box__bg relative rounded-[14px] e shadow-[0px_4px_30px_0px_#0000000D]  border-[#E7E7E9] mx-auto p-[1px]">
                                   <div className="w-full max-w-[922px]  h-auto md:h-[344px] p-5 gap-[30px] rounded-[14px] bg-white">
-                                    <div className="flex items-start gap-4  max-w-4xl mx-auto">
+                                    <div className="flex items-center gap-4 max-w-4xl mx-auto">
                                       <div className="p-2 rounded-lg bg-[#FFFFFF] shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
                                         <img
                                           src="/target-sale.svg"
@@ -2842,26 +2817,13 @@ export default function LeadProfileSideView({
                                       </div>
 
                                       <div className="flex flex-col gap-2 flex-1">
-                                        <div className="flex items-center">
-                                          <h2 className="font-normal text-[16px] leading-[100%] tracking-[0em] font-heading underline">
-                                            Heading
-                                          </h2>
-                                          <img
-                                            src="/edit-02.svg"
-                                            alt="Edit Icon"
-                                            className="w-5 h-5 cursor-pointer"
-                                            onClick={() =>
-                                              setisImportLeadsOpen(true)
-                                            }
-                                          />
-                                        </div>
-
-                                        <p className="font-normal text-[12px] leading-[100%] tracking-[0em] text-[#606062] font-heading">
-                                          Mark the visit done to open the next
-                                          step: sharing lead experience.
+                                        <p className="font-medium text-[14px] leading-[100%] tracking-[0em] text-[#2B2B2B]">
+                                          Add New Note
                                         </p>
                                       </div>
                                     </div>
+
+
 
                                     <div className=" form flex flex-col pt-0  mt-[10px] rounded bg-white">
                                       <div className=" w-full max-w-[882px] h-auto p-3 md:p-2 gap-2.5   outline-none border border-[#E7E7E9] rounded-[8px] p-2 mt-2">
@@ -3391,8 +3353,8 @@ export default function LeadProfileSideView({
                                 <ClockIcon className="mr-1 w-3 h-3" />
                                 {data?.type == 'ph'
                                   ? timeConv(
-                                      Number(data?.time)
-                                    ).toLocaleString()
+                                    Number(data?.time)
+                                  ).toLocaleString()
                                   : timeConv(data?.T).toLocaleString()}
                                 {'    '}
                                 <span className="text-red-900 ml-4 mr-4">
@@ -3430,8 +3392,8 @@ export default function LeadProfileSideView({
                                             <input
                                               type="checkbox"
                                               className="custom-checkbox"
-                                              // checked={false}
-                                              // onChange={handleChange}
+                                            // checked={false}
+                                            // onChange={handleChange}
                                             />
                                           </div>
                                         </label>
@@ -3440,7 +3402,7 @@ export default function LeadProfileSideView({
                                       <div className="flex  items-start">
                                         <h3 className="text-[16px] font-medium text-[#0091ae] mt-[2px]">
                                           {leadNextTaskObj?.notes}
-                                          {}
+                                          { }
                                         </h3>
 
                                         <div className="inline-flex items-center px-2  mt-[4px] h-[20px] text-[#606062] rounded-[8px] font-[Outfit] font-medium text-[14px] tracking-[0.25px] ">
@@ -3473,42 +3435,42 @@ export default function LeadProfileSideView({
                                     </div>
                                     {addTaskCommentObj?.ct ===
                                       leadNextTaskObj?.ct && (
-                                      <section className="flex flex-col ml-[20px]">
-                                        <AddLeadTaskComment
-                                          closeTask={closeTask}
-                                          data={leadNextTaskObj}
-                                          setShowVisitFeedBackStatusFun={
-                                            setShowVisitFeedBackStatusFun
-                                          }
-                                          setShowNotInterestedFun={
-                                            setShowNotInterestedFun
-                                          }
-                                          setAddCommentTitle={
-                                            setAddCommentTitle
-                                          }
-                                          addCommentTitle={addCommentTitle}
-                                          addCommentTime={addCommentTime}
-                                          setPostPoneToFuture={
-                                            setPostPoneToFuture
-                                          }
-                                          setClosePrevious={setClosePrevious}
-                                          setAddCommentPlusTask={
-                                            setAddCommentPlusTask
-                                          }
-                                          setAddCommentTime={setAddCommentTime}
-                                          cancelResetStatusFun={
-                                            cancelResetStatusFun
-                                          }
-                                          addTaskCommentFun={addTaskCommentFun}
-                                          addCommentPlusTask={
-                                            addCommentPlusTask
-                                          }
-                                          setSelType={setSelType}
-                                          selType={selType}
-                                          d={d}
-                                        />
-                                      </section>
-                                    )}
+                                        <section className="flex flex-col ml-[20px]">
+                                          <AddLeadTaskComment
+                                            closeTask={closeTask}
+                                            data={leadNextTaskObj}
+                                            setShowVisitFeedBackStatusFun={
+                                              setShowVisitFeedBackStatusFun
+                                            }
+                                            setShowNotInterestedFun={
+                                              setShowNotInterestedFun
+                                            }
+                                            setAddCommentTitle={
+                                              setAddCommentTitle
+                                            }
+                                            addCommentTitle={addCommentTitle}
+                                            addCommentTime={addCommentTime}
+                                            setPostPoneToFuture={
+                                              setPostPoneToFuture
+                                            }
+                                            setClosePrevious={setClosePrevious}
+                                            setAddCommentPlusTask={
+                                              setAddCommentPlusTask
+                                            }
+                                            setAddCommentTime={setAddCommentTime}
+                                            cancelResetStatusFun={
+                                              cancelResetStatusFun
+                                            }
+                                            addTaskCommentFun={addTaskCommentFun}
+                                            addCommentPlusTask={
+                                              addCommentPlusTask
+                                            }
+                                            setSelType={setSelType}
+                                            selType={selType}
+                                            d={d}
+                                          />
+                                        </section>
+                                      )}
                                   </section>
 
                                   <div className="flex flex-col items-end">
@@ -3525,48 +3487,47 @@ export default function LeadProfileSideView({
                                             ''
                                           )
                                         ) <= 24) && (
-                                        <span
-                                          className={`py-1 mb-2 ${
-                                            leadNextTaskObj?.comingSoon
-                                              ? 'text-[#ffa274]'
-                                              : 'text-[#ffa274]'
-                                          } text-[12px] text-center`}
-                                        >
-                                          {leadNextTaskObj?.comingSoon
-                                            ? 'Starts in'
-                                            : 'Delayed by'}{' '}
-                                          {Math.abs(
-                                            getDifferenceInMinutes(
-                                              leadNextTaskObj?.schTime,
-                                              ''
-                                            )
-                                          ) > 60
-                                            ? Math.abs(
+                                          <span
+                                            className={`py-1 mb-2 ${leadNextTaskObj?.comingSoon
+                                                ? 'text-[#ffa274]'
+                                                : 'text-[#ffa274]'
+                                              } text-[12px] text-center`}
+                                          >
+                                            {leadNextTaskObj?.comingSoon
+                                              ? 'Starts in'
+                                              : 'Delayed by'}{' '}
+                                            {Math.abs(
+                                              getDifferenceInMinutes(
+                                                leadNextTaskObj?.schTime,
+                                                ''
+                                              )
+                                            ) > 60
+                                              ? Math.abs(
                                                 getDifferenceInMinutes(
                                                   leadNextTaskObj?.schTime,
                                                   ''
                                                 )
                                               ) > 8640
-                                              ? `${Math.abs(
+                                                ? `${Math.abs(
                                                   getDifferenceInDays(
                                                     leadNextTaskObj?.schTime,
                                                     ''
                                                   )
                                                 )} Days `
-                                              : `${Math.abs(
+                                                : `${Math.abs(
                                                   getDifferenceInHours(
                                                     leadNextTaskObj?.schTime,
                                                     ''
                                                   )
                                                 )} Hours `
-                                            : `${Math.abs(
+                                              : `${Math.abs(
                                                 getDifferenceInMinutes(
                                                   leadNextTaskObj?.schTime,
                                                   ''
                                                 )
                                               )} Min`}
-                                        </span>
-                                      )}
+                                          </span>
+                                        )}
                                     </span>
                                   </div>
                                 </div>
@@ -3691,9 +3652,8 @@ export default function LeadProfileSideView({
                                           strokeWidth="2"
                                           strokeLinecap="round"
                                           strokeLinejoin="round"
-                                          className={`ml-1 transition-transform ${
-                                            isExpanded ? 'rotate-180' : ''
-                                          }`}
+                                          className={`ml-1 transition-transform ${isExpanded ? 'rotate-180' : ''
+                                            }`}
                                         >
                                           <polyline points="6 9 12 15 18 9"></polyline>
                                         </svg>
@@ -3847,11 +3807,10 @@ export default function LeadProfileSideView({
                                     ].map((item, index, array) => (
                                       <div
                                         key={item.label}
-                                        className={`${
-                                          index !== array.length - 1
+                                        className={`${index !== array.length - 1
                                             ? ' pb-3'
                                             : ''
-                                        }`}
+                                          }`}
                                       >
                                         <div className="flex justify-between  items-center">
                                           <div className="flex gap-2 items-center">
@@ -3917,12 +3876,12 @@ export default function LeadProfileSideView({
                                       </div>
 
                                       <div className="flex flex-wrap gap-2">
-                                        <div className="bg-[#F3E1D8] rounded-[15px] py-1 px-2 flex gap-2 items-center">
+                                        <div className="bg-[#EEF4FE] text-[#0D0A1E] rounded-[15px] py-1 px-2 flex gap-2 items-center">
                                           <div>
                                             <img
                                               src={
                                                 selProjectFullDetails?.planningApproval?.toLowerCase() ===
-                                                'yes'
+                                                  'yes'
                                                   ? '/yessale.svg'
                                                   : '/nosale.svg'
                                               }
@@ -3936,12 +3895,12 @@ export default function LeadProfileSideView({
                                           </span>
                                         </div>
 
-                                        <div className="bg-[#F3E1D8] rounded-[15px] py-1 px-2 flex gap-2 items-center">
+                                        <div className="bg-[#EEF4FE]  text-[#0D0A1E] rounded-[15px] py-1 px-2 flex gap-2 items-center">
                                           <div>
                                             <img
                                               src={
                                                 selProjectFullDetails?.planningApproval?.toLowerCase() ===
-                                                'yes'
+                                                  'yes'
                                                   ? '/yessale.svg'
                                                   : '/nosale.svg'
                                               }
@@ -3956,7 +3915,7 @@ export default function LeadProfileSideView({
                                         </div>
 
                                         {/* Amenities */}
-                                        <div className="border bg-[#F3E1D8] rounded-[15px] py-1 px-2 font-outfit font-normal text-xs leading-tight tracking-normal text-[#606062] flex items-center justify-center">
+                                        <div className="border bg-[#EEF4FE] rounded-[15px] py-1 px-2 font-outfit font-normal text-xs leading-tight tracking-normal text-[#0D0A1E] flex items-center justify-center">
                                           +21 Amenities
                                         </div>
                                       </div>
@@ -4005,9 +3964,8 @@ export default function LeadProfileSideView({
                                         strokeWidth="2"
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
-                                        className={`ml-1 transition-transform ${
-                                          isExpanded ? 'rotate-180' : ''
-                                        }`}
+                                        className={`ml-1 transition-transform ${isExpanded ? 'rotate-180' : ''
+                                          }`}
                                       >
                                         <polyline points="6 9 12 15 18 9"></polyline>
                                       </svg>
@@ -4088,7 +4046,7 @@ export default function LeadProfileSideView({
                                           PROJECTS (3)
                                         </span>
                                         <div className="ml-auto">
-                                          <button className="crm_bg_color p-2 rounded-lg text-white">
+                                          <button className="bg-[#EEF4FE] p-2 rounded-lg text-black">
                                             <PlusCircle size={20} />
                                           </button>
                                         </div>
@@ -4117,7 +4075,7 @@ export default function LeadProfileSideView({
 
                                       <button
                                         onClick={toggleProjectsExpand}
-                                        className="flex items-center text-purple-600 mt-2 font-medium"
+                                        className="flex items-center text-[#606062] mt-2 font-medium"
                                       >
                                         Less{' '}
                                         <ChevronUp size={16} className="ml-1" />
@@ -4191,11 +4149,10 @@ export default function LeadProfileSideView({
                                     ].map((item, index, array) => (
                                       <div
                                         key={item.label}
-                                        className={`flex justify-between items-center ${
-                                          index !== array.length - 1
+                                        className={`flex justify-between items-center ${index !== array.length - 1
                                             ? 'pb-3'
                                             : ''
-                                        }`}
+                                          }`}
                                       >
                                         <div className="flex gap-2 items-center">
                                           <span className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062] whitespace-nowrap">
@@ -4301,10 +4258,9 @@ export default function LeadProfileSideView({
                                   <div className="w-full flex flex-col mb-3 mt-2">
                                     <CustomSelect
                                       name="source"
-                                      label={`Why  ${
-                                        customerDetails?.Name?.toLocaleUpperCase() ||
+                                      label={`Why  ${customerDetails?.Name?.toLocaleUpperCase() ||
                                         'Customer'
-                                      } is  not Interested *`}
+                                        } is  not Interested *`}
                                       className="input mt-3"
                                       onChange={(value) => {
                                         setNotInterestType(value.value)
@@ -4386,9 +4342,8 @@ export default function LeadProfileSideView({
                             <div className="flex flex-row ">
                               <div className="flex flex-row bg-white rounded-xl border ">
                                 <div
-                                  className={` py-1 pr-4 pl-4 min-w-[62px] ${
-                                    selFilterVal === 'all' ? 'bg-[#E8E8E8]' : ''
-                                  } rounded-xl rounded-r-none`}
+                                  className={` py-1 pr-4 pl-4 min-w-[62px] ${selFilterVal === 'all' ? 'bg-[#E8E8E8]' : ''
+                                    } rounded-xl rounded-r-none`}
                                   onClick={() => setSelFilterVal('all')}
                                 >
                                   <span className="mr-1 text-[10px] ">All</span>
@@ -4400,11 +4355,10 @@ export default function LeadProfileSideView({
                                   }
                                 </div>
                                 <div
-                                  className={` py-1 pr-4 pl-4 min-w-[62px] border-x ${
-                                    selFilterVal === 'pending'
+                                  className={` py-1 pr-4 pl-4 min-w-[62px] border-x ${selFilterVal === 'pending'
                                       ? 'bg-[#E8E8E8] text-[0E0A1F]'
                                       : ''
-                                  } `}
+                                    } `}
                                   onClick={() => setSelFilterVal('pending')}
                                 >
                                   {/* <CheckCircleIcon className="w-4 h-3  inline " /> */}
@@ -4424,11 +4378,10 @@ export default function LeadProfileSideView({
                                   </span>
                                 </div>
                                 <div
-                                  className={` py-1 pr-4 pl-4 min-w-[62px] ${
-                                    selFilterVal === 'completed'
+                                  className={` py-1 pr-4 pl-4 min-w-[62px] ${selFilterVal === 'completed'
                                       ? 'bg-[#E8E8E8]'
                                       : ''
-                                  }  rounded-xl rounded-l-none`}
+                                    }  rounded-xl rounded-l-none`}
                                   onClick={() => setSelFilterVal('completed')}
                                 >
                                   {/* <CheckCircleIcon className="w-4 h-3 inline text-[#058527]" /> */}
@@ -4625,28 +4578,28 @@ export default function LeadProfileSideView({
 
                                                 {tempLeadStatus ===
                                                   'visitfixed' && (
-                                                  <div className="">
-                                                    <label className="block font-[Outfit] block font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162] mb-2">
-                                                      Assign lead to Site
-                                                      Incharge
-                                                    </label>
-                                                    <div className="relative">
-                                                      <div className="w-full  border-b border-[#E7E7E9] bg-transparent flex justify-between items-center cursor-pointer">
-                                                        <AssigedToDropComp
-                                                          assignerName={
-                                                            assignerName
-                                                          }
-                                                          id={id}
-                                                          setAssigner={
-                                                            setAssigner
-                                                          }
-                                                          usersList={usersList}
-                                                          className="absolute top-[100%]  z-[999]"
-                                                        />
+                                                    <div className="">
+                                                      <label className="block font-[Outfit] block font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162] mb-2">
+                                                        Assign lead to Site
+                                                        Incharge
+                                                      </label>
+                                                      <div className="relative">
+                                                        <div className="w-full  border-b border-[#E7E7E9] bg-transparent flex justify-between items-center cursor-pointer">
+                                                          <AssigedToDropComp
+                                                            assignerName={
+                                                              assignerName
+                                                            }
+                                                            id={id}
+                                                            setAssigner={
+                                                              setAssigner
+                                                            }
+                                                            usersList={usersList}
+                                                            className="absolute top-[100%]  z-[999]"
+                                                          />
+                                                        </div>
                                                       </div>
                                                     </div>
-                                                  </div>
-                                                )}
+                                                  )}
                                               </div>
                                             </section>
                                             <div className="flex flex-row mt-4 justify-between pr-4">
@@ -4841,12 +4794,11 @@ export default function LeadProfileSideView({
 )} */}
                                       {data?.comments?.length > 0 && (
                                         <div
-                                          className={`flex items-center mt-[2px] mb-1 ${
-                                            data?.stsType === 'visitfixed' &&
-                                            data?.sts !== 'completed'
+                                          className={`flex items-center mt-[2px] mb-1 ${data?.stsType === 'visitfixed' &&
+                                              data?.sts !== 'completed'
                                               ? 'ml-[15px]'
                                               : 'ml-[15px]'
-                                          }`}
+                                            }`}
                                         >
                                           <p className="font-outfit font-medium text-[12px] leading-[100%] tracking-[0%] text-[#606062] ml-[16px]">
                                             {data.comments.length} Comment
@@ -4865,16 +4817,14 @@ export default function LeadProfileSideView({
                                             //   : ''
                                             //   }`}
 
-                                            className={` ml-[29px] ${
-                                              data?.stsType === 'visitfixed' &&
-                                              data?.sts !== 'completed'
+                                            className={` ml-[29px] ${data?.stsType === 'visitfixed' &&
+                                                data?.sts !== 'completed'
                                                 ? 'pl-0'
                                                 : 'pl-0'
-                                            } py-[4px] text-[14px] text-[#7E92A2] tracking-wide ${
-                                              data?.comments?.length - 1 === k
+                                              } py-[4px] text-[14px] text-[#7E92A2] tracking-wide ${data?.comments?.length - 1 === k
                                                 ? 'mb-1'
                                                 : ''
-                                            }`}
+                                              }`}
                                           >
                                             <section className="flex flex-row justify-between items-center w-full">
                                               <div className="flex items-center space-x-2">
@@ -4909,10 +4859,9 @@ export default function LeadProfileSideView({
                                             {showNotInterested && (
                                               <div className="w-full flex flex-col mb-3 mt-2">
                                                 <SelectDropDownComp
-                                                  label={`Why  ${
-                                                    customerDetails?.Name?.toLocaleUpperCase() ||
+                                                  label={`Why  ${customerDetails?.Name?.toLocaleUpperCase() ||
                                                     'Customer'
-                                                  } is  not Interested*`}
+                                                    } is  not Interested*`}
                                                   options={notInterestOptions}
                                                   value={fbTitle}
                                                   onChange={(value) => {
@@ -4947,12 +4896,11 @@ export default function LeadProfileSideView({
                                                     (option) => (
                                                       <button
                                                         key={option.value}
-                                                        className={`py-2 px-8 text-[12px] flex border border-[#E7E7E9] rounded-lg items-center space-x-1 rounded-md ${
-                                                          fbTitle ===
-                                                          option.value
+                                                        className={`py-2 px-8 text-[12px] flex border border-[#E7E7E9] rounded-lg items-center space-x-1 rounded-md ${fbTitle ===
+                                                            option.value
                                                             ? 'sale_bg_color text-white'
                                                             : 'bg-white text-gray-700'
-                                                        }`}
+                                                          }`}
                                                         onClick={() =>
                                                           setFbTitle(
                                                             option.value
@@ -5382,7 +5330,7 @@ export default function LeadProfileSideView({
                       <div className="max-w-4xl mx-auto bg-white  rounded-[14px] border border-[#E7E7E9] p-[20px] shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)]">
                         <div className="relative">
                           <div
-                            className="absolute top-0 bottom-0 left-[22px] w-0.5 bg-[#E17059]"
+                            className="absolute top-0 bottom-0 left-[22px] w-0.5 bg-[#5CA9E3]"
                             style={{ height: '100%' }}
                           ></div>
 
@@ -5394,22 +5342,16 @@ export default function LeadProfileSideView({
                                     <div className="w-8 h-8  rounded-md flex items-center justify-center  z-10">
                                       {data?.type === 'ph' ? (
                                         <img
-                                          src="/timelineo.svg"
+                                          src="/timelinerounded.svg"
                                           alt="Completed"
-                                          className="w-4 h-4"
+                                          className="w-7 h-7"
                                         />
                                       ) : (
-                                        // <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                        //   <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                                        // </svg>
                                         <img
-                                          src="/timelineo.svg"
+                                          src="/timelinerounded.svg"
                                           alt="Completed"
-                                          className="w-4 h-4"
+                                          className="w-7 h-7"
                                         />
-                                        // <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                        //   <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1z" clipRule="evenodd"></path>
-                                        // </svg>
                                       )}
                                     </div>
                                   </div>
@@ -5465,11 +5407,11 @@ export default function LeadProfileSideView({
                                             <ClockIcon className="mr-1 w-3 h-3" />
                                             {data?.type == 'ph'
                                               ? timeConv(
-                                                  Number(data?.time)
-                                                ).toLocaleString()
+                                                Number(data?.time)
+                                              ).toLocaleString()
                                               : timeConv(
-                                                  data?.T
-                                                ).toLocaleString()}
+                                                data?.T
+                                              ).toLocaleString()}
                                             {'    '}
                                             <span className="text-red-900 ml-4 mr-4">
                                               {Number(data?.duration)} sec
@@ -5514,11 +5456,11 @@ export default function LeadProfileSideView({
                                           <span className="text-xs  text-gray-500 ml-1">
                                             {data?.type == 'ph'
                                               ? timeConv(
-                                                  Number(data?.time)
-                                                ).toLocaleString()
+                                                Number(data?.time)
+                                              ).toLocaleString()
                                               : timeConv(
-                                                  data?.T
-                                                ).toLocaleString()}
+                                                data?.T
+                                              ).toLocaleString()}
                                           </span>
 
                                           <div className="w-[2px] mx-2 mt-[4px] h-[8px] border-0 border-r"></div>
@@ -5552,7 +5494,7 @@ export default function LeadProfileSideView({
         setOpen={setisImportLeadsOpen}
         title={'Edit Lead'}
         leadDetailsObj={leadDetailsObj}
-        widthClass="max-w-2xl"
+        widthClass="max-w-4xl"
       />
     </>
   )

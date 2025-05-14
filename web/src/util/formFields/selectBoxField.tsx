@@ -45,6 +45,7 @@ export const CustomSelect = ({
   label,
   className,
   labelClassName = 'text-gray-700',
+  customStyles
 }) => {
   const defaultValue = (options, value) => {
     return (

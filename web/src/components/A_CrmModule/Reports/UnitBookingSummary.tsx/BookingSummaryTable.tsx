@@ -993,7 +993,7 @@ export default function UnitSummaryTableBody({
   return (
     <Section sx={{ width: '100%' }} style={{ border: 'none', radius: 0 }}>
       <section
-        style={{ borderTop: '1px solid #efefef', background: '#fefafb' }}
+        style={{ borderTop: '1px solid #efefef', background: '#FFFFFF' }}
       >
         <TableContainer sx={{ maxHeight: 640 }}>
           <Table

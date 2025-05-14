@@ -398,7 +398,7 @@ export default function ProjectManagement() {
 
                     <button
                       onClick={toggleProjectsExpand}
-                      className="flex items-center text-purple-600 mt-2 font-medium"
+                      className="flex items-center text-[#606062] mt-2 font-medium"
                     >
                       Less <ChevronUp size={16} className="ml-1" />
                     </button>

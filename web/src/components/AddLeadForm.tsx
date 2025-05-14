@@ -754,6 +754,63 @@ const AddLeadForm = ({
                               }}
                               value={formik.values.source}
                               options={sourceList}
+
+                                           customStyles={{
+                      option: (provided, state) => ({
+                        ...provided,
+                        backgroundColor: state.isSelected
+                          ? '#C8E7FF'
+                          : state.isFocused
+                          ? '#EEF4FE'
+                          : provided.backgroundColor,
+                        color: state.isSelected
+                          ? '#126595'
+                          : state.isFocused
+                          ? '#0D0A1E'
+                          : provided.color,
+                          cursor: 'pointer',
+
+
+                          
+
+                      }),
+                      control: (base) => ({
+                        ...base,
+                        height: 30,
+                        minHeight: 30,
+                        padding: 0,
+                        borderRadius: 8,
+                      }),
+                      valueContainer: (base) => ({
+                        ...base,
+                        alignItems: 'initial',
+                        paddingTop: 0,
+                        marginTop: 3,
+                      }),
+                      dropdownIndicator: (base) => ({
+                        ...base,
+                        paddingTop: 5,
+                      }),
+                      indicatorSeparator: (base) => ({
+                        ...base,
+                        marginTop: 6,
+                        marginBottom: 10,
+                      }),
+                      menu: (provided) => ({
+                        ...provided,
+                        marginTop: 0,
+                        zIndex: 9999,
+                        borderRadius: 8,
+                      }),
+                      menuList: (provided, state) => ({
+                        ...provided,
+                        paddingTop: 0,
+                        paddingBottom: 0,
+                        borderRadius: 8,
+                      }),
+                    }}
+
+
                             />
                           </div>
 
@@ -769,6 +826,61 @@ const AddLeadForm = ({
                               }}
                               value={formik.values.project}
                               options={projectList}
+
+                                           customStyles={{
+                      option: (provided, state) => ({
+                        ...provided,
+                        backgroundColor: state.isSelected
+                          ? '#C8E7FF'
+                          : state.isFocused
+                          ? '#EEF4FE'
+                          : provided.backgroundColor,
+                        color: state.isSelected
+                          ? '#126595'
+                          : state.isFocused
+                          ? '#0D0A1E'
+                          : provided.color,
+                          cursor: 'pointer',
+
+
+                          
+
+                      }),
+                      control: (base) => ({
+                        ...base,
+                        height: 30,
+                        minHeight: 30,
+                        padding: 0,
+                        borderRadius: 8,
+                      }),
+                      valueContainer: (base) => ({
+                        ...base,
+                        alignItems: 'initial',
+                        paddingTop: 0,
+                        marginTop: 3,
+                      }),
+                      dropdownIndicator: (base) => ({
+                        ...base,
+                        paddingTop: 5,
+                      }),
+                      indicatorSeparator: (base) => ({
+                        ...base,
+                        marginTop: 6,
+                        marginBottom: 10,
+                      }),
+                      menu: (provided) => ({
+                        ...provided,
+                        marginTop: 0,
+                        zIndex: 9999,
+                        borderRadius: 8,
+                      }),
+                      menuList: (provided, state) => ({
+                        ...provided,
+                        paddingTop: 0,
+                        paddingBottom: 0,
+                        borderRadius: 8,
+                      }),
+                    }}
                             />
                           </div>
                         </div>
@@ -790,6 +902,62 @@ const AddLeadForm = ({
                                 }}
                                 value={formik.values.assignedTo}
                                 options={usersList}
+
+                                                                           customStyles={{
+                      option: (provided, state) => ({
+                        ...provided,
+                        backgroundColor: state.isSelected
+                          ? '#C8E7FF'
+                          : state.isFocused
+                          ? '#EEF4FE'
+                          : provided.backgroundColor,
+                        color: state.isSelected
+                          ? '#126595'
+                          : state.isFocused
+                          ? '#0D0A1E'
+                          : provided.color,
+                          cursor: 'pointer',
+
+
+                          
+
+                      }),
+                      control: (base) => ({
+                        ...base,
+                        height: 30,
+                        minHeight: 30,
+                        padding: 0,
+                        borderRadius: 8,
+                      }),
+                      valueContainer: (base) => ({
+                        ...base,
+                        alignItems: 'initial',
+                        paddingTop: 0,
+                        marginTop: 3,
+                      }),
+                      dropdownIndicator: (base) => ({
+                        ...base,
+                        paddingTop: 5,
+                      }),
+                      indicatorSeparator: (base) => ({
+                        ...base,
+                        marginTop: 6,
+                        marginBottom: 10,
+                      }),
+                      menu: (provided) => ({
+                        ...provided,
+                        marginTop: 0,
+                        zIndex: 9999,
+                        borderRadius: 8,
+                      }),
+                      menuList: (provided, state) => ({
+                        ...provided,
+                        paddingTop: 0,
+                        paddingBottom: 0,
+                        borderRadius: 8,
+                      }),
+                    }}
+
                               />
 
                               <p
@@ -915,6 +1083,65 @@ const AddLeadForm = ({
                                 }}
                                 value={formik.values.budget}
                                 options={budgetList}
+
+
+                                
+                                                                           customStyles={{
+                      option: (provided, state) => ({
+                        ...provided,
+                        backgroundColor: state.isSelected
+                          ? '#C8E7FF'
+                          : state.isFocused
+                          ? '#EEF4FE'
+                          : provided.backgroundColor,
+                        color: state.isSelected
+                          ? '#126595'
+                          : state.isFocused
+                          ? '#0D0A1E'
+                          : provided.color,
+                          cursor: 'pointer',
+
+
+                          
+
+                      }),
+                      control: (base) => ({
+                        ...base,
+                        height: 30,
+                        minHeight: 30,
+                        padding: 0,
+                        borderRadius: 8,
+                      }),
+                      valueContainer: (base) => ({
+                        ...base,
+                        alignItems: 'initial',
+                        paddingTop: 0,
+                        marginTop: 3,
+                      }),
+                      dropdownIndicator: (base) => ({
+                        ...base,
+                        paddingTop: 5,
+                      }),
+                      indicatorSeparator: (base) => ({
+                        ...base,
+                        marginTop: 6,
+                        marginBottom: 10,
+                      }),
+                      menu: (provided) => ({
+                        ...provided,
+                        marginTop: 0,
+                        zIndex: 9999,
+                        borderRadius: 8,
+                      }),
+                      menuList: (provided, state) => ({
+                        ...provided,
+                        paddingTop: 0,
+                        paddingBottom: 0,
+                        borderRadius: 8,
+                      }),
+                    }}
+
+                              
                               />
                               <p
                                 className="text-sm text-red-500 hidden mt-3"
@@ -964,14 +1191,14 @@ const AddLeadForm = ({
                             {title === 'Edit Lead' && (
                               <div className="mt-8 z-10 w-[93%]  text-right md:block flex absolute bottom-0 pb-2 bg-white p-4 space-y-4 md:space-y-0 md:space-x-4">
                                 <button
-                                  className="mb-4 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-sm hover:shadow-lg hover:bg-gray-100"
+                                  className="mb-4 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-[8px]"
                                   type="reset"
                                   onClick={() => resetter()}
                                 >
                                   Reset
                                 </button>
                                 <button
-                                  className="mb-2 md:mb-0 bg-[#0891B2] px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500"
+                                  className="mb-2 md:mb-0 sale_bg_color px-5 py-2 text-sm shadow-sm font-medium mr-10 tracking-wider text-white  rounded-[8px]"
                                   type="submit"
                                   disabled={loading}
                                 >

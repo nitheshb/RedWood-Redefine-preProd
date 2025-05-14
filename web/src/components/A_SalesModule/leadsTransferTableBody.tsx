@@ -322,14 +322,14 @@ const LeadsTransferTableBody = ({
             ) : (
               // <table className="min-w-full  rounded-lg  text-center mt-6">
               <table
-                className="min-w-full rounded-2xl overflow-hidden text-center mt-6"
+                className="min-w-full rounded-2xl overflow-hidden text-center border border-[#E7E7E9] mt-6"
                 style={{ borderCollapse: 'separate', borderSpacing: 0 }}
               >
                 <thead className="rounded-2xl">
                   <tr>
                     <th
                       scope="col"
-                      className="text-sm font-medium bg-[#FDEFE7] text-gray-900  "
+                      className="text-sm font-medium bg-[#F5F5F5]  border-b border-[#E7E7E9] text-gray-900  "
                     >
                       <label
                         htmlFor="selectAllCheckbox"
@@ -360,7 +360,7 @@ const LeadsTransferTableBody = ({
                       <th
                         key={i}
                         scope="col"
-                        className={`text-sm font-medium text-[#000000] bg-[#FDEFE7] px-2 py-2 ${
+                        className={`text-sm font-medium text-[#000000] bg-[#F5F5F5] border-b border-[#E7E7E9] px-2 py-2 ${
                           // ['Project', 'Lead Name'].includes(d.label)
                           //   ? 'text-left'
                           //   : ''

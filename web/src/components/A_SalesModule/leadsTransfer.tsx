@@ -314,55 +314,58 @@ const LeadsTransferHome = ({ project }) => {
                           }}
                           value={selLeadsOf?.value}
                           options={[...usersAllList]}
-                          customStyles={{
-                            option: (provided, state) => ({
-                              ...provided,
-                              backgroundColor: state.isSelected
-                                ? '#94B5ED'
-                                : state.isFocused
-                                ? '#FDEFE7'
-                                : provided.backgroundColor,
-                              color: state.isSelected
-                                ? 'white'
-                                : state.isFocused
-                                ? '#2B2B2B'
-                                : provided.color,
-                            }),
-                            control: (base) => ({
-                              ...base,
-                              height: 30,
-                              minHeight: 30,
-                              padding: 0,
-                              borderRadius: 8,
-                            }),
-                            valueContainer: (base) => ({
-                              ...base,
-                              alignItems: 'initial',
-                              paddingTop: 0,
-                              marginTop: 3,
-                            }),
-                            dropdownIndicator: (base) => ({
-                              ...base,
-                              paddingTop: 5,
-                            }),
-                            indicatorSeparator: (base) => ({
-                              ...base,
-                              marginTop: 6,
-                              marginBottom: 10,
-                            }),
-                            menu: (provided) => ({
-                              ...provided,
-                              marginTop: 0,
-                              zIndex: 9999,
-                              borderRadius: 8,
-                            }),
-                            menuList: (provided, state) => ({
-                              ...provided,
-                              paddingTop: 0,
-                              paddingBottom: 0,
-                              borderRadius: 8,
-                            }),
-                          }}
+
+                                              customStyles={{
+                      option: (provided, state) => ({
+                        ...provided,
+                        backgroundColor: state.isSelected
+                          ? '#C8E7FF'
+                          : state.isFocused
+                          ? '#EEF4FE'
+                          : provided.backgroundColor,
+                        color: state.isSelected
+                          ? '#126595'
+                          : state.isFocused
+                          ? '#0D0A1E'
+                          : provided.color,
+                          cursor: 'pointer',
+                      }),
+                      control: (base) => ({
+                        ...base,
+                        height: 30,
+                        minHeight: 30,
+                        padding: 0,
+                        borderRadius: 8,
+                      }),
+                      valueContainer: (base) => ({
+                        ...base,
+                        alignItems: 'initial',
+                        paddingTop: 0,
+                        marginTop: 3,
+                      }),
+                      dropdownIndicator: (base) => ({
+                        ...base,
+                        paddingTop: 5,
+                      }),
+                      indicatorSeparator: (base) => ({
+                        ...base,
+                        marginTop: 6,
+                        marginBottom: 10,
+                      }),
+                      menu: (provided) => ({
+                        ...provided,
+                        marginTop: 0,
+                        zIndex: 9999,
+                        borderRadius: 8,
+                      }),
+                      menuList: (provided, state) => ({
+                        ...provided,
+                        paddingTop: 0,
+                        paddingBottom: 0,
+                        borderRadius: 8,
+                      }),
+                    }}
+            
                         />
                       </section>
 
@@ -380,55 +383,58 @@ const LeadsTransferHome = ({ project }) => {
                           }}
                           value={selLeadTransferTo?.value}
                           options={[...usersList]}
-                          customStyles={{
-                            option: (provided, state) => ({
-                              ...provided,
-                              backgroundColor: state.isSelected
-                                ? '#94B5ED'
-                                : state.isFocused
-                                ? '#FDEFE7'
-                                : provided.backgroundColor,
-                              color: state.isSelected
-                                ? 'white'
-                                : state.isFocused
-                                ? '#2B2B2B'
-                                : provided.color,
-                            }),
-                            control: (base) => ({
-                              ...base,
-                              height: 30,
-                              minHeight: 30,
-                              padding: 0,
-                              borderRadius: 8,
-                            }),
-                            valueContainer: (base) => ({
-                              ...base,
-                              alignItems: 'initial',
-                              paddingTop: 0,
-                              marginTop: 3,
-                            }),
-                            dropdownIndicator: (base) => ({
-                              ...base,
-                              paddingTop: 5,
-                            }),
-                            indicatorSeparator: (base) => ({
-                              ...base,
-                              marginTop: 6,
-                              marginBottom: 10,
-                            }),
-                            menu: (provided) => ({
-                              ...provided,
-                              marginTop: 0,
-                              zIndex: 9999,
-                              borderRadius: 8,
-                            }),
-                            menuList: (provided, state) => ({
-                              ...provided,
-                              paddingTop: 0,
-                              paddingBottom: 0,
-                              borderRadius: 8,
-                            }),
-                          }}
+
+                        customStyles={{
+                      option: (provided, state) => ({
+                        ...provided,
+                        backgroundColor: state.isSelected
+                          ? '#C8E7FF'
+                          : state.isFocused
+                          ? '#EEF4FE'
+                          : provided.backgroundColor,
+                        color: state.isSelected
+                          ? '#126595'
+                          : state.isFocused
+                          ? '#0D0A1E'
+                          : provided.color,
+                          cursor: 'pointer',
+                      }),
+                      control: (base) => ({
+                        ...base,
+                        height: 30,
+                        minHeight: 30,
+                        padding: 0,
+                        borderRadius: 8,
+                      }),
+                      valueContainer: (base) => ({
+                        ...base,
+                        alignItems: 'initial',
+                        paddingTop: 0,
+                        marginTop: 3,
+                      }),
+                      dropdownIndicator: (base) => ({
+                        ...base,
+                        paddingTop: 5,
+                      }),
+                      indicatorSeparator: (base) => ({
+                        ...base,
+                        marginTop: 6,
+                        marginBottom: 10,
+                      }),
+                      menu: (provided) => ({
+                        ...provided,
+                        marginTop: 0,
+                        zIndex: 9999,
+                        borderRadius: 8,
+                      }),
+                      menuList: (provided, state) => ({
+                        ...provided,
+                        paddingTop: 0,
+                        paddingBottom: 0,
+                        borderRadius: 8,
+                      }),
+                    }}
+          
                         />
                       </section>
                     </section>
@@ -467,7 +473,7 @@ const LeadsTransferHome = ({ project }) => {
 
           <div className="">
             <div>
-              <div className=" rounded px-1 mb-3">
+              <div className=" rounded border-b border-[#E7E7E9] px-1 mb-3">
                 {/* <div className="font-semibold">Current Lead Status</div> */}
                 <div className="sm:flex items-center justify-between rounded  ">
                   <div className="flex items-center">
@@ -538,7 +544,7 @@ const LeadsTransferHome = ({ project }) => {
                                   : 'text-[#606062]'
                               }`}
                             >
-                              <span className="text-sm font-normal">
+                              <span className="text-[14px]  font-medium text-[#000000]">
                                 {d.lab}
                               </span>
                               {/* <span className="text-xs mt-1">{d.count}</span> */}
