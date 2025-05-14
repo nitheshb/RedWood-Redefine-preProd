@@ -11,6 +11,7 @@ import LeadPerformance3Pie from '../charts/LeadPerformanceSummary3Pie'
 import LeadHomeChartBar from '../charts/LeadPerformanceHomeChartBar'
 import LeadLoctionMap from '../charts/locationMap'
 import QualifiedBySource2Bars from '../charts/QualifiedBySource2Bars'
+import HotColdRadialShape from '../charts/HotColdRadialShape'
 
 const LeadsCoversionGraphs = ({
   sourceRawFilData,
@@ -277,11 +278,9 @@ const LeadsCoversionGraphs = ({
                   <div className="flex flex-col"></div>
                   <section className="flex flex-row justify-between">
                     <article className="flex flex-col">
-                      <div className="text-[#1f2937]">Leads by Country</div>
-                      <div className="text-[#1f2937] font-[700] text-2xl mt-2">
-                        ₹62,820.59
-                      </div>
-                      <div className="text-[#EF4444] text-xs mt-1">
+                      <div className="text-[#1f2937]">Qualified by Source</div>
+
+                      <div className="text-[#808080] text-xs mt-1">
                         0.2% less than the previous 30 days
                       </div>
                     </article>
@@ -296,11 +295,9 @@ const LeadsCoversionGraphs = ({
                   <div className="flex flex-col"></div>
                   <section className="flex flex-row justify-between">
                     <article className="flex flex-col">
-                      <div className="text-[#1f2937]">Revenue</div>
-                      <div className="text-[#1f2937] font-[700] text-2xl mt-2">
-                        ₹62,820.59
-                      </div>
-                      <div className="text-[#EF4444] text-xs mt-1">
+                      <div className="text-[#1f2937]">Hot vs Cold</div>
+
+                      <div className="text-[#808080] text-xs mt-1">
                         0.2% less than the previous 30 days
                       </div>
                     </article>
@@ -327,8 +324,9 @@ const LeadsCoversionGraphs = ({
                         </section>
                       </article>
                     </section>
-                    <div className='w-[300px]'>
-                    <PieChartComponent />
+                    <div>
+                    <HotColdRadialShape leadsData={leadsPayload} />
+
                     </div>
                   </div>
                 </section>
