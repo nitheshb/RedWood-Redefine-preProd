@@ -16,10 +16,10 @@ const PieChartComponent = () => {
         data={data}
         dataKey="value"
         nameKey="name"
-        cx="50%"
-        cy="50%"
+        cx="20%"
+        cy="20%"
         outerRadius={150}
-        fill="#8884d8"
+        fill="#8884D8"
         label={(entry) => `${entry.name} (${entry.percent}%)`}
       >
         {data.map((entry, index) => (

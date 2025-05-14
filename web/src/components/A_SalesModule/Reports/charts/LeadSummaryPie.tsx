@@ -54,9 +54,12 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export default function Example({leadsData}) {
+export default function LeadSummaryPie({leadsData}) {
   const totalVisitors = React.useMemo(() => {
+    if(leadsData.length>0) {
+    return leadsData[0]?.count
     return leadsData.reduce((acc, curr) => acc + curr.visitors, 0)
+    }
   }, [])
 
   return (
@@ -104,7 +107,7 @@ export default function Example({leadsData}) {
                           y={(viewBox.cy || 0) + 24}
                           className="fill-muted-foreground"
                         >
-                          Visitors
+                          Leads
                         </tspan>
                       </text>
                     )
@@ -114,16 +117,20 @@ export default function Example({leadsData}) {
             </Pie>
           </PieChart>
         </ChartContainer>
+        {/* leadsData */}
+        <div className="flex flex-col w-full justify-between p-4 py-6">
+        {leadsData.map((d, i)=>
 
-        <section className="flex flex-row w-full justify-between">
+        <section className="flex flex-row w-full justify-between border-b border-[#F3F2F9] ">
         <section className="flex flex-row">
-                        <div className="text-[#1f2937] w-3 h-3 mt-[2px] mx-2 rounded-full bg-[#9333ea]"></div>
+                        <div className={`text-[#1f2937] w-3 h-3 mt-[2px] mx-2 rounded-full `}  style={{ backgroundColor: d?.fill }}></div>
                         <div className="text-[#4b5563] text-xs">
                           {' '}
-                          Leads
+                          {d?.stausTitle}
                         </div>
-                      </section> <span>400</span>
+                      </section> <span>{d?.count}</span>
         </section>
+        )}</div>
       </CardContent>
       {/* <CardFooter className="flex-col gap-2 text-sm">
         <div className="flex items-center gap-2 font-medium leading-none">
