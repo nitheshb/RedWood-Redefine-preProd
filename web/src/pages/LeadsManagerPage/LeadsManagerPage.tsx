@@ -16,6 +16,7 @@ import { useAuth } from 'src/context/firebase-auth-context'
 import UnitsInventoryHome from 'src/components/A_ProjModule/UnitsInvertoryHome'
 import LeadsTransferHome from 'src/components/A_SalesModule/leadsTransfer'
 import ProfileSummary from 'src/components/A_SalesModule/Reports/profileSummary'
+import LeadsControllerHome from 'src/components/A_SalesModule/LeadsController/LeadsControllerHome'
 
 const LeadsManagerPage = (props, sourceLink) => {
   const { user } = useAuth()
@@ -107,13 +108,16 @@ const LeadsManagerPage = (props, sourceLink) => {
               {viewable === 'leadslake' && (
                 <LeadsLakeHomePage taskType={viewable} />
               )}
-              {viewable === 'leadsController' && (
+              {viewable === 'leadsTransfer' && (
                 <LeadsTransferHome
                   project={{
                     projectName: 'Projects',
                   }}
                   isEdit={undefined}
                 />
+              )}
+               {viewable === 'leadsController' && (
+                <LeadsControllerHome taskType={viewable} />
               )}
               {viewable === 'units_inventory' && (
                 <section className="mx-1">
