@@ -236,8 +236,8 @@ const EnhancedTableToolbar = (props) => {
   }, [rows])
 
   React.useEffect(() => {
-    if(pId){
-    getProjectDetails(pId)
+    if (pId) {
+      getProjectDetails(pId)
     }
   }, [])
   const { user } = useAuth()
@@ -828,11 +828,11 @@ const EnhancedTableToolbar = (props) => {
           z.value = ['fixedcost'].includes(d1?.units?.value)
             ? Number(d1?.percentage)
             : inx == 1
-            ? Number(
+              ? Number(
                 (applicablePlotCost * (d1?.percentage / 100)).toFixed(2) -
-                  bookingAdvanceCost
+                bookingAdvanceCost
               )
-            : Number((applicablePlotCost * (d1?.percentage / 100)).toFixed(2))
+              : Number((applicablePlotCost * (d1?.percentage / 100)).toFixed(2))
           // z.value = applicablePlotCost
         } else {
           console.log('d1 is ', area, d1?.units?.value, Number(d1?.percentage))
@@ -2609,6 +2609,986 @@ export default function LfileuploadTableTemplate({
           align: 'left',
           format: (value) => value.toFixed(2),
         },
+
+
+
+        {
+          id: 'LeadsId',
+          label: 'Leads Id',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'Salutation',
+          label: 'Salutation',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+        {
+          id: 'LastName',
+          label: 'Last Name',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'LeadHotness',
+          label: 'Lead Hotness',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'LeadStage',
+          label: 'Lead Stage',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'Verified',
+          label: 'Verified',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'PhoneCountry',
+          label: 'Phone Country',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'SecondaryPhones',
+          label: 'Secondary Phones',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'SecondaryEmails',
+          label: 'Secondary Emails',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'ProjectCount',
+          label: 'Project Count',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'LastProjectAdded',
+          label: 'Last Project Added',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'Location',
+          label: 'Location',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'Address',
+          label: 'Address',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'Street',
+          label: 'Street',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'City',
+          label: 'City',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'Region',
+          label: 'Region',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'Zip Code',
+          label: 'Zip Code',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'Country',
+          label: 'Country',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'PropertyType',
+          label: 'Property Type',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'MinBudget',
+          label: 'Min Budget',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+        {
+          id: 'MaxBudget',
+          label: 'Max Budget',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'MinPossession',
+          label: 'Min Possession',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'MaxPossession',
+          label: 'Max Possession',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'BedroomPreference',
+          label: 'Bedroom Preference',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'Purpose',
+          label: 'Purpose',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'FundingSource',
+          label: 'Funding Source',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'Furnishing',
+          label: 'Furnishing',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'Facing',
+          label: 'Facing',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'Transactiontype',
+          label: 'Transaction type',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+        {
+          id: 'Bathroompreference',
+          label: 'Bathroom preference',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'Area',
+          label: 'Area',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'Configuration',
+          label: 'Configuration',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'Interestedin',
+          label: 'Interested in',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'NRI',
+          label: 'NRI',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'FirstCampaign',
+          label: 'First-Campaign',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'FirstSubSource',
+          label: 'First-Sub Source',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'FirstMedium',
+          label: 'First Medium',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'FirstCampaignProject',
+          label: 'First Campaign Project',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+        {
+          id: 'LastCampaign',
+          label: 'Last Campaign',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'LastCampaignAddedOn',
+          label: 'Last Campaign Added On',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'LastSourceOfEnquiry',
+          label: 'Last-Source Of Enquiry',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'Last Sub Source',
+          label: 'LastSubSource',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'LastMedium',
+          label: 'Last-Medium',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'LastCampaignProject',
+          label: 'Last Campaign Project',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'Reengaged Count',
+          label: 'Reengaged Count',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'LeadOwnerEmailID',
+          label: 'Lead Owner Email ID',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'ReceivedOn',
+          label: 'Received On',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+        {
+          id: 'Firstcontactedon',
+          label: 'First contacted on',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'FirstcontactedoninMinutes',
+          label: 'First contacted on in Minutes',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+        {
+          id: 'FirstcontactedAttemptedon',
+          label: 'First contacted Attempted on',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+        {
+          id: 'FirstcontactedAttemptedoninMinutes',
+          label: 'First contacted Attempted on in Minutes',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+        {
+          id: 'LastContactedOn',
+          label: 'Last Contacted On',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+        {
+          id: 'PushedOn',
+          label: 'Pushed On',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+        {
+          id: 'Pushedby',
+          label: 'Pushed by',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+
+        {
+          id: 'ReassignedBy',
+          label: 'Reassigned By',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'ReassignedOn',
+          label: 'Reassigned On',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+        {
+          id: 'LastSalesContactedOn',
+          label: 'Last Sales Contacted On',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+        {
+          id: 'LastSalesContactAttemptedOn',
+          label: 'Last Sales Contact Attempted On',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+        {
+          id: 'FollowupStatus',
+          label: 'Followup Status',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+        {
+          id: 'NextFollowupDate',
+          label: 'Next Followup Date',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+        {
+          id: 'LastFollowupStatus',
+          label: 'Last Followup Status',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+
+
+        {
+          id: 'LastFollowupDate',
+          label: 'Last Followup Date',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'SitevisitStatus',
+          label: 'Site visit Status',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+        {
+          id: 'LastSitevisitConductedDate',
+          label: 'Last Site visit Conducted Date',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+        {
+          id: 'NextSitevisitDate',
+          label: 'Next Site visit Date',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+        {
+          id: 'ThirdLastNote',
+          label: 'Third Last Note',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+        {
+          id: 'SecondLastNote',
+          label: 'Second Last Note',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+        {
+          id: 'Lastnote',
+          label: 'Last note',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+
+
+        {
+          id: 'LastNoteBy',
+          label: 'Last Note By',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'LastNoteBySales',
+          label: 'Last Note By Sales',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+        {
+          id: 'LastNoteByPreSales',
+          label: 'Last Note By Pre Sales',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+        {
+          id: 'LastCallNote(Answered)',
+          label: 'Last Call Note(Answered)',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+        {
+          id: 'Lastnoteofcalls',
+          label: 'Last note of calls',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+        {
+          id: 'FirstContactAttempt',
+          label: 'First Contact Attempt',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+        {
+          id: 'TotalIncomingAnsweredCalls',
+          label: 'Total Incoming Answered Calls',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+        {
+          id: 'TotalIncomingNotAnsweredCalls',
+          label: 'Total Incoming Not Answered Calls',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+        {
+          id: 'TotalOutgoingAnsweredCalls',
+          label: 'Total Outgoing Answered Calls',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+        {
+          id: 'TotalOutgoingNotAnsweredCalls',
+          label: 'Total Outgoing Not Answered Calls',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+        {
+          id: 'DropoffOn',
+          label: 'Dropoff On',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+
+        {
+          id: 'DropoffBy',
+          label: 'Dropoff By',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+        {
+          id: 'DropoffReason',
+          label: 'Dropoff Reason',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+        {
+          id: 'SystemTags',
+          label: 'System Tags',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+        {
+          id: 'ManualTags',
+          label: 'Manual Tags',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+        {
+          id: 'SecondarySales',
+          label: 'Secondary Sales',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+        {
+          id: 'LastRe-engagedOn',
+          label: 'Last Re-engaged On',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+
+        {
+          id: 'Re-engagedDatesWithSources',
+          label: 'Re-engaged Dates With Sources',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+        {
+          id: 'Analytics',
+          label: 'Analytics',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+
+        {
+          id: 'Incomes',
+          label: 'Incomes',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+        {
+          id: 'Date Of Birth',
+          label: 'Date Of Birth',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'Age',
+          label: 'Age',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+        {
+          id: 'Gender',
+          label: 'Gender',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+
+        {
+          id: 'Anniversary',
+          label: 'Anniversary',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+        {
+          id: 'MaritalsStatus',
+          label: 'Marital Status',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+
+        {
+          id: 'BankandLoans',
+          label: 'Bank and Loans',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+        {
+          id: 'Degreeandcolleges',
+          label: 'Degree and colleges',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+
+        {
+          id: 'TitleandCompany',
+          label: 'Title and Company',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+        {
+          id: 'Industry',
+          label: 'Industry',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+
+        {
+          id: 'AttendedBySalesId',
+          label: 'Attended By Sales Id',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+        {
+          id: 'Attended By Team',
+          label: 'Attended By Team',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+
+        {
+          id: 'Unitconfigurations',
+          label: 'Unit configurations',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+        {
+          id: 'Dealstage',
+          label: 'Deal stage',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+
+        {
+          id: 'Expected Close Date',
+          label: 'ExpectedCloseDate',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+        {
+          id: 'Value',
+          label: 'Value',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+        {
+          id: 'ChannelPartner',
+          label: 'Channel Partner',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+        {
+          id: 'Timezone',
+          label: 'Time zone',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+        {
+          id: 'LeadAge',
+          label: 'Lead Age',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+        {
+          id: 'ProjectName',
+          label: 'Project Name',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+        {
+          id: 'ProjectUnitNumber',
+          label: 'Project Unit Number',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+        {
+          id: 'LeadName',
+          label: 'Lead Name',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+        {
+          id: 'PropertyConfiguration',
+          label: 'Property Configuration',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+        {
+          id: 'RequiredPlotSize',
+          label: 'Required Plot Size',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+        {
+          id: 'Budget',
+          label: 'Budget',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+        {
+          id: 'Reference',
+          label: 'Reference',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+
+
+
+
+
+
+
+
+
+
       ]
     }
   }, [])
@@ -2812,7 +3792,7 @@ export default function LfileuploadTableTemplate({
                       style={{
                         background:
                           (index == 0 && sourceTab === 'duplicateR') ||
-                          sourceTab === 'validR'
+                            sourceTab === 'validR'
                             ? '#e8fde8'
                             : '',
                       }}

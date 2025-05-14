@@ -371,6 +371,25 @@ export const sourceList = [
   ...sourceListItems,
 ]
 
+
+export const Locationlead = [
+  { label: 'Bangalore', value: 'BANGALORE' },
+  { label: 'Hyderabad', value: 'HYDERABAD' },
+  { label: 'Mumbai', value: 'MUMBAI' },
+  { label: 'Delhi', value: 'DELHI' },
+  { label: 'Chennai', value: 'CHENNAI' },
+  { label: 'Pune', value: 'PUNE' },
+  { label: 'Kolkata', value: 'KOLKATA' },
+  { label: 'Ahmedabad', value: 'AHMEDABAD' },
+  { label: 'Jaipur', value: 'JAIPUR' },
+  { label: 'Noida', value: 'NOIDA' },
+];
+
+
+
+
+
+
 export const leadBinReasonList = [
   { label: 'Duplicate', value: 'DUPLICATE_ENTRY' },
   { label: 'Invalid Data', value: 'INVALID_DATA' },

@@ -12,6 +12,7 @@ import * as Yup from 'yup'
 
 import {
   leadBinReasonList,
+  Locationlead,
   sourceList,
   sourceListItems,
 } from 'src/constants/projects'
@@ -143,6 +144,16 @@ const AddLeadForm = ({
       custObj.projectName = leadDetailsObj?.Project
       custObj.projectId = leadDetailsObj?.ProjectId
       custObj.assignedTo = leadDetailsObj?.assignedTo
+      custObj.mobileNo1 = leadDetailsObj?.mobileNo1
+      custObj.Locationlead = leadDetailsObj?.Locationlead
+      custObj.secondaryEmail = leadDetailsObj?.secondaryEmail
+      custObj.countryCode1 = leadDetailsObj?.countryCode1
+      custObj.address = leadDetailsObj?.address
+      custObj.city = leadDetailsObj?.city
+      custObj.street = leadDetailsObj?.street
+      custObj.region = leadDetailsObj?.region
+      custObj.zipCode = leadDetailsObj?.zipCode
+
       custObj.assignedToObj = leadDetailsObj?.assignedToObj
       custObj.budget = leadDetailsObj?.budget
       custObj.value = leadDetailsObj?.project
@@ -279,6 +290,16 @@ const AddLeadForm = ({
         budget: data?.budget,
         Project: data?.project,
         ProjectId: data?.projectId,
+        mobileNo1: data?.mobileNo1,
+        Locationlead: data?.Locationlead,
+        secondaryEmail: data?.secondaryEmail,
+        countryCode1: data?.countryCode1,
+        address: data?.address,
+        city: data?.city,
+        street: data?.street,
+        region: data?.region,
+        zipCode: data?.zipCode,
+
         Source: data?.source,
         assignedTo: data?.assignedToObj?.value || '',
         assignedToObj: {
@@ -350,6 +371,15 @@ const AddLeadForm = ({
         countryCode,
         assignedTo,
         assignedToObj,
+        mobileNo1,
+        Locationlead,
+        secondaryEmail,
+        countryCode1,
+        address,
+        city,
+        street,
+        region,
+        zipCode,
         source,
         project,
         projectId,
@@ -366,6 +396,15 @@ const AddLeadForm = ({
         Mobile: mobileNo,
         //budget: budget,
         countryCode: countryCode,
+        mobileNo1: mobileNo1,
+        Locationlead: Locationlead,
+        secondaryEmail: secondaryEmail,
+        countryCode1: countryCode1,
+        address: address,
+        city: city,
+        street: street,
+        region: region,
+        zipCode: zipCode,
         Name: name,
         Note: '',
         Project: project,
@@ -421,8 +460,7 @@ const AddLeadForm = ({
 
         await sendWhatAppTextSms(
           mobileNo,
-          `Thank you ${name} for choosing the world class ${
-            project || 'project'
+          `Thank you ${name} for choosing the world class ${project || 'project'
           }`
         )
 
@@ -545,6 +583,16 @@ const AddLeadForm = ({
                 project: customerDetailsTuned?.projectName || '',
                 projectId: customerDetailsTuned?.projectId || '',
                 assignedTo: customerDetailsTuned?.assignedTo || '',
+                mobileNo1: customerDetailsTuned?.mobileNo1 || '',
+                Locationlead: customerDetailsTuned?.Locationlead || '',
+                secondaryEmail: customerDetailsTuned?.secondaryEmail || '',
+                countryCode1: customerDetailsTuned?.countryCode1 || '',
+                address: customerDetailsTuned?.address || '',
+                city: customerDetailsTuned?.city || '',
+                street: customerDetailsTuned?.street || '',
+                region: customerDetailsTuned?.region || '',
+                zipCode: customerDetailsTuned?.zipCode || '',
+
                 assignedToObj: customerDetailsTuned?.assignedToObj || {},
                 budget: customerDetailsTuned?.budget || {},
                 deptVal: '',
@@ -755,60 +803,60 @@ const AddLeadForm = ({
                               value={formik.values.source}
                               options={sourceList}
 
-                                           customStyles={{
-                      option: (provided, state) => ({
-                        ...provided,
-                        backgroundColor: state.isSelected
-                          ? '#C8E7FF'
-                          : state.isFocused
-                          ? '#EEF4FE'
-                          : provided.backgroundColor,
-                        color: state.isSelected
-                          ? '#126595'
-                          : state.isFocused
-                          ? '#0D0A1E'
-                          : provided.color,
-                          cursor: 'pointer',
+                              customStyles={{
+                                option: (provided, state) => ({
+                                  ...provided,
+                                  backgroundColor: state.isSelected
+                                    ? '#C8E7FF'
+                                    : state.isFocused
+                                      ? '#EEF4FE'
+                                      : provided.backgroundColor,
+                                  color: state.isSelected
+                                    ? '#126595'
+                                    : state.isFocused
+                                      ? '#0D0A1E'
+                                      : provided.color,
+                                  cursor: 'pointer',
 
 
-                          
 
-                      }),
-                      control: (base) => ({
-                        ...base,
-                        height: 30,
-                        minHeight: 30,
-                        padding: 0,
-                        borderRadius: 8,
-                      }),
-                      valueContainer: (base) => ({
-                        ...base,
-                        alignItems: 'initial',
-                        paddingTop: 0,
-                        marginTop: 3,
-                      }),
-                      dropdownIndicator: (base) => ({
-                        ...base,
-                        paddingTop: 5,
-                      }),
-                      indicatorSeparator: (base) => ({
-                        ...base,
-                        marginTop: 6,
-                        marginBottom: 10,
-                      }),
-                      menu: (provided) => ({
-                        ...provided,
-                        marginTop: 0,
-                        zIndex: 9999,
-                        borderRadius: 8,
-                      }),
-                      menuList: (provided, state) => ({
-                        ...provided,
-                        paddingTop: 0,
-                        paddingBottom: 0,
-                        borderRadius: 8,
-                      }),
-                    }}
+
+                                }),
+                                control: (base) => ({
+                                  ...base,
+                                  height: 30,
+                                  minHeight: 30,
+                                  padding: 0,
+                                  borderRadius: 8,
+                                }),
+                                valueContainer: (base) => ({
+                                  ...base,
+                                  alignItems: 'initial',
+                                  paddingTop: 0,
+                                  marginTop: 3,
+                                }),
+                                dropdownIndicator: (base) => ({
+                                  ...base,
+                                  paddingTop: 5,
+                                }),
+                                indicatorSeparator: (base) => ({
+                                  ...base,
+                                  marginTop: 6,
+                                  marginBottom: 10,
+                                }),
+                                menu: (provided) => ({
+                                  ...provided,
+                                  marginTop: 0,
+                                  zIndex: 9999,
+                                  borderRadius: 8,
+                                }),
+                                menuList: (provided, state) => ({
+                                  ...provided,
+                                  paddingTop: 0,
+                                  paddingBottom: 0,
+                                  borderRadius: 8,
+                                }),
+                              }}
 
 
                             />
@@ -827,60 +875,60 @@ const AddLeadForm = ({
                               value={formik.values.project}
                               options={projectList}
 
-                                           customStyles={{
-                      option: (provided, state) => ({
-                        ...provided,
-                        backgroundColor: state.isSelected
-                          ? '#C8E7FF'
-                          : state.isFocused
-                          ? '#EEF4FE'
-                          : provided.backgroundColor,
-                        color: state.isSelected
-                          ? '#126595'
-                          : state.isFocused
-                          ? '#0D0A1E'
-                          : provided.color,
-                          cursor: 'pointer',
+                              customStyles={{
+                                option: (provided, state) => ({
+                                  ...provided,
+                                  backgroundColor: state.isSelected
+                                    ? '#C8E7FF'
+                                    : state.isFocused
+                                      ? '#EEF4FE'
+                                      : provided.backgroundColor,
+                                  color: state.isSelected
+                                    ? '#126595'
+                                    : state.isFocused
+                                      ? '#0D0A1E'
+                                      : provided.color,
+                                  cursor: 'pointer',
 
 
-                          
 
-                      }),
-                      control: (base) => ({
-                        ...base,
-                        height: 30,
-                        minHeight: 30,
-                        padding: 0,
-                        borderRadius: 8,
-                      }),
-                      valueContainer: (base) => ({
-                        ...base,
-                        alignItems: 'initial',
-                        paddingTop: 0,
-                        marginTop: 3,
-                      }),
-                      dropdownIndicator: (base) => ({
-                        ...base,
-                        paddingTop: 5,
-                      }),
-                      indicatorSeparator: (base) => ({
-                        ...base,
-                        marginTop: 6,
-                        marginBottom: 10,
-                      }),
-                      menu: (provided) => ({
-                        ...provided,
-                        marginTop: 0,
-                        zIndex: 9999,
-                        borderRadius: 8,
-                      }),
-                      menuList: (provided, state) => ({
-                        ...provided,
-                        paddingTop: 0,
-                        paddingBottom: 0,
-                        borderRadius: 8,
-                      }),
-                    }}
+
+                                }),
+                                control: (base) => ({
+                                  ...base,
+                                  height: 30,
+                                  minHeight: 30,
+                                  padding: 0,
+                                  borderRadius: 8,
+                                }),
+                                valueContainer: (base) => ({
+                                  ...base,
+                                  alignItems: 'initial',
+                                  paddingTop: 0,
+                                  marginTop: 3,
+                                }),
+                                dropdownIndicator: (base) => ({
+                                  ...base,
+                                  paddingTop: 5,
+                                }),
+                                indicatorSeparator: (base) => ({
+                                  ...base,
+                                  marginTop: 6,
+                                  marginBottom: 10,
+                                }),
+                                menu: (provided) => ({
+                                  ...provided,
+                                  marginTop: 0,
+                                  zIndex: 9999,
+                                  borderRadius: 8,
+                                }),
+                                menuList: (provided, state) => ({
+                                  ...provided,
+                                  paddingTop: 0,
+                                  paddingBottom: 0,
+                                  borderRadius: 8,
+                                }),
+                              }}
                             />
                           </div>
                         </div>
@@ -903,60 +951,60 @@ const AddLeadForm = ({
                                 value={formik.values.assignedTo}
                                 options={usersList}
 
-                                                                           customStyles={{
-                      option: (provided, state) => ({
-                        ...provided,
-                        backgroundColor: state.isSelected
-                          ? '#C8E7FF'
-                          : state.isFocused
-                          ? '#EEF4FE'
-                          : provided.backgroundColor,
-                        color: state.isSelected
-                          ? '#126595'
-                          : state.isFocused
-                          ? '#0D0A1E'
-                          : provided.color,
-                          cursor: 'pointer',
+                                customStyles={{
+                                  option: (provided, state) => ({
+                                    ...provided,
+                                    backgroundColor: state.isSelected
+                                      ? '#C8E7FF'
+                                      : state.isFocused
+                                        ? '#EEF4FE'
+                                        : provided.backgroundColor,
+                                    color: state.isSelected
+                                      ? '#126595'
+                                      : state.isFocused
+                                        ? '#0D0A1E'
+                                        : provided.color,
+                                    cursor: 'pointer',
 
 
-                          
 
-                      }),
-                      control: (base) => ({
-                        ...base,
-                        height: 30,
-                        minHeight: 30,
-                        padding: 0,
-                        borderRadius: 8,
-                      }),
-                      valueContainer: (base) => ({
-                        ...base,
-                        alignItems: 'initial',
-                        paddingTop: 0,
-                        marginTop: 3,
-                      }),
-                      dropdownIndicator: (base) => ({
-                        ...base,
-                        paddingTop: 5,
-                      }),
-                      indicatorSeparator: (base) => ({
-                        ...base,
-                        marginTop: 6,
-                        marginBottom: 10,
-                      }),
-                      menu: (provided) => ({
-                        ...provided,
-                        marginTop: 0,
-                        zIndex: 9999,
-                        borderRadius: 8,
-                      }),
-                      menuList: (provided, state) => ({
-                        ...provided,
-                        paddingTop: 0,
-                        paddingBottom: 0,
-                        borderRadius: 8,
-                      }),
-                    }}
+
+                                  }),
+                                  control: (base) => ({
+                                    ...base,
+                                    height: 30,
+                                    minHeight: 30,
+                                    padding: 0,
+                                    borderRadius: 8,
+                                  }),
+                                  valueContainer: (base) => ({
+                                    ...base,
+                                    alignItems: 'initial',
+                                    paddingTop: 0,
+                                    marginTop: 3,
+                                  }),
+                                  dropdownIndicator: (base) => ({
+                                    ...base,
+                                    paddingTop: 5,
+                                  }),
+                                  indicatorSeparator: (base) => ({
+                                    ...base,
+                                    marginTop: 6,
+                                    marginBottom: 10,
+                                  }),
+                                  menu: (provided) => ({
+                                    ...provided,
+                                    marginTop: 0,
+                                    zIndex: 9999,
+                                    borderRadius: 8,
+                                  }),
+                                  menuList: (provided, state) => ({
+                                    ...provided,
+                                    paddingTop: 0,
+                                    paddingBottom: 0,
+                                    borderRadius: 8,
+                                  }),
+                                }}
 
                               />
 
@@ -971,6 +1019,184 @@ const AddLeadForm = ({
                         )}
 
                         {/* 6 */}
+
+
+
+
+
+                        <div>
+
+
+                          <div className="md:flex   flex-row    md:space-x-4    w-full   text-xs mt-">
+                            <div className="   mb-3    space-y-2    w-full text-xs">
+
+
+                              <div className=" space-y-1 w-full text-xs">
+                                <label htmlFor="countryCode" className="inline-block">
+                                  Secondary MobileNo
+                                </label>
+                                <div className="flex border mb-6 mt-0 border-[#cccccc] rounded-md ">
+                                  <div className="inline-block">
+                                    <input
+                                      type="text"
+                                      id="countryCode1"
+                                      name="countryCode1"
+                                      value={formik.values.countryCode1}
+                                      onChange={(e) => {
+                                        formik.setFieldValue(
+                                          'countryCode1',
+                                          e.target.value
+                                        )
+                                      }}
+                                      onBlur={formik.handleBlur}
+                                      className="w-11 bg-grey-lighter text-grey-darker h-7 px-2 border-none  rounded-l-md focus:outline-none"
+                                    />
+                                    {formik.errors.countryCode1 &&
+                                      formik.touched.countryCode1 && (
+                                        <div className="text-red-500 text-xs">
+                                          {formik.errors.countryCode1}
+                                        </div>
+                                      )}
+                                  </div>
+
+                                  <div className="border-l border-gray-400 mt-1 mb-1 mr-2"></div>
+
+                                  <PhoneNoField
+                                    name="mobileNo1"
+                                    className="input w-full h-8 !rounded-none !rounded-r-md focus:outline-none my-custom-class"
+                                    customStyles={customPhoneNoFieldStyles}
+                                    onChange={(value) => {
+                                      formik.setFieldValue('mobileNo1', value.value)
+                                    }}
+                                    value={formik.values.mobileNo1}
+                                    options={sourceList}
+                                  />
+                                </div>
+                              </div>
+
+                            </div>
+                            <div className="mb-3 space-y-2 w-full text-xs">
+                              <TextField label="Secondary Email" name="secondaryEmail" type="text" />
+                            </div>
+                          </div>
+
+
+
+                        </div>
+
+
+
+
+
+
+
+                        <div className="md:flex md:flex-row md:space-x-4 w-full text-xs ">
+                          <div className="w-full flex flex-col mb-3 mt-2">
+                            <CustomSelect
+                              name="Locationlead"
+                              label="Location"
+                              className="input mt-3"
+                              onChange={(value) => {
+                                formik.setFieldValue('Locationlead', value.value)
+                              }}
+                              value={formik.values.Locationlead}
+                              options={Locationlead}
+
+                              customStyles={{
+                                option: (provided, state) => ({
+                                  ...provided,
+                                  backgroundColor: state.isSelected
+                                    ? '#C8E7FF'
+                                    : state.isFocused
+                                      ? '#EEF4FE'
+                                      : provided.backgroundColor,
+                                  color: state.isSelected
+                                    ? '#126595'
+                                    : state.isFocused
+                                      ? '#0D0A1E'
+                                      : provided.color,
+                                  cursor: 'pointer',
+
+
+
+
+                                }),
+                                control: (base) => ({
+                                  ...base,
+                                  height: 30,
+                                  minHeight: 30,
+                                  padding: 0,
+                                  borderRadius: 8,
+                                }),
+                                valueContainer: (base) => ({
+                                  ...base,
+                                  alignItems: 'initial',
+                                  paddingTop: 0,
+                                  marginTop: 3,
+                                }),
+                                dropdownIndicator: (base) => ({
+                                  ...base,
+                                  paddingTop: 5,
+                                }),
+                                indicatorSeparator: (base) => ({
+                                  ...base,
+                                  marginTop: 6,
+                                  marginBottom: 10,
+                                }),
+                                menu: (provided) => ({
+                                  ...provided,
+                                  marginTop: 0,
+                                  zIndex: 9999,
+                                  borderRadius: 8,
+                                }),
+                                menuList: (provided, state) => ({
+                                  ...provided,
+                                  paddingTop: 0,
+                                  paddingBottom: 0,
+                                  borderRadius: 8,
+                                }),
+                              }}
+
+
+                            />
+                          </div>
+
+
+                          <div className=" w-full text-xs">
+                            <TextField label="Address" name="address" type="text" />
+
+                          </div>
+                        </div>
+
+
+
+
+
+
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                          <TextField label="City" name="city" type="text" />
+                          <TextField label="Street" name="street" type="text" />
+                          <TextField label="Region" name="region" type="text" />
+                          <TextField label="Zip Code" name="zipCode" type="text" />
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                         <div className=" mt-8 ">
                           <label className="font-semibold text-[#2B2B2B]  text-sm  mb-1 ">
                             Advanced<abbr title="required"></abbr>
@@ -990,16 +1216,14 @@ const AddLeadForm = ({
                                     key={plan.name}
                                     value={plan}
                                     className={({ active, checked }) =>
-                                      `${
-                                        active
-                                          ? 'ring-2 ring-offset-2  border  border-[#000] bg-[#F2F2F2]  ring-white ring-opacity-60 col-span-2'
-                                          : ''
+                                      `${active
+                                        ? 'ring-2 ring-offset-2  border  border-[#000] bg-[#F2F2F2]  ring-white ring-opacity-60 col-span-2'
+                                        : ''
                                       }
-                ${
-                  selected.name == plan.name
-                    ? 'ring-1  ring-green-400 border bg-opacity-75 text-black'
-                    : 'bg-white'
-                }
+                ${selected.name == plan.name
+                                        ? 'ring-1  ring-green-400 border bg-opacity-75 text-black'
+                                        : 'bg-white'
+                                      }
                   relative rounded-lg px-5 py-2 cursor-pointer flex border border-[#E5E7EB]  col-span-2`
                                     }
                                   >
@@ -1010,11 +1234,10 @@ const AddLeadForm = ({
                                             <div className="text-sm">
                                               <RadioGroup.Label
                                                 as="p"
-                                                className={`font-medium  ${
-                                                  selected.name == plan.name
-                                                    ? 'text-gray-900'
-                                                    : 'text-gray-900'
-                                                }`}
+                                                className={`font-medium  ${selected.name == plan.name
+                                                  ? 'text-gray-900'
+                                                  : 'text-gray-900'
+                                                  }`}
                                               >
                                                 <img
                                                   className="w-8 h-8 inline"
@@ -1029,11 +1252,10 @@ const AddLeadForm = ({
                                           </div>
                                           {true && (
                                             <div
-                                              className={`${
-                                                selected.name == plan.name
-                                                  ? 'flex-shrink-0 text-white ml-auto'
-                                                  : 'flex-shrink-0 text-black ml-auto'
-                                              } mt-2`}
+                                              className={`${selected.name == plan.name
+                                                ? 'flex-shrink-0 text-white ml-auto'
+                                                : 'flex-shrink-0 text-black ml-auto'
+                                                } mt-2`}
                                             >
                                               <svg
                                                 viewBox="0 0 24 24"
@@ -1085,63 +1307,63 @@ const AddLeadForm = ({
                                 options={budgetList}
 
 
-                                
-                                                                           customStyles={{
-                      option: (provided, state) => ({
-                        ...provided,
-                        backgroundColor: state.isSelected
-                          ? '#C8E7FF'
-                          : state.isFocused
-                          ? '#EEF4FE'
-                          : provided.backgroundColor,
-                        color: state.isSelected
-                          ? '#126595'
-                          : state.isFocused
-                          ? '#0D0A1E'
-                          : provided.color,
-                          cursor: 'pointer',
+
+                                customStyles={{
+                                  option: (provided, state) => ({
+                                    ...provided,
+                                    backgroundColor: state.isSelected
+                                      ? '#C8E7FF'
+                                      : state.isFocused
+                                        ? '#EEF4FE'
+                                        : provided.backgroundColor,
+                                    color: state.isSelected
+                                      ? '#126595'
+                                      : state.isFocused
+                                        ? '#0D0A1E'
+                                        : provided.color,
+                                    cursor: 'pointer',
 
 
-                          
 
-                      }),
-                      control: (base) => ({
-                        ...base,
-                        height: 30,
-                        minHeight: 30,
-                        padding: 0,
-                        borderRadius: 8,
-                      }),
-                      valueContainer: (base) => ({
-                        ...base,
-                        alignItems: 'initial',
-                        paddingTop: 0,
-                        marginTop: 3,
-                      }),
-                      dropdownIndicator: (base) => ({
-                        ...base,
-                        paddingTop: 5,
-                      }),
-                      indicatorSeparator: (base) => ({
-                        ...base,
-                        marginTop: 6,
-                        marginBottom: 10,
-                      }),
-                      menu: (provided) => ({
-                        ...provided,
-                        marginTop: 0,
-                        zIndex: 9999,
-                        borderRadius: 8,
-                      }),
-                      menuList: (provided, state) => ({
-                        ...provided,
-                        paddingTop: 0,
-                        paddingBottom: 0,
-                        borderRadius: 8,
-                      }),
-                    }}
 
-                              
+                                  }),
+                                  control: (base) => ({
+                                    ...base,
+                                    height: 30,
+                                    minHeight: 30,
+                                    padding: 0,
+                                    borderRadius: 8,
+                                  }),
+                                  valueContainer: (base) => ({
+                                    ...base,
+                                    alignItems: 'initial',
+                                    paddingTop: 0,
+                                    marginTop: 3,
+                                  }),
+                                  dropdownIndicator: (base) => ({
+                                    ...base,
+                                    paddingTop: 5,
+                                  }),
+                                  indicatorSeparator: (base) => ({
+                                    ...base,
+                                    marginTop: 6,
+                                    marginBottom: 10,
+                                  }),
+                                  menu: (provided) => ({
+                                    ...provided,
+                                    marginTop: 0,
+                                    zIndex: 9999,
+                                    borderRadius: 8,
+                                  }),
+                                  menuList: (provided, state) => ({
+                                    ...provided,
+                                    paddingTop: 0,
+                                    paddingBottom: 0,
+                                    borderRadius: 8,
+                                  }),
+                                }}
+
+
                               />
                               <p
                                 className="text-sm text-red-500 hidden mt-3"
