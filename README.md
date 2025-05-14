@@ -18,7 +18,7 @@ We use Yarn1 as our package manager. To get the dependencies installed, just do 
 yarn install
 ```
 
-### Fire it up...
+### Fire it up
 
 ```terminal
 yarn redwood dev
