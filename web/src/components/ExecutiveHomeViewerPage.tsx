@@ -861,7 +861,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                     <span className="text-sm">Add Lead</span>
                   </button>
 
-                  {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
+                  {(!user?.role?.includes(USER_ROLES.CP_AGENT)) && access?.includes('view_leads') && (
                     <button
                       onClick={() => fSetLeadsType('Import Leads')}
                       className="flex items-center gap-1 px-4 py-1 text-sm font-medium text-black border-2 border-[#94B5ED] rounded-lg"

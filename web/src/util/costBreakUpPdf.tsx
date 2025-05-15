@@ -65,6 +65,8 @@ const CostBreakUpPdf = ({
   const { user } = useAuth()
   const { orgId, role } = user
 
+  console.log('role is', role)
+
   const { enqueueSnackbar } = useSnackbar()
   const ref = createRef()
 
@@ -971,20 +973,24 @@ const CostBreakUpPdf = ({
                                       </th>
                                       <td className="w-[15%]  px-2 text-[12px] text-right  ">
                                         {!(
-                                          (role.includes('sales') &&
+                                          (role.includes('sales-executive') &&
                                             projectDetails?.allowSalesExCsEdit) ||
+                                          (role.includes('sales-manager') &&
+                                            projectDetails?.allowSalesManCsEdit) ||
                                           role.includes('admin') ||
-                                          role.includes('crm') ||
-                                          false
+                                          role.includes('crm')
+
                                         ) &&
                                           Number(d1?.charges)?.toLocaleString(
                                             'en-IN'
                                           )}
-                                        {((role.includes('sales') &&
+                                        {((role.includes('sales-executive') &&
                                           projectDetails?.allowSalesExCsEdit) ||
+                                          (role.includes('sales-manager') &&
+                                          projectDetails?.allowSalesManCsEdit)||
                                           role.includes('admin') ||
-                                          role.includes('crm') ||
-                                          false) && (
+                                          role.includes('crm')
+                                          ) && (
                                           <TextFieldFlat
                                             label=""
                                             className="w-[90%] text-[12px] text-right font-semibold border-b  border-[#B76E00]  pr-1 py-[4px] text-[#B76E00]"
@@ -1255,21 +1261,25 @@ const CostBreakUpPdf = ({
                                           </th>
                                           <td className="w-[15%]  px-2 text-[12px] text-right  ">
                                             {!(
-                                              (role.includes('sales') &&
+                                              (role.includes('sales-executive') &&
                                                 projectDetails?.allowSalesExCsEdit) ||
+                                                (role.includes('sales-manager') &&
+                                                projectDetails?.allowSalesManCsEdit)||
                                               role.includes('admin') ||
-                                              role.includes('crm') ||
-                                              false
+                                              role.includes('crm')
+
                                             ) &&
                                               Number(
                                                 d1?.charges
                                               )?.toLocaleString('en-IN')}
 
-                                            {((role.includes('sales') &&
+                                            {((role.includes('sales-executive') &&
                                               projectDetails?.allowSalesExCsEdit) ||
+                                              (role.includes('sales-manager') &&
+                                              projectDetails?.allowSalesManCsEdit)||
                                               role.includes('admin') ||
-                                              role.includes('crm') ||
-                                              false) && (
+                                              role.includes('crm')
+                                              ) && (
                                               <TextFieldFlat
                                                 label=""
                                                 className="w-[90%] text-[12px] text-right font-semibold border-b  border-[#B76E00]  pr-1 py-[4px] text-[#B76E00]"

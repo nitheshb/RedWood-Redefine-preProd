@@ -4708,7 +4708,9 @@ export const updateUserAccessProject = async (
   }
 }
 
-export const updateAccessRoles = async (
+export const /* The above code appears to be a comment block in TypeScript. It is documenting a
+function or method called `updateAccessRoles`. The comment block uses the ` */
+updateAccessRoles = async (
   orgId,
   role,
   accessRoles,
@@ -4730,13 +4732,16 @@ export const updateAccessRoles = async (
       txt: `${currentUser.email} is updated the user access roles`,
       by: currentUser.email,
     })
+    console.log('new is', currentPage, accessRoles)
+    let msg = `"${currentPage.key=='view_leads'? 'Import lead' : currentPage.key=='update_crm'? 'Update Cost Sheet' : currentPage.key=='view_crm'? 'Update Payment Schedule' :  currentPage.name }" access is ${currentPage.checked ? 'revoked' : 'enabled'} for ${role.type}`
     // variant could be success, error, warning, info, or default
-    enqueueSnackbar(
-      `User roles for ${role.type} & ${currentPage.name} updated successfully`,
-      {
-        variant: 'success',
-      }
-    )
+    toast.success(msg)
+    // enqueueSnackbar(
+    //   `User roles for ${role.type} & ${currentPage.name} updated successfully`,
+    //   {
+    //     variant: 'success',
+    //   }
+    // )
   } catch (e) {
     return enqueueSnackbar(e.message, { variant: 'error' })
   }

@@ -30,6 +30,11 @@ const ProjectAccessSideView = ({
   const [loading, setLoading] = useState(false)
   const [allowCrmStausOnDue, setAllowCrmStatusOnDue] = useState(false)
   const [allowSalesExCsEdit, setAllowSalesExCsEdit] = useState(false)
+  const [allowSalesManCsEdit, setAllowSalesManCsEdit] = useState(false)
+
+  const [allowSalesExPsEdit, setAllowSalesExPsEdit] = useState(false)
+  const [allowSalesManPsEdit, setAllowSalesManPsEdit] = useState(false)
+
 
   const { enqueueSnackbar } = useSnackbar()
   const [open, setOpen] = useState(false)
@@ -151,6 +156,24 @@ const ProjectAccessSideView = ({
     })
     setAllowSalesExCsEdit(status.target.checked)
   }
+  const updateAllowSalesManCsEdit = (status) => {
+    updateProjectPayload(orgId, projectDetails?.uid, {
+      allowSalesManCsEdit: status.target.checked,
+    })
+    setAllowSalesManCsEdit(status.target.checked)
+  }
+  const updateAllowSalesExPsEdit = (status) => {
+    updateProjectPayload(orgId, projectDetails?.uid, {
+      allowSalesExPsEdit: status.target.checked,
+    })
+    setAllowSalesExPsEdit(status.target.checked)
+  }
+  const updateAllowSalesManPsEdit = (status) => {
+    updateProjectPayload(orgId, projectDetails?.uid, {
+      allowSalesManPsEdit: status.target.checked,
+    })
+    setAllowSalesManPsEdit(status.target.checked)
+  }
   return (
     <div className="h-full flex flex-col  bg-white shadow-xl">
       <div className="   z-10">
@@ -165,6 +188,8 @@ const ProjectAccessSideView = ({
               />
             )}
             {subView === 'salesAccess' && (
+              <>
+              <section>
               <div className="ml-4">
                 <Checkbox
                   color="primary"
@@ -181,6 +206,58 @@ const ProjectAccessSideView = ({
                   Allow Costsheet Edit feature for Sales Executive
                 </span>
               </div>
+              <div className="ml-4">
+                <Checkbox
+                  color="primary"
+                  checked={allowSalesManCsEdit}
+                  onChange={(e) => {
+                    updateAllowSalesManCsEdit(e)
+                  }}
+                  inputProps={{
+                    'aria-label': 'select all desserts',
+                  }}
+                />
+                <span className="mt-1">
+                  {' '}
+                  Allow Costsheet Edit feature for Sales Manager
+                </span>
+              </div>
+              </section>
+              <section>
+              <div className="ml-4">
+                <Checkbox
+                  color="primary"
+                  checked={allowSalesExPsEdit}
+                  onChange={(e) => {
+                    updateAllowSalesExPsEdit(e)
+                  }}
+                  inputProps={{
+                    'aria-label': 'select all desserts',
+                  }}
+                />
+                <span className="mt-1">
+                  {' '}
+                  Allow Payment Schedule Edit feature for Sales Executive
+                </span>
+              </div>
+              <div className="ml-4">
+                <Checkbox
+                  color="primary"
+                  checked={allowSalesManPsEdit}
+                  onChange={(e) => {
+                    updateAllowSalesManPsEdit(e)
+                  }}
+                  inputProps={{
+                    'aria-label': 'select all desserts',
+                  }}
+                />
+                <span className="mt-1">
+                  {' '}
+                  Allow Payment Schedule Edit feature for Sales Manager
+                </span>
+              </div>
+              </section>
+              </>
             )}
 
             {subView === 'creditNoteIssuers' && (

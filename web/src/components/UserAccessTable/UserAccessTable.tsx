@@ -144,7 +144,7 @@ const UserAccessTable = ({ showCompletedTasks }) => {
         <div className="h-screen w-full bg-white rounded-lg  flex flex-col">
           <div className="flex flex-row mt-3 ml-6">
             <div className="flex flex-row mt-1 mr-2">
-              <span className="ml-2 text-md font-semibold text-black leading-none font-Playfair">
+              <span className=" text-md font-semibold text-black leading-none font-Playfair">
                 Feature Access Control{' '}
               </span>
               {/* Access Control Table */}
@@ -260,7 +260,7 @@ const UserAccessTable = ({ showCompletedTasks }) => {
 
             <div className="flex-1 mb-10 mt-4  shadow-sm bg-white">
               <div className="h-full ">
-                <table className="w-full border-collapse table-fixed  whitespace-nowrap ">
+                <table className=" border-collapse table-fixed  whitespace-nowrap ">
                   <thead className="bg-[#E8E6FE] ">
                     <tr>
                       <th className="sticky left-0 top-0 z-20 w-40  px-4 py-2 text-left font-semibold text-[11px] text-gray-900 border-b border-r">
@@ -269,7 +269,7 @@ const UserAccessTable = ({ showCompletedTasks }) => {
                       {filterData?.[4]?.access.map(({ name, key }) => (
                         <th
                           key={key}
-                          className="sticky top-0 z-10  px-4 py-2 text-center font-semibold text-[11px] text-gray-900 border-b min-w-[200px]"
+                          className="sticky top-0 z-10  px-4 py-2 text-center font-semibold text-[11px] text-gray-900 border-b min-w-[100px] w-[100px] max-w-[100px]"
                         >
                           {name}
                         </th>
@@ -279,11 +279,11 @@ const UserAccessTable = ({ showCompletedTasks }) => {
                   <tbody className="divide-y">
                     {filterData.map((item) => (
                       <tr key={item.uid} className="hover:bg-gray-50">
-                        <td className="sticky left-0 z-10 bg-white px-4 py-2 text-[12px] text-gray-900 border-r">
+                        <td className="sticky left-0 z-10 bg-white px-4 py-2 text-[12px] text-gray-900 border-r ">
                           {item.type}
                         </td>
                         {item?.access.map((element) => (
-                          <td key={element.key} className="">
+                          <td key={element.key} className=" w-[150px] max-w-[200px] w-[100px] max-w-[100px]">
                             <div className="flex items-center justify-center">
                               <button
                                 onClick={() =>
