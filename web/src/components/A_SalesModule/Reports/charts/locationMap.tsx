@@ -29,7 +29,7 @@ export default function LeadLoctionMap() {
   return (
     <div className="flex w-full h-[500px] border rounded-lg overflow-hidden">
 
-    <div className="w-2/4  flex items-center justify-center">
+    <div className="w-3/4  flex items-center justify-center">
     <svg
                       // width={70%}
                       // data-width={70%}
@@ -2076,7 +2076,7 @@ export default function LeadLoctionMap() {
           <tr>
             <th className="px-3 py-2">#</th>
             <th className="px-3 py-2">Country</th>
-            <th className="px-3 py-2">Population</th>
+            <th className="px-3 py-2">Leads</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200">
@@ -2087,12 +2087,12 @@ export default function LeadLoctionMap() {
           </tr>
           <tr>
             <td className="px-3 py-2">2</td>
-            <td className="px-3 py-2">China</td>
+            <td className="px-3 py-2">UAE</td>
             <td className="px-3 py-2">1.42B</td>
           </tr>
           <tr>
             <td className="px-3 py-2">3</td>
-            <td className="px-3 py-2">USA</td>
+            <td className="px-3 py-2">Others</td>
             <td className="px-3 py-2">339M</td>
           </tr>
         </tbody>
