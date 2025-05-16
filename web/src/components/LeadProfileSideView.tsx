@@ -120,6 +120,8 @@ import GradientSlider from './A_SalesModule/LeadProfileSideView/gradientSlider/g
 import DuplicateLeadCard from './A_SalesModule/duplicateLeadCard'
 import { VerySlimSelectBox } from 'src/util/formFields/slimSelectBoxField'
 import AssigedToDropCompCrm from './assignedToDropCompCrm'
+import { activieLogNamer, empNameSetter } from 'src/util/logNameTranformer'
+import ActivityLogComp from './A_SalesModule/LeadProfileSideView/activityLog'
 
 // interface iToastInfo {
 //   open: boolean
@@ -194,11 +196,21 @@ const siteVisitFeedbackOptions = [
 ]
 
 const lookingAtBudgetRange = [
-  { label: 'less than 25 lakhs', value: 'less25L', str: 10 },
-  { label: 'less than 50 lakhs', value: 'less50L', str: 20 },
-  { label: 'less than 1 Cr', value: 'less1Cr', str: 30 },
-  { label: 'less than 1.5 Cr', value: 'less1.5Cr', str: 40 },
-  { label: 'less than 2 Cr', value: 'less2Cr', str: 50 },
+  { label: '20 lacs - 50 lacs', value: 'less50L', str: 20 },
+  { label: '50 lacs - 1 cr', value: 'less1Cr', str: 30 },
+  { label: '1 cr - 2 cr', value: 'less1.5Cr', str: 40 },
+  { label: ' 2 cr and above', value: 'less2Cr', str: 50 },
+]
+const bedRoomConfigurtionRange = [
+  { label: '1 BHK', value: '1', str: 0 },
+  { label: '1.5 BHK', value: '1.5', str: 10 },
+  { label: '2 BHK', value: '2', str: 20 },
+
+  { label: '2.5 BHK', value: '2.5', str: 20 },
+
+  { label: '3 BHK', value: '3', str: 50 },
+
+  { label: '3.5 BHK', value: '3.5', str: 50 },
 ]
 const exitstingAsset = [
   { label: 'Plot', value: 'plot', str: 10 },
@@ -271,6 +283,8 @@ export default function LeadProfileSideView({
     astr: 0,
     asset: '',
     asstr: 0,
+    config: '',
+    confstr: 0,
   })
   const [opstr, setopstr] = useState(0)
   const [showNotInterested, setShowNotInterested] = useState(false)
@@ -563,7 +577,7 @@ export default function LeadProfileSideView({
         x = leadsActivityFetchedData
       }
 
-      setFilterData(x)
+      setFilterData(leadsActivityFetchedData)
     }
   }, [leadsActivityFetchedData, selFeature])
 
@@ -1252,34 +1266,8 @@ export default function LeadProfileSideView({
     setAttach(true)
   }
 
-  const activieLogNamer = (dat) => {
-    const { type, from, to, by } = dat
-    let tex = type
 
-    switch (type) {
-      case 'l_ctd':
-        return (tex = 'Lead Created')
-      case 'sts_change':
-        return (tex = `completed & moved to`)
-      case 'assign_change':
-        return (tex = `Lead Assigned To`)
-      default:
-        return (tex = type)
-    }
-    return tex
-  }
 
-  const empNameSetter = (emp_id) => {
-    const userIsA = usersList?.filter((userD) => {
-      return userD?.uid == emp_id
-    })
-    if (userIsA[0]) {
-      const { email } = userIsA[0] || []
-      return email
-    } else {
-      return emp_id
-    }
-  }
 
   const fAddNotes = async () => {
     const data = {
@@ -1561,7 +1549,7 @@ export default function LeadProfileSideView({
         fcmToken,
         // timestamp: Timestamp.now()
       })
-
+    toast.success('Call triggered in your mobile')
       console.log('Call document added successfully!')
     } catch (error) {
       console.error('Error in call trigger:', error)
@@ -2171,7 +2159,7 @@ export default function LeadProfileSideView({
 
                                 <div className="mt-8">
                                   <Slider
-                                    // onChange={(e) => setopstr(e.target.value)}
+                                    onChange={(e) => setopstr(e.target.value)}
                                     value={opstr}
                                     defaultValue={opstr}
                                     aria-label="Default"
@@ -2180,11 +2168,11 @@ export default function LeadProfileSideView({
                                       height: 8,
                                       '& .MuiSlider-track': {
                                         background:
-                                          'linear-gradient(to right, #ff6a00, #ee0979) !important', // Replace with your desired gradient
+                                          'linear-gradient(to right, #AEECF6, #94B5ED) !important', // Replace with your desired gradient
                                         border: 'none !important',
                                       },
                                       '& .MuiSlider-rail': {
-                                        backgroundColor: '#EAEAEA',
+                                        backgroundColor: '#e2e8f0',
                                         opacity: 1,
                                       },
                                       '& .MuiSlider-thumb': {
@@ -2201,74 +2189,138 @@ export default function LeadProfileSideView({
                                   />
                                 </div>
                               </div>
-                              <div className="grid grid-cols-2 gap-8 pt-3 mx-3  mt-2">
-                                <div className="mt-2">
-                                  <div className="flex justify-between w-11.7/12 m-auto">
-                                    <div>Any Existing Banglore Assets ?*</div>
 
-                                    <div className="flex items-center">
+
+                              <div className=" py-4">
+                                <div className="grid grid-cols-2 gap-6">
+
+
+
+
+   {/* Left Reason Section */}
+   <div className="bg-white rounded-xl p-6 shadow-sm border">
+                                    <section className='flex flex-row justify-between'>
+                                    <div className="flex items-center gap-3 mb-5">
+                                      <div className="bg-[#FFFFFF] p-1.5 rounded-lg  shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+                                        <img
+                                          src="/target-sale.svg"
+                                          alt="Clock Icon"
+                                          className="w-[18px] h-[18px]"
+                                        />
+                                      </div>
+
+                                      <h2 className=" font-normal text-[16px] leading-[100%] tracking-[0%] text-[#000000]">
+                                        Budget
+                                      </h2>
+                                    </div>
+                                    <div className="flex items-center mb-4">
                                       <div className="w-16 mr-2">
                                         <RoundedProgressBar
-                                          progress={optionvalues.asstr}
+                                          progress={optionvalues.bstr}
                                           height={8}
                                           fillColor="#94B5ED"
                                           showLabels={false}
                                         />
                                       </div>
-                                      <span className="text-xs font-medium">{`${optionvalues.asstr}%`}</span>
+                                      <span className="text-xs font-medium">{`${optionvalues.bstr}%`}</span>
+                                    </div>
+                                    </section>
+                                    <div className="grid grid-cols-1 gap-4">
+                                  <div className="grid grid-cols-2 gap-4">
+                                      {lookingAtBudgetRange.map((data, i) => (
+                                         <button
+                                         className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
+                                          optionvalues.budget === data.value
+                                             ? 'bg-[#FCE6D9]  leading-[100%] tracking-[0] sale_text_color '
+                                             : 'bg-white hover:bg-gray-50'
+                                         }`}
+                                         onClick={() =>
+
+                                           setoptionvalues({
+                                            ...optionvalues,
+                                            budget: data.value,
+                                            bstr: data.str,
+                                          })
+                                         }
+                                       >
+                                         {data.label}
+                                       </button>
+                                      ))}
+                                  </div>
+
                                     </div>
                                   </div>
-                                  <CustomSelect
-                                    name="accountName"
-                                    label="Existing Asset"
-                                    className="input"
-                                    onChange={(value) => {
-                                      setoptionvalues({
-                                        ...optionvalues,
-                                        asset: value.value,
-                                        asstr: value.str,
-                                      })
-                                    }}
-                                    value={optionvalues.asset}
-                                    options={exitstingAsset}
-                                  />
-                                </div>
-                                <div className="mt-2">
-                                  <div className="flex justify-between w-11.7/12 m-auto">
-                                    <div>Reason For Purchase ?*</div>
 
-                                    <div className="flex items-center">
+                                  {/* Right Reason Section */}
+                                  <div className="bg-white rounded-xl p-6 shadow-sm border">
+                                    <section className='flex flex-row justify-between'>
+                                    <div className="flex items-center gap-3 mb-5">
+                                      <div className="bg-[#FFFFFF] p-1.5 rounded-lg  shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+                                        <img
+                                          src="/target-sale.svg"
+                                          alt="Clock Icon"
+                                          className="w-[18px] h-[18px]"
+                                        />
+                                      </div>
+
+                                      <h2 className=" font-normal text-[16px] leading-[100%] tracking-[0%] text-[#000000]">
+                                        Configuration
+                                      </h2>
+                                    </div>
+                                    <div className="flex items-center mb-4">
                                       <div className="w-16 mr-2">
                                         <RoundedProgressBar
-                                          progress={optionvalues.pstr}
+                                          progress={optionvalues.confstr ||0}
                                           height={8}
                                           fillColor="#94B5ED"
                                           showLabels={false}
                                         />
                                       </div>
-                                      <span className="text-xs font-medium">{`${optionvalues.pstr}%`}</span>
+                                      <span className="text-xs font-medium">{`${optionvalues.confstr ||0}%`}</span>
                                     </div>
-                                    {/* <div> {`${optionvalues.pstr}%`}</div> */}
+                                    </section>
+                                    <div className="grid grid-cols-1 gap-4">
+                                  <div className="grid grid-cols-3 gap-4">
+                                      {bedRoomConfigurtionRange.map((data, i) => (
+                                         <button
+                                         className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
+                                          optionvalues.config === data.value
+                                             ? 'bg-[#FCE6D9]  leading-[100%] tracking-[0] sale_text_color '
+                                             : 'bg-white hover:bg-gray-50'
+                                         }`}
+                                         onClick={() =>
+
+                                           setoptionvalues({
+                                            ...optionvalues,
+                                            config: data.value,
+                                            confstr: data.str,
+                                          })
+                                         }
+                                       >
+                                         {data.label}
+                                       </button>
+                                      ))}
                                   </div>
-                                  <CustomSelect
-                                    name="reasonPurchase"
-                                    label="Purchase Reason"
-                                    className="input"
-                                    onChange={(value) => {
-                                      setoptionvalues({
-                                        ...optionvalues,
-                                        purchase: value.value,
-                                        pstr: value.str,
-                                      })
-                                    }}
-                                    value={optionvalues.purchase}
-                                    options={reasonPurchase}
-                                  />
-                                </div>
-                                <div className="mt-2">
-                                  <div className="flex justify-between w-11.7/12 m-auto">
-                                    <div>Preferred Area ?*</div>
-                                    <div className="flex items-center">
+
+                                    </div>
+                                  </div>
+                                  {/* Left Reason Section */}
+                                  <div className="bg-white rounded-xl p-6 shadow-sm border">
+                                    <section className='flex flex-row justify-between'>
+                                    <div className="flex items-center gap-3 mb-5">
+                                      <div className="bg-[#FFFFFF] p-1.5 rounded-lg  shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+                                        <img
+                                          src="/target-sale.svg"
+                                          alt="Clock Icon"
+                                          className="w-[18px] h-[18px]"
+                                        />
+                                      </div>
+
+                                      <h2 className=" font-normal text-[16px] leading-[100%] tracking-[0%] text-[#000000]">
+                                        Preferred Area
+                                      </h2>
+                                    </div>
+                                    <div className="flex items-center mb-4">
                                       <div className="w-16 mr-2">
                                         <RoundedProgressBar
                                           progress={optionvalues.astr}
@@ -2279,257 +2331,37 @@ export default function LeadProfileSideView({
                                       </div>
                                       <span className="text-xs font-medium">{`${optionvalues.astr}%`}</span>
                                     </div>
-                                    {/* <div> {`${optionvalues.astr}%`}</div> */}
-                                  </div>
-                                  <CustomSelect
-                                    name="preferredArea"
-                                    className="input"
-                                    onChange={(value) => {
-                                      setoptionvalues({
-                                        ...optionvalues,
-                                        area: value.value,
-                                        astr: value.str,
-                                      })
-                                    }}
-                                    value={optionvalues.area}
-                                    options={preferredArea}
-                                  />
-                                </div>
-                              </div>
-
-                              <div className=" p-4">
-                                <div className="grid grid-cols-2 gap-6">
-                                  {/* Budget Section */}
-                                  <div className="bg-white rounded-xl p-6 shadow-sm border">
-                                    <div className="flex gap-3 items-center mb-5">
-                                      <div className="bg-[#FFFFFF] p-1.5 rounded-lg  shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
-                                        <img
-                                          src="/target-sale.svg"
-                                          alt="Clock Icon"
-                                          className="w-[18px] h-[18px]"
-                                        />
-                                      </div>
-
-                                      <h2 className=" font-normal text-[16px] leading-[100%] tracking-[0%] text-[#000000]">
-                                        Budget?*
-                                      </h2>
-                                    </div>
-
+                                    </section>
                                     <div className="grid grid-cols-1 gap-4">
-                                      <div className="grid grid-cols-2 gap-4">
-                                        <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
-                                            budget === '10-50'
-                                              ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color'
-                                              : 'bg-white hover:bg-gray-50'
-                                          }`}
-                                          onClick={() => setBudget('10-50')}
-                                        >
-                                          10 lacs - 50 lacs
-                                        </button>
+                                  <div className="grid grid-cols-2 gap-4">
+                                      {preferredArea.map((data, i) => (
+                                         <button
+                                         className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
+                                          optionvalues.area === data.value
+                                             ? 'bg-[#FCE6D9]  leading-[100%] tracking-[0] sale_text_color '
+                                             : 'bg-white hover:bg-gray-50'
+                                         }`}
+                                         onClick={() =>
 
-                                        <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
-                                            budget === '50-1'
-                                              ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
-                                              : 'bg-white hover:bg-gray-50'
-                                          }`}
-                                          onClick={() => setBudget('50-1')}
-                                        >
-                                          50 lacs - 1 cr
-                                        </button>
-                                      </div>
-
-                                      <div className="grid grid-cols-2 gap-4">
-                                        <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
-                                            budget === '1-2'
-                                              ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
-                                              : 'bg-white hover:bg-gray-50'
-                                          }`}
-                                          onClick={() => setBudget('1-2')}
-                                        >
-                                          1 cr - 2 cr
-                                        </button>
-
-                                        <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
-                                            budget === '2+'
-                                              ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
-                                              : 'bg-white hover:bg-gray-50'
-                                          }`}
-                                          onClick={() => setBudget('2+')}
-                                        >
-                                          2 cr and above
-                                        </button>
-                                      </div>
-                                    </div>
+                                           setoptionvalues({
+                                            ...optionvalues,
+                                            area: data.value,
+                                            astr: data.str,
+                                          })
+                                         }
+                                       >
+                                         {data.label}
+                                       </button>
+                                      ))}
                                   </div>
 
-                                  {/* Configuration Section */}
-                                  <div className="bg-white rounded-xl p-6 shadow-sm border">
-                                    <div className="flex items-center gap-3 mb-5">
-                                      {/* <div className="bg-blue-100 p-2 rounded-md">
-              <span className="text-blue-700 text-xl">🏢</span>
-            </div> */}
-                                      <div className="bg-[#FFFFFF] p-1.5 rounded-lg  shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
-                                        <img
-                                          src="/target-sale.svg"
-                                          alt="Clock Icon"
-                                          className="w-[18px] h-[18px]"
-                                        />
-                                      </div>
-                                      <h2 className=" font-normal text-[16px] leading-[100%] tracking-[0%] text-[#000000]">
-                                        Configuration ?*
-                                      </h2>
-                                    </div>
-
-                                    <div className="grid grid-cols-1 gap-4">
-                                      <div className="grid grid-cols-2 gap-4">
-                                        <button
-                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
-                                            configuration === '1BHK'
-                                              ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
-                                              : 'bg-white hover:bg-gray-50'
-                                          }`}
-                                          onClick={() =>
-                                            setConfiguration('1BHK')
-                                          }
-                                        >
-                                          1 BHK
-                                        </button>
-
-                                        <button
-                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
-                                            configuration === '2BHK'
-                                              ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
-                                              : 'bg-white hover:bg-gray-50'
-                                          }`}
-                                          onClick={() =>
-                                            setConfiguration('2BHK')
-                                          }
-                                        >
-                                          2 BHK
-                                        </button>
-                                      </div>
-
-                                      <div className="grid grid-cols-3 gap-4">
-                                        <button
-                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
-                                            configuration === '3BHK'
-                                              ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
-                                              : 'bg-white hover:bg-gray-50'
-                                          }`}
-                                          onClick={() =>
-                                            setConfiguration('3BHK')
-                                          }
-                                        >
-                                          3 BHK
-                                        </button>
-
-                                        <button
-                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
-                                            configuration === '4BHK'
-                                              ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
-                                              : 'bg-white hover:bg-gray-50'
-                                          }`}
-                                          onClick={() =>
-                                            setConfiguration('4BHK')
-                                          }
-                                        >
-                                          4 BHK
-                                        </button>
-
-                                        <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
-                                            configuration === 'Others'
-                                              ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
-                                              : 'bg-white hover:bg-gray-50'
-                                          }`}
-                                          onClick={() =>
-                                            setConfiguration('Others')
-                                          }
-                                        >
-                                          Others
-                                        </button>
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                  {/* Left Reason Section */}
-                                  <div className="bg-white rounded-xl p-6 shadow-sm border">
-                                    <div className="flex items-center gap-3 mb-5">
-                                      <div className="bg-[#FFFFFF] p-1.5 rounded-lg  shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
-                                        <img
-                                          src="/target-sale.svg"
-                                          alt="Clock Icon"
-                                          className="w-[18px] h-[18px]"
-                                        />
-                                      </div>
-
-                                      <h2 className=" font-normal text-[16px] leading-[100%] tracking-[0%] text-[#000000]">
-                                        Reason
-                                      </h2>
-                                    </div>
-
-                                    <div className="grid grid-cols-1 gap-4">
-                                      <div className="grid grid-cols-2 gap-4">
-                                        <button
-                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
-                                            reasonLeft === 'Apartment & Villas'
-                                              ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
-                                              : 'bg-white hover:bg-gray-50'
-                                          }`}
-                                          onClick={() =>
-                                            setReasonLeft('Apartment & Villas')
-                                          }
-                                        >
-                                          Apartment & Villas
-                                        </button>
-
-                                        <button
-                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
-                                            reasonLeft === 'Plot'
-                                              ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
-                                              : 'bg-white hover:bg-gray-50'
-                                          }`}
-                                          onClick={() => setReasonLeft('Plot')}
-                                        >
-                                          Plot
-                                        </button>
-                                      </div>
-
-                                      <div className="grid grid-cols-2 gap-4">
-                                        <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
-                                            reasonLeft === 'Apartment'
-                                              ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
-                                              : 'bg-white hover:bg-gray-50'
-                                          }`}
-                                          onClick={() =>
-                                            setReasonLeft('Apartment')
-                                          }
-                                        >
-                                          Apartment
-                                        </button>
-
-                                        <button
-                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
-                                            reasonLeft === 'Villa'
-                                              ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
-                                              : 'bg-white hover:bg-gray-50'
-                                          }`}
-                                          onClick={() => setReasonLeft('Villa')}
-                                        >
-                                          Villa
-                                        </button>
-                                      </div>
                                     </div>
                                   </div>
 
                                   {/* Right Reason Section */}
                                   <div className="bg-white rounded-xl p-6 shadow-sm border">
-                                    <div className="flex gap-3 items-center mb-5">
+                                    <section className='flex flex-row justify-between'>
+                                    <div className="flex items-center gap-3 mb-5">
                                       <div className="bg-[#FFFFFF] p-1.5 rounded-lg  shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
                                         <img
                                           src="/target-sale.svg"
@@ -2537,65 +2369,46 @@ export default function LeadProfileSideView({
                                           className="w-[18px] h-[18px]"
                                         />
                                       </div>
+
                                       <h2 className=" font-normal text-[16px] leading-[100%] tracking-[0%] text-[#000000]">
-                                        Reason
+                                        Reason For Purchase
                                       </h2>
                                     </div>
-
+                                    <div className="flex items-center mb-4">
+                                      <div className="w-16 mr-2">
+                                        <RoundedProgressBar
+                                          progress={optionvalues.pstr}
+                                          height={8}
+                                          fillColor="#94B5ED"
+                                          showLabels={false}
+                                        />
+                                      </div>
+                                      <span className="text-xs font-medium">{`${optionvalues.pstr}%`}</span>
+                                    </div>
+                                    </section>
                                     <div className="grid grid-cols-1 gap-4">
-                                      <div className="grid grid-cols-2 gap-4">
-                                        <button
-                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
-                                            reasonRight === 'Apartment & Villas'
-                                              ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
-                                              : 'bg-white hover:bg-gray-50'
-                                          }`}
-                                          onClick={() =>
-                                            setReasonRight('Apartment & Villas')
-                                          }
-                                        >
-                                          Apartment & Villas
-                                        </button>
+                                  <div className="grid grid-cols-2 gap-4">
+                                      {reasonPurchase.map((data, i) => (
+                                         <button
+                                         className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
+                                          optionvalues.purchase === data.value
+                                             ? 'bg-[#FCE6D9]  leading-[100%] tracking-[0] sale_text_color '
+                                             : 'bg-white hover:bg-gray-50'
+                                         }`}
+                                         onClick={() =>
 
-                                        <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
-                                            reasonRight === 'Plot'
-                                              ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
-                                              : 'bg-white hover:bg-gray-50'
-                                          }`}
-                                          onClick={() => setReasonRight('Plot')}
-                                        >
-                                          Plot
-                                        </button>
-                                      </div>
+                                           setoptionvalues({
+                                            ...optionvalues,
+                                            purchase: data.value,
+                                            pstr: data.str,
+                                          })
+                                         }
+                                       >
+                                         {data.label}
+                                       </button>
+                                      ))}
+                                  </div>
 
-                                      <div className="grid grid-cols-2 gap-4">
-                                        <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
-                                            reasonRight === 'Apartment'
-                                              ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
-                                              : 'bg-white hover:bg-gray-50'
-                                          }`}
-                                          onClick={() =>
-                                            setReasonRight('Apartment')
-                                          }
-                                        >
-                                          Apartment
-                                        </button>
-
-                                        <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
-                                            reasonRight === 'Villa'
-                                              ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color '
-                                              : 'bg-white hover:bg-gray-50'
-                                          }`}
-                                          onClick={() =>
-                                            setReasonRight('Villa')
-                                          }
-                                        >
-                                          Villa
-                                        </button>
-                                      </div>
                                     </div>
                                   </div>
                                 </div>
@@ -2618,7 +2431,7 @@ export default function LeadProfileSideView({
                                     onClick={() => LeadStrengthFun()}
                                     className={`w-[77px] h-[40px] px-6 py-2.5 gap-[10px] sale_bg_color rounded-[8px]   flex justify-center items-center`}
                                   >
-                                    <span className="font-semibold text-[12px] leading-[100%]  text-white tracking-[0.06em]">
+                                    <span className="font-semibold text-[12px] leading-[100%]  s_btn_txt_color tracking-[0.06em]">
                                       Save
                                     </span>
                                   </button>
@@ -3470,6 +3283,17 @@ export default function LeadProfileSideView({
                                       >
                                         + Add Comment
                                       </button>
+
+                                     {streamCurrentStatus === 'visitfixed' &&  <button
+                                        className="font-[Outfit] ml-6 font-['opensans'] text-[#606062] text-[12px] underline underline-offset-[25%]"
+                                        onClick={() =>{
+                                          setFeature('appointments')
+                                          setShowVisitFeedBackStatusFun(leadNextTaskObj, 'visitdone')
+                                        }
+                                        }
+                                      >
+                                       + SiteVisit feedback{"->"}
+                                      </button>}
                                     </div>
                                     {addTaskCommentObj?.ct ===
                                       leadNextTaskObj?.ct && (
@@ -3593,9 +3417,11 @@ export default function LeadProfileSideView({
                                       </span>
                                     </div>
                                   </div>
-                                  <button className="text-[12px] text-[#606062] font-[Outfit]  ">
-                                    View {leadNextTaskObj?.comments?.length}{' '}
-                                    comments
+                                  <button className="text-[12px] text-[#606062] font-[Outfit]  " onClick={()=>{
+                                          setFeature('appointments')
+
+                                  }}>
+                                      comments ({leadNextTaskObj?.comments?.length}) {"->"}
                                   </button>
                                 </div>
                               </div>
@@ -3726,153 +3552,7 @@ export default function LeadProfileSideView({
     </div>
   </div> */}
 
-                                <div className="border border-[#F0F0F5] bg-[#FFFFFF] p-3 shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] rounded-[8px] ">
-                                  <div className="flex justify-between">
-                                    <div className="flex flex-col w-full ">
-                                      <div className="flex items-center mb-4 justify-between pb-[16px] pt-[8px] border-b border-[#F0F0F5]">
-                                        <section className="flex items-center">
-                                          <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
-                                            <div className="bg-[#E3F1FA] p-1 rounded-full">
-                                              {/* <Clock className="text-purple-500 w-5 h-5" /> */}
-                                              <img
-                                                src="/location.svg"
-                                                alt=""
-                                                className="w-[18px] h-[18px]"
-                                              />
-                                            </div>
-                                          </div>
-                                          <span className="font-semibold text-[12px] leading-[100%] tracking-[6%] uppercase text-[#2B2B2B]">
-                                            Site visit (
-                                            {projectData.siteVisit.count})
-                                          </span>
-                                        </section>
-                                        <div className="flex flex-row items-center font-medium text-[14px] text-[#0E0A1F] mr-[8px]">
-                                          <img
-                                            src="/good.svg"
-                                            alt="icon"
-                                            className="mb-1 w-8 h-8 mr-[8px]"
-                                          />
-                                          Good
-                                        </div>
-                                      </div>
-
-                                      <div className="flex flex-row justify-between">
-                                        <p className="font-normal text-[12px] text-[#0D0A1E]">
-                                          Visit Date:{' '}
-                                          {projectData.siteVisit.date}
-                                        </p>
-                                        <p className="font-normal text-[12px] text-[#0D0A1E]">
-                                          Site In-charge:{' '}
-                                          {projectData.siteVisit.inCharge}
-                                        </p>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                {/*
-  <div className="border border-[#E7E7E9] bg-[#FFFFFF] p-4 rounded-[8px]">
-  <div className="flex items-center mb-4">
-    <div className="bg-[#FFFFFF] p-1.5 rounded-lg mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
-      <img src="/quill_clock.svg" alt="" className='w-[18px] h-[18px]' />
-    </div>
-    <span className="font-semibold text-[12px] leading-[100%] tracking-[6%] uppercase text-[#2B2B2B]">SITE VISIT (4)</span>
-  </div>
-
-
-
-
-  <div className="grid grid-cols-2 items-center gap-4">
-  <div className="flex gap-2 flex-col">
-    <div className="font-normal text-[14px] tracking-[0%] text-[#606062]">
-      Visit Date: {projectData.siteVisit.date}
-    </div>
-    <div className="font-normal text-[14px] tracking-[0%] text-[#606062]">
-      Site In-charge: {projectData.siteVisit.inCharge}
-    </div>
-  </div>
-
-  <div className="font-semibold text-[14px] leading-[100%] tracking-[0em] text-[#0E0A1F] flex flex-col items-center">
-    <img src="/good.svg" alt="icon" className="mb-1 w-16 h-16" />
-    Good
-  </div>
-</div>
-
-
-
-</div> */}
-
-                                <div className="border border-[#F0F0F5] bg-[#FFFFFF] shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] p-4 rounded-[8px] cursor-pointer">
-                                  <div className="flex items-center mb-4">
-                                    <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
-                                      <div className="bg-[#E3F1FA] p-1 rounded-full">
-                                        {/* <Clock className="text-purple-500 w-5 h-5" /> */}
-                                        <img
-                                          src="/target-sale.svg"
-                                          alt=""
-                                          className="w-[18px] h-[18px]"
-                                        />
-                                      </div>
-                                    </div>
-
-                                    <span className="font-semibold text-[12px] leading-[100%] tracking-[6%] uppercase text-[#2B2B2B]">
-                                      TASK LOGS
-                                    </span>
-                                    <div className="ml-auto">
-                                      <img
-                                        src="/arrowright.svg"
-                                        alt="Arrow Right Icon"
-                                        className="w-5 h-5"
-                                      />
-                                    </div>
-                                  </div>
-
-                                  <div className="space-y-4 px-4">
-                                    {[
-                                      {
-                                        label: 'Price Quotations',
-                                        value:
-                                          projectData.taskLogs.priceQuotations,
-                                      },
-                                      {
-                                        label: 'Completed Tasks',
-                                        value:
-                                          projectData.taskLogs.completedTasks,
-                                      },
-                                      {
-                                        label: 'Total Comments',
-                                        value:
-                                          projectData.taskLogs.totalComments,
-                                      },
-                                    ].map((item, index, array) => (
-                                      <div
-                                        key={item.label}
-                                        className={`${
-                                          index !== array.length - 1
-                                            ? ' pb-3'
-                                            : ''
-                                        }`}
-                                      >
-                                        <div className="flex justify-between  items-center">
-                                          <div className="flex gap-2 items-center">
-                                            <span className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062] whitespace-nowrap">
-                                              {item.label}
-                                            </span>
-                                          </div>
-                                          <div className="w-full mx-4 mt-[3px] h-[0.60px] relative custom-dash-border border-neutral-300"></div>
-                                          <span className="font-outfit font-normal text-xs leading-tight tracking-tight text-[#606062]">
-                                            {item.value}
-                                          </span>
-                                        </div>
-                                      </div>
-                                    ))}
-                                  </div>
-                                </div>
-                              </div>
-
-                              {/* Right Column */}
-                              <div className="space-y-4">
-                                <div className=" rounded-[8px] py-[16px]   shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)]  border border-[#F0F0F5]  max-w-lg">
+<div className=" rounded-[8px] py-[16px]   shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)]  border border-[#F0F0F5]  max-w-lg">
                                   <div className="flex items-center mb-8 border-b border-gray-200 px-4 pb-[16px]">
                                     <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
                                       <div className="bg-[#E3F1FA] p-1 rounded-full">
@@ -4015,14 +3695,191 @@ export default function LeadProfileSideView({
                                   </section>
                                 </div>
 
+                                {/*
+  <div className="border border-[#E7E7E9] bg-[#FFFFFF] p-4 rounded-[8px]">
+  <div className="flex items-center mb-4">
+    <div className="bg-[#FFFFFF] p-1.5 rounded-lg mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+      <img src="/quill_clock.svg" alt="" className='w-[18px] h-[18px]' />
+    </div>
+    <span className="font-semibold text-[12px] leading-[100%] tracking-[6%] uppercase text-[#2B2B2B]">SITE VISIT (4)</span>
+  </div>
+
+
+
+
+  <div className="grid grid-cols-2 items-center gap-4">
+  <div className="flex gap-2 flex-col">
+    <div className="font-normal text-[14px] tracking-[0%] text-[#606062]">
+      Visit Date: {projectData.siteVisit.date}
+    </div>
+    <div className="font-normal text-[14px] tracking-[0%] text-[#606062]">
+      Site In-charge: {projectData.siteVisit.inCharge}
+    </div>
+  </div>
+
+  <div className="font-semibold text-[14px] leading-[100%] tracking-[0em] text-[#0E0A1F] flex flex-col items-center">
+    <img src="/good.svg" alt="icon" className="mb-1 w-16 h-16" />
+    Good
+  </div>
+</div>
+
+
+
+</div> */}
+
+                                <div className="border border-[#F0F0F5] bg-[#FFFFFF] shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] p-4 rounded-[8px] cursor-pointer">
+                                  <div className="flex items-center mb-4">
+                                    <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+                                      <div className="bg-[#E3F1FA] p-1 rounded-full">
+                                        {/* <Clock className="text-purple-500 w-5 h-5" /> */}
+                                        <img
+                                          src="/target-sale.svg"
+                                          alt=""
+                                          className="w-[18px] h-[18px]"
+                                        />
+                                      </div>
+                                    </div>
+
+                                    <span className="font-semibold text-[12px] leading-[100%] tracking-[6%] uppercase text-[#2B2B2B]">
+                                      TASK LOGS
+                                    </span>
+                                    <div className="ml-auto">
+                                      <img
+                                        src="/arrowright.svg"
+                                        alt="Arrow Right Icon"
+                                        className="w-5 h-5"
+                                      />
+                                    </div>
+                                  </div>
+
+                                  <div className="space-y-4 px-4">
+                                    {[
+                                      {
+                                        label: 'Price Quotations',
+                                        value:
+                                          projectData.taskLogs.priceQuotations,
+                                      },
+                                      {
+                                        label: 'Completed Tasks',
+                                        value:
+                                          projectData.taskLogs.completedTasks,
+                                      },
+                                      {
+                                        label: 'Total Comments',
+                                        value:
+                                          projectData.taskLogs.totalComments,
+                                      },
+                                    ].map((item, index, array) => (
+                                      <div
+                                        key={item.label}
+                                        className={`${
+                                          index !== array.length - 1
+                                            ? ' pb-3'
+                                            : ''
+                                        }`}
+                                      >
+                                        <div className="flex justify-between  items-center">
+                                          <div className="flex gap-2 items-center">
+                                            <span className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062] whitespace-nowrap">
+                                              {item.label}
+                                            </span>
+                                          </div>
+                                          <div className="w-full mx-4 mt-[3px] h-[0.60px] relative custom-dash-border border-neutral-300"></div>
+                                          <span className="font-outfit font-normal text-xs leading-tight tracking-tight text-[#606062]">
+                                            {item.value}
+                                          </span>
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* Right Column */}
+                              <div className="space-y-4">
+                              <div className="border border-[#F0F0F5] bg-[#FFFFFF] p-3 shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] rounded-[8px] ">
+                                  <div className="flex justify-between">
+                                    <div className="flex flex-col w-full ">
+                                      <div className="flex items-center mb-4 justify-between pb-[16px] pt-[8px] border-b border-[#F0F0F5]">
+                                        <section className="flex items-center">
+                                          <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+                                            <div className="bg-[#E3F1FA] p-1 rounded-full">
+                                              {/* <Clock className="text-purple-500 w-5 h-5" /> */}
+                                              <img
+                                                src="/location.svg"
+                                                alt=""
+                                                className="w-[18px] h-[18px]"
+                                              />
+                                            </div>
+                                          </div>
+                                          <span className="font-semibold text-[12px] leading-[100%] tracking-[6%] uppercase text-[#2B2B2B]">
+                                            Site visit (
+                                            {projectData.siteVisit.count})
+                                          </span>
+                                        </section>
+                                        <div className="flex flex-row items-center font-medium text-[14px] text-[#0E0A1F] mr-[8px]">
+                                          <img
+                                            src="/good.svg"
+                                            alt="icon"
+                                            className="mb-1 w-8 h-8 mr-[8px]"
+                                          />
+                                          Good
+                                        </div>
+                                      </div>
+
+                                      <div className="flex flex-row justify-between">
+                                        <p className="font-normal text-[12px] text-[#0D0A1E]">
+                                          Visit Date:{' '}
+                                          {projectData.siteVisit.date}
+                                        </p>
+                                        <p className="font-normal text-[12px] text-[#0D0A1E]">
+                                          Site In-charge:{' '}
+                                          {projectData.siteVisit.inCharge}
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </div>
+                              </div>
+
+
+
+                              <div className="border border-[#E7E7E9] bg-[#FFFFFF] p-3 shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] rounded-[14px] ">
+                                  <div className="flex justify-between">
+                                    <div className="flex flex-col w-full ">
+                                      <div className="flex items-center mb-4 justify-between pb-[16px] pt-[8px] border-b border-[#F0F0F5]">
+                                        <section className="flex items-center">
+                                          <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+                                            <div className="bg-[#E3F1FA] p-1 rounded-full">
+                                              {/* <Clock className="text-purple-500 w-5 h-5" /> */}
+                                              <img
+                                                src="/location.svg"
+                                                alt=""
+                                                className="w-[18px] h-[18px]"
+                                              />
+                                            </div>
+                                          </div>
+                                          <span className="font-semibold text-[12px] leading-[100%] tracking-[6%] uppercase text-[#2B2B2B]">
+                                            Activity (
+                                            {filterData?.length})
+                                          </span>
+                                        </section>
+
+                                      </div>
+
+                                      <ActivityLogComp filterData={filterData} usersList={usersList} />
+                                     
+                                    </div>
+                                  </div>
+                              </div>
+
                                 {/* Projects Card */}
-                                <div className="border border-[#F0F0F5] shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] bg-[#FFFFFF] p-4 rounded-[8px] ">
+                                {/* <div className="border border-[#F0F0F5] shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] bg-[#FFFFFF] p-4 rounded-[8px] ">
                                   {!isProjectsExpanded && (
                                     <div>
                                       <div className="flex items-center mb-4">
                                         <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
                                           <div className="bg-[#E3F1FA] p-1 rounded-full">
-                                            {/* <Clock className="text-purple-500 w-5 h-5" /> */}
+
                                             <img
                                               src="/quill_clock.svg"
                                               alt=""
@@ -4070,13 +3927,13 @@ export default function LeadProfileSideView({
                                       </button>
                                     </div>
                                   )}
-                                  {/* Expanded View */}
+
                                   {isProjectsExpanded && (
                                     <div>
                                       <div className="flex items-center mb-4">
                                         <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
                                           <div className="bg-[#E3F1FA] p-1 rounded-full">
-                                            {/* <Clock className="text-purple-500 w-5 h-5" /> */}
+
                                             <img
                                               src="/quill_clock.svg"
                                               alt=""
@@ -4124,7 +3981,7 @@ export default function LeadProfileSideView({
                                       </button>
                                     </div>
                                   )}
-                                </div>
+                                </div> */}
 
                                 {/* More Details Card */}
                                 {/* <div className="bg-white p-6 rounded-lg shadow-sm">
@@ -4627,8 +4484,7 @@ export default function LeadProfileSideView({
                                                   'visitfixed' && (
                                                   <div className="">
                                                     <label className="block font-[Outfit] block font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162] mb-2">
-                                                      Assign lead to Site
-                                                      Incharge
+                                                      Assign lead to Site Incharge
                                                     </label>
                                                     <div className="relative">
                                                       <div className="w-full  border-b border-[#E7E7E9] bg-transparent flex justify-between items-center cursor-pointer">
@@ -4656,7 +4512,7 @@ export default function LeadProfileSideView({
                                               <section className="flex">
                                                 <button
                                                   type="submit"
-                                                  className={`flex mt-2 cursor-pointer rounded-lg items-center justify-center pl-2 h-[36px] pr-4 py-2 px-6 text-sm font-medium sale_bg_color text-white `}
+                                                  className={`flex mt-2 cursor-pointer rounded-lg items-center justify-center pl-2 h-[36px] pr-4 py-2 px-6 text-sm font-medium sale_bg_color  s_btn_txt_color`}
                                                 >
                                                   <span className="ml-1 ">
                                                     Create{' '}
@@ -4942,6 +4798,233 @@ export default function LeadProfileSideView({
                                                 <label className="mb-4 font-outfit font-normal text-xs leading-[100%] tracking-[0%] text-[#606062]">
                                                   Sites Visit Feedback *
                                                 </label>
+
+                                                <div className=" py-4">
+                                <div className="grid grid-cols-2 gap-6">
+
+
+
+
+   {/* Left Reason Section */}
+   <div className="bg-white rounded-xl p-6 shadow-sm border">
+                                    <section className='flex flex-row justify-between'>
+                                    <div className="flex items-center gap-3 mb-5">
+                                      <div className="bg-[#FFFFFF] p-1.5 rounded-lg  shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+                                        <img
+                                          src="/target-sale.svg"
+                                          alt="Clock Icon"
+                                          className="w-[18px] h-[18px]"
+                                        />
+                                      </div>
+
+                                      <h2 className=" font-normal text-[16px] leading-[100%] tracking-[0%] text-[#000000]">
+                                        Budget
+                                      </h2>
+                                    </div>
+                                    <div className="flex items-center mb-4">
+                                      <div className="w-16 mr-2">
+                                        <RoundedProgressBar
+                                          progress={optionvalues.bstr}
+                                          height={8}
+                                          fillColor="#94B5ED"
+                                          showLabels={false}
+                                        />
+                                      </div>
+                                      <span className="text-xs font-medium">{`${optionvalues.bstr}%`}</span>
+                                    </div>
+                                    </section>
+                                    <div className="grid grid-cols-1 gap-4">
+                                  <div className="grid grid-cols-2 gap-4">
+                                      {lookingAtBudgetRange.map((data, i) => (
+                                         <button
+                                         className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
+                                          optionvalues.budget === data.value
+                                             ? 'bg-[#FCE6D9]  leading-[100%] tracking-[0] sale_text_color '
+                                             : 'bg-white hover:bg-gray-50'
+                                         }`}
+                                         onClick={() =>
+
+                                           setoptionvalues({
+                                            ...optionvalues,
+                                            budget: data.value,
+                                            bstr: data.str,
+                                          })
+                                         }
+                                       >
+                                         {data.label}
+                                       </button>
+                                      ))}
+                                  </div>
+
+                                    </div>
+                                  </div>
+
+                                  {/* Right Reason Section */}
+                                  <div className="bg-white rounded-xl p-6 shadow-sm border">
+                                    <section className='flex flex-row justify-between'>
+                                    <div className="flex items-center gap-3 mb-5">
+                                      <div className="bg-[#FFFFFF] p-1.5 rounded-lg  shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+                                        <img
+                                          src="/target-sale.svg"
+                                          alt="Clock Icon"
+                                          className="w-[18px] h-[18px]"
+                                        />
+                                      </div>
+
+                                      <h2 className=" font-normal text-[16px] leading-[100%] tracking-[0%] text-[#000000]">
+                                        Configuration
+                                      </h2>
+                                    </div>
+                                    <div className="flex items-center mb-4">
+                                      <div className="w-16 mr-2">
+                                        <RoundedProgressBar
+                                          progress={optionvalues.confstr ||0}
+                                          height={8}
+                                          fillColor="#94B5ED"
+                                          showLabels={false}
+                                        />
+                                      </div>
+                                      <span className="text-xs font-medium">{`${optionvalues.confstr ||0}%`}</span>
+                                    </div>
+                                    </section>
+                                    <div className="grid grid-cols-1 gap-4">
+                                  <div className="grid grid-cols-3 gap-4">
+                                      {bedRoomConfigurtionRange.map((data, i) => (
+                                         <button
+                                         className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
+                                          optionvalues.config === data.value
+                                             ? 'bg-[#FCE6D9]  leading-[100%] tracking-[0] sale_text_color '
+                                             : 'bg-white hover:bg-gray-50'
+                                         }`}
+                                         onClick={() =>
+
+                                           setoptionvalues({
+                                            ...optionvalues,
+                                            config: data.value,
+                                            confstr: data.str,
+                                          })
+                                         }
+                                       >
+                                         {data.label}
+                                       </button>
+                                      ))}
+                                  </div>
+
+                                    </div>
+                                  </div>
+                                  {/* Left Reason Section */}
+                                  <div className="bg-white rounded-xl p-6 shadow-sm border">
+                                    <section className='flex flex-row justify-between'>
+                                    <div className="flex items-center gap-3 mb-5">
+                                      <div className="bg-[#FFFFFF] p-1.5 rounded-lg  shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+                                        <img
+                                          src="/target-sale.svg"
+                                          alt="Clock Icon"
+                                          className="w-[18px] h-[18px]"
+                                        />
+                                      </div>
+
+                                      <h2 className=" font-normal text-[16px] leading-[100%] tracking-[0%] text-[#000000]">
+                                        Preferred Area
+                                      </h2>
+                                    </div>
+                                    <div className="flex items-center mb-4">
+                                      <div className="w-16 mr-2">
+                                        <RoundedProgressBar
+                                          progress={optionvalues.astr}
+                                          height={8}
+                                          fillColor="#94B5ED"
+                                          showLabels={false}
+                                        />
+                                      </div>
+                                      <span className="text-xs font-medium">{`${optionvalues.astr}%`}</span>
+                                    </div>
+                                    </section>
+                                    <div className="grid grid-cols-1 gap-4">
+                                  <div className="grid grid-cols-2 gap-4">
+                                      {preferredArea.map((data, i) => (
+                                         <button
+                                         className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
+                                          optionvalues.area === data.value
+                                             ? 'bg-[#FCE6D9]  leading-[100%] tracking-[0] sale_text_color '
+                                             : 'bg-white hover:bg-gray-50'
+                                         }`}
+                                         onClick={() =>
+
+                                           setoptionvalues({
+                                            ...optionvalues,
+                                            area: data.value,
+                                            astr: data.str,
+                                          })
+                                         }
+                                       >
+                                         {data.label}
+                                       </button>
+                                      ))}
+                                  </div>
+
+                                    </div>
+                                  </div>
+
+                                  {/* Right Reason Section */}
+                                  <div className="bg-white rounded-xl p-6 shadow-sm border">
+                                    <section className='flex flex-row justify-between'>
+                                    <div className="flex items-center gap-3 mb-5">
+                                      <div className="bg-[#FFFFFF] p-1.5 rounded-lg  shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+                                        <img
+                                          src="/target-sale.svg"
+                                          alt="Clock Icon"
+                                          className="w-[18px] h-[18px]"
+                                        />
+                                      </div>
+
+                                      <h2 className=" font-normal text-[16px] leading-[100%] tracking-[0%] text-[#000000]">
+                                        Reason For Purchase
+                                      </h2>
+                                    </div>
+                                    <div className="flex items-center mb-4">
+                                      <div className="w-16 mr-2">
+                                        <RoundedProgressBar
+                                          progress={optionvalues.pstr}
+                                          height={8}
+                                          fillColor="#94B5ED"
+                                          showLabels={false}
+                                        />
+                                      </div>
+                                      <span className="text-xs font-medium">{`${optionvalues.pstr}%`}</span>
+                                    </div>
+                                    </section>
+                                    <div className="grid grid-cols-1 gap-4">
+                                  <div className="grid grid-cols-2 gap-4">
+                                      {reasonPurchase.map((data, i) => (
+                                         <button
+                                         className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
+                                          optionvalues.purchase === data.value
+                                             ? 'bg-[#FCE6D9]  leading-[100%] tracking-[0] sale_text_color '
+                                             : 'bg-white hover:bg-gray-50'
+                                         }`}
+                                         onClick={() =>
+
+                                           setoptionvalues({
+                                            ...optionvalues,
+                                            purchase: data.value,
+                                            pstr: data.str,
+                                          })
+                                         }
+                                       >
+                                         {data.label}
+                                       </button>
+                                      ))}
+                                  </div>
+
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div></div>
+
+
                                                 <div className="flex space-x-4">
                                                   {siteVisitFeedbackOptions.map(
                                                     (option) => (
@@ -5026,7 +5109,7 @@ export default function LeadProfileSideView({
                                                   )
                                                 }}
                                                 // className={`flex mt-2 ml-4 rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-balck  bg-[#7bd2ea]  hover:bg-gray-700 hover:text-white `}
-                                                className="flex items-center px-4 h-9 text-sm font-medium text-white sale_bg_color rounded-md"
+                                                className="flex items-center px-4 h-9 text-sm font-medium text-white sale_bg_color s_btn_txt_color rounded-md"
                                               >
                                                 Save & Whats App
                                               </button>
@@ -5035,7 +5118,7 @@ export default function LeadProfileSideView({
                                                   cancelResetStatusFun()
                                                 }
                                                 // className={`flex mt-2 ml-4  rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700 hover:text-white  `}
-                                                className="flex items-center px-4 h-9 text-sm font-medium text-black border rounded-md"
+                                                className="flex items-center px-4 h-9 text-sm font-medium text-black s_btn_txt_color border rounded-md"
                                               >
                                                 Cancel
                                               </button>
@@ -5255,291 +5338,8 @@ export default function LeadProfileSideView({
                     <div className="text-gray-600 font-medium mr-6 text-[12px] uppercase tracking-wide mb-4 ">
                       Timeline
                     </div>
+                    <ActivityLogComp filterData={filterData} usersList={usersList} />
 
-                    <div className="">
-                      {/* <ol className="col-span-12 space-y-2 relative pl-4 sm:col-span-8  sm:before:absolute sm:before:top-2 sm:before:bottom-0 sm:before:w-0.5 sm:before:-left-3 before:bg-gray-200">
-                        {filterData?.map((data, i) => (
-                          <section
-                            key={i}
-                            className="flex flex-col sm:relative sm:before:absolute sm:before:top-2 sm:before:w-4 sm:before:h-4 sm:before:rounded-full sm:before:left-[-35px] sm:before:z-[1] before:bg-[#7BD2EA] bg-white  rounded-lg"
-                          >
-                            <a
-                              href="#"
-                              className="block items-center px-3 sm:flex "
-                            >
-                              {data?.type == 'status' && (
-                                <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-blue-200 rounded-full ring-8 ring-white  ">
-                                  <svg
-                                    className="w-3 h-3 text-blue-600 \"
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      fillRule="evenodd"
-                                      d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                                      clipRule="evenodd"
-                                    ></path>
-                                  </svg>
-                                </span>
-                              )}
-                              {data?.type == 'ph' && (
-                                <>
-                                  <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-green-200 rounded-full ring-8 ring-white ">
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      className="h-3 w-3 text-blue-600 "
-                                      viewBox="0 0 20 20"
-                                      fill="currentColor"
-                                    >
-                                      <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                                    </svg>
-                                  </span>
-                                  <div className="text-gray-600  m-3">
-                                    <div className="text-base font-normal">
-                                      <span className="font-medium text-green-900 ">
-                                        {'Rajiv'}
-                                      </span>{' '}
-                                      called{' '}
-                                      <span className="text-sm text-red-900 ">
-                                        {Name}
-                                      </span>{' '}
-                                    </div>
-                                    <div className="text-sm font-normal">
-                                      {data?.txt}
-                                    </div>
-                                    <span className="inline-flex items-center text-xs font-normal text-gray-500 ">
-                                      <ClockIcon className="mr-1 w-3 h-3" />
-                                      {data?.type == 'ph'
-                                        ? timeConv(
-                                          Number(data?.time)
-                                        ).toLocaleString()
-                                        : timeConv(data?.T).toLocaleString()}
-                                      {'    '}
-                                      <span className="text-red-900 ml-4 mr-4">
-                                        {Number(data?.duration)} sec
-                                      </span>
-                                      or
-                                      <span className="text-red-900 ml-4">
-                                        {parseInt(data?.duration / 60)} min
-                                      </span>
-                                    </span>
-                                  </div>
-                                </>
-                              )}
-                              {data?.type != 'ph' && (
-                                <div className="text-gray-600 font-bodyLato mx-3 my-1">
-                                  <div className="text-base font-normal">
-                                    {data?.type === 'sts_change' && (
-                                      <span className="text-sm font-medium text-gray-800 ">
-                                        {data?.from?.toUpperCase()} {'  '}
-                                      </span>
-                                    )}
-                                    <span className="text-sm font-normal text-gray-800 mx-2 ">
-                                      {activieLogNamer(data)}
-                                    </span>{' '}
-                                    {data?.type === 'sts_change' && (
-                                      <span className="text-sm font-medium text-gray-800 ">
-                                        {'  '} {data?.to?.toUpperCase()}
-                                      </span>
-                                    )}
-                                    {data?.type === 'assign_change' && (
-                                      <span className="text-xs  text-gray-500 ">
-                                        {'  '} {empNameSetter(data?.to)}
-                                      </span>
-                                    )}
-                                  </div>
-                                  <div className="text-sm font-normal">
-                                    {data?.txt}
-                                  </div>
-                                  <span className="inline-flex items-center text-xs font-normal text-gray-500 ">
-                                    <ClockIcon className=" w-3 h-3   text-gray-500" />
-
-                                    <span className="text-xs  text-gray-500 ml-1">
-                                      {data?.type == 'ph'
-                                        ? timeConv(
-                                          Number(data?.time)
-                                        ).toLocaleString()
-                                        : timeConv(data?.T).toLocaleString()}
-                                    </span>
-
-                                    <div className="w-[2px] mx-2 mt-[4px] h-[8px] border-0 border-r"></div>
-
-                                    <span className="text-xs  text-gray-500">
-                                      by:
-                                    </span>
-                                    <span className="text-xs  text-gray-500 ml-1 ">
-                                      {data?.by}
-                                    </span>
-                                  </span>
-                                </div>
-                              )}
-                            </a>
-                          </section>
-                        ))}
-                      </ol> */}
-
-                      <div className="max-w-4xl mx-auto bg-white  rounded-[14px] border border-[#E7E7E9] p-[20px] shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)]">
-                        <div className="relative">
-                          <div
-                            className="absolute top-0 bottom-0 left-[22px] w-0.5 bg-[#E17059]"
-                            style={{ height: '100%' }}
-                          ></div>
-
-                          <div className="space-y-3">
-                            {filterData?.map((data, i) => (
-                              <div key={i} className="relative pl-16">
-                                <div className="absolute left-0 top-0">
-                                  <div className="w-12 h-12 flex items-center justify-center">
-                                    <div className="w-8 h-8  rounded-md flex items-center justify-center  z-10">
-                                      {data?.type === 'ph' ? (
-                                        <img
-                                          src="/timelineo.svg"
-                                          alt="Completed"
-                                          className="w-4 h-4"
-                                        />
-                                      ) : (
-                                        // <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                        //   <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                                        // </svg>
-                                        <img
-                                          src="/timelineo.svg"
-                                          alt="Completed"
-                                          className="w-4 h-4"
-                                        />
-                                        // <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                        //   <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1z" clipRule="evenodd"></path>
-                                        // </svg>
-                                      )}
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div className="border-b border-gray-100 py-2">
-                                  <a
-                                    href="#"
-                                    className="block items-center  sm:flex "
-                                  >
-                                    {data?.type == 'status' && (
-                                      <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-blue-200 rounded-full ring-8 ring-white  ">
-                                        <svg
-                                          className="w-3 h-3 text-blue-600 \"
-                                          fill="currentColor"
-                                          viewBox="0 0 20 20"
-                                          xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                          <path
-                                            fillRule="evenodd"
-                                            d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                                            clipRule="evenodd"
-                                          ></path>
-                                        </svg>
-                                      </span>
-                                    )}
-                                    {data?.type == 'ph' && (
-                                      <>
-                                        <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-green-200 rounded-full ring-8 ring-white ">
-                                          <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            className="h-3 w-3 text-blue-600 "
-                                            viewBox="0 0 20 20"
-                                            fill="currentColor"
-                                          >
-                                            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                                          </svg>
-                                        </span>
-                                        <div className="text-gray-600  m-3">
-                                          <div className="text-base font-normal">
-                                            <span className="font-medium text-green-900 ">
-                                              {'Rajiv'}
-                                            </span>{' '}
-                                            called{' '}
-                                            <span className="text-sm text-red-900 ">
-                                              {Name}
-                                            </span>{' '}
-                                          </div>
-                                          <div className="text-sm font-normal">
-                                            {data?.txt}
-                                          </div>
-                                          <span className="inline-flex items-center text-xs font-normal text-gray-500 ">
-                                            <ClockIcon className="mr-1 w-3 h-3" />
-                                            {data?.type == 'ph'
-                                              ? timeConv(
-                                                  Number(data?.time)
-                                                ).toLocaleString()
-                                              : timeConv(
-                                                  data?.T
-                                                ).toLocaleString()}
-                                            {'    '}
-                                            <span className="text-red-900 ml-4 mr-4">
-                                              {Number(data?.duration)} sec
-                                            </span>
-                                            or
-                                            <span className="text-red-900 ml-4">
-                                              {parseInt(data?.duration / 60)}{' '}
-                                              min
-                                            </span>
-                                          </span>
-                                        </div>
-                                      </>
-                                    )}
-                                    {data?.type != 'ph' && (
-                                      <div className="text-gray-600 font-bodyLato mx-3 my-1">
-                                        <div className="text-base font-normal">
-                                          {data?.type === 'sts_change' && (
-                                            <span className="text-sm font-medium text-gray-800 ">
-                                              {data?.from?.toUpperCase()} {'  '}
-                                            </span>
-                                          )}
-                                          <span className="text-sm font-normal text-gray-800 mx-2 ">
-                                            {activieLogNamer(data)}
-                                          </span>{' '}
-                                          {data?.type === 'sts_change' && (
-                                            <span className="text-sm font-medium text-gray-800 ">
-                                              {'  '} {data?.to?.toUpperCase()}
-                                            </span>
-                                          )}
-                                          {data?.type === 'assign_change' && (
-                                            <span className="text-xs  text-gray-500 ">
-                                              {'  '} {empNameSetter(data?.to)}
-                                            </span>
-                                          )}
-                                        </div>
-                                        <div className="text-sm font-normal">
-                                          {data?.txt}
-                                        </div>
-                                        <span className="inline-flex items-center text-xs font-normal text-gray-500 ">
-                                          <ClockIcon className=" w-3 h-3   text-gray-500" />
-
-                                          <span className="text-xs  text-gray-500 ml-1">
-                                            {data?.type == 'ph'
-                                              ? timeConv(
-                                                  Number(data?.time)
-                                                ).toLocaleString()
-                                              : timeConv(
-                                                  data?.T
-                                                ).toLocaleString()}
-                                          </span>
-
-                                          <div className="w-[2px] mx-2 mt-[4px] h-[8px] border-0 border-r"></div>
-
-                                          <span className="text-xs  text-gray-500">
-                                            by:
-                                          </span>
-                                          <span className="text-xs  text-gray-500 ml-1 ">
-                                            {data?.by}
-                                          </span>
-                                        </span>
-                                      </div>
-                                    )}
-                                  </a>
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 )}
               </section>

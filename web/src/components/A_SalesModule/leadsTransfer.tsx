@@ -435,7 +435,7 @@ const LeadsTransferHome = ({ project }) => {
 
                     <section>
                       <section
-                        className="text-white sale_bg_color  text-[12px] rounded-md px-3 py-3 font-medium leading-[100%]  cursor-pointer"
+                        className=" sale_bg_color s_btn_txt_color text-[12px] rounded-md px-3 py-3 font-medium leading-[100%]  cursor-pointer"
                         onClick={() => tranferLeads()}
                       >
                         Apply Lead Transfer

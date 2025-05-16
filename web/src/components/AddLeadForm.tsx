@@ -1179,7 +1179,7 @@ const AddLeadForm = ({
                                   Reset
                                 </button>
                                 <button
-                                  className="mb-2 md:mb-0 sale_bg_color px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white  rounded-[8px] "
+                                  className="mb-2 md:mb-0 sale_bg_color px-5 py-2 text-sm shadow-sm font-medium tracking-wider s_btn_txt_color  rounded-[8px] "
                                   type="submit"
                                   disabled={loading}
                                 >
@@ -1187,7 +1187,7 @@ const AddLeadForm = ({
                                   Add Lead
                                 </button>
                                 <button
-                                  className="mb-2 md:mb-0 sale_bg_color px-5 py-2 text-sm shadow-sm font-medium mr-10 tracking-wider text-white  rounded-[8px] "
+                                  className="mb-2 md:mb-0 sale_bg_color px-5 py-2 text-sm shadow-sm font-medium mr-10 tracking-wider s_btn_txt_color  rounded-[8px] "
                                   type="submit"
                                   onClick={() => setCloseWindowMode(true)}
                                   disabled={loading}

@@ -6,6 +6,7 @@ import { useAuth } from 'src/context/firebase-auth-context'
 import { auth } from 'src/context/firebaseConfig'
 import { logout as logoutAction } from 'src/state/actions/user'
 import ModuleSwitchDrop from '../A_SideMenu/modulesSwitchDrop'
+import NotificationHomeDropdown from '../comps/NotificationHeader/NotificationHome'
 
 const HeadNavBar2 = ({ selModule, setSelModule, setViewable }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
@@ -36,6 +37,7 @@ const HeadNavBar2 = ({ selModule, setSelModule, setViewable }) => {
     setViewable('userProfile')
   }
 
+
   return (
     <div className="sticky top-0 z-50">
       <div className="flex items-center flex-shrink-0 h-14 px-2  pl-0 bg-white border-b ">
@@ -57,6 +59,7 @@ const HeadNavBar2 = ({ selModule, setSelModule, setViewable }) => {
         {/* <GlobalSearchBar /> */}
         <button className="flex items-center justify-center h-10 px-4 ml-auto "></button>
         <button className="flex items-center justify-center h-10 text-sm font-medium "></button>
+        <NotificationHomeDropdown />
         <Box
           sx={{
             cursor: 'pointer',

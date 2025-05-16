@@ -27,7 +27,7 @@ const ReEngageCriteria = ({
 
           <section className=' border-b border-[#F3F2F9] pb-4'>
             <div  className="flex items-center justify-between">
-                <div>Allow only one lead per phone number to avoid duplicates.
+                <div>Consider when no activity for last 60 days
                 </div>
                    <button
                     onClick={() => setUniqueLeadPh(!uniqueLeadPh)}
@@ -80,16 +80,14 @@ const ReEngageCriteria = ({
                     `
                   }
                 >
-                  {uniqueLeadPh ? 'Creation of multiple leads using the same phone number is blocked now  ' : 'Creation of multiple leads using the same phone number is allowed'}
+                  {uniqueLeadPh ? 'Lead will be counted as reengaged when it is ideal for 60 days ' : 'Lead will be counted for reengaged when it is ideal for 0 days '}
+
                 </span>
-
-
-
               </div>
           </section>
           <section className=' border-b border-[#F3F2F9] pb-4 pt-2'>
             <div  className="flex items-center justify-between">
-                <div>Allow only one lead per phone number with in each project to avoid duplicates.</div>
+                <div>Consider when lead is in archieve</div>
                    <button
                     onClick={() => setUniqueLeadPhPI(!uniqueLeadPhPI)}
                     className={`ml-3 relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
@@ -141,7 +139,7 @@ const ReEngageCriteria = ({
                     `
                   }
                 >
-                  {uniqueLeadPhPI ? 'Creation of multiple leads using the same phone number within a each project is blocked now  ' : 'Creation of multiple leads using the same phone number within a each project is allowed now '}
+                  {uniqueLeadPhPI ? 'All archieve leads can be considered as reengaged on re-enquiry ' : 'No archieve leads can be considered as reengaged on re-enquiry'}
                 </span>
 
 
