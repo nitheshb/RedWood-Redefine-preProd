@@ -703,15 +703,10 @@ export default function TodayLeadsActivitySearchView({
                     </section>
                     <section className="ml-1">
                       <TaskProgress userTodayPerfA={userTodayPerfA} />
-                      <div className="mt-1">
-                        <RecentActivity
-                          title={'My Activity'}
-                          userTodayPerfA={userTodayPerfA}
-                        />
-                      </div>
+                     
                       <div className="mt-1">
                       <section className="bg-white rounded-lg  flex flex-col p-4 w-100 max-h-[400px] overflow-y-scroll">
-                      <h5 className="font-bodyLato text-md">Activity Log</h5>
+                      <h5 className="font-bodyLato text-md">My Activity</h5>
                         <UserActivityLogHomeSlim
                           usersList={usersList}
                           filterData={userActivityA}

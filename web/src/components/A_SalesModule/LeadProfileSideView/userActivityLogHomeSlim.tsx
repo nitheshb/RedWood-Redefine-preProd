@@ -107,7 +107,7 @@ useEffect(() => {
                           </>
                         )}
                         {data?.type != 'ph' && (
-                          <div className="text-gray-600 font-bodyLato mx-3 my-1">
+                          <div className="text-gray-600 font-bodyLato  my-1">
                             <div className="text-base    font-normal">
                               {data?.type === 'sts_change' && (
                                 <span className="text-[12px] font-medium text-gray-800 bg-[#F5F5F5] p-2 py-1 px-3 rounded-[8px] ">
