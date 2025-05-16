@@ -1746,7 +1746,7 @@ export function MultipleFileUploadField({
                 {!['Plan Diagram', 'Brouchers', 'Approvals'].includes(
                   title
                 ) && (
-                  <div className="mt-2 p-6 bg-white border border-gray-100">
+                  <div className="mt-2 p-6  bg-white border border-gray-100">
                     <LfileUploadTableHome
                       fileRecords={fileRecords}
                       title={title}

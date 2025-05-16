@@ -118,7 +118,7 @@ const LfileUploadTableHome = ({ fileRecords, title, pId, myBlock }) => {
                 data-tabs-toggle="#myTabContent"
                 role="tablist"
               >
-                <li className="mr-2" role="presentation">
+                <li className="mr-2 " role="presentation">
                   <button
                     className={`inline-block py-4 px-4 text-sm font-medium text-center text-gray-500 rounded-t-lg border-b-2  hover:text-black hover:border-blue-600 dark:text-gray-400 dark:hover:text-gray-300  ${
                       value === 'all'

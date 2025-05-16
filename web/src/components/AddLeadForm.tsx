@@ -132,10 +132,27 @@ const AddLeadForm = ({
       await setCustomerDetailsTuned(custObj)
       await console.log('my project data is ', customerDetailsTuned, custObj)
     }
+
+
+    {/* change-1 */ }
+
+
     if (title === 'Edit Lead') {
       const custObj = customerDetails
       custObj.name = leadDetailsObj?.Name
       custObj.email = leadDetailsObj?.Email
+      custObj.SecondaryEmail = leadDetailsObj?.SecondaryEmail
+
+      // custObj.PhoneCountry = leadDetailsObj?.PhoneCountry;
+      custObj.SecondaryPhones = leadDetailsObj?.SecondaryPhones;
+      custObj.Address = leadDetailsObj?.Address;
+      custObj.Street = leadDetailsObj?.Street;
+      custObj.City = leadDetailsObj?.City;
+      custObj.Region = leadDetailsObj?.Region;
+      custObj.ZipCode = leadDetailsObj?.ZipCode;
+      custObj.Country = leadDetailsObj?.Country;
+      custObj.TimeZone = leadDetailsObj?.TimeZone;
+
       custObj.phone = leadDetailsObj?.Mobile
       custObj.countryCode = leadDetailsObj?.countryCode
       custObj.Date = leadDetailsObj?.Date
@@ -266,6 +283,9 @@ const AddLeadForm = ({
     }
   }, [leadDetailsObj])
 
+
+  {/* change-2 */ }
+
   const onSubmitFun = async (data, resetForm) => {
     //console.log(data)
     setLoading(true)
@@ -273,6 +293,19 @@ const AddLeadForm = ({
       const leadData = {
         Date: startDate.getTime(),
         Email: data?.email,
+        SecondaryEmail: data?.SecondaryEmail,
+
+
+
+        SecondaryPhones: data?.SecondaryPhones,
+        Address: data?.Address,
+        Street: data?.Street,
+        City: data?.City,
+        Region: data?.Region,
+        ZipCode: data?.ZipCode,
+        Country: data?.Country,
+        TimeZone: data?.TimeZone,
+
         Mobile: data?.mobileNo,
         countryCode: data?.countryCode,
         Name: data?.name,
@@ -343,8 +376,22 @@ const AddLeadForm = ({
         }
       }
 
+
+
+      {/* change-3 */ }
+
       const {
         email,
+        SecondaryEmail,
+
+        SecondaryPhones,
+        Address,
+        Street,
+        City,
+        Region,
+        ZipCode,
+        Country,
+        TimeZone,
         name,
         mobileNo,
         countryCode,
@@ -360,9 +407,26 @@ const AddLeadForm = ({
         mobileNo,
         projectId
       )
+
+
+      {/* change-5 */ }
+
+
+
+
       const leadData = {
         Date: startDate.getTime(),
         Email: email,
+        SecondaryEmail: SecondaryEmail,
+        SecondaryPhones: SecondaryPhones,
+        Address: Address,
+        Street: Street,
+        City: City,
+        Region: Region,
+        ZipCode: ZipCode,
+        Country: Country,
+        TimeZone: TimeZone,
+
         Mobile: mobileNo,
         //budget: budget,
         countryCode: countryCode,
@@ -421,8 +485,7 @@ const AddLeadForm = ({
 
         await sendWhatAppTextSms(
           mobileNo,
-          `Thank you ${name} for choosing the world class ${
-            project || 'project'
+          `Thank you ${name} for choosing the world class ${project || 'project'
           }`
         )
 
@@ -533,6 +596,9 @@ const AddLeadForm = ({
       <div className="grid  gap-8 grid-cols-1">
         <div className="flex flex-col  my-10 rounded-lg bg-white border border-gray-100 px-4 m-4 mt-4">
           <div className="mt-0">
+
+            {/* change-6 */}
+
             <Formik
               enableReinitialize={true}
               initialValues={{
@@ -541,6 +607,17 @@ const AddLeadForm = ({
                 mobileNo: customerDetailsTuned?.phone || '',
                 countryCode: customerDetailsTuned?.countryCode || '+91',
                 email: customerDetailsTuned?.email || '',
+                SecondaryEmail: customerDetailsTuned?.SecondaryEmail || '',
+
+                SecondaryPhones: customerDetailsTuned?.SecondaryPhones || '',
+
+                Address: customerDetailsTuned?.Address || '',
+                Street: customerDetailsTuned?.Street || '',
+                City: customerDetailsTuned?.City || '',
+                Region: customerDetailsTuned?.Region || '',
+                ZipCode: customerDetailsTuned?.ZipCode || '',
+                Country: customerDetailsTuned?.Country || '',
+                TimeZone: customerDetailsTuned?.TimeZone || '',
                 source: customerDetailsTuned?.source || '',
                 project: customerDetailsTuned?.projectName || '',
                 projectId: customerDetailsTuned?.projectId || '',
@@ -628,6 +705,16 @@ const AddLeadForm = ({
                     <div className="md:flex   flex-row    md:space-x-4    w-full   text-xs mt-">
                       <div className="   mb-3    space-y-2    w-full text-xs">
                         <TextField label="Email" name="email" type="text" />
+                      </div>
+
+                      {/* change-7 */}
+
+                      <div className="mb-3 space-y-2 w-full text-xs">
+                        <TextField
+                          label="Secondary Email"
+                          name="SecondaryEmail"
+                          type="text"
+                        />
                       </div>
                       <div className="mb-3 space-y-2 w-full text-xs">
                         <span className="inline w-full">
@@ -822,16 +909,14 @@ const AddLeadForm = ({
                                     key={plan.name}
                                     value={plan}
                                     className={({ active, checked }) =>
-                                      `${
-                                        active
-                                          ? 'ring-2 ring-offset-2  border  border-[#000] bg-[#F2F2F2]  ring-white ring-opacity-60 col-span-2'
-                                          : ''
+                                      `${active
+                                        ? 'ring-2 ring-offset-2  border  border-[#000] bg-[#F2F2F2]  ring-white ring-opacity-60 col-span-2'
+                                        : ''
                                       }
-                ${
-                  selected.name == plan.name
-                    ? 'ring-1  ring-green-400 border bg-opacity-75 text-black'
-                    : 'bg-white'
-                }
+                ${selected.name == plan.name
+                                        ? 'ring-1  ring-green-400 border bg-opacity-75 text-black'
+                                        : 'bg-white'
+                                      }
                   relative rounded-lg px-5 py-2 cursor-pointer flex border border-[#E5E7EB]  col-span-2`
                                     }
                                   >
@@ -842,11 +927,10 @@ const AddLeadForm = ({
                                             <div className="text-sm">
                                               <RadioGroup.Label
                                                 as="p"
-                                                className={`font-medium  ${
-                                                  selected.name == plan.name
+                                                className={`font-medium  ${selected.name == plan.name
                                                     ? 'text-gray-900'
                                                     : 'text-gray-900'
-                                                }`}
+                                                  }`}
                                               >
                                                 <img
                                                   className="w-8 h-8 inline"
@@ -861,11 +945,10 @@ const AddLeadForm = ({
                                           </div>
                                           {true && (
                                             <div
-                                              className={`${
-                                                selected.name == plan.name
+                                              className={`${selected.name == plan.name
                                                   ? 'flex-shrink-0 text-white ml-auto'
                                                   : 'flex-shrink-0 text-black ml-auto'
-                                              } mt-2`}
+                                                } mt-2`}
                                             >
                                               <svg
                                                 viewBox="0 0 24 24"
@@ -925,6 +1008,111 @@ const AddLeadForm = ({
                             </div>
                           </div>
                         </div>
+
+
+
+
+
+
+
+
+                        <div>
+
+                          <div className=" mt-8 ">
+                            <label className="font-semibold text-[#2B2B2B]  text-sm  mb-1 ">
+                              Contact Information<abbr title="required"></abbr>
+                            </label>
+                          </div>
+                                <div className="border-t-4 rounded-xl w-16 mt-1 border-[#94B5ED]"></div>
+
+
+
+
+                          <div className="md:flex flex-row md:space-x-4 w-full text-xs mt-">
+
+
+                            {/* Add these new fields */}
+                            <div className="mb-3 space-y-2 w-full text-xs">
+                              {/* <TextField label="Secondary Phones" name="SecondaryPhones" type="text" /> */}
+                                        <div className="flex border mb-6 mt-0 border-[#cccccc] rounded-md ">
+                          {/* <div className="inline-block">
+                            <input
+                              type="text"
+                              id="countryCode"
+                              name="countryCode"
+                              value={formik.values.countryCode}
+                              onChange={(e) => {
+                                formik.setFieldValue(
+                                  'countryCode',
+                                  e.target.value
+                                )
+                              }}
+                              onBlur={formik.handleBlur}
+                              className="w-11 bg-grey-lighter text-grey-darker h-7 px-2 border-none  rounded-l-md focus:outline-none"
+                            />
+                            {formik.errors.countryCode &&
+                              formik.touched.countryCode && (
+                                <div className="text-red-500 text-xs">
+                                  {formik.errors.countryCode}
+                                </div>
+                              )}
+                          </div> */}
+
+                          <div className="border-l border-gray-400 mt-1 mb-1 mr-2"></div>
+
+                          <PhoneNoField
+                            name="mobileNo"
+                            className="input w-full h-8 !rounded-none !rounded-r-md focus:outline-none my-custom-class"
+                            customStyles={customPhoneNoFieldStyles}
+                            onChange={(value) => {
+                              formik.setFieldValue('SecondaryPhones', value.value)
+                            }}
+                            value={formik.values.SecondaryPhones}
+                            options={sourceList}
+                          />
+                        </div>
+                            </div>
+                            <div className="mb-3 space-y-2 w-full text-xs">
+                              <TextField label="Address" name="Address" type="text" />
+                            </div>
+                          </div>
+
+                          <div className="md:flex flex-row md:space-x-4 w-full text-xs">
+                            <div className="mb-3 space-y-2 w-full text-xs">
+                              <TextField label="Street" name="Street" type="text" />
+                            </div>
+                            <div className="mb-3 space-y-2 w-full text-xs">
+                              <TextField label="City" name="City" type="text" />
+                            </div>
+                          </div>
+
+                          <div className="md:flex flex-row md:space-x-4 w-full text-xs">
+                            <div className="mb-3 space-y-2 w-full text-xs">
+                              <TextField label="Region" name="Region" type="text" />
+                            </div>
+                            <div className="mb-3 space-y-2 w-full text-xs">
+                              <TextField label="Zip Code" name="ZipCode" type="text" />
+                            </div>
+                          </div>
+
+                          <div className="md:flex flex-row md:space-x-4 w-full text-xs">
+                            <div className="mb-3 space-y-2 w-full text-xs">
+                              <TextField label="Country" name="Country" type="text" />
+                            </div>
+                            <div className="mb-3 space-y-2 w-full text-xs">
+                              <TextField label="Time Zone" name="TimeZone" type="text" />
+                            </div>
+                          </div>
+                        </div>
+
+
+
+
+
+
+
+
+
                         <div className="mb-8">
                           <p className="text-xs text-red-400 text-right my-3">
                             Mobile No / Email is required{' '}
