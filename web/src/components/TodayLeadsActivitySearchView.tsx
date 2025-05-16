@@ -27,6 +27,7 @@ import {
   getAllProjects,
   steamUsersListByRole,
   steamUserTodayProgress,
+  streamSaleUserActivityLog,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import CSVDownloader from 'src/util/csvDownload'
@@ -41,6 +42,8 @@ import TaskProgress from './Charts_Graphs/TaskProgress'
 import LogSkelton from './shimmerLoaders/logSkelton'
 import SiderForm from './SiderForm/SiderForm'
 import TodoListView from './todoList'
+import ActivityLogComp from './A_SalesModule/LeadProfileSideView/activityLog'
+import UserActivityLogHomeSlim from './A_SalesModule/LeadProfileSideView/userActivityLogHomeSlim'
 
 const headCells = [
   {
@@ -330,6 +333,8 @@ export default function TodayLeadsActivitySearchView({
   const [sortType, setSortType] = useState('Latest')
 
   const [userTodayPerfA, setUserTodayPerfA] = useState({})
+  const [userActivityA, setUserActivityA] = useState([])
+
 
   const [selProjectIs, setSelProject] = useState({
     label: 'All Projects',
@@ -345,6 +350,7 @@ export default function TodayLeadsActivitySearchView({
   }, [selStatus, rowsParent])
   useEffect(() => {
     getMyTodayProgress()
+    getMyTodayActivity()
   }, [])
 
   const getMyTodayProgress = async () => {
@@ -353,7 +359,7 @@ export default function TodayLeadsActivitySearchView({
       (doc) => {
         const myTaskA = doc.data()
 
-        console.log('fetched users list is', myTaskA)
+        console.log('fetched users activity is', myTaskA)
 
         setUserTodayPerfA(myTaskA)
       },
@@ -646,6 +652,18 @@ export default function TodayLeadsActivitySearchView({
   if (hrs < 12) greet = 'Good Morning'
   else if (hrs >= 12 && hrs <= 17) greet = 'Good Afternoon'
   else if (hrs >= 17 && hrs <= 24) greet = 'Good Evening'
+
+  const getMyTodayActivity = async () => {
+    const unsubscribe = await streamSaleUserActivityLog(
+      user?.orgId,
+    'snap',
+      { email: user?.email },
+      (error) => setUserActivityA([])
+    )
+    setUserActivityA(unsubscribe)
+
+    return
+  }
   return (
     <>
       <div className="mt-1">
@@ -691,7 +709,15 @@ export default function TodayLeadsActivitySearchView({
                           userTodayPerfA={userTodayPerfA}
                         />
                       </div>
-
+                      <div className="mt-1">
+                      <section className="bg-white rounded-lg  flex flex-col p-4 w-100 max-h-[400px] overflow-y-scroll">
+                      <h5 className="font-bodyLato text-md">Activity Log</h5>
+                        <UserActivityLogHomeSlim
+                          usersList={usersList}
+                          filterData={userActivityA}
+                        />
+                      </section>
+                      </div>
                       <div className="mt-1">
                         <RecentActivity
                           title={'Team Activity'}
@@ -796,9 +822,9 @@ export default function TodayLeadsActivitySearchView({
                     <h3 className="mb-1 text-sm font-semibold text-gray-900">
                       No Tasks Found
                     </h3>
-                    <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+                    {/* <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
                       <span className="text-blue-600"> Add New Task</span>
-                    </time>
+                    </time> */}
                   </div>
                 )}
                 <div className="mt-6">

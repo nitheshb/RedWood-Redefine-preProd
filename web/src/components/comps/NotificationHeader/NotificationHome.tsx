@@ -7,22 +7,22 @@ const NotificationHomeDropdown = ({  }) => {
   const notifications = [
       {
         id: 1,
-        title: 'New Message',
-        message: 'You received a new message from Sarah Johnson',
+        title: 'New Lead',
+        message: 'New lead is assigned',
         time: '5 minutes ago',
         read: false,
       },
       {
         id: 1,
-        title: 'New Message',
-        message: 'You received a new message from Sarah Johnson',
+        title: 'Site Visit Scheduled',
+        message: 'A site visit has been scheduled for tomorrow at 10 AM',
         time: '5 minutes ago',
         read: false,
       },
       {
         id: 1,
-        title: 'New Message',
-        message: 'You received a new message from Sarah Johnson',
+        title: 'Upcoming Call',
+        message: 'Follow up with chaitanya is pending',
         time: '5 minutes ago',
         read: false,
       },

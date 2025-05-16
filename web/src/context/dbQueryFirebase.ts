@@ -1342,6 +1342,17 @@ export const AddCommentTaskManData = async (orgId, dta, user) => {
   // return onSnapshot(itemsQuery, snapshot, error)
 }
 //  get lead activity list
+export const streamSaleUserActivityLog = async (orgId, snapshot, data, error) => {
+  const { email } = data
+
+  const { data: lead_logs, error: error1 } = await supabase
+    .from(`${orgId}_lead_logs`)
+    .select('type,subtype,T, by, from, to ')
+    .eq('by', email)
+    .order('T', { ascending: false })
+    console.log('chek', lead_logs, error1)
+  return lead_logs
+}
 export const steamLeadActivityLog = async (orgId, snapshot, data, error) => {
   const { uid } = data
   console.log('is uid g', data, uid)

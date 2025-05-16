@@ -100,7 +100,7 @@ export default function L_AutoAllocator() {
       })
       return item
     })
-    fetchUsers()
+    // fetchUsers()
     return sortedList
   }
 

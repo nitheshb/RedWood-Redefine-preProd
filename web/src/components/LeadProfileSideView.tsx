@@ -120,6 +120,8 @@ import GradientSlider from './A_SalesModule/LeadProfileSideView/gradientSlider/g
 import DuplicateLeadCard from './A_SalesModule/duplicateLeadCard'
 import { VerySlimSelectBox } from 'src/util/formFields/slimSelectBoxField'
 import AssigedToDropCompCrm from './assignedToDropCompCrm'
+import { activieLogNamer, empNameSetter } from 'src/util/logNameTranformer'
+import ActivityLogComp from './A_SalesModule/LeadProfileSideView/activityLog'
 
 // interface iToastInfo {
 //   open: boolean
@@ -575,7 +577,7 @@ export default function LeadProfileSideView({
         x = leadsActivityFetchedData
       }
 
-      setFilterData(x)
+      setFilterData(leadsActivityFetchedData)
     }
   }, [leadsActivityFetchedData, selFeature])
 
@@ -1264,34 +1266,8 @@ export default function LeadProfileSideView({
     setAttach(true)
   }
 
-  const activieLogNamer = (dat) => {
-    const { type, from, to, by } = dat
-    let tex = type
 
-    switch (type) {
-      case 'l_ctd':
-        return (tex = 'Lead Created')
-      case 'sts_change':
-        return (tex = `completed & moved to`)
-      case 'assign_change':
-        return (tex = `Lead Assigned To`)
-      default:
-        return (tex = type)
-    }
-    return tex
-  }
 
-  const empNameSetter = (emp_id) => {
-    const userIsA = usersList?.filter((userD) => {
-      return userD?.uid == emp_id
-    })
-    if (userIsA[0]) {
-      const { email } = userIsA[0] || []
-      return email
-    } else {
-      return emp_id
-    }
-  }
 
   const fAddNotes = async () => {
     const data = {
@@ -1573,7 +1549,7 @@ export default function LeadProfileSideView({
         fcmToken,
         // timestamp: Timestamp.now()
       })
-
+    toast.success('Call triggered in your mobile')
       console.log('Call document added successfully!')
     } catch (error) {
       console.error('Error in call trigger:', error)
@@ -3576,153 +3552,7 @@ export default function LeadProfileSideView({
     </div>
   </div> */}
 
-                                <div className="border border-[#F0F0F5] bg-[#FFFFFF] p-3 shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] rounded-[8px] ">
-                                  <div className="flex justify-between">
-                                    <div className="flex flex-col w-full ">
-                                      <div className="flex items-center mb-4 justify-between pb-[16px] pt-[8px] border-b border-[#F0F0F5]">
-                                        <section className="flex items-center">
-                                          <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
-                                            <div className="bg-[#E3F1FA] p-1 rounded-full">
-                                              {/* <Clock className="text-purple-500 w-5 h-5" /> */}
-                                              <img
-                                                src="/location.svg"
-                                                alt=""
-                                                className="w-[18px] h-[18px]"
-                                              />
-                                            </div>
-                                          </div>
-                                          <span className="font-semibold text-[12px] leading-[100%] tracking-[6%] uppercase text-[#2B2B2B]">
-                                            Site visit (
-                                            {projectData.siteVisit.count})
-                                          </span>
-                                        </section>
-                                        <div className="flex flex-row items-center font-medium text-[14px] text-[#0E0A1F] mr-[8px]">
-                                          <img
-                                            src="/good.svg"
-                                            alt="icon"
-                                            className="mb-1 w-8 h-8 mr-[8px]"
-                                          />
-                                          Good
-                                        </div>
-                                      </div>
-
-                                      <div className="flex flex-row justify-between">
-                                        <p className="font-normal text-[12px] text-[#0D0A1E]">
-                                          Visit Date:{' '}
-                                          {projectData.siteVisit.date}
-                                        </p>
-                                        <p className="font-normal text-[12px] text-[#0D0A1E]">
-                                          Site In-charge:{' '}
-                                          {projectData.siteVisit.inCharge}
-                                        </p>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                {/*
-  <div className="border border-[#E7E7E9] bg-[#FFFFFF] p-4 rounded-[8px]">
-  <div className="flex items-center mb-4">
-    <div className="bg-[#FFFFFF] p-1.5 rounded-lg mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
-      <img src="/quill_clock.svg" alt="" className='w-[18px] h-[18px]' />
-    </div>
-    <span className="font-semibold text-[12px] leading-[100%] tracking-[6%] uppercase text-[#2B2B2B]">SITE VISIT (4)</span>
-  </div>
-
-
-
-
-  <div className="grid grid-cols-2 items-center gap-4">
-  <div className="flex gap-2 flex-col">
-    <div className="font-normal text-[14px] tracking-[0%] text-[#606062]">
-      Visit Date: {projectData.siteVisit.date}
-    </div>
-    <div className="font-normal text-[14px] tracking-[0%] text-[#606062]">
-      Site In-charge: {projectData.siteVisit.inCharge}
-    </div>
-  </div>
-
-  <div className="font-semibold text-[14px] leading-[100%] tracking-[0em] text-[#0E0A1F] flex flex-col items-center">
-    <img src="/good.svg" alt="icon" className="mb-1 w-16 h-16" />
-    Good
-  </div>
-</div>
-
-
-
-</div> */}
-
-                                <div className="border border-[#F0F0F5] bg-[#FFFFFF] shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] p-4 rounded-[8px] cursor-pointer">
-                                  <div className="flex items-center mb-4">
-                                    <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
-                                      <div className="bg-[#E3F1FA] p-1 rounded-full">
-                                        {/* <Clock className="text-purple-500 w-5 h-5" /> */}
-                                        <img
-                                          src="/target-sale.svg"
-                                          alt=""
-                                          className="w-[18px] h-[18px]"
-                                        />
-                                      </div>
-                                    </div>
-
-                                    <span className="font-semibold text-[12px] leading-[100%] tracking-[6%] uppercase text-[#2B2B2B]">
-                                      TASK LOGS
-                                    </span>
-                                    <div className="ml-auto">
-                                      <img
-                                        src="/arrowright.svg"
-                                        alt="Arrow Right Icon"
-                                        className="w-5 h-5"
-                                      />
-                                    </div>
-                                  </div>
-
-                                  <div className="space-y-4 px-4">
-                                    {[
-                                      {
-                                        label: 'Price Quotations',
-                                        value:
-                                          projectData.taskLogs.priceQuotations,
-                                      },
-                                      {
-                                        label: 'Completed Tasks',
-                                        value:
-                                          projectData.taskLogs.completedTasks,
-                                      },
-                                      {
-                                        label: 'Total Comments',
-                                        value:
-                                          projectData.taskLogs.totalComments,
-                                      },
-                                    ].map((item, index, array) => (
-                                      <div
-                                        key={item.label}
-                                        className={`${
-                                          index !== array.length - 1
-                                            ? ' pb-3'
-                                            : ''
-                                        }`}
-                                      >
-                                        <div className="flex justify-between  items-center">
-                                          <div className="flex gap-2 items-center">
-                                            <span className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062] whitespace-nowrap">
-                                              {item.label}
-                                            </span>
-                                          </div>
-                                          <div className="w-full mx-4 mt-[3px] h-[0.60px] relative custom-dash-border border-neutral-300"></div>
-                                          <span className="font-outfit font-normal text-xs leading-tight tracking-tight text-[#606062]">
-                                            {item.value}
-                                          </span>
-                                        </div>
-                                      </div>
-                                    ))}
-                                  </div>
-                                </div>
-                              </div>
-
-                              {/* Right Column */}
-                              <div className="space-y-4">
-                                <div className=" rounded-[8px] py-[16px]   shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)]  border border-[#F0F0F5]  max-w-lg">
+<div className=" rounded-[8px] py-[16px]   shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)]  border border-[#F0F0F5]  max-w-lg">
                                   <div className="flex items-center mb-8 border-b border-gray-200 px-4 pb-[16px]">
                                     <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
                                       <div className="bg-[#E3F1FA] p-1 rounded-full">
@@ -3865,14 +3695,191 @@ export default function LeadProfileSideView({
                                   </section>
                                 </div>
 
+                                {/*
+  <div className="border border-[#E7E7E9] bg-[#FFFFFF] p-4 rounded-[8px]">
+  <div className="flex items-center mb-4">
+    <div className="bg-[#FFFFFF] p-1.5 rounded-lg mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+      <img src="/quill_clock.svg" alt="" className='w-[18px] h-[18px]' />
+    </div>
+    <span className="font-semibold text-[12px] leading-[100%] tracking-[6%] uppercase text-[#2B2B2B]">SITE VISIT (4)</span>
+  </div>
+
+
+
+
+  <div className="grid grid-cols-2 items-center gap-4">
+  <div className="flex gap-2 flex-col">
+    <div className="font-normal text-[14px] tracking-[0%] text-[#606062]">
+      Visit Date: {projectData.siteVisit.date}
+    </div>
+    <div className="font-normal text-[14px] tracking-[0%] text-[#606062]">
+      Site In-charge: {projectData.siteVisit.inCharge}
+    </div>
+  </div>
+
+  <div className="font-semibold text-[14px] leading-[100%] tracking-[0em] text-[#0E0A1F] flex flex-col items-center">
+    <img src="/good.svg" alt="icon" className="mb-1 w-16 h-16" />
+    Good
+  </div>
+</div>
+
+
+
+</div> */}
+
+                                <div className="border border-[#F0F0F5] bg-[#FFFFFF] shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] p-4 rounded-[8px] cursor-pointer">
+                                  <div className="flex items-center mb-4">
+                                    <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+                                      <div className="bg-[#E3F1FA] p-1 rounded-full">
+                                        {/* <Clock className="text-purple-500 w-5 h-5" /> */}
+                                        <img
+                                          src="/target-sale.svg"
+                                          alt=""
+                                          className="w-[18px] h-[18px]"
+                                        />
+                                      </div>
+                                    </div>
+
+                                    <span className="font-semibold text-[12px] leading-[100%] tracking-[6%] uppercase text-[#2B2B2B]">
+                                      TASK LOGS
+                                    </span>
+                                    <div className="ml-auto">
+                                      <img
+                                        src="/arrowright.svg"
+                                        alt="Arrow Right Icon"
+                                        className="w-5 h-5"
+                                      />
+                                    </div>
+                                  </div>
+
+                                  <div className="space-y-4 px-4">
+                                    {[
+                                      {
+                                        label: 'Price Quotations',
+                                        value:
+                                          projectData.taskLogs.priceQuotations,
+                                      },
+                                      {
+                                        label: 'Completed Tasks',
+                                        value:
+                                          projectData.taskLogs.completedTasks,
+                                      },
+                                      {
+                                        label: 'Total Comments',
+                                        value:
+                                          projectData.taskLogs.totalComments,
+                                      },
+                                    ].map((item, index, array) => (
+                                      <div
+                                        key={item.label}
+                                        className={`${
+                                          index !== array.length - 1
+                                            ? ' pb-3'
+                                            : ''
+                                        }`}
+                                      >
+                                        <div className="flex justify-between  items-center">
+                                          <div className="flex gap-2 items-center">
+                                            <span className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062] whitespace-nowrap">
+                                              {item.label}
+                                            </span>
+                                          </div>
+                                          <div className="w-full mx-4 mt-[3px] h-[0.60px] relative custom-dash-border border-neutral-300"></div>
+                                          <span className="font-outfit font-normal text-xs leading-tight tracking-tight text-[#606062]">
+                                            {item.value}
+                                          </span>
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* Right Column */}
+                              <div className="space-y-4">
+                              <div className="border border-[#F0F0F5] bg-[#FFFFFF] p-3 shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] rounded-[8px] ">
+                                  <div className="flex justify-between">
+                                    <div className="flex flex-col w-full ">
+                                      <div className="flex items-center mb-4 justify-between pb-[16px] pt-[8px] border-b border-[#F0F0F5]">
+                                        <section className="flex items-center">
+                                          <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+                                            <div className="bg-[#E3F1FA] p-1 rounded-full">
+                                              {/* <Clock className="text-purple-500 w-5 h-5" /> */}
+                                              <img
+                                                src="/location.svg"
+                                                alt=""
+                                                className="w-[18px] h-[18px]"
+                                              />
+                                            </div>
+                                          </div>
+                                          <span className="font-semibold text-[12px] leading-[100%] tracking-[6%] uppercase text-[#2B2B2B]">
+                                            Site visit (
+                                            {projectData.siteVisit.count})
+                                          </span>
+                                        </section>
+                                        <div className="flex flex-row items-center font-medium text-[14px] text-[#0E0A1F] mr-[8px]">
+                                          <img
+                                            src="/good.svg"
+                                            alt="icon"
+                                            className="mb-1 w-8 h-8 mr-[8px]"
+                                          />
+                                          Good
+                                        </div>
+                                      </div>
+
+                                      <div className="flex flex-row justify-between">
+                                        <p className="font-normal text-[12px] text-[#0D0A1E]">
+                                          Visit Date:{' '}
+                                          {projectData.siteVisit.date}
+                                        </p>
+                                        <p className="font-normal text-[12px] text-[#0D0A1E]">
+                                          Site In-charge:{' '}
+                                          {projectData.siteVisit.inCharge}
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </div>
+                              </div>
+
+
+
+                              <div className="border border-[#E7E7E9] bg-[#FFFFFF] p-3 shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] rounded-[14px] ">
+                                  <div className="flex justify-between">
+                                    <div className="flex flex-col w-full ">
+                                      <div className="flex items-center mb-4 justify-between pb-[16px] pt-[8px] border-b border-[#F0F0F5]">
+                                        <section className="flex items-center">
+                                          <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+                                            <div className="bg-[#E3F1FA] p-1 rounded-full">
+                                              {/* <Clock className="text-purple-500 w-5 h-5" /> */}
+                                              <img
+                                                src="/location.svg"
+                                                alt=""
+                                                className="w-[18px] h-[18px]"
+                                              />
+                                            </div>
+                                          </div>
+                                          <span className="font-semibold text-[12px] leading-[100%] tracking-[6%] uppercase text-[#2B2B2B]">
+                                            Activity (
+                                            {filterData?.length})
+                                          </span>
+                                        </section>
+
+                                      </div>
+
+                                      <ActivityLogComp filterData={filterData} usersList={usersList} />
+                                     
+                                    </div>
+                                  </div>
+                              </div>
+
                                 {/* Projects Card */}
-                                <div className="border border-[#F0F0F5] shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] bg-[#FFFFFF] p-4 rounded-[8px] ">
+                                {/* <div className="border border-[#F0F0F5] shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] bg-[#FFFFFF] p-4 rounded-[8px] ">
                                   {!isProjectsExpanded && (
                                     <div>
                                       <div className="flex items-center mb-4">
                                         <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
                                           <div className="bg-[#E3F1FA] p-1 rounded-full">
-                                            {/* <Clock className="text-purple-500 w-5 h-5" /> */}
+
                                             <img
                                               src="/quill_clock.svg"
                                               alt=""
@@ -3920,13 +3927,13 @@ export default function LeadProfileSideView({
                                       </button>
                                     </div>
                                   )}
-                                  {/* Expanded View */}
+
                                   {isProjectsExpanded && (
                                     <div>
                                       <div className="flex items-center mb-4">
                                         <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
                                           <div className="bg-[#E3F1FA] p-1 rounded-full">
-                                            {/* <Clock className="text-purple-500 w-5 h-5" /> */}
+
                                             <img
                                               src="/quill_clock.svg"
                                               alt=""
@@ -3974,7 +3981,7 @@ export default function LeadProfileSideView({
                                       </button>
                                     </div>
                                   )}
-                                </div>
+                                </div> */}
 
                                 {/* More Details Card */}
                                 {/* <div className="bg-white p-6 rounded-lg shadow-sm">
@@ -5331,291 +5338,8 @@ export default function LeadProfileSideView({
                     <div className="text-gray-600 font-medium mr-6 text-[12px] uppercase tracking-wide mb-4 ">
                       Timeline
                     </div>
+                    <ActivityLogComp filterData={filterData} usersList={usersList} />
 
-                    <div className="">
-                      {/* <ol className="col-span-12 space-y-2 relative pl-4 sm:col-span-8  sm:before:absolute sm:before:top-2 sm:before:bottom-0 sm:before:w-0.5 sm:before:-left-3 before:bg-gray-200">
-                        {filterData?.map((data, i) => (
-                          <section
-                            key={i}
-                            className="flex flex-col sm:relative sm:before:absolute sm:before:top-2 sm:before:w-4 sm:before:h-4 sm:before:rounded-full sm:before:left-[-35px] sm:before:z-[1] before:bg-[#7BD2EA] bg-white  rounded-lg"
-                          >
-                            <a
-                              href="#"
-                              className="block items-center px-3 sm:flex "
-                            >
-                              {data?.type == 'status' && (
-                                <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-blue-200 rounded-full ring-8 ring-white  ">
-                                  <svg
-                                    className="w-3 h-3 text-blue-600 \"
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      fillRule="evenodd"
-                                      d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                                      clipRule="evenodd"
-                                    ></path>
-                                  </svg>
-                                </span>
-                              )}
-                              {data?.type == 'ph' && (
-                                <>
-                                  <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-green-200 rounded-full ring-8 ring-white ">
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      className="h-3 w-3 text-blue-600 "
-                                      viewBox="0 0 20 20"
-                                      fill="currentColor"
-                                    >
-                                      <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                                    </svg>
-                                  </span>
-                                  <div className="text-gray-600  m-3">
-                                    <div className="text-base font-normal">
-                                      <span className="font-medium text-green-900 ">
-                                        {'Rajiv'}
-                                      </span>{' '}
-                                      called{' '}
-                                      <span className="text-sm text-red-900 ">
-                                        {Name}
-                                      </span>{' '}
-                                    </div>
-                                    <div className="text-sm font-normal">
-                                      {data?.txt}
-                                    </div>
-                                    <span className="inline-flex items-center text-xs font-normal text-gray-500 ">
-                                      <ClockIcon className="mr-1 w-3 h-3" />
-                                      {data?.type == 'ph'
-                                        ? timeConv(
-                                          Number(data?.time)
-                                        ).toLocaleString()
-                                        : timeConv(data?.T).toLocaleString()}
-                                      {'    '}
-                                      <span className="text-red-900 ml-4 mr-4">
-                                        {Number(data?.duration)} sec
-                                      </span>
-                                      or
-                                      <span className="text-red-900 ml-4">
-                                        {parseInt(data?.duration / 60)} min
-                                      </span>
-                                    </span>
-                                  </div>
-                                </>
-                              )}
-                              {data?.type != 'ph' && (
-                                <div className="text-gray-600 font-bodyLato mx-3 my-1">
-                                  <div className="text-base font-normal">
-                                    {data?.type === 'sts_change' && (
-                                      <span className="text-sm font-medium text-gray-800 ">
-                                        {data?.from?.toUpperCase()} {'  '}
-                                      </span>
-                                    )}
-                                    <span className="text-sm font-normal text-gray-800 mx-2 ">
-                                      {activieLogNamer(data)}
-                                    </span>{' '}
-                                    {data?.type === 'sts_change' && (
-                                      <span className="text-sm font-medium text-gray-800 ">
-                                        {'  '} {data?.to?.toUpperCase()}
-                                      </span>
-                                    )}
-                                    {data?.type === 'assign_change' && (
-                                      <span className="text-xs  text-gray-500 ">
-                                        {'  '} {empNameSetter(data?.to)}
-                                      </span>
-                                    )}
-                                  </div>
-                                  <div className="text-sm font-normal">
-                                    {data?.txt}
-                                  </div>
-                                  <span className="inline-flex items-center text-xs font-normal text-gray-500 ">
-                                    <ClockIcon className=" w-3 h-3   text-gray-500" />
-
-                                    <span className="text-xs  text-gray-500 ml-1">
-                                      {data?.type == 'ph'
-                                        ? timeConv(
-                                          Number(data?.time)
-                                        ).toLocaleString()
-                                        : timeConv(data?.T).toLocaleString()}
-                                    </span>
-
-                                    <div className="w-[2px] mx-2 mt-[4px] h-[8px] border-0 border-r"></div>
-
-                                    <span className="text-xs  text-gray-500">
-                                      by:
-                                    </span>
-                                    <span className="text-xs  text-gray-500 ml-1 ">
-                                      {data?.by}
-                                    </span>
-                                  </span>
-                                </div>
-                              )}
-                            </a>
-                          </section>
-                        ))}
-                      </ol> */}
-
-                      <div className="max-w-4xl mx-auto bg-white  rounded-[14px] border border-[#E7E7E9] p-[20px] shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)]">
-                        <div className="relative">
-                          <div
-                            className="absolute top-0 bottom-0 left-[22px] w-0.5 bg-[#E17059]"
-                            style={{ height: '100%' }}
-                          ></div>
-
-                          <div className="space-y-3">
-                            {filterData?.map((data, i) => (
-                              <div key={i} className="relative pl-16">
-                                <div className="absolute left-0 top-0">
-                                  <div className="w-12 h-12 flex items-center justify-center">
-                                    <div className="w-8 h-8  rounded-md flex items-center justify-center  z-10">
-                                      {data?.type === 'ph' ? (
-                                        <img
-                                          src="/timelineo.svg"
-                                          alt="Completed"
-                                          className="w-4 h-4"
-                                        />
-                                      ) : (
-                                        // <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                        //   <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                                        // </svg>
-                                        <img
-                                          src="/timelineo.svg"
-                                          alt="Completed"
-                                          className="w-4 h-4"
-                                        />
-                                        // <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                        //   <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1z" clipRule="evenodd"></path>
-                                        // </svg>
-                                      )}
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div className="border-b border-gray-100 py-2">
-                                  <a
-                                    href="#"
-                                    className="block items-center  sm:flex "
-                                  >
-                                    {data?.type == 'status' && (
-                                      <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-blue-200 rounded-full ring-8 ring-white  ">
-                                        <svg
-                                          className="w-3 h-3 text-blue-600 \"
-                                          fill="currentColor"
-                                          viewBox="0 0 20 20"
-                                          xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                          <path
-                                            fillRule="evenodd"
-                                            d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                                            clipRule="evenodd"
-                                          ></path>
-                                        </svg>
-                                      </span>
-                                    )}
-                                    {data?.type == 'ph' && (
-                                      <>
-                                        <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-green-200 rounded-full ring-8 ring-white ">
-                                          <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            className="h-3 w-3 text-blue-600 "
-                                            viewBox="0 0 20 20"
-                                            fill="currentColor"
-                                          >
-                                            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                                          </svg>
-                                        </span>
-                                        <div className="text-gray-600  m-3">
-                                          <div className="text-base font-normal">
-                                            <span className="font-medium text-green-900 ">
-                                              {'Rajiv'}
-                                            </span>{' '}
-                                            called{' '}
-                                            <span className="text-sm text-red-900 ">
-                                              {Name}
-                                            </span>{' '}
-                                          </div>
-                                          <div className="text-sm font-normal">
-                                            {data?.txt}
-                                          </div>
-                                          <span className="inline-flex items-center text-xs font-normal text-gray-500 ">
-                                            <ClockIcon className="mr-1 w-3 h-3" />
-                                            {data?.type == 'ph'
-                                              ? timeConv(
-                                                  Number(data?.time)
-                                                ).toLocaleString()
-                                              : timeConv(
-                                                  data?.T
-                                                ).toLocaleString()}
-                                            {'    '}
-                                            <span className="text-red-900 ml-4 mr-4">
-                                              {Number(data?.duration)} sec
-                                            </span>
-                                            or
-                                            <span className="text-red-900 ml-4">
-                                              {parseInt(data?.duration / 60)}{' '}
-                                              min
-                                            </span>
-                                          </span>
-                                        </div>
-                                      </>
-                                    )}
-                                    {data?.type != 'ph' && (
-                                      <div className="text-gray-600 font-bodyLato mx-3 my-1">
-                                        <div className="text-base font-normal">
-                                          {data?.type === 'sts_change' && (
-                                            <span className="text-sm font-medium text-gray-800 ">
-                                              {data?.from?.toUpperCase()} {'  '}
-                                            </span>
-                                          )}
-                                          <span className="text-sm font-normal text-gray-800 mx-2 ">
-                                            {activieLogNamer(data)}
-                                          </span>{' '}
-                                          {data?.type === 'sts_change' && (
-                                            <span className="text-sm font-medium text-gray-800 ">
-                                              {'  '} {data?.to?.toUpperCase()}
-                                            </span>
-                                          )}
-                                          {data?.type === 'assign_change' && (
-                                            <span className="text-xs  text-gray-500 ">
-                                              {'  '} {empNameSetter(data?.to)}
-                                            </span>
-                                          )}
-                                        </div>
-                                        <div className="text-sm font-normal">
-                                          {data?.txt}
-                                        </div>
-                                        <span className="inline-flex items-center text-xs font-normal text-gray-500 ">
-                                          <ClockIcon className=" w-3 h-3   text-gray-500" />
-
-                                          <span className="text-xs  text-gray-500 ml-1">
-                                            {data?.type == 'ph'
-                                              ? timeConv(
-                                                  Number(data?.time)
-                                                ).toLocaleString()
-                                              : timeConv(
-                                                  data?.T
-                                                ).toLocaleString()}
-                                          </span>
-
-                                          <div className="w-[2px] mx-2 mt-[4px] h-[8px] border-0 border-r"></div>
-
-                                          <span className="text-xs  text-gray-500">
-                                            by:
-                                          </span>
-                                          <span className="text-xs  text-gray-500 ml-1 ">
-                                            {data?.by}
-                                          </span>
-                                        </span>
-                                      </div>
-                                    )}
-                                  </a>
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 )}
               </section>
