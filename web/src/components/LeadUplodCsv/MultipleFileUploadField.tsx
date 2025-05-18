@@ -34,6 +34,10 @@ import {
   CalculateComponentTotal,
   computePartTotal,
 } from 'src/util/unitCostSheetCalculator'
+import BulkCsvUploader from './importLeadBulk'
+import { splitPhoneNumber } from 'src/util/phoneNoSlicer'
+import { format, parse as dateParse, isValid,  } from 'date-fns'
+import { selldoLeadStageMapper } from 'src/util/selldoLeadStageMapper'
 
 let currentId = 0
 
@@ -41,6 +45,66 @@ function getNewId() {
   // we could use a fancier solution instead of a sequential ID :)
   return ++currentId
 }
+// function detectDateFormat(input) {
+//   const patterns = [
+//     { format: 'dd/MM/yyyy HH:mm:ss', regex: /^\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}:\d{2}$/ }, // 20/05/2022 00:00:00
+//     { format: 'dd/MM/yyyy H:mm:ss',  regex: /^\d{2}\/\d{2}\/\d{4} \d{1}:\d{2}:\d{2}$/ }, // 20/05/2022 0:00:00
+//     { format: 'dd/MM/yyyy HH:mm',    regex: /^\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}$/ },       // 05/07/2023 00:00
+//     { format: 'dd/MM/yyyy H:mm',     regex: /^\d{2}\/\d{2}\/\d{4} \d{1}:\d{2}$/ },
+//   ];
+
+//   for (const { format, regex } of patterns) {
+//     if (regex.test(input)) {
+//       return format;
+//     }
+//   }
+
+//   return null;
+// }
+
+const detectDateFormat = (input) => {
+  // Try several common formats
+  const formats = [
+    'dd/MM/yyyy HH:mm:ss',
+    'dd/MM/yyyy HH:mm',
+    'MM/dd/yyyy HH:mm:ss',
+    'MM/dd/yyyy HH:mm',
+    'yyyy-MM-dd HH:mm:ss',
+    'yyyy-MM-dd HH:mm',
+    'yyyy/MM/dd HH:mm:ss',
+    'yyyy/MM/dd HH:mm',
+    'dd-MM-yyyy HH:mm:ss',
+    'dd-MM-yyyy HH:mm',
+    // Add date-only formats too
+    'dd/MM/yyyy',
+    'MM/dd/yyyy',
+    'yyyy-MM-dd',
+    'yyyy/MM/dd',
+    'dd-MM-yyyy'
+  ];
+
+  // Try each format until we find one that works
+  for (const formatString of formats) {
+    try {
+      const parsedDate = dateParse(input, formatString, new Date());
+      // If the date is valid (not NaN), return it
+      if (!isNaN(parsedDate.getTime())) {
+        return parsedDate;
+      }
+    } catch (error) {
+      // Continue to next format if parsing fails
+      continue;
+    }
+  }
+
+  // If no format worked, try letting the JS Date handle it
+  const fallbackDate = new Date(input);
+  if (!isNaN(fallbackDate.getTime())) {
+    return fallbackDate;
+  }
+
+  throw new Error(`Unable to parse date: ${input}`);
+};
 
 export interface UploadableFile {
   // id was added after the video being released to fix a bug
@@ -103,7 +167,6 @@ export function MultipleFileUploadField({
   source,
 }) {
   const { user } = useAuth()
-
   const { orgId } = user
   const [_, __, helpers] = useField(name)
   const classes = useStyles()
@@ -1380,16 +1443,48 @@ export function MultipleFileUploadField({
           // set duplicate & valid records
           // check in db if record exists with matched phone Number & email
           const serialData = await Promise.all(
-            clean1.map(async (dRow) => {
-              console.log('found row is ', dRow)
+            clean1.map(async (dRow, i) => {
+              console.log('found row is ',i+1, dRow, dRow['Date'] != '' && dRow['Date'] != undefined)
+              try {
+
+
+              if(dRow['Date'] != '' && dRow['Date'] != undefined){
           // get the project Id, if projectId does not exist then push it to invalid record
           // get the assigne Name, if assigne Name does not exist then push it to invalid record
-          const date = new Date(dRow['Date']) // some mock date
-          const milliseconds = date.getTime() + 21600000 // adding 21600000 ms == 6hrs to match local time with utc + 6hrs
-          console.log('milliseconds is', milliseconds)
+          const input = dRow['Date']
+
+
+          const parsedDate = detectDateFormat(input);
+          const formatted = format(parsedDate, 'dd-MMM-yyyy');
+          const date = new Date(formatted); // Convert formatted string back to Date
+          const milliseconds = date.getTime() + 21600000;
+          dRow['Date'] = milliseconds;
+            // const formatString = detectDateFormat(input);
+
+            // if (!formatString) {
+            //   throw new Error(`Unrecognized date format for input: "${input}"`);
+            // }
+
+            // const parsedDate = dateParse(input, formatString, new Date());
+
+            // if (!isValid(parsedDate)) {
+            //   throw new Error(`Invalid date parsed for input: "${input}"`);
+            // }
+
+          //
+          //  adding 21600000 ms == 6hrs to match local time with utc + 6hrs
+
           // dRow['Date'] = prettyDate(milliseconds).toLocaleString()
-          dRow['Date'] = milliseconds
-          dRow['Status'] = dRow['Status']?.toLowerCase() || ''
+          if(dRow['Mobile']){
+          dRow['CountryCode'] =splitPhoneNumber(dRow['Mobile']).countryCode
+          dRow['Mobile'] = splitPhoneNumber(dRow['Mobile']).phoneNumber
+
+          }
+
+          dRow['Status'] =  selldoLeadStageMapper(dRow['Status']?.trim()?.toLowerCase(), i)?.toLowerCase() || ''
+          // dRow['Status'] = 'new'
+          dRow['check'] = dRow['Status']
+
           dRow['Source'] = dRow['Source']?.toLowerCase() || ''
           dRow['CT'] = Timestamp.now().toMillis()
           if(dRow['Project'] != '' || ![
@@ -1462,9 +1557,15 @@ export function MultipleFileUploadField({
           }
         }
 
+      }else{
+        dRow['mode'] = 'invalid'
+              return dRow
+      }
 
-
-
+    } catch (error) {
+      dRow['mode'] = 'invalid'
+      return dRow
+    }
             })
           )
 
@@ -1547,6 +1648,8 @@ export function MultipleFileUploadField({
       {files.length === 0 && (
         <div className="mx-3" {...getRootProps({ style })}>
           {title === 'Import Leads' && (
+            <>
+
             <div className="w-full flex flex-row justify-between ">
               <span></span>
               <a
@@ -1560,6 +1663,7 @@ export function MultipleFileUploadField({
                 </span>
               </a>
             </div>
+            </>
           )}
 
           {title === 'ImportAssets' && (

@@ -2575,6 +2575,13 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toLocaleString('en-US'),
         },
         {
+          id: 'CountryCode',
+          label: 'Code',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+        {
           id: 'Mobile',
           label: 'Mobile',
           minWidth: 10,
@@ -2603,6 +2610,13 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toFixed(2),
         },
         {
+          id: 'check',
+          label: 'Check',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
           id: 'EmpId',
           label: 'Assigned To',
           minWidth: 10,
@@ -2614,7 +2628,7 @@ export default function LfileuploadTableTemplate({
 
 
 
-        
+
         {
           id: 'LeadsId',
           label: 'Leads Id',
@@ -2638,14 +2652,14 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toFixed(2),
         },
         {
-          id: 'LeadHotness',
+          id: 'Lead Hotness',
           label: 'Lead Hotness',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
         },
         {
-          id: 'LeadStage',
+          id: 'Stage',
           label: 'Lead Stage',
           minWidth: 10,
           align: 'left',
@@ -2666,33 +2680,27 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toFixed(2),
         },
         {
-          id: 'SecondaryPhones',
+          id: 'Secondary Phones',
           label: 'Secondary Phones',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
         },
         {
-          id: 'SecondaryEmails',
+          id: 'Secondary Emails',
           label: 'Secondary Emails',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
         },
         {
-          id: 'ProjectCount',
+          id: 'Project Count',
           label: 'Project Count',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
         },
-        {
-          id: 'LastProjectAdded',
-          label: 'Last Project Added',
-          minWidth: 10,
-          align: 'left',
-          format: (value) => value.toFixed(2),
-        },
+
         {
           id: 'Location',
           label: 'Location',
@@ -2743,14 +2751,14 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toFixed(2),
         },
         {
-          id: 'PropertyType',
+          id: 'Property Type',
           label: 'Property Type',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
         },
         {
-          id: 'MinBudget',
+          id: 'Min Budget',
           label: 'Min Budget',
           minWidth: 10,
           align: 'left',
@@ -2758,28 +2766,28 @@ export default function LfileuploadTableTemplate({
         },
 
         {
-          id: 'MaxBudget',
+          id: 'Max Budget',
           label: 'Max Budget',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
         },
         {
-          id: 'MinPossession',
+          id: 'Min Possession',
           label: 'Min Possession',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
         },
         {
-          id: 'MaxPossession',
+          id: 'Max Possession',
           label: 'Max Possession',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
         },
         {
-          id: 'BedroomPreference',
+          id: 'Bedroom Preference',
           label: 'Bedroom Preference',
           minWidth: 10,
           align: 'left',
@@ -2793,7 +2801,7 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toFixed(2),
         },
         {
-          id: 'FundingSource',
+          id: 'Funding Source',
           label: 'Funding Source',
           minWidth: 10,
           align: 'left',
@@ -2814,7 +2822,7 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toFixed(2),
         },
         {
-          id: 'Transactiontype',
+          id: 'Transaction type',
           label: 'Transaction type',
           minWidth: 10,
           align: 'left',
@@ -2822,7 +2830,7 @@ export default function LfileuploadTableTemplate({
         },
 
         {
-          id: 'Bathroompreference',
+          id: 'Bathroom preference',
           label: 'Bathroom preference',
           minWidth: 10,
           align: 'left',
@@ -2843,7 +2851,7 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toFixed(2),
         },
         {
-          id: 'Interestedin',
+          id: 'Interested in',
           label: 'Interested in',
           minWidth: 10,
           align: 'left',
@@ -2857,28 +2865,28 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toFixed(2),
         },
         {
-          id: 'FirstCampaign',
+          id: 'First-Campaign',
           label: 'First-Campaign',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
         },
         {
-          id: 'FirstSubSource',
+          id: 'First-SubSource',
           label: 'First-Sub Source',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
         },
         {
-          id: 'FirstMedium',
+          id: 'First Medium',
           label: 'First Medium',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
         },
         {
-          id: 'FirstCampaignProject',
+          id: 'First Campaign Project',
           label: 'First Campaign Project',
           minWidth: 10,
           align: 'left',
@@ -2886,42 +2894,42 @@ export default function LfileuploadTableTemplate({
         },
 
         {
-          id: 'LastCampaign',
+          id: 'Last Campaign',
           label: 'Last Campaign',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
         },
         {
-          id: 'LastCampaignAddedOn',
+          id: 'Last Campaign Added On',
           label: 'Last Campaign Added On',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
         },
         {
-          id: 'LastSourceOfEnquiry',
+          id: 'Last-Source Of Enquiry',
           label: 'Last-Source Of Enquiry',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
         },
         {
-          id: 'Last Sub Source',
+          id: 'LastSubSource',
           label: 'LastSubSource',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
         },
         {
-          id: 'LastMedium',
+          id: 'Last-Medium',
           label: 'Last-Medium',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
         },
         {
-          id: 'LastCampaignProject',
+          id: 'Last Campaign Project',
           label: 'Last Campaign Project',
           minWidth: 10,
           align: 'left',
@@ -2935,14 +2943,14 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toFixed(2),
         },
         {
-          id: 'LeadOwnerEmailID',
+          id: 'Lead Owner Email ID',
           label: 'Lead Owner Email ID',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
         },
         {
-          id: 'ReceivedOn',
+          id: 'Received On',
           label: 'Received On',
           minWidth: 10,
           align: 'left',
@@ -2951,14 +2959,14 @@ export default function LfileuploadTableTemplate({
 
 
         {
-          id: 'Firstcontactedon',
+          id: 'First contacted on',
           label: 'First contacted on',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
         },
         {
-          id: 'FirstcontactedoninMinutes',
+          id: 'First contacted on in Minutes',
           label: 'First contacted on in Minutes',
           minWidth: 10,
           align: 'left',
@@ -2968,7 +2976,7 @@ export default function LfileuploadTableTemplate({
 
 
         {
-          id: 'FirstcontactedAttemptedon',
+          id: 'First contacted Attempted on',
           label: 'First contacted Attempted on',
           minWidth: 10,
           align: 'left',
@@ -2978,7 +2986,7 @@ export default function LfileuploadTableTemplate({
 
 
         {
-          id: 'FirstcontactedAttemptedoninMinutes',
+          id: 'First contacted Attempted on in Minutes',
           label: 'First contacted Attempted on in Minutes',
           minWidth: 10,
           align: 'left',
@@ -2988,7 +2996,7 @@ export default function LfileuploadTableTemplate({
 
 
         {
-          id: 'LastContactedOn',
+          id: 'Last Contacted On',
           label: 'Last Contacted On',
           minWidth: 10,
           align: 'left',
@@ -2997,7 +3005,7 @@ export default function LfileuploadTableTemplate({
 
 
         {
-          id: 'PushedOn',
+          id: 'Pushed On',
           label: 'Pushed On',
           minWidth: 10,
           align: 'left',
@@ -3007,7 +3015,7 @@ export default function LfileuploadTableTemplate({
 
 
         {
-          id: 'Pushedby',
+          id: 'Pushed by',
           label: 'Pushed by',
           minWidth: 10,
           align: 'left',
@@ -3018,14 +3026,14 @@ export default function LfileuploadTableTemplate({
 
 
         {
-          id: 'ReassignedBy',
+          id: 'Reassigned By',
           label: 'Reassigned By',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
         },
         {
-          id: 'ReassignedOn',
+          id: 'Reassigned On',
           label: 'Reassigned On',
           minWidth: 10,
           align: 'left',
@@ -3035,7 +3043,7 @@ export default function LfileuploadTableTemplate({
 
 
         {
-          id: 'LastSalesContactedOn',
+          id: 'Last Sales Contacted On',
           label: 'Last Sales Contacted On',
           minWidth: 10,
           align: 'left',
@@ -3045,7 +3053,7 @@ export default function LfileuploadTableTemplate({
 
 
         {
-          id: 'LastSalesContactAttemptedOn',
+          id: 'Last Sales Contact Attempted On',
           label: 'Last Sales Contact Attempted On',
           minWidth: 10,
           align: 'left',
@@ -3055,7 +3063,7 @@ export default function LfileuploadTableTemplate({
 
 
         {
-          id: 'FollowupStatus',
+          id: 'Followup Status',
           label: 'Followup Status',
           minWidth: 10,
           align: 'left',
@@ -3064,7 +3072,7 @@ export default function LfileuploadTableTemplate({
 
 
         {
-          id: 'NextFollowupDate',
+          id: 'Next Followup Date',
           label: 'Next Followup Date',
           minWidth: 10,
           align: 'left',
@@ -3074,7 +3082,7 @@ export default function LfileuploadTableTemplate({
 
 
         {
-          id: 'LastFollowupStatus',
+          id: 'Last Followup Status',
           label: 'Last Followup Status',
           minWidth: 10,
           align: 'left',
@@ -3086,14 +3094,14 @@ export default function LfileuploadTableTemplate({
 
 
         {
-          id: 'LastFollowupDate',
+          id: 'Last Followup Date',
           label: 'Last Followup Date',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
         },
         {
-          id: 'SitevisitStatus',
+          id: 'Site visit Status',
           label: 'Site visit Status',
           minWidth: 10,
           align: 'left',
@@ -3103,7 +3111,7 @@ export default function LfileuploadTableTemplate({
 
 
         {
-          id: 'LastSitevisitConductedDate',
+          id: 'Last Site visit Conducted Date',
           label: 'Last Site visit Conducted Date',
           minWidth: 10,
           align: 'left',
@@ -3113,7 +3121,7 @@ export default function LfileuploadTableTemplate({
 
 
         {
-          id: 'NextSitevisitDate',
+          id: 'Next Site visit Date',
           label: 'Next Site visit Date',
           minWidth: 10,
           align: 'left',
@@ -3123,7 +3131,7 @@ export default function LfileuploadTableTemplate({
 
 
         {
-          id: 'ThirdLastNote',
+          id: 'Third Last Note',
           label: 'Third Last Note',
           minWidth: 10,
           align: 'left',
@@ -3132,7 +3140,7 @@ export default function LfileuploadTableTemplate({
 
 
         {
-          id: 'SecondLastNote',
+          id: 'Second Last Note',
           label: 'Second Last Note',
           minWidth: 10,
           align: 'left',
@@ -3142,7 +3150,7 @@ export default function LfileuploadTableTemplate({
 
 
         {
-          id: 'Lastnote',
+          id: 'Last note',
           label: 'Last note',
           minWidth: 10,
           align: 'left',
@@ -3154,14 +3162,14 @@ export default function LfileuploadTableTemplate({
 
 
         {
-          id: 'LastNoteBy',
+          id: 'Last Note By',
           label: 'Last Note By',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
         },
         {
-          id: 'LastNoteBySales',
+          id: 'Last Note By Sales',
           label: 'Last Note By Sales',
           minWidth: 10,
           align: 'left',
@@ -3171,7 +3179,7 @@ export default function LfileuploadTableTemplate({
 
 
         {
-          id: 'LastNoteByPreSales',
+          id: 'Last Note By PreSales',
           label: 'Last Note By Pre Sales',
           minWidth: 10,
           align: 'left',
@@ -3181,7 +3189,7 @@ export default function LfileuploadTableTemplate({
 
 
         {
-          id: 'LastCallNote(Answered)',
+          id: 'Last Call Note(Answered)',
           label: 'Last Call Note(Answered)',
           minWidth: 10,
           align: 'left',
@@ -3191,7 +3199,7 @@ export default function LfileuploadTableTemplate({
 
 
         {
-          id: 'Lastnoteofcalls',
+          id: 'Last note of calls',
           label: 'Last note of calls',
           minWidth: 10,
           align: 'left',
@@ -3200,7 +3208,7 @@ export default function LfileuploadTableTemplate({
 
 
         {
-          id: 'FirstContactAttempt',
+          id: 'First Contact Attempt',
           label: 'First Contact Attempt',
           minWidth: 10,
           align: 'left',
@@ -3210,7 +3218,7 @@ export default function LfileuploadTableTemplate({
 
 
         {
-          id: 'TotalIncomingAnsweredCalls',
+          id: 'Total Incoming Answered Calls',
           label: 'Total Incoming Answered Calls',
           minWidth: 10,
           align: 'left',
@@ -3219,7 +3227,7 @@ export default function LfileuploadTableTemplate({
 
 
               {
-          id: 'TotalIncomingNotAnsweredCalls',
+          id: 'Total Incoming Not Answered Calls',
           label: 'Total Incoming Not Answered Calls',
           minWidth: 10,
           align: 'left',
@@ -3229,7 +3237,7 @@ export default function LfileuploadTableTemplate({
 
 
         {
-          id: 'TotalOutgoingAnsweredCalls',
+          id: 'Total Outgoing Answered Calls',
           label: 'Total Outgoing Answered Calls',
           minWidth: 10,
           align: 'left',
@@ -3238,7 +3246,7 @@ export default function LfileuploadTableTemplate({
 
 
         {
-          id: 'TotalOutgoingNotAnsweredCalls',
+          id: 'Total Outgoing Not Answered Calls',
           label: 'Total Outgoing Not Answered Calls',
           minWidth: 10,
           align: 'left',
@@ -3248,7 +3256,7 @@ export default function LfileuploadTableTemplate({
 
 
         {
-          id: 'DropoffOn',
+          id: 'Dropoff On',
           label: 'Dropoff On',
           minWidth: 10,
           align: 'left',
@@ -3259,7 +3267,7 @@ export default function LfileuploadTableTemplate({
 
 
               {
-          id: 'DropoffBy',
+          id: 'Dropoff By',
           label: 'Dropoff By',
           minWidth: 10,
           align: 'left',
@@ -3269,7 +3277,7 @@ export default function LfileuploadTableTemplate({
 
 
         {
-          id: 'DropoffReason',
+          id: 'Dropoff Reason',
           label: 'Dropoff Reason',
           minWidth: 10,
           align: 'left',
@@ -3278,7 +3286,7 @@ export default function LfileuploadTableTemplate({
 
 
         {
-          id: 'SystemTags',
+          id: 'System Tags',
           label: 'System Tags',
           minWidth: 10,
           align: 'left',
@@ -3288,7 +3296,7 @@ export default function LfileuploadTableTemplate({
 
 
         {
-          id: 'ManualTags',
+          id: 'Manual Tags',
           label: 'Manual Tags',
           minWidth: 10,
           align: 'left',
@@ -3298,16 +3306,16 @@ export default function LfileuploadTableTemplate({
 
 
         {
-          id: 'SecondarySales',
+          id: 'Secondary Sales',
           label: 'Secondary Sales',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
         },
 
-        
+
         {
-          id: 'LastRe-engagedOn',
+          id: 'Last Re-engaged On',
           label: 'Last Re-engaged On',
           minWidth: 10,
           align: 'left',
@@ -3316,9 +3324,9 @@ export default function LfileuploadTableTemplate({
 
 
 
-        
+
         {
-          id: 'Re-engagedDatesWithSources',
+          id: 'Re-engaged Dates With Sources',
           label: 'Re-engaged Dates With Sources',
           minWidth: 10,
           align: 'left',
@@ -3326,18 +3334,18 @@ export default function LfileuploadTableTemplate({
         },
 
 
-        
-        {
-          id: 'Analytics',
-          label: 'Analytics',
-          minWidth: 10,
-          align: 'left',
-          format: (value) => value.toFixed(2),
-        },
+
+        // {
+        //   id: 'Analytics',
+        //   label: 'Analytics',
+        //   minWidth: 10,
+        //   align: 'left',
+        //   format: (value) => value.toFixed(2),
+        // },
 
 
 
-        
+
         {
           id: 'Incomes',
           label: 'Incomes',
@@ -3346,7 +3354,7 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toFixed(2),
         },
 
-        
+
         {
           id: 'Date Of Birth',
           label: 'Date Of Birth',
@@ -3362,7 +3370,7 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toFixed(2),
         },
 
-        
+
         {
           id: 'Gender',
           label: 'Gender',
@@ -3382,9 +3390,9 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toFixed(2),
         },
 
-        
+
         {
-          id: 'MaritalsStatus',
+          id: 'Maritals Status',
           label: 'Marital Status',
           minWidth: 10,
           align: 'left',
@@ -3395,16 +3403,16 @@ export default function LfileuploadTableTemplate({
 
 
                 {
-          id: 'BankandLoans',
+          id: 'Bank and Loans',
           label: 'Bank and Loans',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
         },
 
-        
+
         {
-          id: 'Degreeandcolleges',
+          id: 'Degree and colleges',
           label: 'Degree and colleges',
           minWidth: 10,
           align: 'left',
@@ -3415,14 +3423,14 @@ export default function LfileuploadTableTemplate({
 
 
                 {
-          id: 'TitleandCompany',
+          id: 'Title and Company',
           label: 'Title and Company',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
         },
 
-        
+
         {
           id: 'Industry',
           label: 'Industry',
@@ -3435,14 +3443,14 @@ export default function LfileuploadTableTemplate({
 
 
                 {
-          id: 'AttendedBySalesId',
+          id: 'Attended By Sales Id',
           label: 'Attended By Sales Id',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
         },
 
-        
+
         {
           id: 'Attended By Team',
           label: 'Attended By Team',
@@ -3455,16 +3463,16 @@ export default function LfileuploadTableTemplate({
 
 
                 {
-          id: 'Unitconfigurations',
+          id: 'Unit configurations',
           label: 'Unit configurations',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
         },
 
-        
+
         {
-          id: 'Dealstage',
+          id: 'Deal stage',
           label: 'Deal stage',
           minWidth: 10,
           align: 'left',
@@ -3476,13 +3484,13 @@ export default function LfileuploadTableTemplate({
 
                 {
           id: 'Expected Close Date',
-          label: 'ExpectedCloseDate',
+          label: 'Expected Close Date',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
         },
 
-        
+
         {
           id: 'Value',
           label: 'Value',
@@ -3494,16 +3502,16 @@ export default function LfileuploadTableTemplate({
 
 
                 {
-          id: 'ChannelPartner',
+          id: 'Channel Partner',
           label: 'Channel Partner',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
         },
 
-        
+
         {
-          id: 'Timezone',
+          id: 'Time zone',
           label: 'Time zone',
           minWidth: 10,
           align: 'left',
@@ -3512,16 +3520,16 @@ export default function LfileuploadTableTemplate({
 
 
         {
-          id: 'LeadAge',
+          id: 'Lead Age',
           label: 'Lead Age',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
         },
 
-        
+
         {
-          id: 'ProjectName',
+          id: 'Project Name',
           label: 'Project Name',
           minWidth: 10,
           align: 'left',
@@ -3529,7 +3537,7 @@ export default function LfileuploadTableTemplate({
         },
 
              {
-          id: 'ProjectUnitNumber',
+          id: 'Project Unit Number',
           label: 'Project Unit Number',
           minWidth: 10,
           align: 'left',
@@ -3539,7 +3547,7 @@ export default function LfileuploadTableTemplate({
 
 
              {
-          id: 'LeadName',
+          id: 'Lead Name',
           label: 'Lead Name',
           minWidth: 10,
           align: 'left',
@@ -3548,7 +3556,7 @@ export default function LfileuploadTableTemplate({
 
 
              {
-          id: 'PropertyConfiguration',
+          id: 'Property Configuration',
           label: 'Property Configuration',
           minWidth: 10,
           align: 'left',
@@ -3557,7 +3565,7 @@ export default function LfileuploadTableTemplate({
 
 
              {
-          id: 'RequiredPlotSize',
+          id: 'Required Plot Size',
           label: 'Required Plot Size',
           minWidth: 10,
           align: 'left',
@@ -3719,7 +3727,6 @@ export default function LfileuploadTableTemplate({
           filteredData={rows}
           searchKey={searchKey}
           setSearchKey={setSearchKey}
-          sourceTab={sourceTab}
           rows={rows}
           title={title}
           pId={pId}

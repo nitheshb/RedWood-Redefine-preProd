@@ -914,7 +914,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
         open={isImportLeadsOpen}
         setOpen={setisImportLeadsOpen}
         title={addLeadsTypes}
-        widthClass="max-w-4xl"
+        widthClass="max-w-8xl"
         customerDetails={selUserProfile}
         unitsViewMode={unitsViewMode}
         setUnitsViewMode={setUnitsViewMode}
