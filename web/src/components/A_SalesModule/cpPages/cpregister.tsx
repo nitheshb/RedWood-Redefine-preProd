@@ -137,8 +137,8 @@ const CPRegister = () => {
     perPh: Yup.string()
       .matches(phoneRegExp, 'Phone number is not valid')
       .min(10, 'Phone no is to short')
-      .max(10, 'Phone no is to long')
-      .required('Phone no is required'),
+      .max(10, 'Phone no is to long'),
+      // .required('Phone no is required'),
 
     empId: Yup.string().required('Employee Id is required'),
   })
@@ -260,7 +260,7 @@ const CPRegister = () => {
                             //label="Personal Phone Number*"
                             label={
                               <span className=" font-regular  text-gray-700 text-[12px]">
-                                Personal Phone Number*
+                                Alternate Phone Number*=
                               </span>
                             }
                             className="input  text-[13px] placeholder-gray-700 placeholder:opacity-80 mt-2"
@@ -329,7 +329,7 @@ const CPRegister = () => {
                                 disabled={editMode}
                               />
                             </div>
-                            <div className="w-full flex flex-col mb-3">
+                            {/* <div className="w-full flex flex-col mb-3">
                               <TextField
                                 label="Aadhar No"
                                 name="aadharNo"
@@ -346,7 +346,7 @@ const CPRegister = () => {
                                   )
                                 }}
                               />
-                            </div>
+                            </div> */}
                           </div>
 
                           <p className="text-xs text-red-500 text-right my-3">

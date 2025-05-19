@@ -2098,7 +2098,8 @@ export const checkIfLeadAlreadyExists = async (cName, matchVal, projectId) => {
   // db.collection('')
 
   console.log('matchVal', matchVal)
-  const q = await query(collection(db, cName), where('Mobile', '==', matchVal), where('ProjectId', '==', projectId))
+  const q = await query(collection(db, cName), where('Mobile', '==', matchVal))
+  // const q = await query(collection(db, cName), where('Mobile', '==', matchVal), where('ProjectId', '==', projectId))
   const parentDocs = []
   const cpDocs = []
 
@@ -2135,6 +2136,8 @@ export const checkIfLeadAlreadyExists = async (cName, matchVal, projectId) => {
 
   // db.collection(`${orgId}_leads`).add(data)
 }
+
+
 
 export const checkIfMasterAlreadyExists = async (cName, matchVal, title) => {
   // db.collection(`${orgId}_leads`).doc().set(data)
