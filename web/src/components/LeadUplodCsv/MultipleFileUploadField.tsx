@@ -1542,7 +1542,7 @@ export function MultipleFileUploadField({
                     }
                   }else{
                     dRow['invalidReason'] = 'Invalid Sales is empty'
-                    dRow['mode'] = 'invalid'
+                   
                   }
                   return await dRow
             }else{
