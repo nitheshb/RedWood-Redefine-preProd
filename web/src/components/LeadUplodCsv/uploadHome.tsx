@@ -86,7 +86,6 @@ export default function LeadsDropHomes({ title, pId, myPhase, myBlock }) {
             Block:{' '}
           </div>
         )}
-         <BulkCsvUploader  />
         <div className="flex flex-col  my-10 rounded-lg  px-4 m-4 mt-12">
           <Formik
             initialValues={{ files: null }}
@@ -141,6 +140,7 @@ export default function LeadsDropHomes({ title, pId, myPhase, myBlock }) {
             )}
           </Formik>
         </div>
+        <BulkCsvUploader  />
       </div>
     </div>
   )

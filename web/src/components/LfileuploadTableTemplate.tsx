@@ -2567,6 +2567,7 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toLocaleString(),
         },
         { id: 'Status', label: 'Status', minWidth: 100 },
+        { id: 'invalidReason', label: 'InvalidReason', minWidth: 100 },
         {
           id: 'Name',
           label: 'Name',
@@ -2625,7 +2626,13 @@ export default function LfileuploadTableTemplate({
         },
 
 
-
+        {
+          id: 'Lead Owner Email ID',
+          label: 'Lead Owner Email ID',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
 
 
 
@@ -2942,13 +2949,7 @@ export default function LfileuploadTableTemplate({
           align: 'left',
           format: (value) => value.toFixed(2),
         },
-        {
-          id: 'Lead Owner Email ID',
-          label: 'Lead Owner Email ID',
-          minWidth: 10,
-          align: 'left',
-          format: (value) => value.toFixed(2),
-        },
+
         {
           id: 'Received On',
           label: 'Received On',

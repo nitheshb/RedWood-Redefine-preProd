@@ -1448,7 +1448,7 @@ export function MultipleFileUploadField({
               try {
 
 
-              if(dRow['Date'] != '' && dRow['Date'] != undefined){
+        if(dRow['Date'] != '' && dRow['Date'] != undefined){
           // get the project Id, if projectId does not exist then push it to invalid record
           // get the assigne Name, if assigne Name does not exist then push it to invalid record
           const input = dRow['Date']
@@ -1459,19 +1459,7 @@ export function MultipleFileUploadField({
           const date = new Date(formatted); // Convert formatted string back to Date
           const milliseconds = date.getTime() + 21600000;
           dRow['Date'] = milliseconds;
-            // const formatString = detectDateFormat(input);
 
-            // if (!formatString) {
-            //   throw new Error(`Unrecognized date format for input: "${input}"`);
-            // }
-
-            // const parsedDate = dateParse(input, formatString, new Date());
-
-            // if (!isValid(parsedDate)) {
-            //   throw new Error(`Invalid date parsed for input: "${input}"`);
-            // }
-
-          //
           //  adding 21600000 ms == 6hrs to match local time with utc + 6hrs
 
           // dRow['Date'] = prettyDate(milliseconds).toLocaleString()
@@ -1481,12 +1469,14 @@ export function MultipleFileUploadField({
 
           }
 
+
           dRow['Status'] =  selldoLeadStageMapper(dRow['Status']?.trim()?.toLowerCase(), i)?.toLowerCase() || ''
           // dRow['Status'] = 'new'
           dRow['check'] = dRow['Status']
 
           dRow['Source'] = dRow['Source']?.toLowerCase() || ''
           dRow['CT'] = Timestamp.now().toMillis()
+          console.log('found row is 3', dRow, projectList)
           if(dRow['Project'] != '' || ![
             'new',
             'followup',
@@ -1497,7 +1487,7 @@ export function MultipleFileUploadField({
             'notinterested',
             'junk',
           ].includes(dRow['Status'])){
-          if (dRow['Project'] != '') {
+
             console.log('found row is 3', dRow, projectList)
             const projectFilA = projectList.filter((data) => {
               console.log('found row is 3.1', data)
@@ -1525,12 +1515,13 @@ export function MultipleFileUploadField({
                     dRow['Mobile']
                   )
                   dRow['mode'] = await makeMode(foundLength)
-                  if (dRow['mode'] === 'valid' && dRow['EmpId'] != '') {
-                    console.log('found row is 1', dRow)
+                  dRow['invalidReason'] = dRow['mode']=='invalid' && 'Duplicate lead exits'
+                  if (dRow['mode'] === 'valid' && dRow['Lead Owner Email ID'] != '') {
+                    console.log('sales team is', salesTeamList)
                     // check & get employee details and push it to dRow
                     // project Id
                     const MatchedValA = await salesTeamList.filter((data) => {
-                      return data.empId == dRow['EmpId']
+                      return data.email == dRow['Lead Owner Email ID']
                     })
                     console.log('found row is MatchedValA', MatchedValA.length, MatchedValA,dRow['EmpId'])
                     if (MatchedValA.length >0) {
@@ -1545,24 +1536,34 @@ export function MultipleFileUploadField({
                       }
                       dRow['EmpId'] = MatchedValA[0]['name']
                     }else{
+                      dRow['invalidReason'] = 'Invalid Sales emailId'
                       dRow['mode'] = 'invalid'
                       return dRow
                     }
+                  }else{
+                    dRow['invalidReason'] = 'Invalid Sales is empty'
+                    dRow['mode'] = 'invalid'
                   }
                   return await dRow
             }else{
+              dRow['invalidReason'] = 'Project not found'
               dRow['mode'] = 'invalid'
               return dRow
             }
-          }
-        }
+
+        }else{
+          dRow['invalidReason'] = 'Project not found 2'
+       }
 
       }else{
+         dRow['invalidReason'] = 'Invalid Create Date'
         dRow['mode'] = 'invalid'
               return dRow
       }
 
     } catch (error) {
+      dRow['invalidReason'] = 'Error'
+      console.log('error is ', error)
       dRow['mode'] = 'invalid'
       return dRow
     }
