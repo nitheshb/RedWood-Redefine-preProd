@@ -12,6 +12,8 @@ import FinanceHomePagePage from './pages/FinanceHomePagePage/FinanceHomePagePage
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage/PrivacyPolicyPage'
 import Profile from './pages/Profile/Profile'
 import { useEffect } from 'react'
+import CPRegister from './components/A_SalesModule/cpPages/cpregister'
+import SiteVisitRegister from './components/A_SalesModule/siteVisitRegister/siteVisitRegister'
 
 const defaultRoutes = () => {
   return (
@@ -189,6 +191,8 @@ const Routes = () => {
       <Route path="/crm-home" page={CrmHomePage} name="crmHome" />
       <Route path="/finance-home-page" page={FinanceHomePagePage} name="financeHomePage" />
       <Route path="/administration-team" page={AdministrationTeamPage} name="administrationTeam" />
+      <Route path="/cp-register" page={CPRegister} name="cpRegister" />
+      <Route path="/sitevisit-feeback" page={SiteVisitRegister} name="siteVisitFb" />
 
       {UpdatedRoutes}
       <Route path="/profile" page={Profile} name="profile" />
