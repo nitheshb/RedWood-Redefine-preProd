@@ -1,90 +1,79 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { CheckCircle, Phone, Search } from 'lucide-react';
-import { checkIfLeadAlreadyExists } from 'src/context/dbQueryFirebase';
+import { checkIfLeadAlreadyExists, steamUsersListByRole, updateLeadData } from 'src/context/dbQueryFirebase';
 import toast from 'react-hot-toast';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css'
 import { setHours, setMinutes } from 'date-fns'
+import { useAuth } from 'src/context/firebase-auth-context';
+import { CustomSelect } from 'src/util/formFields/selectBoxField';
 
 export default function SiteVisitRegisterForm() {
+   const { user } = useAuth()
+    const { orgId } = user
   const [step, setStep] = useState(0);
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [selectedLead, setSelectedLead] = useState(null);
-  // Mock data for demonstration purposes
-  const [existingLeads, setExistingLeads] = useState([
-    {
-      id: 1,
-      firstName: 'John',
-      lastName: 'Doe',
-      phone: '555-123-4567',
-      email: 'john.doe@example.com',
-      propertyType: 'House',
-      budget: '$500,000',
-      location: 'Downtown',
-      bedrooms: '3',
-      bathrooms: '2',
-      additionalRequirements: 'Needs a garage and backyard',
-      assignedAgent: 'Jane Smith',
-      priorityLevel: 'High',
-      notes: 'Interested in quick closing',
-      referenceNumber: 'REF-2025-001'
-    },
-    {
-      id: 2,
-      firstName: 'Jane',
-      lastName: 'Smith',
-      phone: '555-987-6543',
-      email: 'jane.smith@example.com'
-    },
-    {
-      id: 3,
-      firstName: 'Bob',
-      lastName: 'Johnson',
-      phone: '555-222-3333',
-      email: 'bob.johnson@example.com'
-    }
-  ]);
+  const [usersList, setusersList] = useState([])
+  useEffect(() => {
+    const unsubscribe = steamUsersListByRole(
+      orgId,
+      (querySnapshot) => {
+        const usersListA = querySnapshot.docs.map((docSnapshot) =>
+          docSnapshot.data()
+        )
+        usersListA.map((user) => {
+          user.label = user.displayName || user.name
+          user.value = user.uid
+        })
+        console.log('fetched users list is', usersListA)
+
+        setusersList(usersListA)
+      },
+      (error) => setusersList([])
+    )
+
+    return
+  }, [])
 
   const [formData, setFormData] = useState({
     // Search leads
     searchPhone: '',
-
-
     title: 'Mr', // default value
-
     // Personal details
     firstName: '',
     lastName: '',
     email: '',
     phone: '',
-
     // Property requirements
     propertyType: '',
     budget: '',
     // location: '',
     address: '',
-    Pincode: '',
+    pincode: '',
     customerdesignation: '',
-    PurposeofPurchase: '',
+    purposeofPurchase: '',
     bedrooms: '',
     bathrooms: '',
     additionalRequirements: '',
     customercompany: '',
-    remarks: '',
+    siteVistRemarks: '',
 
     // Office use only
     // assignedAgent: '',
     // priorityLevel: 'Medium',
     notes: '',
     // referenceNumber: '',
-    attendedByManager: '',
-    siteVisitDateTime: '',
-    scheduledBy: '',
+    svAttendedBy: '',
+    svHappendOn: '',
+    svSchBy: '',
     referenceName: '',
-    
+    svAttendedByObj: {},
+    svSchByObj: {}
+
   });
 
   // Validation schemas for each step
@@ -100,9 +89,9 @@ export default function SiteVisitRegisterForm() {
     propertyType: Yup.string().required('Property type is required'),
     budget: Yup.string().required('Budget is required'),
     address: Yup.string().required('Address is required'),
-    Pincode: Yup.string().required('Pincode is required'),
-    remarks: Yup.string().required('This Is required'),
-    PurposeofPurchase: Yup.string().required('Purpose of Purchase is required'),
+    pincode: Yup.string().required('pincode is required'),
+    siteVistRemarks: Yup.string().required('This Is required'),
+    purposeofPurchase: Yup.string().required('Purpose of Purchase is required'),
     customerdesignation: Yup.string().required('Customer Designation is required'),
     bathrooms: Yup.string().required('Property configuration is required'),
     customercompany: Yup.string().required('Customer Company is required'),
@@ -113,9 +102,9 @@ export default function SiteVisitRegisterForm() {
     // assignedAgent: Yup.string().required('Assigned agent is required'),
     // priorityLevel: Yup.string().required('Priority level is required'),
     // referenceNumber: Yup.string().required('Reference number is required'),
-    attendedByManager: Yup.string().required('This required'),
-    scheduledBy: Yup.string().required('This is required '),
-    siteVisitDateTime: Yup.string().required('this is required'),
+    svAttendedBy: Yup.string().required('This required'),
+    svSchBy: Yup.string().required('This is required '),
+    svHappendOn: Yup.string().required('this is required'),
   });
 
   // Get the current validation schema based on the step
@@ -134,7 +123,7 @@ export default function SiteVisitRegisterForm() {
   const searchLeads = async (phoneNumber) => {
     setIsSearching(true);
     const foundLeads = await checkIfLeadAlreadyExists(
-      `${'maahomes'}_leads`,
+      `${orgId}_leads`,
       phoneNumber,
       'NA'
     )
@@ -152,21 +141,22 @@ export default function SiteVisitRegisterForm() {
 
   const selectLead = (lead) => {
     setSelectedLead(lead);
+    console.log('Selected lead is', lead);
     setFormData({
       ...formData,
       title: lead.title || '',
-      firstName: lead.firstName || '',
+      firstName: lead.Name || '',
       lastName: lead.lastName || '',
-      email: lead.email || '',
-      phone: lead.phone || '',
+      email: lead.Email || '',
+      phone: lead.Mobile || '',
       propertyType: lead.propertyType || '',
       budget: lead.budget || '',
       // location: lead.location || '',
       address: lead.address || '',
-      Pincode: lead.Pincode || '',
-      remarks: lead.remarks || '',
+      pincode: lead.pincode || '',
+      siteVistRemarks: lead.siteVistRemarks || '',
       referenceName: lead.referenceName || '',
-      PurposeofPurchase: lead.PurposeofPurchase || '',
+      purposeofPurchase: lead.purposeofPurchase || '',
       customerdesignation: lead.customerdesignation || '',
       bedrooms: lead.bedrooms || '',
       bathrooms: lead.bathrooms || '',
@@ -175,10 +165,13 @@ export default function SiteVisitRegisterForm() {
       // priorityLevel: lead.priorityLevel || 'Medium',
       notes: lead.notes || '',
       // referenceNumber: lead.referenceNumber || '',
-      scheduledBy: lead.scheduledBy || '',
-      attendedByManager: lead.attendedByManager || '',
+      svSchBy: lead.svSchBy || '',
+      svAttendedBy: lead.svAttendedBy || '',
       customercompany: lead.customercompany || '',
-      siteVisitDateTime: lead.siteVisitDateTime || '',
+      svAttendedByObj: lead.svAttendedByObj || {},
+      svSchByObj: lead.svSchByObj || {},
+
+      svHappendOn:  lead.svHappendOn || '',
     });
   };
 
@@ -193,10 +186,17 @@ export default function SiteVisitRegisterForm() {
     setStep(step - 1);
   };
 
-  const handleSubmit = (values) => {
+  const handleSubmit = async(values,  resetForm) => {
     const finalData = { ...formData, ...values };
     setFormData(finalData);
+    console.log('data value is', values.svHappendOn)
     // In a real application, you would submit the data to your backend here
+    await updateLeadData(orgId, selectedLead.id, finalData, user?.email)
+    resetForm()
+    setStep(0)
+    setSearchResults([])
+    setSelectedLead(null)
+    toast.success('Lead updated successfully!')
     console.log('Form submitted with:', finalData);
     alert('Form submitted successfully!');
   };
@@ -215,7 +215,7 @@ export default function SiteVisitRegisterForm() {
             <div className="text-xs mt-1">Search Leads</div>
           </div>
 
-          <div className={`flex-1 h-1 mx-2 ${step >= 1 ? 'bg-blue-500' : 'bg-gray-300'}`}></div>
+          <div className={`flex-1 h-1 mx-2 mt-[16px] ${step >= 1 ? 'bg-blue-500' : 'bg-gray-300'}`}></div>
           <div className="flex flex-col items-center">
             <div className={`w-10 h-10 flex items-center justify-center rounded-full border-2 ${step >= 1 ? 'bg-blue-500 border-blue-500 text-white' : 'border-gray-300'}`}>
               {step > 1 ? <CheckCircle className="w-6 h-6" /> : 1}
@@ -223,7 +223,7 @@ export default function SiteVisitRegisterForm() {
             <div className="text-xs mt-1">Personal Details</div>
           </div>
 
-          <div className={`flex-1 h-1 mx-2 ${step >= 2 ? 'bg-blue-500' : 'bg-gray-300'}`}></div>
+          <div className={`flex-1 h-1 mt-[16px]  mx-2 ${step >= 2 ? 'bg-blue-500' : 'bg-gray-300'}`}></div>
 
           <div className="flex flex-col items-center">
             <div className={`w-10 h-10 flex items-center justify-center rounded-full border-2 ${step >= 2 ? 'bg-blue-500 border-blue-500 text-white' : 'border-gray-300'}`}>
@@ -232,7 +232,7 @@ export default function SiteVisitRegisterForm() {
             <div className="text-xs mt-1">Property Requirements</div>
           </div>
 
-          <div className={`flex-1 h-1 mx-2 ${step >= 3 ? 'bg-blue-500' : 'bg-gray-300'}`}></div>
+          <div className={`flex-1 h-1 mt-[16px]  mx-2 ${step >= 3 ? 'bg-blue-500' : 'bg-gray-300'}`}></div>
 
           <div className="flex flex-col items-center">
             <div className={`w-10 h-10 flex items-center justify-center rounded-full border-2 ${step >= 3 ? 'bg-blue-500 border-blue-500 text-white' : 'border-gray-300'}`}>
@@ -246,7 +246,8 @@ export default function SiteVisitRegisterForm() {
       <Formik
         initialValues={formData}
         validationSchema={getValidationSchema()}
-        onSubmit={(values) => {
+        enableReinitialize={true}
+        onSubmit={(values, { resetForm }) => {
           // if (step === 3) {
           //   handleSubmit(values);
           // } else {
@@ -255,7 +256,7 @@ export default function SiteVisitRegisterForm() {
           if (step === 0) {
             nextStep(values);
           } else if (step === 3) {
-            handleSubmit(values);
+            handleSubmit(values, resetForm);
           } else {
             nextStep(values);
           }
@@ -535,17 +536,23 @@ export default function SiteVisitRegisterForm() {
                   </div>
 
 
-
                   <div>
-                    <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                    <label htmlFor="purposeofPurchase" className="block text-sm font-medium text-gray-700 mb-1">
+                      Purpose of Purchase*:
+                    </label>
                     <Field
-                      type="text"
-                      id="address"
-                      name="address"
+                      as="select"
+                      id="purposeofPurchase"
+                      name="purposeofPurchase"
                       className="w-full p-2 border border-gray-300 rounded-md"
-                    />
-                    <ErrorMessage name="address" component="div" className="text-red-500 text-sm mt-1" />
+                    >
+                      <option value="">Select Purpose</option>
+                      <option value="self_funding">Own Use</option>
+                      <option value="bank_loan">Investment</option>
+                    </Field>
+                    <ErrorMessage name="purposeofPurchase" component="div" className="text-red-500 text-sm mt-1" />
                   </div>
+
 
 
                 </div>
@@ -579,22 +586,81 @@ export default function SiteVisitRegisterForm() {
 
 
                   <div>
-                    <label htmlFor="Pincode" className="block text-sm font-medium text-gray-700 mb-1">Pincode</label>
+                    <label htmlFor="pincode" className="block text-sm font-medium text-gray-700 mb-1">pincode</label>
                     <Field
                       type="number"
-                      id="Pincode"
-                      name="Pincode"
+                      id="pincode"
+                      name="pincode"
                       className="w-full p-2 border border-gray-300 rounded-md"
                       maxLength="6"
                       pattern="[0-9]{6}"
                       title="Please enter exactly 6 digits"
                       inputMode="numeric"
+                      onChange={(e) => {
+                        const value = e.target.value.replace(/\D/g, '');
+                        console.log('pincode entered is', e.target.value)
+                        setFieldValue(
+                          'pincode',
+                          e.target.value
+                        )
+                        if (e.target.value.length == 6) {
+                          fetch(
+                            `https://api.postalpincode.in/pincode/${e.target.value}`
+                          )
+                            .then((res) => res.json())
+                            .then((data) => {
+                              console.log('data is', data)
+                              if (data.length > 0) {
+
+
+                                setFieldValue(
+                                  'city',
+                                  data[0]?.PostOffice[0]?.Block
+                                )
+                                setFieldValue(
+                                  'areaofresidence',
+                                  data[0]?.PostOffice[0]?.Name
+                                )
+
+
+                              }
+                            })
+                        }
+                       }}
                     />
-                    <ErrorMessage name="Pincode" component="div" className="text-red-500 text-sm mt-1" />
+                    <ErrorMessage name="pincode" component="div" className="text-red-500 text-sm mt-1" />
                   </div>
 
-
-
+                  <div>
+                    <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                    <Field
+                      type="text"
+                      id="address"
+                      name="address"
+                      className="w-full p-2 border border-gray-300 rounded-md"
+                    />
+                    <ErrorMessage name="address" component="div" className="text-red-500 text-sm mt-1" />
+                  </div>
+                  <div>
+                    <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-1">City</label>
+                    <Field
+                      type="text"
+                      id="city"
+                      name="city"
+                      className="w-full p-2 border border-gray-300 rounded-md"
+                    />
+                    <ErrorMessage name="city" component="div" className="text-red-500 text-sm mt-1" />
+                  </div>
+                  <div>
+                    <label htmlFor="areaofresidence" className="block text-sm font-medium text-gray-700 mb-1">Area of Residence</label>
+                    <Field
+                      type="text"
+                      id="areaofresidence"
+                      name="areaofresidence"
+                      className="w-full p-2 border border-gray-300 rounded-md"
+                    />
+                    <ErrorMessage name="areaofresidence" component="div" className="text-red-500 text-sm mt-1" />
+                  </div>
                   <div>
                     <label htmlFor="customercompany" className="block text-sm font-medium text-gray-700 mb-1">Customer Company*:</label>
                     <Field
@@ -606,32 +672,6 @@ export default function SiteVisitRegisterForm() {
                     <ErrorMessage name="customercompany" component="div" className="text-red-500 text-sm mt-1" />
                   </div>
 
-
-                </div>
-
-
-                <div className="grid grid-cols-2 gap-4">
-
-
-                  <div>
-                    <label htmlFor="PurposeofPurchase" className="block text-sm font-medium text-gray-700 mb-1">
-                      Purpose of Purchase*:
-                    </label>
-                    <Field
-                      as="select"
-                      id="PurposeofPurchase"
-                      name="PurposeofPurchase"
-                      className="w-full p-2 border border-gray-300 rounded-md"
-                    >
-                      <option value="">Select Purpose</option>
-                      <option value="self_funding">Own Use</option>
-                      <option value="bank_loan">Investment</option>
-                    </Field>
-                    <ErrorMessage name="PurposeofPurchase" component="div" className="text-red-500 text-sm mt-1" />
-                  </div>
-
-
-
                   <div>
                     <label htmlFor="customerdesignation" className="block text-sm font-medium text-gray-700 mb-1">Customer Designation*:</label>
                     <Field
@@ -642,9 +682,10 @@ export default function SiteVisitRegisterForm() {
                     />
                     <ErrorMessage name="customerdesignation" component="div" className="text-red-500 text-sm mt-1" />
                   </div>
-
-
                 </div>
+
+
+
 
 
                 <div>
@@ -677,17 +718,17 @@ export default function SiteVisitRegisterForm() {
 
                 {/* New Remarks field */}
                 <div>
-                  <label htmlFor="remarks" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="siteVistRemarks" className="block text-sm font-medium text-gray-700 mb-1">
                     Remarks
                   </label>
                   <Field
                     as="textarea"
-                    id="remarks"
-                    name="remarks"
+                    id="siteVistRemarks"
+                    name="siteVistRemarks"
                     className="w-full p-2 border border-gray-300 rounded-md h-24"
                     placeholder="Any special notes or comments"
                   />
-                  <ErrorMessage name="remarks" component="div" className="text-red-500 text-sm mt-1" />
+                  <ErrorMessage name="siteVistRemarks" component="div" className="text-red-500 text-sm mt-1" />
                 </div>
 
 
@@ -723,13 +764,13 @@ export default function SiteVisitRegisterForm() {
                 </div> */}
 
                 <div>
-                  <label htmlFor="scheduledBy" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="svSchBy" className="block text-sm font-medium text-gray-700 mb-1">
                     Site Visit Activity Scheduled by*
                   </label>
-                  <Field
+                  {/* <Field
                     as="select"
-                    id="scheduledBy"
-                    name="scheduledBy"
+                    id="svSchBy"
+                    name="svSchBy"
                     className="w-full p-2 border border-gray-300 rounded-md"
                     required
                   >
@@ -738,18 +779,40 @@ export default function SiteVisitRegisterForm() {
                     <option value="Jane Smith">Jane Smith</option>
                     <option value="Mike Johnson">Mike Johnson</option>
                     <option value="Sarah Williams">Sarah Williams</option>
-                  </Field>
-                  <ErrorMessage name="scheduledBy" component="div" className="text-red-500 text-sm mt-1" />
+                  </Field> */}
+                   <CustomSelect
+                                                  name="svSchBy"
+                                                  // label="Assign To"
+                                                  className="input mt-"
+                                                  onChange={(value) => {
+                                                    console.log('value is ', value, user)
+                                                   setFieldValue(
+                                                      'svSchBy',
+                                                      value.value
+                                                    )
+                                                   setFieldValue('svSchByObj', value)
+                                                  }}
+                                                  value={values.svSchBy}
+                                                  options={usersList}
+                                                />
+
+                                                <p
+                                                  className="text-sm text-red-500 hidden mt-3"
+                                                  id="error"
+                                                >
+                                                  Please fill out this field.
+                                                </p>
+                  <ErrorMessage name="svSchBy" component="div" className="text-red-500 text-sm mt-1" />
                 </div>
 
                 <div>
-                  <label htmlFor="attendedByManager" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="svAttendedBy" className="block text-sm font-medium text-gray-700 mb-1">
                     Attended by sales manager*
                   </label>
-                  <Field
+                  {/* <Field
                     as="select"
-                    id="attendedByManager"
-                    name="attendedByManager"
+                    id="svAttendedBy"
+                    name="svAttendedBy"
                     className="w-full p-2 border border-gray-300 rounded-md"
                     required
                   >
@@ -758,35 +821,62 @@ export default function SiteVisitRegisterForm() {
                     <option value="Jane Smith">Jane Smith</option>
                     <option value="Mike Johnson">Mike Johnson</option>
                     <option value="Sarah Williams">Sarah Williams</option>
-                  </Field>
-                  <ErrorMessage name="attendedByManager" component="div" className="text-red-500 text-sm mt-1" />
+                  </Field> */}
+
+                  <CustomSelect
+                                                  name="svAttendedBy"
+                                                  // label="Assign To"
+                                                  className="input mt-"
+                                                  onChange={(value) => {
+                                                    console.log('value is ', value, user)
+                                                   setFieldValue(
+                                                      'svAttendedBy',
+                                                      value.value
+                                                    )
+                                                   setFieldValue('svAttendedByObj', value)
+                                                  }}
+                                                  value={values.svAttendedBy}
+                                                  options={usersList}
+                                                />
+
+                                                <p
+                                                  className="text-sm text-red-500 hidden mt-3"
+                                                  id="error"
+                                                >
+                                                  Please fill out this field.
+                                                </p>
+                  <ErrorMessage name="svAttendedBy" component="div" className="text-red-500 text-sm mt-1" />
                 </div>
 
 
                 <div>
-                  <label htmlFor="siteVisitDateTime" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="svHappendOn" className="block text-sm font-medium text-gray-700 mb-1">
                     Site Visit Date And Time*
                   </label>
-                  <Field name="siteVisitDateTime">
+                  <Field name="svHappendOn">
                     {({ field, form }) => (
-                      <DatePicker
-                        id="siteVisitDateTime"
-                        selected={field.value || null}
-                        onChange={(date) => form.setFieldValue(field.name, date)}
-                        className="w-full p-2 border border-gray-300 rounded-md font-outfit font-normal text-sm leading-tight tracking-tight"
-                        showTimeSelect
-                        timeFormat="HH:mm"
-                        injectTimes={[
-                          setHours(setMinutes(new Date(), 1), 0),
-                          setHours(setMinutes(new Date(), 5), 12),
-                          setHours(setMinutes(new Date(), 59), 23),
-                        ]}
-                        dateFormat="MMMM d, yyyy h:mm aa"
-                        required
-                      />
+                     <DatePicker
+                     id="svHappendOn"
+                     selected={field.value ? new Date(field.value) : null} // convert ms -> Date
+                     onChange={(date) => {
+                       const milliseconds = date ? date.getTime() : null;
+                       setFieldValue('svHappendOn', milliseconds); // store as ms
+                     }}
+                     className="w-full p-2 border border-gray-300 rounded-md font-outfit font-normal text-sm leading-tight tracking-tight"
+                     showTimeSelect
+                     timeFormat="HH:mm"
+                     injectTimes={[
+                       setHours(setMinutes(new Date(), 1), 0),
+                       setHours(setMinutes(new Date(), 5), 12),
+                       setHours(setMinutes(new Date(), 59), 23),
+                     ]}
+                     dateFormat="MMMM d, yyyy h:mm aa"
+                     required
+                   />
                     )}
                   </Field>
-                  <ErrorMessage name="siteVisitDateTime" component="div" className="text-red-500 text-sm mt-1" />
+
+                  <ErrorMessage name="svHappendOn" component="div" className="text-red-500 text-sm mt-1" />
                 </div>
 
                 {/* <div>
