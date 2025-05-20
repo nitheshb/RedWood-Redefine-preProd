@@ -67,7 +67,7 @@ export default function SiteVisitRegisterForm() {
     projectName: '',
     projectUnitNumber: '',
     referralLeadName: '',
-    
+
 
 
     // Office use only
@@ -225,7 +225,7 @@ export default function SiteVisitRegisterForm() {
       {/* Progress steps */}
 
       <div className="mb-8">
-        <div className="flex items-center justify-between">
+        <div className="flex justify-between">
 
           <div className="flex flex-col items-center">
             <div className={`w-10 h-10 flex items-center justify-center rounded-full border-2 ${step >= 0 ? 'bg-blue-500 border-blue-500 text-white' : 'border-gray-300'}`}>
@@ -458,7 +458,7 @@ export default function SiteVisitRegisterForm() {
                     <ErrorMessage name="firstName" component="div" className="text-red-500 text-sm mt-1" />
                   </div>
 
-                  {/* 
+                  {/*
                     <div>
                     <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
                     <Field
@@ -611,7 +611,7 @@ export default function SiteVisitRegisterForm() {
         />
         <ErrorMessage name="projectUnitNumber" component="div" className="text-red-500 text-sm mt-1" />
       </div>
-      
+
       <div>
         <label htmlFor="referralLeadName" className="block text-sm font-medium text-gray-700 mb-1">Lead Name*</label>
         <Field
@@ -877,7 +877,7 @@ export default function SiteVisitRegisterForm() {
 
 
 
-{/* 
+{/*
                 <div>
                   <label htmlFor="additionalRequirements" className="block text-sm font-medium text-gray-700 mb-1">
                     Additional Requirements
