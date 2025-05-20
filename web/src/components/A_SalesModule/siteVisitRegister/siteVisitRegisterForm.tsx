@@ -11,8 +11,8 @@ import { useAuth } from 'src/context/firebase-auth-context';
 import { CustomSelect } from 'src/util/formFields/selectBoxField';
 
 export default function SiteVisitRegisterForm() {
-   const { user } = useAuth()
-    const { orgId } = user
+  const { user } = useAuth()
+  const { orgId } = user
   const [step, setStep] = useState(0);
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -45,7 +45,7 @@ export default function SiteVisitRegisterForm() {
     title: 'Mr', // default value
     // Personal details
     firstName: '',
-    lastName: '',
+    // lastName: '',
     email: '',
     phone: '',
     // Property requirements
@@ -53,14 +53,22 @@ export default function SiteVisitRegisterForm() {
     budget: '',
     // location: '',
     address: '',
+    source: '',
     pincode: '',
     customerdesignation: '',
     purposeofPurchase: '',
     bedrooms: '',
     bathrooms: '',
-    additionalRequirements: '',
+    // additionalRequirements: '',
     customercompany: '',
     siteVistRemarks: '',
+    subSource: '',
+    cpName: '',
+    projectName: '',
+    projectUnitNumber: '',
+    referralLeadName: '',
+    
+
 
     // Office use only
     // assignedAgent: '',
@@ -70,7 +78,7 @@ export default function SiteVisitRegisterForm() {
     svAttendedBy: '',
     svHappendOn: '',
     svSchBy: '',
-    referenceName: '',
+    // referenceName: '',
     svAttendedByObj: {},
     svSchByObj: {}
 
@@ -80,8 +88,8 @@ export default function SiteVisitRegisterForm() {
   const personalDetailsSchema = Yup.object({
     title: Yup.string().required('Title is required'),
     firstName: Yup.string().required('First name is required'),
-    lastName: Yup.string().required('Last name is required'),
-    email: Yup.string().email('Invalid email address').required('Email is required'),
+    // lastName: Yup.string().required('Last name is required'),
+    email: Yup.string().email('Invalid email ').required('Email is required'),
     phone: Yup.string().required('Phone number is required'),
   });
 
@@ -94,8 +102,13 @@ export default function SiteVisitRegisterForm() {
     purposeofPurchase: Yup.string().required('Purpose of Purchase is required'),
     customerdesignation: Yup.string().required('Customer Designation is required'),
     bathrooms: Yup.string().required('Property configuration is required'),
-    customercompany: Yup.string().required('Customer Company is required'),
-    referenceName: Yup.string().required('this is required'),
+    customercompany: Yup.string().required('This is required'),
+    referralLeadName: Yup.string().required('This is required'),
+    projectUnitNumber: Yup.string().required('This is required'),
+    projectName: Yup.string().required('This is required'),
+    cpName: Yup.string().required('This is required'),
+    subSource: Yup.string().required('This is required'),
+    // referenceName: Yup.string().required('this is required'),
   });
 
   const officeUseSchema = Yup.object({
@@ -146,21 +159,27 @@ export default function SiteVisitRegisterForm() {
       ...formData,
       title: lead.title || '',
       firstName: lead.Name || '',
-      lastName: lead.lastName || '',
+      // lastName: lead.lastName || '',
       email: lead.Email || '',
       phone: lead.Mobile || '',
+      subSource: lead.subSource || '',
+      cpName: lead.cpName || '',
+      projectName: lead.projectName || '',
+      projectUnitNumber: lead.projectUnitNumber || '',
+      referralLeadName: lead.referralLeadName || '',
       propertyType: lead.propertyType || '',
       budget: lead.budget || '',
+      source: lead.source || '',
       // location: lead.location || '',
       address: lead.address || '',
       pincode: lead.pincode || '',
       siteVistRemarks: lead.siteVistRemarks || '',
-      referenceName: lead.referenceName || '',
+      // referenceName: lead.referenceName || '',
       purposeofPurchase: lead.purposeofPurchase || '',
       customerdesignation: lead.customerdesignation || '',
       bedrooms: lead.bedrooms || '',
       bathrooms: lead.bathrooms || '',
-      additionalRequirements: lead.additionalRequirements || '',
+      // additionalRequirements: lead.additionalRequirements || '',
       // assignedAgent: lead.assignedAgent || '',
       // priorityLevel: lead.priorityLevel || 'Medium',
       notes: lead.notes || '',
@@ -171,7 +190,7 @@ export default function SiteVisitRegisterForm() {
       svAttendedByObj: lead.svAttendedByObj || {},
       svSchByObj: lead.svSchByObj || {},
 
-      svHappendOn:  lead.svHappendOn || '',
+      svHappendOn: lead.svHappendOn || '',
     });
   };
 
@@ -186,7 +205,7 @@ export default function SiteVisitRegisterForm() {
     setStep(step - 1);
   };
 
-  const handleSubmit = async(values,  resetForm) => {
+  const handleSubmit = async (values, resetForm) => {
     const finalData = { ...formData, ...values };
     setFormData(finalData);
     console.log('data value is', values.svHappendOn)
@@ -362,7 +381,7 @@ export default function SiteVisitRegisterForm() {
               <div className="space-y-4">
                 <h2 className="text-xl font-semibold text-gray-800">Personal Details</h2>
 
-                <div className="grid grid-cols-2 gap-4">
+                {/* <div className="grid grid-cols-2 gap-4">
 
 
                   <div>
@@ -406,7 +425,56 @@ export default function SiteVisitRegisterForm() {
                     />
                     <ErrorMessage name="lastName" component="div" className="text-red-500 text-sm mt-1" />
                   </div>
+                </div> */}
+
+
+                <div className="grid grid-cols-4 gap-4">
+
+                  <div className="col-span-1">
+                    <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                    <Field
+                      as="select"
+                      id="title"
+                      name="title"
+                      className="w-full p-2 border border-gray-300 rounded-md"
+                    >
+                      <option value="Mr">Mr</option>
+                      <option value="Mrs">Mrs</option>
+                      <option value="Miss">Miss</option>
+                      <option value="Ms">Ms</option>
+                      <option value="Dr">Dr</option>
+                    </Field>
+                    <ErrorMessage name="title" component="div" className="text-red-500 text-sm mt-1" />
+                  </div>
+
+                  <div className="col-span-3">
+                    <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                    <Field
+                      type="text"
+                      id="firstName"
+                      name="firstName"
+                      className="w-full p-2 border border-gray-300 rounded-md"
+                    />
+                    <ErrorMessage name="firstName" component="div" className="text-red-500 text-sm mt-1" />
+                  </div>
+
+                  {/* 
+                    <div>
+                    <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                    <Field
+                      type="text"
+                      id="lastName"
+                      name="lastName"
+                      className="w-full p-2 border border-gray-300 rounded-md"
+                    />
+                    <ErrorMessage name="lastName" component="div" className="text-red-500 text-sm mt-1" />
+                  </div> */}
+
+
+
+
                 </div>
+
 
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
@@ -439,9 +507,131 @@ export default function SiteVisitRegisterForm() {
 
                 <h2 className="text-xl font-semibold text-gray-800">Please specify your requirements</h2>
 
+<div className='grid grid-cols-2 gap-4'>
+  {/* Left Column */}
+  <div>
+    {/* Source Field */}
+    <div>
+      <label htmlFor="source" className="block text-sm font-medium text-gray-700 mb-1">Source*</label>
+      <Field
+        as="select"
+        id="source"
+        name="source"
+        className="w-full p-2 border border-gray-300 rounded-md"
+        onChange={(e) => {
+          setFieldValue('source', e.target.value);
+          // Clear dependent fields when source changes
+          setFieldValue('subSource', '');
+          setFieldValue('cpName', '');
+          setFieldValue('projectName', '');
+          setFieldValue('projectUnitNumber', '');
+          setFieldValue('referralLeadName', '');
+        }}
+      >
+        <option value="Referral">Referral</option>
+        <option value="Direct">Direct</option>
+        <option value="CP">CP</option>
+      </Field>
+      <ErrorMessage name="source" component="div" className="text-red-500 text-sm mt-1" />
+    </div>
+
+    {/* Project Name (moved next to Source) */}
+    {(values.source === 'Referral' || !values.source) && (
+      <div className="mt-2">
+        <label htmlFor="projectName" className="block text-sm font-medium text-gray-700 mb-1">Project Name*</label>
+        <Field
+          type="text"
+          id="projectName"
+          name="projectName"
+          className="w-full p-2 border border-gray-300 rounded-md"
+        />
+        <ErrorMessage name="projectName" component="div" className="text-red-500 text-sm mt-1" />
+      </div>
+    )}
+
+    {/* Direct - Sub Source */}
+    {values.source === 'Direct' && (
+      <div className="mt-2">
+        <label htmlFor="subSource" className="block text-sm font-medium text-gray-700 mb-1">Sub Source*</label>
+        <Field
+          as="select"
+          id="subSource"
+          name="subSource"
+          className="w-full p-2 border border-gray-300 rounded-md"
+        >
+          <option value="">Select sub source</option>
+          <option value="Walk-in">Walk-in</option>
+          <option value="Website">Website</option>
+          <option value="Advertisement">Advertisement</option>
+          <option value="Social Media">Social Media</option>
+          <option value="Other">Other</option>
+        </Field>
+        <ErrorMessage name="subSource" component="div" className="text-red-500 text-sm mt-1" />
+      </div>
+    )}
+
+    {/* CP - Search Field */}
+    {values.source === 'CP' && (
+      <div className="mt-2">
+        <label htmlFor="cpName" className="block text-sm font-medium text-gray-700 mb-1">Search CP Name*</label>
+        <div className="flex">
+          <Field
+            type="text"
+            id="cpName"
+            name="cpName"
+            className="flex-1 p-2 border border-gray-300 rounded-md"
+            placeholder="Enter CP name"
+          />
+          <button
+            type="button"
+            className="ml-2 px-2 py-2 bg-[#F3F4F6] text-black text-[12px] rounded-md"
+            onClick={() => {
+              // Implement CP search functionality here
+              console.log('Searching for CP:', values.cpName);
+            }}
+          >
+            Search
+          </button>
+        </div>
+        <ErrorMessage name="cpName" component="div" className="text-red-500 text-sm mt-1" />
+      </div>
+    )}
+  </div>
+
+  {/* Right Column - Other Referral Fields */}
+  {(values.source === 'Referral' || !values.source) && (
+    <div className="space-y-2">
+      <div>
+        <label htmlFor="projectUnitNumber" className="block text-sm font-medium text-gray-700 mb-1">Project Unit Number*</label>
+        <Field
+          type="text"
+          id="projectUnitNumber"
+          name="projectUnitNumber"
+          className="w-full p-2 border border-gray-300 rounded-md"
+        />
+        <ErrorMessage name="projectUnitNumber" component="div" className="text-red-500 text-sm mt-1" />
+      </div>
+      
+      <div>
+        <label htmlFor="referralLeadName" className="block text-sm font-medium text-gray-700 mb-1">Lead Name*</label>
+        <Field
+          type="text"
+          id="referralLeadName"
+          name="referralLeadName"
+          className="w-full p-2 border border-gray-300 rounded-md"
+        />
+        <ErrorMessage name="referralLeadName" component="div" className="text-red-500 text-sm mt-1" />
+      </div>
+    </div>
+  )}
+</div>
+
 
 
                 <div className="grid grid-cols-2 gap-4">
+
+
+
 
 
                   <div>
@@ -626,7 +816,7 @@ export default function SiteVisitRegisterForm() {
                               }
                             })
                         }
-                       }}
+                      }}
                     />
                     <ErrorMessage name="pincode" component="div" className="text-red-500 text-sm mt-1" />
                   </div>
@@ -687,7 +877,7 @@ export default function SiteVisitRegisterForm() {
 
 
 
-
+{/* 
                 <div>
                   <label htmlFor="additionalRequirements" className="block text-sm font-medium text-gray-700 mb-1">
                     Additional Requirements
@@ -714,7 +904,7 @@ export default function SiteVisitRegisterForm() {
                     placeholder="Who referred this client?"
                   />
                   <ErrorMessage name="referenceName" component="div" className="text-red-500 text-sm mt-1" />
-                </div>
+                </div> */}
 
                 {/* New Remarks field */}
                 <div>
@@ -780,28 +970,28 @@ export default function SiteVisitRegisterForm() {
                     <option value="Mike Johnson">Mike Johnson</option>
                     <option value="Sarah Williams">Sarah Williams</option>
                   </Field> */}
-                   <CustomSelect
-                                                  name="svSchBy"
-                                                  // label="Assign To"
-                                                  className="input mt-"
-                                                  onChange={(value) => {
-                                                    console.log('value is ', value, user)
-                                                   setFieldValue(
-                                                      'svSchBy',
-                                                      value.value
-                                                    )
-                                                   setFieldValue('svSchByObj', value)
-                                                  }}
-                                                  value={values.svSchBy}
-                                                  options={usersList}
-                                                />
+                  <CustomSelect
+                    name="svSchBy"
+                    // label="Assign To"
+                    className="input mt-"
+                    onChange={(value) => {
+                      console.log('value is ', value, user)
+                      setFieldValue(
+                        'svSchBy',
+                        value.value
+                      )
+                      setFieldValue('svSchByObj', value)
+                    }}
+                    value={values.svSchBy}
+                    options={usersList}
+                  />
 
-                                                <p
-                                                  className="text-sm text-red-500 hidden mt-3"
-                                                  id="error"
-                                                >
-                                                  Please fill out this field.
-                                                </p>
+                  <p
+                    className="text-sm text-red-500 hidden mt-3"
+                    id="error"
+                  >
+                    Please fill out this field.
+                  </p>
                   <ErrorMessage name="svSchBy" component="div" className="text-red-500 text-sm mt-1" />
                 </div>
 
@@ -824,27 +1014,27 @@ export default function SiteVisitRegisterForm() {
                   </Field> */}
 
                   <CustomSelect
-                                                  name="svAttendedBy"
-                                                  // label="Assign To"
-                                                  className="input mt-"
-                                                  onChange={(value) => {
-                                                    console.log('value is ', value, user)
-                                                   setFieldValue(
-                                                      'svAttendedBy',
-                                                      value.value
-                                                    )
-                                                   setFieldValue('svAttendedByObj', value)
-                                                  }}
-                                                  value={values.svAttendedBy}
-                                                  options={usersList}
-                                                />
+                    name="svAttendedBy"
+                    // label="Assign To"
+                    className="input mt-"
+                    onChange={(value) => {
+                      console.log('value is ', value, user)
+                      setFieldValue(
+                        'svAttendedBy',
+                        value.value
+                      )
+                      setFieldValue('svAttendedByObj', value)
+                    }}
+                    value={values.svAttendedBy}
+                    options={usersList}
+                  />
 
-                                                <p
-                                                  className="text-sm text-red-500 hidden mt-3"
-                                                  id="error"
-                                                >
-                                                  Please fill out this field.
-                                                </p>
+                  <p
+                    className="text-sm text-red-500 hidden mt-3"
+                    id="error"
+                  >
+                    Please fill out this field.
+                  </p>
                   <ErrorMessage name="svAttendedBy" component="div" className="text-red-500 text-sm mt-1" />
                 </div>
 
@@ -855,24 +1045,24 @@ export default function SiteVisitRegisterForm() {
                   </label>
                   <Field name="svHappendOn">
                     {({ field, form }) => (
-                     <DatePicker
-                     id="svHappendOn"
-                     selected={field.value ? new Date(field.value) : null} // convert ms -> Date
-                     onChange={(date) => {
-                       const milliseconds = date ? date.getTime() : null;
-                       setFieldValue('svHappendOn', milliseconds); // store as ms
-                     }}
-                     className="w-full p-2 border border-gray-300 rounded-md font-outfit font-normal text-sm leading-tight tracking-tight"
-                     showTimeSelect
-                     timeFormat="HH:mm"
-                     injectTimes={[
-                       setHours(setMinutes(new Date(), 1), 0),
-                       setHours(setMinutes(new Date(), 5), 12),
-                       setHours(setMinutes(new Date(), 59), 23),
-                     ]}
-                     dateFormat="MMMM d, yyyy h:mm aa"
-                     required
-                   />
+                      <DatePicker
+                        id="svHappendOn"
+                        selected={field.value ? new Date(field.value) : null} // convert ms -> Date
+                        onChange={(date) => {
+                          const milliseconds = date ? date.getTime() : null;
+                          setFieldValue('svHappendOn', milliseconds); // store as ms
+                        }}
+                        className="w-full p-2 border border-gray-300 rounded-md font-outfit font-normal text-sm leading-tight tracking-tight"
+                        showTimeSelect
+                        timeFormat="HH:mm"
+                        injectTimes={[
+                          setHours(setMinutes(new Date(), 1), 0),
+                          setHours(setMinutes(new Date(), 5), 12),
+                          setHours(setMinutes(new Date(), 59), 23),
+                        ]}
+                        dateFormat="MMMM d, yyyy h:mm aa"
+                        required
+                      />
                     )}
                   </Field>
 
