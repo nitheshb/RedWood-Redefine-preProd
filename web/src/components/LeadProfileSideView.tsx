@@ -3867,7 +3867,7 @@ export default function LeadProfileSideView({
                                       </div>
 
                                       <ActivityLogComp filterData={filterData} usersList={usersList} />
-                                     
+
                                     </div>
                                   </div>
                               </div>

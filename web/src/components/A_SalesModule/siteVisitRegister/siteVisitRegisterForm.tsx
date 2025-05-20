@@ -1,95 +1,123 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { CheckCircle, Phone, Search } from 'lucide-react';
-import { checkIfLeadAlreadyExists } from 'src/context/dbQueryFirebase';
+import { checkIfLeadAlreadyExists, steamUsersListByRole, updateLeadData } from 'src/context/dbQueryFirebase';
 import toast from 'react-hot-toast';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css'
+import { setHours, setMinutes } from 'date-fns'
+import { useAuth } from 'src/context/firebase-auth-context';
+import { CustomSelect } from 'src/util/formFields/selectBoxField';
 
 export default function SiteVisitRegisterForm() {
+  const { user } = useAuth()
+  const { orgId } = user
   const [step, setStep] = useState(0);
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [selectedLead, setSelectedLead] = useState(null);
-// Mock data for demonstration purposes
-const [existingLeads, setExistingLeads] = useState([
-  {
-    id: 1,
-    firstName: 'John',
-    lastName: 'Doe',
-    phone: '555-123-4567',
-    email: 'john.doe@example.com',
-    propertyType: 'House',
-    budget: '$500,000',
-    location: 'Downtown',
-    bedrooms: '3',
-    bathrooms: '2',
-    additionalRequirements: 'Needs a garage and backyard',
-    assignedAgent: 'Jane Smith',
-    priorityLevel: 'High',
-    notes: 'Interested in quick closing',
-    referenceNumber: 'REF-2025-001'
-  },
-  {
-    id: 2,
-    firstName: 'Jane',
-    lastName: 'Smith',
-    phone: '555-987-6543',
-    email: 'jane.smith@example.com'
-  },
-  {
-    id: 3,
-    firstName: 'Bob',
-    lastName: 'Johnson',
-    phone: '555-222-3333',
-    email: 'bob.johnson@example.com'
-  }
-]);
+  const [usersList, setusersList] = useState([])
+  useEffect(() => {
+    const unsubscribe = steamUsersListByRole(
+      orgId,
+      (querySnapshot) => {
+        const usersListA = querySnapshot.docs.map((docSnapshot) =>
+          docSnapshot.data()
+        )
+        usersListA.map((user) => {
+          user.label = user.displayName || user.name
+          user.value = user.uid
+        })
+        console.log('fetched users list is', usersListA)
+
+        setusersList(usersListA)
+      },
+      (error) => setusersList([])
+    )
+
+    return
+  }, [])
 
   const [formData, setFormData] = useState({
-     // Search leads
-     searchPhone: '',
-
+    // Search leads
+    searchPhone: '',
+    title: 'Mr', // default value
     // Personal details
     firstName: '',
-    lastName: '',
+    // lastName: '',
     email: '',
     phone: '',
-
     // Property requirements
     propertyType: '',
     budget: '',
-    location: '',
+    // location: '',
+    address: '',
+    source: '',
+    pincode: '',
+    customerdesignation: '',
+    purposeofPurchase: '',
     bedrooms: '',
     bathrooms: '',
-    additionalRequirements: '',
+    // additionalRequirements: '',
+    customercompany: '',
+    siteVistRemarks: '',
+    subSource: '',
+    cpName: '',
+    projectName: '',
+    projectUnitNumber: '',
+    referralLeadName: '',
+
+
 
     // Office use only
-    assignedAgent: '',
-    priorityLevel: 'Medium',
+    // assignedAgent: '',
+    // priorityLevel: 'Medium',
     notes: '',
-    referenceNumber: '',
+    // referenceNumber: '',
+    svAttendedBy: '',
+    svHappendOn: '',
+    svSchBy: '',
+    // referenceName: '',
+    svAttendedByObj: {},
+    svSchByObj: {}
+
   });
 
   // Validation schemas for each step
   const personalDetailsSchema = Yup.object({
+    title: Yup.string().required('Title is required'),
     firstName: Yup.string().required('First name is required'),
-    lastName: Yup.string().required('Last name is required'),
-    email: Yup.string().email('Invalid email address').required('Email is required'),
+    // lastName: Yup.string().required('Last name is required'),
+    email: Yup.string().email('Invalid email ').required('Email is required'),
     phone: Yup.string().required('Phone number is required'),
   });
 
   const propertyRequirementsSchema = Yup.object({
     propertyType: Yup.string().required('Property type is required'),
     budget: Yup.string().required('Budget is required'),
-    location: Yup.string().required('Location is required'),
-    bedrooms: Yup.string().required('Number of bedrooms is required'),
-    bathrooms: Yup.string().required('Number of bathrooms is required'),
+    address: Yup.string().required('Address is required'),
+    pincode: Yup.string().required('pincode is required'),
+    siteVistRemarks: Yup.string().required('This Is required'),
+    purposeofPurchase: Yup.string().required('Purpose of Purchase is required'),
+    customerdesignation: Yup.string().required('Customer Designation is required'),
+    bathrooms: Yup.string().required('Property configuration is required'),
+    customercompany: Yup.string().required('This is required'),
+    referralLeadName: Yup.string().required('This is required'),
+    projectUnitNumber: Yup.string().required('This is required'),
+    projectName: Yup.string().required('This is required'),
+    cpName: Yup.string().required('This is required'),
+    subSource: Yup.string().required('This is required'),
+    // referenceName: Yup.string().required('this is required'),
   });
 
   const officeUseSchema = Yup.object({
-    assignedAgent: Yup.string().required('Assigned agent is required'),
-    priorityLevel: Yup.string().required('Priority level is required'),
-    referenceNumber: Yup.string().required('Reference number is required'),
+    // assignedAgent: Yup.string().required('Assigned agent is required'),
+    // priorityLevel: Yup.string().required('Priority level is required'),
+    // referenceNumber: Yup.string().required('Reference number is required'),
+    svAttendedBy: Yup.string().required('This required'),
+    svSchBy: Yup.string().required('This is required '),
+    svHappendOn: Yup.string().required('this is required'),
   });
 
   // Get the current validation schema based on the step
@@ -105,43 +133,64 @@ const [existingLeads, setExistingLeads] = useState([
         return Yup.object({});
     }
   };
-const searchLeads = async (phoneNumber) => {
+  const searchLeads = async (phoneNumber) => {
     setIsSearching(true);
-const foundLeads = await checkIfLeadAlreadyExists(
-        `${'maahomes'}_leads`,
-        phoneNumber,
-        'NA'
-      )
+    const foundLeads = await checkIfLeadAlreadyExists(
+      `${orgId}_leads`,
+      phoneNumber,
+      'NA'
+    )
 
-      if(foundLeads?.length > 0){
-        toast.success('Lead exists!', )
-        setSearchResults(foundLeads);
-        setIsSearching(false);
-      }else{
-        setIsSearching(false);
-      }
+    if (foundLeads?.length > 0) {
+      toast.success('Lead exists!',)
+      setSearchResults(foundLeads);
+      setIsSearching(false);
+    } else {
+      setIsSearching(false);
+    }
 
 
   };
 
   const selectLead = (lead) => {
     setSelectedLead(lead);
+    console.log('Selected lead is', lead);
     setFormData({
       ...formData,
-      firstName: lead.firstName || '',
-      lastName: lead.lastName || '',
-      email: lead.email || '',
-      phone: lead.phone || '',
+      title: lead.title || '',
+      firstName: lead.Name || '',
+      // lastName: lead.lastName || '',
+      email: lead.Email || '',
+      phone: lead.Mobile || '',
+      subSource: lead.subSource || '',
+      cpName: lead.cpName || '',
+      projectName: lead.projectName || '',
+      projectUnitNumber: lead.projectUnitNumber || '',
+      referralLeadName: lead.referralLeadName || '',
       propertyType: lead.propertyType || '',
       budget: lead.budget || '',
-      location: lead.location || '',
+      source: lead.source || '',
+      // location: lead.location || '',
+      address: lead.address || '',
+      pincode: lead.pincode || '',
+      siteVistRemarks: lead.siteVistRemarks || '',
+      // referenceName: lead.referenceName || '',
+      purposeofPurchase: lead.purposeofPurchase || '',
+      customerdesignation: lead.customerdesignation || '',
       bedrooms: lead.bedrooms || '',
       bathrooms: lead.bathrooms || '',
-      additionalRequirements: lead.additionalRequirements || '',
-      assignedAgent: lead.assignedAgent || '',
-      priorityLevel: lead.priorityLevel || 'Medium',
+      // additionalRequirements: lead.additionalRequirements || '',
+      // assignedAgent: lead.assignedAgent || '',
+      // priorityLevel: lead.priorityLevel || 'Medium',
       notes: lead.notes || '',
-      referenceNumber: lead.referenceNumber || '',
+      // referenceNumber: lead.referenceNumber || '',
+      svSchBy: lead.svSchBy || '',
+      svAttendedBy: lead.svAttendedBy || '',
+      customercompany: lead.customercompany || '',
+      svAttendedByObj: lead.svAttendedByObj || {},
+      svSchByObj: lead.svSchByObj || {},
+
+      svHappendOn: lead.svHappendOn || '',
     });
   };
 
@@ -156,29 +205,36 @@ const foundLeads = await checkIfLeadAlreadyExists(
     setStep(step - 1);
   };
 
-  const handleSubmit = (values) => {
+  const handleSubmit = async (values, resetForm) => {
     const finalData = { ...formData, ...values };
     setFormData(finalData);
+    console.log('data value is', values.svHappendOn)
     // In a real application, you would submit the data to your backend here
+    await updateLeadData(orgId, selectedLead.id, finalData, user?.email)
+    resetForm()
+    setStep(0)
+    setSearchResults([])
+    setSelectedLead(null)
+    toast.success('Lead updated successfully!')
     console.log('Form submitted with:', finalData);
     alert('Form submitted successfully!');
   };
 
   return (
-    <div className="max-w-2xl  p-6 bg-white rounded-b-lg shadow-lg min-w-[626px]">
+    <div className="max-w-4xl  p-6 bg-white rounded-b-lg shadow-lg min-w-[626px]">
       {/* Progress steps */}
 
       <div className="mb-8">
-        <div className="flex items-center justify-between">
+        <div className="flex justify-between">
 
-        <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center">
             <div className={`w-10 h-10 flex items-center justify-center rounded-full border-2 ${step >= 0 ? 'bg-blue-500 border-blue-500 text-white' : 'border-gray-300'}`}>
               <Search className="w-5 h-5" />
             </div>
             <div className="text-xs mt-1">Search Leads</div>
           </div>
 
-          <div className={`flex-1 h-1 mx-2 ${step >= 1 ? 'bg-blue-500' : 'bg-gray-300'}`}></div>
+          <div className={`flex-1 h-1 mx-2 mt-[16px] ${step >= 1 ? 'bg-blue-500' : 'bg-gray-300'}`}></div>
           <div className="flex flex-col items-center">
             <div className={`w-10 h-10 flex items-center justify-center rounded-full border-2 ${step >= 1 ? 'bg-blue-500 border-blue-500 text-white' : 'border-gray-300'}`}>
               {step > 1 ? <CheckCircle className="w-6 h-6" /> : 1}
@@ -186,7 +242,7 @@ const foundLeads = await checkIfLeadAlreadyExists(
             <div className="text-xs mt-1">Personal Details</div>
           </div>
 
-          <div className={`flex-1 h-1 mx-2 ${step >= 2 ? 'bg-blue-500' : 'bg-gray-300'}`}></div>
+          <div className={`flex-1 h-1 mt-[16px]  mx-2 ${step >= 2 ? 'bg-blue-500' : 'bg-gray-300'}`}></div>
 
           <div className="flex flex-col items-center">
             <div className={`w-10 h-10 flex items-center justify-center rounded-full border-2 ${step >= 2 ? 'bg-blue-500 border-blue-500 text-white' : 'border-gray-300'}`}>
@@ -195,7 +251,7 @@ const foundLeads = await checkIfLeadAlreadyExists(
             <div className="text-xs mt-1">Property Requirements</div>
           </div>
 
-          <div className={`flex-1 h-1 mx-2 ${step >= 3 ? 'bg-blue-500' : 'bg-gray-300'}`}></div>
+          <div className={`flex-1 h-1 mt-[16px]  mx-2 ${step >= 3 ? 'bg-blue-500' : 'bg-gray-300'}`}></div>
 
           <div className="flex flex-col items-center">
             <div className={`w-10 h-10 flex items-center justify-center rounded-full border-2 ${step >= 3 ? 'bg-blue-500 border-blue-500 text-white' : 'border-gray-300'}`}>
@@ -209,7 +265,8 @@ const foundLeads = await checkIfLeadAlreadyExists(
       <Formik
         initialValues={formData}
         validationSchema={getValidationSchema()}
-        onSubmit={(values) => {
+        enableReinitialize={true}
+        onSubmit={(values, { resetForm }) => {
           // if (step === 3) {
           //   handleSubmit(values);
           // } else {
@@ -218,7 +275,7 @@ const foundLeads = await checkIfLeadAlreadyExists(
           if (step === 0) {
             nextStep(values);
           } else if (step === 3) {
-            handleSubmit(values);
+            handleSubmit(values, resetForm);
           } else {
             nextStep(values);
           }
@@ -226,8 +283,8 @@ const foundLeads = await checkIfLeadAlreadyExists(
       >
         {({ values, isSubmitting, isValid, handleSubmit, setFieldValue }) => (
           <Form className="space-y-4">
-               {/* Step 0: Search Leads */}
-               {step === 0 && (
+            {/* Step 0: Search Leads */}
+            {step === 0 && (
               <div className="space-y-4">
                 <h2 className="text-xl font-semibold text-gray-800">Search Existing Leads</h2>
 
@@ -324,7 +381,29 @@ const foundLeads = await checkIfLeadAlreadyExists(
               <div className="space-y-4">
                 <h2 className="text-xl font-semibold text-gray-800">Personal Details</h2>
 
-                <div className="grid grid-cols-2 gap-4">
+                {/* <div className="grid grid-cols-2 gap-4">
+
+
+                  <div>
+                    <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                    <Field
+                      as="select"
+                      id="title"
+                      name="title"
+                      className="w-full p-2 border border-gray-300 rounded-md"
+                    >
+                      <option value="Mr">Mr</option>
+                      <option value="Mrs">Mrs</option>
+                      <option value="Miss">Miss</option>
+                      <option value="Ms">Ms</option>
+                      <option value="Dr">Dr</option>
+
+                    </Field>
+                    <ErrorMessage name="title" component="div" className="text-red-500 text-sm mt-1" />
+                  </div>
+
+
+
                   <div>
                     <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
                     <Field
@@ -346,7 +425,56 @@ const foundLeads = await checkIfLeadAlreadyExists(
                     />
                     <ErrorMessage name="lastName" component="div" className="text-red-500 text-sm mt-1" />
                   </div>
+                </div> */}
+
+
+                <div className="grid grid-cols-4 gap-4">
+
+                  <div className="col-span-1">
+                    <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                    <Field
+                      as="select"
+                      id="title"
+                      name="title"
+                      className="w-full p-2 border border-gray-300 rounded-md"
+                    >
+                      <option value="Mr">Mr</option>
+                      <option value="Mrs">Mrs</option>
+                      <option value="Miss">Miss</option>
+                      <option value="Ms">Ms</option>
+                      <option value="Dr">Dr</option>
+                    </Field>
+                    <ErrorMessage name="title" component="div" className="text-red-500 text-sm mt-1" />
+                  </div>
+
+                  <div className="col-span-3">
+                    <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                    <Field
+                      type="text"
+                      id="firstName"
+                      name="firstName"
+                      className="w-full p-2 border border-gray-300 rounded-md"
+                    />
+                    <ErrorMessage name="firstName" component="div" className="text-red-500 text-sm mt-1" />
+                  </div>
+
+                  {/*
+                    <div>
+                    <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                    <Field
+                      type="text"
+                      id="lastName"
+                      name="lastName"
+                      className="w-full p-2 border border-gray-300 rounded-md"
+                    />
+                    <ErrorMessage name="lastName" component="div" className="text-red-500 text-sm mt-1" />
+                  </div> */}
+
+
+
+
                 </div>
+
 
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
@@ -375,54 +503,252 @@ const foundLeads = await checkIfLeadAlreadyExists(
             {/* Step 2: Property Requirements */}
             {step === 2 && (
               <div className="space-y-4">
-                <h2 className="text-xl font-semibold text-gray-800">Property Requirements</h2>
 
-                <div>
-                  <label htmlFor="propertyType" className="block text-sm font-medium text-gray-700 mb-1">Property Type</label>
-                  <Field
-                    as="select"
-                    id="propertyType"
-                    name="propertyType"
-                    className="w-full p-2 border border-gray-300 rounded-md"
-                  >
-                    <option value="">Select property type</option>
-                    <option value="House">House</option>
-                    <option value="Apartment">Apartment</option>
-                    <option value="Condo">Condo</option>
-                    <option value="Townhouse">Townhouse</option>
-                    <option value="Land">Land</option>
-                    <option value="Commercial">Commercial</option>
-                  </Field>
-                  <ErrorMessage name="propertyType" component="div" className="text-red-500 text-sm mt-1" />
+
+                <h2 className="text-xl font-semibold text-gray-800">Please specify your requirements</h2>
+
+<div className='grid grid-cols-2 gap-4'>
+  {/* Left Column */}
+  <div>
+    {/* Source Field */}
+    <div>
+      <label htmlFor="source" className="block text-sm font-medium text-gray-700 mb-1">Source*</label>
+      <Field
+        as="select"
+        id="source"
+        name="source"
+        className="w-full p-2 border border-gray-300 rounded-md"
+        onChange={(e) => {
+          setFieldValue('source', e.target.value);
+          // Clear dependent fields when source changes
+          setFieldValue('subSource', '');
+          setFieldValue('cpName', '');
+          setFieldValue('projectName', '');
+          setFieldValue('projectUnitNumber', '');
+          setFieldValue('referralLeadName', '');
+        }}
+      >
+        <option value="Referral">Referral</option>
+        <option value="Direct">Direct</option>
+        <option value="CP">CP</option>
+      </Field>
+      <ErrorMessage name="source" component="div" className="text-red-500 text-sm mt-1" />
+    </div>
+
+    {/* Project Name (moved next to Source) */}
+    {(values.source === 'Referral' || !values.source) && (
+      <div className="mt-2">
+        <label htmlFor="projectName" className="block text-sm font-medium text-gray-700 mb-1">Project Name*</label>
+        <Field
+          type="text"
+          id="projectName"
+          name="projectName"
+          className="w-full p-2 border border-gray-300 rounded-md"
+        />
+        <ErrorMessage name="projectName" component="div" className="text-red-500 text-sm mt-1" />
+      </div>
+    )}
+
+    {/* Direct - Sub Source */}
+    {values.source === 'Direct' && (
+      <div className="mt-2">
+        <label htmlFor="subSource" className="block text-sm font-medium text-gray-700 mb-1">Sub Source*</label>
+        <Field
+          as="select"
+          id="subSource"
+          name="subSource"
+          className="w-full p-2 border border-gray-300 rounded-md"
+        >
+          <option value="">Select sub source</option>
+          <option value="Walk-in">Walk-in</option>
+          <option value="Website">Website</option>
+          <option value="Advertisement">Advertisement</option>
+          <option value="Social Media">Social Media</option>
+          <option value="Other">Other</option>
+        </Field>
+        <ErrorMessage name="subSource" component="div" className="text-red-500 text-sm mt-1" />
+      </div>
+    )}
+
+    {/* CP - Search Field */}
+    {values.source === 'CP' && (
+      <div className="mt-2">
+        <label htmlFor="cpName" className="block text-sm font-medium text-gray-700 mb-1">Search CP Name*</label>
+        <div className="flex">
+          <Field
+            type="text"
+            id="cpName"
+            name="cpName"
+            className="flex-1 p-2 border border-gray-300 rounded-md"
+            placeholder="Enter CP name"
+          />
+          <button
+            type="button"
+            className="ml-2 px-2 py-2 bg-[#F3F4F6] text-black text-[12px] rounded-md"
+            onClick={() => {
+              // Implement CP search functionality here
+              console.log('Searching for CP:', values.cpName);
+            }}
+          >
+            Search
+          </button>
+        </div>
+        <ErrorMessage name="cpName" component="div" className="text-red-500 text-sm mt-1" />
+      </div>
+    )}
+  </div>
+
+  {/* Right Column - Other Referral Fields */}
+  {(values.source === 'Referral' || !values.source) && (
+    <div className="space-y-2">
+      <div>
+        <label htmlFor="projectUnitNumber" className="block text-sm font-medium text-gray-700 mb-1">Project Unit Number*</label>
+        <Field
+          type="text"
+          id="projectUnitNumber"
+          name="projectUnitNumber"
+          className="w-full p-2 border border-gray-300 rounded-md"
+        />
+        <ErrorMessage name="projectUnitNumber" component="div" className="text-red-500 text-sm mt-1" />
+      </div>
+
+      <div>
+        <label htmlFor="referralLeadName" className="block text-sm font-medium text-gray-700 mb-1">Lead Name*</label>
+        <Field
+          type="text"
+          id="referralLeadName"
+          name="referralLeadName"
+          className="w-full p-2 border border-gray-300 rounded-md"
+        />
+        <ErrorMessage name="referralLeadName" component="div" className="text-red-500 text-sm mt-1" />
+      </div>
+    </div>
+  )}
+</div>
+
+
+
+                <div className="grid grid-cols-2 gap-4">
+
+
+
+
+
+                  <div>
+
+
+                    <div>
+                      <label htmlFor="propertyType" className="block text-sm font-medium text-gray-700 mb-1">Property Type</label>
+                      <Field
+                        as="select"
+                        id="propertyType"
+                        name="propertyType"
+                        className="w-full p-2 border border-gray-300 rounded-md"
+                      >
+                        <option value="">Select property type</option>
+                        <option value="House">House</option>
+                        <option value="Apartment">Apartment</option>
+                        <option value="Condo">Condo</option>
+                        <option value="Townhouse">Townhouse</option>
+                        <option value="Land">Land</option>
+                        <option value="Commercial">Commercial</option>
+                      </Field>
+                      <ErrorMessage name="propertyType" component="div" className="text-red-500 text-sm mt-1" />
+                    </div>
+
+
+                  </div>
+
+
+
+
+
+
+                  <div>
+                    <label htmlFor="bathrooms" className="block text-sm font-medium text-gray-700 mb-1">Property configuration</label>
+                    <Field
+                      as="select"
+                      id="bathrooms"
+                      name="bathrooms"
+                      className="w-full p-2 border border-gray-300 rounded-md"
+                    >
+                      <option value="">Select</option>
+                      <option value="1">1 Bhk</option>
+                      <option value="1.5">2 Bhk</option>
+                      <option value="2">3 Bhk</option>
+                      <option value="2.5">4 Bhk</option>
+                      {/* <option value="3">5 Bhk</option> */}
+                      <option value="3+">Studio</option>
+                      <option value="3+">Penthouse</option>
+                    </Field>
+                    <ErrorMessage name="bathrooms" component="div" className="text-red-500 text-sm mt-1" />
+                  </div>
+
+
+
+
+
+
+
+
+
                 </div>
+
+
+
+
+
+
+
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="budget" className="block text-sm font-medium text-gray-700 mb-1">Budget</label>
                     <Field
-                      type="text"
+                      as="select"
                       id="budget"
                       name="budget"
                       className="w-full p-2 border border-gray-300 rounded-md"
-                      placeholder="$"
-                    />
+                    >
+                      <option value="">Select Budget</option>
+                      <option value="under_50k">Below 1cr</option>
+                      <option value="50k_100k">1cr to 1.25cr</option>
+                      <option value="100k_200k">1.25cr to 1.50cr</option>
+                      <option value="200k_500k">1.50cr to 2cr</option>
+                      <option value="500k_plus">2cr to 2.50cr</option>
+                      <option value="500k_plus">2.50cr to 2.50cr</option>
+                      <option value="500k_plus">2.50cr to 3cr</option>
+                      <option value="500k_plus">3cr to 3.50cr</option>
+                      <option value="500k_plus">3.50cr to 4cr</option>
+                      <option value="500k_plus">4cr</option>
+                    </Field>
                     <ErrorMessage name="budget" component="div" className="text-red-500 text-sm mt-1" />
                   </div>
 
+
                   <div>
-                    <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-1">Preferred Location</label>
+                    <label htmlFor="purposeofPurchase" className="block text-sm font-medium text-gray-700 mb-1">
+                      Purpose of Purchase*:
+                    </label>
                     <Field
-                      type="text"
-                      id="location"
-                      name="location"
+                      as="select"
+                      id="purposeofPurchase"
+                      name="purposeofPurchase"
                       className="w-full p-2 border border-gray-300 rounded-md"
-                    />
-                    <ErrorMessage name="location" component="div" className="text-red-500 text-sm mt-1" />
+                    >
+                      <option value="">Select Purpose</option>
+                      <option value="self_funding">Own Use</option>
+                      <option value="bank_loan">Investment</option>
+                    </Field>
+                    <ErrorMessage name="purposeofPurchase" component="div" className="text-red-500 text-sm mt-1" />
                   </div>
+
+
+
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <div>
+                  {/* <div>
                     <label htmlFor="bedrooms" className="block text-sm font-medium text-gray-700 mb-1">Bedrooms</label>
                     <Field
                       as="select"
@@ -438,28 +764,120 @@ const foundLeads = await checkIfLeadAlreadyExists(
                       <option value="5+">5+</option>
                     </Field>
                     <ErrorMessage name="bedrooms" component="div" className="text-red-500 text-sm mt-1" />
+                  </div> */}
+
+
+                </div>
+
+
+
+
+                <div className="grid grid-cols-2 gap-4">
+
+
+                  <div>
+                    <label htmlFor="pincode" className="block text-sm font-medium text-gray-700 mb-1">pincode</label>
+                    <Field
+                      type="number"
+                      id="pincode"
+                      name="pincode"
+                      className="w-full p-2 border border-gray-300 rounded-md"
+                      maxLength="6"
+                      pattern="[0-9]{6}"
+                      title="Please enter exactly 6 digits"
+                      inputMode="numeric"
+                      onChange={(e) => {
+                        const value = e.target.value.replace(/\D/g, '');
+                        console.log('pincode entered is', e.target.value)
+                        setFieldValue(
+                          'pincode',
+                          e.target.value
+                        )
+                        if (e.target.value.length == 6) {
+                          fetch(
+                            `https://api.postalpincode.in/pincode/${e.target.value}`
+                          )
+                            .then((res) => res.json())
+                            .then((data) => {
+                              console.log('data is', data)
+                              if (data.length > 0) {
+
+
+                                setFieldValue(
+                                  'city',
+                                  data[0]?.PostOffice[0]?.Block
+                                )
+                                setFieldValue(
+                                  'areaofresidence',
+                                  data[0]?.PostOffice[0]?.Name
+                                )
+
+
+                              }
+                            })
+                        }
+                      }}
+                    />
+                    <ErrorMessage name="pincode" component="div" className="text-red-500 text-sm mt-1" />
                   </div>
 
                   <div>
-                    <label htmlFor="bathrooms" className="block text-sm font-medium text-gray-700 mb-1">Bathrooms</label>
+                    <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">Address</label>
                     <Field
-                      as="select"
-                      id="bathrooms"
-                      name="bathrooms"
+                      type="text"
+                      id="address"
+                      name="address"
                       className="w-full p-2 border border-gray-300 rounded-md"
-                    >
-                      <option value="">Select</option>
-                      <option value="1">1</option>
-                      <option value="1.5">1.5</option>
-                      <option value="2">2</option>
-                      <option value="2.5">2.5</option>
-                      <option value="3">3</option>
-                      <option value="3+">3+</option>
-                    </Field>
-                    <ErrorMessage name="bathrooms" component="div" className="text-red-500 text-sm mt-1" />
+                    />
+                    <ErrorMessage name="address" component="div" className="text-red-500 text-sm mt-1" />
+                  </div>
+                  <div>
+                    <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-1">City</label>
+                    <Field
+                      type="text"
+                      id="city"
+                      name="city"
+                      className="w-full p-2 border border-gray-300 rounded-md"
+                    />
+                    <ErrorMessage name="city" component="div" className="text-red-500 text-sm mt-1" />
+                  </div>
+                  <div>
+                    <label htmlFor="areaofresidence" className="block text-sm font-medium text-gray-700 mb-1">Area of Residence</label>
+                    <Field
+                      type="text"
+                      id="areaofresidence"
+                      name="areaofresidence"
+                      className="w-full p-2 border border-gray-300 rounded-md"
+                    />
+                    <ErrorMessage name="areaofresidence" component="div" className="text-red-500 text-sm mt-1" />
+                  </div>
+                  <div>
+                    <label htmlFor="customercompany" className="block text-sm font-medium text-gray-700 mb-1">Customer Company*:</label>
+                    <Field
+                      type="text"
+                      id="customercompany"
+                      name="customercompany"
+                      className="w-full p-2 border border-gray-300 rounded-md"
+                    />
+                    <ErrorMessage name="customercompany" component="div" className="text-red-500 text-sm mt-1" />
+                  </div>
+
+                  <div>
+                    <label htmlFor="customerdesignation" className="block text-sm font-medium text-gray-700 mb-1">Customer Designation*:</label>
+                    <Field
+                      type="text"
+                      id="customerdesignation"
+                      name="customerdesignation"
+                      className="w-full p-2 border border-gray-300 rounded-md"
+                    />
+                    <ErrorMessage name="customerdesignation" component="div" className="text-red-500 text-sm mt-1" />
                   </div>
                 </div>
 
+
+
+
+{/*
                 <div>
                   <label htmlFor="additionalRequirements" className="block text-sm font-medium text-gray-700 mb-1">
                     Additional Requirements
@@ -472,18 +890,51 @@ const foundLeads = await checkIfLeadAlreadyExists(
                     placeholder="Pool, garden, garage, etc."
                   />
                 </div>
+
+
+                <div>
+                  <label htmlFor="referenceName" className="block text-sm font-medium text-gray-700 mb-1">
+                    Reference Name
+                  </label>
+                  <Field
+                    type="text"
+                    id="referenceName"
+                    name="referenceName"
+                    className="w-full p-2 border border-gray-300 rounded-md"
+                    placeholder="Who referred this client?"
+                  />
+                  <ErrorMessage name="referenceName" component="div" className="text-red-500 text-sm mt-1" />
+                </div> */}
+
+                {/* New Remarks field */}
+                <div>
+                  <label htmlFor="siteVistRemarks" className="block text-sm font-medium text-gray-700 mb-1">
+                    Remarks
+                  </label>
+                  <Field
+                    as="textarea"
+                    id="siteVistRemarks"
+                    name="siteVistRemarks"
+                    className="w-full p-2 border border-gray-300 rounded-md h-24"
+                    placeholder="Any special notes or comments"
+                  />
+                  <ErrorMessage name="siteVistRemarks" component="div" className="text-red-500 text-sm mt-1" />
+                </div>
+
+
               </div>
             )}
 
             {/* Step 3: Office Use Only */}
             {step === 3 && (
               <div className="space-y-4">
-                <h2 className="text-xl font-semibold text-gray-800">Office Use Only</h2>
+                <h2 className="text-xl font-semibold text-gray-800">To be filled by Office Staff only</h2>
                 <div className="bg-yellow-50 p-3 rounded-md mb-4">
                   <p className="text-yellow-700 text-sm">This section is restricted to office staff only.</p>
                 </div>
 
-                <div>
+
+                {/* <div>
                   <label htmlFor="assignedAgent" className="block text-sm font-medium text-gray-700 mb-1">
                     Assigned Agent
                   </label>
@@ -500,9 +951,125 @@ const foundLeads = await checkIfLeadAlreadyExists(
                     <option value="Sarah Williams">Sarah Williams</option>
                   </Field>
                   <ErrorMessage name="assignedAgent" component="div" className="text-red-500 text-sm mt-1" />
+                </div> */}
+
+                <div>
+                  <label htmlFor="svSchBy" className="block text-sm font-medium text-gray-700 mb-1">
+                    Site Visit Activity Scheduled by*
+                  </label>
+                  {/* <Field
+                    as="select"
+                    id="svSchBy"
+                    name="svSchBy"
+                    className="w-full p-2 border border-gray-300 rounded-md"
+                    required
+                  >
+                    <option value="">Select scheduler</option>
+                    <option value="John Doe">John Doe</option>
+                    <option value="Jane Smith">Jane Smith</option>
+                    <option value="Mike Johnson">Mike Johnson</option>
+                    <option value="Sarah Williams">Sarah Williams</option>
+                  </Field> */}
+                  <CustomSelect
+                    name="svSchBy"
+                    // label="Assign To"
+                    className="input mt-"
+                    onChange={(value) => {
+                      console.log('value is ', value, user)
+                      setFieldValue(
+                        'svSchBy',
+                        value.value
+                      )
+                      setFieldValue('svSchByObj', value)
+                    }}
+                    value={values.svSchBy}
+                    options={usersList}
+                  />
+
+                  <p
+                    className="text-sm text-red-500 hidden mt-3"
+                    id="error"
+                  >
+                    Please fill out this field.
+                  </p>
+                  <ErrorMessage name="svSchBy" component="div" className="text-red-500 text-sm mt-1" />
                 </div>
 
                 <div>
+                  <label htmlFor="svAttendedBy" className="block text-sm font-medium text-gray-700 mb-1">
+                    Attended by sales manager*
+                  </label>
+                  {/* <Field
+                    as="select"
+                    id="svAttendedBy"
+                    name="svAttendedBy"
+                    className="w-full p-2 border border-gray-300 rounded-md"
+                    required
+                  >
+                    <option value="">Select manager</option>
+                    <option value="John Doe">John Doe</option>
+                    <option value="Jane Smith">Jane Smith</option>
+                    <option value="Mike Johnson">Mike Johnson</option>
+                    <option value="Sarah Williams">Sarah Williams</option>
+                  </Field> */}
+
+                  <CustomSelect
+                    name="svAttendedBy"
+                    // label="Assign To"
+                    className="input mt-"
+                    onChange={(value) => {
+                      console.log('value is ', value, user)
+                      setFieldValue(
+                        'svAttendedBy',
+                        value.value
+                      )
+                      setFieldValue('svAttendedByObj', value)
+                    }}
+                    value={values.svAttendedBy}
+                    options={usersList}
+                  />
+
+                  <p
+                    className="text-sm text-red-500 hidden mt-3"
+                    id="error"
+                  >
+                    Please fill out this field.
+                  </p>
+                  <ErrorMessage name="svAttendedBy" component="div" className="text-red-500 text-sm mt-1" />
+                </div>
+
+
+                <div>
+                  <label htmlFor="svHappendOn" className="block text-sm font-medium text-gray-700 mb-1">
+                    Site Visit Date And Time*
+                  </label>
+                  <Field name="svHappendOn">
+                    {({ field, form }) => (
+                      <DatePicker
+                        id="svHappendOn"
+                        selected={field.value ? new Date(field.value) : null} // convert ms -> Date
+                        onChange={(date) => {
+                          const milliseconds = date ? date.getTime() : null;
+                          setFieldValue('svHappendOn', milliseconds); // store as ms
+                        }}
+                        className="w-full p-2 border border-gray-300 rounded-md font-outfit font-normal text-sm leading-tight tracking-tight"
+                        showTimeSelect
+                        timeFormat="HH:mm"
+                        injectTimes={[
+                          setHours(setMinutes(new Date(), 1), 0),
+                          setHours(setMinutes(new Date(), 5), 12),
+                          setHours(setMinutes(new Date(), 59), 23),
+                        ]}
+                        dateFormat="MMMM d, yyyy h:mm aa"
+                        required
+                      />
+                    )}
+                  </Field>
+
+                  <ErrorMessage name="svHappendOn" component="div" className="text-red-500 text-sm mt-1" />
+                </div>
+
+                {/* <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Priority Level</label>
                   <div className="flex space-x-4">
                     <label className="flex items-center">
@@ -533,9 +1100,9 @@ const foundLeads = await checkIfLeadAlreadyExists(
                       High
                     </label>
                   </div>
-                </div>
+                </div> */}
 
-                <div>
+                {/* <div>
                   <label htmlFor="referenceNumber" className="block text-sm font-medium text-gray-700 mb-1">
                     Reference Number
                   </label>
@@ -546,9 +1113,9 @@ const foundLeads = await checkIfLeadAlreadyExists(
                     className="w-full p-2 border border-gray-300 rounded-md"
                   />
                   <ErrorMessage name="referenceNumber" component="div" className="text-red-500 text-sm mt-1" />
-                </div>
+                </div> */}
 
-                <div>
+                {/* <div>
                   <label htmlFor="notes" className="block text-sm font-medium text-gray-700 mb-1">
                     Internal Notes
                   </label>
@@ -558,13 +1125,15 @@ const foundLeads = await checkIfLeadAlreadyExists(
                     name="notes"
                     className="w-full p-2 border border-gray-300 rounded-md h-24"
                   />
-                </div>
+                </div> */}
+
+
               </div>
             )}
 
             {/* Navigation buttons */}
             <div className="flex justify-between pt-4">
-            {step > 0 && (
+              {step > 0 && (
                 <button
                   type="button"
                   onClick={() => prevStep(values)}
