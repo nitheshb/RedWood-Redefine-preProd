@@ -17,6 +17,8 @@ import UnitsInventoryHome from 'src/components/A_ProjModule/UnitsInvertoryHome'
 import LeadsTransferHome from 'src/components/A_SalesModule/leadsTransfer'
 import ProfileSummary from 'src/components/A_SalesModule/Reports/profileSummary'
 import LeadsControllerHome from 'src/components/A_SalesModule/LeadsController/LeadsControllerHome'
+import CPAgentsListHome from 'src/components/A_SalesModule/cpPages/cpAgentsListHome'
+import SiteVisitListHome from 'src/components/A_SalesModule/siteVisitRegister/siteVisitsListHome'
 
 const LeadsManagerPage = (props, sourceLink) => {
   const { user } = useAuth()
@@ -119,6 +121,24 @@ const LeadsManagerPage = (props, sourceLink) => {
                {viewable === 'leadsController' && (
                 <LeadsControllerHome taskType={viewable} />
               )}
+
+            {viewable === 'siteVisits' && (
+                            <SiteVisitListHome
+                              project={{
+                                projectName: 'Projects',
+                              }}
+                              isEdit={undefined}
+                            />
+                          )}
+              {viewable === 'cpAgents' && (
+                <CPAgentsListHome
+                  project={{
+                    projectName: 'Projects',
+                  }}
+                  isEdit={undefined}
+                />
+              )}
+
               {viewable === 'units_inventory' && (
                 <section className="mx-1">
                   <UnitsInventoryHome

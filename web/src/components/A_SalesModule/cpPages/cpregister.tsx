@@ -43,7 +43,7 @@ const CPRegister = () => {
       dept: 'sales',
       role: 'cp-agent',
       orgName: 'maahomes',
-      orgId: orgId,
+      orgId: 'maahomes',
       userStatus: 'active',
       orgStatus: 'active',
       offPh: offPh,
