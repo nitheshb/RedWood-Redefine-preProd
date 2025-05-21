@@ -85,10 +85,12 @@ useEffect(() => {
                                     { label: 'sNo', id: 'no', align: 'left' },
                                     { label: 'Name', id: 'name', align: 'left' },
                                     { label: 'Phone No', id: 'offPh', align: 'left' },
-                                    { label: 'Alternate No', id: 'new', align: 'center' },
-                                    { label: 'email', id: 'new', align: 'center' },
-                                    { label: 'status', id: 'userStatus', align: 'center' },
-                                    { label: 'Rera No', id: 'empId', align: 'center' },
+                                    { label: 'Project Name', id: 'new', align: 'center' },
+                                    { label: 'Status', id: 'new', align: 'center' },
+                                    { label: 'Schedudled By', id: 'userStatus', align: 'center' },
+                                    { label: 'Conducted By', id: 'empId', align: 'center' },
+                                    { label: 'Conducted On', id: 'empId', align: 'center' },
+                                    { label: 'Remarks', id: 'empId', align: 'center' },
                                   ].map((d, i) => (
                                     <th
                                       key={i}

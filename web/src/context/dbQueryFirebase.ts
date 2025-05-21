@@ -2815,6 +2815,44 @@ export const addLead = async (orgId, data, by, msg) => {
     }
   }
 }
+export const addSiteVisitEntry = async (orgId, data, by) => {
+  console.log('my values is ', data)
+  if (data?.Name) {
+    try {
+      delete data['']
+      const x = await addDoc(collection(db, `${orgId}_siteVisits`), data)
+      await console.log('add Lead value is ', x, x.id, data)
+
+      const {
+        intype,
+        Name,
+        Mobile,
+        countryCode,
+        assignedTo,
+        Project,
+        assignedToObj,
+      } = data
+      if (Name) {
+        const { data: data3, error: errorx } = await supabase
+          .from(`${orgId}_siteVisits_logs`)
+          .insert([
+            {
+              type: 'l_ctd',
+              subtype: intype,
+              T: Timestamp.now().toMillis(),
+              Luid: x?.id || '',
+              by,
+              payload: {},
+            },
+          ]).select()
+
+        return x
+      }
+    } catch (error) {
+      console.log('error in uploading file with data', data, error)
+    }
+  }
+}
 export const registerCpUser = async (orgId,  data1, user) => {
   const { empId, email, myRole, deptVal, name, offPh, perPh, userStatus } =
   data1

@@ -1398,9 +1398,7 @@ export function MultipleFileUploadField({
               cleanRow['Dateofjoining']= dRow['Date of joining']
               cleanRow['Isfulltime']= dRow['Is fulltime']
               cleanRow['Channelpartnertype']= dRow['Channel partner type']
-              cleanRow['Channelpartnertype']= dRow['Channel partner type']
               cleanRow['Minbudget']= dRow['Min budget']
-              cleanRow['Maxbudget']= dRow['Max budget']
               cleanRow['Maxbudget']= dRow['Max budget']
               cleanRow['Islocationspecific']= dRow['Is location specific']
               cleanRow['Propertytype']= dRow['Property type']
@@ -1422,27 +1420,23 @@ export function MultipleFileUploadField({
               let cleanRow ={}
               cleanRow['code'] = dRow['Code Name']
               cleanRow['salutation'] = dRow['Salutation']
-              cleanRow['name'] = dRow['First name'] + ' ' + dRow['Last name']
+              cleanRow['name'] = dRow['First Name'] + ' ' + dRow['Last Name']
               cleanRow['email'] = dRow['Email']
 
-              cleanRow['Phone'] = dRow['Phone']
-              cleanRow['Project'] = dRow['Project']
-              cleanRow['PAN']= dRow['PAN']
+              cleanRow['mobile'] = dRow['Phone']
+              cleanRow['project'] = dRow['Project']
+
               cleanRow['Occupation']= dRow['Occupation']
               cleanRow['Location']= dRow['Location']
               cleanRow['Address']= dRow['Address']
-              cleanRow['Projects']= dRow['Projects']
-              cleanRow['Dateofjoining']= dRow['Date of joining']
-              cleanRow['Isfulltime']= dRow['Is fulltime']
-              cleanRow['Channelpartnertype']= dRow['Channel partner type']
-              cleanRow['Channelpartnertype']= dRow['Channel partner type']
-              cleanRow['Minbudget']= dRow['Min budget']
-              cleanRow['Maxbudget']= dRow['Max budget']
-              cleanRow['Maxbudget']= dRow['Max budget']
-              cleanRow['Islocationspecific']= dRow['Is location specific']
-              cleanRow['Propertytype']= dRow['Property type']
-              cleanRow['Sourceofrecruitment']= dRow['Source of recruitment']
-              cleanRow['empId']= dRow['Rera number']
+
+
+              cleanRow['scheduledBy']= dRow['Initiated By']
+              cleanRow['initiatedByTeam']= dRow['Initiated By Team']
+              cleanRow['conductedBy']= dRow['Conducted By']
+              cleanRow['conductedOn']= dRow['Conducted On']
+              cleanRow['remarks']= dRow['Remark']
+
               cleanRow['mode']= dRow['Phone']!=undefined? 'valid' : 'invalid'
               return cleanRow
             })

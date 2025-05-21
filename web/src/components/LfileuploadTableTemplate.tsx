@@ -26,6 +26,7 @@ import Highlighter from 'react-highlight-words'
 import {
   addLead,
   addPlotUnit,
+  addSiteVisitEntry,
   addUnit,
   capturePaymentS,
   getLedsData1,
@@ -282,6 +283,9 @@ const EnhancedTableToolbar = (props) => {
         await addLead(orgId, newData, user?.email, 'Lead Created by csv')}
         if(title === 'ImportCP'){
           await registerCpUser(orgId, newData, user)
+        }
+        if(title === 'ImportSiteVisits'){
+          await addSiteVisitEntry(orgId, newData, user)
         }
         setUploadedLeadsCount(index + 1)
         return
@@ -2596,6 +2600,68 @@ export default function LfileuploadTableTemplate({
         {
           id: 'empId',
           label: 'Rera No',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        }
+
+      ]
+    } else if (title === 'ImportSiteVisits'){
+      columns = [
+
+        { id: 'salutation', label: 'Salutation', minWidth: 100 },
+        {
+          id: 'name',
+          label: 'Name',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+          id: 'mobile',
+          label: 'Mobile',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+          id: 'email',
+          label: 'Email',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'project',
+          label: 'Project',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'scheduledBy',
+          label: 'Scheduled By',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'conductedBy',
+          label: 'Conducted By',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'conductedOn',
+          label: 'Conducted On',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'remarks',
+          label: 'Remarks',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
