@@ -1,5 +1,5 @@
 import { IdentificationIcon } from '@heroicons/react/outline'
-import { WhereToVote } from '@mui/icons-material'
+import { OutdoorGrillRounded, WhereToVote } from '@mui/icons-material'
 import {
   setDoc,
   doc,
@@ -34,6 +34,7 @@ import { supabase } from './supabase'
 import LeadTaskFooter from 'src/components/Comp_CustomerProfileSideView/LeadTaskFooter'
 import { firebase } from '@redwoodjs/auth/dist/authClients/firebase'
 import toast from 'react-hot-toast'
+import axios from 'axios'
 // import { admin } from './adnim'
 
 // import { userAccessRoles } from 'src/constants/userAccess'
@@ -77,6 +78,16 @@ export const steamUsersListByRole = (orgId, snapshot, error) => {
     where('orgId', '==', orgId),
     where('userStatus', '==', 'active'),
     where('roles', 'array-contains-any', ['sales-manager', 'sales-executive'])
+  )
+  return onSnapshot(itemsQuery, snapshot, error)
+}
+// get users cpAgent
+export const steamUsersListCpAgents = (orgId, snapshot, error) => {
+  const itemsQuery = query(
+    collection(db, 'users'),
+    where('orgId', '==', orgId),
+    where('userStatus', '==', 'active'),
+    where('roles', 'array-contains-any', ['cp-agent'])
   )
   return onSnapshot(itemsQuery, snapshot, error)
 }
@@ -2114,6 +2125,8 @@ export const checkIfLeadAlreadyExists = async (cName, matchVal, projectId) => {
   // db.collection('')
 
   console.log('matchVal', matchVal)
+  const q = await query(collection(db, cName), where('Mobile', '==', matchVal))
+  // const q = await query(collection(db, cName), where('Mobile', '==', matchVal), where('ProjectId', '==', projectId))
   const q = query(collection(db, cName), where('Mobile', '==', matchVal), where('ProjectId', '==', projectId))
   const parentDocs = []
   const cpDocs = []
@@ -2151,6 +2164,8 @@ export const checkIfLeadAlreadyExists = async (cName, matchVal, projectId) => {
 
   // db.collection(`${orgId}_leads`).add(data)
 }
+
+
 
 export const checkIfMasterAlreadyExists = async (cName, matchVal, title) => {
   // db.collection(`${orgId}_leads`).doc().set(data)
@@ -2814,6 +2829,119 @@ export const addLead = async (orgId, data, by, msg) => {
       console.log('error in uploading file with data', data, error)
     }
   }
+}
+export const addSiteVisitEntry = async (orgId, data, by) => {
+  console.log('my values is ', data)
+  if (data?.Name) {
+    try {
+      delete data['']
+      const x = await addDoc(collection(db, `${orgId}_siteVisits`), data)
+      await console.log('add Lead value is ', x, x.id, data)
+
+      const {
+        intype,
+        Name,
+        Mobile,
+        countryCode,
+        assignedTo,
+        Project,
+        assignedToObj,
+      } = data
+      if (Name) {
+        const { data: data3, error: errorx } = await supabase
+          .from(`${orgId}_siteVisits_logs`)
+          .insert([
+            {
+              type: 'l_ctd',
+              subtype: intype,
+              T: Timestamp.now().toMillis(),
+              Luid: x?.id || '',
+              by,
+              payload: {},
+            },
+          ]).select()
+
+        return x
+      }
+    } catch (error) {
+      console.log('error in uploading file with data', data, error)
+    }
+  }
+}
+export const registerCpUser = async (orgId,  data1, user) => {
+  const { empId, email, myRole, deptVal, name, offPh, perPh, userStatus } =
+  data1
+  const data = {
+    empId: empId,
+    email: email,
+    name: name,
+    password: 'redefine@123',
+    dept: 'sales',
+    role: 'cp-agent',
+    orgName: 'maahomes',
+    orgId: orgId,
+    userStatus: 'active',
+    orgStatus: 'active',
+    offPh: offPh,
+    perPh: perPh,
+  }
+  const config = {
+    method: 'post',
+
+    url: 'https://asia-south1-redefine-erp.cloudfunctions.net/erpAddUser',
+    headers: {
+      'Content-Type': 'text/plain',
+    },
+    data,
+  }
+  axios(config)
+      .then(async function (response) {
+        if (response.data) {
+
+          const { success, msg, payload } = await response['data']
+          // const { id } = payload
+          console.log('user payload is ', response)
+
+          if (success) {
+            const docDetailsIs = await checkIfUserAlreadyExists('users', email)
+
+            console.log('docDetailsIs', docDetailsIs, docDetailsIs[0]['uid'])
+            updateUserRole(
+              empId,
+              'Maa Homes',
+              orgId,
+              docDetailsIs[0]['uid'],
+              'sales',
+              'cp-agent',
+              email,
+              offPh,
+              perPh,
+              'active',
+              user?.email
+            )
+            const x = {
+              name,
+              empId,
+              email,
+              uid: docDetailsIs[0]['uid'],
+              userStatus: 'active',
+              orgStatus: 'active',
+            }
+            addUserLog(orgId, {
+              s: 's',
+              type: 'addUser',
+              subtype: 'addUser',
+              txt: `${email} as ${myRole}`,
+              by: user?.email
+            })
+          }
+
+        }
+      })
+      .catch(function (error) {
+        console.log('error is ', error)
+
+      })
 }
 // This function is used to add leads for cp
 export const addCpLead = async (orgId, data, by, msg) => {
@@ -6424,7 +6552,7 @@ export const updateCrmReportAmountAgreeNew = async (orgId, data, by) => {
   const payload = {
     empId: receive_by,
     pId: projectId,
-    week: x.weekNumberOfYear,
+    week: x.weekNumberOfYear,/////
     month: x.month,
     year: x.year,
     received: increment(totalAmount),

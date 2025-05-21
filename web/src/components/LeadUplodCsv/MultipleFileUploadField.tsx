@@ -1438,6 +1438,74 @@ export function MultipleFileUploadField({
           console.log('data os jere', records)
           // uploadFile(file)
           // upload pdf to cloud
+        }else if(['ImportCP'].includes(title)) {
+          const clean1 = records.filter((row) => row['Date'] != '')
+          // set duplicate & valid records
+          // check in db if record exists with matched phone Number & email
+          const serialData = await Promise.all(
+            clean1.map(async (dRow) => {
+              console.log('found row is ', dRow)
+              let cleanRow ={}
+              cleanRow['code'] = dRow['Code Name']
+              cleanRow['salutation'] = dRow['Salutation']
+              cleanRow['name'] = dRow['First name'] + ' ' + dRow['Last name']
+              cleanRow['email'] = dRow['Email']
+              cleanRow['AlternateEmail'] = dRow['Alternate Email']
+              cleanRow['offPh'] = dRow['Phone']
+              cleanRow['perPh'] = dRow['Alternate Phone']
+              cleanRow['PAN']= dRow['PAN']
+              cleanRow['Occupation']= dRow['Occupation']
+              cleanRow['Location']= dRow['Location']
+              cleanRow['Address']= dRow['Address']
+              cleanRow['Projects']= dRow['Projects']
+              cleanRow['Dateofjoining']= dRow['Date of joining']
+              cleanRow['Isfulltime']= dRow['Is fulltime']
+              cleanRow['Channelpartnertype']= dRow['Channel partner type']
+              cleanRow['Minbudget']= dRow['Min budget']
+              cleanRow['Maxbudget']= dRow['Max budget']
+              cleanRow['Islocationspecific']= dRow['Is location specific']
+              cleanRow['Propertytype']= dRow['Property type']
+              cleanRow['Sourceofrecruitment']= dRow['Source of recruitment']
+              cleanRow['empId']= dRow['Rera number']
+              cleanRow['mode']= dRow['Phone']!=undefined? 'valid' : 'invalid'
+              return cleanRow
+            })
+          )
+          await setfileRecords(serialData)
+          await console.log('Finished: records', serialData, fileRecords)
+        }else if(['ImportSiteVisits'].includes(title)) {
+          const clean1 = records.filter((row) => row['Date'] != '')
+          // set duplicate & valid records
+          // check in db if record exists with matched phone Number & email
+          const serialData = await Promise.all(
+            clean1.map(async (dRow) => {
+              console.log('found row is ', dRow)
+              let cleanRow ={}
+              cleanRow['code'] = dRow['Code Name']
+              cleanRow['salutation'] = dRow['Salutation']
+              cleanRow['name'] = dRow['First Name'] + ' ' + dRow['Last Name']
+              cleanRow['email'] = dRow['Email']
+
+              cleanRow['mobile'] = dRow['Phone']
+              cleanRow['project'] = dRow['Project']
+
+              cleanRow['Occupation']= dRow['Occupation']
+              cleanRow['Location']= dRow['Location']
+              cleanRow['Address']= dRow['Address']
+
+
+              cleanRow['scheduledBy']= dRow['Initiated By']
+              cleanRow['initiatedByTeam']= dRow['Initiated By Team']
+              cleanRow['conductedBy']= dRow['Conducted By']
+              cleanRow['conductedOn']= dRow['Conducted On']
+              cleanRow['remarks']= dRow['Remark']
+
+              cleanRow['mode']= dRow['Phone']!=undefined? 'valid' : 'invalid'
+              return cleanRow
+            })
+          )
+          await setfileRecords(serialData)
+          await console.log('Finished: records', serialData, fileRecords)
         } else {
           const clean1 = records.filter((row) => row['Date'] != '')
           // set duplicate & valid records

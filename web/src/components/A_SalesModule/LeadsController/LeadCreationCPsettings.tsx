@@ -34,7 +34,7 @@ const LeadCreationCPSettings = ({
 
           <section className=' border-b border-[#F3F2F9] pb-4'>
             <div  className="flex items-center justify-between">
-                <div>Consider when no activity for last 60 days
+                <div>Consider when no activity for last 90 days
                 </div>
                    <button
                     onClick={() => setUniqueLeadPh(!uniqueLeadPh)}

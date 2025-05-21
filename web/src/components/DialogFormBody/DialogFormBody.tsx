@@ -896,13 +896,49 @@ const DialogFormBody = ({
                                   type="number"
                                   inputProps={{ maxLength: 6 }}
                                   onInput={(e) => {
-                                    if (e.target.value.length > 6) {
-                                      e.target.value = e.target.value.slice(
-                                        0,
-                                        6
-                                      )
-                                    }
-                                  }}
+                                    // if (e.target.value.length > 6) {
+                                    //   e.target.value = e.target.value.slice(
+                                    //     0,
+                                    //     6
+                                    //   )
+                                    // }
+                                    formik.setFieldValue(
+                                      'pincode',
+                                      e.target.value
+                                    )
+
+
+                                  if (e.target.value.length == 6) {
+                                    fetch(
+                                      `https://api.postalpincode.in/pincode/${e.target.value}`
+                                    )
+                                      .then((res) => res.json())
+                                      .then((data) => {
+                                        console.log('data is', data)
+                                        if (data.length > 0) {
+                                          formik.setFieldValue(
+                                            'city',
+                                            data[0]?.PostOffice[0]?.Block
+                                          )
+                                          if (data[0]?.PostOffice[0]?.State) {
+                                            let fil = statesListA.filter(
+                                              (d) =>
+                                                d.label ==
+                                                data[0]?.PostOffice[0]?.State
+                                            )
+                                            formik.setFieldValue(
+                                              'state',
+                                              fil[0].value
+                                            )
+                                          }
+                                          // formik.setFieldValue(
+                                          //   'country',
+                                          //   data[0]?.PostOffice[0]?.Country
+                                          // )
+                                        }
+                                      })
+                                  }
+                                }}
                                 />
                               </div>
                             </div>

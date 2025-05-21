@@ -54,7 +54,7 @@ const LfileUploadTableHome = ({ fileRecords, title, pId, myBlock }) => {
   }, [])
 
   useEffect(() => {
-    console.log('table data is ', tableData2)
+    console.log('table data is ', tableData2, fileRecords)
     let dummyValid = fileRecords.filter((rw) => rw['mode'] === 'valid')
     const dupMode = fileRecords.filter((rw) => rw['mode'] === 'duplicate')
     const invalidA = fileRecords.filter((rw) => rw['mode'] === 'invalid')

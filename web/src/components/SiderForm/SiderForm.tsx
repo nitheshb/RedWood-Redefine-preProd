@@ -373,6 +373,24 @@ const SiderForm = ({
                     myBlock={undefined}
                   />
                 )}
+                 {title === 'ImportCP' && (
+                  <LeadsDropHomes
+                    title={title}
+                    dialogOpen={setOpen}
+                    pId={pId}
+                    myPhase={undefined}
+                    myBlock={undefined}
+                  />
+                )}
+                 {title === 'ImportSiteVisits' && (
+                  <LeadsDropHomes
+                    title={title}
+                    dialogOpen={setOpen}
+                    pId={pId}
+                    myPhase={undefined}
+                    myBlock={undefined}
+                  />
+                )}
                 {title === 'Add Lead' && (
                   <AddLeadForm title={title} dialogOpen={setOpen} />
                 )}

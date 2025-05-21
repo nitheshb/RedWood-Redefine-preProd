@@ -14,6 +14,7 @@ import store from 'src/state/store'
 
 import './index.css'
 import { Toaster } from 'react-hot-toast'
+import NoInternetBanner from './components/comps/noInternetBanner'
 
 // const firebaseConfig = {
 //   // apiKey: process.env.FIREBASE_API_KEY,
@@ -62,11 +63,13 @@ const App = () => (
         >
           <AuthProvider>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <NoInternetBanner />
+
               <Routes />
               {/* <Toaster
-              autoClose={10000} 
+              autoClose={10000}
               position="top-right"
-                
+
               /> */}
 
               <Toaster

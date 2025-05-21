@@ -22,6 +22,7 @@ import { PhoneNoField } from 'src/util/formFields/phNoField'
 import { setHours, setMinutes } from 'date-fns'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 import { useSnackbar } from 'notistack'
+import { phoneRegExp } from 'src/util/phoneExpression'
 
 const SUserSignupBody = ({ title, dialogOpen, empData }) => {
   const d = new window.Date()
@@ -216,8 +217,7 @@ const SUserSignupBody = ({ title, dialogOpen, empData }) => {
         })
     }
   }
-  const phoneRegExp =
-    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+
   const validate = Yup.object({
     name: Yup.string()
       .max(15, 'Must be 15 characters or less')
