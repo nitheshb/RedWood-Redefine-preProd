@@ -74,9 +74,10 @@ export const ChartTooltipContent = ({ active, payload, hideLabel = false }) => {
   }
 
   const data = payload[0];
-  const browser = data.name;
+  const browser = data.payload.date;
   const value = data.value;
   const color = data.payload.fill;
+  console.log('inside chart tooltip', data);
 
   return (
     <div className="rounded-lg border bg-white p-3 shadow-md animate-in fade-in-50 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 z-50">
@@ -91,7 +92,7 @@ export const ChartTooltipContent = ({ active, payload, hideLabel = false }) => {
           </span>
         </div>
         <div className="text-xs text-muted-foreground">
-          {value.toLocaleString()} visitors
+          {value.toLocaleString()} Leads
         </div>
       </div>
     </div>

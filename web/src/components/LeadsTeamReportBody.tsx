@@ -11,6 +11,7 @@ import { startOfWeek, startOfDay, startOfMonth, subMonths } from 'date-fns'
 import { sourceListItems } from 'src/constants/projects'
 import {
   addAgreegatedSalesValues,
+  getAllLeads,
   getAllProjects,
   getEmployeesListDept,
   getEmployeesTaskProgressDept,
@@ -23,13 +24,14 @@ import {
   streamLeadLogdWithNullProj,
   updateLeadLastUpdateTime,
   updateLeadsLogWithProject,
+  updateLeadTrendsOnLeadArrival,
   updateTodaySourceStatsDB,
   updateTodayTasksTotal,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { sendWhatAppTextSms1 } from 'src/util/axiosWhatAppApi'
 import CSVDownloader from 'src/util/csvDownload'
-import { prettyDate } from 'src/util/dateConverter'
+import { getWeekMonthNo, prettyDate } from 'src/util/dateConverter'
 import { SlimSelectBox } from 'src/util/formFields/slimSelectBoxField'
 
 import MarketingAnalyticsHome from './A_MarketingModule/MarketinAnalyticsHome'
@@ -53,6 +55,9 @@ import ReportSideWindow from './SiderForm/ReportSideView'
 import SiderForm from './SiderForm/SiderForm'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 import Chatbot from './comps/aichat/Chatbot'
+import { increment } from 'src/context/db'
+import { daysInWeek } from 'date-fns/esm'
+
 
 const valueFeedData = [
   { k: 'Total', v: 300, pic: '' },
@@ -114,6 +119,8 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
   const [leadLogsRawData, setLeadLogsRawData] = useState([])
   const [leadLogsFetchedRawData, setLeadLogsFetchRawData] = useState([])
   const [empPerDayTasksCountsA, setEmpPerDayTasksCountsA] = useState([])
+  const [leadsProcessed, setLeadsProcessed] = useState(0)
+  const [totaLeadsProcessed, setTotalLeadsProcessed] = useState(0)
 
   const [sourceListTuned, setSourceListTuned] = useState([])
   const [selCat, setSelCat] = useState('lead_perf')
@@ -347,6 +354,57 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
       () => setusersList1([])
     )
     return
+  }
+  const updateLeadTrends = async (projectFilList) => {
+    // get the all leads from leads table
+    // based on created date split it for day, week, month, year
+    // overall company
+    // attach it to source
+    // attach it to campaign
+   const allLeadsA = await getAllLeads(orgId )
+   console.log('all leads are', allLeadsA.length, allLeadsA)
+
+   setTotalLeadsProcessed(allLeadsA.length)
+   return
+for (const data of allLeadsA) {
+  let x = getWeekMonthNo(data?.Date);
+  console.log('leads date split', x, data?.Name);
+  setLeadsProcessed((prev) => prev + 1);
+  const day = {id:`${x.dayInYear}Y${x.year}`, cat:'day', value: x.dayInYear, Y: x.year, T: data?.Date}
+  const day_month = {id:`${x.day}M${x.month}Y${x.year}`, cat:'day_month', value: x.day, month: x.month, Y: x.year, T: data?.Date }
+  const week = {id:`W${x.weekNumberOfYear}Y${x.year}`, cat:'week', value: x.weekNumberOfYear, Y: x.year, T: data?.Date }
+  const weekMonth = {id:`W${x.weekNumberOfYear}M${x.month}Y${x.year}`, cat:'day_month', value: x.weekNumberOfYear, month: x.month, Y: x.year, T: data?.Date}
+  const month = {id:`M${x.month}Y${x.year}`, cat:'month',  value: x.month, Y: x.year, T:data?.Date}
+  const year = {id:`Y${x.year}`, cat:'year',  value: x.year, Y: x.year, T: data?.Date}
+
+
+
+  for (const data1 of [day, day_month, week, weekMonth, month, year]) {
+    await updateLeadTrendsOnLeadArrival(orgId, data1, data);
+  }
+}
+
+   return
+    projectFilList.map((data) => {
+      const payload = {
+        Total: data?.TotalNew?.length || 0,
+        inprogress: data?.inprogress_new?.length || 0,
+        new: data?.new?.length || 0,
+        followup: data?.followup?.length || 0,
+        visitfixed: data?.visitfixed?.length || 0,
+        visitdone: data?.visitdone?.length || 0,
+        negotiation: data?.negotiation?.length || 0,
+        booked: data?.booked_new?.length || 0,
+        notinterested: data?.notinterested?.length || 0,
+        dead: data?.dead?.length || 0,
+        blocked: data?.blocked?.length || 0,
+        junk: data?.junk?.length || 0,
+        archieve: data?.archieve_new?.length || 0,
+        others: data?.others?.length || 0,
+      }
+      console.log('payload is', payload, data)
+      addAgreegatedSalesValues(orgId, data?.uid, payload)
+    })
   }
   const updateAgreegatedValues = async (projectFilList) => {
     projectFilList.map((data) => {
@@ -1090,6 +1148,14 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                         onClick={() => updateAgreegatedValues(projectFilList)}
                       >
                         Calculate
+                      </div>
+                    )}
+                     {orgId == 'spark' && (
+                      <div
+                        className="mt-3 mr-2 cursor-pointer"
+                        onClick={() => updateLeadTrends(projectFilList)}
+                      >
+                        Trends Maker({leadsProcessed}/{totaLeadsProcessed})
                       </div>
                     )}
 

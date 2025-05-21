@@ -120,6 +120,12 @@ export function formatToPhone(no) {
 export function getWeekMonthNo(milliseconds) {
   const date = new Date(milliseconds)
   const currentMonth = date.getMonth()
+  // get day of the year
+  const startOfYear = new Date(date.getFullYear(), 0, 0);
+  const diff = date - startOfYear;
+  const oneDay = 1000 * 60 * 60 * 24; // milliseconds in a day
+  const dayInYear = Math.floor(diff / oneDay);
+
   // Get day month and year
   const day = date.getDate()
   const month = date.getMonth() + 1 // Months are zero-based
@@ -158,6 +164,7 @@ export function getWeekMonthNo(milliseconds) {
   const formattedDate = `W-${weekNumberOfYear}_M-${month}_year-${year}`
 
   return {
+    dayInYear,
     weekNumberOfYear: weekNumberOfYear,
     weekNumberOfMonth: weekNumberOfMonth,
     day: day,

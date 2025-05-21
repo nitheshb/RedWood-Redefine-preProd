@@ -913,7 +913,7 @@ export const updateTodaySourceStatsDB = async (
 ) => {
   // const itemsQuery = query(doc(db, `${orgId}_leads_log', 'W6sFKhgyihlsKmmqDG0r'))
   const records = []
-  const getAllProjectsQuery = await query(
+  const getAllProjectsQuery = query(
     collection(db, `${'maahomes'}_leads_lake`)
     // where('cT', '>=')
   )
@@ -1251,7 +1251,7 @@ export const editTaskManAttachmentsData = async (orgId, dta, user) => {
   // return onSnapshot(itemsQuery, snapshot, error)
 }
 export const ReOpenTaskManData = async (orgId, dta, user, status) => {
-  await console.log('task details are', dta)
+  console.log('task details are', dta)
   const {
     id,
     title,
@@ -1274,12 +1274,10 @@ export const ReOpenTaskManData = async (orgId, dta, user, status) => {
   x.map(async (userId) => {
     // get phone no's
     const additionalUserInfo = await getUser(userId)
-    await console.log('task details are', dta, additionalUserInfo)
-    await sendWhatAppTextSms1(
+    console.log('task details are', dta, additionalUserInfo)
+    sendWhatAppTextSms1(
       additionalUserInfo?.offPh,
-      `Task has been *Re-Open* by  ${
-        user.displayName
-      } \n \n *Due Date*:${prettyDateTime(
+      `Task has been *Re-Open* by  ${user.displayName} \n \n *Due Date*:${prettyDateTime(
         due_date
       )}  \n *Done Date*: ${prettyDateTime(
         Timestamp.now().toMillis()
@@ -1290,7 +1288,7 @@ export const ReOpenTaskManData = async (orgId, dta, user, status) => {
   // return onSnapshot(itemsQuery, snapshot, error)
 }
 export const CompleteTaskManData = async (orgId, dta, user, status) => {
-  await console.log('task details are', dta)
+  console.log('task details are', dta)
   const {
     id,
     title,
@@ -1313,12 +1311,10 @@ export const CompleteTaskManData = async (orgId, dta, user, status) => {
   x.map(async (userId) => {
     // get phone no's
     const additionalUserInfo = await getUser(userId)
-    await console.log('task details are', dta, additionalUserInfo)
-    await sendWhatAppTextSms1(
+    console.log('task details are', dta, additionalUserInfo)
+    sendWhatAppTextSms1(
       additionalUserInfo?.offPh,
-      `Task has been *closed* by  ${
-        user.displayName
-      } \n \n *Due Date*:${prettyDateTime(
+      `Task has been *closed* by  ${user.displayName} \n \n *Due Date*:${prettyDateTime(
         due_date
       )}  \n *Done Date*: ${prettyDateTime(
         Timestamp.now().toMillis()
@@ -1535,8 +1531,14 @@ export const getEmployeesListDept = async (orgId, data) => {
   const citySnapshot = await getDocs(itemsQuery)
   // await citySnapshot.docs.map((doc) => doc.data())
   console.log('my Array data is delayer 1', citySnapshot)
-  return await citySnapshot.docs.map((doc) => doc.data())
+  return citySnapshot.docs.map((doc) => doc.data())
 }
+/* The above code appears to be a comment block in TypeScript. It mentions a symbol or
+entity called "EmployeesListDept" and then poses a question asking what the code is
+doing. However, the actual code or logic is missing in the provided snippet, so it
+is not possible to determine what the code is doing without seeing the
+implementation. */
+
 
 export const getMyLeadsByDate = async (orgId, data) => {
   const { cutoffDate, uid, isCp } = data
@@ -1550,7 +1552,7 @@ export const getMyLeadsByDate = async (orgId, data) => {
   const citySnapshot = await getDocs(itemsQuery)
   // await citySnapshot.docs.map((doc) => doc.data())
   console.log('my Array data is delayer 1', citySnapshot)
-  return await citySnapshot.docs.map((doc) => doc.data())
+  return citySnapshot.docs.map((doc) => doc.data())
 }
 export const getLeadsByDate = async (orgId, data) => {
   const { cutoffDate, dateRange } = data
@@ -1596,7 +1598,7 @@ export const getLeadsByDate = async (orgId, data) => {
   const citySnapshot = await getDocs(itemsQuery)
   // await citySnapshot.docs.map((doc) => doc.data())
   console.log('my Array data is delayer 1', citySnapshot)
-  return await citySnapshot.docs.map((doc) => {
+  return citySnapshot.docs.map((doc) => {
     const x = doc.data()
     x.id = doc.id
     return x
@@ -1612,7 +1614,21 @@ export const getLeadsByRange = async (orgId, data) => {
   const citySnapshot = await getDocs(itemsQuery)
   // await citySnapshot.docs.map((doc) => doc.data())
   console.log('my Array data is delayer 1', citySnapshot)
-  return await citySnapshot.docs.map((doc) => {
+  return citySnapshot.docs.map((doc) => {
+    const x = doc.data()
+    x.id = doc.id
+    return x
+  })
+}
+// getAll leads for metrics calculator
+export const getAllLeads = async (orgId) => {
+  const itemsQuery = query(
+    collection(db, `${orgId}_leads`)
+  )
+  const citySnapshot = await getDocs(itemsQuery)
+  // await citySnapshot.docs.map((doc) => doc.data())
+  console.log('my Array data is delayer 1', citySnapshot)
+  return citySnapshot.docs.map((doc) => {
     const x = doc.data()
     x.id = doc.id
     return x
@@ -1628,10 +1644,10 @@ export const getLeadsByPhoneNo = async (orgId, data) => {
   const citySnapshot = await getDocs(itemsQuery)
   // await citySnapshot.docs.map((doc) => doc.data())
   console.log('my Array data is delayer 1', citySnapshot)
-  await citySnapshot.docs.map((doc) => {
+  citySnapshot.docs.map((doc) => {
     console.log('value is', doc.id, doc.data())
   })
-  return await citySnapshot.docs.map((doc) => {
+  return citySnapshot.docs.map((doc) => {
     const x = doc.data()
     x.id = doc.id
     return x
@@ -1979,14 +1995,14 @@ export const getProjById1 = async (orgId, uid) => {
   const citySnapshot = await getDocs(itemsQuery)
   // await citySnapshot.docs.map((doc) => doc.data())
   console.log('my Array data is delayer 1', citySnapshot)
-  return await citySnapshot.docs.map((doc) => doc.data())
+  return citySnapshot.docs.map((doc) => doc.data())
 }
 export const getLedsData1 = async (orgId) => {
   try {
     const citiesCol = collection(db, `${orgId}_leads`)
     const citySnapshot = await getDocs(citiesCol)
-    await citySnapshot.docs.map((doc) => doc.data())
-    await console.log(
+    citySnapshot.docs.map((doc) => doc.data())
+    console.log(
       'inside getLeadsData1 length',
       `${orgId}leads`,
       citySnapshot.docs.map((doc) => doc.data())
@@ -2037,7 +2053,7 @@ export const getUnitsAllBlocks = (orgId, snapshot, data, error) => {
 
 export const getCustomerDocs = async (orgId, uid: string, snapshot, error) => {
   try {
-    const getAllProjectByIdQuery = await query(
+    const getAllProjectByIdQuery = query(
       collection(db, `${orgId}_leads_docs`),
       where('cUid', '==', uid)
     )
@@ -2051,7 +2067,7 @@ export const getPlanDiagramByPhase = async (orgId, data, snapshot, error) => {
   const { pId, phaseId, type } = data
   console.log('plandiagram data is', data)
   try {
-    const getAllProjectByIdQuery = await query(
+    const getAllProjectByIdQuery = query(
       collection(db, `${orgId}_project_docs`),
       where('pId', '==', pId),
       // where('phaseId', '==', phaseId),
@@ -2098,12 +2114,12 @@ export const checkIfLeadAlreadyExists = async (cName, matchVal, projectId) => {
   // db.collection('')
 
   console.log('matchVal', matchVal)
-  const q = await query(collection(db, cName), where('Mobile', '==', matchVal), where('ProjectId', '==', projectId))
+  const q = query(collection(db, cName), where('Mobile', '==', matchVal), where('ProjectId', '==', projectId))
   const parentDocs = []
   const cpDocs = []
 
   const querySnapshot = await getDocs(q)
-  await console.log('foundLength @@', querySnapshot.docs.length)
+  console.log('foundLength @@', querySnapshot.docs.length)
   // return await querySnapshot.docs.length
 
   querySnapshot.forEach((doc) => {
@@ -2114,7 +2130,7 @@ export const checkIfLeadAlreadyExists = async (cName, matchVal, projectId) => {
     parentDocs.push(x)
   })
 
-  const q1 = await query(
+  const q1 = query(
     collection(db, `${cName}_cp`),
     where('Mobile', '==', matchVal)
   )
@@ -2140,7 +2156,7 @@ export const checkIfMasterAlreadyExists = async (cName, matchVal, title) => {
   // db.collection(`${orgId}_leads`).doc().set(data)
   // db.collection('')
   console.log('matchVal', matchVal)
-  const q = await query(
+  const q = query(
     collection(db, cName),
     where('title', '==', title),
     where('value', '==', matchVal)
@@ -2149,7 +2165,7 @@ export const checkIfMasterAlreadyExists = async (cName, matchVal, title) => {
   const cpDocs = []
 
   const querySnapshot = await getDocs(q)
-  await console.log('foundLength @@', querySnapshot.docs.length)
+  console.log('foundLength @@', querySnapshot.docs.length)
   // return await querySnapshot.docs.length
 
   querySnapshot.forEach((doc) => {
@@ -2160,12 +2176,12 @@ export const checkIfMasterAlreadyExists = async (cName, matchVal, title) => {
   return parentDocs
 }
 export const checkIfCampaignAlreadyExists = async (orgId, unitId) => {
-  const q = await query(
+  const q = query(
     collection(db, `${orgId}_campaigns`),
     where('campaignTitle', '==', unitId)
   )
   const querySnapshot = await getDocs(q)
-  await console.log('foundLength @@', querySnapshot.docs.length)
+  console.log('foundLength @@', querySnapshot.docs.length)
   const parentDocs = []
   querySnapshot.forEach((doc) => {
     console.log('dc', doc.id, ' => ', doc.data())
@@ -2184,7 +2200,7 @@ export const checkIfUnitAlreadyExists = async (
   // db.collection(`${orgId}_leads').doc().set(data)
   // db.collection('')
   console.log('inoinel', pId, phaseId || 1, blockId || 1, unitId)
-  const q = await query(
+  const q = query(
     collection(db, cName),
     where('unit_no', '==', unitId),
     // where('phaseId', '==', phaseId || 1),
@@ -2193,7 +2209,7 @@ export const checkIfUnitAlreadyExists = async (
   )
 
   const querySnapshot = await getDocs(q)
-  await console.log('foundLength @@', unitId, pId, querySnapshot.docs.length)
+  console.log('foundLength @@', unitId, pId, querySnapshot.docs.length)
   // return await querySnapshot.docs.length
   const parentDocs = []
   querySnapshot.forEach((doc) => {
@@ -2215,10 +2231,10 @@ export const checkIfUserAlreadyExists = async (cName, matchVal) => {
   // db.collection(`${orgId}_leads`).doc().set(data)
   // db.collection('')
   console.log('matchVal', matchVal)
-  const q = await query(collection(db, cName), where('email', '==', matchVal))
+  const q = query(collection(db, cName), where('email', '==', matchVal))
 
   const querySnapshot = await getDocs(q)
-  await console.log('foundLength @@', querySnapshot.docs.length)
+  console.log('foundLength @@', querySnapshot.docs.length)
   // return await querySnapshot.docs.length
   const parentDocs = []
   querySnapshot.forEach((doc) => {
@@ -2236,7 +2252,7 @@ export const checkIfUserAlreadyExists = async (cName, matchVal) => {
 }
 export const getLeadsDataLake = async (orgId, snapshot, error, data) => {
   const { dateRange } = data
-  const getAllProjectsQuery = await query(
+  const getAllProjectsQuery = query(
     collection(db, `${orgId}_leads_lake`),
     where('cT', '>=', dateRange)
   )
@@ -2253,7 +2269,7 @@ export const getAllRoleAccess = async (orgId) => {
   //   await setDoc(ref, updated, { merge: true })
   // })
   const records = []
-  const getAllRolesQueryById = await query(
+  const getAllRolesQueryById = query(
     collection(db, `${orgId}_roles_access`)
   )
   const querySnapshot = await getDocs(getAllRolesQueryById)
@@ -2264,7 +2280,7 @@ export const getAllRoleAccess = async (orgId) => {
 }
 
 export const getSelectedRoleAccess = async (orgId, role) => {
-  const getRolesQueryById = await query(
+  const getRolesQueryById = query(
     collection(db, `${orgId}_roles_access`),
     where('role', '==', role)
   )
@@ -2281,7 +2297,7 @@ export const getMyProjects = async (orgId, data, snapshot, error) => {
   console.log('org is ', orgId)
   const { projAccessA } = data
   console.log('what is this', projAccessA)
-  const getAllProjectsQuery = await query(
+  const getAllProjectsQuery = query(
     collection(db, `${orgId}_projects`),
     // where('uid', 'in', projAccessA),
     orderBy('created', 'desc')
@@ -2290,7 +2306,7 @@ export const getMyProjects = async (orgId, data, snapshot, error) => {
 }
 export const getAllProjects = async (orgId, snapshot, error) => {
   console.log('org is ', orgId)
-  const getAllProjectsQuery = await query(
+  const getAllProjectsQuery = query(
     collection(db, `${orgId}_projects`),
     orderBy('created', 'desc')
   )
@@ -2299,7 +2315,7 @@ export const getAllProjects = async (orgId, snapshot, error) => {
 }
 export const getAllCampaigns = async (orgId, snapshot, error) => {
   console.log('org is ', orgId)
-  const getAllProjectsQuery = await query(
+  const getAllProjectsQuery = query(
     collection(db, `${orgId}_campaigns`),
     orderBy('start_date', 'desc')
   )
@@ -2307,14 +2323,14 @@ export const getAllCampaigns = async (orgId, snapshot, error) => {
 }
 export const getSalesReportsData = async (orgId, snapshot, error) => {
   console.log('org is ', orgId)
-  const getAllProjectsQuery = await query(
+  const getAllProjectsQuery = query(
     collection(db, `${orgId}_sales_reports`)
   )
   return onSnapshot(getAllProjectsQuery, snapshot, error)
 }
 export const getAllSources = async (orgId, snapshot, error) => {
   console.log('org is ', orgId)
-  const getAllProjectsQuery = await query(
+  const getAllProjectsQuery = query(
     collection(db, `${orgId}_LeadSources`),
     orderBy('label')
   )
@@ -2324,7 +2340,7 @@ export const getAllSources = async (orgId, snapshot, error) => {
 
 export const getProjectByUid = async (orgId, uid: string, snapshot, error) => {
   try {
-    const getAllProjectByIdQuery = await query(
+    const getAllProjectByIdQuery = query(
       collection(db, `${orgId}_projects`),
       where('uid', '==', uid)
     )
@@ -2341,7 +2357,7 @@ export const getPhasesByProject = async (
   error
 ) => {
   console.log('project details are', uid)
-  const getAllPhasesQuery = await query(
+  const getAllPhasesQuery = query(
     collection(db, `${orgId}_phases`),
     where('projectId', '==', uid)
   )
@@ -2355,7 +2371,7 @@ export const getBlocksByPhase = async (
   error
 ) => {
   try {
-    const getAllPhasesQuery = await query(
+    const getAllPhasesQuery = query(
       collection(db, `${orgId}_blocks`),
       where('projectId', '==', projectId)
       // where('phaseId', '==', phaseId),
@@ -2374,7 +2390,7 @@ export const getPaymentSchedule = async (
   snapshot,
   error
 ) => {
-  const getAllPaymentSchedule = await query(
+  const getAllPaymentSchedule = query(
     collection(db, 'paymentSchedule'),
     where('projectId', '==', projectId),
     where('phaseId', '==', phaseId),
@@ -2557,7 +2573,7 @@ export const getAdditionalCharges = async (
   snapshot,
   error
 ) => {
-  const getAllAdditionalCharges = await query(
+  const getAllAdditionalCharges = query(
     collection(db, 'additionalCharges'),
     where('projectId', '==', projectId),
     where('phaseId', '==', phaseId),
@@ -2586,7 +2602,7 @@ export const createUser = async (data: any) => {
 }
 export const deleteLeadSupabase = async (payload) => {
   const { data, error } = await supabase.from('maahomes_leads').delete()
-  await console.log('error as ', error)
+  console.log('error as ', error)
 }
 export const addLeadSupabase = async (payload) => {
   // const { data, error } = await supabase
@@ -2674,8 +2690,8 @@ export const addTaskBusiness = async (orgId, dta, user) => {
   x.map(async (userId) => {
     // get phone no's
     const additionalUserInfo = await getUser(userId)
-    await console.log('task details are', dta, additionalUserInfo)
-    await sendWhatAppTextSms1(
+    console.log('task details are', dta, additionalUserInfo)
+    sendWhatAppTextSms1(
       additionalUserInfo?.offPh,
       `New Task Added By *${user.displayName}*
       \n \n *Due Date*:${prettyDateTime(
@@ -2683,7 +2699,7 @@ export const addTaskBusiness = async (orgId, dta, user) => {
       )}  \n *Priority*:${priorities} \n *Task*: ${taskTitle}`
     )
   })
-  await console.log('data is ', data, error)
+  console.log('data is ', data, error)
 }
 
 export const addCampaign = async (orgId, data, by, msg) => {
@@ -2710,7 +2726,7 @@ export const addLead = async (orgId, data, by, msg) => {
     try {
       delete data['']
       const x = await addDoc(collection(db, `${orgId}_leads`), data)
-      await console.log('add Lead value is ', x, x.id, data)
+      console.log('add Lead value is ', x, x.id, data)
 
       const {
         intype,
@@ -2746,11 +2762,9 @@ export const addLead = async (orgId, data, by, msg) => {
         }
         if (assignedTo) {
           const { offPh, name } = assignedToObj
-          await sendWhatAppTextSms1(
+          sendWhatAppTextSms1(
             offPh,
-            `⚡ A new lead- ${Name} Assigned to you @${
-              Project || ''
-            }. 📱${Mobile}`
+            `⚡ A new lead- ${Name} Assigned to you @${Project || ''}. 📱${Mobile}`
           )
 
           // await sendWhatAppTextSms1(
@@ -2767,7 +2781,7 @@ export const addLead = async (orgId, data, by, msg) => {
           // Maa Homes`
           // )
         }
-        await console.log('what is this supbase', data3, errorx)
+        console.log('what is this supbase', data3, errorx)
         // await addLeadLog(orgId, x.id, {
         //   s: 's',
         //   type: 'status',
@@ -2804,7 +2818,7 @@ export const addLead = async (orgId, data, by, msg) => {
 // This function is used to add leads for cp
 export const addCpLead = async (orgId, data, by, msg) => {
   const x = await addDoc(collection(db, `${orgId}_leads_cp`), data)
-  await console.log('add Lead value is ', x, x.id, data)
+  console.log('add Lead value is ', x, x.id, data)
   const { intype, Name, Mobile, assignedTo, Project, assignedToObj } = data
   const { data: data3, error: errorx } = await supabase
     .from(`${orgId}_lead_logs`)
@@ -2820,12 +2834,12 @@ export const addCpLead = async (orgId, data, by, msg) => {
     ]).select()
   if (assignedTo) {
     const { offPh } = assignedToObj
-    await sendWhatAppTextSms1(
+    sendWhatAppTextSms1(
       offPh,
       `⚡ A new lead- ${Name} Assigned to you @${Project}. 📱${Mobile}`
     )
   }
-  await console.log('what is this supbase', data3, errorx)
+  console.log('what is this supbase', data3, errorx)
   // await addLeadLog(orgId, x.id, {
   //   s: 's',
   //   type: 'status',
@@ -3301,7 +3315,7 @@ export const gretProjectionSum = async (orgId, data) => {
   // db.collection('')
   const { pId, monthNo, currentYear } = data
   console.log('pushed values are', pId)
-  const q = await query(
+  const q = query(
     collection(db, `${orgId}_payment_projections`),
     where('pId', '==', pId),
     // where('pId', '==', '02dce2f6-f056-4dcb-9819-01b9710781e1'), //
@@ -3310,7 +3324,7 @@ export const gretProjectionSum = async (orgId, data) => {
   )
   const parentDocs = []
   const querySnapshot = await getDocs(q)
-  await console.log('foundLength @@', querySnapshot.docs.length)
+  console.log('foundLength @@', querySnapshot.docs.length)
   let receivable = 0
   querySnapshot.forEach((doc) => {
     const x = doc.data()
@@ -3327,7 +3341,7 @@ export const gretProjectCollectionSum = async (orgId, data) => {
   // db.collection('')
   const { pId, monthNo, currentYear } = data
   console.log('pushed values are', pId)
-  const q = await query(
+  const q = query(
     collection(db, `${orgId}_proj_M_amounts`),
     where('pId', '==', pId)
     // where('pId', '==', '02dce2f6-f056-4dcb-9819-01b9710781e1'), //
@@ -3336,7 +3350,7 @@ export const gretProjectCollectionSum = async (orgId, data) => {
   )
   const parentDocs = []
   const querySnapshot = await getDocs(q)
-  await console.log('foundLength @@', querySnapshot.docs.length)
+  console.log('foundLength @@', querySnapshot.docs.length)
   let receivable = 0
   querySnapshot.forEach((doc) => {
     const x = doc.data()
@@ -3352,20 +3366,19 @@ export const greProjectBookingsSum = async (orgId, data) => {
   // db.collection('')
   const { pId, startTime, endTime } = data
   console.log('pushed values are', pId)
-  const q = await query(
+  const q = query(
     collection(db, `${orgId}_leads`),
     where('ProjectId', '==', pId),
     where('Status', '==', 'booked'),
     // where('pId', '==', '02dce2f6-f056-4dcb-9819-01b9710781e1'), //
-
     where('stsUpT', '>=', startTime),
     where('stsUpT', '<=', endTime)
-
     // where('year', '==', currentYear)
+
   )
   const parentDocs = []
   const querySnapshot = await getDocs(q)
-  await console.log('foundLength @@', querySnapshot.docs.length)
+  console.log('foundLength @@', querySnapshot.docs.length)
   let receivable = 0
   querySnapshot.forEach((doc) => {
     const x = doc.data()
@@ -3379,7 +3392,7 @@ export const greProjectBookingsSum = async (orgId, data) => {
 export const getSourceBookingsSum = async (orgId, data) => {
   const { pId, startTime, endTime } = data
   console.log('check it ==>', pId)
-  const q = await query(
+  const q = query(
     collection(db, `${orgId}_leads`),
     where('Source', '==', pId),
     where('Status', '==', 'booked'),
@@ -3388,7 +3401,7 @@ export const getSourceBookingsSum = async (orgId, data) => {
   )
   const parentDocs = []
   const querySnapshot = await getDocs(q)
-  await console.log('foundLength @@', querySnapshot.docs.length)
+  console.log('foundLength @@', querySnapshot.docs.length)
   let receivable = 0
   querySnapshot.forEach((doc) => {
     const x = doc.data()
@@ -3402,7 +3415,7 @@ export const getSourceBookingsSum = async (orgId, data) => {
 export const getEmpBookingsSum = async (orgId, data) => {
   const { pId, startTime, endTime } = data
   console.log('check it ==>', pId)
-  const q = await query(
+  const q = query(
     collection(db, `${orgId}_leads`),
     where('assignedTo', '==', pId),
     where('Status', '==', 'booked'),
@@ -3411,7 +3424,7 @@ export const getEmpBookingsSum = async (orgId, data) => {
   )
   const parentDocs = []
   const querySnapshot = await getDocs(q)
-  await console.log('foundLength @@', querySnapshot.docs.length)
+  console.log('foundLength @@', querySnapshot.docs.length)
   let receivable = 0
   querySnapshot.forEach((doc) => {
     const x = doc.data()
@@ -3425,7 +3438,7 @@ export const getEmpBookingsSum = async (orgId, data) => {
 export const getAllProjectMonthlyBookingsSum = async (orgId, data) => {
   const { pId, startTime, endTime } = data
   console.log('pushed values are', pId)
-  const q = await query(
+  const q = query(
     collection(db, `${orgId}_leads`),
 
     where('Status', '==', 'booked'),
@@ -3435,7 +3448,7 @@ export const getAllProjectMonthlyBookingsSum = async (orgId, data) => {
   )
   const parentDocs = []
   const querySnapshot = await getDocs(q)
-  await console.log('foundLength ==<  @@', querySnapshot.docs.length)
+  console.log('foundLength ==<  @@', querySnapshot.docs.length)
   let receivable = 0
   querySnapshot.forEach((doc) => {
     const x = doc.data()
@@ -3556,7 +3569,7 @@ export const cancelUnitDbFun = async (orgId, unitData, by,closeFun, enqueueSnack
 export const streamBookedLeads = async (orgId, data, snapshot, error) => {
   const { pId, startTime, endTime } = data
   console.log('pushed values are', pId)
-  const q = await query(
+  const q = query(
     collection(db, `${orgId}_leads`),
     where('ProjectId', '==', pId),
     where('Status', '==', 'booked'),
@@ -3570,7 +3583,7 @@ export const streamBookedLeads = async (orgId, data, snapshot, error) => {
 export const streamSourceBookedLeads = async (orgId, data, snapshot, error) => {
   const { pId, startTime, endTime } = data
   console.log('pushed values are', pId, data)
-  const q = await query(
+  const q = query(
     collection(db, `${orgId}_leads`),
     where('Source', 'in', pId),
     where('Status', '==', 'booked'),
@@ -3585,7 +3598,7 @@ export const streamSourceBookedLeads = async (orgId, data, snapshot, error) => {
 export const streamEmpBookedLeads = async (orgId, data, snapshot, error) => {
   const { pId, startTime, endTime } = data
   console.log('pushed values are', pId, data)
-  const q = await query(
+  const q = query(
     collection(db, `${orgId}_leads`),
     where('assignedTo', '==', pId),
     where('Status', '==', 'booked'),
@@ -3600,7 +3613,7 @@ export const streamEmpBookedLeads = async (orgId, data, snapshot, error) => {
 export const sourceBookedLeads = async (orgId, data, snapshot, error) => {
   const { pId, SourceA, startTime, endTime } = data
   console.log('pushed values are', data)
-  const q = await query(
+  const q = query(
     collection(db, `${orgId}_leads`),
     where('Source', '==', SourceA),
     // where('Status', '==', 'booked'),
@@ -3615,7 +3628,7 @@ export const sourceBookedLeads = async (orgId, data, snapshot, error) => {
 export const getEmpCompletedTasks = async (orgId, data) => {
   const { pId, startTime, endTime } = data
   console.log('check it ==>', pId)
-  const q = await query(
+  const q = query(
     collection(db, `${orgId}_leads`),
     where('assignedTo', '==', pId),
     where('Status', '==', 'booked'),
@@ -3624,7 +3637,7 @@ export const getEmpCompletedTasks = async (orgId, data) => {
   )
   const parentDocs = []
   const querySnapshot = await getDocs(q)
-  await console.log('foundLength @@', querySnapshot.docs.length)
+  console.log('foundLength @@', querySnapshot.docs.length)
   let receivable = 0
   querySnapshot.forEach((doc) => {
     const x = doc.data()
@@ -3638,7 +3651,7 @@ export const getEmpCompletedTasks = async (orgId, data) => {
 export const getEmpCollectionsSum = async (orgId, data) => {
   const { pId, monthNo, currentYear } = data
   console.log('pushed values are', pId)
-  const q = await query(
+  const q = query(
     collection(db, `${orgId}_emp_collections`),
     where('uId', '==', pId),
 
@@ -3647,7 +3660,7 @@ export const getEmpCollectionsSum = async (orgId, data) => {
   )
   const parentDocs = []
   const querySnapshot = await getDocs(q)
-  await console.log('foundLength @@', querySnapshot.docs.length)
+  console.log('foundLength @@', querySnapshot.docs.length)
   let receivable = 0
   querySnapshot.forEach((doc) => {
     const x = doc.data()
@@ -3730,7 +3743,7 @@ export const addUnit = async (orgId, data, by, msg) => {
   return
 
   const x = await addDoc(collection(db, `${orgId}_units`), data)
-  await console.log('x value is', x, x.id)
+  console.log('x value is', x, x.id)
   // await addLeadLog(x.id, {
   //   s: 's',
   //   type: 'status',
@@ -4654,7 +4667,7 @@ export const updateUserRole = async (
     perPh: perPh || '',
     userStatus: userStatus,
   })
-  return await addUserLog(orgId, {
+  return addUserLog(orgId, {
     s: 's',
     type: 'updateRole',
     subtype: 'updateRole',
@@ -4667,7 +4680,7 @@ export const updateUserAvatar = async (orgId, uid, email, avatarUrl, by) => {
   await updateDoc(doc(db, 'users', uid), {
     avatarUrl: avatarUrl,
   })
-  return await addUserLog(orgId, {
+  return addUserLog(orgId, {
     s: 's',
     type: 'updateAvatar',
     subtype: 'updateAvatar',
@@ -4704,7 +4717,7 @@ export const updateUserAccessProject = async (
     enqueueSnackbar(`Access Provided to ${email}`, {
       variant: 'success',
     })
-    return await addUserLog(orgId, {
+    return addUserLog(orgId, {
       s: 's',
       type: 'updateRole',
       subtype: 'updateRole',
@@ -4736,7 +4749,7 @@ updateAccessRoles = async (
     await updateDoc(doc(db, `${orgId}_roles_access`, role.uid), {
       access: accessRoles,
     })
-    await addUserLog(orgId, {
+    addUserLog(orgId, {
       s: 's',
       type: 'updateRoleAccess',
       subtype: 'updateAccessForPages',
@@ -5304,7 +5317,7 @@ export const updateLeadAssigTo = async (
     }
   }
 
-  await sendWhatAppTextSms1(
+  sendWhatAppTextSms1(
     offPh,
     `⚡ A new lead- ${Name} Assigned to you. 📱${Mobile}`
   )
@@ -5426,15 +5439,15 @@ try {
     // }
     // addCustomer(orgId, customerD, by, enqueueSnackbar, ()=>({}))
 
-    await console.log('customer data is ', data, error, customerInfo, {
-      Name: customerInfo?.customerDetailsObj?.customerName1,
-      // id: leadDocId,
-      my_assets: [unitId],
-      T: Timestamp.now().toMillis(),
-      Luid: leadDocId,
-      added_by: by,
-      projects: [projectId],
-    })
+    console.log('customer data is ', data, error, customerInfo, {
+    Name: customerInfo?.customerDetailsObj?.customerName1,
+    // id: leadDocId,
+    my_assets: [unitId],
+    T: Timestamp.now().toMillis(),
+    Luid: leadDocId,
+    added_by: by,
+    projects: [projectId],
+  })
     return data
   } catch (error) {
 
@@ -5861,7 +5874,7 @@ export const addAccountslogS = async (
         },
       ]).select()
 
-    await console.log('data is ', data, error)
+    console.log('data is ', data, error)
     enqueueSnackbar(`Captured Payment`, {
       variant: 'success',
     })
@@ -6081,6 +6094,78 @@ export const updateUnitStatusDates = async (
       variant: 'error',
     })
   }
+  return
+}
+export const updateLeadTrendsOnLeadArrival = async (
+  orgId,
+  docId_d,
+  payload,
+) => {
+  let obj = {
+    new: increment(1),
+    [payload['Status']?.trim() || 'unKnown']: increment(1),
+    ...docId_d
+  };
+
+  console.log('Lead trend  updation failed', docId_d, payload)
+  try {
+    await updateDoc(doc(db, `${orgId}_leadTrends`, docId_d?.id), obj)
+
+  } catch (error) {
+    console.log('Lead trend updation failed', error, {
+      obj
+    })
+    await setDoc(doc(db, `${orgId}_leadTrends`, docId_d?.id), obj)
+  }
+
+  return
+}
+export const updateLeadTrendsOnLeadArrival_Projects = async (
+  orgId,
+  docId_d,
+  payload,
+) => {
+  let obj = {
+    new: increment(1),
+    [payload['Status']?.trim() || 'unKnown']: increment(1),
+    ...docId_d
+  };
+
+  console.log('Lead trend  updation failed', docId_d, payload)
+  try {
+    await updateDoc(doc(db, `${orgId}_leadTrends`, docId_d?.id), obj)
+
+  } catch (error) {
+    console.log('Lead trend updation failed', error, {
+      obj
+    })
+    await setDoc(doc(db, `${orgId}_leadTrends`, docId_d?.id), obj)
+  }
+
+  return
+}
+export const updateLeadTrendsOnLeadArrival_Emp = async (
+  orgId,
+  docId_d,
+  payload,
+) => {
+  let obj = {
+    new: increment(1),
+    [payload['Status']?.trim() || 'unKnown']: increment(1),
+    ...docId_d
+  };
+
+  console.log('Lead trend  updation failed', docId_d, payload)
+  try {
+    await updateDoc(doc(db, `${orgId}_leadTrends`, docId_d?.id), obj)
+
+  } catch (error) {
+    console.log('Lead trend updation failed', error, {
+      obj
+    })
+    await setDoc(doc(db, `${orgId}_leadTrends`, docId_d?.id), obj)
+  }
+
   return
 }
 export const updateProjectionsAgreegationsOnBooking = async (
@@ -8096,7 +8181,7 @@ export const upSertMortgageUnit = async (orgId, unitUid, data, by) => {
 export const deleteUser = async (orgId, uid, by, email, myRole) => {
   console.log('delte user is ', uid)
   await deleteDoc(doc(db, 'users', uid))
-  return await addUserLog(orgId, {
+  return addUserLog(orgId, {
     s: 's',
     type: 'deleteRole',
     subtype: 'deleteRole',
@@ -8113,7 +8198,7 @@ export const deleteProject = async (
 ) => {
   await deleteDoc(doc(db, `${orgId}_projects`, uid))
   const { projectName } = Project
-  await addProjectLog(orgId, {
+  addProjectLog(orgId, {
     pId: uid,
     s: 's',
     type: 'deleteProject',
@@ -8350,6 +8435,25 @@ export const steamLeadsVsSources = async (orgId, snapshot, data, error) => {
   // return onSnapshot(itemsQuery, snapshot, error)
 }
 
+export const getLeadTrends = async (orgId, data) => {
+  const { cutoffDate, uid, isCp } = data
+
+  const itemsQuery = query(
+    collection(db, `${orgId}_leadTrends`),
+    where('Y', '==', 2025),
+    where('cat', '==', 'day_month'),
+    // orderBy('T')
+  )
+  const citySnapshot = await getDocs(itemsQuery)
+  // await citySnapshot.docs.map((doc) => doc.data())
+  console.log('my Array data is delayer 1', citySnapshot)
+  return citySnapshot.docs.map((doc) => {
+    let x = doc.data()
+    x.date = `${x.Y}-${x.month}-${x.value}`
+    return x
+
+  }).sort((a, b) => new Date(a.date) - new Date(b.date))
+}
 // unit Brokerage details
 
 // add brokerage details
