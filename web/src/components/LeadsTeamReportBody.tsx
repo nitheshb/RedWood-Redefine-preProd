@@ -55,13 +55,13 @@ import ReportSideWindow from './SiderForm/ReportSideView'
 import SiderForm from './SiderForm/SiderForm'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 import Chatbot from './comps/aichat/Chatbot'
-<<<<<<< HEAD
+
 import { increment } from 'src/context/db'
 import { daysInWeek } from 'date-fns/esm'
 
-=======
+
 import CallActivityGraphs from './A_SalesModule/Reports/callActivity/CallAcitivtyGraphs'
->>>>>>> Develop
+
 
 const valueFeedData = [
   { k: 'Total', v: 300, pic: '' },

@@ -2127,7 +2127,6 @@ export const checkIfLeadAlreadyExists = async (cName, matchVal, projectId) => {
   console.log('matchVal', matchVal)
   const q = await query(collection(db, cName), where('Mobile', '==', matchVal))
   // const q = await query(collection(db, cName), where('Mobile', '==', matchVal), where('ProjectId', '==', projectId))
-  const q = query(collection(db, cName), where('Mobile', '==', matchVal), where('ProjectId', '==', projectId))
   const parentDocs = []
   const cpDocs = []
 
