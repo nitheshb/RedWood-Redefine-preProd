@@ -1046,11 +1046,11 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                 { label: 'Booking Performance', value: 'booking_perf' },
                 { label: 'Call Activity', value: 'call_activity' },
 
-                { label: 'Home', value: 'sale_report_home' },
-                { label: 'Marketing', value: 'marketing_Dashboard' },
+                // { label: 'Home', value: 'sale_report_home' },
+                // { label: 'Marketing', value: 'marketing_Dashboard' },
 
-                { label: 'Top Bar', value: 'bar_tasks' },
-                { label: 'Profile', value: 'profile_tasks' },
+                // { label: 'Top Bar', value: 'bar_tasks' },
+                // { label: 'Profile', value: 'profile_tasks' },
               ].map((data, i) => (
                 <button
                   key={i}
