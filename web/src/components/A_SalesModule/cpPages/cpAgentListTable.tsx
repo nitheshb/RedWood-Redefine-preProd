@@ -93,7 +93,7 @@ useEffect(() => {
                                     <th
                                       key={i}
                                       scope="col"
-                                      className={`text-sm font-medium text-[#000000] bg-[#E8F6FF]   px-3 py-2 ${
+                                      className={`text-sm font-medium text-[#000000]          bg-[#E8F6FF]  px-3 py-2 ${
                                         // ['Project', 'Lead Name'].includes(d.label)
                                         //   ? 'text-left'
                                         //   : ''
