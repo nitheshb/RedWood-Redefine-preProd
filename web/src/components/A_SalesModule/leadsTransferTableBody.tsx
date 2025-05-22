@@ -329,7 +329,7 @@ const LeadsTransferTableBody = ({
                   <tr>
                     <th
                       scope="col"
-                      className="text-sm font-medium bg-[#FDEFE7] text-gray-900  "
+                      className="text-sm font-medium  bg-[#E8F6FF]  border-b border-[#E7E7E9] text-gray-900  "
                     >
                       <label
                         htmlFor="selectAllCheckbox"
@@ -360,7 +360,7 @@ const LeadsTransferTableBody = ({
                       <th
                         key={i}
                         scope="col"
-                        className={`text-sm font-medium text-[#000000] bg-[#FDEFE7] px-2 py-2 ${
+                        className={`text-sm font-medium text-[#000000] bg-[#E8F6FF] border-b border-[#E7E7E9] px-2 py-2 ${
                           // ['Project', 'Lead Name'].includes(d.label)
                           //   ? 'text-left'
                           //   : ''

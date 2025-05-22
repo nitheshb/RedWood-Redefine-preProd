@@ -650,19 +650,21 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                       { label: 'All Projects', value: 'allprojects' },
                       ...projectList,
                     ]}
-                    customStyles={{
+
+                             customStyles={{
                       option: (provided, state) => ({
                         ...provided,
                         backgroundColor: state.isSelected
-                          ? '#94B5ED'
+                          ? '#C8E7FF'
                           : state.isFocused
-                          ? '#FDEFE7'
+                          ? '#EEF4FE'
                           : provided.backgroundColor,
                         color: state.isSelected
-                          ? 'white'
+                          ? '#126595'
                           : state.isFocused
-                          ? '#2B2B2B'
+                          ? '#0D0A1E'
                           : provided.color,
+                          cursor: 'pointer',
                       }),
                       control: (base) => ({
                         ...base,
@@ -699,6 +701,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                         borderRadius: 8,
                       }),
                     }}
+         
                   />
                   {/*
                   <VerySlimSelectBox
@@ -731,78 +734,21 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                         { label: 'Cp Leads', value: 'cpleads' },
                         ...usersList,
                       ]}
-                      customStyles={{
-                        option: (provided, state) => ({
-                          ...provided,
-                          backgroundColor: state.isSelected
-                            ? '#94B5ED'
-                            : state.isFocused
-                            ? '#FDEFE7'
-                            : provided.backgroundColor,
-                          color: state.isSelected
-                            ? 'white'
-                            : state.isFocused
-                            ? '#2B2B2B'
-                            : provided.color,
-                        }),
-                        control: (base) => ({
-                          ...base,
-                          height: 30,
-                          minHeight: 30,
-                          padding: 0,
-                          borderRadius: 8,
-                        }),
-                        valueContainer: (base) => ({
-                          ...base,
-                          alignItems: 'initial',
-                          paddingTop: 0,
-                          marginTop: 3,
-                        }),
-                        dropdownIndicator: (base) => ({
-                          ...base,
-                          paddingTop: 5,
-                        }),
-                        indicatorSeparator: (base) => ({
-                          ...base,
-                          marginTop: 6,
-                          marginBottom: 10,
-                        }),
-                        menu: (provided) => ({
-                          ...provided,
-                          marginTop: 0,
-                          zIndex: 9999,
-                          borderRadius: 8,
-                        }),
-                        menuList: (provided, state) => ({
-                          ...provided,
-                          paddingTop: 0,
-                          paddingBottom: 0,
-                          borderRadius: 8,
-                        }),
-                      }}
-                    />
-                  )}
 
-                  <SmartCalendarSelect
-                    onChange={(value) => {
-                      console.log(value, 'Selected Date Range')
-                      setShortDateRange(value)
-                    }}
-                    label="All Dates"
-                    defaultForTeamLeads={selLeadsOf?.value === 'teamleads'}
-                    customStyles={{
+                      customStyles={{
                       option: (provided, state) => ({
                         ...provided,
                         backgroundColor: state.isSelected
-                          ? '#94B5ED'
+                          ? '#C8E7FF'
                           : state.isFocused
-                          ? '#FDEFE7'
+                          ? '#EEF4FE'
                           : provided.backgroundColor,
                         color: state.isSelected
-                          ? 'white'
+                          ? '#126595'
                           : state.isFocused
-                          ? '#2B2B2B'
+                          ? '#0D0A1E'
                           : provided.color,
+                          cursor: 'pointer',
                       }),
                       control: (base) => ({
                         ...base,
@@ -839,6 +785,70 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                         borderRadius: 8,
                       }),
                     }}
+            
+                    />
+                  )}
+
+                  <SmartCalendarSelect
+                    onChange={(value) => {
+                      console.log(value, 'Selected Date Range')
+                      setShortDateRange(value)
+                    }}
+                    label="All Dates"
+                    defaultForTeamLeads={selLeadsOf?.value === 'teamleads'}
+
+
+                                       customStyles={{
+                      option: (provided, state) => ({
+                        ...provided,
+                        backgroundColor: state.isSelected
+                          ? '#C8E7FF'
+                          : state.isFocused
+                          ? '#EEF4FE'
+                          : provided.backgroundColor,
+                        color: state.isSelected
+                          ? '#126595'
+                          : state.isFocused
+                          ? '#0D0A1E'
+                          : provided.color,
+                          cursor: 'pointer',
+                      }),
+                      control: (base) => ({
+                        ...base,
+                        height: 30,
+                        minHeight: 30,
+                        padding: 0,
+                        borderRadius: 8,
+                      }),
+                      valueContainer: (base) => ({
+                        ...base,
+                        alignItems: 'initial',
+                        paddingTop: 0,
+                        marginTop: 3,
+                      }),
+                      dropdownIndicator: (base) => ({
+                        ...base,
+                        paddingTop: 5,
+                      }),
+                      indicatorSeparator: (base) => ({
+                        ...base,
+                        marginTop: 6,
+                        marginBottom: 10,
+                      }),
+                      menu: (provided) => ({
+                        ...provided,
+                        marginTop: 0,
+                        zIndex: 9999,
+                        borderRadius: 8,
+                      }),
+                      menuList: (provided, state) => ({
+                        ...provided,
+                        paddingTop: 0,
+                        paddingBottom: 0,
+                        borderRadius: 8,
+                      }),
+                    }}
+           
                   />
 
                   <button

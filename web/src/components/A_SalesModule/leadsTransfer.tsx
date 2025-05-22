@@ -318,15 +318,16 @@ const LeadsTransferHome = ({ project }) => {
                             option: (provided, state) => ({
                               ...provided,
                               backgroundColor: state.isSelected
-                                ? '#94B5ED'
+                                ? '#C8E7FF'
                                 : state.isFocused
-                                ? '#FDEFE7'
+                                ? '#EEF4FE'
                                 : provided.backgroundColor,
                               color: state.isSelected
-                                ? 'white'
+                                ? '#126595'
                                 : state.isFocused
-                                ? '#2B2B2B'
+                                ? '#0D0A1E'
                                 : provided.color,
+                                cursor: 'pointer',
                             }),
                             control: (base) => ({
                               ...base,
@@ -384,15 +385,16 @@ const LeadsTransferHome = ({ project }) => {
                             option: (provided, state) => ({
                               ...provided,
                               backgroundColor: state.isSelected
-                                ? '#94B5ED'
+                                ? '#C8E7FF'
                                 : state.isFocused
-                                ? '#FDEFE7'
+                                ? '#EEF4FE'
                                 : provided.backgroundColor,
                               color: state.isSelected
-                                ? 'white'
+                                ? '#126595'
                                 : state.isFocused
-                                ? '#2B2B2B'
+                                ? '#0D0A1E'
                                 : provided.color,
+                                 cursor: 'pointer',
                             }),
                             control: (base) => ({
                               ...base,

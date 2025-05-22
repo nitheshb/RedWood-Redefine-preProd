@@ -40,6 +40,7 @@ export const CustomSelect = ({
   onChange,
   options,
   setAddNewBankStuff,
+  customStyles,
   value,
   name,
   label,
