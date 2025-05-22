@@ -468,7 +468,7 @@ export default function SiteVisitRegisterForm() {
                       type="text"
                       id="firstName"
                       name="firstName"
-                      className="w-full px-2 py-1.5 mt-5 border border-gray-300 rounded-md text-sm"
+                      className="w-full px-2 py-1.5 mt-6 border border-gray-300 rounded-md text-sm"
                     />
                     <ErrorMessage name="firstName" component="div" className="text-red-500 text-xs mt-1" />
                   </div>
