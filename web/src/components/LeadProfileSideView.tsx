@@ -5352,7 +5352,7 @@ export default function LeadProfileSideView({
         setOpen={setisImportLeadsOpen}
         title={'Edit Lead'}
         leadDetailsObj={leadDetailsObj}
-        widthClass="     max-w-4xl"
+        widthClass="max-w-4xl  "
       />
     </>
   )
