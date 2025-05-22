@@ -93,7 +93,7 @@ useEffect(() => {
                                     <th
                                       key={i}
                                       scope="col"
-                                      className={`text-sm font-medium text-[#000000]          bg-[#E8F6FF]  px-3 py-2 ${
+                                      className={`text-sm font-medium text-[#000000]    bg-[#E8F6FF]   px-3 py-2 ${
                                         // ['Project', 'Lead Name'].includes(d.label)
                                         //   ? 'text-left'
                                         //   : ''
@@ -117,16 +117,16 @@ useEffect(() => {
 
                                     >
 
-                                      <td className="text-sm text-gray-900 text-left font-medium px-6 py-2 whitespace-nowrap ">
+                                      <td className="text-sm text-gray-900  text-left font-medium  px-6   py-2 whitespace-nowrap ">
                                         {i + 1}
                                       </td>
-                                      <td className="text-sm text-gray-900 text-left font-medium px-2  py-2 whitespace-nowrap ">
+                                      <td className="text-sm text-gray-900  text-left font-medium  px-2  py-2 whitespace-nowrap ">
                                         {data?.name}
                                       </td>
-                                      <td className="text-sm text-gray-900 text-left px-2 py-2 whitespace-nowrap">
+                                      <td className="text-sm text-gray-900  text-left  px-2 py-2 whitespace-nowrap">
                                         {data?.offPh}
                                       </td>
-                                      <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
+                                      <td className="text-sm text-gray-900   px-6 py-2 whitespace-nowrap">
                                         {data?.perPh}
                                       </td>
 
@@ -134,7 +134,7 @@ useEffect(() => {
                                         {data?.email}
                                       </td>
 
-                                      <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
+                                      <td className="text-sm text-gray-900   px-6 py-2 whitespace-nowrap">
                                         {data?.userStatus}
                                       </td>
                                       <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
