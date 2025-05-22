@@ -124,7 +124,7 @@ const SiderForm = ({
               <div
                 className={`relative w-screen ${
                   title === 'Add Lead' || title === 'upload_legal_docs'
-                    ? 'max-w-2xl'
+                    ? 'max-w-4xl'
                     : widthClass
                 }
                  ${unitsViewMode ? 'max-w-7xl' : widthClass}`}
