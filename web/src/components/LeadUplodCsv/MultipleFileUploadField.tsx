@@ -1583,13 +1583,13 @@ export function MultipleFileUploadField({
                     dRow['Mobile']
                   )
                   dRow['mode'] = await makeMode(foundLength)
-                  dRow['invalidReason'] = dRow['mode']=='invalid' && 'Duplicate lead exits'
+                  dRow['invalidReason'] =  dRow['mode']=='invalid' && 'Duplicate lead exits'
                   if (dRow['mode'] === 'valid' && dRow['Lead Owner Email ID'] != '') {
                     console.log('sales team is', salesTeamList)
                     // check & get employee details and push it to dRow
                     // project Id
                     const MatchedValA = await salesTeamList.filter((data) => {
-                      return data.email?.toLowercase() === dRow['Lead Owner Email ID']?.toLowerCase()
+                      return data?.email?.toLowerCase() === dRow['Lead Owner Email ID']?.toLowerCase()
                     })
                     console.log('found row is MatchedValA', MatchedValA.length, MatchedValA,dRow['EmpId'])
                     if (MatchedValA.length >0) {
@@ -1631,7 +1631,7 @@ export function MultipleFileUploadField({
 
     } catch (error) {
       dRow['invalidReason'] = 'Error'
-      console.log('error is ', error)
+      console.log('error is ===>', error)
       dRow['mode'] = 'invalid'
       return dRow
     }
