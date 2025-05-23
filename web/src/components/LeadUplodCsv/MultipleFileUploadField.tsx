@@ -1506,12 +1506,12 @@ export function MultipleFileUploadField({
                     normalizedRow['Mobile']
                   )
                   normalizedRow['mode'] = await makeMode(foundLength)
-                  if (normalizedRow['mode'] === 'valid' && normalizedRow['EmpId'] != '') {
+                  if (normalizedRow['mode'] === 'valid' && normalizedRow['Lead Owner Email ID'] != '') {
                     console.log('found row is 1', normalizedRow)
                     // check & get employee details and push it to dRow
                     // project Id
                     const MatchedValA = await salesTeamList.filter((data) => {
-                      return data.empId == normalizedRow['EmpId']
+                      return data.emailId == normalizedRow['Lead Owner Email ID']
                     })
                     console.log('found row is MatchedValA', MatchedValA.length, MatchedValA,normalizedRow['EmpId'])
                     if (MatchedValA.length >0) {

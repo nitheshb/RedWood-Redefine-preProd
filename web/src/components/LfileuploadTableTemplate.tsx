@@ -2758,8 +2758,6 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toFixed(2),
         },
 
-
-
         {
           id: 'LeadsId',
           label: 'Leads Id',
