@@ -1544,6 +1544,7 @@ export function MultipleFileUploadField({
 
           dRow['Source'] = dRow['Source']?.toLowerCase() || ''
           dRow['CT'] = Timestamp.now().toMillis()
+          dRow['Remarks'] = dRow['Last Note'] || ''
           console.log('found row is 3', dRow, projectList)
           if(dRow['Project'] != '' || ![
             'new',
