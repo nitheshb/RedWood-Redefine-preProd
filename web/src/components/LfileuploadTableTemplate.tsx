@@ -1407,12 +1407,17 @@ const EnhancedTableToolbar = (props) => {
           <span className="ml-3">Showing {rowsAfterSearchKey.length}</span>
 
           <span></span>
+          {sourceTab === 'validR' && !unitUploadMessage && (
+            <span className="ml-3">
+              Uploaded {uploadedUnitsCount} of {rows.length}
+            </span>
+          )}
           <span className="ml-3">{unitUploadMessage}</span>
            <Tooltip title={`Download ${rowsAfterSearchKey?.length} Row`}>
                       <CSVDownloader
                         className="mr-6 h-[20px] bg-[#FDEFE7] w-[20px]"
                         downloadRows={rowsAfterSearchKey}
-                        sourceTab={'selStatus'}
+                        sourceTab={selStatus}
                         style={{ height: '20px', width: '20px' }}
                       />
                     </Tooltip>
