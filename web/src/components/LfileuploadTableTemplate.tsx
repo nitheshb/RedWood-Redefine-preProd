@@ -40,6 +40,7 @@ import {
 import { useAuth } from 'src/context/firebase-auth-context'
 import { prettyDate } from 'src/util/dateConverter'
 import { CalculateComponentTotal } from 'src/util/unitCostSheetCalculator'
+import CSVDownloader from 'src/util/csvDownload'
 
 // function createData(
 //   Date,
@@ -1407,6 +1408,14 @@ const EnhancedTableToolbar = (props) => {
 
           <span></span>
           <span className="ml-3">{unitUploadMessage}</span>
+           <Tooltip title={`Download ${rowsAfterSearchKey?.length} Row`}>
+                      <CSVDownloader
+                        className="mr-6 h-[20px] bg-[#FDEFE7] w-[20px]"
+                        downloadRows={rowsAfterSearchKey}
+                        sourceTab={'selStatus'}
+                        style={{ height: '20px', width: '20px' }}
+                      />
+                    </Tooltip>
         </Typography>
       )}
 
