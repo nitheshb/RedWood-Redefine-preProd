@@ -1515,6 +1515,7 @@ export function MultipleFileUploadField({
               console.log('found row is ',i+1, dRow, dRow['Date'] != '' && dRow['Date'] != undefined)
               try {
 
+          let cleanRow ={}
 
         if(dRow['Date'] != '' && dRow['Date'] != undefined){
           // get the project Id, if projectId does not exist then push it to invalid record
@@ -1527,7 +1528,6 @@ export function MultipleFileUploadField({
           const date = new Date(formatted); // Convert formatted string back to Date
           const milliseconds = date.getTime() + 21600000;
           dRow['Date'] = milliseconds;
-
           //  adding 21600000 ms == 6hrs to match local time with utc + 6hrs
 
           // dRow['Date'] = prettyDate(milliseconds).toLocaleString()
