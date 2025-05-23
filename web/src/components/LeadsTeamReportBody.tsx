@@ -11,6 +11,7 @@ import { startOfWeek, startOfDay, startOfMonth, subMonths } from 'date-fns'
 import { sourceListItems } from 'src/constants/projects'
 import {
   addAgreegatedSalesValues,
+  copyCollection,
   getAllLeads,
   getAllProjects,
   getEmployeesListDept,
@@ -125,6 +126,10 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
   const [empPerDayTasksCountsA, setEmpPerDayTasksCountsA] = useState([])
   const [leadsProcessed, setLeadsProcessed] = useState(0)
   const [totaLeadsProcessed, setTotalLeadsProcessed] = useState(0)
+
+  const [status, setStatus] = useState('')
+  const [result, setResult] = useState(null)
+
 
   const [sourceListTuned, setSourceListTuned] = useState([])
   const [selCat, setSelCat] = useState('lead_perf')
@@ -409,6 +414,19 @@ for (const data of allLeadsA) {
       console.log('payload is', payload, data)
       addAgreegatedSalesValues(orgId, data?.uid, payload)
     })
+  }
+
+  const handleCopy = async () => {
+    setStatus('Copying...')
+    try {
+      const { total, copied } = await copyCollection('maahomes_leads', 'maahomes_leads_old')
+      setResult({ total, copied })
+      console.log('copied result is', total, copied)
+      setStatus('Done!')
+    } catch (err) {
+      setStatus('Failed to copy')
+      console.error(err)
+    }
   }
   const updateAgreegatedValues = async (projectFilList) => {
     projectFilList.map((data) => {
@@ -1163,6 +1181,21 @@ for (const data of allLeadsA) {
                       >
                         Trends Maker({leadsProcessed}/{totaLeadsProcessed})
                       </div>
+                    )}
+                     {orgId == 'spark' && (
+                      <>
+                      <div
+                        className="mt-3 mr-2 cursor-pointer"
+                        onClick={() => handleCopy()}
+                      >
+                        Rename Leads Table({leadsProcessed}/{totaLeadsProcessed})
+                      </div>
+                      {status && <p className="mt-2">{status}</p>}
+      {result && (
+        <p className="mt-2 text-sm text-gray-600">
+          Copied {result.copied} out of {result.total} documents.
+        </p>)}
+                      </>
                     )}
 
                     <section className="flex mb-2 border rounded-lg">

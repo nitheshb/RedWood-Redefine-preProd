@@ -8584,3 +8584,21 @@ export const getLeadTrends = async (orgId, data) => {
 // unit Brokerage details
 
 // add brokerage details
+
+
+export async function copyCollection(oldCollectionName, newCollectionName) {
+  const oldRef = collection(db, 'maahomes_leads_old')
+  const snapshot = await getDocs(oldRef)
+  const total = snapshot.size
+  let copied = 0
+  console.log('total copied is', copied++,"/", snapshot.size)
+
+  // for (const docSnap of snapshot.docs) {
+  //   const newDocRef = doc(db, newCollectionName, docSnap.id)
+  //   await setDoc(newDocRef, docSnap.data())
+  //   console.log('total copied is', copied++,"/", snapshot.size)
+  //   copied++
+  // }
+
+  return { total, copied }
+}

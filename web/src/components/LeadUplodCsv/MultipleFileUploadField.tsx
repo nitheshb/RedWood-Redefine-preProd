@@ -1521,7 +1521,7 @@ export function MultipleFileUploadField({
           // get the project Id, if projectId does not exist then push it to invalid record
           // get the assigne Name, if assigne Name does not exist then push it to invalid record
           const input = dRow['Date']
-
+     
 
           const parsedDate = detectDateFormat(input);
           const formatted = format(parsedDate, 'dd-MMM-yyyy');
@@ -1610,7 +1610,7 @@ export function MultipleFileUploadField({
                       return dRow
                     }
                   }else{
-                    dRow['invalidReason'] = 'Invalid Sales is empty'
+                    dRow['invalidReason'] = `mode not correct or no Lead Owner Email ID  ${dRow['mode']} `
 
                   }
                   return await dRow

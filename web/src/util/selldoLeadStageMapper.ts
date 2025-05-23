@@ -35,13 +35,13 @@ console.log('normalized is ', normalized, i)
     case 'incoming':
       return 'new';
     case 'prospect':
-      return 'followup';
+      return 'prospect';
     case 'Prospect':
-        return 'followup';
+        return 'prospect';
     case 'opportunity':
-        return 'followup';
+        return 'negotiation';
     case 'Opportunity':
-          return 'followup';
+          return 'negotiation';
     case 'booked':
       return 'booked';
     case 'follow up':
@@ -53,9 +53,9 @@ console.log('normalized is ', normalized, i)
     case 'rnr':
       return 'junk'
     case 'eoifilled':
-      return 'followup';
+      return 'negotiation';
     case 'eoi filled':
-        return 'followup';
+        return 'negotiation';
 
       //     'opportunity': 'followup',
     default:
