@@ -324,7 +324,6 @@ const DialogFormBody = ({
     projectName: Yup.string()
       .max(80, 'Must be 80 characters or less')
       .required('Required'),
-
     location: Yup.string().required('Required'),
     pincode: Yup.string()
       .required('Required')
