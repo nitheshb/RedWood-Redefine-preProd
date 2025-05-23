@@ -322,7 +322,7 @@ const DialogFormBody = ({
 
   const createProjectSchema = Yup.object({
     projectName: Yup.string()
-      .max(30, 'Must be 30 characters or less')
+      .max(80, 'Must be 80 characters or less')
       .required('Required'),
 
     location: Yup.string().required('Required'),
