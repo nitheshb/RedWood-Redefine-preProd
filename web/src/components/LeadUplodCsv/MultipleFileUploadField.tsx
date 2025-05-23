@@ -1589,7 +1589,7 @@ export function MultipleFileUploadField({
                     // check & get employee details and push it to dRow
                     // project Id
                     const MatchedValA = await salesTeamList.filter((data) => {
-                      return data.email == dRow['Lead Owner Email ID']
+                      return data.email?.toLowercase() === dRow['Lead Owner Email ID']?.toLowerCase()
                     })
                     console.log('found row is MatchedValA', MatchedValA.length, MatchedValA,dRow['EmpId'])
                     if (MatchedValA.length >0) {
@@ -1610,7 +1610,7 @@ export function MultipleFileUploadField({
                     }
                   }else{
                     dRow['invalidReason'] = 'Invalid Sales is empty'
-                   
+
                   }
                   return await dRow
             }else{
