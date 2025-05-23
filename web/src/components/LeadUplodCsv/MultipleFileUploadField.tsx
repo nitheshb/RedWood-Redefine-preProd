@@ -34,10 +34,6 @@ import {
   CalculateComponentTotal,
   computePartTotal,
 } from 'src/util/unitCostSheetCalculator'
-import BulkCsvUploader from './importLeadBulk'
-import { splitPhoneNumber } from 'src/util/phoneNoSlicer'
-import { format, parse as dateParse, isValid,  } from 'date-fns'
-import { selldoLeadStageMapper } from 'src/util/selldoLeadStageMapper'
 
 let currentId = 0
 
@@ -45,66 +41,6 @@ function getNewId() {
   // we could use a fancier solution instead of a sequential ID :)
   return ++currentId
 }
-// function detectDateFormat(input) {
-//   const patterns = [
-//     { format: 'dd/MM/yyyy HH:mm:ss', regex: /^\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}:\d{2}$/ }, // 20/05/2022 00:00:00
-//     { format: 'dd/MM/yyyy H:mm:ss',  regex: /^\d{2}\/\d{2}\/\d{4} \d{1}:\d{2}:\d{2}$/ }, // 20/05/2022 0:00:00
-//     { format: 'dd/MM/yyyy HH:mm',    regex: /^\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}$/ },       // 05/07/2023 00:00
-//     { format: 'dd/MM/yyyy H:mm',     regex: /^\d{2}\/\d{2}\/\d{4} \d{1}:\d{2}$/ },
-//   ];
-
-//   for (const { format, regex } of patterns) {
-//     if (regex.test(input)) {
-//       return format;
-//     }
-//   }
-
-//   return null;
-// }
-
-const detectDateFormat = (input) => {
-  // Try several common formats
-  const formats = [
-    'dd/MM/yyyy HH:mm:ss',
-    'dd/MM/yyyy HH:mm',
-    'MM/dd/yyyy HH:mm:ss',
-    'MM/dd/yyyy HH:mm',
-    'yyyy-MM-dd HH:mm:ss',
-    'yyyy-MM-dd HH:mm',
-    'yyyy/MM/dd HH:mm:ss',
-    'yyyy/MM/dd HH:mm',
-    'dd-MM-yyyy HH:mm:ss',
-    'dd-MM-yyyy HH:mm',
-    // Add date-only formats too
-    'dd/MM/yyyy',
-    'MM/dd/yyyy',
-    'yyyy-MM-dd',
-    'yyyy/MM/dd',
-    'dd-MM-yyyy'
-  ];
-
-  // Try each format until we find one that works
-  for (const formatString of formats) {
-    try {
-      const parsedDate = dateParse(input, formatString, new Date());
-      // If the date is valid (not NaN), return it
-      if (!isNaN(parsedDate.getTime())) {
-        return parsedDate;
-      }
-    } catch (error) {
-      // Continue to next format if parsing fails
-      continue;
-    }
-  }
-
-  // If no format worked, try letting the JS Date handle it
-  const fallbackDate = new Date(input);
-  if (!isNaN(fallbackDate.getTime())) {
-    return fallbackDate;
-  }
-
-  throw new Error(`Unable to parse date: ${input}`);
-};
 
 export interface UploadableFile {
   // id was added after the video being released to fix a bug
@@ -167,6 +103,7 @@ export function MultipleFileUploadField({
   source,
 }) {
   const { user } = useAuth()
+
   const { orgId } = user
   const [_, __, helpers] = useField(name)
   const classes = useStyles()
@@ -1511,42 +1448,25 @@ export function MultipleFileUploadField({
           // set duplicate & valid records
           // check in db if record exists with matched phone Number & email
           const serialData = await Promise.all(
-            clean1.map(async (dRow, i) => {
-              console.log('found row is ',i+1, dRow, dRow['Date'] != '' && dRow['Date'] != undefined)
-              try {
+            clean1.map(async (dRow) => {
+              console.log('found row is ', dRow)
+              const normalizedRow = {}
+    Object.keys(dRow).forEach(key => {
+      const normalizedKey = key.replace(/\s+/g, '') // Remove all spaces
+      normalizedRow[normalizedKey] = dRow[key]
+    })
 
-          let cleanRow ={}
-
-        if(dRow['Date'] != '' && dRow['Date'] != undefined){
           // get the project Id, if projectId does not exist then push it to invalid record
           // get the assigne Name, if assigne Name does not exist then push it to invalid record
-          const input = dRow['Date']
-     
-
-          const parsedDate = detectDateFormat(input);
-          const formatted = format(parsedDate, 'dd-MMM-yyyy');
-          const date = new Date(formatted); // Convert formatted string back to Date
-          const milliseconds = date.getTime() + 21600000;
-          dRow['Date'] = milliseconds;
-          //  adding 21600000 ms == 6hrs to match local time with utc + 6hrs
-
+          const date = new Date(normalizedRow['Date']) // some mock date
+          const milliseconds = date.getTime() + 21600000 // adding 21600000 ms == 6hrs to match local time with utc + 6hrs
+          console.log('milliseconds is', milliseconds)
           // dRow['Date'] = prettyDate(milliseconds).toLocaleString()
-          if(dRow['Mobile']){
-          dRow['CountryCode'] =splitPhoneNumber(dRow['Mobile']).countryCode
-          dRow['Mobile'] = splitPhoneNumber(dRow['Mobile']).phoneNumber
-
-          }
-
-
-          dRow['Status'] =  selldoLeadStageMapper(dRow['Status']?.trim()?.toLowerCase(), i)?.toLowerCase() || ''
-          // dRow['Status'] = 'new'
-          dRow['check'] = dRow['Status']
-
-          dRow['Source'] = dRow['Source']?.toLowerCase() || ''
-          dRow['CT'] = Timestamp.now().toMillis()
-          dRow['Remarks'] = dRow['Last Note'] || ''
-          console.log('found row is 3', dRow, projectList)
-          if(dRow['Project'] != '' || ![
+          normalizedRow['Date'] = milliseconds
+          normalizedRow['Status'] = normalizedRow['Status']?.toLowerCase() || ''
+          normalizedRow['Source'] = normalizedRow['Source']?.toLowerCase() || ''
+          normalizedRow['CT'] = Timestamp.now().toMillis()
+          if(normalizedRow['Project'] != '' || ![
             'new',
             'followup',
             'visitfixed',
@@ -1555,87 +1475,70 @@ export function MultipleFileUploadField({
             'booked',
             'notinterested',
             'junk',
-          ].includes(dRow['Status'])){
-
-            console.log('found row is 3', dRow, projectList)
+          ].includes(normalizedRow['Status'])){
+          if (normalizedRow['Project'] != '') {
+            console.log('found row is 3', normalizedRow, projectList)
             const projectFilA = projectList.filter((data) => {
               console.log('found row is 3.1', data)
-              return data.projectName == dRow['Project']
+              return data.projectName == normalizedRow['Project']
             })
             if (projectFilA.length >= 1) {
-              console.log('found row is 4', dRow)
-              dRow['ProjectId'] = projectFilA[0]['uid']
-              if (dRow['Status'] == '' || dRow['Status'] === undefined) {
-                dRow['Status'] = 'unassigned'
+              console.log('found row is 4', normalizedRow)
+              normalizedRow['ProjectId'] = projectFilA[0]['uid']
+              if (normalizedRow['Status'] == '' || normalizedRow['Status'] === undefined) {
+                normalizedRow['Status'] = 'unassigned'
               }
                   const foundLength = await checkIfLeadAlreadyExists(
                     `${orgId}_leads`,
-                    dRow['Mobile'],
-                    dRow['ProjectId']
+                    normalizedRow['Mobile'],
+                    normalizedRow['ProjectId']
                   )
                   // modify date
 
-                  console.log('found row is 5', dRow)
+                  console.log('found row is 5', normalizedRow)
                   await console.log(
                     'foundLength is',
                     foundLength,
-                    dRow,
+                    normalizedRow,
                     foundLength,
-                    dRow['Mobile']
+                    normalizedRow['Mobile']
                   )
-                  dRow['mode'] = await makeMode(foundLength)
-                  dRow['invalidReason'] =  dRow['mode']=='invalid' && 'Duplicate lead exits'
-                  if (dRow['mode'] === 'valid' && dRow['Lead Owner Email ID'] != '') {
-                    console.log('sales team is', salesTeamList)
+                  normalizedRow['mode'] = await makeMode(foundLength)
+                  if (normalizedRow['mode'] === 'valid' && normalizedRow['EmpId'] != '') {
+                    console.log('found row is 1', normalizedRow)
                     // check & get employee details and push it to dRow
                     // project Id
                     const MatchedValA = await salesTeamList.filter((data) => {
-                      return data?.email?.toLowerCase() === dRow['Lead Owner Email ID']?.toLowerCase()
+                      return data.empId == normalizedRow['EmpId']
                     })
-                    console.log('found row is MatchedValA', MatchedValA.length, MatchedValA,dRow['EmpId'])
+                    console.log('found row is MatchedValA', MatchedValA.length, MatchedValA,normalizedRow['EmpId'])
                     if (MatchedValA.length >0) {
-                      console.log('found row is 2', dRow)
+                      console.log('found row is 2', normalizedRow)
                       const { offPh } = MatchedValA[0]
-                      dRow['assignedTo'] = MatchedValA[0]['uid']
-                      dRow['assignedToObj'] = {
+                      normalizedRow['assignedTo'] = MatchedValA[0]['uid']
+                      normalizedRow['assignedToObj'] = {
                         empId: MatchedValA[0]['empId'],
                         label: MatchedValA[0]['name'],
                         name: MatchedValA[0]['name'],
                         offPh: offPh || 0,
                       }
-                      dRow['EmpId'] = MatchedValA[0]['name']
+                      normalizedRow['EmpId'] = MatchedValA[0]['name']
                     }else{
-                      dRow['invalidReason'] = 'Invalid Sales emailId'
-                      dRow['mode'] = 'invalid'
-                      return dRow
+                      normalizedRow['mode'] = 'invalid'
+                      return normalizedRow
                     }
-                  }else{
-                    dRow['invalidReason'] = `mode not correct or no Lead Owner Email ID  ${dRow['mode']} `
-
                   }
-                  return await dRow
+                  return await normalizedRow
             }else{
-              dRow['invalidReason'] = 'Project not found'
-              dRow['mode'] = 'invalid'
-              return dRow
+              normalizedRow['mode'] = 'invalid'
+              return normalizedRow
             }
+          }
+        }
 
-        }else{
-          dRow['invalidReason'] = 'Project not found 2'
-       }
 
-      }else{
-         dRow['invalidReason'] = 'Invalid Create Date'
-        dRow['mode'] = 'invalid'
-              return dRow
-      }
 
-    } catch (error) {
-      dRow['invalidReason'] = 'Error'
-      console.log('error is ===>', error)
-      dRow['mode'] = 'invalid'
-      return dRow
-    }
+
             })
           )
 
@@ -1718,8 +1621,6 @@ export function MultipleFileUploadField({
       {files.length === 0 && (
         <div className="mx-3" {...getRootProps({ style })}>
           {title === 'Import Leads' && (
-            <>
-
             <div className="w-full flex flex-row justify-between ">
               <span></span>
               <a
@@ -1733,7 +1634,6 @@ export function MultipleFileUploadField({
                 </span>
               </a>
             </div>
-            </>
           )}
 
           {title === 'ImportAssets' && (
@@ -1920,7 +1820,7 @@ export function MultipleFileUploadField({
                 {!['Plan Diagram', 'Brouchers', 'Approvals'].includes(
                   title
                 ) && (
-                  <div className="mt-2 p-6  bg-white border border-gray-100">
+                  <div className="mt-2 p-6 bg-white border border-gray-100">
                     <LfileUploadTableHome
                       fileRecords={fileRecords}
                       title={title}
