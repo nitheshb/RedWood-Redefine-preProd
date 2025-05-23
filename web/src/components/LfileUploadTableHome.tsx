@@ -66,6 +66,7 @@ const LfileUploadTableHome = ({ fileRecords, title, pId, myBlock }) => {
           ![
             'new',
             'followup',
+            'prospect',
             'visitfixed',
             'visitdone',
             'negotiation',

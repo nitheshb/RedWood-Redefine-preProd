@@ -34,6 +34,7 @@ import {
   CalculateComponentTotal,
   computePartTotal,
 } from 'src/util/unitCostSheetCalculator'
+import { selldoLeadStageMapper } from 'src/util/selldoLeadStageMapper'
 
 let currentId = 0
 
@@ -1463,13 +1464,14 @@ export function MultipleFileUploadField({
           console.log('milliseconds is', milliseconds)
           // dRow['Date'] = prettyDate(milliseconds).toLocaleString()
           normalizedRow['Date'] = milliseconds
-          normalizedRow['Status'] = normalizedRow['Status']?.toLowerCase() || ''
+          normalizedRow['Status'] = selldoLeadStageMapper(normalizedRow['Status']?.toLowerCase() || '', 1)
           normalizedRow['Source'] = normalizedRow['Source']?.toLowerCase() || ''
           normalizedRow['CT'] = Timestamp.now().toMillis()
           if(normalizedRow['Project'] != '' || ![
             'new',
             'followup',
             'visitfixed',
+            'prospect',
             'visitdone',
             'negotiation',
             'booked',
