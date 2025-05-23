@@ -3,12 +3,14 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 
 import { useEffect, useState } from 'react'
+
 import { CalendarIcon, EyeIcon } from '@heroicons/react/outline'
 import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
 } from '@heroicons/react/solid'
 import { startOfWeek, startOfDay, startOfMonth, subMonths } from 'date-fns'
+
 import { sourceListItems } from 'src/constants/projects'
 import {
   addAgreegatedSalesValues,
@@ -32,6 +34,7 @@ import { useAuth } from 'src/context/firebase-auth-context'
 import { sendWhatAppTextSms1 } from 'src/util/axiosWhatAppApi'
 import CSVDownloader from 'src/util/csvDownload'
 import { prettyDate } from 'src/util/dateConverter'
+import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 import { SlimSelectBox } from 'src/util/formFields/slimSelectBoxField'
 
 import MarketingAnalyticsHome from '../../components/A_MarketingModule/MarketinAnalyticsHome'
@@ -50,7 +53,6 @@ import ReportSideWindow from '../../components/SiderForm/ReportSideView'
 import SiderForm from '../../components/SiderForm/SiderForm'
 
 import LeadsTransferTableBody from './leadsTransferTableBody'
-import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 
 const valueFeedData = [
   { k: 'Total', v: 300, pic: '' },
@@ -1052,6 +1054,40 @@ const LeadsTransferBody = ({
       )
     })
   }
+  const sourcePerformanceData = [
+    {
+      source: 'Hell Paradise',
+      total: 60,
+      inProgress: 40,
+      booked: 14,
+      achieve: 24,
+      others: 12,
+    },
+    {
+      source: 'Hell Paradise',
+      total: 60,
+      inProgress: 40,
+      booked: 14,
+      achieve: 24,
+      others: 12,
+    },
+    {
+      source: 'Lost in utopia',
+      total: 60,
+      inProgress: 40,
+      booked: 14,
+      achieve: 24,
+      others: 12,
+    },
+    {
+      source: 'Dreams of serenity',
+      total: 60,
+      inProgress: 40,
+      booked: 14,
+      achieve: 24,
+      others: 12,
+    },
+  ]
   return (
     <div>
       <section className="pb-8 pt-1 mb-8 leading-7 text-gray-900">
@@ -2132,7 +2168,7 @@ const LeadsTransferBody = ({
                   </article>
                 </section>
               </section>
-              <div className="flex flex-row">
+              {/* <div className="flex flex-row">
                 <div className="flex flex-col  mt-4 drop-shadow-md rounded-lg  px-4">
                   <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div
@@ -2165,10 +2201,8 @@ const LeadsTransferBody = ({
                                     value
                                   )
                                   selViewSource(value)
-                                  // formik.setFieldValue('project', value.value)
                                 }}
                                 value={viewSource?.value}
-                                // options={aquaticCreatures}
                                 options={[
                                   ...[
                                     {
@@ -2191,10 +2225,8 @@ const LeadsTransferBody = ({
                                   value
                                 )
                                 setSelProject(value)
-                                // formik.setFieldValue('project', value.value)
                               }}
                               value={selProjectIs?.value}
-                              // options={aquaticCreatures}
                               options={[
                                 ...[
                                   {
@@ -2215,26 +2247,6 @@ const LeadsTransferBody = ({
                             </span>
                           </div>
                         </div>
-                        {/* <section className="flex flex-row text-blue">
-                      <div
-                        onClick={() => {
-                          updateProjectNameInlogs()
-                        }}
-                      >
-                        Update projectName
-                      </div>
-
-                      <div
-                        className="ml-4"
-                        onClick={() => {
-                          updateLeadsLastUpdatetimeFun()
-                        }}
-                      >
-                        update LeadsLastUpdatetTime
-                      </div>
-
-                      {}
-                    </section> */}
 
                         <section className="flex flex-row justify-between mt-[18px]">
                           <section className="flex">
@@ -2686,6 +2698,99 @@ const LeadsTransferBody = ({
                     </div>
                   </div>
                 </div>
+              </div> */}
+              <section>
+                <section className="flex flex-row flex-wrap gap-6">
+                  <section className="w-[100%] pt-4">
+                    <div className="flex flex-col"></div>
+                    <section className="flex flex-row justify-between">
+                      <article className="flex flex-col">
+                        <div className="text-[#1f2937]">Source Performance</div>
+
+                        <div className="text-[#808080] text-xs mt-1">
+                          The schools that completes the domains and maximum
+                          number of MIPs submitted on domains
+                        </div>
+                      </article>
+                      <article>
+                        <SlimSelectBox
+                          name=""
+                          label=""
+                          className="input min-w-[164px]"
+                          options={[
+                            {
+                              label: 'This week',
+                              value: 'thisweek',
+                            },
+                          ]}
+                          placeholder="This week"
+                          onChange={undefined}
+                          value={undefined}
+                          customStyles={undefined}
+                        />
+                      </article>
+                    </section>
+                  </section>
+                </section>
+              </section>
+              <div className="overflow-auto rounded-xl border border-gray-200 mt-4">
+                <table className="min-w-full w-full text-sm text-left text-gray-700 overflow-x-auto">
+                  <thead className="bg-gray-100 text-xs text-gray-500">
+                    <tr>
+                      {[
+                        { label: 'Source', id: 'source' },
+                        { label: 'Total', id: 'total' },
+                        { label: 'In Progress', id: 'inprogress' },
+                        { label: 'Booked', id: 'booked' },
+                        { label: 'Achieve', id: 'achieve' },
+                        { label: 'Others', id: 'others' },
+                      ].map((d, i) => (
+                        <th
+                          key={i}
+                          scope="col"
+                          className={`text-sm font-medium text-[#0D0A1E]  px-6 py-4  ${
+                            ['Source'].includes(d.label)
+                              ? 'text-left'
+                              : 'text-right'
+                          }`}
+                        >
+                          {d.label}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200 odd:bg-white even:bg-white">
+                    {sourcePerformanceData.map((data, i) => {
+                      return (
+                        <tr
+                          key={i}
+                          className="border-t hover:bg-gray-50 transition-colors text-right py-4 "
+                        >
+                          <td className="text-sm text-gray-900 font-medium px-6 py-3 whitespace-nowrap text-left ">
+                            {data?.source}
+                          </td>
+                          <td className="text-sm text-gray-900 font-light px-12 py-3 whitespace-nowrap ">
+                            {data?.total}
+                          </td>
+                          <td className="text-sm text-gray-900 font-light px-12 py-2 whitespace-nowrap ">
+                            {data?.inProgress}
+                          </td>
+
+                          <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap ">
+                            {data?.booked}
+                          </td>
+
+                          <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap ">
+                            {data?.achieve}
+                          </td>
+                          <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap ">
+                            {data?.others}
+                          </td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
               </div>
             </section>
           )}

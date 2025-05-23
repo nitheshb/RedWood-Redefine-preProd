@@ -40,6 +40,7 @@ import StackedBarChart from './A_MarketingModule/Reports/Charts/marketingStacked
 import CampaingsTopBarsComponent from './A_MarketingModule/Reports/Charts/marketingTopBars'
 import BookingSummaryReport from './A_SalesModule/Reports/bookingSummaryReport'
 import CallActivityGraphs from './A_SalesModule/Reports/callActivity/CallAcitivtyGraphs'
+import LeadLoctionMap from './A_SalesModule/Reports/charts/locationMap'
 import EmpLeadsTasksSummaryTable from './A_SalesModule/Reports/empLeadsTasksSummaryTable'
 import EmpTasksReportM from './A_SalesModule/Reports/EmpTasks/empTasksReportM'
 import LeadsCoversionGraphs from './A_SalesModule/Reports/leadsConversionRatio/LeadsCoversionGraphs'
@@ -1023,6 +1024,42 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
       )
     })
   }
+
+  const sourcePerformanceData = [
+    {
+      source: 'Hell Paradise',
+      total: 60,
+      inProgress: 40,
+      booked: 14,
+      achieve: 24,
+      others: 12,
+    },
+    {
+      source: 'Hell Paradise',
+      total: 60,
+      inProgress: 40,
+      booked: 14,
+      achieve: 24,
+      others: 12,
+    },
+    {
+      source: 'Lost in utopia',
+      total: 60,
+      inProgress: 40,
+      booked: 14,
+      achieve: 24,
+      others: 12,
+    },
+    {
+      source: 'Dreams of serenity',
+      total: 60,
+      inProgress: 40,
+      booked: 14,
+      achieve: 24,
+      others: 12,
+    },
+  ]
+
   return (
     <div>
       <section className="pb-8 pt-1 mb-8 leading-7 text-gray-900 bg-white mt-1 mx-1 rounded-lg ">
@@ -2585,47 +2622,48 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
           {/* {selCat === 'payment_ui' && <BookingSummaryHeader/>} */}
 
           {selCat === 'source_perf' && (
-            <section>
-              <section className="flex flex-row flex-wrap gap-2">
-                <section className="w-[99%] border-[#e7e5eb] bg-white rounded-lg p-4">
-                  <div className="flex flex-col"></div>
-                  <section className="flex flex-row justify-between">
-                    <article className="flex flex-col">
-                      <div className="text-[#1f2937]">Leads</div>
-                      <div className="text-[#1f2937] font-[700] text-2xl mt-2">
-                        00,000
-                      </div>
-                      <div className="text-[#EF4444] text-xs mt-1">
-                        0.0% less than the previous 30 days
-                      </div>
-                    </article>
-                    <article>date</article>
-                  </section>
-
-                  <div className="w-full h-[400px] mt-4">
+            <div className="flex flex-col drop-shadow-md rounded-lg  px-4 font-['outfit']">
+              <section>
+                <section className="flex flex-row flex-wrap gap-2">
+                  <section className="w-[99%] border-[#e7e5eb] bg-white rounded-lg p-4">
+                    <div className="flex flex-col"></div>
                     <section className="flex flex-row justify-between">
-                      <article></article>
-                      <article className="flex flex-row mr-2 mb-3">
-                        <section className="flex flex-row">
-                          <div className="text-[#1f2937] w-3 h-3 mt-1 mx-2 rounded-sm bg-[#9333ea]"></div>
-                          <div className="text-[#4b5563] text-xs">
-                            {' '}
-                            This month
-                          </div>
-                        </section>
-                        <section className="flex flex-row">
-                          <div className="text-[#2563eb] w-3 h-3 mt-1 mx-2 rounded-sm bg-[#2563eb]"></div>
-                          <div className="text-[#4b5563] text-xs">
-                            {' '}
-                            Last month
-                          </div>
-                        </section>
+                      <article className="flex flex-col">
+                        <div className="text-[#1f2937]">Leads</div>
+                        <div className="text-[#1f2937] font-[700] text-2xl mt-2">
+                          00,000
+                        </div>
+                        <div className="text-[#EF4444] text-xs mt-1">
+                          0.0% less than the previous 30 days
+                        </div>
                       </article>
+                      <article>date</article>
                     </section>
-                    <StackedBarChart />
-                  </div>
-                  {/* bottom sheet */}
-                  <section className="mt-3 ml-4">
+
+                    <div className="w-full h-[400px] mt-4">
+                      <section className="flex flex-row justify-between">
+                        <article></article>
+                        <article className="flex flex-row mr-2 mb-3">
+                          <section className="flex flex-row">
+                            <div className="text-[#1f2937] w-3 h-3 mt-1 mx-2 rounded-sm bg-[#9333ea]"></div>
+                            <div className="text-[#4b5563] text-xs">
+                              {' '}
+                              This month
+                            </div>
+                          </section>
+                          <section className="flex flex-row">
+                            <div className="text-[#2563eb] w-3 h-3 mt-1 mx-2 rounded-sm bg-[#2563eb]"></div>
+                            <div className="text-[#4b5563] text-xs">
+                              {' '}
+                              Last month
+                            </div>
+                          </section>
+                        </article>
+                      </section>
+                      <StackedBarChart />
+                    </div>
+                    {/* bottom sheet */}
+                    {/* <section className="mt-3 ml-4">
                     <div className="text-[#1f2937] font-[600] text-xl">
                       Conversion funnel
                     </div>
@@ -2673,538 +2711,665 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                   </section>
                   <article className="text-[#4f46e5] text-center font-[500] text-[13px]">
                     View full Report
-                  </article>
+                  </article> */}
+                  </section>
+                  <section className="w-[100%] border-[#e7e5eb] bg-white rounded-lg p-4">
+                    <div className="flex flex-col"></div>
+                    <section className="flex flex-row justify-between">
+                      <article className="flex flex-col">
+                        <div className="text-[#1f2937]">Geography</div>
+
+                        <div className="text-[#808080] text-xs mt-1">
+                          Breakdown of which marketing source are bringing
+                          leadss from each geography.
+                        </div>
+                      </article>
+                      <article>date</article>
+                    </section>
+                    <LeadLoctionMap />
+                  </section>
                 </section>
-              </section>
-              <div className="flex flex-row">
-                <div className="flex flex-col  mt-4 drop-shadow-md rounded-lg  px-4">
-                  <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    <div
-                      className="py-2 inline-block  sm:px-6 lg:px-8"
-                      style={{ backgroundColor: '#ebfafa' }}
-                    >
-                      <div className="overflow-hidden">
-                        <div className="flex flex-row justify-between border-b mt-4 pb-2">
-                          <div className=" text-md font-bold leading-none pl-0 mt-2  mb-4 ">
-                            {`Source Performance `}
-                          </div>
-                          {orgId === 'spark' && (
-                            <div
-                              onClick={() => {
-                                insertTodaySourcePerformance()
-                              }}
-                            >
-                              admin
+
+                {/* <div className="flex flex-row">
+                  <div className="flex flex-col  mt-4 drop-shadow-md rounded-lg  px-4">
+                    <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                      <div
+                        className="py-2 inline-block  sm:px-6 lg:px-8"
+                        style={{ backgroundColor: '#ebfafa' }}
+                      >
+                        <div className="overflow-hidden">
+                          <div className="flex flex-row justify-between border-b mt-4 pb-2">
+                            <div className=" text-md font-bold leading-none pl-0 mt-2  mb-4 ">
+                              {`Source Performance `}
                             </div>
-                          )}
-                          <div className=" flex flex-row   ">
-                            <span className="mr-4">
+                            {orgId === 'spark' && (
+                              <div
+                                onClick={() => {
+                                  insertTodaySourcePerformance()
+                                }}
+                              >
+                                admin
+                              </div>
+                            )}
+                            <div className=" flex flex-row   ">
+                              <span className="mr-4">
+                                <SlimSelectBox
+                                  name="project"
+                                  label=""
+                                  className="input min-w-[164px]"
+                                  onChange={(value) => {
+                                    console.log(
+                                      'zoro condition changed one  is',
+                                      value
+                                    )
+                                    selViewSource(value)
+                                  }}
+                                  value={viewSource?.value}
+                                  options={[
+                                    ...[
+                                      {
+                                        label: 'All Sources',
+                                        value: 'allsources',
+                                      },
+                                    ],
+                                    ...sourceListTuned,
+                                  ]}
+                                  placeholder={undefined}
+                                />
+                              </span>
                               <SlimSelectBox
                                 name="project"
                                 label=""
-                                className="input min-w-[164px]"
+                                className="input min-w-[164px] ml-4"
                                 onChange={(value) => {
                                   console.log(
                                     'zoro condition changed one  is',
                                     value
                                   )
-                                  selViewSource(value)
+                                  setSelProject(value)
                                 }}
-                                value={viewSource?.value}
+                                value={selProjectIs?.value}
                                 options={[
                                   ...[
                                     {
-                                      label: 'All Sources',
-                                      value: 'allsources',
+                                      label: 'All Projects',
+                                      value: 'allprojects',
                                     },
                                   ],
-                                  ...sourceListTuned,
+                                  ...projectList,
                                 ]}
                                 placeholder={undefined}
                               />
-                            </span>
-                            <SlimSelectBox
-                              name="project"
-                              label=""
-                              className="input min-w-[164px] ml-4"
-                              onChange={(value) => {
-                                console.log(
-                                  'zoro condition changed one  is',
-                                  value
-                                )
-                                setSelProject(value)
-                              }}
-                              value={selProjectIs?.value}
-                              options={[
-                                ...[
-                                  {
-                                    label: 'All Projects',
-                                    value: 'allprojects',
-                                  },
-                                ],
-                                ...projectList,
-                              ]}
-                              placeholder={undefined}
-                            />
-                            <span style={{ display: '' }}>
-                              <CSVDownloader
-                                className="mr-6 h-[20px] w-[20px]"
-                                downloadRows={sourceDownloadRows}
-                                style={{ height: '20px', width: '20px' }}
-                              />
-                            </span>
+                              <span style={{ display: '' }}>
+                                <CSVDownloader
+                                  className="mr-6 h-[20px] w-[20px]"
+                                  downloadRows={sourceDownloadRows}
+                                  style={{ height: '20px', width: '20px' }}
+                                />
+                              </span>
+                            </div>
                           </div>
-                        </div>
 
-                        <section className="flex flex-row justify-between mt-[18px]">
-                          <section className="flex">
-                            {!isEdit && (
+                          <section className="flex flex-row justify-between mt-[18px]">
+                            <section className="flex">
+                              {!isEdit && (
+                                <button
+                                  onClick={() => {
+                                    setDateRange([null, null])
+                                    setSourceDateRange(startOfDay(d).getTime())
+                                  }}
+                                >
+                                  <span
+                                    className={`flex ml-2 mt-[5px] items-center h-6 px-3 text-xs ${
+                                      sourceDateRange ===
+                                      startOfDay(d).getTime()
+                                        ? 'font-semibold text-pink-800 bg-pink-200 '
+                                        : 'text-green-800 bg-green-200 '
+                                    }rounded-full`}
+                                  >
+                                    <EyeIcon
+                                      className="h-3 w-3 mr-1"
+                                      aria-hidden="true"
+                                    />
+                                    Now
+                                  </span>
+                                </button>
+                              )}
+
                               <button
                                 onClick={() => {
                                   setDateRange([null, null])
-                                  setSourceDateRange(startOfDay(d).getTime())
+                                  setSourceDateRange(startOfWeek(d).getTime())
                                 }}
                               >
                                 <span
                                   className={`flex ml-2 mt-[5px] items-center h-6 px-3 text-xs ${
-                                    sourceDateRange === startOfDay(d).getTime()
+                                    sourceDateRange === startOfWeek(d).getTime()
                                       ? 'font-semibold text-pink-800 bg-pink-200 '
                                       : 'text-green-800 bg-green-200 '
                                   }rounded-full`}
                                 >
-                                  <EyeIcon
+                                  <CalendarIcon
                                     className="h-3 w-3 mr-1"
                                     aria-hidden="true"
                                   />
-                                  Now
+                                  This Week
                                 </span>
                               </button>
-                            )}
-
-                            <button
-                              onClick={() => {
-                                setDateRange([null, null])
-                                setSourceDateRange(startOfWeek(d).getTime())
-                              }}
-                            >
-                              <span
-                                className={`flex ml-2 mt-[5px] items-center h-6 px-3 text-xs ${
-                                  sourceDateRange === startOfWeek(d).getTime()
-                                    ? 'font-semibold text-pink-800 bg-pink-200 '
-                                    : 'text-green-800 bg-green-200 '
-                                }rounded-full`}
+                              <button
+                                onClick={() => {
+                                  setDateRange([null, null])
+                                  setSourceDateRange(startOfMonth(d).getTime())
+                                }}
                               >
-                                <CalendarIcon
-                                  className="h-3 w-3 mr-1"
-                                  aria-hidden="true"
-                                />
-                                This Week
-                              </span>
-                            </button>
-                            <button
-                              onClick={() => {
-                                setDateRange([null, null])
-                                setSourceDateRange(startOfMonth(d).getTime())
-                              }}
-                            >
-                              <span
-                                className={`flex ml-2 mt-[5px] items-center h-6 px-3 text-xs ${
-                                  sourceDateRange === startOfMonth(d).getTime()
-                                    ? 'font-semibold text-pink-800 bg-pink-200 '
-                                    : 'text-green-800 bg-green-200 '
-                                }rounded-full`}
+                                <span
+                                  className={`flex ml-2 mt-[5px] items-center h-6 px-3 text-xs ${
+                                    sourceDateRange ===
+                                    startOfMonth(d).getTime()
+                                      ? 'font-semibold text-pink-800 bg-pink-200 '
+                                      : 'text-green-800 bg-green-200 '
+                                  }rounded-full`}
+                                >
+                                  <CalendarIcon
+                                    className="h-3 w-3 mr-1"
+                                    aria-hidden="true"
+                                  />
+                                  This Month
+                                </span>
+                              </button>
+                              <button
+                                onClick={() => {
+                                  setDateRange([null, null])
+                                  setSourceDateRange(
+                                    subMonths(startOfMonth(d), 6).getTime()
+                                  )
+                                }}
                               >
-                                <CalendarIcon
-                                  className="h-3 w-3 mr-1"
-                                  aria-hidden="true"
-                                />
-                                This Month
-                              </span>
-                            </button>
-                            <button
-                              onClick={() => {
-                                setDateRange([null, null])
-                                setSourceDateRange(
-                                  subMonths(startOfMonth(d), 6).getTime()
-                                )
-                              }}
-                            >
-                              <span
-                                className={`flex ml-2 mt-[5px] items-center h-6 px-3 text-xs ${
-                                  sourceDateRange ===
-                                  subMonths(startOfMonth(d), 6).getTime()
-                                    ? 'font-semibold text-pink-800 bg-pink-200 '
-                                    : 'text-green-800 bg-green-200 '
-                                }rounded-full`}
-                              >
-                                <CalendarIcon
-                                  className="h-3 w-3 mr-1"
-                                  aria-hidden="true"
-                                />
-                                Last 6 Months
-                              </span>
-                            </button>
-                            <span className="max-h-[42px] mt-[2px] ml-3">
-                              <label className="bg-green   pl-   flex flex-row cursor-pointer">
-                                {!isOpened && (
-                                  <span
-                                    className={`flex ml-1 mt-[6px] items-center h-6 px-3 text-xs ${
-                                      sourceDateRange === startDate?.getTime()
-                                        ? 'font-semibold text-pink-800 bg-pink-200 '
-                                        : 'text-green-800 bg-green-200 '
-                                    } rounded-full`}
-                                    onClick={() => {
-                                      setIsOpened(true)
-                                    }}
-                                  >
-                                    <CalendarIcon
-                                      className="h-3 w-3 mr-1"
-                                      aria-hidden="true"
-                                    />
-                                    {startDate == null ? 'Custom' : ''}
-                                    {startDate != null
-                                      ? prettyDate(
-                                          startDate?.getTime() + 21600000
-                                        )
-                                      : ''}
-                                    {endDate != null ? '-' : ''}
-                                    {endDate != null
-                                      ? prettyDate(
-                                          endDate?.getTime() + 21600000
-                                        )
-                                      : ''}
-                                  </span>
-                                )}
-                                {
-                                  <span
-                                    className="inline"
-                                    style={{
-                                      visibility: isOpened
-                                        ? 'visible'
-                                        : 'hidden',
-                                    }}
-                                  >
-                                    <CustomDatePicker
-                                      className={`z-10 pl- py-1 px-3 mt-[7px] inline text-xs text-[#0091ae] placeholder-green-800 cursor-pointer  max-w-fit   ${
+                                <span
+                                  className={`flex ml-2 mt-[5px] items-center h-6 px-3 text-xs ${
+                                    sourceDateRange ===
+                                    subMonths(startOfMonth(d), 6).getTime()
+                                      ? 'font-semibold text-pink-800 bg-pink-200 '
+                                      : 'text-green-800 bg-green-200 '
+                                  }rounded-full`}
+                                >
+                                  <CalendarIcon
+                                    className="h-3 w-3 mr-1"
+                                    aria-hidden="true"
+                                  />
+                                  Last 6 Months
+                                </span>
+                              </button>
+                              <span className="max-h-[42px] mt-[2px] ml-3">
+                                <label className="bg-green   pl-   flex flex-row cursor-pointer">
+                                  {!isOpened && (
+                                    <span
+                                      className={`flex ml-1 mt-[6px] items-center h-6 px-3 text-xs ${
                                         sourceDateRange === startDate?.getTime()
                                           ? 'font-semibold text-pink-800 bg-pink-200 '
                                           : 'text-green-800 bg-green-200 '
                                       } rounded-full`}
-                                      onCalendarClose={() => setIsOpened(false)}
-                                      placeholderText="&#128467;	 Custom"
-                                      onChange={(update) => {
-                                        setDateRange(update)
+                                      onClick={() => {
+                                        setIsOpened(true)
                                       }}
-                                      selectsRange={true}
-                                      startDate={startDate}
-                                      endDate={endDate}
-                                      isClearable={true}
-                                      onClear={() => {
-                                        console.log('am i cleared')
+                                    >
+                                      <CalendarIcon
+                                        className="h-3 w-3 mr-1"
+                                        aria-hidden="true"
+                                      />
+                                      {startDate == null ? 'Custom' : ''}
+                                      {startDate != null
+                                        ? prettyDate(
+                                            startDate?.getTime() + 21600000
+                                          )
+                                        : ''}
+                                      {endDate != null ? '-' : ''}
+                                      {endDate != null
+                                        ? prettyDate(
+                                            endDate?.getTime() + 21600000
+                                          )
+                                        : ''}
+                                    </span>
+                                  )}
+                                  {
+                                    <span
+                                      className="inline"
+                                      style={{
+                                        visibility: isOpened
+                                          ? 'visible'
+                                          : 'hidden',
                                       }}
-                                      dateFormat="MMM dd, yyyy"
-                                    />
-                                  </span>
-                                }
-                              </label>
-                            </span>
+                                    >
+                                      <CustomDatePicker
+                                        className={`z-10 pl- py-1 px-3 mt-[7px] inline text-xs text-[#0091ae] placeholder-green-800 cursor-pointer  max-w-fit   ${
+                                          sourceDateRange ===
+                                          startDate?.getTime()
+                                            ? 'font-semibold text-pink-800 bg-pink-200 '
+                                            : 'text-green-800 bg-green-200 '
+                                        } rounded-full`}
+                                        onCalendarClose={() =>
+                                          setIsOpened(false)
+                                        }
+                                        placeholderText="&#128467;	 Custom"
+                                        onChange={(update) => {
+                                          setDateRange(update)
+                                        }}
+                                        selectsRange={true}
+                                        startDate={startDate}
+                                        endDate={endDate}
+                                        isClearable={true}
+                                        onClear={() => {
+                                          console.log('am i cleared')
+                                        }}
+                                        dateFormat="MMM dd, yyyy"
+                                      />
+                                    </span>
+                                  }
+                                </label>
+                              </span>
+                            </section>
                           </section>
-                        </section>
-                        <table className="w-[700px] text-center font-semibold mt-6 cardborder">
-                          <thead className="border-b">
-                            <tr>
-                              {[
-                                { label: 'Source', id: 'label' },
-                                { label: 'Total', id: 'total' },
-                                { label: 'Unassigned', id: 'unassigned' },
-                                { label: 'InProgress', id: 'inprogress' },
-                                { label: 'New', id: 'new' },
-                                { label: 'Followup', id: 'followup' },
-                                { label: 'VisitFixed', id: 'visitfixed' },
-                                { label: 'VisitDone', id: 'visitdone' },
-                                { label: 'Neogotiation', id: 'neogotiation' },
+                          <table className="w-[700px] text-center font-semibold mt-6 cardborder">
+                            <thead className="border-b">
+                              <tr>
+                                {[
+                                  { label: 'Source', id: 'label' },
+                                  { label: 'Total', id: 'total' },
+                                  { label: 'Unassigned', id: 'unassigned' },
+                                  { label: 'InProgress', id: 'inprogress' },
+                                  { label: 'New', id: 'new' },
+                                  { label: 'Followup', id: 'followup' },
+                                  { label: 'VisitFixed', id: 'visitfixed' },
+                                  { label: 'VisitDone', id: 'visitdone' },
+                                  {
+                                    label: 'Neogotiation',
+                                    id: 'neogotiation',
+                                  },
 
-                                { label: 'Booked', id: 'booked' },
-                                { label: 'NotInterested', id: 'notinterested' },
-                                { label: 'Dead', id: 'dead' },
-                                { label: 'Blocked', id: 'blocked' },
-                                { label: 'Junk', id: 'junk' },
-                                { label: 'Archieve', id: 'archieve' },
-                                { label: 'Others', id: 'others' },
-                              ].map((d, i) => (
-                                <th
-                                  key={i}
-                                  scope="col"
-                                  className={`text-sm font-medium font-semibold text-gray-900 px-6 py-4 ${
-                                    ['Source'].includes(d.label)
-                                      ? 'text-left'
-                                      : ''
-                                  }`}
-                                  style={{
-                                    display: viewSourceStats1A.includes(d.id)
-                                      ? ''
-                                      : 'none',
-                                    color:
-                                      ['inprogress'].includes(d.id) &&
-                                      showInproFSource
-                                        ? 'blue'
-                                        : ['archieve'].includes(d.id) &&
-                                          showArchiFSource
-                                        ? 'blue'
-                                        : 'black',
-                                  }}
-                                  onClick={() => {
-                                    if (
-                                      ['inprogress', 'archieve'].includes(d.id)
-                                    )
-                                      showColumnsSourceFun(d.id)
-                                  }}
-                                >
-                                  {d.label}
-                                  {d.id === 'inprogress' &&
-                                    !showInproFSource && (
-                                      <ChevronDoubleRightIcon
-                                        className="w-4 h-4 inline"
-                                        aria-hidden="true"
-                                      />
-                                    )}
-                                  {d.id === 'inprogress' &&
-                                    showInproFSource && (
-                                      <ChevronDoubleLeftIcon
-                                        className="w-4 h-4 inline"
-                                        aria-hidden="true"
-                                      />
-                                    )}
-                                  {d.id === 'archieve' && !showArchiFSource && (
-                                    <ChevronDoubleRightIcon
-                                      className="w-4 h-4 inline"
-                                      aria-hidden="true"
-                                    />
-                                  )}
-                                  {d.id === 'archieve' && showArchiFSource && (
-                                    <ChevronDoubleLeftIcon
-                                      className="w-4 h-4 inline"
-                                      aria-hidden="true"
-                                    />
-                                  )}
-                                </th>
-                              ))}
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {sourceFiltListTuned.map((data, i) => {
-                              return (
-                                <tr
-                                  className={`  ${
-                                    i % 2 === 0
-                                      ? 'bg-white border-blue-200'
-                                      : 'bg-gray-100'
-                                  }`}
-                                  key={i}
-                                >
-                                  <td className="text-sm text-gray-900 font-medium px-6 py-2 whitespace-nowrap text-left">
-                                    {data?.label}
-                                  </td>
-                                  <td
-                                    className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap"
+                                  { label: 'Booked', id: 'booked' },
+                                  {
+                                    label: 'NotInterested',
+                                    id: 'notinterested',
+                                  },
+                                  { label: 'Dead', id: 'dead' },
+                                  { label: 'Blocked', id: 'blocked' },
+                                  { label: 'Junk', id: 'junk' },
+                                  { label: 'Archieve', id: 'archieve' },
+                                  { label: 'Others', id: 'others' },
+                                ].map((d, i) => (
+                                  <th
+                                    key={i}
+                                    scope="col"
+                                    className={`text-sm font-medium font-semibold text-gray-900 px-6 py-4 ${
+                                      ['Source'].includes(d.label)
+                                        ? 'text-left'
+                                        : ''
+                                    }`}
+                                    style={{
+                                      display: viewSourceStats1A.includes(d.id)
+                                        ? ''
+                                        : 'none',
+                                      color:
+                                        ['inprogress'].includes(d.id) &&
+                                        showInproFSource
+                                          ? 'blue'
+                                          : ['archieve'].includes(d.id) &&
+                                            showArchiFSource
+                                          ? 'blue'
+                                          : 'black',
+                                    }}
                                     onClick={() => {
-                                      console.log(
-                                        'total stuff is ',
-                                        data?.Total
+                                      if (
+                                        ['inprogress', 'archieve'].includes(
+                                          d.id
+                                        )
                                       )
+                                        showColumnsSourceFun(d.id)
                                     }}
                                   >
-                                    {data?.Total?.length}
+                                    {d.label}
+                                    {d.id === 'inprogress' &&
+                                      !showInproFSource && (
+                                        <ChevronDoubleRightIcon
+                                          className="w-4 h-4 inline"
+                                          aria-hidden="true"
+                                        />
+                                      )}
+                                    {d.id === 'inprogress' &&
+                                      showInproFSource && (
+                                        <ChevronDoubleLeftIcon
+                                          className="w-4 h-4 inline"
+                                          aria-hidden="true"
+                                        />
+                                      )}
+                                    {d.id === 'archieve' &&
+                                      !showArchiFSource && (
+                                        <ChevronDoubleRightIcon
+                                          className="w-4 h-4 inline"
+                                          aria-hidden="true"
+                                        />
+                                      )}
+                                    {d.id === 'archieve' &&
+                                      showArchiFSource && (
+                                        <ChevronDoubleLeftIcon
+                                          className="w-4 h-4 inline"
+                                          aria-hidden="true"
+                                        />
+                                      )}
+                                  </th>
+                                ))}
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {sourceFiltListTuned.map((data, i) => {
+                                return (
+                                  <tr
+                                    className={`  ${
+                                      i % 2 === 0
+                                        ? 'bg-white border-blue-200'
+                                        : 'bg-gray-100'
+                                    }`}
+                                    key={i}
+                                  >
+                                    <td className="text-sm text-gray-900 font-medium px-6 py-2 whitespace-nowrap text-left">
+                                      {data?.label}
+                                    </td>
+                                    <td
+                                      className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap"
+                                      onClick={() => {
+                                        console.log(
+                                          'total stuff is ',
+                                          data?.Total
+                                        )
+                                      }}
+                                    >
+                                      {data?.Total?.length}
+                                    </td>
+                                    <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
+                                      {data?.inprogress?.length}
+                                    </td>
+                                    {showInproFSource && (
+                                      <>
+                                        <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
+                                          {data?.new?.length}
+                                        </td>
+                                        <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
+                                          {data?.followup?.length}
+                                        </td>
+                                        <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
+                                          {data?.visitfixed?.length}
+                                        </td>
+                                        <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
+                                          {data?.visitdone?.length}
+                                        </td>
+                                        <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
+                                          {data?.negotiation?.length}
+                                        </td>
+                                        <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
+                                          {data?.unassigned?.length}
+                                        </td>
+                                      </>
+                                    )}
+                                    <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
+                                      {data?.booked?.length}
+                                    </td>
+                                    {showArchiFSource && (
+                                      <>
+                                        <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
+                                          {data?.notinterested?.length}
+                                        </td>
+                                        <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
+                                          {data?.dead?.length}
+                                        </td>
+                                        <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
+                                          {data?.blocked?.length}
+                                        </td>
+                                        <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
+                                          {data?.junk?.length}
+                                        </td>
+                                      </>
+                                    )}
+                                    <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
+                                      {data?.archieve?.length}
+                                    </td>
+                                    <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
+                                      {data?.others?.length}
+                                    </td>
+                                  </tr>
+                                )
+                              })}
+
+                              {viewSource?.value === 'allsources' && (
+                                <tr className="border-b bg-gray-800 boder-gray-900">
+                                  <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap text-left">
+                                    Total
                                   </td>
-                                  <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
-                                    {data?.inprogress?.length}
+                                  <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap ">
+                                    {sourceRawFilData.length}
+                                  </td>
+                                  <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
+                                    {
+                                      sourceRawFilData.filter((datObj) =>
+                                        [
+                                          'new',
+                                          'unassigned',
+                                          'followup',
+                                          'visitfixed',
+                                          'visitdone',
+                                          'negotiation',
+                                        ].includes(datObj?.Status)
+                                      ).length
+                                    }
                                   </td>
                                   {showInproFSource && (
                                     <>
-                                      <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
-                                        {data?.new?.length}
+                                      <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
+                                        {
+                                          sourceRawFilData.filter(
+                                            (datObj) => datObj?.Status == 'new'
+                                          ).length
+                                        }
                                       </td>
-                                      <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
-                                        {data?.followup?.length}
+                                      <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap ">
+                                        {
+                                          sourceRawFilData.filter(
+                                            (datObj) =>
+                                              datObj?.Status == 'followup'
+                                          ).length
+                                        }
                                       </td>
-                                      <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
-                                        {data?.visitfixed?.length}
+                                      <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap ">
+                                        {
+                                          sourceRawFilData.filter(
+                                            (datObj) =>
+                                              datObj?.Status == 'visitfixed'
+                                          ).length
+                                        }
                                       </td>
-                                      <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
-                                        {data?.visitdone?.length}
+                                      <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap ">
+                                        {
+                                          sourceRawFilData.filter(
+                                            (datObj) =>
+                                              datObj?.Status == 'visitdone'
+                                          ).length
+                                        }
                                       </td>
-                                      <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
-                                        {data?.negotiation?.length}
-                                      </td>
-                                      <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
-                                        {data?.unassigned?.length}
+                                      <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap ">
+                                        {
+                                          sourceRawFilData.filter(
+                                            (datObj) =>
+                                              datObj?.Status == 'negotiation'
+                                          ).length
+                                        }
                                       </td>
                                     </>
                                   )}
-                                  <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
-                                    {data?.booked?.length}
+                                  <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap ">
+                                    {
+                                      sourceRawFilData.filter(
+                                        (datObj) => datObj?.Status == 'booked'
+                                      ).length
+                                    }
                                   </td>
                                   {showArchiFSource && (
                                     <>
-                                      <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
-                                        {data?.notinterested?.length}
+                                      <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap ">
+                                        {
+                                          sourceRawFilData.filter(
+                                            (datObj) =>
+                                              datObj?.Status == 'notinterested'
+                                          ).length
+                                        }
                                       </td>
-                                      <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
-                                        {data?.dead?.length}
+                                      <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
+                                        {
+                                          sourceRawFilData.filter(
+                                            (datObj) => datObj?.Status == 'dead'
+                                          ).length
+                                        }
                                       </td>
-                                      <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
-                                        {data?.blocked?.length}
+                                      <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
+                                        {
+                                          sourceRawFilData.filter(
+                                            (datObj) =>
+                                              datObj?.Status == 'blocked'
+                                          ).length
+                                        }
                                       </td>
-                                      <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
-                                        {data?.junk?.length}
+                                      <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
+                                        {
+                                          sourceRawFilData.filter(
+                                            (datObj) => datObj?.Status == 'junk'
+                                          ).length
+                                        }
                                       </td>
                                     </>
                                   )}
-                                  <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
-                                    {data?.archieve?.length}
+                                  <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
+                                    {
+                                      sourceRawFilData.filter((datObj) =>
+                                        [
+                                          'blocked',
+                                          'dead',
+                                          'notinterested',
+                                          'junk',
+                                        ].includes(datObj?.Status)
+                                      ).length
+                                    }
                                   </td>
-                                  <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
-                                    {data?.others?.length}
+                                  <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
+                                    {
+                                      sourceRawFilData.filter(
+                                        (datObj) => datObj?.Status == ''
+                                      ).length
+                                    }
                                   </td>
                                 </tr>
-                              )
-                            })}
-
-                            {viewSource?.value === 'allsources' && (
-                              <tr className="border-b bg-gray-800 boder-gray-900">
-                                <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap text-left">
-                                  Total
-                                </td>
-                                <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap ">
-                                  {sourceRawFilData.length}
-                                </td>
-                                <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
-                                  {
-                                    sourceRawFilData.filter((datObj) =>
-                                      [
-                                        'new',
-                                        'unassigned',
-                                        'followup',
-                                        'visitfixed',
-                                        'visitdone',
-                                        'negotiation',
-                                      ].includes(datObj?.Status)
-                                    ).length
-                                  }
-                                </td>
-                                {showInproFSource && (
-                                  <>
-                                    <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
-                                      {
-                                        sourceRawFilData.filter(
-                                          (datObj) => datObj?.Status == 'new'
-                                        ).length
-                                      }
-                                    </td>
-                                    <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap ">
-                                      {
-                                        sourceRawFilData.filter(
-                                          (datObj) =>
-                                            datObj?.Status == 'followup'
-                                        ).length
-                                      }
-                                    </td>
-                                    <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap ">
-                                      {
-                                        sourceRawFilData.filter(
-                                          (datObj) =>
-                                            datObj?.Status == 'visitfixed'
-                                        ).length
-                                      }
-                                    </td>
-                                    <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap ">
-                                      {
-                                        sourceRawFilData.filter(
-                                          (datObj) =>
-                                            datObj?.Status == 'visitdone'
-                                        ).length
-                                      }
-                                    </td>
-                                    <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap ">
-                                      {
-                                        sourceRawFilData.filter(
-                                          (datObj) =>
-                                            datObj?.Status == 'negotiation'
-                                        ).length
-                                      }
-                                    </td>
-                                  </>
-                                )}
-                                <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap ">
-                                  {
-                                    sourceRawFilData.filter(
-                                      (datObj) => datObj?.Status == 'booked'
-                                    ).length
-                                  }
-                                </td>
-                                {showArchiFSource && (
-                                  <>
-                                    <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap ">
-                                      {
-                                        sourceRawFilData.filter(
-                                          (datObj) =>
-                                            datObj?.Status == 'notinterested'
-                                        ).length
-                                      }
-                                    </td>
-                                    <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
-                                      {
-                                        sourceRawFilData.filter(
-                                          (datObj) => datObj?.Status == 'dead'
-                                        ).length
-                                      }
-                                    </td>
-                                    <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
-                                      {
-                                        sourceRawFilData.filter(
-                                          (datObj) =>
-                                            datObj?.Status == 'blocked'
-                                        ).length
-                                      }
-                                    </td>
-                                    <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
-                                      {
-                                        sourceRawFilData.filter(
-                                          (datObj) => datObj?.Status == 'junk'
-                                        ).length
-                                      }
-                                    </td>
-                                  </>
-                                )}
-                                <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
-                                  {
-                                    sourceRawFilData.filter((datObj) =>
-                                      [
-                                        'blocked',
-                                        'dead',
-                                        'notinterested',
-                                        'junk',
-                                      ].includes(datObj?.Status)
-                                    ).length
-                                  }
-                                </td>
-                                <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
-                                  {
-                                    sourceRawFilData.filter(
-                                      (datObj) => datObj?.Status == ''
-                                    ).length
-                                  }
-                                </td>
-                              </tr>
-                            )}
-                          </tbody>
-                        </table>
+                              )}
+                            </tbody>
+                          </table>
+                        </div>
                       </div>
                     </div>
                   </div>
+                </div> */}
+                <section>
+                  <section className="flex flex-row flex-wrap gap-6">
+                    <section className="w-[100%] pt-4">
+                      <div className="flex flex-col"></div>
+                      <section className="flex flex-row justify-between">
+                        <article className="flex flex-col">
+                          <div className="text-[#1f2937]">
+                            Source Performance
+                          </div>
+
+                          <div className="text-[#808080] text-xs mt-1">
+                            The schools that completes the domains and maximum
+                            number of MIPs submitted on domains
+                          </div>
+                        </article>
+                        <article>
+                          <SlimSelectBox
+                            name=""
+                            label=""
+                            className="input min-w-[164px]"
+                            options={[
+                              {
+                                label: 'This week',
+                                value: 'thisweek',
+                              },
+                            ]}
+                            placeholder="This week"
+                            onChange={undefined}
+                            value={undefined}
+                            customStyles={undefined}
+                          />
+                        </article>
+                      </section>
+                    </section>
+                  </section>
+                </section>
+                <div className="overflow-auto rounded-xl border border-gray-200 mt-4">
+                  <table className="min-w-full w-full text-sm text-left text-gray-700 overflow-x-auto">
+                    <thead className="bg-gray-100 text-xs text-gray-500">
+                      <tr>
+                        {[
+                          { label: 'Source', id: 'source' },
+                          { label: 'Total', id: 'total' },
+                          { label: 'In Progress', id: 'inprogress' },
+                          { label: 'Booked', id: 'booked' },
+                          { label: 'Achieve', id: 'achieve' },
+                          { label: 'Others', id: 'others' },
+                        ].map((d, i) => (
+                          <th
+                            key={i}
+                            scope="col"
+                            className={`text-sm font-medium text-[#0D0A1E]  px-6 py-4  ${
+                              ['Source'].includes(d.label)
+                                ? 'text-left'
+                                : 'text-right'
+                            }`}
+                          >
+                            {d.label}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-200 odd:bg-white even:bg-white">
+                      {sourcePerformanceData.map((data, i) => {
+                        return (
+                          <tr
+                            key={i}
+                            className="border-t hover:bg-gray-50 transition-colors text-right py-4 "
+                          >
+                            <td className="text-sm text-gray-900 font-medium px-6 py-3 whitespace-nowrap text-left ">
+                              {data?.source}
+                            </td>
+                            <td className="text-sm text-gray-900 font-light px-12 py-3 whitespace-nowrap ">
+                              {data?.total}
+                            </td>
+                            <td className="text-sm text-gray-900 font-light px-12 py-2 whitespace-nowrap ">
+                              {data?.inProgress}
+                            </td>
+
+                            <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap ">
+                              {data?.booked}
+                            </td>
+
+                            <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap ">
+                              {data?.achieve}
+                            </td>
+                            <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap ">
+                              {data?.others}
+                            </td>
+                          </tr>
+                        )
+                      })}
+                    </tbody>
+                  </table>
                 </div>
-              </div>
-            </section>
+              </section>
+            </div>
           )}
 
           {selCat === 'emp_status_report' && (
