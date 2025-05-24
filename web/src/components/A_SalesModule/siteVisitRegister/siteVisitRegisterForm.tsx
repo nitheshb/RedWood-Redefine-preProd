@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { CheckCircle, Phone, Search } from 'lucide-react';
-import { checkIfLeadAlreadyExists, steamUsersListByRole, updateLeadData } from 'src/context/dbQueryFirebase';
+import { addSiteVisitEntry, checkIfLeadAlreadyExists, getMyProjects, steamUsersListByRole, steamUsersListCpAgents, updateLeadData } from 'src/context/dbQueryFirebase';
 import toast from 'react-hot-toast';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css'
 import { setHours, setMinutes } from 'date-fns'
 import { useAuth } from 'src/context/firebase-auth-context';
 import { CustomSelect } from 'src/util/formFields/selectBoxField';
+import ConstructHomeList from 'src/components/A_ProjModule/ConstructHomeList';
 
 export default function SiteVisitRegisterForm() {
   const { user } = useAuth()
@@ -18,6 +19,14 @@ export default function SiteVisitRegisterForm() {
   const [isSearching, setIsSearching] = useState(false);
   const [selectedLead, setSelectedLead] = useState(null);
   const [usersList, setusersList] = useState([])
+  const [projectList, setprojectList] = useState([])
+  const [selProjectIs, setSelProject] = useState({
+      label: 'All Projects',
+      value: 'allprojects',
+    })
+    const [cPUsersList, setCPUsersList] = useState([])
+    const [selCPUser, setSelCPUser] = useState([])
+
   useEffect(() => {
     const unsubscribe = steamUsersListByRole(
       orgId,
@@ -38,6 +47,54 @@ export default function SiteVisitRegisterForm() {
 
     return
   }, [])
+   useEffect(() => {
+      const unsubscribe1 = steamUsersListCpAgents(
+        orgId,
+        (querySnapshot) => {
+          const usersListA = querySnapshot.docs.map((docSnapshot) =>
+            docSnapshot.data()
+          )
+
+          usersListA.map((user) => {
+            user.label = user.displayName || user.name
+            user.value = user.uid
+          })
+
+          setCPUsersList(usersListA)
+        },
+        (error) => setCPUsersList([])
+      )
+
+      return
+
+
+
+    }, [])
+    useEffect(() => {
+      const unsubscribe = getMyProjects(
+        orgId,
+        { projAccessA: '' },
+        (querySnapshot) => {
+          const projectsListA = querySnapshot.docs.map((docSnapshot) =>
+            docSnapshot.data()
+          )
+
+          projectsListA.map((user) => {
+            user.label = user.projectName
+            user.value = user.projectName
+          })
+
+            setprojectList(projectsListA)
+
+        },
+        (error) => {
+          console.log('error at bro', error)
+          setprojectList([])
+        }
+      )
+
+      return
+    }, [])
 
   const [formData, setFormData] = useState({
     // Search leads
@@ -212,7 +269,19 @@ export default function SiteVisitRegisterForm() {
     setFormData(finalData);
     console.log('data value is', values.svHappendOn)
     // In a real application, you would submit the data to your backend here
-    await updateLeadData(orgId, selectedLead.id, finalData, user?.email)
+
+    const newData = {
+      ...finalData,
+      ...selProjectIs,
+      ...selCPUser,
+      // remarks: ''
+      // projectId: selectedLead?.projectId,
+      // leadId: selectedLead?.id,
+    }
+    await addSiteVisitEntry(orgId, newData, user)
+    //
+    // await updateLeadData(orgId, selectedLead.id, finalData, user?.email)
+    console.log('final data is', newData)
     resetForm()
     setStep(0)
     setSearchResults([])
@@ -266,7 +335,7 @@ export default function SiteVisitRegisterForm() {
 
       <Formik
         initialValues={formData}
-        validationSchema={getValidationSchema()}
+        // validationSchema={getValidationSchema()}
         enableReinitialize={true}
         onSubmit={(values, { resetForm }) => {
           // if (step === 3) {
@@ -274,6 +343,7 @@ export default function SiteVisitRegisterForm() {
           // } else {
           //   nextStep(values);
           // }
+          console.log('iam at step ', step)
           if (step === 0) {
             nextStep(values);
           } else if (step === 3) {
@@ -495,16 +565,16 @@ export default function SiteVisitRegisterForm() {
                 <div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                      <label htmlFor="mobile" className="block text-sm font-medium text-gray-700 mb-1">
                         Mobile No*:
                       </label>
                       <Field
                         type="tel"
-                        id="phone"
-                        name="phone"
+                        id="mobile"
+                        name="mobile"
                         className="w-full px-2 py-1  border border-gray-300 rounded-md text-sm"
                       />
-                      <ErrorMessage name="phone" component="div" className="text-red-500 text-xs mt-1" />
+                      <ErrorMessage name="mobile" component="div" className="text-red-500 text-xs mt-1" />
                     </div>
 
                     <div>
@@ -548,28 +618,37 @@ export default function SiteVisitRegisterForm() {
                 <div className='grid grid-cols-2 gap-4'>
                   {/* Left Column */}
                   <div>
-                    {/* Source Field */}
-                    <div>
-                      <label htmlFor="source" className="block text-sm font-medium text-gray-700 mb-1">Source*</label>
-                      {/* <Field
-                        as="select"
-                        id="source"
-                        name="source"
-                        className="w-full px-2 py-1  border border-gray-300 rounded-md text-sm"
-                        onChange={(e) => {
-                          setFieldValue('source', e.target.value);
-                          // Clear dependent fields when source changes
-                          setFieldValue('subSource', '');
-                          setFieldValue('cpName', '');
-                          setFieldValue('projectName', '');
-                          setFieldValue('projectUnitNumber', '');
-                          setFieldValue('referralLeadName', '');
+
+                               {/* Project Name (moved next to Source) */}
+
+                               <div className="mt-3">
+                        <label htmlFor="projectName" className="block text-sm font-medium text-gray-700 mb-1">Project Name*</label>
+                        <CustomSelect
+                        name="projectName"
+                        className="input mt-"
+                        onChange={(value) => {
+                          // setFieldValue('source', value.value);
+                          // // Clear dependent fields
+                          // setFieldValue('subSource', '');
+                          // setFieldValue('cpName', '');
+                          // setFieldValue('projectName', '');
+                          // setFieldValue('projectUnitNumber', '');
+                          // setFieldValue('referralLeadName', '');
+                          console.log('projectName', value)
+                          let x ={label: value?.label, value: value?.value, projectName: value?.label, projectId: value?.uid}
+                          setSelProject(x)
                         }}
-                      >
-                        <option value="Referral">Referral</option>
-                        <option value="Direct">Direct</option>
-                        <option value="CP">CP</option>
-                      </Field> */}
+                        value={selProjectIs?.value}
+                        options={projectList}
+                      />
+                        <ErrorMessage name="projectName" component="div" className="text-red-500 text-xs mt-1" />
+                      </div>
+
+                  </div>
+   {/* Source Field */}
+   <div className="mt-3">
+                      <label htmlFor="source" className="block text-sm font-medium text-gray-700 mb-1">Source*</label>
+
                       <CustomSelect
                         name="source"
                         className="input mt-"
@@ -592,57 +671,21 @@ export default function SiteVisitRegisterForm() {
                       <ErrorMessage name="source" component="div" className="text-red-500 text-xs mt-1" />
                     </div>
 
-                    {/* Project Name (moved next to Source) */}
-                    {(values.source === 'Referral' || !values.source) && (
-                      <div className="mt-3">
-                        <label htmlFor="projectName" className="block text-sm font-medium text-gray-700 mb-1">Project Name*</label>
-                        <Field
-                          type="text"
-                          id="projectName"
-                          name="projectName"
-                          className="w-full px-2 py-1  border border-gray-300 rounded-md text-sm"
-                        />
-                        <ErrorMessage name="projectName" component="div" className="text-red-500 text-xs mt-1" />
-                      </div>
-                    )}
+
+
 
                     {/* Direct - Sub Source */}
                     {values.source === 'Direct' && (
-                      <div className="mt-3">
+                      <div className="">
                         <label htmlFor="subSource" className="block text-sm font-medium text-gray-700 mb-1">Sub Source*</label>
-                        {/* <Field
-                          as="select"
-                          id="subSource"
-                          name="subSource"
-                          className="w-full px-2 py-1  border border-gray-300 rounded-md text-sm"
-                        >
 
-                          <option value="Direct Walkin">Direct Walkin</option>
-                          <option value="Google">Google</option>
-                          <option value="Website">Website</option>
-                          <option value="Newspaper">Newspaper</option>
-                          <option value="YouTube">YouTube</option>
-                          <option value="LinkedIn">LinkedIn</option>
-                          <option value="Instagram">Instagram</option>
-                          <option value="Leaflet">Leaflet</option>
-                          <option value="Hoardings">Hoardings</option>
-                          <option value="Whatsapp">Whatsapp</option>
-                          <option value="Email">Email</option>
-                          <option value="99acres">99acres</option>
-                          <option value="Magic Bricks">Magic Bricks</option>
-                          <option value="housing.com">housing.com</option>
-                          <option value="Facebook">Facebook</option>
-                          <option value="Other">Other</option>
-
-
-
-                        </Field> */}
                         <CustomSelect
                           name="subSource"
                           className="input "
                           onChange={(value) => {
                             setFieldValue('subSource', value.value);
                           }}
+                          placeHolder="Select sub source"
                           value={values.subSource}
                           options={[
                             { value: 'Direct Walkin', label: 'Direct Walkin' },
@@ -670,35 +713,41 @@ export default function SiteVisitRegisterForm() {
 
                     {/* CP - Search Field */}
                     {values.source === 'CP' && (
-                      <div className="mt-2">
+                      <div className="min-w-[300px]">
                         <label htmlFor="cpName" className="block text-sm font-medium text-gray-700 mb-1">Search CP Name*</label>
                         <div className="flex">
-                          <Field
-                            type="text"
-                            id="cpName"
-                            name="cpName"
-                            className="flex-1 p-2 border border-gray-300 rounded-md"
-                            placeholder="Enter CP name"
-                          />
-                          <button
-                            type="button"
-                            className="ml-2 px-2 py-2 bg-[#F3F4F6] text-black text-[12px] rounded-md"
-                            onClick={() => {
-                              // Implement CP search functionality here
-                              console.log('Searching for CP:', values.cpName);
-                            }}
-                          >
-                            Search
-                          </button>
+                        <CustomSelect
+                        name="cpName"
+                        className="input mt- w-[100%] flex"
+                        onChange={(value) => {
+                          console.log('cpName', value)
+                          let x ={label: value?.label, value: value?.value, cpName: value?.label, cpId: value?.uid, email: value?.email, cpPh: value?.offPh}
+                          setSelCPUser(value)
+                        }}
+
+                        value={selCPUser?.value}
+                        options={cPUsersList}
+                        placeHolder={"CP Name"}
+                      />
+
                         </div>
                         <ErrorMessage name="cpName" component="div" className="text-red-500 text-xs mt-1" />
                       </div>
                     )}
-                  </div>
-
                   {/* Right Column - Other Referral Fields */}
                   {(values.source === 'Referral' || !values.source) && (
                     <div className="space-y-4  ">
+
+<div>
+                        <label htmlFor="referralLeadName" className="block text-sm font-medium text-gray-700 mb-1">Lead Name*</label>
+                        <Field
+                          type="text"
+                          id="referralLeadName"
+                          name="referralLeadName"
+                          className="w-full px-2 py-1  border border-gray-300 rounded-md text-sm"
+                        />
+                        <ErrorMessage name="referralLeadName" component="div" className="text-red-500 text-xs mt-1" />
+                      </div>
                       <div className=''>
                         <label htmlFor="projectUnitNumber" className="block text-sm font-medium text-gray-700 mb-1">Project Unit Number*</label>
                         <Field
@@ -710,16 +759,6 @@ export default function SiteVisitRegisterForm() {
                         <ErrorMessage name="projectUnitNumber" component="div" className="text-red-500 text-xs mt-1" />
                       </div>
 
-                      <div>
-                        <label htmlFor="referralLeadName" className="block text-sm font-medium text-gray-700 mb-1">Lead Name*</label>
-                        <Field
-                          type="text"
-                          id="referralLeadName"
-                          name="referralLeadName"
-                          className="w-full px-2 py-1  border border-gray-300 rounded-md text-sm"
-                        />
-                        <ErrorMessage name="referralLeadName" component="div" className="text-red-500 text-xs mt-1" />
-                      </div>
                     </div>
                   )}
                 </div>
@@ -790,7 +829,7 @@ export default function SiteVisitRegisterForm() {
                       <option value="1.5">2 Bhk</option>
                       <option value="2">3 Bhk</option>
                       <option value="2.5">4 Bhk</option>
-                      
+
                       <option value="3+">Studio</option>
                       <option value="3+">Penthouse</option>
                     </Field> */}
@@ -874,6 +913,7 @@ export default function SiteVisitRegisterForm() {
                         { value: '3.5cr_4cr', label: '3.50cr to 4cr' },
                         { value: 'above_4cr', label: '4cr and above' }
                       ]}
+                      placeHolder={"Budget"}
                     />
 
                     <ErrorMessage name="budget" component="div" className="text-red-500 text-xs mt-1" />
@@ -1310,7 +1350,7 @@ export default function SiteVisitRegisterForm() {
                   Back
                 </button>
               )}
-
+{isSubmitting?.toString()}
               {step < 3 && step > 0 ? (
                 <button
                   type="submit"
@@ -1322,8 +1362,8 @@ export default function SiteVisitRegisterForm() {
               ) : step === 3 ? (
                 <button
                   type="submit"
-                  disabled={isSubmitting || !isValid}
-                  className={`px-4 py-2 ${isValid ? 'bg-green-500 hover:bg-green-600' : 'bg-green-300'} text-white rounded-md ml-auto`}
+                  disabled={ !isValid}
+                  className={`px-4 py-2 ${isValid ? 'bg-green-500 hover:bg-green-600 cursor-pointer' : 'bg-green-300'} text-white rounded-md ml-auto`}
                 >
                   Submit
                 </button>

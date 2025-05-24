@@ -12,6 +12,7 @@ import {
   steamUsersListByRole,
   updateLeadAssigTo,
   steamUsersListCpAgents,
+  steamSiteVisitsLists,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import 'flowbite'
@@ -135,7 +136,7 @@ const SiteVisitListHome = ({ project }) => {
   }, [])
 
   useEffect(() => {
-    const unsubscribe1 = steamUsersListCpAgents(
+    const unsubscribe1 = steamSiteVisitsLists(
       orgId,
       (querySnapshot) => {
         const usersListA = querySnapshot.docs.map((docSnapshot) =>
@@ -146,7 +147,7 @@ const SiteVisitListHome = ({ project }) => {
           user.label = user.displayName || user.name
           user.value = user.uid
         })
-
+console.log('sitevisits list ', usersListA)
         setusersList(usersListA)
       },
       (error) => setusersList([])
@@ -321,9 +322,6 @@ const SiteVisitListHome = ({ project }) => {
                 <div className="relative w-full  pb-6 rounded-lg">
                   <div className="flex items-center justify-between">
                     <section className="flex gap-2 flex-row">
-
-
-
                     </section>
 
                     <section>

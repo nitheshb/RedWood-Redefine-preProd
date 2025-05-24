@@ -92,6 +92,18 @@ export const steamUsersListCpAgents = (orgId, snapshot, error) => {
   return onSnapshot(itemsQuery, snapshot, error)
 }
 
+// get users cpAgent
+export const steamSiteVisitsLists = (orgId, snapshot, error) => {
+  const itemsQuery = query(
+    collection(db, `${orgId}_siteVisits`),
+
+    // where('orgId', '==', orgId),
+    // where('userStatus', '==', 'active'),
+    // where('roles', 'array-contains-any', ['cp-agent'])
+  )
+  return onSnapshot(itemsQuery, snapshot, error)
+}
+
 // get users list by Dept
 export const steamUsersListByDept = (orgId, dept, snapshot, error) => {
   const itemsQuery = query(
@@ -2817,7 +2829,7 @@ export const addLead = async (orgId, data, by, msg) => {
 }
 export const addSiteVisitEntry = async (orgId, data, by) => {
   console.log('my values is ', data)
-  if (data?.Name) {
+  // if (data?.Name) {
     try {
       delete data['']
       const x = await addDoc(collection(db, `${orgId}_siteVisits`), data)
@@ -2851,7 +2863,7 @@ export const addSiteVisitEntry = async (orgId, data, by) => {
     } catch (error) {
       console.log('error in uploading file with data', data, error)
     }
-  }
+  // }
 }
 export const registerCpUser = async (orgId,  data1, user) => {
   const { empId, email, myRole, deptVal, name, offPh, perPh, userStatus } =
