@@ -695,7 +695,10 @@ export default function LeadProfileSideView({
       Project: value.projectName,
       ProjectId: value.uid,
     }
-
+    setSelProjectIs(value)
+    updateLeadProject(orgId, leadDocId, x)
+    toast.success('Project updated')
+    return
     console.log('my stuff ', x, value)
     const foundLength = await checkIfLeadAlreadyExists(
       `${orgId}_leads`,

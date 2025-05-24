@@ -137,7 +137,7 @@ const SiteVisitListHome = ({ project }) => {
   }, [])
 
   useEffect(() => {
-    const unsubscribe1 = steamUsersListCpAgents(
+    const unsubscribe1 = steamSiteVisitsLists(
       orgId,
       (querySnapshot) => {
         const usersListA = querySnapshot.docs.map((docSnapshot) =>

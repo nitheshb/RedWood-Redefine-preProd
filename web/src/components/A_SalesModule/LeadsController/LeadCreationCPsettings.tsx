@@ -87,7 +87,7 @@ const LeadCreationCPSettings = ({
                     `
                   }
                 >
-                  {uniqueLeadPh ? 'Lead will be counted as reengaged when it is ideal for 60 days ' : 'Lead will be counted for reengaged when it is ideal for 0 days '}
+                  {uniqueLeadPh ? 'Lead will be counted as reengaged when it is ideal for 90 days ' : 'Lead will be counted for reengaged when it is ideal for 0 days '}
 
                 </span>
               </div>
