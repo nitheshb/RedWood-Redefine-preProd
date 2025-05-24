@@ -44,6 +44,7 @@ export const CustomSelect = ({
   name,
   label,
   className,
+  placeHolder,
   labelClassName = 'text-gray-700',
 }) => {
   const defaultValue = (options, value) => {
@@ -68,7 +69,7 @@ export const CustomSelect = ({
             maxMenuHeight={150}
             name={name}
             value={defaultValue(options, value)}
-            placeholder={label || 'All Projects'}
+            placeholder={label || placeHolder ||'All Projects'}
             onChange={(value) => {
               onChange(value)
             }}

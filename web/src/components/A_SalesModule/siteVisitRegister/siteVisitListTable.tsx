@@ -122,26 +122,32 @@ useEffect(() => {
                                       <td className="text-sm text-gray-900 font-medium px-6 py-2 whitespace-nowrap ">
                                         {i + 1}
                                       </td>
-                                      <td className="text-sm text-gray-900 font-medium px-6 py-2 whitespace-nowrap ">
-                                        {data?.name}
+                                      <td className="text-sm text-gray-900 font-medium px-2 py-2 whitespace-nowrap  text-left">
+                                        {data?.firstName}
                                       </td>
-                                      <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
+                                      <td className="text-sm text-gray-900  px-2 py-2 whitespace-nowrap text-left">
                                         {data?.offPh}
                                       </td>
                                       <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
-                                        {data?.perPh}
+                                        {data?.projectName}
+                                      </td>
+                                      <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
+                                        {data?.source}
+                                      </td>
+                                      <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
+                                        {data?.svSchByObj?.name}
                                       </td>
 
                                       <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
-                                        {data?.email}
+                                        {data?.svAttendedByObj?.name}
+                                      </td>
+                                      <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
+                                        {prettyDateTime(data?.svHappendOn)}
+                                      </td>
+                                      <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
+                                        {data?.siteVistRemarks || 'NA'}
                                       </td>
 
-                                      <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
-                                        {data?.userStatus}
-                                      </td>
-                                      <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
-                                        {data?.empId}
-                                      </td>
                                     </tr>
                                   )
                                 })}

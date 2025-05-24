@@ -151,24 +151,7 @@ const CPAgentsListHome = ({ project }) => {
     )
 
     return
-    const unsubscribe = steamUsersListByRole(
-      orgId,
-      (querySnapshot) => {
-        const usersListA = querySnapshot.docs.map((docSnapshot) =>
-          docSnapshot.data()
-        )
 
-        usersListA.map((user) => {
-          user.label = user.displayName || user.name
-          user.value = user.uid
-        })
-
-        setusersList(usersListA)
-      },
-      (error) => setusersList([])
-    )
-
-    return
 
 
   }, [])
