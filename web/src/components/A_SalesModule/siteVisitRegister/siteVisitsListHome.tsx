@@ -13,6 +13,7 @@ import {
   updateLeadAssigTo,
   steamUsersListCpAgents,
   steamSiteVisitsLists,
+  streamSiteVisits,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import 'flowbite'
@@ -136,7 +137,7 @@ const SiteVisitListHome = ({ project }) => {
   }, [])
 
   useEffect(() => {
-    const unsubscribe1 = steamSiteVisitsLists(
+    const unsubscribe1 = steamUsersListCpAgents(
       orgId,
       (querySnapshot) => {
         const usersListA = querySnapshot.docs.map((docSnapshot) =>

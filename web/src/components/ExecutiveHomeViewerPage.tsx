@@ -246,6 +246,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                   'followup',
                   'unassigned',
                   'visitfixed',
+                  'prospect',
                   '',
 
                   'negotiation',

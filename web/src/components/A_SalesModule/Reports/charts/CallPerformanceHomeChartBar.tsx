@@ -120,20 +120,16 @@ const chartConfig = {
     label: 'Page Views',
   },
   desktop: {
-    label: 'Leads',
+    label: 'Call Trends',
     color: '#2563EB',
   },
   mobile: {
-    label: 'Booked',
-    color: '#E76E50',
-  },
-  archieve: {
-    label: 'Archieve',
+    label: 'Call trends over team',
     color: '#E76E50',
   },
 }
 
-export default function LeadHomeChartBar() {
+export default function CallPerformanceChartBar() {
   const [activeChart, setActiveChart] =
     React.useState<keyof typeof chartConfig>('desktop')
 
@@ -141,7 +137,6 @@ export default function LeadHomeChartBar() {
     () => ({
       desktop: chartData.reduce((acc, curr) => acc + curr.desktop, 0),
       mobile: chartData.reduce((acc, curr) => acc + curr.mobile, 0),
-      archieve: chartData.reduce((acc, curr) => acc + curr.mobile, 0),
     }),
     []
   )
@@ -149,14 +144,8 @@ export default function LeadHomeChartBar() {
   return (
     <Card className="border-0">
       <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
-        <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
-          <CardTitle>Leads Trend</CardTitle>
-          <CardDescription>
-            Showing total leads for the last 3 months
-          </CardDescription>
-        </div>
         <div className="flex">
-          {['desktop', 'mobile', 'archieve'].map((key) => {
+          {['desktop', 'mobile'].map((key) => {
             const chart = key as keyof typeof chartConfig
             return (
               <button
@@ -179,6 +168,9 @@ export default function LeadHomeChartBar() {
         </div>
       </CardHeader>
       <CardContent className="px-2 sm:p-6">
+        <div className="text-[#808080] text-xs mt-1">
+          Total number of leads employees handled across every project.
+        </div>
         <ChartContainer
           config={chartConfig}
           className="aspect-auto h-[250px] w-full border-0"

@@ -114,6 +114,14 @@ export const steamUsersListByDept = (orgId, dept, snapshot, error) => {
   )
   return onSnapshot(itemsQuery, snapshot, error)
 }
+
+// get users list by Dept
+export const streamSiteVisits = (orgId, snapshot, error) => {
+  const itemsQuery = query(
+    collection(db, `${orgId}_site_visits`)
+  )
+  return onSnapshot(itemsQuery, snapshot, error)
+}
 // get users list by Dept
 export const steamUsersListByDeptWithInactive = (
   orgId,

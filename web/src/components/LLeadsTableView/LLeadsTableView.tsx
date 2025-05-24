@@ -43,6 +43,7 @@ const LLeadsTableView = ({
             { lab: 'In Progress', val: 'all' },
             { lab: 'New', val: 'new' },
             { lab: 'Follow Up', val: 'followup' },
+            { lab: 'Prospect', val: 'prospect' },
             { lab: 'Visit Fixed', val: 'visitfixed' },
             { lab: 'Negotiation', val: 'negotiation' },
             { lab: 'Un Assigned', val: 'unassigned' },

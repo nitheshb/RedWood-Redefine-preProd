@@ -1404,6 +1404,12 @@ export default function LeadProfileSideView({
       color: ' bg-violet-500',
     },
     {
+      label: 'Prospect',
+      value: 'prospect',
+      logo: 'RefreshIcon',
+      color: ' bg-violet-500',
+    },
+    {
       label: 'Visit Fixed',
       value: 'visitfixed',
       logo: 'FireIcon',
@@ -1898,7 +1904,7 @@ export default function LeadProfileSideView({
                           ? 'sale_bg_color text-white  '
                           : statusFlowObj.value === streamCurrentStatus ||
                             statusFlowObj.value === tempLeadStatus
-                          ? 'bg-white border-[#94B5ED]  shadow-[0_0_0_3px_rgba(251,203,193,1)]  text-black '
+                          ? 'sale_bg_color border-[#94B5ED]  shadow-[0_0_0_3px_rgba(251,203,193,1)]  text-black '
                           : 'bg-white border-gray-300 text-gray-300'
                       }`}
                       onClick={() => setStatusFun(id, statusFlowObj.value)}
@@ -3407,7 +3413,7 @@ export default function LeadProfileSideView({
                                     <ChatAlt2Icon className="w-4 h-4 inline text-gray-500" />
                                     <div className="flex gap-2">
                                       <span className="font-[Outfit] text-[14px] text-[#2B2B2B]">
-                                        {leadDetailsObj?.Remarks || 'NA'}
+                                        {leadDetailsObj?.['Lastnote'] || leadDetailsObj?.Remarks || 'NA'}
                                       </span>
                                       <span className="text-[12px] text-[#606062] font-[Outfit] mt-[2px]">
                                         {leadDetailsObj?.Remarks_T &&
