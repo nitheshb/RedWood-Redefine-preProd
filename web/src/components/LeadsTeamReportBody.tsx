@@ -57,6 +57,7 @@ import { serialProjecVisitFixedData } from './LeadsTeamReport/serialProjectVisit
 import { serialMyData } from './LeadsTeamReport/SourceLeads'
 import ReportSideWindow from './SiderForm/ReportSideView'
 import SiderForm from './SiderForm/SiderForm'
+import SourcePerformanceStack from './A_SalesModule/Reports/SourcePerformance/sourcePerformanceStack'
 
 const valueFeedData = [
   { k: 'Total', v: 300, pic: '' },
@@ -2624,7 +2625,13 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
           {selCat === 'source_perf' && (
             <div className="flex flex-col drop-shadow-md rounded-lg  px-4 font-['outfit']">
               <section>
-                <section className="flex flex-row flex-wrap gap-2">
+                <section className="flex flex-col flex-wrap gap-2">
+                    <SourcePerformanceStack
+                      sourceRawFilData={sourceRawFilData}
+                      showDrillDownFun={showDrillDownFun}
+                      projectFilList={projectListTuned}
+                      leadsFetchedRawData={leadsFetchedRawData}
+                    />
                   <section className="w-[99%] border-[#e7e5eb] bg-white rounded-lg p-4">
                     <div className="flex flex-col"></div>
                     <section className="flex flex-row justify-between">

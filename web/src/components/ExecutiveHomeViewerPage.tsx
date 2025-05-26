@@ -126,7 +126,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
     } else if (selLeadsOf?.value == 'cpleads') {
       getCpTeamLeads()
     } else if (selLeadsOf?.value == 'teamleads') {
-      if (user?.role?.includes(USER_ROLES.ADMIN)) {
+      if (user?.role?.includes(USER_ROLES.ADMIN) || user?.role?.includes(USER_ROLES.SALES_MANAGER)) {
         getAdminAllLeads()
       } else {
         getMyTeamLeads()
@@ -224,7 +224,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
 
   const getAdminAllLeads = async () => {
     const { orgId } = user
-    if (user?.role?.includes(USER_ROLES.ADMIN)) {
+    if (user?.role?.includes(USER_ROLES.ADMIN) || user?.role?.includes(USER_ROLES.SALES_MANAGER)) {
       const unsubscribe = getLeadsByAdminStatus(
         orgId,
         async (querySnapshot) => {
@@ -281,6 +281,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                 'followup',
                 'unassigned',
                 'visitfixed',
+                'prospect',
                 '',
                 'visitdone',
                 'visitcancel',
@@ -323,6 +324,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                 'unassigned',
                 'visitfixed',
                 'visitcancel',
+                'prospect',
                 '',
                 'visitdone',
                 'negotiation',
@@ -383,6 +385,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                   'followup',
                   'unassigned',
                   'visitfixed',
+                  'prospect',
                   '',
                   'visitdone',
                   'visitcancel',
@@ -450,7 +453,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
       },
       (error) => setLeadsFetchedData([])
     )
-    return1
+
   }
   const filter_Leads_Projects_Users_Fun = () => {
     setFetchLeadsLoader(true)
