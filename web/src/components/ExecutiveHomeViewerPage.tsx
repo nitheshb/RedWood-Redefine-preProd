@@ -286,7 +286,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                 'visitdone',
                 'visitcancel',
                 'negotiation',
-                'reassign',
+                // 'reassign',
                 'RNR',
                 // 'booked',
               ]
@@ -328,7 +328,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                 '',
                 'visitdone',
                 'negotiation',
-                'reassign',
+                // 'reassign',
                 'RNR',
                 // 'booked',
               ]
