@@ -155,6 +155,36 @@ export default function ProjectManagement() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 ">
             {/* Left Column */}
             <div className="space-y-4">
+                  {/* Site Visit Section */}
+                  <div className="bg-[#F9F9FB] p-4 rounded-lg shadow-sm">
+                <div className="flex items-center mb-4">
+                  <div className="bg-purple-100 p-1.5 rounded-lg mr-3">
+                    {/* <Clock className="text-purple-600" size={20} /> */}
+                    <img
+                      src="/quill_clock.svg"
+                      alt=""
+                      className="w-[18px] h-[18px]"
+                    />
+                  </div>
+                  <span className="font-semibold text-[12px] text-[#696990] leading-[100%] tracking-[0.06em] uppercase">
+                    SITE VISIT ({projectData.siteVisit.count})
+                  </span>
+                </div>
+
+                <div className="flex justify-between items-center">
+                  <div className="flex gap-2 flex-col">
+                    <div className="font-normal text-[14px] leading-[100%] tracking-[0%] text-[#606062]">
+                      Visit Date: {projectData.siteVisit.date}
+                    </div>
+                    <div className="font-normal text-[14px] leading-[100%] tracking-[0%] text-[#606062]">
+                      Site In-charge: {projectData.siteVisit.inCharge}
+                    </div>
+                  </div>
+                  <button className="font-semibold text-[14px] leading-[100%] tracking-[0em] text-[#0E0A1F]">
+                    Review emoji
+                  </button>
+                </div>
+              </div>
               {/* Lead Strength Card */}
               <div className="bg-[#F9F9FB] p-6 rounded-lg shadow-sm">
                 <div className="flex items-center mb-6">
@@ -212,36 +242,7 @@ export default function ProjectManagement() {
                 </div>
               </div>
 
-              {/* Site Visit Section */}
-              <div className="bg-[#F9F9FB] p-4 rounded-lg shadow-sm">
-                <div className="flex items-center mb-4">
-                  <div className="bg-purple-100 p-1.5 rounded-lg mr-3">
-                    {/* <Clock className="text-purple-600" size={20} /> */}
-                    <img
-                      src="/quill_clock.svg"
-                      alt=""
-                      className="w-[18px] h-[18px]"
-                    />
-                  </div>
-                  <span className="font-semibold text-[12px] text-[#696990] leading-[100%] tracking-[0.06em] uppercase">
-                    SITE VISIT ({projectData.siteVisit.count})
-                  </span>
-                </div>
 
-                <div className="flex justify-between items-center">
-                  <div className="flex gap-2 flex-col">
-                    <div className="font-normal text-[14px] leading-[100%] tracking-[0%] text-[#606062]">
-                      Visit Date: {projectData.siteVisit.date}
-                    </div>
-                    <div className="font-normal text-[14px] leading-[100%] tracking-[0%] text-[#606062]">
-                      Site In-charge: {projectData.siteVisit.inCharge}
-                    </div>
-                  </div>
-                  <button className="font-semibold text-[14px] leading-[100%] tracking-[0em] text-[#0E0A1F]">
-                    Review emoji
-                  </button>
-                </div>
-              </div>
 
               {/* Task Logs Section */}
               <div className="bg-[#F9F9FB] p-4 rounded-lg shadow-sm">

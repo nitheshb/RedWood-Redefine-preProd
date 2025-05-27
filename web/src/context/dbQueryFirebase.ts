@@ -2866,8 +2866,9 @@ export const addSiteVisitEntry = async (orgId, data, by) => {
             },
           ]).select()
 
-        return x
+
       }
+      return x
     } catch (error) {
       console.log('error in uploading file with data', data, error)
     }

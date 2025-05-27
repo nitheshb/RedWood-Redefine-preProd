@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { CheckCircle, Phone, Search } from 'lucide-react';
-import { addSiteVisitEntry, checkIfLeadAlreadyExists, getMyProjects, steamUsersListByRole, steamUsersListCpAgents, updateLeadData } from 'src/context/dbQueryFirebase';
+import { addLead, addSiteVisitEntry, checkIfLeadAlreadyExists, getMyProjects, steamUsersListByRole, steamUsersListCpAgents, updateLeadData } from 'src/context/dbQueryFirebase';
 import toast from 'react-hot-toast';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css'
@@ -10,6 +10,8 @@ import { setHours, setMinutes } from 'date-fns'
 import { useAuth } from 'src/context/firebase-auth-context';
 import { CustomSelect } from 'src/util/formFields/selectBoxField';
 import ConstructHomeList from 'src/components/A_ProjModule/ConstructHomeList';
+import { arrayUnion, Timestamp } from 'firebase/firestore';
+import { sv } from 'date-fns/locale';
 
 export default function SiteVisitRegisterForm() {
   const { user } = useAuth()
@@ -104,7 +106,7 @@ export default function SiteVisitRegisterForm() {
     firstName: '',
     // lastName: '',
     email: '',
-    phone: '',
+    mobile: '',
     secondaryPhone: '',
     // Property requirements
     propertyType: '',
@@ -116,7 +118,6 @@ export default function SiteVisitRegisterForm() {
     customerdesignation: '',
     purposeofPurchase: '',
     bedrooms: '',
-    bedrooms: '',
     // additionalRequirements: '',
     customercompany: '',
     siteVistRemarks: '',
@@ -125,9 +126,6 @@ export default function SiteVisitRegisterForm() {
     projectName: '',
     projectUnitNumber: '',
     referralLeadName: '',
-
-
-
     // Office use only
     // assignedAgent: '',
     // priorityLevel: 'Medium',
@@ -219,7 +217,7 @@ export default function SiteVisitRegisterForm() {
       firstName: lead.Name || '',
       // lastName: lead.lastName || '',
       email: lead.Email || '',
-      phone: lead.Mobile || '',
+      mobile: lead.Mobile || '',
       secondaryPhone: lead.secondaryPhone || '',
       subSource: lead.subSource || '',
       cpName: lead.cpName || '',
@@ -278,7 +276,39 @@ export default function SiteVisitRegisterForm() {
       // projectId: selectedLead?.projectId,
       // leadId: selectedLead?.id,
     }
-    await addSiteVisitEntry(orgId, newData, user)
+    console.log('new data is', newData, selectedLead)
+
+     let siteVisitDoc = await addSiteVisitEntry(orgId, newData, user)
+      newData.svId = siteVisitDoc.id
+    console.log('site visit doc is',selectedLead,  siteVisitDoc, siteVisitDoc.id, newData)
+    let x = {
+      siteVisitA: arrayUnion(siteVisitDoc.id),
+      svSchBy: newData.svSchBy,
+      svSchByObj: newData.svSchByObj,
+      svAttendedBy: newData.svAttendedBy,
+      svHappendOn: newData.svHappendOn,
+      coveredA: arrayUnion('visitdone'),
+      VisitDoneNotes: newData.siteVistRemarks,
+    }
+     if(selectedLead?.id){
+
+       await updateLeadData(orgId, selectedLead.id, x, user?.email)
+     }else{
+      x.Mobile = newData?.mobile
+      x.Name= newData?.firstName
+      x.Email = newData?.email
+      x.Status = 'negotitation'
+      x.intype = 'sitevisit'
+      x.Date = Timestamp.now().toMillis(),
+      x.by = user?.email
+      x.Project= newData?.projectName
+      x.ProjectId = selProjectIs?.value === 'allprojects' ? '' : selProjectIs?.value
+      x.assignedTo = newData?.svAttendedByObj?.value || user?.uid
+      x.assignedToObj= newDate?.svAttendedByObj
+      await addLead(orgId, newData, user?.email, 'Site Visit Added')
+     }
+
+
     //
     // await updateLeadData(orgId, selectedLead.id, finalData, user?.email)
     console.log('final data is', newData)
@@ -1350,7 +1380,7 @@ export default function SiteVisitRegisterForm() {
                   Back
                 </button>
               )}
-{isSubmitting?.toString()}
+
               {step < 3 && step > 0 ? (
                 <button
                   type="submit"

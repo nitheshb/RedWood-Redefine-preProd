@@ -169,11 +169,11 @@ export default function AddLeadTaskComment({
             <section className="flex flex-row items-center">
               <span className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#0E0A1F] whitespace-nowrap">
                 {' '}
-                Reschedule to:
+                Reschedule to :
               </span>
-              <span className="pl-2">
+              <span className="pl-2 relative z-50">
                 <DatePicker
-                  className=" px-2 min-w-[80px] inline font-outfit font-normal text-sm leading-tight tracking-tight text-[font-outfit font-normal text-sm  leading-tight tracking-tight sale_text_color h-[24px]"
+                  className="z-50 px-2 min-w-[80px] inline font-outfit font-normal text-sm leading-tight tracking-tight text-[font-outfit font-normal text-sm  leading-tight tracking-tight sale_text_color h-[24px]"
                   selected={pickerDate}
                   onChange={(date) => {
                     console.log(
@@ -189,6 +189,7 @@ export default function AddLeadTaskComment({
 
                     setAddCommentTime(date.getTime())
                   }}
+                  popperClassName="z-50"
                   showTimeSelect
                   timeFormat="HH:mm"
                   injectTimes={[

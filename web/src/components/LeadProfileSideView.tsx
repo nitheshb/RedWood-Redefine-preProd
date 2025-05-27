@@ -421,6 +421,10 @@ export default function LeadProfileSideView({
   }, [])
 
   useEffect(() => {
+    setAddTaskCommentObj(leadNextTaskObj)
+  }, [leadNextTaskObj])
+
+  useEffect(() => {
     console.log('my stuff ', selProjectIs?.uid, ProjectId)
 
     const z = projectList.filter((da) => {
@@ -531,8 +535,8 @@ export default function LeadProfileSideView({
     if (leadSchFilteredData?.length > 0) {
       const x = leadSchFilteredData[0]
       let y =
-        Math.abs(getDifferenceInHours(x?.schTime, '')) <= 24 &&
-        Math.abs(getDifferenceInHours(x?.schTime, '')) >= 0
+        // Math.abs(getDifferenceInHours(x?.schTime, '')) <= 24 &&
+        getDifferenceInHours(x?.schTime, '') >= 0
           ? true
           : false
       x.comingSoon = y
@@ -2765,7 +2769,7 @@ export default function LeadProfileSideView({
                           <div className="">
                             <div className="flex my-4  items-center justify-between">
                               <div className="font-medium text-[16px] leading-[100%] tracking-[0%] mb-4 ">
-                                Other notes
+                                 Notes
                               </div>
 
                               <button onClick={() => selFun()}>
@@ -2818,11 +2822,14 @@ export default function LeadProfileSideView({
                                 >
                                   <div className="px-6">
                                     <div className="flex justify-between items-start">
-                                      <div>
-                                        <h3 className="text-sm font-medium text-gray-800">
-                                          Heading
-                                        </h3>
-                                      </div>
+                                    <div>
+                                      <h3 className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062]">
+                                        {data?.notes}
+                                      </h3>
+                                      <p className="mt-2 text-sm text-gray-600">
+                                        {data?.txt}
+                                      </p>
+                                    </div>
 
                                       <div>
                                         <div className="flex items-center text-xs text-gray-500 space-x-1">
@@ -2837,14 +2844,7 @@ export default function LeadProfileSideView({
                                     {/* Horizontal line with more visible border style */}
                                     <hr className="border-t-1 border-[#E7E7E9] my-4 w-full" />
 
-                                    <div>
-                                      <h3 className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062]">
-                                        {data?.notes}
-                                      </h3>
-                                      <p className="mt-2 text-sm text-gray-600">
-                                        {data?.txt}
-                                      </p>
-                                    </div>
+
                                   </div>
                                 </li>
                               ))}
@@ -3346,10 +3346,12 @@ export default function LeadProfileSideView({
 
                                   <div className="flex flex-col items-end">
                                     <div
-                                      className={`w-9 h-9 px-3 py-3 mb-[8px] rounded-full sale_bg_color text-blue-700 `}
+                                      className={`w-9 h-9 px-3 py-3 mb-[8px] cursor-pointer rounded-full sale_bg_color text-blue-700 `}
+                                      onClick={() => {                        handleCallButtonClick(user?.uid, Name, Mobile)}}
                                     >
                                       <Phone size={14} />
                                     </div>
+
                                     <span className="font-medium text-[12px] tracking-[0%]">
                                       {(leadNextTaskObj?.sts !== 'completed' ||
                                         Math.abs(
@@ -3361,7 +3363,7 @@ export default function LeadProfileSideView({
                                         <span
                                           className={`py-1 mb-2 ${
                                             leadNextTaskObj?.comingSoon
-                                              ? 'text-[#ffa274]'
+                                              ? 'text-[#060e08]'
                                               : 'text-[#ffa274]'
                                           } text-[12px] text-center`}
                                         >
@@ -3441,6 +3443,49 @@ export default function LeadProfileSideView({
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 ">
                               {/* Left Column */}
                               <div className="space-y-4">
+                              <div className="border border-[#F0F0F5] bg-[#FFFFFF] p-3 shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] rounded-[8px] ">
+                                  <div className="flex justify-between">
+                                    <div className="flex flex-col w-full ">
+                                      <div className="flex items-center mb-4 justify-between pb-[16px] pt-[8px] border-b border-[#F0F0F5]">
+                                        <section className="flex items-center">
+                                          <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+                                            <div className="bg-[#E3F1FA] p-1 rounded-full">
+                                              {/* <Clock className="text-purple-500 w-5 h-5" /> */}
+                                              <img
+                                                src="/location.svg"
+                                                alt=""
+                                                className="w-[18px] h-[18px]"
+                                              />
+                                            </div>
+                                          </div>
+                                          <span className="font-semibold text-[12px] leading-[100%] tracking-[6%] uppercase text-[#2B2B2B]">
+                                            Site visit (
+                                            {projectData.siteVisit.count})
+                                          </span>
+                                        </section>
+                                        <div className="flex flex-row items-center font-medium text-[14px] text-[#0E0A1F] mr-[8px]">
+                                          <img
+                                            src="/good.svg"
+                                            alt="icon"
+                                            className="mb-1 w-8 h-8 mr-[8px]"
+                                          />
+                                          Good
+                                        </div>
+                                      </div>
+
+                                      <div className="flex flex-row justify-between">
+                                        <p className="font-normal text-[12px] text-[#0D0A1E]">
+                                          Visit Date:{' '}
+                                          {projectData.siteVisit.date}
+                                        </p>
+                                        <p className="font-normal text-[12px] text-[#0D0A1E]">
+                                          Site In-charge:{' '}
+                                          {projectData.siteVisit.inCharge}
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </div>
+                              </div>
                                 <div className=" rounded-[8px] py-[16px]  bg-[#FFFFFF]  border border-[#F0F0F5]  shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] max-w-lg">
                                   <div className="flex items-center mb-8 border-b border-gray-200 px-4 pb-[16px]">
                                     <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
@@ -3806,49 +3851,7 @@ export default function LeadProfileSideView({
 
                               {/* Right Column */}
                               <div className="space-y-4">
-                              <div className="border border-[#F0F0F5] bg-[#FFFFFF] p-3 shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] rounded-[8px] ">
-                                  <div className="flex justify-between">
-                                    <div className="flex flex-col w-full ">
-                                      <div className="flex items-center mb-4 justify-between pb-[16px] pt-[8px] border-b border-[#F0F0F5]">
-                                        <section className="flex items-center">
-                                          <div className="bg-[#f2f7fb] p-1 rounded-full mr-3 shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
-                                            <div className="bg-[#E3F1FA] p-1 rounded-full">
-                                              {/* <Clock className="text-purple-500 w-5 h-5" /> */}
-                                              <img
-                                                src="/location.svg"
-                                                alt=""
-                                                className="w-[18px] h-[18px]"
-                                              />
-                                            </div>
-                                          </div>
-                                          <span className="font-semibold text-[12px] leading-[100%] tracking-[6%] uppercase text-[#2B2B2B]">
-                                            Site visit (
-                                            {projectData.siteVisit.count})
-                                          </span>
-                                        </section>
-                                        <div className="flex flex-row items-center font-medium text-[14px] text-[#0E0A1F] mr-[8px]">
-                                          <img
-                                            src="/good.svg"
-                                            alt="icon"
-                                            className="mb-1 w-8 h-8 mr-[8px]"
-                                          />
-                                          Good
-                                        </div>
-                                      </div>
 
-                                      <div className="flex flex-row justify-between">
-                                        <p className="font-normal text-[12px] text-[#0D0A1E]">
-                                          Visit Date:{' '}
-                                          {projectData.siteVisit.date}
-                                        </p>
-                                        <p className="font-normal text-[12px] text-[#0D0A1E]">
-                                          Site In-charge:{' '}
-                                          {projectData.siteVisit.inCharge}
-                                        </p>
-                                      </div>
-                                    </div>
-                                  </div>
-                              </div>
 
 
 
