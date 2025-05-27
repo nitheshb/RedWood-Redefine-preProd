@@ -5483,6 +5483,11 @@ export const IncrementTastCompletedCount = async (
       recA: arrayUnion({ tx: txt, T: Timestamp.now().toMillis() }),
     })
   } catch (error) {
+    await setDoc(doc(db, `${orgId}_emp_performance`, `${userId}DD${ddMy}`), {
+      [newSt]: increment(todayTasksIncre),
+      all_comp: increment(todayTasksIncre),
+      recA: arrayUnion({ tx: txt, T: Timestamp.now().toMillis() }),
+    })
     console.log('erro in emp performance + complted Count')
   }
 }
@@ -5503,7 +5508,12 @@ export const IncrementTastTotalCount = async (
       recA: arrayUnion({ tx: txt, T: Timestamp.now().toMillis() }),
     })
   } catch (error) {
-    console.log('erro in emp performance Upate')
+    await setDoc(doc(db, `${orgId}_emp_performance`, `${userId}DD${ddMy}`), {
+      [newSt]: increment(todayTasksIncre),
+      all: increment(todayTasksIncre),
+      recA: arrayUnion({ tx: txt, T: Timestamp.now().toMillis() }),
+    })
+    console.log('erro in emp performance Upate', error)
   }
 }
 export const decreCountOnResheduleOtherDay = async (
@@ -5521,6 +5531,11 @@ export const decreCountOnResheduleOtherDay = async (
       recA: arrayUnion({ tx: txt, T: Timestamp.now().toMillis() }),
     })
   } catch (error) {
+    await setDoc(doc(db, `${orgId}_emp_performance`, `${userId}DD${ddMy}`), {
+      [newSt]: increment(0),
+      all: increment(0),
+      recA: arrayUnion({ tx: txt, T: Timestamp.now().toMillis() }),
+    })
     console.log('erro in emp performance Upate decre')
   }
 }
