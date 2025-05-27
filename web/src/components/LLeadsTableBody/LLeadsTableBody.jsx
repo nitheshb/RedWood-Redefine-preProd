@@ -15,6 +15,7 @@ import {
   getDifferenceInHours,
   getDifferenceInMinutes,
 } from 'src/util/dateConverter'
+import { handleCallButtonClick } from 'src/util/dailerFeature'
 
 import 'react-datepicker/dist/react-datepicker.css'
 import TableCell from '@mui/material/TableCell'
@@ -639,7 +640,7 @@ export default function LLeadsTableBody({
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0
 
   const [selBlock, setSelBlock] = React.useState({})
-  const [viewUnitStatusA, setViewUnitStatusA] = React.useState([
+  const [viewColumnDataA, setViewColumnDataA] = React.useState([
     'Phone No',
     'Last Activity',
   ])
@@ -648,22 +649,22 @@ export default function LLeadsTableBody({
       const { role } = user
 
       if (role[0] === 'sales-manager') {
-        setViewUnitStatusA(['Phone No', 'Assigned To'])
+        setViewColumnDataA(['Phone No', 'Assigned To'])
       }
     }
   }, [user])
 
   const pickCustomViewer = (item) => {
-    const newViewer = viewUnitStatusA
-    if (viewUnitStatusA.includes(item)) {
+    const newViewer = viewColumnDataA
+    if (viewColumnDataA.includes(item)) {
       const filtered = newViewer.filter(function (value) {
         return value != item
       })
-      setViewUnitStatusA(filtered)
-      console.log('reviwed is ', viewUnitStatusA)
+      setViewColumnDataA(filtered)
+      console.log('reviwed is ', viewColumnDataA)
     } else {
-      setViewUnitStatusA([...newViewer, item])
-      console.log('reviwed is add ', viewUnitStatusA)
+      setViewColumnDataA([...newViewer, item])
+      console.log('reviwed is add ', viewColumnDataA)
     }
   }
 
@@ -679,9 +680,9 @@ export default function LLeadsTableBody({
         setDateRange={setDateRange}
         setSearchKey={setSearchKey}
         rows={rows}
-        viewUnitStatusA={viewUnitStatusA}
+        viewUnitStatusA={viewColumnDataA}
         pickCustomViewer={pickCustomViewer}
-        setViewUnitStatusA={setViewUnitStatusA}
+        setViewUnitStatusA={setViewColumnDataA}
         leadsFetchedData={leadsFetchedData}
         searchVal={searchVal}
       />
@@ -705,7 +706,7 @@ export default function LLeadsTableBody({
               onRequestSort={handleRequestSort}
               rowCount={rows?.length}
               searchkey={searchKey}
-              viewUnitStatusA={viewUnitStatusA}
+              viewUnitStatusA={viewColumnDataA}
             />
 
             <TableBody>
@@ -852,7 +853,7 @@ export default function LLeadsTableBody({
                               </span>
                             </div>
                           </div>
-                          {viewUnitStatusA.includes('Email Id') && (
+                          {viewColumnDataA.includes('Email Id') && (
                             <div>
                               <span className="font-outfit">
                                 <HighlighterStyle
@@ -862,8 +863,11 @@ export default function LLeadsTableBody({
                               </span>
                             </div>
                           )}
-                          {viewUnitStatusA.includes('Phone No') && (
-                            <div>
+                          {viewColumnDataA.includes('Phone No') && (
+                            <button className="hover:underline inline-block cursor-pointer"
+                            onClickCapture={()=>{
+                              handleCallButtonClick(user?.uid, row?.Name, row?.Mobile)
+                            }}>
                               <span className="font-outfit">
                                 <HighlighterStyle
                                   searchKey={searchKey}
@@ -879,7 +883,7 @@ export default function LLeadsTableBody({
                                   )}
                                 />
                               </span>
-                            </div>
+                            </button>
                           )}
                         </section>
                       </TableCell>
@@ -889,7 +893,7 @@ export default function LLeadsTableBody({
                         <TableCell align="left">{row?.UnitNo}</TableCell>
                       )}
 
-                      {viewUnitStatusA.includes('Assigned To') && (
+                      {viewColumnDataA.includes('Assigned To') && (
                         <TableCell align="left">
                           <span className="font-outfit">
                             {row?.assignedToObj?.label}
@@ -928,7 +932,7 @@ export default function LLeadsTableBody({
                           />
                         </span>
                       </TableCell>
-                      {viewUnitStatusA.includes('Last Activity') && (
+                      {viewColumnDataA.includes('Last Activity') && (
                         <TableCell
                           component="th"
                           id={labelId}
@@ -980,7 +984,7 @@ export default function LLeadsTableBody({
                           </>
                         </TableCell>
                       )}
-                      {viewUnitStatusA.includes('Next Sch') && (
+                      {viewColumnDataA.includes('Next Sch') && (
                         <TableCell
                           component="th"
                           id={labelId}

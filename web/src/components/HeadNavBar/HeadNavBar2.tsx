@@ -7,6 +7,7 @@ import { auth } from 'src/context/firebaseConfig'
 import { logout as logoutAction } from 'src/state/actions/user'
 import ModuleSwitchDrop from '../A_SideMenu/modulesSwitchDrop'
 import NotificationHomeDropdown from '../comps/NotificationHeader/NotificationHome'
+import { GlobalSearchBar } from './GlobalSearchBar'
 
 const HeadNavBar2 = ({ selModule, setSelModule, setViewable }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
@@ -56,7 +57,7 @@ const HeadNavBar2 = ({ selModule, setSelModule, setViewable }) => {
             pickedValue={selModule}
           />
         </section>
-        {/* <GlobalSearchBar /> */}
+        <GlobalSearchBar />
         <button className="flex items-center justify-center h-10 px-4 ml-auto "></button>
         <button className="flex items-center justify-center h-10 text-sm font-medium "></button>
         <NotificationHomeDropdown />

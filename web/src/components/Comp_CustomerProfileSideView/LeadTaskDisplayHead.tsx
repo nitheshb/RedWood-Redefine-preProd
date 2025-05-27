@@ -24,8 +24,8 @@ export default function LeadTaskDisplayHead({
 
   useEffect(() => {
     let x =
-      Math.abs(getDifferenceInHours(data?.schTime, '')) <= 24 &&
-        Math.abs(getDifferenceInHours(data?.schTime, '')) >= 0
+
+     getDifferenceInHours(data?.schTime, '') >= 0
         ? true
         : false
     setComingSoonState(x)
@@ -85,14 +85,13 @@ export default function LeadTaskDisplayHead({
 
         <section>
 
-
   {(data?.sts != 'completed' ) && (
     <span
       className={` px-3 py-1  mb-3  rounded-[4px] ${comingSoonState ? 'bg-[#DFF6E0] text-[#1B6600]' : 'bg-[#FDECEC] text-[#D20D0D]'
         }   font-outfit font-medium text-[12px] leading-tight tracking-tight text-center`}
     >
       {comingSoonState ? 'Starts in' : 'Delayed by'} {'  '}
-      {Math.abs(getDifferenceInMinutes(data?.schTime, '')) > 60
+      {getDifferenceInMinutes(data?.schTime, '') > 60
         ? Math.abs(getDifferenceInMinutes(data?.schTime, '')) > 8640
           ? `${Math.abs(getDifferenceInDays(data?.schTime, ''))} Days `
           : `${Math.abs(getDifferenceInHours(data?.schTime, ''))} Hours `

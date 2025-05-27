@@ -122,6 +122,7 @@ import { VerySlimSelectBox } from 'src/util/formFields/slimSelectBoxField'
 import AssigedToDropCompCrm from './assignedToDropCompCrm'
 import { activieLogNamer, empNameSetter } from 'src/util/logNameTranformer'
 import ActivityLogComp from './A_SalesModule/LeadProfileSideView/activityLog'
+import { handleCallButtonClick } from 'src/util/dailerFeature'
 
 // interface iToastInfo {
 //   open: boolean
@@ -1537,37 +1538,7 @@ export default function LeadProfileSideView({
   //   }
   // }
 
-  async function handleCallButtonClick(uid, name, number) {
-    try {
-      const userRef = doc(db, 'users', uid)
-      const userSnap = await getDoc(userRef)
 
-      if (!userSnap.exists()) {
-        console.error('User not found!')
-        return
-      }
-
-      const { fcmToken } = userSnap.data()
-      console.error('Date', userSnap.data())
-      if (!fcmToken) {
-        toast.error('No Sales App exits for you')
-        return
-      }
-
-      console.log('FCM Token:', fcmToken)
-
-      await addDoc(collection(db, 'calls'), {
-        name,
-        number,
-        fcmToken,
-        // timestamp: Timestamp.now()
-      })
-    toast.success('Call triggered in your mobile')
-      console.log('Call document added successfully!')
-    } catch (error) {
-      console.error('Error in call trigger:', error)
-    }
-  }
 
   const [isProjectsExpanded, setIsProjectsExpanded] = useState(false)
   const [isAssignedExpanded, setIsAssignedExpanded] = useState(false)
@@ -3239,39 +3210,44 @@ export default function LeadProfileSideView({
 
                       <div>
                         <div className="grid grid-cols-1 lg:grid-cols-1 gap-4 ">
-                          <div className="relative rounded-[8px] border border-[#F0F0F5]  bg-[#FFFFFF] overflow-hidden">
+                          <div className=" rounded-[8px] border border-[#F0F0F5]  bg-[#FFFFFF] overflow-hidden">
                             {/* Card content */}
-                            <div className="relative z-10 m-[1px] rounded-[8px] bg-white   shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] flex flex-col">
-                              <div className="flex flex-col  justify-between my-[20px] px-6">
-                                <div className="flex  justify-between gap-3">
-                                  <section className="flex flex-col ">
-                                    <div className="flex gap-3">
-                                      <div className="mt-1">
-                                        <label className="flex items-center space-x-3 cursor-pointer">
-                                          <div className="gradient-border-container">
-                                            <input
-                                              type="checkbox"
-                                              className="custom-checkbox"
-                                              // checked={false}
-                                              // onChange={handleChange}
-                                            />
-                                          </div>
-                                        </label>
-                                      </div>
-
-                                      <div className="flex  items-start">
-                                        <h3 className="text-[16px] font-medium text-[#0091ae] mt-[2px]">
-                                          {leadNextTaskObj?.notes}
-                                          {}
-                                        </h3>
-
-                                        <div className="inline-flex items-center px-2  mt-[4px] h-[20px] text-[#606062] rounded-[8px] font-[Outfit] font-medium text-[14px] tracking-[0.25px] ">
-                                          #{streamCurrentStatus}
-                                        </div>
-                                      </div>
+                            <div className="py-1 px-5">
+                                    <div className="pb-3">
+                                      {editTaskObj?.ct === leadNextTaskObj?.ct ? (
+                                        <EditLeadTask
+                                          editTaskObj={editTaskObj}
+                                          setStartDate={setStartDate}
+                                          startDate={startDate}
+                                          takTitle={takTitle}
+                                          setTitleFun={setTitleFun}
+                                          cancelResetStatusFun={
+                                            cancelResetStatusFun
+                                          }
+                                          editTaskFun={editTaskFun}
+                                          d={d}
+                                        />
+                                      ) : null}
                                     </div>
 
-                                    <div className="flex flex-wrap mt-1 font-[Outfit] s_h12 ml-[34px]">
+                                    <>
+                                      {' '}
+                                      <LeadTaskDisplayHead
+                                        data={leadNextTaskObj}
+                                        setAddTaskCommentObj={
+                                          setAddTaskCommentObj
+                                        }
+                                        closeTaskFun={closeTaskFun}
+                                        hoverTasId={hoverTasId}
+                                        undoFun={undoFun}
+                                        setShowVisitFeedBackStatusFun={
+                                          setShowVisitFeedBackStatusFun
+                                        }
+                                        EditTaskOpenWindowFun={
+                                          EditTaskOpenWindowFun
+                                        }
+                                      />
+                                       <div className="flex flex-wrap mt-1 font-[Outfit] s_h12 ml-[34px]">
                                       <div className=" s_h12 text-[#606062] font-[300]">
                                         Assigned date :{' '}
                                         {prettyDateTime(
@@ -3283,30 +3259,9 @@ export default function LeadProfileSideView({
                                         Assigned to: {leadNextTaskObj.by}
                                       </div>
                                     </div>
-                                    <div className="mt-[12px] ml-[34px]">
-                                      <button
-                                        className="font-[Outfit] font-['opensans'] text-[#606062] text-[12px] underline underline-offset-[25%]"
-                                        onClick={() =>
-                                          setAddTaskCommentObj(leadNextTaskObj)
-                                        }
-                                      >
-                                        + Add Comment
-                                      </button>
+                                      {addTaskCommentObj?.ct === leadNextTaskObj?.ct && (
+                                        <div className="ml-[18px]">
 
-                                     {streamCurrentStatus === 'visitfixed' &&  <button
-                                        className="font-[Outfit] ml-6 font-['opensans'] text-[#606062] text-[12px] underline underline-offset-[25%]"
-                                        onClick={() =>{
-                                          setFeature('appointments')
-                                          setShowVisitFeedBackStatusFun(leadNextTaskObj, 'visitdone')
-                                        }
-                                        }
-                                      >
-                                       + SiteVisit feedback{"->"}
-                                      </button>}
-                                    </div>
-                                    {addTaskCommentObj?.ct ===
-                                      leadNextTaskObj?.ct && (
-                                      <section className="flex flex-col ml-[20px]">
                                         <AddLeadTaskComment
                                           closeTask={closeTask}
                                           data={leadNextTaskObj}
@@ -3340,103 +3295,487 @@ export default function LeadProfileSideView({
                                           selType={selType}
                                           d={d}
                                         />
-                                      </section>
-                                    )}
-                                  </section>
-
-                                  <div className="flex flex-col items-end">
-                                    <div
-                                      className={`w-9 h-9 px-3 py-3 mb-[8px] cursor-pointer rounded-full sale_bg_color text-blue-700 `}
-                                      onClick={() => {                        handleCallButtonClick(user?.uid, Name, Mobile)}}
-                                    >
-                                      <Phone size={14} />
-                                    </div>
-
-                                    <span className="font-medium text-[12px] tracking-[0%]">
-                                      {(leadNextTaskObj?.sts !== 'completed' ||
-                                        Math.abs(
-                                          getDifferenceInHours(
-                                            leadNextTaskObj?.schTime,
-                                            ''
-                                          )
-                                        ) <= 24) && (
-                                        <span
-                                          className={`py-1 mb-2 ${
-                                            leadNextTaskObj?.comingSoon
-                                              ? 'text-[#060e08]'
-                                              : 'text-[#ffa274]'
-                                          } text-[12px] text-center`}
-                                        >
-                                          {leadNextTaskObj?.comingSoon
-                                            ? 'Starts in'
-                                            : 'Delayed by'}{' '}
-                                          {Math.abs(
-                                            getDifferenceInMinutes(
-                                              leadNextTaskObj?.schTime,
-                                              ''
-                                            )
-                                          ) > 60
-                                            ? Math.abs(
-                                                getDifferenceInMinutes(
-                                                  leadNextTaskObj?.schTime,
-                                                  ''
-                                                )
-                                              ) > 8640
-                                              ? `${Math.abs(
-                                                  getDifferenceInDays(
-                                                    leadNextTaskObj?.schTime,
-                                                    ''
-                                                  )
-                                                )} Days `
-                                              : `${Math.abs(
-                                                  getDifferenceInHours(
-                                                    leadNextTaskObj?.schTime,
-                                                    ''
-                                                  )
-                                                )} Hours `
-                                            : `${Math.abs(
-                                                getDifferenceInMinutes(
-                                                  leadNextTaskObj?.schTime,
-                                                  ''
-                                                )
-                                              )} Min`}
-                                        </span>
+                                        </div>
                                       )}
-                                    </span>
-                                  </div>
-                                </div>
-                              </div>
+                                      {/* <div className='ml-7 border-b border-[#E7E7E9] py-2 min-h-[1px]'>
+                                        {addTaskCommentObj?.ct != leadNextTaskObj?.ct && (
+                                          <LeadTaskFooter
+                                            data={data}
+                                            hoverTasId={hoverTasId}
+                                            EditTaskOpenWindowFun={
+                                              EditTaskOpenWindowFun
+                                            }
+                                            delFun={delFun}
+                                          />
+                                        )}
+                                      </div> */}
+                                      <div
+                                        className={`ml-7 pb-[8px] min-h-[1px]`}
+                                      >
+                                        {addTaskCommentObj?.ct != leadNextTaskObj?.ct && (
+                                          <LeadTaskFooter
+                                            data={leadNextTaskObj}
+                                            hoverTasId={hoverTasId}
+                                            EditTaskOpenWindowFun={
+                                              EditTaskOpenWindowFun
+                                            }
+                                            delFun={delFun}
+                                          />
+                                        )}
+                                      </div>
+                                      {/*
+{data?.comments?.length > 0 && (
+  <p className="font-outfit font-medium text-[12px] leading-[100%] tracking-[0%] text-[#606062] mt-4 mb-2 ml-6 mb-2">
+    {data.comments.length} Comment{data.comments.length > 1 ? 's' : ''}
+  </p>
+)} */}
+                                      {/* {data?.comments?.length > 0 && (
+  <div className="flex items-center mt-4 mb-2 ml-6">
+    <div className="w-4 h-px bg-[#E7E7E9] mr-2" />
+    <p className="font-outfit font-medium text-[12px] leading-[100%] tracking-[0%] text-[#606062]">
+      {data.comments.length} Comment{data.comments.length > 1 ? 's' : ''}
+    </p>
+  </div>
+)} */}
+                                      {leadNextTaskObj?.comments?.length > 0 && (
+                                        <div
+                                          className={`flex items-center mt-[2px] mb-1 ${
+                                            leadNextTaskObj?.stsType === 'visitfixed' &&
+                                            leadNextTaskObj?.sts !== 'completed'
+                                              ? 'ml-[15px]'
+                                              : 'ml-[15px]'
+                                          } ml-[20px]`}
+                                        >
+                                          <p className="font-outfit font-medium text-[12px] leading-[100%] tracking-[0%] text-[#606062] ml-[16px]">
+                                            {leadNextTaskObj.comments.length} Comment
+                                            {leadNextTaskObj.comments.length > 1
+                                              ? 's'
+                                              : ''}
+                                          </p>
+                                        </div>
+                                      )}
+                                      <ol className="list-none ml-[4px]">
+                                      {leadNextTaskObj?.comments?.map((commentObj, k) => {
+                                        return (
+                                          <li
+                                            // key={k}
+                                            // className={`ml-6 pl-6  py-3 text-[14px] text-[#7E92A2] tracking-wide ${data?.comments?.length - 1 === k
+                                            //   ? 'mb-1'
+                                            //   : ''
+                                            //   }`}
 
-                              <div className=" border-t">
-                                <div className="flex items-center justify-between my-[10px] px-6">
-                                  <div className="flex items-center gap-2 ">
-                                    {/* <img
-                                      src="/comment.svg"
-                                      alt=""
-                                      className="w-4 h-4"
-                                    /> */}
-                                    <ChatAlt2Icon className="w-4 h-4 inline text-gray-500" />
-                                    <div className="flex gap-2">
-                                      <span className="font-[Outfit] text-[14px] text-[#2B2B2B]">
-                                        {leadDetailsObj?.['Lastnote'] || leadDetailsObj?.Remarks || 'NA'}
-                                      </span>
-                                      <span className="text-[12px] text-[#606062] font-[Outfit] mt-[2px]">
-                                        {leadDetailsObj?.Remarks_T &&
-                                          prettyDateTime(
-                                            leadDetailsObj?.Remarks_T
-                                          )}
-                                      </span>
+                                            className={` ml-[29px] ${
+                                              leadNextTaskObj?.stsType === 'visitfixed' &&
+                                              leadNextTaskObj?.sts !== 'completed'
+                                                ? 'pl-0'
+                                                : 'pl-0'
+                                            } py-[4px] text-[14px] text-[#7E92A2] tracking-wide ${
+                                              leadNextTaskObj?.comments?.length - 1 === k
+                                                ? 'mb-1'
+                                                : ''
+                                            }`}
+                                          >
+                                            <section className="flex flex-row justify-between items-center w-full">
+                                              <div className="flex items-center space-x-2">
+                                                {/* <span>
+                                              {' '}
+
+                                              {' '} */}
+
+                                                <img
+                                                  src="/material-symbols-light_add-task-rounded.svg"
+                                                  alt="Clock Icon"
+                                                  className="w-[14px] h-[14px]"
+                                                />
+
+                                                <span className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#7E92A2]">
+                                                  {commentObj?.c}
+                                                </span>
+                                                {/* </span> */}
+                                              </div>
+                                              <p className="text-[12px] font-normal leading-[14px] tracking-normal text-[#606062]">
+                                                {' '}
+                                                {prettyDateTime(commentObj?.t)}
+                                              </p>
+                                            </section>
+                                          </li>
+                                        )
+                                      })}
+                                      </ol>
+                                      {(showNotInterested ||
+                                        showVisitFeedBackStatus) &&
+                                        selSchGrpO?.ct === leadNextTaskObj?.ct && (
+                                          <div className="flex flex-col pt-0 my-10 mt-[10px] rounded bg-white mx-2">
+                                            {showNotInterested && (
+                                              <div className="w-full flex flex-col mb-3 mt-2">
+                                                <SelectDropDownComp
+                                                  label={`Why  ${
+                                                    customerDetails?.Name?.toLocaleUpperCase() ||
+                                                    'Customer'
+                                                  } is  not Interested*`}
+                                                  options={notInterestOptions}
+                                                  value={fbTitle}
+                                                  onChange={(value) => {
+                                                    setFbTitle(value.value)
+                                                  }}
+                                                />
+                                              </div>
+                                            )}
+
+                                            {/* {showVisitFeedBackStatus && (
+                                              <div className="w-full flex flex-col mb-3 mt-2">
+                                                <SelectDropDownComp
+                                                  label="Sites Visit Feedback *"
+                                                  options={
+                                                    siteVisitFeedbackOptions
+                                                  }
+                                                  value={fbTitle}
+                                                  onChange={(value) => {
+                                                    setFbTitle(value.value)
+                                                  }}
+                                                />
+                                              </div>
+                                            )} */}
+
+                                            {showVisitFeedBackStatus && (
+                                              <div className="w-full flex  flex-col mb-3 mt-2">
+                                                <label className="mb-4 font-outfit font-normal text-xs leading-[100%] tracking-[0%] text-[#606062]">
+                                                  Sites Visit Feedback *
+                                                </label>
+
+                                                <div className=" py-4">
+                                <div className="grid grid-cols-2 gap-6">
+
+
+
+
+   {/* Left Reason Section */}
+   <div className="bg-white rounded-xl p-6 shadow-sm border">
+                                    <section className='flex flex-row justify-between'>
+                                    <div className="flex items-center gap-3 mb-5">
+                                      <div className="bg-[#FFFFFF] p-1.5 rounded-lg  shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+                                        <img
+                                          src="/target-sale.svg"
+                                          alt="Clock Icon"
+                                          className="w-[18px] h-[18px]"
+                                        />
+                                      </div>
+
+                                      <h2 className=" font-normal text-[16px] leading-[100%] tracking-[0%] text-[#000000]">
+                                        Budget
+                                      </h2>
+                                    </div>
+                                    <div className="flex items-center mb-4">
+                                      <div className="w-16 mr-2">
+                                        <RoundedProgressBar
+                                          progress={optionvalues.bstr}
+                                          height={8}
+                                          fillColor="#94B5ED"
+                                          showLabels={false}
+                                        />
+                                      </div>
+                                      <span className="text-xs font-medium">{`${optionvalues.bstr}%`}</span>
+                                    </div>
+                                    </section>
+                                    <div className="grid grid-cols-1 gap-4">
+                                  <div className="grid grid-cols-2 gap-4">
+                                      {lookingAtBudgetRange.map((data, i) => (
+                                         <button
+                                         className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
+                                          optionvalues.budget === data.value
+                                             ? 'bg-[#FCE6D9]  leading-[100%] tracking-[0] sale_text_color '
+                                             : 'bg-white hover:bg-gray-50'
+                                         }`}
+                                         onClick={() =>
+
+                                           setoptionvalues({
+                                            ...optionvalues,
+                                            budget: data.value,
+                                            bstr: data.str,
+                                          })
+                                         }
+                                       >
+                                         {data.label}
+                                       </button>
+                                      ))}
+                                  </div>
+
                                     </div>
                                   </div>
-                                  <button className="text-[12px] text-[#606062] font-[Outfit]  " onClick={()=>{
-                                          setFeature('appointments')
 
-                                  }}>
-                                      comments ({leadNextTaskObj?.comments?.length}) {"->"}
-                                  </button>
+                                  {/* Right Reason Section */}
+                                  <div className="bg-white rounded-xl p-6 shadow-sm border">
+                                    <section className='flex flex-row justify-between'>
+                                    <div className="flex items-center gap-3 mb-5">
+                                      <div className="bg-[#FFFFFF] p-1.5 rounded-lg  shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+                                        <img
+                                          src="/target-sale.svg"
+                                          alt="Clock Icon"
+                                          className="w-[18px] h-[18px]"
+                                        />
+                                      </div>
+
+                                      <h2 className=" font-normal text-[16px] leading-[100%] tracking-[0%] text-[#000000]">
+                                        Configuration
+                                      </h2>
+                                    </div>
+                                    <div className="flex items-center mb-4">
+                                      <div className="w-16 mr-2">
+                                        <RoundedProgressBar
+                                          progress={optionvalues.confstr ||0}
+                                          height={8}
+                                          fillColor="#94B5ED"
+                                          showLabels={false}
+                                        />
+                                      </div>
+                                      <span className="text-xs font-medium">{`${optionvalues.confstr ||0}%`}</span>
+                                    </div>
+                                    </section>
+                                    <div className="grid grid-cols-1 gap-4">
+                                  <div className="grid grid-cols-3 gap-4">
+                                      {bedRoomConfigurtionRange.map((data, i) => (
+                                         <button
+                                         className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
+                                          optionvalues.config === data.value
+                                             ? 'bg-[#FCE6D9]  leading-[100%] tracking-[0] sale_text_color '
+                                             : 'bg-white hover:bg-gray-50'
+                                         }`}
+                                         onClick={() =>
+
+                                           setoptionvalues({
+                                            ...optionvalues,
+                                            config: data.value,
+                                            confstr: data.str,
+                                          })
+                                         }
+                                       >
+                                         {data.label}
+                                       </button>
+                                      ))}
+                                  </div>
+
+                                    </div>
+                                  </div>
+                                  {/* Left Reason Section */}
+                                  <div className="bg-white rounded-xl p-6 shadow-sm border">
+                                    <section className='flex flex-row justify-between'>
+                                    <div className="flex items-center gap-3 mb-5">
+                                      <div className="bg-[#FFFFFF] p-1.5 rounded-lg  shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+                                        <img
+                                          src="/target-sale.svg"
+                                          alt="Clock Icon"
+                                          className="w-[18px] h-[18px]"
+                                        />
+                                      </div>
+
+                                      <h2 className=" font-normal text-[16px] leading-[100%] tracking-[0%] text-[#000000]">
+                                        Preferred Area
+                                      </h2>
+                                    </div>
+                                    <div className="flex items-center mb-4">
+                                      <div className="w-16 mr-2">
+                                        <RoundedProgressBar
+                                          progress={optionvalues.astr}
+                                          height={8}
+                                          fillColor="#94B5ED"
+                                          showLabels={false}
+                                        />
+                                      </div>
+                                      <span className="text-xs font-medium">{`${optionvalues.astr}%`}</span>
+                                    </div>
+                                    </section>
+                                    <div className="grid grid-cols-1 gap-4">
+                                  <div className="grid grid-cols-2 gap-4">
+                                      {preferredArea.map((data, i) => (
+                                         <button
+                                         className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
+                                          optionvalues.area === data.value
+                                             ? 'bg-[#FCE6D9]  leading-[100%] tracking-[0] sale_text_color '
+                                             : 'bg-white hover:bg-gray-50'
+                                         }`}
+                                         onClick={() =>
+
+                                           setoptionvalues({
+                                            ...optionvalues,
+                                            area: data.value,
+                                            astr: data.str,
+                                          })
+                                         }
+                                       >
+                                         {data.label}
+                                       </button>
+                                      ))}
+                                  </div>
+
+                                    </div>
+                                  </div>
+
+                                  {/* Right Reason Section */}
+                                  <div className="bg-white rounded-xl p-6 shadow-sm border">
+                                    <section className='flex flex-row justify-between'>
+                                    <div className="flex items-center gap-3 mb-5">
+                                      <div className="bg-[#FFFFFF] p-1.5 rounded-lg  shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)]">
+                                        <img
+                                          src="/target-sale.svg"
+                                          alt="Clock Icon"
+                                          className="w-[18px] h-[18px]"
+                                        />
+                                      </div>
+
+                                      <h2 className=" font-normal text-[16px] leading-[100%] tracking-[0%] text-[#000000]">
+                                        Reason For Purchase
+                                      </h2>
+                                    </div>
+                                    <div className="flex items-center mb-4">
+                                      <div className="w-16 mr-2">
+                                        <RoundedProgressBar
+                                          progress={optionvalues.pstr}
+                                          height={8}
+                                          fillColor="#94B5ED"
+                                          showLabels={false}
+                                        />
+                                      </div>
+                                      <span className="text-xs font-medium">{`${optionvalues.pstr}%`}</span>
+                                    </div>
+                                    </section>
+                                    <div className="grid grid-cols-1 gap-4">
+                                  <div className="grid grid-cols-2 gap-4">
+                                      {reasonPurchase.map((data, i) => (
+                                         <button
+                                         className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${
+                                          optionvalues.purchase === data.value
+                                             ? 'bg-[#FCE6D9]  leading-[100%] tracking-[0] sale_text_color '
+                                             : 'bg-white hover:bg-gray-50'
+                                         }`}
+                                         onClick={() =>
+
+                                           setoptionvalues({
+                                            ...optionvalues,
+                                            purchase: data.value,
+                                            pstr: data.str,
+                                          })
+                                         }
+                                       >
+                                         {data.label}
+                                       </button>
+                                      ))}
+                                  </div>
+
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
+
+                              <div></div>
+
+
+                                                <div className="flex space-x-4">
+                                                  {siteVisitFeedbackOptions.map(
+                                                    (option) => (
+                                                      <button
+                                                        key={option.value}
+                                                        className={`py-2 px-8 text-[12px] flex border border-[#E7E7E9] rounded-lg items-center space-x-1 rounded-md ${
+                                                          fbTitle ===
+                                                          option.value
+                                                            ? 'sale_bg_color text-white'
+                                                            : 'bg-white text-gray-700'
+                                                        }`}
+                                                        onClick={() =>
+                                                          setFbTitle(
+                                                            option.value
+                                                          )
+                                                        }
+                                                      >
+                                                        <img
+                                                          src={`/${option.value}.svg`}
+                                                          alt={option.label}
+                                                          className="w-5 h-5"
+                                                        />
+                                                        <span>
+                                                          {option.label}
+                                                        </span>
+                                                      </button>
+                                                    )
+                                                  )}
+                                                </div>
+                                              </div>
+                                            )}
+
+                                            <div className=" w-full max-w-[882px]  h-auto p-3 md:p-2 gap-2.5   outline-none border border-[#E7E7E9] rounded-[8px] p-2 mt-2">
+                                              <textarea
+                                                value={fbNotes}
+                                                onChange={(e) =>
+                                                  setfbNotes(e.target.value)
+                                                }
+                                                placeholder="Type & make a notes *"
+                                                className="w-full min-h-[161px]  text-[12px] outline-none  focus:border-blue-600 hover:border-blue-600 rounded bg-[#FFFFFF]"
+                                              ></textarea>
+                                            </div>
+                                            <div className="flex flex-wrap items-end item justify-end gap-4 mt-5">
+                                              <button
+                                                onClick={() => {
+                                                  if (fbNotes != '') {
+                                                    setLeadStatus('visitdone')
+                                                    if (showNotInterested) {
+                                                      notInterestedFun()
+                                                      return
+                                                    }
+                                                    addFeedbackFun(data)
+                                                  } else {
+                                                    toast.error(
+                                                      'Please Enter Notes'
+                                                    )
+                                                  }
+                                                }}
+                                                // className={`flex mt-2 rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-balck  bg-[#7bd2ea]  hover:bg-gray-700 hover:text-white `}
+                                                className="flex items-center px-4 h-9 text-sm font-medium text-white sale_bg_color rounded-md"
+                                              >
+                                                Save
+                                              </button>
+                                              <button
+                                                onClick={() => {
+                                                  console.log('am i clicked')
+
+                                                  setLeadStatus('visitdone')
+                                                  if (showNotInterested) {
+                                                    notInterestedFun()
+                                                    return
+                                                  }
+                                                  addFeedbackFun(data)
+
+                                                  getWhatsAppTemplates(
+                                                    'on_sitevisit_done',
+                                                    'wa',
+                                                    'customer',
+                                                    ProjectId,
+                                                    receiverDetails,
+                                                    msgPayload
+                                                  )
+                                                }}
+                                                // className={`flex mt-2 ml-4 rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-balck  bg-[#7bd2ea]  hover:bg-gray-700 hover:text-white `}
+                                                className="flex items-center px-4 h-9 text-sm font-medium text-white sale_bg_color s_btn_txt_color rounded-md"
+                                              >
+                                                Save & Whats App
+                                              </button>
+                                              <button
+                                                onClick={() =>
+                                                  cancelResetStatusFun()
+                                                }
+                                                // className={`flex mt-2 ml-4  rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700 hover:text-white  `}
+                                                className="flex items-center px-4 h-9 text-sm font-medium text-black s_btn_txt_color border rounded-md"
+                                              >
+                                                Cancel
+                                              </button>
+                                            </div>
+                                          </div>
+                                        )}
+
+
+
+                                    </>
+                                  </div>
+
+
                           </div>
 
                           <div>
@@ -4585,7 +4924,7 @@ export default function LeadProfileSideView({
                               </div>
                             )}
                           <div className="py-2">
-                            <ol className="relative  rounded-[8px] border-[1px]  border-[#E7E7E9] shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] ">
+                            <ol className="  rounded-[8px] border-[1px]  border-[#E7E7E9] shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)] ">
                               {leadSchFilteredData.map((data, i) => (
                                 <section
                                   key={i}
@@ -4633,7 +4972,8 @@ export default function LeadProfileSideView({
                                         }
                                       />
                                       {addTaskCommentObj?.ct === data?.ct && (
-                                        <AddLeadTaskComment
+                                       <div className="">
+                                       <AddLeadTaskComment
                                           closeTask={closeTask}
                                           data={data}
                                           setShowVisitFeedBackStatusFun={
@@ -4666,6 +5006,7 @@ export default function LeadProfileSideView({
                                           selType={selType}
                                           d={d}
                                         />
+                                        </div>
                                       )}
                                       {/* <div className='ml-7 border-b border-[#E7E7E9] py-2 min-h-[1px]'>
                                         {addTaskCommentObj?.ct != data?.ct && (

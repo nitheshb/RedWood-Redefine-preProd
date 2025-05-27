@@ -171,7 +171,7 @@ export default function AddLeadTaskComment({
                 {' '}
                 Reschedule to :
               </span>
-              <span className="pl-2 relative z-50">
+              <span className="pl-2  z-50">
                 <DatePicker
                   className="z-50 px-2 min-w-[80px] inline font-outfit font-normal text-sm leading-tight tracking-tight text-[font-outfit font-normal text-sm  leading-tight tracking-tight sale_text_color h-[24px]"
                   selected={pickerDate}
