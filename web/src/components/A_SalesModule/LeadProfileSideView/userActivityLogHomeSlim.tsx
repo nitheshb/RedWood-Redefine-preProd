@@ -112,7 +112,7 @@ export default function UserActivityLogHomeSlim( {filterData, usersList}) {
     </>
   ));
 
-  // Main optimized timeline component
+
   const OptimizedTimeline = memo(({ filterData, Name, timeConv }) => {
     // Memoize the filtered and processed data
     const processedData = useMemo(() => {
