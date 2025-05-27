@@ -51,7 +51,9 @@ console.log('normalized is ', normalized, i)
     case 'Lost':
         return 'junk';
     case 'rnr':
-      return 'junk'
+      return 'followup'
+    case 'RNR':
+        return 'followup'
     case 'eoifilled':
       return 'negotiation';
     case 'eoi filled':
