@@ -654,6 +654,7 @@ export default function TodayLeadsActivitySearchView({
   else if (hrs >= 17 && hrs <= 24) greet = 'Good Evening'
 
   const getMyTodayActivity = async () => {
+    
     const unsubscribe = await streamSaleUserActivityLog(
       user?.orgId,
     'snap',
@@ -703,7 +704,7 @@ export default function TodayLeadsActivitySearchView({
                     </section>
                     <section className="ml-1">
                       <TaskProgress userTodayPerfA={userTodayPerfA} />
-                     
+
                       <div className="mt-1">
                       <section className="bg-white rounded-lg  flex flex-col p-4 w-100 max-h-[400px] overflow-y-scroll">
                       <h5 className="font-bodyLato text-md">My Activity</h5>

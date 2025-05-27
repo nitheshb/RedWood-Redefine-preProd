@@ -268,7 +268,7 @@ export default function SiteVisitRegisterForm() {
     console.log('data value is', values.svHappendOn)
     // In a real application, you would submit the data to your backend here
 
-    const newData = {
+    let newData = {
       ...finalData,
       ...selProjectIs,
       ...selCPUser,

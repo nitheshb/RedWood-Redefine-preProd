@@ -1375,11 +1375,19 @@ export const AddCommentTaskManData = async (orgId, dta, user) => {
 //  get lead activity list
 export const streamSaleUserActivityLog = async (orgId, snapshot, data, error) => {
   const { email } = data
+  // const startOfToday = new Date();
+  // startOfToday.setHours(0, 0, 0, 0);
+  // const millis = startOfToday.getTime();
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  yesterday.setHours(0, 0, 0, 0);
+  const millis = yesterday.getTime();
 
   const { data: lead_logs, error: error1 } = await supabase
     .from(`${orgId}_lead_logs`)
     .select('type,subtype,T, by, from, to ')
     .eq('by', email)
+    .gte('T', millis)
     .order('T', { ascending: false })
     console.log('chek', lead_logs, error1)
   return lead_logs
