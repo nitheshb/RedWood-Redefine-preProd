@@ -1617,7 +1617,7 @@ export function MultipleFileUploadField({
                       return normalizedRow
                     }
                   }else{
-                    normalizedRow['invalidReason'] = `mode not correct or no Lead Owner Email ID  ${normalizedRow['mode']} `
+                    normalizedRow['invalidReason'] = ` ${normalizedRow['mode']}- mode not correct or no Lead Owner Email ID  `
 
                   }
                   return await normalizedRow
