@@ -36,6 +36,12 @@ console.log('normalized is ', normalized, i)
       return 'new';
     case 'prospect':
       return 'prospect';
+    case 'sv scheduled':
+        return 'visitfixed';
+    case 'Sv Scheduled':
+          return 'visitfixed';
+    case 'sv done':
+            return 'negotiation';
     case 'Prospect':
         return 'prospect';
     case 'opportunity':
