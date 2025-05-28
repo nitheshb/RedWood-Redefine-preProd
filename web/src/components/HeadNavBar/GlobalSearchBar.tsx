@@ -21,7 +21,10 @@ export const GlobalSearchBar = (props) => {
   const { user, logout } = useAuth()
   const dispatch = useDispatch()
   const searchKeyField = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value
+    let val = e.target.value
+    if(val.length>10){
+     val  = val.slice(-10);
+    }
     getSearchData(val)
   }
 
@@ -36,8 +39,10 @@ export const GlobalSearchBar = (props) => {
       const orgId = user?.orgId
       const res = await getLeadsByPhoneNo(orgId, { search: val })
       setSearchData(res)
-      console.log('myresponse', res[0], res[0].id)
+      console.log('myresponse', res,)
+      if(res?.length>0){
       dispatch(searchResponse({ ...res[0], id: res[0]?.id }))
+      }
       setshowLoader(false)
     }
   }
@@ -95,7 +100,7 @@ export const GlobalSearchBar = (props) => {
           </div>
         ) : (
           <div className="absolute top-full left-0 right-0 z-10 bg-white border border-gray-300 border-solid box-border rounded-lg mt-1 min-h-[75px]">
-            {searchData.length
+            {searchData.length >0
               ? searchData.map((item, index) => {
                   return (
                     <div key={index} className="m-1 mx-2 mt-2">
@@ -115,7 +120,7 @@ export const GlobalSearchBar = (props) => {
                     </div>
                   );
                 })
-              : null}
+              : <div className='text-xs m-1 mx-2 mt-3 mr-3 ml-3'>Not found</div>}
           </div>
         )}
       </div>
