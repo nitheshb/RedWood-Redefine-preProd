@@ -26,6 +26,7 @@ const LLeadsTableView = ({
   leadsFetchedData,
   leadsTyper,
   searchVal,
+  counts
 }) => {
   const { t } = useTranslation()
   const [value, setValue] = useState('all')
@@ -379,7 +380,8 @@ const LLeadsTableView = ({
                                 : 'bg-gray-200 text-gray-600'
                             }`}
                           >
-                            {rowsCounter(leadsFetchedData, d.val).length}
+                            {/* {rowsCounter(leadsFetchedData, d.val).length} */}
+                            {counts[d.val]} {d.val}
                           </span>
                         </button>
 

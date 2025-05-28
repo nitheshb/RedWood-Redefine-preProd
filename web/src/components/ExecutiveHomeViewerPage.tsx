@@ -31,6 +31,9 @@ import {
 import { SmartCalendarSelect } from 'src/util/formFields/smartCalendarSelect'
 
 import SiderForm from './SiderForm/SiderForm'
+import { collection, getCountFromServer, orderBy, query, where } from 'firebase/firestore'
+import { db } from 'src/context/firebaseConfig'
+import ConstructHomeList from './A_ProjModule/ConstructHomeList'
 
 // function createGuidId() {
 //   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -84,7 +87,15 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
     label: 'My Leads',
     value: 'myleads',
   })
-
+  const [counts, setCounts] = useState({
+    all: 0,
+    new: 0,
+    followup: 0,
+    visitfixed: 0,
+    prospect: 0,
+    negotiation: 0,
+    unassigned: 0
+  });
   const statusFields = [
     'new',
     'followup',
@@ -134,7 +145,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
     } else {
       getMyLeadsOrAnyUserLeads(selLeadsOf?.value)
     }
-  }, [selLeadsOf])
+  }, [selLeadsOf, startDate, endDate])
 
   useEffect(() => {
     const unsubscribe = steamUsersListByRole(
@@ -222,9 +233,101 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
     filter_Leads_Projects_Users_Fun()
   }, [leadsFetchedRawData])
 
+  const filterConfig = [
+    { key: 'all', status: 'all' },
+    { key: 'New', status: 'new' },
+    { key: 'Follow up', status: 'followup' },
+    { key: 'Prospect', status: 'prospect' },
+    { key: 'Visit Fixed', status: 'visitfixed' },
+    { key: 'Negotiation', status: 'negotiation' },
+    { key: 'unassigned', status: 'unassigned' }
+  ];
+  const getHeaderCounts = async (type, userId) => {
+    try {
+      const countPromises = filterConfig.map(async (filter) => {
+        let q;
+        let timeIs = startDate?.getTime() + 19070000
+        if(startDate !== null){
+          let timeIs = startDate?.getTime() + 19070000
+          console.log('time is ===>', timeIs, startDate)
+
+      if(type==='adminManger'){
+        q = query(
+          collection(db, `${orgId}_leads`),
+          where('Status', '==', filter.status),
+          where('Date', '>=', timeIs),
+          where('Date', '<=', endDate?.getTime() + 19070000)
+          // orderBy('Date', 'asc')
+        );
+      }
+
+      if(type==='user' && timeIs!=null ){
+
+        q = query(
+          collection(db, `${orgId}_leads`),
+          where('Status', '==', filter.status),
+          where('assignedTo', '==', userId),
+          where('Date', '>=', timeIs),
+          // where('Date', '<=', endDate?.getTime() + 19070000)
+          // orderBy('Date', 'asc')
+        );
+        console.log('user id is', q, timeIs, userId,filter.status, endDate?.getTime() + 19070000 )
+      }
+
+      if(type==='user' &&  Number.isNaN(timeIs) ){
+        console.error('user id is error in snapshot',q,timeIs,userId, type==='user' &&  Number.isNaN(timeIs), Number.isNaN(timeIs), )
+        q = query(
+          collection(db, `${orgId}_leads`),
+          where('Status', '==', filter.status),
+          where('assignedTo', '==', userId),
+
+          // where('Date', '<=', endDate?.getTime() + 19070000)
+          // orderBy('Date', 'asc')
+        );
+      }
+
+    }
+try {
+  if(!q){
+    q = query(
+      collection(db, `${orgId}_leads`),
+      where('Status', '==', filter.status),
+      where('assignedTo', '==', userId),
+
+      // where('Date', '<=', endDate?.getTime() + 19070000)
+      // orderBy('Date', 'asc')
+    );
+  }
+  const snapshot = await getCountFromServer(q);
+  return { key: filter.status, count: snapshot.data().count };
+} catch (error) {
+console.error('user id is error in snapshot',q,timeIs,userId, type==='user' &&  Number.isNaN(timeIs), Number.isNaN(timeIs), error)
+}
+
+
+      });
+
+      const countsArray = await Promise.all(countPromises);
+      console.log('Counts resolved:', countsArray);
+
+      const newCounts = {};
+      let total = 0;
+      countsArray.forEach(({ key, count }) => {
+        newCounts[key] = count;
+        total += count;
+      });
+      newCounts['all'] = total;
+console.log('counts are', newCounts)
+      setCounts(newCounts);
+    } catch (error) {
+      console.error('Error fetching counts:', error);
+    }
+  }
   const getAdminAllLeads = async () => {
     const { orgId } = user
     if (user?.role?.includes(USER_ROLES.ADMIN) || user?.role?.includes(USER_ROLES.SALES_MANAGER)) {
+
+      getHeaderCounts('adminManger', 'all')
       const unsubscribe = getLeadsByAdminStatus(
         orgId,
         async (querySnapshot) => {
@@ -248,7 +351,6 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                   'visitfixed',
                   'prospect',
                   '',
-
                   'negotiation',
                 ]
               : leadsTyper === 'booked'
@@ -301,6 +403,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
   }
   const getMyLeadsOrAnyUserLeads = async (userId) => {
     const { access, uid, orgId } = user
+    getHeaderCounts('user', userId)
     const unsubscribe = getLeadsByStatusUser(
       orgId,
       async (querySnapshot) => {
@@ -906,6 +1009,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                     selUserProfileF={selUserProfileF}
                     leadsTyper={leadsTyper}
                     searchVal={searchValue}
+                    counts={counts}
                   />
                 </div>
               )}
