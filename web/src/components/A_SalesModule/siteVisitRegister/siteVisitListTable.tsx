@@ -126,7 +126,7 @@ useEffect(() => {
                                         {data?.firstName}
                                       </td>
                                       <td className="text-sm text-gray-900  px-2 py-2 whitespace-nowrap text-left">
-                                        {data?.offPh}
+                                        {data?.mobile}
                                       </td>
                                       <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
                                         {data?.projectName}
