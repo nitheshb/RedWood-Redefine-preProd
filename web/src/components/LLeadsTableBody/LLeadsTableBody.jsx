@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FixedSizeList as List } from 'react-window';
 import { useAuth } from 'src/context/firebase-auth-context'
-
+import { handleCallButtonClick } from 'src/util/dailerFeature'
 // Mock data for demonstration
 
 const StarRating = ({ value, max = 5 }) => {
@@ -174,16 +174,19 @@ const TableRow = ({ index, style, data }) => {
           {/* <div className="text-sm text-gray-500 truncate">
             {highlightText(lead.Email, searchTerm)}
           </div> */}
-          <button
+          <div
             className="text-sm mt-1 text-blue-600 hover:text-blue-800 hover:underline whitespace-nowrap"
             onClick={(e) => {
+              // onPhoneClick(lead?.Name, lead?.Mobile)
+              handleCallButtonClick(user?.uid, lead?.Name, lead?.Mobile)
+              // onRowClick(lead)
               // e.stopPropagation();
-              onPhoneClick(user?.uid, lead?.Name, lead?.Mobile)
+
               // Handle call functionality
             }}
           >
             {lead.countryCode} {highlightText(formatPhone(lead.Mobile), searchTerm)}
-          </button>
+          </div>
         </div>
       </div>
 
@@ -299,8 +302,9 @@ export default function LLeadsTableBody({selStatus,leadsTyper, rowsParent, selUs
     // Handle row click functionality
   };
 
-  const handleCallButtonClick =()=>{
-console.log('phone no is clicked')
+  const handleCallButtonClick =(Name, Mobile) => {
+    console.log('phone no is clicked')
+    handleCallButtonClick(user?.uid, Name, Mobile)
   }
 
 
