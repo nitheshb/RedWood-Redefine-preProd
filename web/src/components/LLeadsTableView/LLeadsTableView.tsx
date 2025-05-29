@@ -2068,6 +2068,7 @@ import AutoSizer from 'react-virtualized-auto-sizer'
 import { VariableSizeList as List } from 'react-window'
 
 import LogSkelton from '../shimmerLoaders/logSkelton'
+import { prettyDate } from 'src/util/dateConverter'
 
 // Row counter function
 const rowsCounter = (parent, searchKey) => {
@@ -2125,13 +2126,15 @@ const LeadRow = ({ data, index, style }) => {
 
     return 'bg-gray-100 text-gray-800'
   }
-
+console.log('item is', item)
   return (
     <div className="lead-row" style={style}>
       <div className="flex border-b border-gray-200 hover:bg-gray-50">
         <div className="w-16 py-4 pl-4">{index + 1}</div>
         <div className="w-32 py-4">{formatDate(item.Date)}</div>
-        <div className="w-32 py-4">{formatDate(item.AssignedDate)}</div>
+        <div className="w-32 py-4">{item.assignT != undefined
+                              ? prettyDate(item?.assignT)
+                              : prettyDate(item?.Date)}</div>
         <div className="flex-1 py-4">
           <div>{item.Name || 'N/A'}</div>
           <div className="text-sm text-gray-500">{item.Phone || 'N/A'}</div>
