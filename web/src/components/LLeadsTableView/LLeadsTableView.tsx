@@ -387,7 +387,7 @@ const LLeadsTableView = ({
                             }`}
                           >
                             {/* {rowsCounter(leadsFetchedData, d.val).length} */}
-                            {counts[d.val]} {d.val}
+                            {counts[d.val]}
                           </span>
                         </button>
 
