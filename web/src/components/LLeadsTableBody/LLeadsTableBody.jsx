@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FixedSizeList as List } from 'react-window';
+import { useAuth } from 'src/context/firebase-auth-context'
 
 // Mock data for demonstration
 
@@ -113,7 +114,7 @@ const SearchBar = ({ searchTerm, onSearchChange, totalResults }) => {
 };
 
 const TableRow = ({ index, style, data }) => {
-  const { leads, searchTerm, onRowClick } = data;
+  const { leads, searchTerm, onRowClick, onPhoneClick , user} = data;
   const lead = leads[index];
 
   const formatDate = (timestamp) => {
@@ -176,7 +177,8 @@ const TableRow = ({ index, style, data }) => {
           <button
             className="text-sm mt-1 text-blue-600 hover:text-blue-800 hover:underline whitespace-nowrap"
             onClick={(e) => {
-              e.stopPropagation();
+              // e.stopPropagation();
+              onPhoneClick(user?.uid, lead?.Name, lead?.Mobile)
               // Handle call functionality
             }}
           >
@@ -272,6 +274,7 @@ const TableHeader = () => {
 export default function LLeadsTableBody({selStatus,leadsTyper, rowsParent, selUserProfileF, newArray, fetchLeadsLoader, leadsFetchedData, mySelRows, searchVal}) {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredLeads, setFilteredLeads] = useState(leadsFetchedData);
+    const { user } = useAuth()
 
   useEffect(() => {
     const filtered = leadsFetchedData.filter(lead =>
@@ -288,8 +291,19 @@ export default function LLeadsTableBody({selStatus,leadsTyper, rowsParent, selUs
 
   const handleRowClick = (lead) => {
     console.log('Lead clicked:', lead);
+    let newSelected = []
+
+    selUserProfileF('Lead Profile', lead)
+    setSelected(newSelected)
+
     // Handle row click functionality
   };
+
+  const handleCallButtonClick =()=>{
+console.log('phone no is clicked')
+  }
+
+
 
   return (
     <div className="bg-white shadow-sm  border border-gray-200">
@@ -312,7 +326,9 @@ export default function LLeadsTableBody({selStatus,leadsTyper, rowsParent, selUs
                 itemData={{
                   leads: filteredLeads,
                   searchTerm,
-                  onRowClick: handleRowClick
+                  onRowClick: handleRowClick,
+                  onPhoneClick:handleCallButtonClick,
+                  user: user
                 }}
               >
                 {TableRow}
