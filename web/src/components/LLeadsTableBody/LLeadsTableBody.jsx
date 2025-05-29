@@ -2,62 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { FixedSizeList as List } from 'react-window';
 
 // Mock data for demonstration
-const mockLeadsData = [
-  {
-    id: 1,
-    Date: Date.now() - 86400000,
-    assignT: Date.now() - 86400000,
-    Name: "John Doe",
-    Email: "john.doe@email.com",
-    countryCode: "+1",
-    Mobile: "1234567890",
-    Project: "Luxury Apartments",
-    UnitNo: "A-101",
-    assignedToObj: { label: "Sarah Wilson" },
-    Source: "Website",
-    leadstrength: 80,
-    Status: "Hot Lead",
-    leadUpT: Date.now() - 3600000,
-    schTime: Date.now() + 7200000,
-    Remarks: "Very interested in premium units"
-  },
-  {
-    id: 2,
-    Date: Date.now() - 172800000,
-    assignT: Date.now() - 172800000,
-    Name: "Jane Smith",
-    Email: "jane.smith@email.com",
-    countryCode: "+1",
-    Mobile: "9876543210",
-    Project: "Modern Condos",
-    UnitNo: "B-205",
-    assignedToObj: { label: "Mike Johnson" },
-    Source: "Referral",
-    leadstrength: 60,
-    Status: "Warm Lead",
-    leadUpT: Date.now() - 7200000,
-    schTime: Date.now() + 86400000,
-    Remarks: "Needs financing options"
-  },
-  {
-    id: 3,
-    Date: Date.now() - 259200000,
-    assignT: Date.now() - 259200000,
-    Name: "Robert Johnson",
-    Email: "robert.j@email.com",
-    countryCode: "+1",
-    Mobile: "5551234567",
-    Project: "Sky Towers",
-    UnitNo: "C-308",
-    assignedToObj: { label: "Emily Davis" },
-    Source: "Social Media",
-    leadstrength: 90,
-    Status: "New Lead",
-    leadUpT: Date.now() - 1800000,
-    schTime: Date.now() + 3600000,
-    Remarks: "Looking for 3BHK units"
-  }
-];
 
 const StarRating = ({ value, max = 5 }) => {
   const percentage = (value / 100) * max;
