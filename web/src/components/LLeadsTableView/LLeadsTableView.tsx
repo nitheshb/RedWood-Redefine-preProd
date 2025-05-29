@@ -26,10 +26,12 @@ const LLeadsTableView = ({
   leadsFetchedData,
   leadsTyper,
   searchVal,
-  counts
+  counts,
+  setSelStatusTab,
+  selStatusTab
 }) => {
   const { t } = useTranslation()
-  const [value, setValue] = useState('all')
+
   const [tableData, setTableData] = useState([])
   const [tabHeadFieldsA, settabHeadFieldsA] = useState([])
 
@@ -56,10 +58,10 @@ const LLeadsTableView = ({
     settabHeadFieldsA(tabHeadFieldsA1)
 
     leadsTyper === 'inProgress'
-      ? setValue('all')
+      ? setSelStatusTab('all')
       : leadsTyper === 'archieveLeads'
-      ? setValue('archieve_all')
-      : setValue('booked')
+      ? setSelStatusTab('archieve_all')
+      : setSelStatusTab('booked')
   }, [])
   const [val, setVal] = React.useState('one')
 
@@ -293,31 +295,35 @@ const LLeadsTableView = ({
   const [filLeadsA, setFilLeadsA] = useState([])
 
   useEffect(() => {
-    switch (value) {
-      case 'all':
-        return setFilLeadsA(leadsFetchedData)
-      case 'followup':
-        return setFilLeadsA(
-          leadsFetchedData.filter((dat) => dat?.Status === value)
-        )
-      case 'visitfixed':
-        return setFilLeadsA(
-          leadsFetchedData.filter((dat) => dat?.Status === value)
-        )
-      case 'negotiation':
-        return setFilLeadsA(
-          leadsFetchedData.filter((dat) => dat?.Status === value)
-        )
-      case 'unassigned':
-        return setFilLeadsA(
-          leadsFetchedData.filter((dat) => dat?.Status === value)
-        )
-      default:
-        return setFilLeadsA(
-          leadsFetchedData.filter((dat) => dat?.Status === value)
-        )
-    }
-  }, [value, leadsFetchedData])
+
+    // switch (value) {
+    //   case 'all':
+    //     return setFilLeadsA(leadsFetchedData)
+    //   case 'followup':
+    //     return setFilLeadsA(
+    //       leadsFetchedData.filter((dat) => dat?.Status === value)
+    //     )
+    //   case 'visitfixed':
+    //     return setFilLeadsA(
+    //       leadsFetchedData.filter((dat) => dat?.Status === value)
+    //     )
+    //   case 'negotiation':
+    //     return setFilLeadsA(
+    //       leadsFetchedData.filter((dat) => dat?.Status === value)
+    //     )
+    //   case 'unassigned':
+    //     return setFilLeadsA(
+    //       leadsFetchedData.filter((dat) => dat?.Status === value)
+    //     )
+    //   default:
+    //     return setFilLeadsA(
+    //       leadsFetchedData.filter((dat) => dat?.Status === value)
+    //     )
+    // }
+    setFilLeadsA(leadsFetchedData)
+  }, [selStatusTab, leadsFetchedData])
+
+
   useEffect(() => {}, [leadsFetchedData])
   return (
     <Section pb={4} pt={2}>
@@ -338,7 +344,7 @@ const LLeadsTableView = ({
                 {tabHeadFieldsA.map((d, i) => {
                   return (
                     <ul
-                      value={value}
+                      value={selStatusTab}
                       onChange={handleChange}
                       textColor="secondary"
                       indicatorColor="secondary"
@@ -352,7 +358,7 @@ const LLeadsTableView = ({
                       >
                         <button
                           className={`inline-flex items-center  py-2 text-sm font-medium transition-all border-b-2 ${
-                            value === d.val
+                            selStatusTab === d.val
                               ? 'border-black text-gray-900 font-medium'
                               : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                           }`}
@@ -360,14 +366,14 @@ const LLeadsTableView = ({
                           role="tab"
                           onClick={() => {
                             setFetchLeadsLoader(true)
-                            setValue(d.val)
+                            setSelStatusTab(d.val)
                             setFetchLeadsLoader(false)
                             setmySelRows(rowsCounter(leadsFetchedData, d.val))
                           }}
                         >
                           <span
                             className={` mr-2  ${
-                              value === d.val ? 'font-medium' : ''
+                              selStatusTab === d.val ? 'font-medium' : ''
                             }`}
                           >
                             {d.lab}
@@ -375,7 +381,7 @@ const LLeadsTableView = ({
 
                           <span
                             className={`flex items-center justify-center min-w-6 h-6 px-2 text-xs font-medium rounded-full ${
-                              value === d.val
+                              selStatusTab === d.val
                                 ? 'bg-[#FDEFE7] text-[#0E0A1F]'
                                 : 'bg-gray-200 text-gray-600'
                             }`}
@@ -396,8 +402,8 @@ const LLeadsTableView = ({
             </div>
 
             {fetchLeadsLoader &&
-              [1, 2, 3].map((data, i) => <LogSkelton key={i} />)}
-            {statusSepA[0]?.[value].length === 0 && (
+              [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((data, i) => <LogSkelton key={i} />)}
+            {statusSepA[0]?.[selStatusTab].length === 0 && (
               <div className="flex items-center py-6">
                 <span
                   className="text-xs text-gray-500"
@@ -412,14 +418,14 @@ const LLeadsTableView = ({
               </div>
             )}
 
-            {!fetchLeadsLoader && statusSepA[0]?.[value].length != 0 && (
+            {!fetchLeadsLoader && statusSepA[0]?.[selStatusTab].length != 0 && (
               <LLeadsTableBody
                 leadsTyper={leadsTyper}
                 fetchLeadsLoader={fetchLeadsLoader}
-                selStatus={value}
+                selStatus={selStatusTab}
                 rowsParent={statusSepA[0]}
                 selUserProfileF={selUserProfileF}
-                newArray={statusSepA[0]?.[value]}
+                newArray={statusSepA[0]?.[selStatusTab]}
                 leadsFetchedData={filLeadsA}
                 mySelRows={mySelRows}
                 searchVal={searchVal}

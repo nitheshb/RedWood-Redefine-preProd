@@ -87,6 +87,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
     label: 'My Leads',
     value: 'myleads',
   })
+  const [selStatusTab, setSelStatusTab] = useState('all')
   const [counts, setCounts] = useState({
     all: 0,
     new: 0,
@@ -145,7 +146,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
     } else {
       getMyLeadsOrAnyUserLeads(selLeadsOf?.value)
     }
-  }, [selLeadsOf, startDate, endDate])
+  }, [selLeadsOf, selStatusTab,startDate, endDate])
 
   useEffect(() => {
     const unsubscribe = steamUsersListByRole(
@@ -244,84 +245,125 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
   ];
   const getHeaderCounts = async (type, userId) => {
     try {
+      const timeOffset = 19070000;
+      const timeIs = startDate ? startDate.getTime() + timeOffset : null;
+      const endTime = endDate ? endDate.getTime() + timeOffset : null;
+
       const countPromises = filterConfig.map(async (filter) => {
         let q;
-        let timeIs = startDate?.getTime() + 19070000
-        if(startDate !== null){
-          let timeIs = startDate?.getTime() + 19070000
-          console.log('time is ===>', timeIs, startDate)
 
-      if(type==='adminManger'){
-        q = query(
-          collection(db, `${orgId}_leads`),
-          where('Status', '==', filter.status),
-          where('Date', '>=', timeIs),
-          where('Date', '<=', endDate?.getTime() + 19070000)
-          // orderBy('Date', 'asc')
-        );
-      }
+        const baseCollection = collection(db, `${orgId}_leads`);
+        const statusFilter = where('Status', '==', filter.status);
 
-      if(type==='user' && timeIs!=null ){
+        if (type === 'adminManger' && timeIs != null && endTime != null) {
+          console.log('inside admin');
+          q = query(baseCollection, statusFilter, where('Date', '>=', timeIs), where('Date', '<=', endTime));
+        } else if (type === 'user') {
+          console.log('inside user');
+          const assignedToFilter = where('assignedTo', '==', userId);
+          if (Number.isNaN(timeIs)) {
+            console.warn('Time is NaN. Querying without date filters.');
+            q = query(baseCollection, statusFilter, assignedToFilter);
+          } else {
+            q = query(baseCollection, statusFilter, assignedToFilter, where('Date', '>=', timeIs));
+          }
 
-        q = query(
-          collection(db, `${orgId}_leads`),
-          where('Status', '==', filter.status),
-          where('assignedTo', '==', userId),
-          where('Date', '>=', timeIs),
-          // where('Date', '<=', endDate?.getTime() + 19070000)
-          // orderBy('Date', 'asc')
-        );
-        console.log('user id is', q, timeIs, userId,filter.status, endDate?.getTime() + 19070000 )
-      }
+          console.log('User query:', { q, timeIs, userId, status: filter.status, endTime });
+        }
 
-      if(type==='user' &&  Number.isNaN(timeIs) ){
-        console.error('user id is error in snapshot',q,timeIs,userId, type==='user' &&  Number.isNaN(timeIs), Number.isNaN(timeIs), )
-        q = query(
-          collection(db, `${orgId}_leads`),
-          where('Status', '==', filter.status),
-          where('assignedTo', '==', userId),
+        if (!q) {
+          console.log('Fallback query (undefined q)');
+          q = query(baseCollection, statusFilter);
+        }
 
-          // where('Date', '<=', endDate?.getTime() + 19070000)
-          // orderBy('Date', 'asc')
-        );
-      }
-
-    }
-try {
-  if(!q){
-    q = query(
-      collection(db, `${orgId}_leads`),
-      where('Status', '==', filter.status),
-      where('assignedTo', '==', userId),
-
-      // where('Date', '<=', endDate?.getTime() + 19070000)
-      // orderBy('Date', 'asc')
-    );
-  }
-  const snapshot = await getCountFromServer(q);
-  return { key: filter.status, count: snapshot.data().count };
-} catch (error) {
-console.error('user id is error in snapshot',q,timeIs,userId, type==='user' &&  Number.isNaN(timeIs), Number.isNaN(timeIs), error)
-}
-
-
+        try {
+          const snapshot = await getCountFromServer(q);
+          return { key: filter.status, count: snapshot.data().count };
+        } catch (error) {
+          console.error('Error fetching snapshot:', { q, timeIs, userId, error });
+          return { key: filter.status, count: 0 };
+        }
       });
 
       const countsArray = await Promise.all(countPromises);
       console.log('Counts resolved:', countsArray);
 
-      const newCounts = {};
-      let total = 0;
-      countsArray.forEach(({ key, count }) => {
-        newCounts[key] = count;
-        total += count;
-      });
-      newCounts['all'] = total;
-console.log('counts are', newCounts)
+      const newCounts = countsArray.reduce(
+        (acc, { key, count }) => {
+          acc[key] = count;
+          acc.all += count;
+          return acc;
+        },
+        { all: 0 }
+      );
+
+      console.log('Final counts:', newCounts);
       setCounts(newCounts);
     } catch (error) {
       console.error('Error fetching counts:', error);
     }
+
+  }
+  const streamLeadsDataByStatus = async (type, userId) => {
+    try {
+      const timeOffset = 19070000;
+      const timeIs = startDate ? startDate.getTime() + timeOffset : null;
+      const endTime = endDate ? endDate.getTime() + timeOffset : null;
+
+      const countPromises = filterConfig.map(async (filter) => {
+        let q;
+
+        const baseCollection = collection(db, `${orgId}_leads`);
+        const statusFilter = where('Status', '==', filter.status);
+
+        if (type === 'adminManger' && timeIs != null && endTime != null) {
+          console.log('inside admin');
+          q = query(baseCollection, statusFilter, where('Date', '>=', timeIs), where('Date', '<=', endTime));
+        } else if (type === 'user') {
+          console.log('inside user');
+          const assignedToFilter = where('assignedTo', '==', userId);
+          if (Number.isNaN(timeIs)) {
+            console.warn('Time is NaN. Querying without date filters.');
+            q = query(baseCollection, statusFilter, assignedToFilter);
+          } else {
+            q = query(baseCollection, statusFilter, assignedToFilter, where('Date', '>=', timeIs));
+          }
+
+          console.log('User query:', { q, timeIs, userId, status: filter.status, endTime });
+        }
+
+        if (!q) {
+          console.log('Fallback query (undefined q)');
+          q = query(baseCollection, statusFilter);
+        }
+
+        try {
+          const snapshot = await getCountFromServer(q);
+          return { key: filter.status, count: snapshot.data().count };
+        } catch (error) {
+          console.error('Error fetching snapshot:', { q, timeIs, userId, error });
+          return { key: filter.status, count: 0 };
+        }
+      });
+
+      const countsArray = await Promise.all(countPromises);
+      console.log('Counts resolved:', countsArray);
+
+      const newCounts = countsArray.reduce(
+        (acc, { key, count }) => {
+          acc[key] = count;
+          acc.all += count;
+          return acc;
+        },
+        { all: 0 }
+      );
+
+      console.log('Final counts:', newCounts);
+      setCounts(newCounts);
+    } catch (error) {
+      console.error('Error fetching counts:', error);
+    }
+
   }
   const getAdminAllLeads = async () => {
     const { orgId } = user
@@ -343,7 +385,7 @@ console.log('counts are', newCounts)
         },
         {
           status:
-            leadsTyper === 'inProgress'
+            leadsTyper === 'inProgress' && selStatusTab === 'all'
               ? [
                   'new',
                   'followup',
@@ -355,7 +397,7 @@ console.log('counts are', newCounts)
                 ]
               : leadsTyper === 'booked'
               ? ['booked']
-              : archieveFields,
+              : leadsTyper == 'archieveLeads' ? archieveFields : [selStatusTab],
           projAccessA: projAccessA,
         },
         (error) => setLeadsFetchedData([])
@@ -1010,6 +1052,8 @@ console.log('counts are', newCounts)
                     leadsTyper={leadsTyper}
                     searchVal={searchValue}
                     counts={counts}
+                    setSelStatusTab={setSelStatusTab}
+                    selStatusTab={selStatusTab}
                   />
                 </div>
               )}
