@@ -1423,12 +1423,12 @@ export default function LeadProfileSideView({
       logo: 'FireIcon',
       color: ' bg-violet-500',
     },
-    {
-      label: 'Visit Done',
-      value: 'visitdone',
-      logo: 'DuplicateInactiveIcon',
-      color: ' bg-violet-500',
-    },
+    // {
+    //   label: 'Visit Done',
+    //   value: 'visitdone',
+    //   logo: 'DuplicateInactiveIcon',
+    //   color: ' bg-violet-500',
+    // },
     {
       label: 'Negotiation',
       value: 'negotiation',

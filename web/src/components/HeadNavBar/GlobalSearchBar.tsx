@@ -21,7 +21,10 @@ export const GlobalSearchBar = (props) => {
   const { user, logout } = useAuth()
   const dispatch = useDispatch()
   const searchKeyField = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value
+    let val = e.target.value
+    if(val.length>10){
+     val  = val.slice(-10);
+    }
     getSearchData(val)
   }
 
@@ -36,8 +39,10 @@ export const GlobalSearchBar = (props) => {
       const orgId = user?.orgId
       const res = await getLeadsByPhoneNo(orgId, { search: val })
       setSearchData(res)
-      console.log('myresponse', res[0], res[0].id)
-      dispatch(searchResponse({ ...res[0], id: res[0].id }))
+      console.log('myresponse', res,)
+      if(res?.length>0){
+      dispatch(searchResponse({ ...res[0], id: res[0]?.id }))
+      }
       setshowLoader(false)
     }
   }
@@ -59,92 +64,68 @@ export const GlobalSearchBar = (props) => {
   }, [])
   return (
     <>
-      <span className="flex ml-5 bg-gray-50 border border-gray-300 border-solid box-border w-1/3 rounded-md">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-4 w-4  mt-[6px] mx-2"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-          ></path>
-        </svg>
-        <input
-          type="text"
-          id="globalSearch"
-          placeholder="Search Phone no"
-          onChange={searchKeyField}
-          autoComplete="off"
-          className="w-52 bg-transparent focus:border-transparent focus:ring-0 focus-visible:border-transparent focus-visible:ring-0 focus:outline-none text-sm leading-7 text-gray-900 w-4/5 relative"
-        />
-        {showSearchDropdown && (
-          <div ref={refContainer}>
-            {showLoader ? (
-              <div
-                style={{ width: '397px', left: '393px', top: '40px' }}
-                className="z-10 absolute bg-white border border-gray-300 border-solid box-border rounded-r-lg p-2 min-h-[75px]"
-              >
-                <div className="flex justify-center">
-                  <Loader texColor="text-black" size="h-8 w-8" />
-                </div>
-              </div>
-            ) : (
-              <div
-                style={{ width: '397px', right: '502px', top: '40px' }}
-                className="z-10 absolute bg-white border border-gray-300 border-solid box-border rounded-lg mt-1 min-h-[75px]"
-              >
-                {searchData.length
-                  ? searchData.map((item, index) => {
-                      return (
-                        <div className="m-1 mx-2 mt-2">
-                          <span>{item.Name}</span>
-                          <div className="">
-                            <Link
-                              to={routes.leadsManager({
-                                type: 'inProgress',
-                                clicked: Math.random(),
-                              })}
-                              className="text-xs underline mr-3 text-indigo-700"
-                              id="testing"
-                            >
-                              Sales
-                            </Link>
-                            <Link
-                              to={routes.crmModule()}
-                              className="text-xs underline mr-3 text-indigo-700"
-                            >
-                              CRM
-                            </Link>
+    <div className="relative ml-5 w-1/3">
+    <span className="flex bg-gray-50 border border-gray-300 border-solid box-border w-full rounded-md">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-4 w-4 mt-[6px] mx-2"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+        ></path>
+      </svg>
+      <input
+        type="text"
+        id="globalSearch"
+        placeholder="Search Phone no"
+        onChange={searchKeyField}
+        autoComplete="off"
+        className="w-52 bg-transparent focus:border-transparent focus:ring-0 focus-visible:border-transparent focus-visible:ring-0 focus:outline-none text-sm leading-7 text-gray-900 w-4/5 relative"
+      />
+    </span>
 
-                            <Link
-                              to={routes.financeModule()}
-                              className="text-xs underline mr-3 text-indigo-700"
-                            >
-                              Finance
-                            </Link>
-
-                            <Link
-                              to={routes.legalModule()}
-                              className="text-xs underline mr-3 text-indigo-700"
-                            >
-                              Legal
-                            </Link>
-                          </div>
-                          {searchData.length - 1 !== index && <hr></hr>}
-                        </div>
-                      )
-                    })
-                  : null}
-              </div>
-            )}
+    {showSearchDropdown && (
+      <div ref={refContainer}>
+        {showLoader ? (
+          <div className="absolute top-full left-0 right-0 z-10 bg-white border border-gray-300 border-solid box-border rounded-lg mt-1 p-2 min-h-[75px]">
+            <div className="flex justify-center">
+              <Loader texColor="text-black" size="h-8 w-8" />
+            </div>
+          </div>
+        ) : (
+          <div className="absolute top-full left-0 right-0 z-10 bg-white border border-gray-300 border-solid box-border rounded-lg mt-1 min-h-[75px]">
+            {searchData.length >0
+              ? searchData.map((item, index) => {
+                  return (
+                    <div key={index} className="m-1 mx-2 mt-2">
+                      <span>{item.Name}</span>
+                      <div className="">
+                        <Link
+                          to={routes.leadsManager({
+                            type: 'inProgress',
+                            clicked: Math.random(),
+                          })}
+                          className="text-xs underline mr-3 text-indigo-700"
+                          id="testing"
+                        >
+                          Sales
+                        </Link>
+                      </div>
+                    </div>
+                  );
+                })
+              : <div className='text-xs m-1 mx-2 mt-3 mr-3 ml-3'>Not found</div>}
           </div>
         )}
-      </span>
+      </div>
+    )}
+  </div>
     </>
   )
 }
