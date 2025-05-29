@@ -402,7 +402,7 @@ const LLeadsTableView = ({
             </div>
 
             {fetchLeadsLoader &&
-              [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((data, i) => <LogSkelton key={i} />)}
+              [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((data, i) => <LogSkelton key={i} />)}
             {statusSepA[0]?.[selStatusTab].length === 0 && (
               <div className="flex items-center py-6">
                 <span
