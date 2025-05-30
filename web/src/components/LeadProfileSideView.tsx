@@ -1643,6 +1643,8 @@ export default function LeadProfileSideView({
                             {Name?.[0]}
                           </span>
                         </div>
+                        
+         
                         <div className="flex flex-col">
                           <div className="flex items-center gap-1">
                             <div className="flex items-center gap-2">
@@ -1711,7 +1713,39 @@ export default function LeadProfileSideView({
                                 Cold
                               </div>
                             </div>
+
+
+                 
+                           <div 
+                            style={{
+                                paddingLeft: 12,
+                                paddingRight: 12,
+                                paddingTop: 12,
+                                paddingBottom: 12,
+                                overflow: 'hidden',
+                                borderRadius: 18,
+                                outline:
+                                  '1px var(--Secondary-Stroke, #E7E7E9) solid',
+                                outlineOffset: '-1px',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                gap: 5,
+                                display: 'inline-flex',
+                                height: '20px',
+                              }}
+                           > 
+                            <p className='font-medium text-[12px]  font-outfit'>
+                               {Source?.toString() || 'NA'}
+                            </p>
+                             
+                           </div>
+                        
+
+
+
                           </div>
+
+
 
                           <div className="flex mt-[4px] flex-row">
                             <div className="flex items-center gap-[6px]">
