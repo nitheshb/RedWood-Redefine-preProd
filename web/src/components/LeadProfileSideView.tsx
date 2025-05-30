@@ -112,6 +112,7 @@ import {
   Phone,
   Plus,
   PlusCircle,
+  User
 } from 'lucide-react'
 import SemicircleProgressChart from './A_SalesModule/Reports/charts/SemiCircleProgress'
 import toast, { ToastBar } from 'react-hot-toast'
@@ -1423,12 +1424,12 @@ export default function LeadProfileSideView({
       logo: 'FireIcon',
       color: ' bg-violet-500',
     },
-    {
-      label: 'Visit Done',
-      value: 'visitdone',
-      logo: 'DuplicateInactiveIcon',
-      color: ' bg-violet-500',
-    },
+    // {
+    //   label: 'Visit Done',
+    //   value: 'visitdone',
+    //   logo: 'DuplicateInactiveIcon',
+    //   color: ' bg-violet-500',
+    // },
     {
       label: 'Negotiation',
       value: 'negotiation',
@@ -1714,11 +1715,7 @@ export default function LeadProfileSideView({
 
                           <div className="flex mt-[4px] flex-row">
                             <div className="flex items-center gap-[6px]">
-                              <img
-                                src="/phone.svg"
-                                className="w-[14px]"
-                                alt="Phone Icon"
-                              />
+                              <Phone  className="w-[14px]" />
                               <span className="font-[Outfit]  s_h12">
                                 {Mobile?.replace(
                                   /(\d{3})(\d{3})(\d{4})/,
@@ -1749,15 +1746,11 @@ export default function LeadProfileSideView({
                 {!unitsViewMode && (
                   <section className="flex flex-row  h-[28px] mt-4">
                     <section className="flex group  flow-row justify-between bg-white px-[10px] pr-[18px] py-[14px]  mr-2   border border-[#E7E7E9]  text-black rounded-lg items-center align-middle text-xs cursor-pointer  hover:bg-[#E5E7EB]">
-                      <img
-                        src="/mail.svg"
-                        className="w-[14px]"
-                        alt="Mail Icon"
-                      />
+                      <User className="w-[14px]" />
                       <div className="font-medium text-sm text-[#000000] tracking-wide pr-2 mr-1 relative after:content-[''] after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[1px] after:h-[10px] after:bg-gray-300 group-hover:after:bg-white"></div>
 
                       <div className="font-md ml-2 text-xs tracking-wide font-semibold text-[#000000] ">
-                        {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
+                        {(user?.role?.includes(USER_ROLES.SALES_MANAGER) ||(user?.role?.includes(USER_ROLES.ADMIN))|| customerDetails?.assignedTo ==user?.uid ) ? (
                           <div className="">
                             <AssigedToDropCompCrm
                               assignerName={assignerName}
@@ -1767,13 +1760,11 @@ export default function LeadProfileSideView({
                               align={undefined}
                             />
                           </div>
-                        )}
-                        {user?.role?.includes(USER_ROLES.CP_AGENT) && (
-                          <span className="text-left text-sm">
-                            {' '}
-                            {assignerName}
-                          </span>
-                        )}
+                        ):  <span className="text-left text-sm whitespace-nowrap mr-2">
+                        {' '}
+                        {assignerName}
+                      </span>}
+
                       </div>
                     </section>
                     <section className="flex group flow-row justify-between  px-[10px] pr-[18px] py-[14px]  mr-2   border border-[#E7E7E9]    bg-white text-black rounded-lg items-center align-middle text-xs cursor-pointer hover:bg-[#E5E7EB]">
