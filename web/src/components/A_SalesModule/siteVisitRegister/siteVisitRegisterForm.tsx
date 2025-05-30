@@ -262,12 +262,17 @@ export default function SiteVisitRegisterForm() {
     setStep(step - 1);
   };
 
-  const handleSubmit = async (values, resetForm) => {
-    const finalData = { ...formData, ...values };
-    setFormData(finalData);
-    console.log('data value is', values.svHappendOn)
-    // In a real application, you would submit the data to your backend here
+ 
 
+
+
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+  const finalData = { ...formData, ...values };
+  setFormData(finalData);
+      console.log('data value is', values.svHappendOn)
+    // In a real application, you would submit the data to your backend here
+  
+  try {
     let newData = {
       ...finalData,
       ...selProjectIs,
@@ -275,12 +280,14 @@ export default function SiteVisitRegisterForm() {
       // remarks: ''
       // projectId: selectedLead?.projectId,
       // leadId: selectedLead?.id,
-    }
-    console.log('new data is', newData, selectedLead)
+    };
+    
+    console.log('new data is', newData, selectedLead);
+    let siteVisitDoc = await addSiteVisitEntry(orgId, newData, user);
+    newData.svId = siteVisitDoc.id;
+        console.log('site visit doc is',selectedLead,  siteVisitDoc, siteVisitDoc.id, newData)
 
-     let siteVisitDoc = await addSiteVisitEntry(orgId, newData, user)
-      newData.svId = siteVisitDoc.id
-    console.log('site visit doc is',selectedLead,  siteVisitDoc, siteVisitDoc.id, newData)
+    
     let x = {
       siteVisitA: arrayUnion(siteVisitDoc.id),
       svSchBy: newData.svSchBy,
@@ -289,37 +296,88 @@ export default function SiteVisitRegisterForm() {
       svHappendOn: newData.svHappendOn,
       coveredA: arrayUnion('visitdone'),
       VisitDoneNotes: newData.siteVistRemarks,
+    };
+
+    if(selectedLead?.id) {
+      await updateLeadData(orgId, selectedLead.id, x, user?.email);
+    } else {
+      x.Mobile = newData?.mobile;
+      x.Name = newData?.firstName;
+      x.Email = newData?.email;
+      x.Status = 'negotitation';
+      x.intype = 'sitevisit';
+      x.Date = Timestamp.now().toMillis();
+      x.by = user?.email;
+      x.Project = newData?.projectName;
+      x.ProjectId = selProjectIs?.value === 'allprojects' ? '' : selProjectIs?.value;
+      x.assignedTo = newData?.svAttendedByObj?.value || user?.uid;
+      x.assignedToObj = newData?.svAttendedByObj;
+      await addLead(orgId, newData, user?.email, 'Site Visit Added');
     }
-     if(selectedLead?.id){
-
-       await updateLeadData(orgId, selectedLead.id, x, user?.email)
-     }else{
-      x.Mobile = newData?.mobile
-      x.Name= newData?.firstName
-      x.Email = newData?.email
-      x.Status = 'negotitation'
-      x.intype = 'sitevisit'
-      x.Date = Timestamp.now().toMillis(),
-      x.by = user?.email
-      x.Project= newData?.projectName
-      x.ProjectId = selProjectIs?.value === 'allprojects' ? '' : selProjectIs?.value
-      x.assignedTo = newData?.svAttendedByObj?.value || user?.uid
-      x.assignedToObj= newDate?.svAttendedByObj
-      await addLead(orgId, newData, user?.email, 'Site Visit Added')
-     }
 
 
-    //
+
+
+        //
     // await updateLeadData(orgId, selectedLead.id, finalData, user?.email)
     console.log('final data is', newData)
-    resetForm()
-    setStep(0)
-    setSearchResults([])
-    setSelectedLead(null)
-    toast.success('Lead updated successfully!')
-    console.log('Form submitted with:', finalData);
-    alert('Form submitted successfully!');
-  };
+
+    resetForm();
+    setStep(0);
+    setSearchResults([]);
+    setSelectedLead(null);
+
+
+
+  setSelProject({
+      label: 'All Projects',
+      value: 'allprojects',
+    });
+    setSelCPUser([]);
+    setFormData({
+      searchPhone: '',
+      title: 'Mr',
+      firstName: '',
+      email: '',
+      mobile: '',
+      secondaryPhone: '',
+      propertyType: '',
+      budget: '',
+      address: '',
+      source: '',
+      pincode: '',
+      customerdesignation: '',
+      purposeofPurchase: '',
+      bedrooms: '',
+      customercompany: '',
+      siteVistRemarks: '',
+      subSource: '',
+      cpName: '',
+      projectName: '',
+      projectUnitNumber: '',
+      referralLeadName: '',
+      notes: '',
+      svAttendedBy: '',
+      svHappendOn: '',
+      svSchBy: '',
+      svAttendedByObj: {},
+      svSchByObj: {}
+    });
+    
+    
+    toast.success('Site visit registered successfully!')
+        console.log('Form submitted with:', finalData);
+    
+  } catch (error) {
+    console.error('Submission error:', error);
+    toast.error('Failed to register site visit. Please try again.', {
+      duration: 4000,
+      position: 'top-center',
+    });
+  } finally {
+    setSubmitting(false);
+  }
+};
 
   return (
     <div className="max-w-4xl  p-6 bg-white rounded-b-lg shadow-lg min-w-[626px]">
@@ -367,7 +425,9 @@ export default function SiteVisitRegisterForm() {
         initialValues={formData}
         // validationSchema={getValidationSchema()}
         enableReinitialize={true}
-        onSubmit={(values, { resetForm }) => {
+        onSubmit={(values, formikHelpers ) => {
+              // const { resetForm } = formikHelpers;
+
           // if (step === 3) {
           //   handleSubmit(values);
           // } else {
@@ -377,7 +437,7 @@ export default function SiteVisitRegisterForm() {
           if (step === 0) {
             nextStep(values);
           } else if (step === 3) {
-            handleSubmit(values, resetForm);
+            handleSubmit(values, formikHelpers);
           } else {
             nextStep(values);
           }
@@ -1293,6 +1353,7 @@ export default function SiteVisitRegisterForm() {
                         className="w-full px-2 py-1  border border-gray-300 rounded-md text-sm font-outfit font-normal text-sm leading-tight tracking-tight"
                         showTimeSelect
                         timeFormat="HH:mm"
+                         placeholderText="dd/mm/yy hh:mm"
                         injectTimes={[
                           setHours(setMinutes(new Date(), 1), 0),
                           setHours(setMinutes(new Date(), 5), 12),
@@ -1392,10 +1453,11 @@ export default function SiteVisitRegisterForm() {
               ) : step === 3 ? (
                 <button
                   type="submit"
-                  disabled={ !isValid}
+                  // disabled={ !isValid}
+                   disabled={!isValid || isSubmitting} 
                   className={`px-4 py-2 ${isValid ? 'bg-green-500 hover:bg-green-600 cursor-pointer' : 'bg-green-300'} text-white rounded-md ml-auto`}
                 >
-                  Submit
+                   {isSubmitting ? 'Submit' : 'Submit'}
                 </button>
               ) : null}
             </div>
