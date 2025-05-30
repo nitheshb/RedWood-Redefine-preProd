@@ -183,6 +183,7 @@ const junktOptions = [
     value: 'fake_customer',
   },
   { label: 'RNR from Long Time', value: 'long_time_rnr' },
+   { label: 'False Inquiry', value: 'false_inquiry' },
 ]
 
 const siteVisitFeedbackOptions = [
@@ -4592,13 +4593,13 @@ export default function LeadProfileSideView({
                                 <div className="flex flex-row mt-1">
                                   <button
                                     onClick={() => notInterestedFun()}
-                                    className={`flex mt-2 rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-balck  bg-[#7bd2ea]  hover:bg-gray-700 hover:text-white  `}
+                                    className={`flex mt-2 rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-balck sale_bg_color `}
                                   >
                                     <span className="ml-1 ">Save</span>
                                   </button>
                                   <button
                                     onClick={() => notInterestedFun()}
-                                    className={`flex mt-2 ml-4 rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-balck  bg-[#7bd2ea]  hover:bg-gray-700 hover:text-white `}
+                                    className={`flex mt-2 ml-4 rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-balck  sale_bg_color  `}
                                   >
                                     <span className="ml-1 ">
                                       Save & Whats App
@@ -4606,7 +4607,7 @@ export default function LeadProfileSideView({
                                   </button>
                                   <button
                                     onClick={() => cancelResetStatusFun()}
-                                    className={`flex mt-2 ml-4  rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700 hover:text-white  `}
+                                    className={`flex mt-2 ml-4  rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border    `}
                                   >
                                     <span className="ml-1 ">Cancel</span>
                                   </button>
@@ -5730,7 +5731,7 @@ export default function LeadProfileSideView({
         setOpen={setisImportLeadsOpen}
         title={'Edit Lead'}
         leadDetailsObj={leadDetailsObj}
-        widthClass="max-w-2xl"
+        widthClass="max-w-4xl"
       />
     </>
   )
