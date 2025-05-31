@@ -932,13 +932,13 @@ export default function SiteVisitRegisterForm() {
                       value={values.bedrooms}
                       options={[
                         { value: '', label: 'Select' },
-                        { value: '1_bhk', label: '1 Bhk' },
-                        { value: '2_bhk', label: '2 Bhk' },
-                        { value: '3_bhk', label: '3 Bhk' },
-                        { value: '4_bhk', label: '4 Bhk' },
+                        { value: '1', label: '1 Bhk' },
+                        { value: '2', label: '2 Bhk' },
+                        { value: '3', label: '3 Bhk' },
+                        { value: '4', label: '4 Bhk' },
                         // { value: '3', label: '5 Bhk' }, // Uncomment if needed
-                        { value: 'Studio', label: 'Studio' },
-                        { value: 'Penthouse', label: 'Penthouse' }
+                        { value: 'studio', label: 'Studio' },
+                        { value: 'penthouse', label: 'Penthouse' }
                       ]}
                     />
 
