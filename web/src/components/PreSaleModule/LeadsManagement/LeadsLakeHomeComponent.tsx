@@ -157,7 +157,7 @@ export default function LeadsLakeHomeComponent({ todaySch, schLoading }) {
         setOpen={setisImportLeadsOpen}
         title={'Edit to Push Lead'}
         customerDetails={selUserProfile}
-        widthClass="max-w-2xl"
+        widthClass="max-w-4xl"
       />
       <SiderForm
         open={isImportLeadsOpen1}
