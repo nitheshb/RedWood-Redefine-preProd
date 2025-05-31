@@ -183,7 +183,7 @@ const junktOptions = [
     value: 'fake_customer',
   },
   { label: 'RNR from Long Time', value: 'long_time_rnr' },
-   { label: 'False Inquiry', value: 'false_inquiry' },
+   { label: 'False Enquiry', value: 'false_enquiry' },
 ]
 
 const siteVisitFeedbackOptions = [
