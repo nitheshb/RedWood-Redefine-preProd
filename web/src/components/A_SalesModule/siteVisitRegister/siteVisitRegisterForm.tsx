@@ -113,7 +113,7 @@ export default function SiteVisitRegisterForm() {
     budget: '',
     // location: '',
     address: '',
-    source: '',
+    Source: '',
     pincode: '',
     customerdesignation: '',
     purposeofPurchase: '',
@@ -159,7 +159,7 @@ export default function SiteVisitRegisterForm() {
     customerdesignation: Yup.string().required('This field is required.'),
     // bedrooms: Yup.string().required('Property configuration is required'),
     customercompany: Yup.string().required('This field is required.'),
-    // source: Yup.string().required('This is required'),
+    // Source: Yup.string().required('This is required'),
     // projectUnitNumber: Yup.string().required('This is required'),
     // projectName: Yup.string().required('This is required'),
     // cpName: Yup.string().required('This is required'),
@@ -239,7 +239,7 @@ export default function SiteVisitRegisterForm() {
       referralLeadName: lead.referralLeadName || '',
       propertyType: lead.propertyType || '',
       budget: lead.budget || '',
-      source: lead.source || '',
+      Source: lead.Source || '',
       // location: lead.location || '',
       address: lead.address || '',
       pincode: lead.pincode || '',
@@ -321,7 +321,7 @@ export default function SiteVisitRegisterForm() {
           ProjectId: selProjectIs?.value === 'allprojects' ? '' : selProjectIs?.value,
           assignedTo: newData?.svAttendedByObj?.value || user?.uid,
           assignedToObj: newData?.svAttendedByObj,
-          source: newData?.source,
+          Source: newData?.Source,
           subSource: newData?.subSource,
           cpName: newData?.cpName,
 
@@ -356,7 +356,7 @@ export default function SiteVisitRegisterForm() {
           propertyType: '',
           budget: '',
           address: '',
-          source: '',
+          Source: '',
           pincode: '',
           customerdesignation: '',
           purposeofPurchase: '',
@@ -476,7 +476,7 @@ export default function SiteVisitRegisterForm() {
               <div className="space-y-4">
                 <h2 className="text-xl font-semibold text-gray-800">Search Existing Leads</h2>
 
-                <div className="flex space-x-2">
+                {/* <div className="flex space-x-2">
                   <div className="flex-1">
                     <label htmlFor="searchPhone" className="block text-sm font-medium text-gray-700 mb-1">
                       Phone Number
@@ -500,7 +500,44 @@ export default function SiteVisitRegisterForm() {
                       </button>
                     </div>
                   </div>
+                </div> */}
+
+                <div className="flex space-x-2">
+                  <div className="flex-1">
+                    <label htmlFor="searchPhone" className="block text-sm font-medium text-gray-700 mb-1">
+                      Phone Number
+                    </label>
+                    <div className="flex">
+                      <Field
+                        type="tel"
+                        id="searchPhone"
+                        name="searchPhone"
+                        maxLength={10}
+                        pattern="\d{10}"
+                        onInput={(e) => {
+
+                          e.target.value = e.target.value.replace(/\D/g, '');
+                        }}
+                        className="flex-1 p-2 border border-gray-300 rounded-l-md"
+                        placeholder="Enter 10-digit phone number"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (/^\d{10}$/.test(values.searchPhone)) {
+                            searchLeads(values.searchPhone);
+                          }
+                        }}
+                        disabled={isSearching || !/^\d{10}$/.test(values.searchPhone)}
+                        className={`flex items-center justify-center px-4 py-2 ${/^\d{10}$/.test(values.searchPhone) ? 'bg-blue-500 hover:bg-blue-600' : 'bg-blue-300'} text-white rounded-r-md`}
+                      >
+                        <Search className="w-4 h-4 mr-1" />
+                        Search
+                      </button>
+                    </div>
+                  </div>
                 </div>
+
 
                 {isSearching && (
                   <div className="text-center py-4">
@@ -685,7 +722,7 @@ export default function SiteVisitRegisterForm() {
                         name="projectName"
                         className="input mt-"
                         onChange={(value) => {
-                          // setFieldValue('source', value.value);
+                          // setFieldValue('Source', value.value);
                           // // Clear dependent fields
                           // setFieldValue('subSource', '');
                           // setFieldValue('cpName', '');
@@ -705,13 +742,13 @@ export default function SiteVisitRegisterForm() {
                   </div>
                   {/* Source Field */}
                   <div className="mt-3">
-                    <label htmlFor="source" className="block text-sm font-medium text-gray-700 mb-1">Source*</label>
+                    <label htmlFor="Source" className="block text-sm font-medium text-gray-700 mb-1">Source*</label>
 
                     <CustomSelect
-                      name="source"
+                      name="Source"
                       className="input mt-"
                       onChange={(value) => {
-                        setFieldValue('source', value.value);
+                        setFieldValue('Source', value.value);
                         // Clear dependent fields
                         setFieldValue('subSource', '');
                         setFieldValue('cpName', '');
@@ -719,21 +756,21 @@ export default function SiteVisitRegisterForm() {
                         setFieldValue('projectUnitNumber', '');
                         setFieldValue('referralLeadName', '');
                       }}
-                      value={values.source}
+                      value={values.Source}
                       options={[
                         { value: 'Referral', label: 'Referral' },
                         { value: 'Direct', label: 'Direct' },
                         { value: 'CP', label: 'CP' }
                       ]}
                     />
-                    <ErrorMessage name="source" component="div" className="text-red-500 text-xs mt-1" />
+                    <ErrorMessage name="Source" component="div" className="text-red-500 text-xs mt-1" />
                   </div>
 
 
 
 
                   {/* Direct - Sub Source */}
-                  {values.source === 'Direct' && (
+                  {values.Source === 'Direct' && (
                     <div className="">
                       <label htmlFor="subSource" className="block text-sm font-medium text-gray-700 mb-1">Sub Source*</label>
 
@@ -743,7 +780,7 @@ export default function SiteVisitRegisterForm() {
                         onChange={(value) => {
                           setFieldValue('subSource', value.value);
                         }}
-                        placeHolder="Select sub source"
+                        placeHolder="Select sub Source"
                         value={values.subSource}
                         options={[
                           { value: 'Direct Walkin', label: 'Direct Walkin' },
@@ -770,7 +807,7 @@ export default function SiteVisitRegisterForm() {
                   )}
 
                   {/* CP - Search Field */}
-                  {values.source === 'CP' && (
+                  {values.Source === 'CP' && (
                     <div className="min-w-[300px]">
                       <label htmlFor="cpName" className="block text-sm font-medium text-gray-700 mb-1">Search CP Name*</label>
                       <div className="flex">
@@ -793,7 +830,7 @@ export default function SiteVisitRegisterForm() {
                     </div>
                   )}
                   {/* Right Column - Other Referral Fields */}
-                  {(values.source === 'Referral' || !values.source) && (
+                  {(values.Source === 'Referral' || !values.Source) && (
                     <div className="space-y-4  ">
 
                       <div>
