@@ -1397,7 +1397,7 @@ export default function SiteVisitRegisterForm() {
                     </label>
 
                     <CustomSelect
-                      name="svAttendedBy"
+                      name="svCPsourcedBy"
                       placeHolder="Select CP POC"
                       // label="Assign To"
                       className="input mt-"
@@ -1406,7 +1406,7 @@ export default function SiteVisitRegisterForm() {
                         setFieldValue('svCPsourcedBy', value.value)
                         setFieldValue('svCPsourcedByObj', value)
                       }}
-                      value={values.svAttendedBy}
+                      value={values.svCPsourcedBy}
                       options={cpSourcingManagerA}
                     />
 
