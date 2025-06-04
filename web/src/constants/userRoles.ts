@@ -3,6 +3,7 @@ export const USER_ROLES = {
   SALES_EXECUTIVE: 'sales-executive',
   CP_AGENT: 'cp-agent',
   CP_MANAGER: 'cp-manager',
+  CP_EXECUTIVE: 'cp-executive',
   LEGAL_MANAGER: 'legal-manager',
   LEGAL_EXECUTIVE: 'legal-executive',
   CRM_MANAGER: 'crm-manager',

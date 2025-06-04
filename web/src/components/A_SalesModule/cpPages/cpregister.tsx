@@ -13,7 +13,7 @@ import {
   addUserLog,
   checkIfUserAlreadyExists,
   createUserToWorkReport,
-  steamUsersListCpManagers,
+  steamUsersListCpExecutive,
   updateCPUserRole,
   updateUserRole,
 } from 'src/context/dbQueryFirebase'
@@ -32,30 +32,27 @@ const CPRegister = () => {
   const [loading, setLoading] = useState(false)
   const [editMode, seteditMode] = useState(false)
   const [cpSourcingManagerA, setCpSourcingManagerA] = useState([])
-   useEffect(() => {
-      const unsubscribe1 = steamUsersListCpManagers(
-        orgId,
-        (querySnapshot) => {
-          const usersListA = querySnapshot.docs.map((docSnapshot) =>
-            docSnapshot.data()
-          )
+  useEffect(() => {
+    const unsubscribe1 = steamUsersListCpExecutive(
+      orgId,
+      (querySnapshot) => {
+        const usersListA = querySnapshot.docs.map((docSnapshot) =>
+          docSnapshot.data()
+        )
 
-          usersListA.map((user) => {
-            console.log('cp user are', user)
-            user.label = user.displayName || user.name
-            user.value = user.uid
-          })
+        usersListA.map((user) => {
+          console.log('cp user are', user)
+          user.label = user.displayName || user.name
+          user.value = user.uid
+        })
 
-          setCpSourcingManagerA(usersListA)
-        },
-        (error) => setCpSourcingManagerA([])
-      )
+        setCpSourcingManagerA(usersListA)
+      },
+      (error) => setCpSourcingManagerA([])
+    )
 
-      return
-
-
-
-    }, [])
+    return
+  }, [])
 
   const onSubmit = async (data1) => {
     console.log('insided submit')
@@ -76,8 +73,8 @@ const CPRegister = () => {
       orgStatus: 'active',
       offPh: offPh,
       perPh: perPh,
-      svCPsourceManager: data1?.svCPsourceManager || '',
-      svCPsourceManagerObj: data1?.svCPsourceManagerObj || {},
+      svCPsourcedBy: data1?.svCPsourcedBy || '',
+      svCPsourcedByObj: data1?.svCPsourcedByObj || {},
     }
 
     //       Invalid Arguments {\"empId\":\"102\",\"uid\":\"71wQrhV54oeWxn5Ha9E8pm93XID3\",\"email\":\"nitheshreddy.email@gmail.com\",\"offPh\":\"\",\"perPh\":\"\",\"userStatus\":\"active\",\"orgStatus\":\"active\",\"orgId\":\"spark\",\"department\":[\"admin\"],\"roles\":[\"admin\"],\"name\":\"nitheshreddy\"}"
@@ -116,10 +113,9 @@ const CPRegister = () => {
               offPh,
               perPh,
               'active',
-              data1?.svCPsourceManagerObj || {},
-              data1?.svCPsourceManager || '',
+              data1?.svCPsourcedByObj || {},
+              data1?.svCPsourcedBy || '',
               'nitheshreddy.email@gmail.com'
-
             )
             const x = {
               name,
@@ -171,7 +167,7 @@ const CPRegister = () => {
       .matches(phoneRegExp, 'Phone number is not valid')
       .min(10, 'Phone no is to short')
       .max(10, 'Phone no is to long'),
-      // .required('Phone no is required'),
+    // .required('Phone no is required'),
 
     empId: Yup.string().required('Employee Id is required'),
   })
@@ -199,23 +195,21 @@ const CPRegister = () => {
                 <p className=" font-semibold text-2xl text-center ">
                   Maa Homes
                 </p>
-<div className="">
-                <small className="font-medium  text-gray-500 mr-2 pr-2 ">
-                  +91 96061 20156
-                </small>
-                <small className="font-medium  text-gray-500 ">
-                  info@maahomes.in
-                </small>
-              </div>
+                <div className="">
+                  <small className="font-medium  text-gray-500 mr-2 pr-2 ">
+                    +91 96061 20156
+                  </small>
+                  <small className="font-medium  text-gray-500 ">
+                    info@maahomes.in
+                  </small>
+                </div>
               </div>
 
-              <p className=" mb-4 font-medium text-gary-600 ">
-
-              </p>
+              <p className=" mb-4 font-medium text-gary-600 "></p>
             </div>
             {/* div for making change the details  */}
             <div className="flex flex-col gap-10  w-full">
-              <div className="h-full flex flex-col py-6 bg-white shadow-xl rounded-md" >
+              <div className="h-full flex flex-col py-6 bg-white shadow-xl rounded-md">
                 {formMessage.message && (
                   <div className=" w-full bg-[#E9F6ED] ml-9 mr-9 ">
                     <p
@@ -235,8 +229,8 @@ const CPRegister = () => {
                       empId: '',
                       perPh: '',
                       offPh: '',
-                      svCPsourceManager:  '',
-                      svCPsourceManagerObj:{},
+                      svCPsourcedBy: '',
+                      svCPsourcedByObj: {},
                       // userStatus: 'active',
                     }}
                     enableReinitialize={true}
@@ -367,35 +361,41 @@ const CPRegister = () => {
                             </div>
                           </div>
 
-                                      <div>
-                                            <label htmlFor="svAttendedBy" className="block text-xs  text-gray-700 mb-1">
-                                              CP Sourcing Manager 
-                                            </label>
+                          <div>
+                            <label
+                              htmlFor="svCPsourcedBy"
+                              className="block text-xs  text-gray-700 mb-1"
+                            >
+                              CP Sourced By
+                            </label>
 
-                                            <CustomSelect
-                                              name="svAttendedBy"
-                                              placeHolder="Select CP POC"
-                                              // label="Assign To"
-                                              className="input mt-"
-                                              onChange={(value) => {
-                                                console.log('value is ', value, user)
-                                                formik.setFieldValue(
-                                                  'svCPsourceManager',
-                                                  value.value
-                                                )
-                                                formik.setFieldValue('svCPsourceManagerObj', value)
-                                              }}
-                                              value={formik.values.svCPsourceManager}
-                                              options={cpSourcingManagerA}
-                                            />
+                            <CustomSelect
+                              name="svCPsourcedBy"
+                              placeHolder="Select CP POC"
+                              // label="Assign To"
+                              className="input mt-"
+                              onChange={(value) => {
+                                console.log('value is ', value, user)
+                                formik.setFieldValue(
+                                  'svCPsourcedBy',
+                                  value.value
+                                )
+                                formik.setFieldValue(
+                                  'svCPsourcedByObj',
+                                  value
+                                )
+                              }}
+                              value={formik.values.svCPsourcedBy}
+                              options={cpSourcingManagerA}
+                            />
 
-                                            <p
-                                              className="text-sm text-red-500 hidden mt-3"
-                                              id="error"
-                                            >
-                                              Please fill out this field.
-                                            </p>
-                                          </div>
+                            <p
+                              className="text-sm text-red-500 hidden mt-3"
+                              id="error"
+                            >
+                              Please fill out this field.
+                            </p>
+                          </div>
                           <p className="text-xs text-red-500 text-right my-3">
                             Required fields are marked with an asterisk{' '}
                             <abbr title="Required field">*</abbr>
@@ -422,7 +422,6 @@ const CPRegister = () => {
                   </Formik>
                 </div>
               </div>
-
             </div>
           </div>
         </div>

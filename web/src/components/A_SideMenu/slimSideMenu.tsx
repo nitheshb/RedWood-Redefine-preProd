@@ -1202,6 +1202,9 @@ const SlimSideMenuBar = (props) => {
                 </span>
               </span>
             </li>
+            {(user?.role?.includes(USER_ROLES.CP_MANAGER) ||
+              user?.role?.includes(USER_ROLES.ADMIN)) && (
+
             <li className="relative mt-1">
               <span
                 className={
@@ -1242,7 +1245,7 @@ const SlimSideMenuBar = (props) => {
                   <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                 </span>
               </span>
-            </li>
+            </li>)}
 
 
             {/* <li className="relative mt-1">

@@ -226,6 +226,13 @@ export const userAccessRolesArray = [
   type: 'CP Manager',
   role: 'cp-manager',
 },
+{
+  uid: 'A52027268104112560Z',
+  id: 10,
+  category: 'SALES',
+  type: 'CP Executive',
+  role: 'cp-executive',
+},
   {
     id: 13,
     uid: 'A60052484155844296Z',

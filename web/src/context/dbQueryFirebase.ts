@@ -93,12 +93,12 @@ export const steamUsersListCpAgents = (orgId, snapshot, error) => {
 }
 
 // get users cpAgent
-export const steamUsersListCpManagers = (orgId, snapshot, error) => {
+export const steamUsersListCpExecutive = (orgId, snapshot, error) => {
   const itemsQuery = query(
     collection(db, 'users'),
     where('orgId', '==', orgId),
     where('userStatus', '==', 'active'),
-    where('roles', 'array-contains-any', ['cp-manager'])
+    where('roles', 'array-contains-any', ['cp-executive'])
   )
   return onSnapshot(itemsQuery, snapshot, error)
 }
@@ -106,7 +106,7 @@ export const steamUsersListCpManagers = (orgId, snapshot, error) => {
 // get users cpAgent
 export const steamSiteVisitsLists = (orgId, snapshot, error) => {
   const itemsQuery = query(
-    collection(db, `${orgId}_siteVisits`),
+    collection(db, `${orgId}_siteVisits`)
 
     // where('orgId', '==', orgId),
     // where('userStatus', '==', 'active'),
@@ -128,9 +128,7 @@ export const steamUsersListByDept = (orgId, dept, snapshot, error) => {
 
 // get users list by Dept
 export const streamSiteVisits = (orgId, snapshot, error) => {
-  const itemsQuery = query(
-    collection(db, `${orgId}_site_visits`)
-  )
+  const itemsQuery = query(collection(db, `${orgId}_site_visits`))
   return onSnapshot(itemsQuery, snapshot, error)
 }
 // get users list by Dept
@@ -500,10 +498,6 @@ export const streamGetAllUnitTransactions = async (
   // return onSnapshot(itemsQuery, snapshot, error)
 }
 
-
-
-
-
 export const updateBrokerageDetails = async (
   orgId,
   projectId,
@@ -515,7 +509,7 @@ export const updateBrokerageDetails = async (
 ) => {
   try {
     // unit table updation
-    const unitRef = doc(db, `${orgId}_units`,  unitId)
+    const unitRef = doc(db, `${orgId}_units`, unitId)
     await updateDoc(unitRef, {
       brokerageDetails: {
         ...brokerageDetails,
@@ -776,7 +770,8 @@ export const updateWalletTransactionStatus = async (
         to: status,
         projectId: projectId || '',
       },
-    ]).select()
+    ])
+    .select()
   console.log('error value is', {
     type: 'accounts',
     subtype: data1?.subtype || 'wallet_reviewer',
@@ -868,7 +863,8 @@ export const updateTransactionStatus = async (
         to: status,
         projectId: projectId || '',
       },
-    ]).select()
+    ])
+    .select()
   console.log(
     'check it ',
     status,
@@ -1384,15 +1380,20 @@ export const AddCommentTaskManData = async (orgId, dta, user) => {
   // return onSnapshot(itemsQuery, snapshot, error)
 }
 //  get lead activity list
-export const streamSaleUserActivityLog = async (orgId, snapshot, data, error) => {
+export const streamSaleUserActivityLog = async (
+  orgId,
+  snapshot,
+  data,
+  error
+) => {
   const { email } = data
   // const startOfToday = new Date();
   // startOfToday.setHours(0, 0, 0, 0);
   // const millis = startOfToday.getTime();
-  const yesterday = new Date();
-  yesterday.setDate(yesterday.getDate() - 1);
-  yesterday.setHours(0, 0, 0, 0);
-  const millis = yesterday.getTime();
+  const yesterday = new Date()
+  yesterday.setDate(yesterday.getDate() - 1)
+  yesterday.setHours(0, 0, 0, 0)
+  const millis = yesterday.getTime()
 
   const { data: lead_logs, error: error1 } = await supabase
     .from(`${orgId}_lead_logs`)
@@ -1400,7 +1401,7 @@ export const streamSaleUserActivityLog = async (orgId, snapshot, data, error) =>
     .eq('by', email)
     .gte('T', millis)
     .order('T', { ascending: false })
-    console.log('chek', lead_logs, error1)
+  console.log('chek', lead_logs, error1)
   return lead_logs
 }
 export const steamLeadActivityLog = async (orgId, snapshot, data, error) => {
@@ -2187,8 +2188,6 @@ export const checkIfLeadAlreadyExists = async (cName, matchVal, projectId) => {
   // db.collection(`${orgId}_leads`).add(data)
 }
 
-
-
 export const checkIfMasterAlreadyExists = async (cName, matchVal, title) => {
   // db.collection(`${orgId}_leads`).doc().set(data)
   // db.collection('')
@@ -2701,29 +2700,32 @@ export const addTaskBusiness = async (orgId, dta, user) => {
   }
   console.log('value is ', followA)
 
-  const { data, error } = await supabase.from(`maahomes_TM_Tasks`).insert([
-    {
-      created_on: Timestamp.now().toMillis(),
-      followersC: followA?.length || 0,
-      by_email: user.email,
-      by_name: user.displayName,
-      by_uid: user.uid,
-      dept: assignedToObj?.department[0] || '',
-      due_date: due_date,
-      priority: priorities,
-      status: 'InProgress',
-      desc: taskdesc,
-      title: taskTitle,
-      to_email: assignedToObj?.email,
-      to_name: assignedToObj?.name,
-      to_uid: assignedToObj?.uid,
-      participantsA: followA,
-      participantsC: followA?.length || 0,
-      followersUid: followAUid || [],
-      attachmentsCount: attachA?.length || 0,
-      attachmentsA: attachA,
-    },
-  ]).select()
+  const { data, error } = await supabase
+    .from(`maahomes_TM_Tasks`)
+    .insert([
+      {
+        created_on: Timestamp.now().toMillis(),
+        followersC: followA?.length || 0,
+        by_email: user.email,
+        by_name: user.displayName,
+        by_uid: user.uid,
+        dept: assignedToObj?.department[0] || '',
+        due_date: due_date,
+        priority: priorities,
+        status: 'InProgress',
+        desc: taskdesc,
+        title: taskTitle,
+        to_email: assignedToObj?.email,
+        to_name: assignedToObj?.name,
+        to_uid: assignedToObj?.uid,
+        participantsA: followA,
+        participantsC: followA?.length || 0,
+        followersUid: followAUid || [],
+        attachmentsCount: attachA?.length || 0,
+        attachmentsA: attachA,
+      },
+    ])
+    .select()
   x.map(async (userId) => {
     // get phone no's
     const additionalUserInfo = await getUser(userId)
@@ -2786,7 +2788,8 @@ export const addLead = async (orgId, data, by, msg) => {
               by,
               payload: {},
             },
-          ]).select()
+          ])
+          .select()
         if (Project) {
           // await sendWhatAppTextSms1(
           //   '7760959579',
@@ -2857,45 +2860,44 @@ export const addLead = async (orgId, data, by, msg) => {
 export const addSiteVisitEntry = async (orgId, data, by) => {
   console.log('my values is ', data)
   // if (data?.Name) {
-    try {
-      delete data['']
-      const x = await addDoc(collection(db, `${orgId}_siteVisits`), data)
-      await console.log('add Lead value is ', x, x.id, data)
+  try {
+    delete data['']
+    const x = await addDoc(collection(db, `${orgId}_siteVisits`), data)
+    await console.log('add Lead value is ', x, x.id, data)
 
-      const {
-        intype,
-        Name,
-        Mobile,
-        countryCode,
-        assignedTo,
-        Project,
-        assignedToObj,
-      } = data
-      if (Name) {
-        const { data: data3, error: errorx } = await supabase
-          .from(`${orgId}_siteVisits_logs`)
-          .insert([
-            {
-              type: 'l_ctd',
-              subtype: intype,
-              T: Timestamp.now().toMillis(),
-              Luid: x?.id || '',
-              by,
-              payload: {},
-            },
-          ]).select()
-
-
-      }
-      return x
-    } catch (error) {
-      console.log('error in uploading file with data', data, error)
+    const {
+      intype,
+      Name,
+      Mobile,
+      countryCode,
+      assignedTo,
+      Project,
+      assignedToObj,
+    } = data
+    if (Name) {
+      const { data: data3, error: errorx } = await supabase
+        .from(`${orgId}_siteVisits_logs`)
+        .insert([
+          {
+            type: 'l_ctd',
+            subtype: intype,
+            T: Timestamp.now().toMillis(),
+            Luid: x?.id || '',
+            by,
+            payload: {},
+          },
+        ])
+        .select()
     }
+    return x
+  } catch (error) {
+    console.log('error in uploading file with data', data, error)
+  }
   // }
 }
-export const registerCpUser = async (orgId,  data1, user) => {
+export const registerCpUser = async (orgId, data1, user) => {
   const { empId, email, myRole, deptVal, name, offPh, perPh, userStatus } =
-  data1
+    data1
   const data = {
     empId: empId,
     email: email,
@@ -2920,53 +2922,50 @@ export const registerCpUser = async (orgId,  data1, user) => {
     data,
   }
   axios(config)
-      .then(async function (response) {
-        if (response.data) {
+    .then(async function (response) {
+      if (response.data) {
+        const { success, msg, payload } = await response['data']
+        // const { id } = payload
+        console.log('user payload is ', response)
 
-          const { success, msg, payload } = await response['data']
-          // const { id } = payload
-          console.log('user payload is ', response)
+        if (success) {
+          const docDetailsIs = await checkIfUserAlreadyExists('users', email)
 
-          if (success) {
-            const docDetailsIs = await checkIfUserAlreadyExists('users', email)
-
-            console.log('docDetailsIs', docDetailsIs, docDetailsIs[0]['uid'])
-            updateUserRole(
-              empId,
-              'Maa Homes',
-              orgId,
-              docDetailsIs[0]['uid'],
-              'sales',
-              'cp-agent',
-              email,
-              offPh,
-              perPh,
-              'active',
-              user?.email
-            )
-            const x = {
-              name,
-              empId,
-              email,
-              uid: docDetailsIs[0]['uid'],
-              userStatus: 'active',
-              orgStatus: 'active',
-            }
-            addUserLog(orgId, {
-              s: 's',
-              type: 'addUser',
-              subtype: 'addUser',
-              txt: `${email} as ${myRole}`,
-              by: user?.email
-            })
+          console.log('docDetailsIs', docDetailsIs, docDetailsIs[0]['uid'])
+          updateUserRole(
+            empId,
+            'Maa Homes',
+            orgId,
+            docDetailsIs[0]['uid'],
+            'sales',
+            'cp-agent',
+            email,
+            offPh,
+            perPh,
+            'active',
+            user?.email
+          )
+          const x = {
+            name,
+            empId,
+            email,
+            uid: docDetailsIs[0]['uid'],
+            userStatus: 'active',
+            orgStatus: 'active',
           }
-
+          addUserLog(orgId, {
+            s: 's',
+            type: 'addUser',
+            subtype: 'addUser',
+            txt: `${email} as ${myRole}`,
+            by: user?.email,
+          })
         }
-      })
-      .catch(function (error) {
-        console.log('error is ', error)
-
-      })
+      }
+    })
+    .catch(function (error) {
+      console.log('error is ', error)
+    })
 }
 // This function is used to add leads for cp
 export const addCpLead = async (orgId, data, by, msg) => {
@@ -2984,7 +2983,8 @@ export const addCpLead = async (orgId, data, by, msg) => {
         by,
         payload: {},
       },
-    ]).select()
+    ])
+    .select()
   if (assignedTo) {
     const { offPh } = assignedToObj
     await sendWhatAppTextSms1(
@@ -3054,7 +3054,6 @@ export const addCustomer = async (orgId, data, by, resetForm) => {
   try {
     const did = uuidv4()
     data.id = did
-
 
     await setDoc(doc(db, `${orgId}_customers`, did), data)
     toast.success('Customer Details added successfully')
@@ -3613,12 +3612,21 @@ export const getAllProjectMonthlyBookingsSum = async (orgId, data) => {
   console.log('total is ', receivable)
   return receivable
 }
-export const cancelUnitDbFun = async (orgId, unitData, by,closeFun, enqueueSnackbar) => {
+export const cancelUnitDbFun = async (
+  orgId,
+  unitData,
+  by,
+  closeFun,
+  enqueueSnackbar
+) => {
   return toast.promise(
     (async () => {
       try {
-        const x = await addDoc(collection(db, `${orgId}_cancelled_unit`), unitData);
-        console.log('cancelled Unit value is ', x, x.id, unitData);
+        const x = await addDoc(
+          collection(db, `${orgId}_cancelled_unit`),
+          unitData
+        )
+        console.log('cancelled Unit value is ', x, x.id, unitData)
         // const customerId = unitData?.custObj1?.uid;
         // const y = updateDoc(doc(db, `${orgId}_customers`, unitData.uid), {
         //   input_money: increment(unitData?.T_total),
@@ -3694,7 +3702,7 @@ export const cancelUnitDbFun = async (orgId, unitData, by,closeFun, enqueueSnack
           sourceOfPay: '',
           stepsComp: '',
           sub_source: '',
-        });
+        })
 
         await updateDoc(doc(db, `${orgId}_projects`, unitData?.pId), {
           t_collect: increment(-unitData?.T_approved),
@@ -3702,23 +3710,21 @@ export const cancelUnitDbFun = async (orgId, unitData, by,closeFun, enqueueSnack
           cancelUnitCount: increment(1),
           soldUnitCount: increment(-1),
           soldValue: increment(unitData?.T_total),
-        });
+        })
 
-        closeFun(false);
-        return 'Unit booking is cancelled';
+        closeFun(false)
+        return 'Unit booking is cancelled'
       } catch (error) {
-        console.log('error in uploading file with data', unitData, error);
-        throw error; // Rethrow to let toast.promise handle it
+        console.log('error in uploading file with data', unitData, error)
+        throw error // Rethrow to let toast.promise handle it
       }
     })(),
     {
       loading: 'Processing cancellation...',
       success: (message) => message,
-      error: 'Cancellation failed'
+      error: 'Cancellation failed',
     }
-  );
-
-
+  )
 }
 export const streamBookedLeads = async (orgId, data, snapshot, error) => {
   const { pId, startTime, endTime } = data
@@ -4841,8 +4847,8 @@ export const updateCPUserRole = async (
   offPh,
   perPh,
   userStatus,
-  svCPsourceManagerObj,
-  svCPsourceManager,
+  svCPsourcedByObj,
+  svCPsourcedBy,
   by
 ) => {
   await updateDoc(doc(db, 'users', uid), {
@@ -4853,8 +4859,8 @@ export const updateCPUserRole = async (
     roles: [role],
     offPh: offPh || '',
     perPh: perPh || '',
-    svCPsourceManagerObj,
-    svCPsourceManager,
+    svCPsourcedByObj,
+    svCPsourcedBy,
     userStatus: userStatus,
   })
   return await addUserLog(orgId, {
@@ -4924,42 +4930,52 @@ export const updateUserAccessProject = async (
 
 export const /* The above code appears to be a comment block in TypeScript. It is documenting a
 function or method called `updateAccessRoles`. The comment block uses the ` */
-updateAccessRoles = async (
-  orgId,
-  role,
-  accessRoles,
-  currentUser,
-  enqueueSnackbar,
-  currentPage
-) => {
-  // data.forEach(async (d) => {
-  //   await updateDoc(doc(db, `${orgId}_roles_access', d.uid), d)
-  // })
-  try {
-    await updateDoc(doc(db, `${orgId}_roles_access`, role.uid), {
-      access: accessRoles,
-    })
-    await addUserLog(orgId, {
-      s: 's',
-      type: 'updateRoleAccess',
-      subtype: 'updateAccessForPages',
-      txt: `${currentUser.email} is updated the user access roles`,
-      by: currentUser.email,
-    })
-    console.log('new is', currentPage, accessRoles)
-    let msg = `"${currentPage.key=='view_leads'? 'Import lead' : currentPage.key=='update_crm'? 'Update Cost Sheet' : currentPage.key=='view_crm'? 'Update Payment Schedule' :  currentPage.name }" access is ${currentPage.checked ? 'revoked' : 'enabled'} for ${role.type}`
-    // variant could be success, error, warning, info, or default
-    toast.success(msg)
-    // enqueueSnackbar(
-    //   `User roles for ${role.type} & ${currentPage.name} updated successfully`,
-    //   {
-    //     variant: 'success',
-    //   }
-    // )
-  } catch (e) {
-    return enqueueSnackbar(e.message, { variant: 'error' })
+  updateAccessRoles = async (
+    orgId,
+    role,
+    accessRoles,
+    currentUser,
+    enqueueSnackbar,
+    currentPage
+  ) => {
+    // data.forEach(async (d) => {
+    //   await updateDoc(doc(db, `${orgId}_roles_access', d.uid), d)
+    // })
+    try {
+      await updateDoc(doc(db, `${orgId}_roles_access`, role.uid), {
+        access: accessRoles,
+      })
+      await addUserLog(orgId, {
+        s: 's',
+        type: 'updateRoleAccess',
+        subtype: 'updateAccessForPages',
+        txt: `${currentUser.email} is updated the user access roles`,
+        by: currentUser.email,
+      })
+      console.log('new is', currentPage, accessRoles)
+      let msg = `"${
+        currentPage.key == 'view_leads'
+          ? 'Import lead'
+          : currentPage.key == 'update_crm'
+          ? 'Update Cost Sheet'
+          : currentPage.key == 'view_crm'
+          ? 'Update Payment Schedule'
+          : currentPage.name
+      }" access is ${currentPage.checked ? 'revoked' : 'enabled'} for ${
+        role.type
+      }`
+      // variant could be success, error, warning, info, or default
+      toast.success(msg)
+      // enqueueSnackbar(
+      //   `User roles for ${role.type} & ${currentPage.name} updated successfully`,
+      //   {
+      //     variant: 'success',
+      //   }
+      // )
+    } catch (e) {
+      return enqueueSnackbar(e.message, { variant: 'error' })
+    }
   }
-}
 export const addNewSourceComp = async (
   orgId,
   sourcePayload,
@@ -5474,7 +5490,8 @@ export const updateLeadAssigTo = async (
         to: value,
         projectId: projectId,
       },
-    ]).select()
+    ])
+    .select()
   if (newSt != '') {
     try {
       const todaydate = new Date()
@@ -5610,54 +5627,54 @@ export const createNewCustomerS = async (
     // const { Name } = leadDetailsObj2
 
     console.log('wow it should be here', leadDocId, newStatus)
-try {
+    try {
+      const { data, error } = await supabase
+        .from(`${orgId}_customers`)
+        .insert([
+          {
+            Name:
+              leadDetailsObj2?.Name ||
+              customerInfo?.customerDetailsObj?.customerName1 ||
+              '',
+            // id: leadDocId,
+            my_assets: [unitId],
+            T: Timestamp.now().toMillis(),
+            Luid: leadDocId,
+            added_by: by,
+            projects: [projectId],
+          },
+        ])
+        .select()
+      console.log('supabase customer details saving success')
 
+      // const customerD =     {
+      //   Name:
+      //     leadDetailsObj2?.Name || customerInfo?.customerDetailsObj?.customerName1,
+      //   my_assets: [unitId],
+      //   T: Timestamp.now().toMillis(),
+      //   Luid: leadDocId,
+      //   added_by: by,
+      //   projects: [projectId],
+      //   input_money: 0,
+      //   kyc_status:false,
+      //   remaining_money: 0,
+      //   utilized_money: 0
+      // }
+      // addCustomer(orgId, customerD, by, enqueueSnackbar, ()=>({}))
 
-    const { data, error } = await supabase.from(`${orgId}_customers`).insert([
-      {
-        Name:
-          leadDetailsObj2?.Name ||
-          customerInfo?.customerDetailsObj?.customerName1 ||
-          '',
+      await console.log('customer data is ', data, error, customerInfo, {
+        Name: customerInfo?.customerDetailsObj?.customerName1,
         // id: leadDocId,
         my_assets: [unitId],
         T: Timestamp.now().toMillis(),
         Luid: leadDocId,
         added_by: by,
         projects: [projectId],
-      },
-    ]).select();
-    console.log('supabase customer details saving success',)
-
-    // const customerD =     {
-    //   Name:
-    //     leadDetailsObj2?.Name || customerInfo?.customerDetailsObj?.customerName1,
-    //   my_assets: [unitId],
-    //   T: Timestamp.now().toMillis(),
-    //   Luid: leadDocId,
-    //   added_by: by,
-    //   projects: [projectId],
-    //   input_money: 0,
-    //   kyc_status:false,
-    //   remaining_money: 0,
-    //   utilized_money: 0
-    // }
-    // addCustomer(orgId, customerD, by, enqueueSnackbar, ()=>({}))
-
-    await console.log('customer data is ', data, error, customerInfo, {
-      Name: customerInfo?.customerDetailsObj?.customerName1,
-      // id: leadDocId,
-      my_assets: [unitId],
-      T: Timestamp.now().toMillis(),
-      Luid: leadDocId,
-      added_by: by,
-      projects: [projectId],
-    })
-    return data
-  } catch (error) {
-
-    console.log('supabase customer details saving error', error)
-      }
+      })
+      return data
+    } catch (error) {
+      console.log('supabase customer details saving error', error)
+    }
     return
     // await updateDoc(doc(db, `${orgId}_leads`, leadDocId), {
     //   Status: newStatus,
@@ -5729,7 +5746,8 @@ export const insertPSS = async (
           zeroDay,
           order,
         },
-      ]).select()
+      ])
+      .select()
     enqueueSnackbar(`Insert Ps`, {
       variant: 'success',
     })
@@ -5792,25 +5810,28 @@ export const captureWalletPayment = async (
     } = payload
 
     console.log('unit log', payload, selCustomerDetails)
-    const { data, error } = await supabase.from(`${orgId}_accounts`).insert([
-      {
-        projectId: 'wallet',
-        unit_id: 'wallet',
-        towards: builderName,
-        towards_id: towardsBankDocId || '',
-        mode,
-        custId: leadDocId,
-        customerName:
-          Name || selCustomerDetails.customerDetailsObj?.customerName1 || '',
-        receive_by: payload?.bookedBy,
-        txt_dated: dated, // modify this to dated time entred by user
-        status: payload?.status || 'review',
-        payReason: payload?.payReason,
-        totalAmount: amount,
-        bank_ref: bank_ref_no,
-        attchUrl: payload?.fileUploader?.url || payload?.attchUrl || '',
-      },
-    ]).select()
+    const { data, error } = await supabase
+      .from(`${orgId}_accounts`)
+      .insert([
+        {
+          projectId: 'wallet',
+          unit_id: 'wallet',
+          towards: builderName,
+          towards_id: towardsBankDocId || '',
+          mode,
+          custId: leadDocId,
+          customerName:
+            Name || selCustomerDetails.customerDetailsObj?.customerName1 || '',
+          receive_by: payload?.bookedBy,
+          txt_dated: dated, // modify this to dated time entred by user
+          status: payload?.status || 'review',
+          payReason: payload?.payReason,
+          totalAmount: amount,
+          bank_ref: bank_ref_no,
+          attchUrl: payload?.fileUploader?.url || payload?.attchUrl || '',
+        },
+      ])
+      .select()
     const paymentCB = await addPaymentReceivedEntry(
       orgId,
       'wallet',
@@ -5871,7 +5892,8 @@ export const captureWalletPayment = async (
           by,
           payload: {},
         },
-      ]).select()
+      ])
+      .select()
 
     enqueueSnackbar(`Captured Payment`, {
       variant: 'success',
@@ -5931,28 +5953,31 @@ export const capturePaymentS = async (
     } = payload
 
     console.log('unit log', payload)
-    const { data, error } = await supabase.from(`${orgId}_accounts`).insert([
-      {
-        projectId,
-        unit_id: unitId,
-        towards: payto || builderName,
-        towards_id: towardsBankDocId,
-        mode,
-        custId: custNo,
-        customerName: Name || payload?.customerName || '',
-        receive_by: payload?.bookedBy,
-        txt_dated: dated, // modify this to dated time entred by user
-        status: payload?.status || 'review',
-        payReason: payload?.payReason || payload?.remarks,
-        totalAmount: amount,
-        bank_ref: bank_ref_no,
-        attchUrl:
-          payload?.attchUrl ||
-          payload?.fileUploader?.url ||
-          payload?.attchUrl ||
-          '',
-      },
-    ]).select()
+    const { data, error } = await supabase
+      .from(`${orgId}_accounts`)
+      .insert([
+        {
+          projectId,
+          unit_id: unitId,
+          towards: payto || builderName,
+          towards_id: towardsBankDocId,
+          mode,
+          custId: custNo,
+          customerName: Name || payload?.customerName || '',
+          receive_by: payload?.bookedBy,
+          txt_dated: dated, // modify this to dated time entred by user
+          status: payload?.status || 'review',
+          payReason: payload?.payReason || payload?.remarks,
+          totalAmount: amount,
+          bank_ref: bank_ref_no,
+          attchUrl:
+            payload?.attchUrl ||
+            payload?.fileUploader?.url ||
+            payload?.attchUrl ||
+            '',
+        },
+      ])
+      .select()
     const paymentCB = await addPaymentReceivedEntry(
       orgId,
       unitId,
@@ -6026,7 +6051,8 @@ export const capturePaymentS = async (
           from: 'review',
           to: 'review',
         },
-      ]).select()
+      ])
+      .select()
     const reportPayload = {
       txt_dated: dated,
       receive_by: payload?.bookedBy || payload?.receive_by,
@@ -6077,7 +6103,8 @@ export const addAccountslogS = async (
           unitId,
           amount: 10.0,
         },
-      ]).select()
+      ])
+      .select()
 
     await console.log('data is ', data, error)
     enqueueSnackbar(`Captured Payment`, {
@@ -6164,100 +6191,101 @@ export const updateUnitStatus = async (
 ) => {
   return toast.promise(
     (async () => {
-  try {
-    const unitId = selCustomerPayload?.id
-    console.log('data is===>', selCustomerPayload?.id, data)
-    await updateDoc(doc(db, `${orgId}_units`, selCustomerPayload?.id), {
-      fullPs: data?.fullPs,
-      status: data?.status,
-      [data?.eventKey]: Timestamp.now().toMillis(),
-      T_elgible: data?.T_elgible_new,
-      T_elgible_balance: data?.T_elgible_balance,
-      // [`${data?.status}_on`]: data[`${data?.status}_on`],
-    })
-    const statusVal = data?.status || ''
-    const oldStatus = data?.oldStatus || ''
+      try {
+        const unitId = selCustomerPayload?.id
+        console.log('data is===>', selCustomerPayload?.id, data)
+        await updateDoc(doc(db, `${orgId}_units`, selCustomerPayload?.id), {
+          fullPs: data?.fullPs,
+          status: data?.status,
+          [data?.eventKey]: Timestamp.now().toMillis(),
+          T_elgible: data?.T_elgible_new,
+          T_elgible_balance: data?.T_elgible_balance,
+          // [`${data?.status}_on`]: data[`${data?.status}_on`],
+        })
+        const statusVal = data?.status || ''
+        const oldStatus = data?.oldStatus || ''
 
-    let yo = {
-      status: data?.status,
-      release_status: '',
-      possession_status: '',
-      newUnit: 0,
-      availableCount: data?.status === 'available' ? 1 : 0,
-      cancelledCount: data?.status === 'available' ? 1 : 0,
-      soldUnitCount: data?.status === 'available' ? -1 : 0,
-      bookUnitCount: ['booked'].includes(oldStatus)
-        ? -1
-        : ['booked'].includes(statusVal)
-        ? 1
-        : 0,
-      s_agreeCount: ['agreement_pipeline'].includes(oldStatus)
-        ? -1
-        : ['agreement_pipeline'].includes(statusVal)
-        ? 1
-        : 0,
-      atsCount: ['ATS'].includes(oldStatus)
-        ? -1
-        : ['ATS'].includes(statusVal)
-        ? 1
-        : 0,
-      s_regisCount: ['registered'].includes(oldStatus)
-        ? -1
-        : ['registered'].includes(statusVal)
-        ? 1
-        : 0,
-      s_possCount: ['possession'].includes(oldStatus)
-        ? -1
-        : ['possession'].includes(statusVal)
-        ? 1
-        : 0,
-      blockedUnitCount: ['blocked'].includes(oldStatus)
-        ? -1
-        : ['blocked'].includes(statusVal)
-        ? 1
-        : 0,
-      custBlockCount: ['customer_blocked'].includes(oldStatus)
-        ? -1
-        : ['customer_blocked'].includes(statusVal)
-        ? 1
-        : 0,
-      mangBlockCount: ['management_blocked'].includes(oldStatus)
-        ? -1
-        : ['management_blocked'].includes(statusVal)
-        ? 1
-        : 0,
-      asset_value: 0,
-      area: 0,
+        let yo = {
+          status: data?.status,
+          release_status: '',
+          possession_status: '',
+          newUnit: 0,
+          availableCount: data?.status === 'available' ? 1 : 0,
+          cancelledCount: data?.status === 'available' ? 1 : 0,
+          soldUnitCount: data?.status === 'available' ? -1 : 0,
+          bookUnitCount: ['booked'].includes(oldStatus)
+            ? -1
+            : ['booked'].includes(statusVal)
+            ? 1
+            : 0,
+          s_agreeCount: ['agreement_pipeline'].includes(oldStatus)
+            ? -1
+            : ['agreement_pipeline'].includes(statusVal)
+            ? 1
+            : 0,
+          atsCount: ['ATS'].includes(oldStatus)
+            ? -1
+            : ['ATS'].includes(statusVal)
+            ? 1
+            : 0,
+          s_regisCount: ['registered'].includes(oldStatus)
+            ? -1
+            : ['registered'].includes(statusVal)
+            ? 1
+            : 0,
+          s_possCount: ['possession'].includes(oldStatus)
+            ? -1
+            : ['possession'].includes(statusVal)
+            ? 1
+            : 0,
+          blockedUnitCount: ['blocked'].includes(oldStatus)
+            ? -1
+            : ['blocked'].includes(statusVal)
+            ? 1
+            : 0,
+          custBlockCount: ['customer_blocked'].includes(oldStatus)
+            ? -1
+            : ['customer_blocked'].includes(statusVal)
+            ? 1
+            : 0,
+          mangBlockCount: ['management_blocked'].includes(oldStatus)
+            ? -1
+            : ['management_blocked'].includes(statusVal)
+            ? 1
+            : 0,
+          asset_value: 0,
+          area: 0,
+        }
+
+        await updateProjectComputedData(orgId, selCustomerPayload?.pId, yo)
+        const { data: data4, error: error4 } = await supabase
+          .from(`${orgId}_unit_logs`)
+          .insert([
+            {
+              type: 'sts_change',
+              subtype: 'sts_change',
+              T: Timestamp.now().toMillis(),
+              Uuid: unitId,
+              by,
+              payload: {},
+              from: 'sts_change',
+              to: data?.status,
+            },
+          ])
+          .select()
+        return 'Unit updation successful'
+      } catch (error) {
+        console.log('Unit updation failed', error, {
+          ...data,
+        })
+        throw error
+      }
+    })(),
+    {
+      loading: 'Processing updation...',
+      success: (message) => message,
+      error: 'Updation failed',
     }
-
-    await updateProjectComputedData(orgId, selCustomerPayload?.pId, yo)
-    const { data: data4, error: error4 } = await supabase
-      .from(`${orgId}_unit_logs`)
-      .insert([
-        {
-          type: 'sts_change',
-          subtype: 'sts_change',
-          T: Timestamp.now().toMillis(),
-          Uuid: unitId,
-          by,
-          payload: {},
-          from: 'sts_change',
-          to: data?.status,
-        },
-      ]).select()
-    return 'Unit updation successful'
-  } catch (error) {
-    console.log('Unit updation failed', error, {
-      ...data,
-    })
-    throw error
-  }
-})(),
-{
-  loading: 'Processing updation...',
-  success: (message) => message,
-  error: 'Updation failed'
-}
   )
 }
 
@@ -6287,7 +6315,8 @@ export const updateUnitStatusDates = async (
           from: data?.oldDate,
           to: data?.time,
         },
-      ]).select()
+      ])
+      .select()
     enqueueSnackbar('Unit Status Updated', {
       variant: 'success',
     })
@@ -6533,7 +6562,6 @@ export const updateCrmExecutiveReAssignAgreegations = async (
       })
     }
   }
-
 }
 
 export const updateCrmReportAmountAgreeNew = async (orgId, data, by) => {
@@ -6557,7 +6585,7 @@ export const updateCrmReportAmountAgreeNew = async (orgId, data, by) => {
   const payload = {
     empId: receive_by,
     pId: projectId,
-    week: x.weekNumberOfYear,/////
+    week: x.weekNumberOfYear, /////
     month: x.month,
     year: x.year,
     received: increment(totalAmount),
@@ -6874,7 +6902,8 @@ export const updateManagerApproval = async (
           from: 'cs_review',
           to: status,
         },
-      ]).select()
+      ])
+      .select()
     if (status === 'approved') {
       toast.success('Cost Sheet Approved..!', {
         // variant: 'success',
@@ -6939,7 +6968,8 @@ export const AddUnitDocs = async (
           from: 'docUploaded',
           to: docName,
         },
-      ]).select()
+      ])
+      .select()
     enqueueSnackbar(msg, {
       variant: color,
     })
@@ -7007,7 +7037,8 @@ export const DeleteUnitDocs = async (
           from: 'docDeleted',
           to: docName,
         },
-      ]).select()
+      ])
+      .select()
     enqueueSnackbar(msg, {
       variant: color,
     })
@@ -7053,7 +7084,8 @@ export const updateUnitDocs = async (
           from: 'docUploaded',
           to: docName,
         },
-      ]).select()
+      ])
+      .select()
     enqueueSnackbar(msg, {
       variant: color,
     })
@@ -7097,7 +7129,8 @@ export const updateBankLoanApprovals = async (
           from: 'docUploaded',
           to: '',
         },
-      ]).select()
+      ])
+      .select()
     toast.success('Loan Status Updated')
   } catch (error) {
     console.log('Doc Uplaod failed', error, unitId, {
@@ -7154,7 +7187,8 @@ export const addNewUnitModification = async (
           from: 'cs_review',
           to: status,
         },
-      ]).select()
+      ])
+      .select()
     fullPs.map((d, i) => {
       //
       // this will set the previous date immutable as current date
@@ -7229,7 +7263,8 @@ export const addNewUnitDemand = async (
           from: 'cs_review',
           to: status,
         },
-      ]).select()
+      ])
+      .select()
     fullPs.map((d, i) => {
       //
       // this will set the previous date immutable as current date
@@ -7289,7 +7324,8 @@ export const updateLegalClarityApproval = async (
           from: 'legal_review',
           to: status,
         },
-      ]).select()
+      ])
+      .select()
     enqueueSnackbar('Legal Clarified..!', {
       variant: 'success',
     })
@@ -7333,7 +7369,8 @@ export const updateATSApproval = async (
           from: 'ats_review',
           to: status,
         },
-      ]).select()
+      ])
+      .select()
     // enqueueSnackbar('ATS Approved..!', {
     //   variant: 'success',
     // })
@@ -7386,7 +7423,8 @@ export const updateKycApproval = async (
           from: 'kyc_review',
           to: status,
         },
-      ]).select()
+      ])
+      .select()
     // enqueueSnackbar('KYC Approved..!', {
     //   variant: 'success',
     // })
@@ -7438,7 +7476,8 @@ export const updatePosessionApproval = async (
           from: 'cs_review',
           to: 'posession',
         },
-      ]).select()
+      ])
+      .select()
     // enqueueSnackbar('Posession Approved..!', {
     //   variant: 'success',
     // })
@@ -7487,7 +7526,8 @@ export const updateSDApproval = async (
           from: 'sd_review',
           to: status,
         },
-      ]).select()
+      ])
+      .select()
     enqueueSnackbar(msg, {
       variant: status == 'approved' ? 'success' : 'error',
     })
@@ -7648,7 +7688,8 @@ export const uploadBookedUnitToDb = async (
           from: data?.oldStatus || 'lead',
           to: data?.status || 'booked',
         },
-      ]).select()
+      ])
+      .select()
   } catch (error) {
     console.log('Unit Status Updation Failed', error, {
       ...data,
@@ -7686,7 +7727,8 @@ export const updateUnitAsBooked = async (
           from: data?.oldStatus || 'lead',
           to: data?.status || 'booked',
         },
-      ]).select()
+      ])
+      .select()
     if (enqueueSnackbar) {
       enqueueSnackbar(`Unit updated as ${data?.status}`, {
         variant: 'success',
@@ -7741,7 +7783,8 @@ export const updateUnitAsBlocked = async (
           from: 'lead',
           to: 'blocked',
         },
-      ]).select()
+      ])
+      .select()
     enqueueSnackbar('Unit is blocked..!', {
       variant: 'success',
     })
@@ -7791,7 +7834,8 @@ export const updateLeadRemarks_NotIntrested = async (
           from: from,
           to: Status,
         },
-      ]).select()
+      ])
+      .select()
     enqueueSnackbar('Updated Successfully', {
       variant: 'success',
     })
@@ -7862,7 +7906,8 @@ export const updateLeadRemarks_VisitDone = async (
           from: from,
           to: Status,
         },
-      ]).select()
+      ])
+      .select()
     enqueueSnackbar('Updated Successfully', {
       variant: 'success',
     })
@@ -7898,7 +7943,8 @@ export const updateLeadsStrength = async (orgId, leadDocId, data, by) => {
           from: 0,
           to: leadstrength,
         },
-      ]).select()
+      ])
+      .select()
     toast.success('Lead Strength Updated')
   } catch (error) {
     console.log('Lead Strength failed', error, {
@@ -7945,19 +7991,22 @@ export const updateLeadBookedStatus = async (
       stsUpT: Timestamp.now().toMillis(),
       leadUpT: Timestamp.now().toMillis(),
     })
-    const { data, error } = await supabase.from(`${orgId}_lead_logs`).insert([
-      {
-        type: 'sts_change',
-        subtype: oldStatus,
-        T: Timestamp.now().toMillis(),
-        Luid: leadDocId,
-        by,
-        payload: {},
-        from: oldStatus,
-        to: newStatus,
-        projectId: projectId,
-      },
-    ]).select()
+    const { data, error } = await supabase
+      .from(`${orgId}_lead_logs`)
+      .insert([
+        {
+          type: 'sts_change',
+          subtype: oldStatus,
+          T: Timestamp.now().toMillis(),
+          Luid: leadDocId,
+          by,
+          payload: {},
+          from: oldStatus,
+          to: newStatus,
+          projectId: projectId,
+        },
+      ])
+      .select()
 
     console.log('chek if ther is any erro in supa', data, error)
     enqueueSnackbar(`Status Updated to ${newStatus}`, {
@@ -7994,19 +8043,22 @@ export const updateLeadStatus = async (
     //   txt: msg,
     //   by,
     // })
-    const { data, error } = await supabase.from(`${orgId}_lead_logs`).insert([
-      {
-        type: 'sts_change',
-        subtype: oldStatus,
-        T: Timestamp.now().toMillis(),
-        Luid: leadDocId,
-        by,
-        payload: {},
-        from: oldStatus,
-        to: newStatus,
-        projectId: projectId,
-      },
-    ]).select()
+    const { data, error } = await supabase
+      .from(`${orgId}_lead_logs`)
+      .insert([
+        {
+          type: 'sts_change',
+          subtype: oldStatus,
+          T: Timestamp.now().toMillis(),
+          Luid: leadDocId,
+          by,
+          payload: {},
+          from: oldStatus,
+          to: newStatus,
+          projectId: projectId,
+        },
+      ])
+      .select()
 
     console.log('chek if ther is any erro in supa', data, error)
     enqueueSnackbar(`Status Updated to ${newStatus}`, {
