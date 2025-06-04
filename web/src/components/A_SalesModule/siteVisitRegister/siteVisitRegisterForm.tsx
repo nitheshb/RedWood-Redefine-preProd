@@ -33,6 +33,8 @@ export default function SiteVisitRegisterForm() {
   const [usersList, setusersList] = useState([])
   const [cpSourcingManagerA, setCpSourcingManagerA] = useState([])
 
+
+
   const [projectList, setprojectList] = useState([])
   const [selProjectIs, setSelProject] = useState({
     label: 'All Projects',
@@ -942,7 +944,9 @@ export default function SiteVisitRegisterForm() {
                               email: value?.email,
                               cpPh: value?.offPh,
                             }
-                            setSelCPUser(value)
+                            // setSelCPUser(value)
+                              setSelCPUser(x)
+                             setFieldValue('cpName', value.label)  
                           }}
                           value={selCPUser?.value}
                           options={cPUsersList}
