@@ -23,11 +23,11 @@ export default function SiteVisitRegisterForm() {
   const [usersList, setusersList] = useState([])
   const [projectList, setprojectList] = useState([])
   const [selProjectIs, setSelProject] = useState({
-      label: 'All Projects',
-      value: 'allprojects',
-    })
-    const [cPUsersList, setCPUsersList] = useState([])
-    const [selCPUser, setSelCPUser] = useState([])
+    label: 'All Projects',
+    value: 'allprojects',
+  })
+  const [cPUsersList, setCPUsersList] = useState([])
+  const [selCPUser, setSelCPUser] = useState([])
 
   useEffect(() => {
     const unsubscribe = steamUsersListByRole(
@@ -49,54 +49,54 @@ export default function SiteVisitRegisterForm() {
 
     return
   }, [])
-   useEffect(() => {
-      const unsubscribe1 = steamUsersListCpAgents(
-        orgId,
-        (querySnapshot) => {
-          const usersListA = querySnapshot.docs.map((docSnapshot) =>
-            docSnapshot.data()
-          )
+  useEffect(() => {
+    const unsubscribe1 = steamUsersListCpAgents(
+      orgId,
+      (querySnapshot) => {
+        const usersListA = querySnapshot.docs.map((docSnapshot) =>
+          docSnapshot.data()
+        )
 
-          usersListA.map((user) => {
-            user.label = user.displayName || user.name
-            user.value = user.uid
-          })
+        usersListA.map((user) => {
+          user.label = user.displayName || user.name
+          user.value = user.uid
+        })
 
-          setCPUsersList(usersListA)
-        },
-        (error) => setCPUsersList([])
-      )
+        setCPUsersList(usersListA)
+      },
+      (error) => setCPUsersList([])
+    )
 
-      return
+    return
 
 
 
-    }, [])
-    useEffect(() => {
-      const unsubscribe = getMyProjects(
-        orgId,
-        { projAccessA: '' },
-        (querySnapshot) => {
-          const projectsListA = querySnapshot.docs.map((docSnapshot) =>
-            docSnapshot.data()
-          )
+  }, [])
+  useEffect(() => {
+    const unsubscribe = getMyProjects(
+      orgId,
+      { projAccessA: '' },
+      (querySnapshot) => {
+        const projectsListA = querySnapshot.docs.map((docSnapshot) =>
+          docSnapshot.data()
+        )
 
-          projectsListA.map((user) => {
-            user.label = user.projectName
-            user.value = user.projectName
-          })
+        projectsListA.map((user) => {
+          user.label = user.projectName
+          user.value = user.projectName
+        })
 
-            setprojectList(projectsListA)
+        setprojectList(projectsListA)
 
-        },
-        (error) => {
-          console.log('error at bro', error)
-          setprojectList([])
-        }
-      )
+      },
+      (error) => {
+        console.log('error at bro', error)
+        setprojectList([])
+      }
+    )
 
-      return
-    }, [])
+    return
+  }, [])
 
   const [formData, setFormData] = useState({
     // Search leads
@@ -145,7 +145,7 @@ export default function SiteVisitRegisterForm() {
     // title: Yup.string().required('This field is required.'),
     firstName: Yup.string().required('This field is required.'),
     // lastName: Yup.string().required('Last name is required'),
-    email: Yup.string().email('Invalid email ').required('Email is required'),
+    // email: Yup.string().email('Invalid email ').required('Email is required'),
     phone: Yup.string().required('This field is required.'),
   });
 
@@ -189,28 +189,41 @@ export default function SiteVisitRegisterForm() {
         return Yup.object({});
     }
   };
+
+
+
   const searchLeads = async (phoneNumber) => {
     setIsSearching(true);
     const foundLeads = await checkIfLeadAlreadyExists(
       `${orgId}_leads`,
       phoneNumber,
       'NA'
-    )
+    );
 
     if (foundLeads?.length > 0) {
-      toast.success('Lead exists!',)
+      toast.success('Lead exists!');
       setSearchResults(foundLeads);
-      setIsSearching(false);
     } else {
-      setIsSearching(false);
+
+      setSelectedLead(null);
+
+      setFormData({
+        ...formData,
+        mobile: phoneNumber,
+        searchPhone: phoneNumber
+      });
+      setSearchResults([]);
+      toast('No lead found - will create new one');
     }
-
-
+    setIsSearching(false);
   };
+
 
   const selectLead = (lead) => {
     setSelectedLead(lead);
     console.log('Selected lead is', lead);
+
+
     setFormData({
       ...formData,
       title: lead.title || '',
@@ -262,64 +275,135 @@ export default function SiteVisitRegisterForm() {
     setStep(step - 1);
   };
 
-  const handleSubmit = async (values, resetForm) => {
+
+
+
+
+
+
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     const finalData = { ...formData, ...values };
     setFormData(finalData);
-    console.log('data value is', values.svHappendOn)
-    // In a real application, you would submit the data to your backend here
 
-    let newData = {
-      ...finalData,
-      ...selProjectIs,
-      ...selCPUser,
-      // remarks: ''
-      // projectId: selectedLead?.projectId,
-      // leadId: selectedLead?.id,
+    try {
+      let newData = {
+        ...finalData,
+        ...selProjectIs,
+        ...selCPUser,
+      };
+
+      let siteVisitDoc = await addSiteVisitEntry(orgId, newData, user);
+      newData.svId = siteVisitDoc.id;
+
+      let x = {
+        siteVisitA: arrayUnion(siteVisitDoc.id),
+        svSchBy: newData.svSchBy,
+        svSchByObj: newData.svSchByObj,
+        svAttendedBy: newData.svAttendedBy,
+        svHappendOn: newData.svHappendOn,
+        coveredA: arrayUnion('visitdone'),
+        VisitDoneNotes: newData.siteVistRemarks,
+      };
+
+      if (selectedLead?.id) {
+        await updateLeadData(orgId, selectedLead.id, x, user?.email);
+      } else {
+
+        const newLeadData = {
+          Mobile: newData?.mobile || values?.searchPhone,
+          Name: newData?.firstName,
+          Email: newData?.email,
+          Status: 'new',
+          intype: 'sitevisit',
+          Date: Timestamp.now().toMillis(),
+          by: user?.email,
+          Project: newData?.projectName,
+          ProjectId: selProjectIs?.value === 'allprojects' ? '' : selProjectIs?.value,
+          assignedTo: newData?.svAttendedByObj?.value || user?.uid,
+          assignedToObj: newData?.svAttendedByObj,
+          source: newData?.source,
+          subSource: newData?.subSource,
+          cpName: newData?.cpName,
+
+          title: newData?.title,
+          secondaryPhone: newData?.secondaryPhone,
+          propertyType: newData?.propertyType,
+          budget: newData?.budget,
+          bedrooms: newData?.bedrooms,
+          address: newData?.address,
+          pincode: newData?.pincode,
+          customercompany: newData?.customercompany,
+          customerdesignation: newData?.customerdesignation,
+          purposeofPurchase: newData?.purposeofPurchase
+        };
+
+        const createdLead = await addLead(orgId, newLeadData, user?.email, 'New Lead from Site Visit');
+
+
+        await updateLeadData(orgId, createdLead.id, x, user?.email);
+      }
+
+
+      resetForm({
+        values: {
+
+          searchPhone: '',
+          title: 'Mr',
+          firstName: '',
+          email: '',
+          mobile: '',
+          secondaryPhone: '',
+          propertyType: '',
+          budget: '',
+          address: '',
+          source: '',
+          pincode: '',
+          customerdesignation: '',
+          purposeofPurchase: '',
+          bedrooms: '',
+          customercompany: '',
+          siteVistRemarks: '',
+          subSource: '',
+          cpName: '',
+          projectName: '',
+          projectUnitNumber: '',
+          referralLeadName: '',
+          notes: '',
+          svAttendedBy: '',
+          svHappendOn: '',
+          svSchBy: '',
+          svAttendedByObj: {},
+          svSchByObj: {}
+        }
+      });
+
+      resetForm();
+      setStep(0);
+      setSearchResults([]);
+      setSelectedLead(null);
+      setSelProject({
+        label: 'All Projects',
+        value: 'allprojects',
+      });
+      setSelCPUser([]);
+
+      toast.success('Site visit registered successfully!');
+
+    } catch (error) {
+      console.error('Submission error:', error);
+      toast.error('Failed to register site visit. Please try again.', {
+        duration: 4000,
+        position: 'top-center',
+      });
+    } finally {
+      setSubmitting(false);
     }
-    console.log('new data is', newData, selectedLead)
-
-     let siteVisitDoc = await addSiteVisitEntry(orgId, newData, user)
-      newData.svId = siteVisitDoc.id
-    console.log('site visit doc is',selectedLead,  siteVisitDoc, siteVisitDoc.id, newData)
-    let x = {
-      siteVisitA: arrayUnion(siteVisitDoc.id),
-      svSchBy: newData.svSchBy,
-      svSchByObj: newData.svSchByObj,
-      svAttendedBy: newData.svAttendedBy,
-      svHappendOn: newData.svHappendOn,
-      coveredA: arrayUnion('visitdone'),
-      VisitDoneNotes: newData.siteVistRemarks,
-    }
-     if(selectedLead?.id){
-
-       await updateLeadData(orgId, selectedLead.id, x, user?.email)
-     }else{
-      x.Mobile = newData?.mobile
-      x.Name= newData?.firstName
-      x.Email = newData?.email
-      x.Status = 'negotitation'
-      x.intype = 'sitevisit'
-      x.Date = Timestamp.now().toMillis(),
-      x.by = user?.email
-      x.Project= newData?.projectName
-      x.ProjectId = selProjectIs?.value === 'allprojects' ? '' : selProjectIs?.value
-      x.assignedTo = newData?.svAttendedByObj?.value || user?.uid
-      x.assignedToObj= newDate?.svAttendedByObj
-      await addLead(orgId, newData, user?.email, 'Site Visit Added')
-     }
-
-
-    //
-    // await updateLeadData(orgId, selectedLead.id, finalData, user?.email)
-    console.log('final data is', newData)
-    resetForm()
-    setStep(0)
-    setSearchResults([])
-    setSelectedLead(null)
-    toast.success('Lead updated successfully!')
-    console.log('Form submitted with:', finalData);
-    alert('Form submitted successfully!');
   };
+
+
+
+
+
 
   return (
     <div className="max-w-4xl  p-6 bg-white rounded-b-lg shadow-lg min-w-[626px]">
@@ -367,7 +451,9 @@ export default function SiteVisitRegisterForm() {
         initialValues={formData}
         // validationSchema={getValidationSchema()}
         enableReinitialize={true}
-        onSubmit={(values, { resetForm }) => {
+        onSubmit={(values, formikHelpers) => {
+          // const { resetForm } = formikHelpers;
+
           // if (step === 3) {
           //   handleSubmit(values);
           // } else {
@@ -377,7 +463,7 @@ export default function SiteVisitRegisterForm() {
           if (step === 0) {
             nextStep(values);
           } else if (step === 3) {
-            handleSubmit(values, resetForm);
+            handleSubmit(values, formikHelpers);
           } else {
             nextStep(values);
           }
@@ -483,69 +569,11 @@ export default function SiteVisitRegisterForm() {
               <div className="space-y-4">
                 <h2 className="text-xl font-semibold text-gray-800">Personal Details</h2>
 
-                {/* <div className="grid grid-cols-2 gap-4">
-
-
-                  <div>
-                    <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">Title</label>
-                    <Field
-                      as="select"
-                      id="title"
-                      name="title"
-                      className="w-full px-2 py-1  border border-gray-300 rounded-md text-sm"
-                    >
-                      <option value="Mr">Mr</option>
-                      <option value="Mrs">Mrs</option>
-                      <option value="Miss">Miss</option>
-                      <option value="Ms">Ms</option>
-                      <option value="Dr">Dr</option>
-
-                    </Field>
-                    <ErrorMessage name="title" component="div" className="text-red-500 text-xs mt-1" />
-                  </div>
-
-
-
-                  <div>
-                    <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
-                    <Field
-                      type="text"
-                      id="firstName"
-                      name="firstName"
-                      className="w-full px-2 py-1  border border-gray-300 rounded-md text-sm"
-                    />
-                    <ErrorMessage name="firstName" component="div" className="text-red-500 text-xs mt-1" />
-                  </div>
-
-                  <div>
-                    <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
-                    <Field
-                      type="text"
-                      id="lastName"
-                      name="lastName"
-                      className="w-full px-2 py-1  border border-gray-300 rounded-md text-sm"
-                    />
-                    <ErrorMessage name="lastName" component="div" className="text-red-500 text-xs mt-1" />
-                  </div>
-                </div> */}
-
-
                 <div className="grid grid-cols-4 gap-4">
 
                   <div className="col-span-1">
                     <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">Name</label>
-                    {/* <Field
-                      as="select"
-                      id="title"
-                      name="title"
-                      className="w-full px-2 py-1.5   border border-gray-300 rounded-md text-sm"
-                    >
-                      <option value="Mr">Mr</option>
-                      <option value="Mrs">Mrs</option>
-                      <option value="Miss">Miss</option>
-                      <option value="Ms">Ms</option>
-                      <option value="Dr">Dr</option>
-                    </Field> */}
+
                     <CustomSelect
                       name="title"
                       className="input mt-"
@@ -649,11 +677,11 @@ export default function SiteVisitRegisterForm() {
                   {/* Left Column */}
                   <div>
 
-                               {/* Project Name (moved next to Source) */}
+                    {/* Project Name (moved next to Source) */}
 
-                               <div className="mt-3">
-                        <label htmlFor="projectName" className="block text-sm font-medium text-gray-700 mb-1">Project Name*</label>
-                        <CustomSelect
+                    <div className="mt-3">
+                      <label htmlFor="projectName" className="block text-sm font-medium text-gray-700 mb-1">Project Name*</label>
+                      <CustomSelect
                         name="projectName"
                         className="input mt-"
                         onChange={(value) => {
@@ -665,110 +693,110 @@ export default function SiteVisitRegisterForm() {
                           // setFieldValue('projectUnitNumber', '');
                           // setFieldValue('referralLeadName', '');
                           console.log('projectName', value)
-                          let x ={label: value?.label, value: value?.value, projectName: value?.label, projectId: value?.uid}
+                          let x = { label: value?.label, value: value?.value, projectName: value?.label, projectId: value?.uid }
                           setSelProject(x)
                         }}
                         value={selProjectIs?.value}
                         options={projectList}
                       />
-                        <ErrorMessage name="projectName" component="div" className="text-red-500 text-xs mt-1" />
-                      </div>
-
-                  </div>
-   {/* Source Field */}
-   <div className="mt-3">
-                      <label htmlFor="source" className="block text-sm font-medium text-gray-700 mb-1">Source*</label>
-
-                      <CustomSelect
-                        name="source"
-                        className="input mt-"
-                        onChange={(value) => {
-                          setFieldValue('source', value.value);
-                          // Clear dependent fields
-                          setFieldValue('subSource', '');
-                          setFieldValue('cpName', '');
-                          setFieldValue('projectName', '');
-                          setFieldValue('projectUnitNumber', '');
-                          setFieldValue('referralLeadName', '');
-                        }}
-                        value={values.source}
-                        options={[
-                          { value: 'Referral', label: 'Referral' },
-                          { value: 'Direct', label: 'Direct' },
-                          { value: 'CP', label: 'CP' }
-                        ]}
-                      />
-                      <ErrorMessage name="source" component="div" className="text-red-500 text-xs mt-1" />
+                      <ErrorMessage name="projectName" component="div" className="text-red-500 text-xs mt-1" />
                     </div>
 
+                  </div>
+                  {/* Source Field */}
+                  <div className="mt-3">
+                    <label htmlFor="source" className="block text-sm font-medium text-gray-700 mb-1">Source*</label>
+
+                    <CustomSelect
+                      name="source"
+                      className="input mt-"
+                      onChange={(value) => {
+                        setFieldValue('source', value.value);
+                        // Clear dependent fields
+                        setFieldValue('subSource', '');
+                        setFieldValue('cpName', '');
+                        setFieldValue('projectName', '');
+                        setFieldValue('projectUnitNumber', '');
+                        setFieldValue('referralLeadName', '');
+                      }}
+                      value={values.source}
+                      options={[
+                        { value: 'Referral', label: 'Referral' },
+                        { value: 'Direct', label: 'Direct' },
+                        { value: 'CP', label: 'CP' }
+                      ]}
+                    />
+                    <ErrorMessage name="source" component="div" className="text-red-500 text-xs mt-1" />
+                  </div>
 
 
 
-                    {/* Direct - Sub Source */}
-                    {values.source === 'Direct' && (
-                      <div className="">
-                        <label htmlFor="subSource" className="block text-sm font-medium text-gray-700 mb-1">Sub Source*</label>
 
-                        <CustomSelect
-                          name="subSource"
-                          className="input "
-                          onChange={(value) => {
-                            setFieldValue('subSource', value.value);
-                          }}
-                          placeHolder="Select sub source"
-                          value={values.subSource}
-                          options={[
-                            { value: 'Direct Walkin', label: 'Direct Walkin' },
-                            { value: 'Google', label: 'Google' },
-                            { value: 'Website', label: 'Website' },
-                            { value: 'Newspaper', label: 'Newspaper' },
-                            { value: 'YouTube', label: 'YouTube' },
-                            { value: 'LinkedIn', label: 'LinkedIn' },
-                            { value: 'Instagram', label: 'Instagram' },
-                            { value: 'Leaflet', label: 'Leaflet' },
-                            { value: 'Hoardings', label: 'Hoardings' },
-                            { value: 'Whatsapp', label: 'Whatsapp' },
-                            { value: 'Email', label: 'Email' },
-                            { value: '99acres', label: '99acres' },
-                            { value: 'Magic Bricks', label: 'Magic Bricks' },
-                            { value: 'housing.com', label: 'housing.com' },
-                            { value: 'Facebook', label: 'Facebook' },
-                            { value: 'Other', label: 'Other' }
-                          ]}
-                        />
+                  {/* Direct - Sub Source */}
+                  {values.source === 'Direct' && (
+                    <div className="">
+                      <label htmlFor="subSource" className="block text-sm font-medium text-gray-700 mb-1">Sub Source*</label>
 
-                        <ErrorMessage name="subSource" component="div" className="text-red-500 text-xs mt-1" />
-                      </div>
-                    )}
-
-                    {/* CP - Search Field */}
-                    {values.source === 'CP' && (
-                      <div className="min-w-[300px]">
-                        <label htmlFor="cpName" className="block text-sm font-medium text-gray-700 mb-1">Search CP Name*</label>
-                        <div className="flex">
-                        <CustomSelect
-                        name="cpName"
-                        className="input mt- w-[100%] flex"
+                      <CustomSelect
+                        name="subSource"
+                        className="input "
                         onChange={(value) => {
-                          console.log('cpName', value)
-                          let x ={label: value?.label, value: value?.value, cpName: value?.label, cpId: value?.uid, email: value?.email, cpPh: value?.offPh}
-                          setSelCPUser(value)
+                          setFieldValue('subSource', value.value);
                         }}
-
-                        value={selCPUser?.value}
-                        options={cPUsersList}
-                        placeHolder={"CP Name"}
+                        placeHolder="Select sub source"
+                        value={values.subSource}
+                        options={[
+                          { value: 'Direct Walkin', label: 'Direct Walkin' },
+                          { value: 'Google', label: 'Google' },
+                          { value: 'Website', label: 'Website' },
+                          { value: 'Newspaper', label: 'Newspaper' },
+                          { value: 'YouTube', label: 'YouTube' },
+                          { value: 'LinkedIn', label: 'LinkedIn' },
+                          { value: 'Instagram', label: 'Instagram' },
+                          { value: 'Leaflet', label: 'Leaflet' },
+                          { value: 'Hoardings', label: 'Hoardings' },
+                          { value: 'Whatsapp', label: 'Whatsapp' },
+                          { value: 'Email', label: 'Email' },
+                          { value: '99acres', label: '99acres' },
+                          { value: 'Magic Bricks', label: 'Magic Bricks' },
+                          { value: 'housing.com', label: 'housing.com' },
+                          { value: 'Facebook', label: 'Facebook' },
+                          { value: 'Other', label: 'Other' }
+                        ]}
                       />
 
-                        </div>
-                        <ErrorMessage name="cpName" component="div" className="text-red-500 text-xs mt-1" />
+                      <ErrorMessage name="subSource" component="div" className="text-red-500 text-xs mt-1" />
+                    </div>
+                  )}
+
+                  {/* CP - Search Field */}
+                  {values.source === 'CP' && (
+                    <div className="min-w-[300px]">
+                      <label htmlFor="cpName" className="block text-sm font-medium text-gray-700 mb-1">Search CP Name*</label>
+                      <div className="flex">
+                        <CustomSelect
+                          name="cpName"
+                          className="input mt- w-[100%] flex"
+                          onChange={(value) => {
+                            console.log('cpName', value)
+                            let x = { label: value?.label, value: value?.value, cpName: value?.label, cpId: value?.uid, email: value?.email, cpPh: value?.offPh }
+                            setSelCPUser(value)
+                          }}
+
+                          value={selCPUser?.value}
+                          options={cPUsersList}
+                          placeHolder={"CP Name"}
+                        />
+
                       </div>
-                    )}
+                      <ErrorMessage name="cpName" component="div" className="text-red-500 text-xs mt-1" />
+                    </div>
+                  )}
                   {/* Right Column - Other Referral Fields */}
                   {(values.source === 'Referral' || !values.source) && (
                     <div className="space-y-4  ">
 
-<div>
+                      <div>
                         <label htmlFor="referralLeadName" className="block text-sm font-medium text-gray-700 mb-1">Lead Name*</label>
                         <Field
                           type="text"
@@ -796,30 +824,10 @@ export default function SiteVisitRegisterForm() {
 
 
                 <div className="grid grid-cols-2 gap-4">
-
-
-
-
-
                   <div>
-
-
                     <div className='mt-1'>
                       <label htmlFor="propertyType" className="block text-sm font-medium text-gray-700 mb-1">Property Type</label>
-                      {/* <Field
-                        as="select"
-                        id="propertyType"
-                        name="propertyType"
-                        className="w-full px-2 py-1  border border-gray-300 rounded-md text-sm"
-                      >
-                        <option value="">Select property type</option>
-                        <option value="House">House</option>
-                        <option value="Apartment">Apartment</option>
-                        <option value="Condo">Condo</option>
-                        <option value="Townhouse">Townhouse</option>
-                        <option value="Land">Land</option>
-                        <option value="Commercial">Commercial</option>
-                      </Field> */}
+
                       <CustomSelect
                         name="propertyType"
                         className="input mt-"
@@ -837,32 +845,10 @@ export default function SiteVisitRegisterForm() {
                       />
                       <ErrorMessage name="propertyType" component="div" className="text-red-500 text-xs mt-1" />
                     </div>
-
-
                   </div>
-
-
-
-
-
-
                   <div>
                     <label htmlFor="bedrooms" className="block text-sm font-medium text-gray-700 mb-1">Property configuration</label>
-                    {/* <Field
-                      as="select"
-                      id="bedrooms"
-                      name="bedrooms"
-                      className="w-full px-2 py-1  border border-gray-300 rounded-md text-sm"
-                    >
-                      <option value="">Select</option>
-                      <option value="1">1 Bhk</option>
-                      <option value="1.5">2 Bhk</option>
-                      <option value="2">3 Bhk</option>
-                      <option value="2.5">4 Bhk</option>
 
-                      <option value="3+">Studio</option>
-                      <option value="3+">Penthouse</option>
-                    </Field> */}
                     <CustomSelect
                       name="bedrooms"
                       className="input mt-2"
@@ -873,56 +859,24 @@ export default function SiteVisitRegisterForm() {
                       options={[
                         { value: '', label: 'Select' },
                         { value: '1', label: '1 Bhk' },
-                        { value: '1.5', label: '2 Bhk' },
-                        { value: '2', label: '3 Bhk' },
-                        { value: '2.5', label: '4 Bhk' },
+                        { value: '2', label: '2 Bhk' },
+                        { value: '3', label: '3 Bhk' },
+                        { value: '4', label: '4 Bhk' },
                         // { value: '3', label: '5 Bhk' }, // Uncomment if needed
-                        { value: '3+', label: 'Studio' },
-                        { value: '3+', label: 'Penthouse' }
+                        { value: 'studio', label: 'Studio' },
+                        { value: 'penthouse', label: 'Penthouse' }
                       ]}
                     />
 
                     <ErrorMessage name="bedrooms" component="div" className="text-red-500 text-xs mt-1" />
                   </div>
-
-
-
-
-
-
-
-
-
                 </div>
-
-
-
-
-
-
 
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="budget" className="block text-sm font-medium text-gray-700 mb-1">Preferred Budget Range*:</label>
-                    {/* <Field
-                      as="select"
-                      id="budget"
-                      name="budget"
-                      className="w-full px-2 py-1  border border-gray-300 rounded-md text-sm"
-                    >
-                      <option value="">Select Budget</option>
-                      <option value="under_50k">Below 1cr</option>
-                      <option value="50k_100k">1cr to 1.25cr</option>
-                      <option value="100k_200k">1.25cr to 1.50cr</option>
-                      <option value="200k_500k">1.50cr to 2cr</option>
-                      <option value="500k_plus">2cr to 2.50cr</option>
-                      <option value="500k_plus">2.50cr to 2.50cr</option>
-                      <option value="500k_plus">2.50cr to 3cr</option>
-                      <option value="500k_plus">3cr to 3.50cr</option>
-                      <option value="500k_plus">3.50cr to 4cr</option>
-                      <option value="500k_plus">4cr</option>
-                    </Field> */}
+
                     <CustomSelect
                       name="budget"
                       className="input mt-2"
@@ -954,29 +908,20 @@ export default function SiteVisitRegisterForm() {
                     <label htmlFor="purposeofPurchase" className="block text-sm font-medium text-gray-700 mb-1">
                       Purpose of Purchase*:
                     </label>
-                    {/* <Field
-                      as="select"
-                      id="purposeofPurchase"
-                      name="purposeofPurchase"
-                      className="w-full px-2 py-1  border border-gray-300 rounded-md text-sm"
-                    >
-                      <option value="">Select Purpose</option>
-                      <option value="self_funding">Own Use</option>
-                      <option value="bank_loan">Investment</option>
-                    </Field> */}
+
                     <CustomSelect
-  name="purposeofPurchase"
-  className="input mt-2"
-  onChange={(value) => {
-    setFieldValue('purposeofPurchase', value.value);
-  }}
-  value={values.purposeofPurchase}
-  options={[
-    { value: '', label: 'Select Purpose' },
-    { value: 'self_funding', label: 'Own Use' },
-    { value: 'bank_loan', label: 'Investment' }
-  ]}
-/>
+                      name="purposeofPurchase"
+                      className="input mt-2"
+                      onChange={(value) => {
+                        setFieldValue('purposeofPurchase', value.value);
+                      }}
+                      value={values.purposeofPurchase}
+                      options={[
+                        { value: '', label: 'Select Purpose' },
+                        { value: 'self_funding', label: 'Own Use' },
+                        { value: 'bank_loan', label: 'Investment' }
+                      ]}
+                    />
 
                     <ErrorMessage name="purposeofPurchase" component="div" className="text-red-500 text-xs mt-1" />
                   </div>
@@ -986,23 +931,7 @@ export default function SiteVisitRegisterForm() {
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  {/* <div>
-                    <label htmlFor="bedrooms" className="block text-sm font-medium text-gray-700 mb-1">Bedrooms</label>
-                    <Field
-                      as="select"
-                      id="bedrooms"
-                      name="bedrooms"
-                      className="w-full px-2 py-1  border border-gray-300 rounded-md text-sm"
-                    >
-                      <option value="">Select</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5+">5+</option>
-                    </Field>
-                    <ErrorMessage name="bedrooms" component="div" className="text-red-500 text-xs mt-1" />
-                  </div> */}
+
 
 
                 </div>
@@ -1112,39 +1041,6 @@ export default function SiteVisitRegisterForm() {
                   </div>
                 </div>
 
-
-
-
-                {/*
-                <div>
-                  <label htmlFor="additionalRequirements" className="block text-sm font-medium text-gray-700 mb-1">
-                    Additional Requirements
-                  </label>
-                  <Field
-                    as="textarea"
-                    id="additionalRequirements"
-                    name="additionalRequirements"
-                    className="w-full px-2 py-1  border border-gray-300 rounded-md text-sm h-24"
-                    placeholder="Pool, garden, garage, etc."
-                  />
-                </div>
-
-
-                <div>
-                  <label htmlFor="referenceName" className="block text-sm font-medium text-gray-700 mb-1">
-                    Reference Name
-                  </label>
-                  <Field
-                    type="text"
-                    id="referenceName"
-                    name="referenceName"
-                    className="w-full px-2 py-1  border border-gray-300 rounded-md text-sm"
-                    placeholder="Who referred this client?"
-                  />
-                  <ErrorMessage name="referenceName" component="div" className="text-red-500 text-xs mt-1" />
-                </div> */}
-
-                {/* New Remarks field */}
                 <div>
                   <label htmlFor="siteVistRemarks" className="block text-sm font-medium text-gray-700 mb-1">
                     Remarks
@@ -1172,42 +1068,13 @@ export default function SiteVisitRegisterForm() {
                 </div>
 
 
-                {/* <div>
-                  <label htmlFor="assignedAgent" className="block text-sm font-medium text-gray-700 mb-1">
-                    Assigned Agent
-                  </label>
-                  <Field
-                    as="select"
-                    id="assignedAgent"
-                    name="assignedAgent"
-                    className="w-full px-2 py-1  border border-gray-300 rounded-md text-sm"
-                  >
-                    <option value="">Select agent</option>
-                    <option value="John Doe">John Doe</option>
-                    <option value="Jane Smith">Jane Smith</option>
-                    <option value="Mike Johnson">Mike Johnson</option>
-                    <option value="Sarah Williams">Sarah Williams</option>
-                  </Field>
-                  <ErrorMessage name="assignedAgent" component="div" className="text-red-500 text-xs mt-1" />
-                </div> */}
+
 
                 <div>
                   <label htmlFor="svSchBy" className="block text-sm font-medium text-gray-700 mb-1">
                     Site Visit Activity Scheduled by*
                   </label>
-                  {/* <Field
-                    as="select"
-                    id="svSchBy"
-                    name="svSchBy"
-                    className="w-full px-2 py-1  border border-gray-300 rounded-md text-sm"
-                    required
-                  >
-                    <option value="">Select scheduler</option>
-                    <option value="John Doe">John Doe</option>
-                    <option value="Jane Smith">Jane Smith</option>
-                    <option value="Mike Johnson">Mike Johnson</option>
-                    <option value="Sarah Williams">Sarah Williams</option>
-                  </Field> */}
+
                   <CustomSelect
                     name="svSchBy"
                     // label="Assign To"
@@ -1237,19 +1104,6 @@ export default function SiteVisitRegisterForm() {
                   <label htmlFor="svAttendedBy" className="block text-sm font-medium text-gray-700 mb-1">
                     Attended by sales manager*
                   </label>
-                  {/* <Field
-                    as="select"
-                    id="svAttendedBy"
-                    name="svAttendedBy"
-                    className="w-full px-2 py-1  border border-gray-300 rounded-md text-sm"
-                    required
-                  >
-                    <option value="">Select manager</option>
-                    <option value="John Doe">John Doe</option>
-                    <option value="Jane Smith">Jane Smith</option>
-                    <option value="Mike Johnson">Mike Johnson</option>
-                    <option value="Sarah Williams">Sarah Williams</option>
-                  </Field> */}
 
                   <CustomSelect
                     name="svAttendedBy"
@@ -1293,6 +1147,7 @@ export default function SiteVisitRegisterForm() {
                         className="w-full px-2 py-1  border border-gray-300 rounded-md text-sm font-outfit font-normal text-sm leading-tight tracking-tight"
                         showTimeSelect
                         timeFormat="HH:mm"
+                        placeholderText="dd/mm/yy hh:mm"
                         injectTimes={[
                           setHours(setMinutes(new Date(), 1), 0),
                           setHours(setMinutes(new Date(), 5), 12),
@@ -1306,64 +1161,6 @@ export default function SiteVisitRegisterForm() {
 
                   <ErrorMessage name="svHappendOn" component="div" className="text-red-500 text-xs mt-1" />
                 </div>
-
-                {/* <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Priority Level</label>
-                  <div className="flex space-x-4">
-                    <label className="flex items-center">
-                      <Field
-                        type="radio"
-                        name="priorityLevel"
-                        value="Low"
-                        className="mr-2"
-                      />
-                      Low
-                    </label>
-                    <label className="flex items-center">
-                      <Field
-                        type="radio"
-                        name="priorityLevel"
-                        value="Medium"
-                        className="mr-2"
-                      />
-                      Medium
-                    </label>
-                    <label className="flex items-center">
-                      <Field
-                        type="radio"
-                        name="priorityLevel"
-                        value="High"
-                        className="mr-2"
-                      />
-                      High
-                    </label>
-                  </div>
-                </div> */}
-
-                {/* <div>
-                  <label htmlFor="referenceNumber" className="block text-sm font-medium text-gray-700 mb-1">
-                    Reference Number
-                  </label>
-                  <Field
-                    type="text"
-                    id="referenceNumber"
-                    name="referenceNumber"
-                    className="w-full px-2 py-1  border border-gray-300 rounded-md text-sm"
-                  />
-                  <ErrorMessage name="referenceNumber" component="div" className="text-red-500 text-xs mt-1" />
-                </div> */}
-
-                {/* <div>
-                  <label htmlFor="notes" className="block text-sm font-medium text-gray-700 mb-1">
-                    Internal Notes
-                  </label>
-                  <Field
-                    as="textarea"
-                    id="notes"
-                    name="notes"
-                    className="w-full px-2 py-1  border border-gray-300 rounded-md text-sm h-24"
-                  />
-                </div> */}
 
 
               </div>
@@ -1392,10 +1189,11 @@ export default function SiteVisitRegisterForm() {
               ) : step === 3 ? (
                 <button
                   type="submit"
-                  disabled={ !isValid}
+                  // disabled={ !isValid}
+                  disabled={!isValid || isSubmitting}
                   className={`px-4 py-2 ${isValid ? 'bg-green-500 hover:bg-green-600 cursor-pointer' : 'bg-green-300'} text-white rounded-md ml-auto`}
                 >
-                  Submit
+                  {isSubmitting ? 'Submit' : 'Submit'}
                 </button>
               ) : null}
             </div>
