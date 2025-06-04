@@ -93,6 +93,17 @@ export const steamUsersListCpAgents = (orgId, snapshot, error) => {
 }
 
 // get users cpAgent
+export const steamUsersListCpManagers = (orgId, snapshot, error) => {
+  const itemsQuery = query(
+    collection(db, 'users'),
+    where('orgId', '==', orgId),
+    where('userStatus', '==', 'active'),
+    where('roles', 'array-contains-any', ['cp-manager'])
+  )
+  return onSnapshot(itemsQuery, snapshot, error)
+}
+
+// get users cpAgent
 export const steamSiteVisitsLists = (orgId, snapshot, error) => {
   const itemsQuery = query(
     collection(db, `${orgId}_siteVisits`),

@@ -111,7 +111,7 @@ const Routes = () => {
         <Route path="/admin/legal-module" page={LegalHomePage} name="legalModule" />
         <Route path="/admin/erp-account" page={ErpAccountHomePage} name="erpAccount" />
         <Route path="/admin/administration-team" page={AdministrationTeamPage} name="administrationTeam" />
-        <Route path="/sitevisit-feedback" page={SiteVisitRegister} name="siteVisitFb" />
+        <Route path="/sitevisit-enquiryform" page={SiteVisitRegister} name="siteVisitFb" />
         <Route path="/privacyPolicy" page={PrivacyPolicyPage} name="privacyPolicy" />
       </>
     )
@@ -119,7 +119,7 @@ const Routes = () => {
     UpdatedRoutes = (
       <>
         <Route path="/users-admin" page={UsersAdminPage} name="usersAdmin" />
-        <Route path="/sitevisit-feedback" page={SiteVisitRegister} name="siteVisitFb" />
+        <Route path="/sitevisit-enquiryform" page={SiteVisitRegister} name="siteVisitFb" />
       </>
     )
   } else if (user?.role?.includes(USER_ROLES.SALES_MANAGER) || user?.role?.includes(USER_ROLES.SALES_EXECUTIVE) || user?.role?.includes(USER_ROLES.CP_AGENT)) {
@@ -127,7 +127,7 @@ const Routes = () => {
       <>
         <Route path="/leads-manager" page={LeadsManagerPage} name="leadsManager" />
         <Route path="/leads-caller-board" page={LeadsCallerBoardPage} name="leadsCallerBoard" />
-        <Route path="/sitevisit-feedback" page={SiteVisitRegister} name="siteVisitFb" />
+        <Route path="/sitevisit-enquiryform" page={SiteVisitRegister} name="siteVisitFb" />
       </>
     )
   } else if (user?.role?.includes(USER_ROLES.MARKETING_MANAGER) || user?.role?.includes(USER_ROLES.MARKETING_EXECUTIVE) || user?.role?.includes(USER_ROLES.CP_AGENT)) {
@@ -135,7 +135,7 @@ const Routes = () => {
     UpdatedRoutes = (
       <>
         <Route path="/marketing-module" page={MarketingModulePage} name="marketingModule" />
-        <Route path="/sitevisit-feedback" page={SiteVisitRegister} name="siteVisitFb" />
+        <Route path="/sitevisit-enquiryform" page={SiteVisitRegister} name="siteVisitFb" />
         {/*
         <Route path="/leads-manager" page={LeadsManagerPage} name="leadsManager" />
         <Route path="/leads-caller-board" page={LeadsCallerBoardPage} name="leadsCallerBoard" /> */}
@@ -145,21 +145,21 @@ const Routes = () => {
     UpdatedRoutes = (
       <>
         <Route path="/crm-module" page={CrmHomePage} name="crmModule" />
-        <Route path="/sitevisit-feedback" page={SiteVisitRegister} name="siteVisitFb" />
+        <Route path="/sitevisit-enquiryform" page={SiteVisitRegister} name="siteVisitFb" />
       </>
     )
   } else if (user?.role?.includes(USER_ROLES.FINANCE_MANAGER) || user?.role?.includes(USER_ROLES.FINANCE_EXECUTIVE)) {
     UpdatedRoutes = (
       <>
         <Route path="/finance-module" page={FinanceHomePagePage} name="financeModule" />
-        <Route path="/sitevisit-feedback" page={SiteVisitRegister} name="siteVisitFb" />
+        <Route path="/sitevisit-enquiryform" page={SiteVisitRegister} name="siteVisitFb" />
       </>
     )
   } else if (user?.role?.includes(USER_ROLES.LEGAL_MANAGER) || user?.role?.includes(USER_ROLES.LEGAL_EXECUTIVE)) {
     UpdatedRoutes = (
       <>
         <Route path="/legal-module" page={LegalHomePage} name="legalModule" />
-        <Route path="/sitevisit-feedback" page={SiteVisitRegister} name="siteVisitFb" />
+        <Route path="/sitevisit-enquiryform" page={SiteVisitRegister} name="siteVisitFb" />
       </>
     )
   } else if (user?.role?.includes(USER_ROLES.ADMIN_SUPPORT_MANAGER) || user?.role?.includes(USER_ROLES.ADMIN_SUPPORT_EXECUTIVE)) {
@@ -167,14 +167,14 @@ const Routes = () => {
     UpdatedRoutes = (
       <>
         <Route path="/administration-team" page={AdministrationTeamPage} name="administrationTeam" />
-        <Route path="/sitevisit-feedback" page={SiteVisitRegister} name="siteVisitFb" />
+        <Route path="/sitevisit-enquiryform" page={SiteVisitRegister} name="siteVisitFb" />
       </>
     )
   } else if (user?.role?.includes(USER_ROLES.PROJECT_MANAGER) || user?.role?.includes(USER_ROLES.PROJECT_EXECUTIVE)) {
     UpdatedRoutes = (
       <>
         <Route path="/home" page={HomePage} name="home" />
-        <Route path="/sitevisit-feedback" page={SiteVisitRegister} name="siteVisitFb" />
+        <Route path="/sitevisit-enquiryform" page={SiteVisitRegister} name="siteVisitFb" />
       </>
     )
   } else {
@@ -200,7 +200,6 @@ const Routes = () => {
       <Route path="/finance-home-page" page={FinanceHomePagePage} name="financeHomePage" />
       <Route path="/administration-team" page={AdministrationTeamPage} name="administrationTeam" />
       <Route path="/cp-register" page={CPRegister} name="cpRegister" />
-
 
       {UpdatedRoutes}
       <Route path="/profile" page={Profile} name="profile" />

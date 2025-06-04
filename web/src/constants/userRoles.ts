@@ -2,6 +2,7 @@ export const USER_ROLES = {
   SALES_MANAGER: 'sales-manager',
   SALES_EXECUTIVE: 'sales-executive',
   CP_AGENT: 'cp-agent',
+  CP_MANAGER: 'cp-manager',
   LEGAL_MANAGER: 'legal-manager',
   LEGAL_EXECUTIVE: 'legal-executive',
   CRM_MANAGER: 'crm-manager',
@@ -60,6 +61,11 @@ export const ROLES_LIST = [
   {
     label: 'CP Agent',
     value: USER_ROLES.CP_AGENT,
+    dept: 'sales',
+  },
+  {
+    label: 'CP Manager',
+    value: USER_ROLES.CP_MANAGER,
     dept: 'sales',
   },
   { label: 'Legal manager', value: USER_ROLES.LEGAL_MANAGER, dept: 'legal' },
