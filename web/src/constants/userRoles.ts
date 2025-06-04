@@ -65,6 +65,11 @@ export const ROLES_LIST = [
     dept: 'sales',
   },
   {
+    label: 'CP Executive',
+    value: USER_ROLES.CP_EXECUTIVE,
+    dept: 'sales',
+  },
+  {
     label: 'CP Manager',
     value: USER_ROLES.CP_MANAGER,
     dept: 'sales',
