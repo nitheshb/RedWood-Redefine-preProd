@@ -17,6 +17,8 @@ import PieChartComponent from './charts/salePieChart'
 import StackedLeadsChart from './charts/salesStackedChart'
 import EmployeeBookingSummaryTable from './empBookingSummaryTable'
 import SourceBookingSummaryTable from './sourceBookingSummaryTable'
+import SiteVisitTrends from './SiteVisitM/SiteVisitTrend'
+import BookingPerformanceTrend from './BookingPerformace/bookingPerformance_trend'
 
 const totalProfit = '98,6543.53'
 const profitPercentage = '24.21%'
@@ -265,128 +267,26 @@ const BookingSummaryReport = () => {
       <div className="flex flex-col  mt-4 drop-shadow-md rounded-lg ">
         <div className="">
           <div className="flex flex-col gap-4">
-            <div className="flex flex-row flex-wrap">
-              <div className="bg-[#fff] rounded-lg shadow-xl  ">
-                {/* Block 1 */}
-                <div className="flex flex-col h-full">
-                  <div className="card-block1 flex justify-between mb-8">
-                    <div className="flex-1 mr-4  p-4">
-                      <div>
-                        <section className="text-black  font-weight-[600] mt-1 mb-2">
-                          Bookings
-                        </section>
-                      </div>
-                      <div className="inline-flex mt-8">
-                        <p className="text-3xl font-bold">
-                          {' '}
-                          <CountUpComp
-                            value={projectAValues?.reduce(
-                              (accumulator, currentValue) => {
-                                return (
-                                  accumulator + (currentValue?.receive || 0)
-                                )
-                              },
-                              0
-                            )}
-                          />
-                        </p>
-                        <span className="p-3 pl-4 font-medium">
-                          {profitPercentage}
-                        </span>
-                      </div>
-                      <p className="p-0 cursor-pointer">
-                        <span className="border p-1 border-gray-300 text-black m-1 rounded-tl-2xl px-2 rounded-br-2xl rounded-bl-2xl rounded-tr-2xl font-medium text-sm">
-                          January 2024 - May 2024
-                        </span>
-                      </p>
-                    </div>
-                    <div className="flex-1  rounded-lg p-1">
-                      <BookingsMonthlyStackedChart payload={projectAValues} />
-                    </div>
-                  </div>
 
-                  {/*  card-block2 */}
-                  <div className=" flex flex-wrap">
-                    {avgGrowingData.map((data, index) => (
-                      <div
-                        key={index}
-                        className={`flex-1 p-4 ${
-                          index !== avgGrowingData.length - 1
-                            ? 'border-r border-gray-300'
-                            : ''
-                        }`}
-                      >
-                        <div className="flex items-center mb-2">
-                          {data.icon}
-                          <p className="ml-2">{data.text}</p>
-                        </div>
-                        {data.text === 'Booked' && projectAValues.length > 0 && (
-                          <p
-                            className="font-bold text-xl ml-12 "
-                            onClick={() =>
-                              showDrillDownFun('Booked Units', projectAValues)
-                            }
-                          >
-                            {
-                              projectAValues[projectAValues?.length - 1][
-                                'receive'
-                              ]
-                            }
-                          </p>
-                        )}
-                        {data.text === 'Projects' && (
-                          <p className="font-bold text-xl ml-12">
-                            <CountUpComp value={projects?.length} />{' '}
-                          </p>
-                        )}
-                        {data.text === 'LeadSources' && (
-                          <p className="font-bold text-xl ml-12">
-                            <CountUpComp value={sourceListItems?.length} />
-                          </p>
-                        )}{' '}
-                        {data.text === 'SalesTeam' && (
-                          <p className="font-bold text-xl ml-12">
-                            <CountUpComp value={usersList?.length} />
-                          </p>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              {/* section 2 */}
-            </div>
 
             {/* section - 2 */}
 
             <section className="w-full border-[#e7e5eb] bg-white rounded-lg p-4">
               <div className="flex flex-col"></div>
-              <section className="flex flex-row justify-between px-4">
-                <article className="flex flex-col">
-                  <div className="text-[#1f2937]">Bookings</div>
-                  <div className="text-[#1f2937] font-[700] text-2xl mt-2">
-                    {projectAValues?.reduce((accumulator, currentValue) => {
-                      return accumulator + (currentValue?.receive || 0)
-                    }, 0)}
-                  </div>
-                  <div className="text-[#EF4444] text-xs mt-1">
-                    0.0% less than the previous 30 days
-                  </div>
-                </article>
-                <article></article>
-              </section>
 
-              <div className="w-full h-[300px] mt-4">
-                <section className="flex flex-row justify-between">
+              <BookingPerformanceTrend />
+              {/* <div className="w-full h-[300px] mt-4"> */}
+                {/* <section className="flex flex-row justify-between">
                   <article></article>
                   <article className="flex flex-row mr-2 mb-3"></article>
-                </section>
-                <BookingsMonthlyStackedChart
+                </section> */}
+                {/* <BookingsMonthlyStackedChart
                   source={'full-view'}
                   payload={projectAValues}
-                />
+                /> */}
+
                 {/* <StackedLeadsChart /> */}
-              </div>
+              {/* </div> */}
               {/* bottom sheet */}
               <section className="mt-3 ml-4">
                 {/* <div className="text-[#1f2937] font-[600] text-xl">

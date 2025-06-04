@@ -58,6 +58,8 @@ import { serialMyData } from './LeadsTeamReport/SourceLeads'
 import ReportSideWindow from './SiderForm/ReportSideView'
 import SiderForm from './SiderForm/SiderForm'
 import SourcePerformanceStack from './A_SalesModule/Reports/SourcePerformance/sourcePerformanceStack'
+import SiteVisitReportHome from './A_SalesModule/Reports/SiteVisitM/SiteVisitReportHome'
+import EmployeePerformanceHome from './A_SalesModule/Reports/EmpTasks/EmpPerformanceHome'
 
 const valueFeedData = [
   { k: 'Total', v: 300, pic: '' },
@@ -1670,6 +1672,13 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
           )}
 
           {selCat === 'emp_tasks' && (
+            <>
+            <EmployeePerformanceHome
+                  sourceRawFilData={sourceRawFilData}
+                  showDrillDownFun={showDrillDownFun}
+                  projectFilList={projectListTuned}
+                  leadsFetchedRawData={leadsFetchedRawData}
+                />
             <div className="flex flex-col  mt-4 drop-shadow-md rounded-lg  px-4">
               <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div
@@ -1872,6 +1881,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                 </div>
               </div>
             </div>
+            </>
           )}
 
           {selCat === 'sale_report_home' && <SalesSummaryReport />}
@@ -1888,6 +1898,13 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
 
           {selCat === 'site_visits' && (
             <>
+
+                <SiteVisitReportHome
+                  sourceRawFilData={sourceRawFilData}
+                  showDrillDownFun={showDrillDownFun}
+                  projectFilList={projectListTuned}
+                  leadsFetchedRawData={leadsFetchedRawData}
+                />
               {/* old comp */}
               <div className="flex flex-col  mt-4 drop-shadow-md rounded-lg  px-4">
                 <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -2619,7 +2636,12 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
               </div>
             </>
           )}
-          {selCat === 'booking_perf' && <BookingSummaryReport />}
+          {selCat === 'booking_perf' &&
+<>
+
+          <BookingSummaryReport />
+          </>
+          }
           {/* {selCat === 'payment_ui' && <BookingSummaryHeader/>} */}
 
           {selCat === 'source_perf' && (
