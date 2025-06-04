@@ -82,21 +82,15 @@ export default function SiteVisitRegisterForm() {
         const usersListA = querySnapshot.docs.map((docSnapshot) =>
           docSnapshot.data()
         )
-
         usersListA.map((user) => {
           user.label = user.displayName || user.name
           user.value = user.uid
         })
-
         setCpSourcingManagerA(usersListA)
       },
       (error) => setCpSourcingManagerA([])
     )
-
     return
-
-
-
   }, [])
   useEffect(() => {
     const unsubscribe = getMyProjects(
@@ -288,7 +282,8 @@ export default function SiteVisitRegisterForm() {
       customercompany: lead.customercompany || '',
       svAttendedByObj: lead.svAttendedByObj || {},
       svSchByObj: lead.svSchByObj || {},
-
+      svCPsourceManagerObj: lead?.svCPsourceManagerObj || {},
+      svCPsourceManager: lead?.svCPsourceManager || '',
       svHappendOn: lead.svHappendOn || '',
     });
   };
@@ -403,8 +398,10 @@ export default function SiteVisitRegisterForm() {
           svAttendedBy: '',
           svHappendOn: '',
           svSchBy: '',
+          svCPsourceManager: '',
           svAttendedByObj: {},
-          svSchByObj: {}
+          svSchByObj: {},
+          svCPsourceManagerObj: {}
         }
       });
 
@@ -1166,9 +1163,10 @@ export default function SiteVisitRegisterForm() {
                   <ErrorMessage name="svAttendedBy" component="div" className="text-red-500 text-xs mt-1" />
                 </div>
 
-                {values.SourceCat === 'CP' && (     <div>
+                {values.SourceCat === 'CP' && (
+                   <div>
                   <label htmlFor="svAttendedBy" className="block text-sm font-medium text-gray-700 mb-1">
-                    CP Sourcing Manager
+                    CP Sourcing Manager 
                   </label>
 
                   <CustomSelect

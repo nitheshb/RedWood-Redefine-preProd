@@ -4830,6 +4830,42 @@ export const updateUserRole = async (
   })
 }
 
+export const updateCPUserRole = async (
+  empId,
+  orgName,
+  orgId,
+  uid,
+  dept,
+  role,
+  email,
+  offPh,
+  perPh,
+  userStatus,
+  svCPsourceManagerObj,
+  svCPsourceManager,
+  by
+) => {
+  await updateDoc(doc(db, 'users', uid), {
+    empId: empId || 101,
+    orgName: orgName,
+    orgId: orgId,
+    department: [dept],
+    roles: [role],
+    offPh: offPh || '',
+    perPh: perPh || '',
+    svCPsourceManagerObj,
+    svCPsourceManager,
+    userStatus: userStatus,
+  })
+  return await addUserLog(orgId, {
+    s: 's',
+    type: 'updateRole',
+    subtype: 'updateRole',
+    txt: `${email} is updated with ${role}`,
+    by,
+  })
+}
+
 export const updateUserAvatar = async (orgId, uid, email, avatarUrl, by) => {
   await updateDoc(doc(db, 'users', uid), {
     avatarUrl: avatarUrl,

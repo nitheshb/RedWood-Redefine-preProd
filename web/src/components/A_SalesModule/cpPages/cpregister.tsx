@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import HeadNavBar from 'src/components/HeadNavBar/HeadNavBar'
 import HeadSideBar from 'src/components/HeadSideBar/HeadSideBar'
@@ -13,6 +13,8 @@ import {
   addUserLog,
   checkIfUserAlreadyExists,
   createUserToWorkReport,
+  steamUsersListCpManagers,
+  updateCPUserRole,
   updateUserRole,
 } from 'src/context/dbQueryFirebase'
 import { PhoneNoField } from 'src/util/formFields/phNoField'
@@ -29,6 +31,32 @@ const CPRegister = () => {
   })
   const [loading, setLoading] = useState(false)
   const [editMode, seteditMode] = useState(false)
+  const [cpSourcingManagerA, setCpSourcingManagerA] = useState([])
+   useEffect(() => {
+      const unsubscribe1 = steamUsersListCpManagers(
+        orgId,
+        (querySnapshot) => {
+          const usersListA = querySnapshot.docs.map((docSnapshot) =>
+            docSnapshot.data()
+          )
+
+          usersListA.map((user) => {
+            console.log('cp user are', user)
+            user.label = user.displayName || user.name
+            user.value = user.uid
+          })
+
+          setCpSourcingManagerA(usersListA)
+        },
+        (error) => setCpSourcingManagerA([])
+      )
+
+      return
+
+
+
+    }, [])
+
   const onSubmit = async (data1) => {
     console.log('insided submit')
     setLoading(true)
@@ -48,6 +76,8 @@ const CPRegister = () => {
       orgStatus: 'active',
       offPh: offPh,
       perPh: perPh,
+      svCPsourceManager: data1?.svCPsourceManager || '',
+      svCPsourceManagerObj: data1?.svCPsourceManagerObj || {},
     }
 
     //       Invalid Arguments {\"empId\":\"102\",\"uid\":\"71wQrhV54oeWxn5Ha9E8pm93XID3\",\"email\":\"nitheshreddy.email@gmail.com\",\"offPh\":\"\",\"perPh\":\"\",\"userStatus\":\"active\",\"orgStatus\":\"active\",\"orgId\":\"spark\",\"department\":[\"admin\"],\"roles\":[\"admin\"],\"name\":\"nitheshreddy\"}"
@@ -75,7 +105,7 @@ const CPRegister = () => {
             const docDetailsIs = await checkIfUserAlreadyExists('users', email)
 
             console.log('docDetailsIs', docDetailsIs, docDetailsIs[0]['uid'])
-            updateUserRole(
+            updateCPUserRole(
               empId,
               'Maa Homes',
               orgId,
@@ -86,7 +116,10 @@ const CPRegister = () => {
               offPh,
               perPh,
               'active',
+              data1?.svCPsourceManagerObj || {},
+              data1?.svCPsourceManager || '',
               'nitheshreddy.email@gmail.com'
+
             )
             const x = {
               name,
@@ -202,8 +235,11 @@ const CPRegister = () => {
                       empId: '',
                       perPh: '',
                       offPh: '',
+                      svCPsourceManager:  '',
+                      svCPsourceManagerObj:{},
                       // userStatus: 'active',
                     }}
+                    enableReinitialize={true}
                     validationSchema={validate}
                     onSubmit={(values) => {
                       console.log('ami submitted', values)
@@ -321,7 +357,7 @@ const CPRegister = () => {
                 /> */}
 
                           <div className="md:flex md:flex-row md:space-x-4 w-full text-xs mt-5">
-                            <div className="w-full flex flex-col mb-3">
+                            <div className="w-full flex flex-col mb-1">
                               <TextField
                                 label="RERA No*"
                                 name="empId"
@@ -329,26 +365,37 @@ const CPRegister = () => {
                                 disabled={editMode}
                               />
                             </div>
-                            {/* <div className="w-full flex flex-col mb-3">
-                              <TextField
-                                label="Aadhar No"
-                                name="aadharNo"
-                                type="text"
-                                disabled={editMode}
-                                inputProps={{
-                                  inputMode: 'numeric',
-                                  pattern: '[0-9]*',
-                                }}
-                                onInput={(e) => {
-                                  e.target.value = e.target.value.replace(
-                                    /[^0-9]/g,
-                                    ''
-                                  )
-                                }}
-                              />
-                            </div> */}
                           </div>
 
+                                      <div>
+                                            <label htmlFor="svAttendedBy" className="block text-xs  text-gray-700 mb-1">
+                                              CP Sourcing Manager 
+                                            </label>
+
+                                            <CustomSelect
+                                              name="svAttendedBy"
+                                              placeHolder="Select CP POC"
+                                              // label="Assign To"
+                                              className="input mt-"
+                                              onChange={(value) => {
+                                                console.log('value is ', value, user)
+                                                formik.setFieldValue(
+                                                  'svCPsourceManager',
+                                                  value.value
+                                                )
+                                                formik.setFieldValue('svCPsourceManagerObj', value)
+                                              }}
+                                              value={formik.values.svCPsourceManager}
+                                              options={cpSourcingManagerA}
+                                            />
+
+                                            <p
+                                              className="text-sm text-red-500 hidden mt-3"
+                                              id="error"
+                                            >
+                                              Please fill out this field.
+                                            </p>
+                                          </div>
                           <p className="text-xs text-red-500 text-right my-3">
                             Required fields are marked with an asterisk{' '}
                             <abbr title="Required field">*</abbr>
