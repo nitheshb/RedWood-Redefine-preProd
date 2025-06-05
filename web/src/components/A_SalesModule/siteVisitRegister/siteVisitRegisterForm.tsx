@@ -1327,6 +1327,9 @@ export default function SiteVisitRegisterForm() {
                   </p>
                 </div>
 
+
+                   {values.SourceCat !== 'CP' && (
+
                 <div>
                   <label
                     htmlFor="svSchBy"
@@ -1358,6 +1361,9 @@ export default function SiteVisitRegisterForm() {
                     className="text-red-500 text-xs mt-1"
                   />
                 </div>
+
+                      )}
+
 
                 <div>
                   <label
