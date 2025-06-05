@@ -84,11 +84,13 @@ useEffect(() => {
                                   {[
                                     { label: 'sNo', id: 'no', align: 'left' },
                                     { label: 'Name', id: 'name', align: 'left' },
-                                    { label: 'Phone No', id: 'offPh', align: 'left' },
-                                    { label: 'Alternate No', id: 'new', align: 'center' },
+                                    { label: 'Phone No', id: 'offPh', align: 'center' },
+                                    { label: 'Alternate No', id: 'perPh', align: 'center' },
+                                      { label: 'Cp POC', id: 'svCPsourcedBy', align: 'center' },
                                     { label: 'email', id: 'new', align: 'center' },
                                     { label: 'status', id: 'userStatus', align: 'center' },
                                     { label: 'Rera No', id: 'empId', align: 'center' },
+                                  
                                   ].map((d, i) => (
                                     <th
                                       key={i}
@@ -117,10 +119,10 @@ useEffect(() => {
 
                                     >
 
-                                      <td className="text-sm text-gray-900 font-medium px-6 py-2 whitespace-nowrap ">
+                                      <td className="text-sm text-gray-900 font-medium text-left px-4  py-2 whitespace-nowrap ">
                                         {i + 1}
                                       </td>
-                                      <td className="text-sm text-gray-900 font-medium px-6 py-2 whitespace-nowrap ">
+                                      <td className="text-sm text-gray-900 text-left font-medium px-2 py-2 whitespace-nowrap ">
                                         {data?.name}
                                       </td>
                                       <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
@@ -128,6 +130,10 @@ useEffect(() => {
                                       </td>
                                       <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
                                         {data?.perPh}
+                                      </td>
+
+                                      <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
+                                        {data?.svCPsourcedByObj?.name || 'NA'}
                                       </td>
 
                                       <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
