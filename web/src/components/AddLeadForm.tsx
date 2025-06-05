@@ -743,7 +743,9 @@ const AddLeadForm = ({
                         </div>
                         <div className="border-t-4 rounded-xl w-16 mt-1  border-[#94B5ED]"></div>
                         {/* 3 */}
+                       
                         <div className="md:flex md:flex-row md:space-x-4 w-full text-xs ">
+                          {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
                           <div className="w-full flex flex-col mb-3 mt-2">
                             <CustomSelect
                               name="source"
@@ -756,6 +758,8 @@ const AddLeadForm = ({
                               options={sourceList}
                             />
                           </div>
+
+                            )}
 
                           <div className="w-full flex flex-col mb-3 mt-2">
                             <CustomSelect
@@ -772,6 +776,7 @@ const AddLeadForm = ({
                             />
                           </div>
                         </div>
+                     
                         {/* 4 */}
                         {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
                           <div className="md:flex md:flex-row md:space-x-4 w-full text-xs">

@@ -10,6 +10,7 @@ import {
   startOfMonth,
   endOfMonth,
   subMonths,
+  subDays,
 } from 'date-fns'
 import { setLabels } from 'react-chartjs-2/dist/utils'
 import DatePicker from 'react-datepicker'
@@ -213,6 +214,10 @@ export const SmartCalendarSelect = ({
     {
       label: 'Today',
       value: [startOfDay(d), endOfDay(d)],
+    },
+    {
+      label: 'Yesterday',
+      value: [startOfDay(subDays(d, 1)), endOfDay(subDays(d, 1))],
     },
     {
       label: 'This Week',
