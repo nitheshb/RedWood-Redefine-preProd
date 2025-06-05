@@ -33,6 +33,8 @@ export default function SiteVisitRegisterForm() {
   const [usersList, setusersList] = useState([])
   const [cpSourcingManagerA, setCpSourcingManagerA] = useState([])
 
+
+
   const [projectList, setprojectList] = useState([])
   const [selProjectIs, setSelProject] = useState({
     label: 'All Projects',
@@ -942,7 +944,9 @@ export default function SiteVisitRegisterForm() {
                               email: value?.email,
                               cpPh: value?.offPh,
                             }
-                            setSelCPUser(value)
+                            // setSelCPUser(value)
+                              setSelCPUser(x)
+                             setFieldValue('cpName', value.label)  
                           }}
                           value={selCPUser?.value}
                           options={cPUsersList}
@@ -1397,7 +1401,7 @@ export default function SiteVisitRegisterForm() {
                     </label>
 
                     <CustomSelect
-                      name="svAttendedBy"
+                      name="svCPsourcedBy"
                       placeHolder="Select CP POC"
                       // label="Assign To"
                       className="input mt-"
@@ -1406,7 +1410,7 @@ export default function SiteVisitRegisterForm() {
                         setFieldValue('svCPsourcedBy', value.value)
                         setFieldValue('svCPsourcedByObj', value)
                       }}
-                      value={values.svAttendedBy}
+                      value={values.svCPsourcedBy}
                       options={cpSourcingManagerA}
                     />
 

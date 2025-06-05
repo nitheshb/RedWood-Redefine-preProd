@@ -904,7 +904,9 @@ export default function LLeadsTableBody({
                       <TableCell align="center">
                         <section className="flex flex-col">
                           <span className="px-2 uppercase inline-flex text-[11px] text-black-900  ">
-                            {row?.Source?.toString() || 'NA'}
+                            {/* {row?.Source?.toString() || 'NA'} */}
+                            {row?.Source?.toString() || row?.SourceCat?.toString() || 'NA'}
+
                           </span>
                           <Rating
                             name="size-small half-rating-read"
