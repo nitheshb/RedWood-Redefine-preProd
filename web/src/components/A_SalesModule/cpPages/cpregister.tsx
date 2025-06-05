@@ -375,7 +375,7 @@ const CPRegister = () => {
                               // label="Assign To"
                               className="input mt-"
                               onChange={(value) => {
-                                console.log('value is ', value, user)
+                                
                                 formik.setFieldValue(
                                   'svCPsourcedBy',
                                   value.value
