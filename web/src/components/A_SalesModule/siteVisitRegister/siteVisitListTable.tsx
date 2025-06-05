@@ -86,7 +86,7 @@ useEffect(() => {
                                     { label: 'Name', id: 'name', align: 'left' },
                                     { label: 'Phone No', id: 'offPh', align: 'left' },
                                     { label: 'Project Name', id: 'new', align: 'center' },
-                                    { label: 'Status', id: 'new', align: 'center' },
+                                    { label: 'Source', id: 'new', align: 'center' },
                                     { label: 'Schedudled By', id: 'userStatus', align: 'center' },
                                     { label: 'Conducted By', id: 'empId', align: 'center' },
                                     { label: 'Conducted On', id: 'empId', align: 'center' },
@@ -132,7 +132,9 @@ useEffect(() => {
                                         {data?.projectName}
                                       </td>
                                       <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
-                                        {data?.source}
+                                        {/* {data?.SourceCat}  */}
+                                       {[data?.source, data?.SourceCat,].filter(Boolean).join(' | ')}
+
                                       </td>
                                       <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
                                         {data?.svSchByObj?.name}
