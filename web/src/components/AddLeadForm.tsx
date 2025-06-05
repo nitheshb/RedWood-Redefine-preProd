@@ -192,6 +192,10 @@ const AddLeadForm = ({
     return
   }, [])
 
+
+
+
+
   const budgetList = [
     { label: 'Select Customer Budget', value: '' },
     { label: '5 - 10 Lacs', value: '5-10L' },
@@ -421,8 +425,7 @@ const AddLeadForm = ({
 
         await sendWhatAppTextSms(
           mobileNo,
-          `Thank you ${name} for choosing the world class ${
-            project || 'project'
+          `Thank you ${name} for choosing the world class ${project || 'project'
           }`
         )
 
@@ -541,7 +544,8 @@ const AddLeadForm = ({
                 mobileNo: customerDetailsTuned?.phone || '',
                 countryCode: customerDetailsTuned?.countryCode || '+91',
                 email: customerDetailsTuned?.email || '',
-                source: customerDetailsTuned?.source || '',
+                source: user?.role?.includes(USER_ROLES.CP_AGENT) ? 'cpskagen' : customerDetailsTuned?.source || '',
+                // source: customerDetailsTuned?.source || '',
                 project: customerDetailsTuned?.projectName || '',
                 projectId: customerDetailsTuned?.projectId || '',
                 assignedTo: customerDetailsTuned?.assignedTo || '',
@@ -743,23 +747,36 @@ const AddLeadForm = ({
                         </div>
                         <div className="border-t-4 rounded-xl w-16 mt-1  border-[#94B5ED]"></div>
                         {/* 3 */}
-                       
+
                         <div className="md:flex md:flex-row md:space-x-4 w-full text-xs ">
-                          {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
+
                           <div className="w-full flex flex-col mb-3 mt-2">
                             <CustomSelect
                               name="source"
                               label="Lead Source"
                               className="input mt-3"
                               onChange={(value) => {
-                                formik.setFieldValue('source', value.value)
+                                if (!user?.role?.includes(USER_ROLES.CP_AGENT)) {
+                                  formik.setFieldValue('source', value.value);
+                                }
                               }}
-                              value={formik.values.source}
-                              options={sourceList}
+                              value={user?.role?.includes(USER_ROLES.CP_AGENT) ? 'cpskagen' : formik.values.source}
+                              options={
+                                user?.role?.includes(USER_ROLES.CP_AGENT)
+                                  ? [{ label: 'CP Skagen', value: 'cpskagen' }]
+                                  : sourceList
+                              }
+                              isDisabled={user?.role?.includes(USER_ROLES.CP_AGENT)}
+
                             />
                           </div>
 
-                            )}
+
+
+
+
+
+
 
                           <div className="w-full flex flex-col mb-3 mt-2">
                             <CustomSelect
@@ -776,7 +793,7 @@ const AddLeadForm = ({
                             />
                           </div>
                         </div>
-                     
+
                         {/* 4 */}
                         {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
                           <div className="md:flex md:flex-row md:space-x-4 w-full text-xs">
@@ -827,16 +844,14 @@ const AddLeadForm = ({
                                     key={plan.name}
                                     value={plan}
                                     className={({ active, checked }) =>
-                                      `${
-                                        active
-                                          ? 'ring-2 ring-offset-2  border  border-[#000] bg-[#F2F2F2]  ring-white ring-opacity-60 col-span-2'
-                                          : ''
+                                      `${active
+                                        ? 'ring-2 ring-offset-2  border  border-[#000] bg-[#F2F2F2]  ring-white ring-opacity-60 col-span-2'
+                                        : ''
                                       }
-                ${
-                  selected.name == plan.name
-                    ? 'ring-1  ring-green-400 border bg-opacity-75 text-black'
-                    : 'bg-white'
-                }
+                ${selected.name == plan.name
+                                        ? 'ring-1  ring-green-400 border bg-opacity-75 text-black'
+                                        : 'bg-white'
+                                      }
                   relative rounded-lg px-5 py-2 cursor-pointer flex border border-[#E5E7EB]  col-span-2`
                                     }
                                   >
@@ -847,11 +862,10 @@ const AddLeadForm = ({
                                             <div className="text-sm">
                                               <RadioGroup.Label
                                                 as="p"
-                                                className={`font-medium  ${
-                                                  selected.name == plan.name
-                                                    ? 'text-gray-900'
-                                                    : 'text-gray-900'
-                                                }`}
+                                                className={`font-medium  ${selected.name == plan.name
+                                                  ? 'text-gray-900'
+                                                  : 'text-gray-900'
+                                                  }`}
                                               >
                                                 <img
                                                   className="w-8 h-8 inline"
@@ -866,11 +880,10 @@ const AddLeadForm = ({
                                           </div>
                                           {true && (
                                             <div
-                                              className={`${
-                                                selected.name == plan.name
-                                                  ? 'flex-shrink-0 text-white ml-auto'
-                                                  : 'flex-shrink-0 text-black ml-auto'
-                                              } mt-2`}
+                                              className={`${selected.name == plan.name
+                                                ? 'flex-shrink-0 text-white ml-auto'
+                                                : 'flex-shrink-0 text-black ml-auto'
+                                                } mt-2`}
                                             >
                                               <svg
                                                 viewBox="0 0 24 24"
