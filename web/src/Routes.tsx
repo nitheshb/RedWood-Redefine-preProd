@@ -199,7 +199,7 @@ const Routes = () => {
       <Route path="/crm-home" page={CrmHomePage} name="crmHome" />
       <Route path="/finance-home-page" page={FinanceHomePagePage} name="financeHomePage" />
       <Route path="/administration-team" page={AdministrationTeamPage} name="administrationTeam" />
-      <Route path="/cp-register" page={CPRegister} name="cpRegister" />
+      <Route path="/maahomes-cp-register" page={CPRegister} name="cpRegister" />
 
       {UpdatedRoutes}
       <Route path="/profile" page={Profile} name="profile" />
