@@ -1026,6 +1026,7 @@ export default function SiteVisitRegisterForm() {
                           { value: '', label: 'Select property type' },
                           { value: 'House', label: 'House' },
                           { value: 'Apartment', label: 'Apartment' },
+                          { value: 'Villa', label: 'Villa' },
                           { value: 'Condo', label: 'Condo' },
                           { value: 'Townhouse', label: 'Townhouse' },
                           { value: 'Land', label: 'Land' },
