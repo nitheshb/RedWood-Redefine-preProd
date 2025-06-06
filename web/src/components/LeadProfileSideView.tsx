@@ -371,7 +371,7 @@ export default function LeadProfileSideView({
   const [reasonRight, setReasonRight] = useState('')
 
 
-  // const [leadData, setLeadData] = useState(null)
+  const [leadData, setLeadData] = useState(null)
 
 
   const [addCommentTime, setAddCommentTime] = useState(d.getTime() + 60000)
@@ -652,7 +652,7 @@ export default function LeadProfileSideView({
 
 
 
-  
+
 //   useEffect(() => {
 //   getLeadDataFun()
 // }, [])
@@ -3888,7 +3888,8 @@ export default function LeadProfileSideView({
                                         </p>
                                         <p className="font-normal text-[12px] text-[#0D0A1E]">
                                           Site In-charge:{' '}
-                                          {customerDetails?.assignedToObj?.name}
+                                          {/* {customerDetails?.svAttendedBy} */}
+                                          {usersList.find(user => user.value === customerDetails?.svAttendedBy)?.label || customerDetails?.svAttendedBy}
                                         </p>
                                       </div>
                                     </div>
