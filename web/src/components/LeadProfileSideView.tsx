@@ -1664,6 +1664,17 @@ export default function LeadProfileSideView({
     updateLeadsStrength(orgId, id, x, user.email)
   }
 
+
+
+
+const totalCommentsCount = leadSchFetchedData.reduce((total, task) => {
+  return total + (task?.comments?.length || 0)
+}, 0)
+
+
+
+
+
   return (
     <>
       <div
@@ -3884,12 +3895,12 @@ export default function LeadProfileSideView({
                                       <div className="flex flex-row justify-between">
                                         <p className="font-normal text-[12px] text-[#0D0A1E]">
                                           Visit Date:{' '}
-                                          {prettyDateTime(customerDetails?.svHappendOn)}
+                                          {customerDetails?.svHappendOn ? prettyDateTime(customerDetails.svHappendOn) : 'NA'}
                                         </p>
                                         <p className="font-normal text-[12px] text-[#0D0A1E]">
                                           Site In-charge:{' '}
                                           {/* {customerDetails?.svAttendedBy} */}
-                                          {usersList.find(user => user.value === customerDetails?.svAttendedBy)?.label || customerDetails?.svAttendedBy}
+                                          {usersList.find(user => user.value === customerDetails?.svAttendedBy)?.label || customerDetails?.svAttendedBy ||'NA'}
                                         </p>
                                       </div>
                                     </div>
@@ -4225,12 +4236,12 @@ export default function LeadProfileSideView({
                                       {
                                         label: 'Completed Tasks',
                                         value:
-                                          projectData.taskLogs.completedTasks,
+                                          leadSchFetchedData?.filter((d) => d?.sts === 'completed')?.length,
                                       },
                                       {
                                         label: 'Total Comments',
                                         value:
-                                          projectData.taskLogs.totalComments,
+                                          totalCommentsCount
                                       },
                                     ].map((item, index, array) => (
                                       <div
