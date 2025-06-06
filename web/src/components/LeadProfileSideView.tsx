@@ -58,6 +58,7 @@ import {
   sendCallNotification,
   updateLeadsStrength,
   checkIfLeadAlreadyExists,
+
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { db, storage } from 'src/context/firebaseConfig'
@@ -369,6 +370,10 @@ export default function LeadProfileSideView({
   const [reasonLeft, setReasonLeft] = useState('')
   const [reasonRight, setReasonRight] = useState('')
 
+
+  // const [leadData, setLeadData] = useState(null)
+
+
   const [addCommentTime, setAddCommentTime] = useState(d.getTime() + 60000)
   const {
     id,
@@ -643,6 +648,44 @@ export default function LeadProfileSideView({
 
     return
   }
+
+
+
+
+  
+//   useEffect(() => {
+//   getLeadDataFun()
+// }, [])
+
+
+
+// const getLeadDataFun = () => {
+//   const docRef = doc(db, `${orgId}_leads`, id)
+//   getDoc(docRef)
+//     .then((docSnapshot) => {
+//       if (docSnapshot.exists()) {
+//         const leadData = docSnapshot.data()
+//          console.log('leadDataboxnew:', leadData)
+//         setLeadData(leadData)
+//       } else {
+//         setLeadData(null)
+//       }
+//     })
+//     .catch((error) => {
+//       console.log('Error getting lead data:', error)
+//       setLeadData(null)
+//     })
+// }
+
+
+
+
+
+
+
+
+
+
   useEffect(() => {}, [customerDetails])
 
   const setAssigner = (leadDocId, value) => {
@@ -3825,8 +3868,7 @@ export default function LeadProfileSideView({
                                             </div>
                                           </div>
                                           <span className="font-semibold text-[12px] leading-[100%] tracking-[6%] uppercase text-[#2B2B2B]">
-                                            Site visit (
-                                            {projectData.siteVisit.count})
+                                            Site visit ({customerDetails?.siteVisitA?.length || 0})
                                           </span>
                                         </section>
                                         <div className="flex flex-row items-center font-medium text-[14px] text-[#0E0A1F] mr-[8px]">
@@ -3842,11 +3884,11 @@ export default function LeadProfileSideView({
                                       <div className="flex flex-row justify-between">
                                         <p className="font-normal text-[12px] text-[#0D0A1E]">
                                           Visit Date:{' '}
-                                          {projectData.siteVisit.date}
+                                          {prettyDateTime(customerDetails?.svHappendOn)}
                                         </p>
                                         <p className="font-normal text-[12px] text-[#0D0A1E]">
                                           Site In-charge:{' '}
-                                          {projectData.siteVisit.inCharge}
+                                          {customerDetails?.assignedToObj?.name}
                                         </p>
                                       </div>
                                     </div>
@@ -4413,15 +4455,15 @@ export default function LeadProfileSideView({
                                     {[
                                       {
                                         label: 'Total Talk time',
-                                        value: '102 hrs, 32 mins',
+                                        value: '0 mins',
                                       },
                                       {
                                         label: 'No of time Contacted',
-                                        value: '30 times',
+                                        value: '0 times',
                                       },
                                       {
                                         label: 'RNR',
-                                        value: '20 times',
+                                        value: '0 times',
                                       },
                                     ].map((item, index, array) => (
                                       <div
