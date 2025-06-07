@@ -1024,11 +1024,12 @@ export default function SiteVisitRegisterForm() {
                         value={values.propertyType}
                         options={[
                           { value: '', label: 'Select property type' },
-                          { value: 'House', label: 'House' },
+                          // { value: 'House', label: 'House' },
                           { value: 'Apartment', label: 'Apartment' },
-                          { value: 'Villa', label: 'Villa' },
-                          { value: 'Condo', label: 'Condo' },
-                          { value: 'Townhouse', label: 'Townhouse' },
+                          { value: 'villa', label: 'Villa' },
+                          { value: 'plot', label: 'Plot' },
+                          // { value: 'Condo', label: 'Condo' },
+                          // { value: 'Townhouse', label: 'Townhouse' },
                           { value: 'Land', label: 'Land' },
                           { value: 'Commercial', label: 'Commercial' },
                         ]}
