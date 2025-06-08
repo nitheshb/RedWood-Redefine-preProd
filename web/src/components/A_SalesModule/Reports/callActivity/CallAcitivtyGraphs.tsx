@@ -17,6 +17,8 @@ import QualifiedBySource2Bars from '../charts/QualifiedBySource2Bars'
 import PieChartComponent from '../charts/salePieChart'
 import StackedLeadsChart from '../charts/salesStackedChart'
 import PieChartComp from '../leadsConversionRatio/PieChart'
+import { steamUsersListByRole, streamGetCallActivity } from 'src/context/dbQueryFirebase'
+import { useAuth } from 'src/context/firebase-auth-context'
 
 const CallActivityGraphs = ({
   sourceRawFilData,
@@ -24,7 +26,10 @@ const CallActivityGraphs = ({
   leadsFetchedRawData,
   projectFilList,
 }) => {
+    const { user } = useAuth()
+    const { orgId } = user
   const [show, setShow] = useState(false)
+    const [fetchedSalesTeamList, setfetchedSalesTeamList] = useState([])
 
   const [leadsPayload, setLeadsPayload] = useState([])
 
@@ -33,7 +38,36 @@ const CallActivityGraphs = ({
     val2: 0,
     val3: 0,
   })
+  useEffect(() => {
+    getEmployeesCallData()
 
+    return
+  }, [])
+
+  const getEmployeesCallData = async () => {
+    const unsubscribe = steamUsersListByRole(
+      orgId,
+      async (querySnapshot) => {
+        const usersListA = querySnapshot.docs.map((docSnapshot) =>
+          docSnapshot.data()
+        )
+        await Promise.all(
+          usersListA.map(async (user) => {
+            user.label = user.displayName || user.name;
+            user.value = user.uid;
+            let x = await getLeadsSourcesDb(user.uid);
+            user.callData = x.length> 0 ? x[0] : {};
+          })
+        );
+        console.log('fetchedSalesTeamList', usersListA)
+      await  usersListA.sort((a, b) => a.label.localeCompare(b.label))
+
+
+      await  setfetchedSalesTeamList(usersListA)
+      },
+      (error) => setfetchedSalesTeamList([])
+    )
+  }
   useEffect(() => {
     console.log(
       'full data for projects with raw is =>',
@@ -219,7 +253,29 @@ const CallActivityGraphs = ({
       setShow(false)
     }
   }, [])
+  const getLeadsSourcesDb = async (uid) => {
+    const data = await streamGetCallActivity(
+      orgId,
+      (doc) => {
+        const leadsList = doc.data()
+        const leadsListA = []
+        console.log('fetched call log is', leadsList)
+        // Object.entries(leadsList).forEach((entry) => {
+        //   const [key, value] = entry
+        //   leadsListA.push(value)
+        //   console.log('my total fetched list is 3', `${key}: ${value}`)
+        // })
+        setfetchedSalesTeamList(leadsListA)
+      },
+      {
+        uid: uid,
+      },
+      (error) => ([])
+    )
+    return data
 
+    console.log('mydata is', data)
+  }
   console.log(pieVals, 'dhvaejfv')
 
   console.log(show)
@@ -385,11 +441,10 @@ const CallActivityGraphs = ({
             <div className="flex flex-col"></div>
             <section className="flex flex-row justify-between">
               <article className="flex flex-col">
-                <div className="text-[#1f2937]">Call Activity</div>
+                <div className="text-[#1f2937]">Team Call Activity</div>
 
                 <div className="text-[#808080] text-xs mt-1">
-                  The schools that completes the domains and maximum number of
-                  MIPs submitted on domains
+                  The calls duration that domains and maximum number of calls made by each team member
                 </div>
               </article>
               <article>
@@ -441,37 +496,37 @@ const CallActivityGraphs = ({
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 odd:bg-white even:bg-white">
-              {callActivityData.map((data, i) => {
+              {fetchedSalesTeamList.map((data, i) => {
                 return (
                   <tr
                     key={i}
                     className="border-t hover:bg-gray-50 transition-colors text-right py-4 "
                   >
                     <td className="text-sm text-gray-900 font-medium px-6 py-3 whitespace-nowrap text-left ">
-                      {data?.teamMember}
+                      {data?.name}
                     </td>
                     <td className="text-sm text-gray-900 font-light px-12 py-3 whitespace-nowrap ">
-                      {data?.totalCalls}
+                      {data?.callData?.totalCallsCount}
                     </td>
                     <td className="text-sm text-gray-900 font-light px-12 py-2 whitespace-nowrap ">
-                      {data?.talkTime}
+                      {data?.callData?.talktime}
                     </td>
 
                     <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap ">
-                      {data?.avrTimeDuration}
+                      {data?.callData?.avrTimeDuration}
                     </td>
 
                     <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap ">
-                      {data?.totalOutgoing}
+                      {data?.callData?.totalOutGoingCallsCount}
                     </td>
                     <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap ">
-                      {data?.outgoingAnswered}
+                      {data?.callData?.totalOutgoingAnswered}
                     </td>
                     <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap ">
-                      {data?.totalIncoming}
+                      {data?.callData?.totalIncomingCallsCount}
                     </td>
                     <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap ">
-                      {data?.incomingAnswered}
+                      {data?.callData?.totalIncomingAnswered}
                     </td>
                   </tr>
                 )

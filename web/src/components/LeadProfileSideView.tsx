@@ -265,7 +265,7 @@ export default function LeadProfileSideView({
 }) {
   const { user } = useAuth()
   const { orgId } = user
-  const [fetchedUsersList, setfetchedUsersList] = useState([])
+  const [fetchedSalesTeamList, setfetchedSalesTeamList] = useState([])
   const [usersList, setusersList] = useState([])
   const [uploadFile, setUploadFile] = useState()
   const [postPoneToFuture, setPostPoneToFuture] = useState('present')
@@ -510,14 +510,14 @@ export default function LeadProfileSideView({
         const usersListA = querySnapshot.docs.map((docSnapshot) =>
           docSnapshot.data()
         )
-        setfetchedUsersList(usersListA)
+        setfetchedSalesTeamList(usersListA)
         usersListA.map((user) => {
           user.label = user.displayName || user.name
           user.value = user.uid
         })
         setusersList(usersListA)
       },
-      (error) => setfetchedUsersList([])
+      (error) => setfetchedSalesTeamList([])
     )
 
     return
@@ -631,14 +631,14 @@ export default function LeadProfileSideView({
         const projectsListA = querySnapshot.docs.map((docSnapshot) =>
           docSnapshot.data()
         )
-        setfetchedUsersList(projectsListA)
+        setfetchedSalesTeamList(projectsListA)
         projectsListA.map((user) => {
           user.label = user.projectName
           user.value = user.projectName
         })
         setprojectList(projectsListA)
       },
-      (error) => setfetchedUsersList([])
+      (error) => setfetchedSalesTeamList([])
     )
 
     return
@@ -1644,8 +1644,8 @@ export default function LeadProfileSideView({
                             {Name?.[0]}
                           </span>
                         </div>
-                        
-         
+
+
                         <div className="flex flex-col">
                           <div className="flex items-center gap-1">
                             <div className="flex items-center gap-2">
@@ -1716,8 +1716,8 @@ export default function LeadProfileSideView({
                             </div>
 
 
-                 
-                           <div 
+
+                           <div
                             style={{
                                 paddingLeft: 12,
                                 paddingRight: 12,
@@ -1734,14 +1734,14 @@ export default function LeadProfileSideView({
                                 display: 'inline-flex',
                                 height: '20px',
                               }}
-                           > 
+                           >
                             <p className='font-medium text-[12px]  font-outfit'>
                                {Source?.toString() || 'NA'}
-                               
+
                             </p>
-                             
+
                            </div>
-                        
+
 
 
 

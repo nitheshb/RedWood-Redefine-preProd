@@ -21,6 +21,7 @@ import {
   deleteField,
   arrayRemove,
   serverTimestamp,
+  or,
 } from 'firebase/firestore'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -73,13 +74,18 @@ export const streamMortgageList = (orgId, snapshot, error) => {
 }
 // get users list
 export const steamUsersListByRole = (orgId, snapshot, error) => {
-  const itemsQuery = query(
-    collection(db, 'users'),
-    where('orgId', '==', orgId),
-    where('userStatus', '==', 'active'),
-    where('roles', 'array-contains-any', ['sales-manager', 'sales-executive'])
-  )
-  return onSnapshot(itemsQuery, snapshot, error)
+  try {
+    const itemsQuery = query(
+      collection(db, 'users'),
+      where('orgId', '==', orgId),
+      where('userStatus', '==', 'active'),
+      where('roles', 'array-contains-any', ['sales-manager', 'sales-executive']),
+    )
+    return onSnapshot(itemsQuery, snapshot, error)
+  } catch (error) {
+  console.log('error in fetching', error)
+  }
+
 }
 // get users cpAgent
 export const steamUsersListCpAgents = (orgId, snapshot, error) => {
@@ -8623,3 +8629,35 @@ export const steamLeadsVsSources = async (orgId, snapshot, data, error) => {
 // unit Brokerage details
 
 // add brokerage details
+
+// call Activity
+
+// get all AccountTransactions from supabase
+export const streamGetCallActivity = async (
+  orgId,
+  snapshot,
+  data,
+  error
+) => {
+  // const itemsQuery = query(doc(db, `${orgId}_leads_log', 'W6sFKhgyihlsKmmqDG0r'))
+  const { uid, cutoffDate } = data
+  // return onSnapshot(doc(db, `${orgId}_leads_log`, uid), snapshot, error)
+  const { data: lead_logs, error: countError } = await supabase
+    .from(`${orgId}_sales_emp_kpi`)
+    .select('*')
+    .eq('period', 'M')
+    .eq('uid', uid)
+    .limit(1)
+
+  // .eq('type', 'sts_change')
+  // .is('projectId', null)
+  // .isNull('projectId')
+  // .eq('from', 'visitfixed')
+
+  if (countError) {
+    console.error(countError)
+    return
+  }
+  return lead_logs
+  // return onSnapshot(itemsQuery, snapshot, error)
+}
