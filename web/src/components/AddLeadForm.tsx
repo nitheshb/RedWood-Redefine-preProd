@@ -208,12 +208,22 @@ const AddLeadForm = ({
     { label: '70 - 80 Lacs', value: '70-80L' },
     { label: '80 - 90 Lacs', value: '80-90L' },
     { label: '90 - 100 Lacs', value: '90-100L' },
-    { label: '1.0 Cr - 1.1 Cr', value: '1-1.1C' },
-    { label: '1.1 Cr - 1.2 Cr', value: '1.1-1.2C' },
-    { label: '1.2 Cr - 1.3 Cr', value: '1.2-1.3C' },
-    { label: '1.3 Cr - 1.4 Cr', value: '1.3-1.4C' },
-    { label: '1.4 Cr - 1.5 Cr', value: '1.4-1.5C' },
-    { label: '1.5 + Cr', value: '1.5+' },
+    // { label: '1.0 Cr - 1.1 Cr', value: '1-1.1C' },
+    // { label: '1.1 Cr - 1.2 Cr', value: '1.1-1.2C' },
+    // { label: '1.2 Cr - 1.3 Cr', value: '1.2-1.3C' },
+    // { label: '1.3 Cr - 1.4 Cr', value: '1.3-1.4C' },
+    // { label: '1.4 Cr - 1.5 Cr', value: '1.4-1.5C' },
+    // { label: '1.5 + Cr', value: '1.5+' },
+    { value: 'under_1cr', label: 'Below 1cr' },
+    { value: '1cr_1.25cr', label: '1cr to 1.25cr' },
+    { value: '1.25cr_1.5cr', label: '1.25cr to 1.50cr' },
+    { value: '1.5cr_2cr', label: '1.50cr to 2cr' },
+    { value: '2cr_2.5cr', label: '2cr to 2.50cr' },
+    { value: '2.5cr_2.5cr', label: '2.50cr to 2.50cr' }, // Consider if this is a valid range
+    { value: '2.5cr_3cr', label: '2.50cr to 3cr' },
+    { value: '3cr_3.5cr', label: '3cr to 3.50cr' },
+    { value: '3.5cr_4cr', label: '3.50cr to 4cr' },
+    { value: 'above_4cr', label: '4cr and above' },
   ]
 
   const plans = [
