@@ -18,6 +18,7 @@ const LeadsCoversionGraphs = ({
   showDrillDownFun,
   leadsFetchedRawData,
   projectFilList,
+
 }) => {
   const [show, setShow] = useState(false)
 
@@ -66,7 +67,16 @@ const LeadsCoversionGraphs = ({
           100
       )
       const val2 = 100 - val1
-      setPieVals({ val1, val2, val3: 50 })
+      let val3 = Math.round(
+        (sourceRawFilData.filter((datObj) =>
+          [
+            'booked',
+          ].includes(datObj?.Status)
+        ).length /
+          sourceRawFilData.length) *
+          100
+      )
+      setPieVals({ val1, val2, val3: val3 })
     }
     const inProgressStatuses = new Set([
       'new',
@@ -229,7 +239,7 @@ const LeadsCoversionGraphs = ({
         <div style={{ display: 'flex' }}>
           <div className="w-full flex flex-col gap-6">
 
-            <LeadHomeChartBar />
+            <LeadHomeChartBar  sourceRawFilData={sourceRawFilData} showDrillDownFun={showDrillDownFun}/>
             <section>
               {/* section - 3 */}
               <section className="flex flex-row flex-wrap gap-6">
@@ -243,12 +253,12 @@ const LeadsCoversionGraphs = ({
                         stages of the sales funnel.
                       </div>
                     </article>
-                    <article>date</article>
+
                   </section>
 
                   <div className="w-full  mt-4">
                     {/* <StackedLeadsChart /> */}
-                    <LeadSummaryPie leadsData={leadsPayload} />
+                    <LeadSummaryPie leadsData={leadsPayload}  showDrillDownFun={showDrillDownFun}/>
                   </div>
 
                 </section>
@@ -262,7 +272,7 @@ const LeadsCoversionGraphs = ({
                         stages of the sales funnel.
                       </div>
                     </article>
-                    <article>date</article>
+
                   </section>
 
                   <div className="w-full  mt-4">
@@ -284,7 +294,7 @@ const LeadsCoversionGraphs = ({
                         0.2% less than the previous 30 days
                       </div>
                     </article>
-                    <article>date</article>
+
                   </section>
                   <QualifiedBySource2Bars leadsData={leadsPayload} />
 
@@ -301,7 +311,7 @@ const LeadsCoversionGraphs = ({
                         0.2% less than the previous 30 days
                       </div>
                     </article>
-                    <article>date</article>
+
                   </section>
 
                   <div className="w-full h-[400px] mt-4">
@@ -340,7 +350,7 @@ const LeadsCoversionGraphs = ({
                         Leads landed from 3 different countries
                       </div>
                     </article>
-                    <article>date</article>
+
                   </section>
                   <LeadLoctionMap />
 

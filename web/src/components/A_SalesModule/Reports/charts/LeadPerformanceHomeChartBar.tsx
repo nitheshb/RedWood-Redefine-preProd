@@ -133,9 +133,11 @@ const chartConfig = {
   },
 }
 
-export default function LeadHomeChartBar() {
+export default function LeadHomeChartBar({sourceRawFilData, showDrillDownFun}) {
   const [activeChart, setActiveChart] =
     React.useState<keyof typeof chartConfig>('desktop')
+  const [activeLeadTypeIs, setActiveLeadTypeIs] =
+    React.useState('desktop')
 
   const total = React.useMemo(
     () => ({
@@ -156,8 +158,38 @@ export default function LeadHomeChartBar() {
           </CardDescription>
         </div>
         <div className="flex">
-          {['desktop', 'mobile', 'archieve'].map((key) => {
-            const chart = key as keyof typeof chartConfig
+          {[ {
+                    stausTitle: 'Leads',
+                    data: sourceRawFilData,
+                  },
+                  {
+                    stausTitle: 'Progress',
+                    data: sourceRawFilData.filter((datObj) =>
+                      [
+                        'new',
+                        'unassigned',
+                        'followup',
+                        'visitfixed',
+                        'visitdone',
+                        'negotiation',
+                      ].includes(datObj?.Status)
+                    ),
+                  },{
+                    stausTitle: 'Booked',
+                    data: sourceRawFilData.filter(
+                      (datObj) => datObj?.Status == 'booked'
+                    ),
+                  },
+                   {
+                    stausTitle: 'Not Interested',
+                    data: sourceRawFilData.filter(
+                      (datObj) =>       [
+                        'notinterested',
+                        'junk'
+                      ].includes(datObj?.Status)
+                    ),
+                  },].map((key) => {
+            const chart = key?.stausTitle as keyof typeof chartConfig
             return (
               <button
                 key={chart}
@@ -165,13 +197,16 @@ export default function LeadHomeChartBar() {
                 className={`relative z-30 flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left even:border-l data-[active=true]:bg-muted/50 sm:border-l sm:border-t-0 sm:px-8 sm:py-6 ${
                   activeChart === chart && 'bg-[#E8F6FF]'
                 }`}
-                onClick={() => setActiveChart(chart)}
+                onClick={() => {setActiveChart(chart)
+                  setActiveLeadTypeIs(key?.stausTitle)
+                  showDrillDownFun(`Total ${key?.stausTitle}`, key?.data)
+                }}
               >
-                <span className="text-xs text-muted-foreground">
-                  {chartConfig[chart].label}
+                <span className="text-xs text-muted-foreground whitespace-nowrap">
+                  {key?.stausTitle}
                 </span>
                 <span className="text-lg font-bold leading-none sm:text-3xl">
-                  {total[key as keyof typeof total].toLocaleString()}
+                  {key?.data?.length?.toLocaleString()}
                 </span>
               </button>
             )

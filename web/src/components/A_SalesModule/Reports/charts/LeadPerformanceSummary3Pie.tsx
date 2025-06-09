@@ -102,9 +102,9 @@ export default function LeadSummary3Pie({pieVals}) {
 
   // Only display active segments in legend (not the "remaining" parts)
   const legendData = [
-    { name: "Opportunity to Bookings", value: "Opportunity to Bookings", color: "#0ea5e9", completion: 75 },
-    { name: "New lead to Junk", value: "New lead to Junk", color: "#8b5cf6", completion: 60 },
-    { name: "New lead to Opportunity", value: "New lead to Opportunity", color: "#10b981", completion: 90 },
+    { name: "New lead to Opportunity", value: "New lead to Opportunity", color: "#10b981", completion: pieVals?.val1 },
+    { name: "New lead to Junk", value: "New lead to Junk", color: "#8b5cf6", completion: pieVals?.val2 },
+    { name: "Opportunity to Bookings", value: "Opportunity to Bookings", color: "#0ea5e9", completion: pieVals?.val3 },
   ];
 
   // Calculate radii for each semi-circle

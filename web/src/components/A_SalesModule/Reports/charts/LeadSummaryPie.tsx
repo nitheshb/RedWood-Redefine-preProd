@@ -29,7 +29,7 @@ const chartData = [
 ]
 
 
-export default function LeadSummaryPie({leadsData}) {
+export default function LeadSummaryPie({leadsData,  showDrillDownFun}) {
   const totalVisitors = React.useMemo(() => {
     if(leadsData.length>0) {
     return leadsData[0]?.count
@@ -96,8 +96,8 @@ export default function LeadSummaryPie({leadsData}) {
         <div className="flex flex-col w-full justify-between p-4 py-6">
         {leadsData.map((d, i)=>
 
-        <section className="flex flex-row w-full justify-between border-b border-[#F3F2F9] ">
-        <section className="flex flex-row">
+        <section className="flex flex-row w-full justify-between border-b border-[#F3F2F9] cursor-pointer" onClick={()=> showDrillDownFun(`Total ${d?.stausTitle}`, d?.data)}>
+        <section className="flex flex-row" >
                         <div className={`text-[#1f2937] w-3 h-3 mt-[2px] mx-2 rounded-full `}  style={{ backgroundColor: d?.fill }}></div>
                         <div className="text-[#4b5563] text-xs">
                           {' '}

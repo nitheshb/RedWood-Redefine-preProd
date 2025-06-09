@@ -217,10 +217,12 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
   }, [usersCleanList])
 
   useEffect(() => {
+    console.log('all projects data', selProjectIs?.value )
     if (selProjectIs?.value === 'allprojects') {
       setSourceListTuned(
         serialMyData(sourceListItems, leadsFetchedRawData, 'by_source')
       )
+      console.log('all projects data', leadsFetchedRawData)
       setSourceRawFilData(leadsFetchedRawData)
     } else if (selProjectIs?.value === 'others') {
       const projectWideA = leadsFetchedRawData.filter(
@@ -1493,6 +1495,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                       showDrillDownFun={showDrillDownFun}
                       projectFilList={projectListTuned}
                       leadsFetchedRawData={leadsFetchedRawData}
+      
                     />
                   </div>
                 </div>
@@ -2653,6 +2656,26 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                       showDrillDownFun={showDrillDownFun}
                       projectFilList={projectListTuned}
                       leadsFetchedRawData={leadsFetchedRawData}
+                      sourceFiltListTuned={sourceFiltListTuned}
+                      setSelProject={setSelProject}
+                      selViewSource={selViewSource}
+                      viewSource={viewSource}
+                      selProjectIs={selProjectIs}
+                      projectList={projectList}
+                      sourceDownloadRows={sourceDownloadRows}
+                      startDate={startDate}
+                      endDate={endDate}
+                      sourceListTuned={sourceListTuned}
+                      setDateRange={setDateRange}
+                      setSourceDateRange={setSourceDateRange}
+                      sourceDateRange={sourceDateRange}
+                      startOfDay={startOfDay}
+                      startOfWeek={startOfWeek}
+                      startOfMonth={startOfMonth}
+                      subMonths={subMonths}
+                      isOpened={isOpened}
+                      setIsOpened={setIsOpened}
+
                     />
                   <section className="w-[99%] border-[#e7e5eb] bg-white rounded-lg p-4">
                     <div className="flex flex-col"></div>

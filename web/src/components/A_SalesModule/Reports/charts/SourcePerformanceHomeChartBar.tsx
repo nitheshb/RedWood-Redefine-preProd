@@ -16,7 +16,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from 'src/components/ui/charts'
-export default function  SourcePerformanceStackedHbar () {
+export default function  SourcePerformanceStackedHbar ({sourceFiltListTuned, sourceRawFilData}) {
   // Sample data with 4 sources and their breakdown
   const data = [
     {
@@ -95,34 +95,41 @@ export default function  SourcePerformanceStackedHbar () {
           </CardHeader>
           <CardContent className="px-2 sm:p-6">
     <div className="">
+
       <div className="space-y-0">
-        {data.map((item, index) => {
+        {sourceFiltListTuned.map((item, index) => {
           // Calculate the overall width percentage based on the maximum total
-          const overallWidthPercentage = (item.total / maxTotal) * 100;
+          const overallWidthPercentage = (item?.Total?.length / sourceRawFilData?.length||0) * 100;
 
           return (
-            <div key={index} className="flex items-center gap-6 p-4 bg-gray-50 rounded-lg">
+            <div key={index} className="flex items-center gap-3 gap-y-1 p-4 py-2 bg-gray-50 rounded-lg">
               {/* Source Name */}
               <div className="w-36 flex-shrink-0">
-                <h3 className="font-semibold text-gray-700">{item.source}</h3>
+                <h3 className="font-semibold text-gray-700">{item.label}</h3>
               </div>
 
               {/* Total Count */}
               <div className="w-20 flex-shrink-0 text-right">
-                <span className="font-bold text-gray-800 text-lg">{item.total.toLocaleString()}</span>
+                <span className="font-bold text-gray-800 text-lg">{item?.Total?.length?.toLocaleString()}</span>
               </div>
+           
 
               {/* Container for the proportional bar */}
               <div className="flex-1 relative">
                 {/* Background container showing the full possible width */}
-                <div className="h-12 bg-gray-200 rounded-lg relative overflow-hidden">
+                <div className="h-8 bg-gray-200 rounded-lg relative overflow-hidden">
                   {/* The actual stacked bar with proportional width */}
                   <div
                     className="h-full flex rounded-lg overflow-hidden"
                     style={{ width: `${overallWidthPercentage}%` }}
                   >
-                    {item.segments.map((segment, segIndex) => {
-                      const segmentWidth = (segment.value / item.total) * 100;
+                    {[
+        { label: "InProgress", value: item?.inprogress?.length || 0, color: "bg-blue-500" },
+        { label: "Booked", value: item?.booked?.length || 0, color: "bg-green-500" },
+        { label: "Archieve", value: item?.archieve?.length || 0, color: "bg-purple-500" },
+        { label: "Other", value: 0, color: "bg-orange-500" }
+      ]?.map((segment, segIndex) => {
+                      const segmentWidth = (segment?.value / item?.Total?.length) * 100;
                       return (
                         <div
                           key={segIndex}
@@ -132,13 +139,13 @@ export default function  SourcePerformanceStackedHbar () {
                           {/* Show value if segment is wide enough */}
                           {segmentWidth > 15 && (
                             <span className="text-white text-xs font-medium">
-                              {segment.value}
+                              {segment?.value}
                             </span>
                           )}
 
                           {/* Tooltip on hover */}
                           <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
-                            {segment.label}: {segment.value.toLocaleString()}
+                            {segment?.label}: {segment.value.toLocaleString()}
                           </div>
                         </div>
                       );
@@ -165,15 +172,15 @@ export default function  SourcePerformanceStackedHbar () {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           <div className="flex items-center gap-2">
             <div className="w-4 h-4 bg-blue-500 rounded"></div>
-            <span className="text-sm text-gray-600">Primary</span>
+            <span className="text-sm text-gray-600">InProgress</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-4 h-4 bg-green-500 rounded"></div>
-            <span className="text-sm text-gray-600">Secondary</span>
+            <span className="text-sm text-gray-600">Booked</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-4 h-4 bg-purple-500 rounded"></div>
-            <span className="text-sm text-gray-600">Tertiary</span>
+            <span className="text-sm text-gray-600">Archieve</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-4 h-4 bg-orange-500 rounded"></div>
