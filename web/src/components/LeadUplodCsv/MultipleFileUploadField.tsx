@@ -1537,11 +1537,11 @@ export function MultipleFileUploadField({
           //  adding 21600000 ms == 6hrs to match local time with utc + 6hrs
 
           // normalizedRow['Date'] = prettyDate(milliseconds).toLocaleString()
-          if(normalizedRow['Mobile']){
-          normalizedRow['CountryCode'] =splitPhoneNumber(normalizedRow['Mobile']).countryCode
-          normalizedRow['Mobile'] = splitPhoneNumber(normalizedRow['Mobile']).phoneNumber
+          // if(normalizedRow['Mobile']){
+          // normalizedRow['CountryCode'] =splitPhoneNumber(normalizedRow['Mobile']).countryCode
+          // normalizedRow['Mobile'] = splitPhoneNumber(normalizedRow['Mobile']).phoneNumber
 
-          }
+          // }
 
 
           normalizedRow['Status'] =  selldoLeadStageMapper(normalizedRow['Status']?.trim()?.toLowerCase(), i)?.toLowerCase() || ''
@@ -1577,19 +1577,19 @@ export function MultipleFileUploadField({
               }
                   const foundLength = await checkIfLeadAlreadyExists(
                     `${orgId}_leads`,
-                    normalizedRow['Mobile'],
+                    normalizedRow['Email']?.toLowerCase(),
                     normalizedRow['ProjectId']
                   )
-                  // modify date
+                  // // modify date
 
-                  console.log('found row is 5', normalizedRow)
-                  await console.log(
-                    'foundLength is',
-                    foundLength,
-                    normalizedRow,
-                    foundLength,
-                    normalizedRow['Mobile']
-                  )
+                  // console.log('found row is 5', normalizedRow)
+                  // await console.log(
+                  //   'foundLength is',
+                  //   foundLength,
+                  //   normalizedRow,
+                  //   foundLength,
+                  //   normalizedRow['Mobile']
+                  // )
                   normalizedRow['mode'] = await makeMode(foundLength)
                   normalizedRow['invalidReason'] =  normalizedRow['mode']=='invalid' && 'Duplicate lead exits'
                   if (normalizedRow['mode'] === 'valid' && normalizedRow['LeadOwnerEmailID'] != '') {
@@ -1638,7 +1638,7 @@ export function MultipleFileUploadField({
       }
 
     } catch (error) {
-      normalizedRow['invalidReason'] = 'Error'
+      normalizedRow['invalidReason'] = 'Error1'
       console.log('error is ===>', error)
       normalizedRow['mode'] = 'invalid'
       toast.error('something went wrong')

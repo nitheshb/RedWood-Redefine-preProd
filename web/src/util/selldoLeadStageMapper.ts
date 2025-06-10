@@ -32,6 +32,8 @@ console.log('normalized is ', normalized, i)
   switch (normalized) {
     case 'unqualified':
       return 'notinterested';
+    case 'Unqualified':
+      return 'notinterested';
     case 'incoming':
       return 'new';
     case 'prospect':
