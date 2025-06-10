@@ -939,6 +939,8 @@ export default function LeadProfileSideView({
     return
   }
   const fAddSchedule = async () => {
+    console.log('add schedule', startDate)
+
     const y = takTitle === '' ? addCommentTitle : takTitle
     if (closePrevious) {
       closeAllPerviousTasks(`${y}`)
@@ -957,7 +959,7 @@ export default function LeadProfileSideView({
       schTime:
         tempLeadStatus === 'booked'
           ? Timestamp.now().toMillis() + 10800000
-          : startDate.getTime(),
+          : startDate?.getTime(),
       ct: Timestamp.now().toMillis(),
     }
 
@@ -1264,6 +1266,11 @@ export default function LeadProfileSideView({
     }
   }
   const addFeedbackFun = async (data) => {
+    console.log('add schedule', startDate, data)
+    if(typeof value === "number" && !isNaN(value)){
+      setStartDate(new Date(value))
+    }
+
     const inx = schStsMA.indexOf(data.ct)
 
     data.comments = [
@@ -1308,7 +1315,7 @@ export default function LeadProfileSideView({
     setschStsA(x)
     setschStsMA(y)
 
-    deleteSchLog(orgId, id, data.ct, 'completed', schStsA, schStsMA, data)
+    deleteSchLog(orgId, id, data.ct, 'completed', schStsA, schStsMA)
   }
 
   const selFun = () => {
@@ -3801,7 +3808,7 @@ const totalCommentsCount = leadSchFetchedData.reduce((total, task) => {
                                                       notInterestedFun()
                                                       return
                                                     }
-                                                    addFeedbackFun(data)
+                                                    addFeedbackFun(leadNextTaskObj)
                                                   } else {
                                                     toast.error(
                                                       'Please Enter Notes'
@@ -3822,7 +3829,7 @@ const totalCommentsCount = leadSchFetchedData.reduce((total, task) => {
                                                     notInterestedFun()
                                                     return
                                                   }
-                                                  addFeedbackFun(data)
+                                                  addFeedbackFun(leadNextTaskObj)
 
                                                   getWhatsAppTemplates(
                                                     'on_sitevisit_done',
