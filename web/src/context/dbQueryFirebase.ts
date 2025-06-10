@@ -2979,6 +2979,7 @@ export const registerCpUser = async (orgId, data1, user) => {
 // This function is used to add leads for cp
 export const addCpLead = async (orgId, data, by, msg) => {
   // const x = await addDoc(collection(db, `${orgId}_leads_cp`), data)
+  data.assignType = 'cp'
   const x = await addDoc(collection(db, `${orgId}_leads`), data)
   await console.log('add Lead value is ', x, x.id, data)
   const { intype, Name, Mobile, assignedTo, Project, assignedToObj } = data
