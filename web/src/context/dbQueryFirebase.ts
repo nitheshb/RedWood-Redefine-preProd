@@ -1543,7 +1543,8 @@ export const streamUnitById = (orgId, snapshot, data, error) => {
 // stream
 export const getLeadsByStatus = (orgId, snapshot, data, error) => {
   const { projAccessA, isCp } = data
-  const colName = isCp ? `${orgId}_leads_cp` : `${orgId}_leads`
+  // const colName = isCp ? `${orgId}_leads_cp` : `${orgId}_leads`
+  const colName = isCp ? `${orgId}_leads` : `${orgId}_leads`
   const itemsQuery = query(
     collection(db, colName),
     where('ProjectId', 'in', projAccessA)
@@ -1597,7 +1598,8 @@ export const getEmployeesListDept = async (orgId, data) => {
 
 export const getMyLeadsByDate = async (orgId, data) => {
   const { cutoffDate, uid, isCp } = data
-  const colName = isCp ? `${orgId}_leads_cp` : `${orgId}_leads`
+  // const colName = isCp ? `${orgId}_leads_cp` : `${orgId}_leads`
+    const colName = isCp ? `${orgId}_leads` : `${orgId}_leads`
   console.log('leads table name cp', colName)
   const itemsQuery = query(
     collection(db, colName),
@@ -1903,7 +1905,8 @@ export const getCrmUnitsByStatus = (orgId, snapshot, data, error) => {
 export const getLeadsByStatusUser = (orgId, snapshot, data, error) => {
   console.log('orgId is ', orgId)
   const { status, uid, isCp } = data
-  const colName = isCp ? `${orgId}_leads_cp` : `${orgId}_leads`
+  // const colName = isCp ? `${orgId}_leads_cp` : `${orgId}_leads`
+     const colName = isCp ? `${orgId}_leads` : `${orgId}_leads`
   const itemsQuery = query(
     collection(db, colName),
     where('Status', 'in', status),
@@ -2975,7 +2978,8 @@ export const registerCpUser = async (orgId, data1, user) => {
 }
 // This function is used to add leads for cp
 export const addCpLead = async (orgId, data, by, msg) => {
-  const x = await addDoc(collection(db, `${orgId}_leads_cp`), data)
+  // const x = await addDoc(collection(db, `${orgId}_leads_cp`), data)
+  const x = await addDoc(collection(db, `${orgId}_leads`), data)
   await console.log('add Lead value is ', x, x.id, data)
   const { intype, Name, Mobile, assignedTo, Project, assignedToObj } = data
   const { data: data3, error: errorx } = await supabase
