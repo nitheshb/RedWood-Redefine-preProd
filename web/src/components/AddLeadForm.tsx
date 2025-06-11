@@ -44,6 +44,7 @@ import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 import { use } from 'i18next'
 import toast from 'react-hot-toast'
 import DuplicateLeadCard from './A_SalesModule/duplicateLeadCard'
+import { Timestamp } from 'firebase/firestore'
 
 const AddLeadForm = ({
   title,
@@ -332,14 +333,7 @@ const AddLeadForm = ({
           user.email
         )
       }
-      // update lead data
-      await updateLeadData(orgId, leadDetailsObj.id, leadData, user?.email)
-      setFormMessage('Saved Successfully..!')
-      setLoading(false)
-      if (closeWindowMode) {
-        console.log('am cloded')
-        dialogOpen()
-      }
+      updateLeadDataFun('editmode',leadData, resetForm)
     } else {
       if (user?.role?.includes(USER_ROLES.CP_AGENT)) {
         const { uid, email, displayName, department, role, orgId, phone } = user
@@ -405,10 +399,22 @@ const AddLeadForm = ({
       }
 
       if (foundLength?.length > 0) {
-        console.log('foundLENGTH IS ', foundLength.length, projectId)
+
+let leadPayload = foundLength[0]
+if(!['booked', 'negotiation', 'visitfixed',].includes(leadPayload?.Status)){
+  let x = leadData;
+  x.Status = 'new'
+  x.reengaged = true
+  x.reEngagedOn = Timestamp.now().toMillis()
+
+        updateLeadDataFun('editmode',leadData, resetForm)
+        toast.success('ReEngaged')
+}
+        console.log('foundLENGTH IS ', foundLength.length, projectId, foundLength)
         toast.error('Duplicate exists')
         setFoundDocs(foundLength)
         setFormMessage('Lead Already Exists with Ph No')
+
         setLoading(false)
       } else {
         console.log('foundLENGTH IS empty ', foundLength)
@@ -458,6 +464,17 @@ const AddLeadForm = ({
     }
   }
 
+  const updateLeadDataFun = async (mode, leadData, resetForm) => {
+
+    // update lead data
+    await updateLeadData(orgId, leadDetailsObj.id, leadData, user?.email)
+    setFormMessage('Saved Successfully..!')
+    setLoading(false)
+    if (closeWindowMode) {
+      console.log('am cloded')
+      dialogOpen()
+    }
+  }
   const getLeadScheduleLog = async () => {
     if (leadDetailsObj?.id) {
       steamLeadScheduleLog(
