@@ -402,21 +402,23 @@ const AddLeadForm = ({
         const now = Date.now(); // Current time in ms
         const ninetyDaysAgo = now - (90 * 24 * 60 * 60 * 1000);
 let leadPayload = foundLength[0]
-if(!['booked', 'negotiation', 'visitfixed',].includes(leadPayload?.Status) || ((leadPayload.leadUpT || leadPayload.Date)> ninetyDaysAgo) ){
+console.log('leadPayload is', leadPayload)
+if(!['booked', 'negotiation', 'visitfixed',].includes(leadPayload?.Status) || ((leadPayload?.leadUpT || leadPayload?.Date)< ninetyDaysAgo) ){
   let x = leadData;
-  x.Status = 'negotiation'
+  x.id = leadPayload?.id
+  x.Status = 'new'
   x.reengaged = true
   x.reEngagedOn = Timestamp.now().toMillis()
 
 
-        updateLeadDataFun('editmode',leadData, resetForm)
+        updateLeadDataFun('editmode',x, resetForm)
         toast.success('ReEngaged')
-}
+}else{
         console.log('foundLENGTH IS ', foundLength.length, projectId, foundLength)
         toast.error('Duplicate exists')
         setFoundDocs(foundLength)
         setFormMessage('Lead Already Exists with Ph No')
-
+}
         setLoading(false)
       } else {
         console.log('foundLENGTH IS empty ', foundLength)
@@ -467,7 +469,7 @@ if(!['booked', 'negotiation', 'visitfixed',].includes(leadPayload?.Status) || ((
   }
 
   const updateLeadDataFun = async (mode, leadData, resetForm) => {
-
+console.log('leadData is', leadData)
     // update lead data
     await updateLeadData(orgId, leadData.id, leadData, user?.email)
     setFormMessage('Saved Successfully..!')
