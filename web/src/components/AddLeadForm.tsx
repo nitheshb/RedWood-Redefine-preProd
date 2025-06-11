@@ -333,7 +333,13 @@ const AddLeadForm = ({
           user.email
         )
       }
-      updateLeadDataFun('editmode',leadData, resetForm)
+      await updateLeadData(orgId, leadDetailsObj.id, leadData, user?.email)
+      setFormMessage('Saved Successfully..!')
+      setLoading(false)
+      if (closeWindowMode) {
+        console.log('am cloded')
+        dialogOpen()
+      }
     } else {
       if (user?.role?.includes(USER_ROLES.CP_AGENT)) {
         const { uid, email, displayName, department, role, orgId, phone } = user
