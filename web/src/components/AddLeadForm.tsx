@@ -399,13 +399,15 @@ const AddLeadForm = ({
       }
 
       if (foundLength?.length > 0) {
-
+        const now = Date.now(); // Current time in ms
+        const ninetyDaysAgo = now - (90 * 24 * 60 * 60 * 1000);
 let leadPayload = foundLength[0]
-if(!['booked', 'negotiation', 'visitfixed',].includes(leadPayload?.Status)){
+if(!['booked', 'negotiation', 'visitfixed',].includes(leadPayload?.Status) || ((leadPayload.leadUpT || leadPayload.Date)> ninetyDaysAgo) ){
   let x = leadData;
-  x.Status = 'new'
+  x.Status = 'negotiation'
   x.reengaged = true
   x.reEngagedOn = Timestamp.now().toMillis()
+
 
         updateLeadDataFun('editmode',leadData, resetForm)
         toast.success('ReEngaged')
@@ -467,7 +469,7 @@ if(!['booked', 'negotiation', 'visitfixed',].includes(leadPayload?.Status)){
   const updateLeadDataFun = async (mode, leadData, resetForm) => {
 
     // update lead data
-    await updateLeadData(orgId, leadDetailsObj.id, leadData, user?.email)
+    await updateLeadData(orgId, leadData.id, leadData, user?.email)
     setFormMessage('Saved Successfully..!')
     setLoading(false)
     if (closeWindowMode) {

@@ -13,6 +13,7 @@ import {
   ChatAlt2Icon,
   ChatAltIcon,
 } from '@heroicons/react/outline'
+import {RefreshCcw} from 'lucide-react'
 import {
   CheckCircleIcon,
   DocumentIcon,
@@ -1833,6 +1834,19 @@ const totalCommentsCount = leadSchFetchedData.reduce((total, task) => {
                                 {Email || '-'}
                               </span>
                             </div>
+
+
+                         {leadDetailsObj?.reengaged &&
+   <>
+   <div className="s_divider_small"></div>
+                         <div className="flex items-center gap-[6px]">
+                            <RefreshCcw width={14} height={14} className="w-[14px]" />
+                            <span className="font-[Outfit] s_h12">
+                              {'Re-Engaged' || '-'}
+                            </span>
+                          </div>
+                          </>
+      }
                           </div>
                         </div>
                       </div>
