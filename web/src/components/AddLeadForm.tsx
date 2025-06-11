@@ -403,30 +403,56 @@ const AddLeadForm = ({
         preferredType: selected || {},
         by: user?.email,
       }
-
+      const now = Date.now(); // Current time in ms
+      const ninetyDaysAgo = now - (90 * 24 * 60 * 60 * 1000);
+      let duplicateLeads =[]
       if (foundLength?.length > 0) {
-        const now = Date.now(); // Current time in ms
-        const ninetyDaysAgo = now - (90 * 24 * 60 * 60 * 1000);
-let leadPayload = foundLength[0]
-console.log('leadPayload is', leadPayload)
-if(!['booked', 'negotiation', 'visitfixed',].includes(leadPayload?.Status) || ((leadPayload?.leadUpT || leadPayload?.Date)< ninetyDaysAgo) ){
-  let x = leadData;
-  x.id = leadPayload?.id
-  x.Status = 'new'
-  x.reengaged = true
-  x.reEngagedOn = Timestamp.now().toMillis()
-
-
-        updateLeadDataFun('editmode',x, resetForm)
-        toast.success('ReEngaged')
-}else{
+        duplicateLeads =  foundLength.filter((lead) => lead.Status === 'negotiation' && lead.stsUpT < ninetyDaysAgo)
+      }
+      if (duplicateLeads?.length > 0) {
         console.log('foundLENGTH IS ', foundLength.length, projectId, foundLength)
         toast.error('Duplicate exists')
         setFoundDocs(foundLength)
         setFormMessage('Lead Already Exists with Ph No')
-}
+
+// let leadPayload = foundLength[0]
+// console.log('leadPayload is', leadPayload)
+// if(![ 'negotiation', ].includes(leadPayload?.Status) || ((leadPayload?.leadUpT || leadPayload?.Date)< ninetyDaysAgo) ){
+//   let x = leadData;
+//   x.id = leadPayload?.id
+//   x.Status = 'new'
+//   x.reengaged = true
+//   x.reEngagedOn = Timestamp.now().toMillis()
+
+
+//         updateLeadDataFun('editmode',x, resetForm)
+//         toast.success('ReEngaged')
+// }
+
+// else{
+//         console.log('foundLENGTH IS ', foundLength.length, projectId, foundLength)
+//         toast.error('Duplicate exists')
+//         setFoundDocs(foundLength)
+//         setFormMessage('Lead Already Exists with Ph No')
+// }
         setLoading(false)
-      } else {
+      }
+  //     else if(foundLength?.length > 0){
+  //       foundLength.map((leadData)=>{
+  //         let x = leadData;
+  // x.Status = ['negotiation',].includes(leadPayload?.Status)
+  // x.reengaged = true
+  // x.reEngagedOn = Timestamp.now().toMillis()
+  //       if (leadData?.tableSource == 'cpTable') {
+  //       updateLeadDataFun('editmode',x, resetForm)
+  //       toast.success('ReEngaged')
+  //       }else{
+  //         updateLeadDataFun('editmode',x, resetForm)
+  //         toast.success('ReEngaged')
+  //       }
+  //     })
+  //     }
+       else {
         console.log('foundLENGTH IS empty ', foundLength)
         if (user?.role?.includes(USER_ROLES.CP_AGENT)) {
           await addCpLead(
