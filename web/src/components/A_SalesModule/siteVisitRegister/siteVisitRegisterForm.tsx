@@ -22,6 +22,7 @@ import ConstructHomeList from 'src/components/A_ProjModule/ConstructHomeList'
 import { arrayUnion, Timestamp } from 'firebase/firestore'
 import { sv } from 'date-fns/locale'
 import { sourceListItems } from 'src/constants/projects'
+import Loader from 'src/components/Loader/Loader'
 
 export default function SiteVisitRegisterForm() {
   const { user } = useAuth()
@@ -32,6 +33,7 @@ export default function SiteVisitRegisterForm() {
   const [selectedLead, setSelectedLead] = useState(null)
   const [usersList, setusersList] = useState([])
   const [cpSourcingManagerA, setCpSourcingManagerA] = useState([])
+  const [loading, setLoading] = useState(false)
 
 
 
@@ -326,6 +328,7 @@ export default function SiteVisitRegisterForm() {
 
       if (selectedLead?.id) {
         await updateLeadData(orgId, selectedLead.id, x, user?.email)
+        setLoading(false)
       } else {
         const newLeadData = {
           Mobile: newData?.mobile || values?.searchPhone,
@@ -364,6 +367,7 @@ export default function SiteVisitRegisterForm() {
         )
 
         await updateLeadData(orgId, createdLead.id, x, user?.email)
+        setLoading(false)
       }
 
       resetForm({
@@ -409,7 +413,7 @@ export default function SiteVisitRegisterForm() {
         value: 'allprojects',
       })
       setSelCPUser([])
-
+      setLoading(false)
       toast.success('Site visit registered successfully!')
     } catch (error) {
       console.error('Submission error:', error)
@@ -519,11 +523,14 @@ export default function SiteVisitRegisterForm() {
           // } else {
           //   nextStep(values);
           // }
+
           console.log('iam at step ', step)
           if (step === 0) {
             nextStep(values)
           } else if (step === 3) {
+if(!loading){
             handleSubmit(values, formikHelpers)
+}
           } else {
             nextStep(values)
           }
@@ -946,7 +953,7 @@ export default function SiteVisitRegisterForm() {
                             }
                             // setSelCPUser(value)
                               setSelCPUser(x)
-                             setFieldValue('cpName', value.label)  
+                             setFieldValue('cpName', value.label)
                           }}
                           value={selCPUser?.value}
                           options={cPUsersList}
@@ -1505,6 +1512,7 @@ export default function SiteVisitRegisterForm() {
                       : 'bg-green-300'
                   } text-white rounded-md ml-auto`}
                 >
+                   {loading && <Loader />}
                   {isSubmitting ? 'Submit' : 'Submit'}
                 </button>
               ) : null}
