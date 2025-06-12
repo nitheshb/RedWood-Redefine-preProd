@@ -23,7 +23,6 @@ import {
   steamAllLeadsActivity,
   steamUsersListByRole,
   streamLeadLogdWithNullProj,
-  updateLeadLastUpdateTime,
   updateLeadsLogWithProject,
   updateTodaySourceStatsDB,
   updateTodayTasksTotal,

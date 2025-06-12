@@ -53,6 +53,7 @@ import ReportSideWindow from '../../components/SiderForm/ReportSideView'
 import SiderForm from '../../components/SiderForm/SiderForm'
 
 import LeadsTransferTableBody from './leadsTransferTableBody'
+import { USER_ROLES } from 'src/constants/userRoles'
 
 const valueFeedData = [
   { k: 'Total', v: 300, pic: '' },
@@ -100,6 +101,8 @@ const LeadsTransferBody = ({
   const d = new window.Date()
   const { user } = useAuth()
   const { orgId, access } = user
+  const isCp = user?.role?.includes(USER_ROLES.CP_AGENT) ? true : false
+
   const [leadsFetchedRawData, setLeadsFetchedRawData] = useState([])
   const [leadLogsRawData, setLeadLogsRawData] = useState([])
   const [leadLogsFetchedRawData, setLeadLogsFetchRawData] = useState([])
@@ -881,7 +884,7 @@ const LeadsTransferBody = ({
             if (comments) {
             } else if (ct) {
               try {
-                updateLeadLastUpdateTime(orgId, docSnapshot.id, ct, schTime)
+                updateLeadLastUpdateTime(orgId,isCp, docSnapshot.id, ct, schTime)
               } catch (error) {
                 console.log(
                   'faile to throw error at inside fun getTodayTodoLeadsData  ',

@@ -411,7 +411,7 @@ const AddLeadForm = ({
       const ninetyDaysAgo = now - (90 * 24 * 60 * 60 * 1000);
       let duplicateLeads =[]
       if (foundLength?.length > 0) {
-        duplicateLeads =  foundLength.filter((lead) => lead.Status === 'negotiation' && ((lead.stsUpT|| lead.leadUpT) < ninetyDaysAgo))
+        duplicateLeads =  foundLength.filter((lead) => lead.Status === 'negotiation' && ((lead.stsUpT|| lead.leadUpT) > ninetyDaysAgo))
       }
       if (duplicateLeads?.length > 0) {
         console.log('foundLENGTH IS ', foundLength.length, projectId, foundLength)

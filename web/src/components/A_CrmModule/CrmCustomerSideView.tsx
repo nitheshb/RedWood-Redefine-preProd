@@ -41,7 +41,6 @@ import {
   steamLeadScheduleLog,
   steamUsersListByRole,
   updateLeadAssigTo,
-  updateLeadStatus,
   updateSchLog,
   addLeadNotes,
   steamLeadNotes,

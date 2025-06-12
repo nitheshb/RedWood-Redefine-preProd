@@ -60,6 +60,7 @@ import SiderForm from './SiderForm/SiderForm'
 import SourcePerformanceStack from './A_SalesModule/Reports/SourcePerformance/sourcePerformanceStack'
 import SiteVisitReportHome from './A_SalesModule/Reports/SiteVisitM/SiteVisitReportHome'
 import EmployeePerformanceHome from './A_SalesModule/Reports/EmpTasks/EmpPerformanceHome'
+import { USER_ROLES } from 'src/constants/userRoles'
 
 const valueFeedData = [
   { k: 'Total', v: 300, pic: '' },
@@ -117,6 +118,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
   const d = new window.Date()
   const { user } = useAuth()
   const { orgId, access } = user
+  const isCp = user?.role?.includes(USER_ROLES.CP_AGENT) ? true : false
   const [leadsFetchedRawData, setLeadsFetchedRawData] = useState([])
   const [leadLogsRawData, setLeadLogsRawData] = useState([])
   const [leadLogsFetchedRawData, setLeadLogsFetchRawData] = useState([])
@@ -856,7 +858,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
             if (comments) {
             } else if (ct) {
               try {
-                updateLeadLastUpdateTime(orgId, docSnapshot.id, ct, schTime)
+                updateLeadLastUpdateTime(orgId,isCp, docSnapshot.id, ct, schTime)
               } catch (error) {
                 console.log(
                   'faile to throw error at inside fun getTodayTodoLeadsData  ',
@@ -1495,7 +1497,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                       showDrillDownFun={showDrillDownFun}
                       projectFilList={projectListTuned}
                       leadsFetchedRawData={leadsFetchedRawData}
-      
+
                     />
                   </div>
                 </div>

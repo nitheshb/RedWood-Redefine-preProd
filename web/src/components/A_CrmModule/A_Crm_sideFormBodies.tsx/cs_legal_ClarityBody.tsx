@@ -70,6 +70,8 @@ export default function Crm_legal_Clarity({
 }) {
   const { user } = useAuth()
   const { orgId } = user
+  const isCp = user?.role?.includes(USER_ROLES.CP_AGENT) ? true : false
+
   const { enqueueSnackbar } = useSnackbar()
   const {
     id,
@@ -95,6 +97,8 @@ export default function Crm_legal_Clarity({
     assignT,
     CT,
   } = selUnitPayload
+
+
   const [fetchedUsersList, setfetchedUsersList] = useState([])
   const [usersList, setusersList] = useState([])
   const [uploadFile, setUploadFile] = useState()
@@ -399,10 +403,11 @@ export default function Crm_legal_Clarity({
     }
 
     const { name } = assignedTo
-
     if (streamCurrentStatus != tempLeadStatus) {
+
       updateLeadStatus(
         orgId,
+        isCp,
         ProjectId,
         id,
         streamCurrentStatus,
@@ -564,6 +569,7 @@ export default function Crm_legal_Clarity({
       await editAddTaskCommentDB(orgId, id, data.ct, 'pending', schStsA, data)
       await updateLeadLastUpdateTime(
         orgId,
+        isCp,
         id,
         Timestamp.now().toMillis(),
         addCommentTime
@@ -854,7 +860,7 @@ export default function Crm_legal_Clarity({
         stsUpT: Timestamp.now().toMillis(),
         Remarks: `${fbTitle}-${fbNotes}`,
       }
-      updateLeadRemarks_VisitDone(orgId, id, dat, user.email, enqueueSnackbar)
+      updateLeadRemarks_VisitDone(orgId, isCp, id, dat, user.email, enqueueSnackbar)
       doneFun(selSchGrpO)
       setSelSchGrpO({})
       setLeadStatus('negotiation')

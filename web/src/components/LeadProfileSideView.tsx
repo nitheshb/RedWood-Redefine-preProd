@@ -268,6 +268,7 @@ export default function LeadProfileSideView({
 }) {
   const { user } = useAuth()
   const { orgId } = user
+  const isCp = user?.role?.includes(USER_ROLES.CP_AGENT) ? true : false
   const [fetchedSalesTeamList, setfetchedSalesTeamList] = useState([])
   const [usersList, setusersList] = useState([])
   const [uploadFile, setUploadFile] = useState()
@@ -765,7 +766,9 @@ export default function LeadProfileSideView({
       ProjectId: value.uid,
     }
     setSelProjectIs(value)
-    updateLeadProject(orgId, leadDocId, x)
+    const isCp = user?.role?.includes(USER_ROLES.CP_AGENT) ? true : false
+    updateLeadProject(orgId, isCp, leadDocId, x)
+
     toast.success('Project updated')
     return
     console.log('my stuff ', x, value)
@@ -783,7 +786,7 @@ export default function LeadProfileSideView({
       console.log('foundLENGTH IS ', foundLength, value.uid)
       toast.success('Project updated')
       setSelProjectIs(value)
-      updateLeadProject(orgId, leadDocId, x)
+      updateLeadProject(orgId,isCp, leadDocId, x)
     }
   }
 
@@ -1012,8 +1015,11 @@ export default function LeadProfileSideView({
     const { name } = assignedTo
 
     if (streamCurrentStatus != tempLeadStatus) {
+      const isCp = user?.role?.includes(USER_ROLES.CP_AGENT) ? true : false
+
       updateLeadStatus(
         orgId,
+        isCp,
         ProjectId,
         id,
         streamCurrentStatus,
@@ -1167,6 +1173,7 @@ export default function LeadProfileSideView({
       await editAddTaskCommentDB(orgId, id, data.ct, 'pending', schStsA, data)
       await updateLeadLastUpdateTime(
         orgId,
+        isCp,
         id,
         Timestamp.now().toMillis(),
         addCommentTime
@@ -1369,6 +1376,7 @@ export default function LeadProfileSideView({
       }
       updateLeadRemarks_NotIntrested(
         orgId,
+        user?.role?.includes(USER_ROLES.CP_AGENT)? true : false,
         id,
         dat,
         user.email,
@@ -1386,6 +1394,7 @@ export default function LeadProfileSideView({
       }
       updateLeadRemarks_NotIntrested(
         orgId,
+        user?.role?.includes(USER_ROLES.CP_AGENT)? true : false,
         id,
         dat,
         user.email,
@@ -1406,7 +1415,9 @@ export default function LeadProfileSideView({
         Remarks: `${fbTitle}-${fbNotes}`,
         Remarks_T: Timestamp.now().toMillis(),
       }
-      updateLeadRemarks_VisitDone(orgId, id, dat, user.email, enqueueSnackbar)
+      updateLeadRemarks_VisitDone(orgId,
+        user?.role?.includes(USER_ROLES.CP_AGENT)? true : false,
+        id, dat, user.email, enqueueSnackbar)
       doneFun(selSchGrpO)
       setSelSchGrpO({})
       setLeadStatus('negotiation')
@@ -1879,7 +1890,7 @@ const totalCommentsCount = leadSchFetchedData.reduce((total, task) => {
                       <div className="font-medium text-sm text-[#000000] tracking-wide pr-2 mr-1 relative after:content-[''] after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[1px] after:h-[10px] after:bg-gray-300 group-hover:after:bg-white"></div>
 
                       <div className="font-md ml-2 text-xs tracking-wide font-semibold text-[#000000] ">
-                        {(user?.role?.includes(USER_ROLES.SALES_MANAGER) ||(user?.role?.includes(USER_ROLES.ADMIN))|| customerDetails?.assignedTo ==user?.uid ) ? (
+                        {(user?.role?.includes(USER_ROLES.SALES_MANAGER) ||(user?.role?.includes(USER_ROLES.ADMIN))|| (customerDetails?.assignedTo ==user?.uid && !user?.role?.includes(USER_ROLES.CP_AGENT)) ) ? (
                           <div className="">
                             <AssigedToDropCompCrm
                               assignerName={assignerName}

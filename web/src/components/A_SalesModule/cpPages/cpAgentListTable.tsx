@@ -23,7 +23,6 @@ import {
   steamAllLeadsActivity,
   steamUsersListByRole,
   streamLeadLogdWithNullProj,
-  updateLeadLastUpdateTime,
   updateLeadsLogWithProject,
   updateTodaySourceStatsDB,
   updateTodayTasksTotal,
@@ -90,7 +89,7 @@ useEffect(() => {
                                     { label: 'email', id: 'new', align: 'center' },
                                     { label: 'status', id: 'userStatus', align: 'center' },
                                     { label: 'Rera No', id: 'empId', align: 'center' },
-                                  
+
                                   ].map((d, i) => (
                                     <th
                                       key={i}

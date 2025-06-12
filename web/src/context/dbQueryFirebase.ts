@@ -7837,16 +7837,18 @@ export const updateUnitAsBlocked = async (
 
 export const updateLeadRemarks_NotIntrested = async (
   orgId,
+  isCp,
   leadDocId,
   data,
   by,
   enqueueSnackbar
 ) => {
   try {
+      const colName = isCp ? `${orgId}_leads_cp` : `${orgId}_leads`
     console.log('data is', leadDocId, data)
     const { from, Status, notInterestedReason, notInterestedNotes } = data
 
-    await updateDoc(doc(db, `${orgId}_leads`, leadDocId), {
+    await updateDoc(doc(db, colName, leadDocId), {
       ...data,
     })
     const { data: data1, error: error1 } = await supabase
@@ -7909,6 +7911,7 @@ export const updateLeadRemarks = async (
 }
 export const updateLeadRemarks_VisitDone = async (
   orgId,
+  isCp,
   leadDocId,
   data,
   by,
@@ -7916,9 +7919,11 @@ export const updateLeadRemarks_VisitDone = async (
 ) => {
   try {
     console.log('data is visit done', leadDocId, data)
+    const colName = isCp ? `${orgId}_leads_cp` : `${orgId}_leads`
+
     const { from, Status, VisitDoneReason, VisitDoneNotes } = data
 
-    await updateDoc(doc(db, `${orgId}_leads`, leadDocId), {
+    await updateDoc(doc(db, colName, leadDocId), {
       ...data,
     })
     const { data: data1, error: error1 } = await supabase
@@ -7985,13 +7990,15 @@ export const updateLeadsStrength = async (orgId, leadDocId, data, by) => {
 }
 export const updateLeadLastUpdateTime = async (
   orgId,
+  isCp,
   leadDocId,
   time,
   schTime
 ) => {
   try {
     // console.log('wow it should be here', leadDocId, schTime)
-    await updateDoc(doc(db, `${orgId}_leads`, leadDocId), {
+      const colName = isCp ? `${orgId}_leads_cp` : `${orgId}_leads`
+    await updateDoc(doc(db, colName, leadDocId), {
       leadUpT: time,
       schTime,
     })
@@ -8048,6 +8055,7 @@ export const updateLeadBookedStatus = async (
 }
 export const updateLeadStatus = async (
   orgId,
+  isCp,
   projectId,
   leadDocId,
   oldStatus,
@@ -8057,7 +8065,8 @@ export const updateLeadStatus = async (
 ) => {
   try {
     console.log('wow it should be here', leadDocId, newStatus)
-    await updateDoc(doc(db, `${orgId}_leads`, leadDocId), {
+  const colName = isCp ? `${orgId}_leads_cp` : `${orgId}_leads`
+    await updateDoc(doc(db, colName, leadDocId), {
       Status: newStatus,
       coveredA: arrayUnion(oldStatus),
       stsUpT: Timestamp.now().toMillis(),
@@ -8098,6 +8107,7 @@ export const updateLeadStatus = async (
     })
   }
 }
+
 export const updateProjectCounts = async (
   orgId,
   pId,
@@ -8192,10 +8202,12 @@ export const updateUnblockProjectCounts = async (
     })
   }
 }
-export const updateLeadProject = async (orgId, leadDocId, newProjObj) => {
+export const updateLeadProject = async (orgId, isCp,leadDocId, newProjObj) => {
   console.log('wow it should be here', leadDocId, newProjObj)
-  await updateDoc(doc(db, `${orgId}_leads`, leadDocId), newProjObj)
+    const colName = isCp ? `${orgId}_leads_cp` : `${orgId}_leads`
+  await updateDoc(doc(db, colName, leadDocId), newProjObj)
 }
+
 export const updateSchLog = async (orgId, uid, kId, newStat, schStsA) => {
   const x = `${kId}.sts`
   const y = `${kId}.comT`
