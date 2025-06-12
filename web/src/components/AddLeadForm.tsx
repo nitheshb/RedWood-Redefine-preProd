@@ -23,6 +23,7 @@ import {
   getAllProjects,
   steamLeadScheduleLog,
   steamUsersListByRole,
+  updateCPLeadData,
   updateLeadAssigTo,
   updateLeadData,
   updateLeadLakeStatus,
@@ -333,7 +334,10 @@ const AddLeadForm = ({
           user.email
         )
       }
-      await updateLeadData(orgId, leadDetailsObj.id, leadData, user?.email)
+
+      user?.role?.includes(USER_ROLES.CP_AGENT) ?
+      await  updateCPLeadData(orgId, leadDetailsObj.id, leadData, user?.email) :  await updateLeadData(orgId, leadDetailsObj.id, leadData, user?.email)
+
       setFormMessage('Saved Successfully..!')
       setLoading(false)
       if (closeWindowMode) {
@@ -407,7 +411,7 @@ const AddLeadForm = ({
       const ninetyDaysAgo = now - (90 * 24 * 60 * 60 * 1000);
       let duplicateLeads =[]
       if (foundLength?.length > 0) {
-        duplicateLeads =  foundLength.filter((lead) => lead.Status === 'negotiation' && lead.stsUpT < ninetyDaysAgo)
+        duplicateLeads =  foundLength.filter((lead) => lead.Status === 'negotiation' && ((lead.stsUpT|| lead.leadUpT) < ninetyDaysAgo))
       }
       if (duplicateLeads?.length > 0) {
         console.log('foundLENGTH IS ', foundLength.length, projectId, foundLength)
@@ -437,21 +441,57 @@ const AddLeadForm = ({
 // }
         setLoading(false)
       }
-  //     else if(foundLength?.length > 0){
-  //       foundLength.map((leadData)=>{
-  //         let x = leadData;
-  // x.Status = ['negotiation',].includes(leadPayload?.Status)
-  // x.reengaged = true
-  // x.reEngagedOn = Timestamp.now().toMillis()
-  //       if (leadData?.tableSource == 'cpTable') {
-  //       updateLeadDataFun('editmode',x, resetForm)
-  //       toast.success('ReEngaged')
-  //       }else{
-  //         updateLeadDataFun('editmode',x, resetForm)
-  //         toast.success('ReEngaged')
-  //       }
-  //     })
-  //     }
+      else if(foundLength?.length > 0){
+        // reengaged
+        // check if reengage happens in same company
+
+        // get cp leads and assigned to cp agent then we can mark it as reengaged
+        // else create new cplead
+
+       let cpMyLeadsA = foundLength.filter((d)=>d?.tableSource == 'cpTable' && d?.assignedTo == user?.uid)
+       let salesTeamLeads = foundLength.filter((d)=>d?.tableSource == 'leadsTable' )
+        if(user?.role?.includes(USER_ROLES.CP_AGENT) && cpMyLeadsA.length>0){
+          cpMyLeadsA.map((leadData)=>{
+            let x = leadData;
+    x.Status =  ['new',  'unassigned'].includes(leadData?.Status) ? leadData?.Status : 'new'
+    x.reengaged = true
+    x.reEngagedOn = Timestamp.now().toMillis()
+      updateCPLeadData(orgId, x.id, x, user?.email)
+
+          toast.success('ReEngaged')
+
+        })
+        }
+        else if (user?.role?.includes(USER_ROLES.CP_AGENT) && cpMyLeadsA.length==0) {
+          await addCpLead(
+            orgId,
+            leadData,
+            user?.email,
+            `lead created and assidged to ${assignedToObj?.email || assignedTo}`
+          )
+        }
+        else if (!user?.role?.includes(USER_ROLES.CP_AGENT) && salesTeamLeads.length>0) {
+
+
+          salesTeamLeads.map((leadData)=>{
+            let x = leadData;
+    x.Status =  ['visitfixed',].includes(leadData?.Status) ? leadData?.Status : 'new'
+    x.reengaged = true
+    x.reEngagedOn = Timestamp.now().toMillis()
+
+     updateLeadData(orgId, leadData.id, x, user?.email)
+    setFormMessage('Saved Successfully..!')
+    setLoading(false)
+    if (closeWindowMode) {
+      console.log('am cloded')
+      dialogOpen()
+    }
+            toast.success('ReEngaged')
+
+        })
+        }
+
+      }
        else {
         console.log('foundLENGTH IS empty ', foundLength)
         if (user?.role?.includes(USER_ROLES.CP_AGENT)) {

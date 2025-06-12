@@ -59,6 +59,7 @@ import {
   sendCallNotification,
   updateLeadsStrength,
   checkIfLeadAlreadyExists,
+  steamCPLeadById,
 
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
@@ -474,7 +475,8 @@ export default function LeadProfileSideView({
   const streamLeadDataFun = () => {
     const { id } = customerDetails
     console.log('customer details', customerDetails)
-    const z = steamLeadById(
+    if(user?.role?.includes(USER_ROLES.CP_AGENT)){
+    const z = steamCPLeadById(
       orgId,
       (querySnapshot) => {
         const SnapData = querySnapshot.data()
@@ -488,6 +490,22 @@ export default function LeadProfileSideView({
         console.log('error')
       }
     )
+  }else{
+    const z = steamLeadById(
+      orgId,
+      (querySnapshot) => {
+        const SnapData = querySnapshot.data()
+        SnapData.id = id
+        console.log('lead changed', SnapData)
+
+        setLeadDetailsObj(SnapData)
+      },
+      { uid: id, orgId: orgId },
+      () => {
+        console.log('error')
+      }
+    )
+  }
   }
 
   useEffect(() => {

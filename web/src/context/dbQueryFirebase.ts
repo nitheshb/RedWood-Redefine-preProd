@@ -1534,6 +1534,12 @@ export const steamLeadById = (orgId, snapshot, data, error) => {
   return onSnapshot(doc(db, `${orgId}_leads`, uid), snapshot, error)
   // return onSnapshot(itemsQuery, snapshot, error)
 }
+export const steamCPLeadById = (orgId, snapshot, data, error) => {
+  // const itemsQuery = query(doc(db, `${orgId}_leads_log', 'W6sFKhgyihlsKmmqDG0r'))
+  const { uid } = data
+  return onSnapshot(doc(db, `${orgId}_leads_cp`, uid), snapshot, error)
+  // return onSnapshot(itemsQuery, snapshot, error)
+}
 export const streamUnitById = (orgId, snapshot, data, error) => {
   // const itemsQuery = query(doc(db, `${orgId}_leads_log', 'W6sFKhgyihlsKmmqDG0r'))
   const { uid } = data
@@ -4264,6 +4270,17 @@ export const updateProjectPayload = async (orgId, id, data) => {
 export const updateLeadData = async (orgId, id, data, by) => {
   try {
     const washingtonRef = doc(db, `${orgId}_leads`, id)
+    console.log('check add LeadLog', washingtonRef, 'passed data', data)
+
+    await updateDoc(washingtonRef, data)
+  } catch (error) {
+    //
+    // await setDoc(doc(db, `${orgId}_leads_notes`, id), yo)
+  }
+}
+export const updateCPLeadData = async (orgId, id, data, by) => {
+  try {
+    const washingtonRef = doc(db, `${orgId}_leads_cp`, id)
     console.log('check add LeadLog', washingtonRef, 'passed data', data)
 
     await updateDoc(washingtonRef, data)
