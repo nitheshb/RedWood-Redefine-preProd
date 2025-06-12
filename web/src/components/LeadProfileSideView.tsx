@@ -3341,7 +3341,7 @@ const totalCommentsCount = leadSchFetchedData.reduce((total, task) => {
 
                       <div>
                         <div className="grid grid-cols-1 lg:grid-cols-1 gap-4 ">
-                          <div className=" rounded-[8px] border border-[#F0F0F5]  bg-[#FFFFFF] overflow-hidden">
+                         {!isCp && <div className=" rounded-[8px] border border-[#F0F0F5]  bg-[#FFFFFF] overflow-hidden">
                             {/* Card content */}
                             <div className="py-1 px-5">
                                     <div className="pb-3">
@@ -3907,7 +3907,7 @@ const totalCommentsCount = leadSchFetchedData.reduce((total, task) => {
                                   </div>
 
 
-                          </div>
+                          </div>}
 
                           <div>
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 ">

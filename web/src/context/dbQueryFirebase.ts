@@ -3002,6 +3002,8 @@ export const addCpLead = async (orgId, data, by, msg) => {
       },
     ])
     .select()
+
+
   if (assignedTo) {
     const { offPh } = assignedToObj
     await sendWhatAppTextSms1(
@@ -3010,6 +3012,23 @@ export const addCpLead = async (orgId, data, by, msg) => {
     )
   }
   await console.log('what is this supbase', data3, errorx)
+
+  const data1 = {
+    by: by,
+    type: 'schedule',
+    pri: 'priority 1',
+    notes: 'Get into Introduction Call with customer',
+    sts: 'pending',
+    schTime: Timestamp.now().toMillis() + 10800000, // 3 hrs
+    ct: Timestamp.now().toMillis(),
+  }
+
+  const x1 = []
+
+  x1.push('pending')
+
+  await addLeadScheduler(orgId, x.id, data1, x1, data.assignedTo)
+  return x
   // await addLeadLog(orgId, x.id, {
   //   s: 's',
   //   type: 'status',
