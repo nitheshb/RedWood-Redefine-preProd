@@ -411,7 +411,7 @@ const AddLeadForm = ({
       const ninetyDaysAgo = now - (90 * 24 * 60 * 60 * 1000);
       let duplicateLeads =[]
       if (foundLength?.length > 0) {
-        duplicateLeads =  foundLength.filter((lead) => lead.Status === 'negotiation' && ((lead.stsUpT|| lead.leadUpT) > ninetyDaysAgo))
+        duplicateLeads =  foundLength.filter((lead) => lead.Status === 'negotiation' && ((lead?.stsUpT|| lead?.leadUpT || lead?.stsUpT|| lead?.Date) > ninetyDaysAgo))
       }
       if (duplicateLeads?.length > 0) {
         console.log('foundLENGTH IS ', foundLength.length, projectId, foundLength)
@@ -489,6 +489,16 @@ const AddLeadForm = ({
             toast.success('ReEngaged')
 
         })
+        }
+        else if (!user?.role?.includes(USER_ROLES.CP_AGENT) && salesTeamLeads.length==0) {
+
+
+          await addLead(
+            orgId,
+            leadData,
+            user?.email,
+            `lead created and assidged to ${assignedToObj?.email || assignedTo}`
+          )
         }
 
       }
