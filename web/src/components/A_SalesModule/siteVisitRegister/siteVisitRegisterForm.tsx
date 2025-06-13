@@ -290,6 +290,9 @@ export default function SiteVisitRegisterForm() {
       svCPsourcedBy: lead?.svCPsourcedBy || '',
       svHappendOn: lead.svHappendOn || '',
     })
+    if(lead?.tableSource==='cpTable'){
+      setSelCPUser(lead?.assignedToObj|| {})
+    }
   }
 
   const nextStep = (values) => {
