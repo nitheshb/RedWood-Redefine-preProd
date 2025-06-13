@@ -367,7 +367,7 @@ export default function SiteVisitRegisterForm() {
         let salesTeamLeads =   searchResults.filter((lead) => lead.tableSource != 'cpTable')
        let duplicateLeads =  salesTeamLeads.filter((lead) => lead.Status === 'negotiation' && ((lead?.stsUpT|| lead?.leadUpT || lead?.Date) > ninetyDaysAgo))
 if(salesTeamLeads.length > 0 ){
-       await updateLeadData(orgId, selectedLead.id, x, user?.email)
+       await updateLeadData(orgId, salesTeamLeads[0]?.id, x, user?.email)
 }else{
   const createdLead = await addLead(
     orgId,
