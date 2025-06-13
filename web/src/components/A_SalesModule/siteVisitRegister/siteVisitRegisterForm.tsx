@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import { CheckCircle, Phone, Search } from 'lucide-react'
 import {
+  addCpLead,
   addLead,
   addSiteVisitEntry,
   checkIfLeadAlreadyExists,
@@ -10,6 +11,7 @@ import {
   steamUsersListByRole,
   steamUsersListCpAgents,
   steamUsersListCpExecutive,
+  updateCPLeadData,
   updateLeadData,
 } from 'src/context/dbQueryFirebase'
 import toast from 'react-hot-toast'
@@ -43,7 +45,7 @@ export default function SiteVisitRegisterForm() {
     value: 'allprojects',
   })
   const [cPUsersList, setCPUsersList] = useState([])
-  const [selCPUser, setSelCPUser] = useState([])
+  const [selCPUser, setSelCPUser] = useState({})
 
   useEffect(() => {
     const unsubscribe = steamUsersListByRole(
@@ -263,7 +265,7 @@ export default function SiteVisitRegisterForm() {
       referralLeadName: lead.referralLeadName || '',
       propertyType: lead.propertyType || '',
       budget: lead.budget || '',
-      SourceCat: lead.SourceCat || '',
+      SourceCat: lead?.tableSource==='cpTable'? 'CP' : lead.SourceCat || '',
       Source: lead.Source || '',
       // location: lead.location || '',
       address: lead.address || '',
@@ -319,45 +321,68 @@ export default function SiteVisitRegisterForm() {
         svSchBy: newData.svSchBy,
         svSchByObj: newData.svSchByObj,
         svAttendedBy: newData.svAttendedBy,
+        svAttendedByObj: newData.svAttendedByObj,
         svHappendOn: newData.svHappendOn,
         svCPsourcedByObj: newData.svCPsourcedByObj || {},
         svCPsourcedBy: newData.svCPsourcedBy || '',
         coveredA: arrayUnion('visitdone'),
         VisitDoneNotes: newData.siteVistRemarks,
+        Status: 'negotiation',
       }
-
+      let newLeadData = {
+        Mobile: newData?.mobile || values?.searchPhone,
+        Name: newData?.firstName,
+        Email: newData?.email,
+        Status: 'negotiation',
+        intype: 'sitevisit',
+        Date: Timestamp.now().toMillis(),
+        by: user?.email,
+        Project: newData?.projectName,
+        ProjectId:
+          selProjectIs?.value === 'allprojects' ? '' : selProjectIs?.value,
+        assignedTo: newData?.svAttendedByObj?.value || user?.uid,
+        assignedToObj: newData?.svAttendedByObj,
+        SourceCat: newData?.SourceCat,
+        Source: newData?.Source,
+        cpName: newData?.cpName,
+        title: newData?.title,
+        secondaryPhone: newData?.secondaryPhone,
+        propertyType: newData?.propertyType,
+        budget: newData?.budget,
+        bedrooms: newData?.bedrooms,
+        address: newData?.address,
+        pincode: newData?.pincode,
+        customercompany: newData?.customercompany,
+        customerdesignation: newData?.customerdesignation,
+        purposeofPurchase: newData?.purposeofPurchase,
+        ...x,
+      }
       if (selectedLead?.id) {
+        if (selectedLead?.tableSource === 'cpTable') {
+          await updateCPLeadData(orgId, selectedLead.id, x, user?.email)
+          // check if sales lead exists in list of leads
+          // update the lead status to negotiation
+          const now = Date.now();
+          const ninetyDaysAgo = now - (90 * 24 * 60 * 60 * 1000);
+        let salesTeamLeads =   searchResults.filter((lead) => lead.tableSource != 'cpTable')
+       let duplicateLeads =  salesTeamLeads.filter((lead) => lead.Status === 'negotiation' && ((lead?.stsUpT|| lead?.leadUpT || lead?.Date) > ninetyDaysAgo))
+if(salesTeamLeads.length > 0 ){
+       await updateLeadData(orgId, selectedLead.id, x, user?.email)
+}else{
+  const createdLead = await addLead(
+    orgId,
+    newLeadData,
+    user?.email,
+    'New Lead from Site Visit'
+  )
+}
+
+        }else{
         await updateLeadData(orgId, selectedLead.id, x, user?.email)
+        }
         setLoading(false)
       } else {
-        const newLeadData = {
-          Mobile: newData?.mobile || values?.searchPhone,
-          Name: newData?.firstName,
-          Email: newData?.email,
-          Status: 'new',
-          intype: 'sitevisit',
-          Date: Timestamp.now().toMillis(),
-          by: user?.email,
-          Project: newData?.projectName,
-          ProjectId:
-            selProjectIs?.value === 'allprojects' ? '' : selProjectIs?.value,
-          assignedTo: newData?.svAttendedByObj?.value || user?.uid,
-          assignedToObj: newData?.svAttendedByObj,
-          SourceCat: newData?.SourceCat,
-          Source: newData?.Source,
-          cpName: newData?.cpName,
-          title: newData?.title,
-          secondaryPhone: newData?.secondaryPhone,
-          propertyType: newData?.propertyType,
-          budget: newData?.budget,
-          bedrooms: newData?.bedrooms,
-          address: newData?.address,
-          pincode: newData?.pincode,
-          customercompany: newData?.customercompany,
-          customerdesignation: newData?.customerdesignation,
-          purposeofPurchase: newData?.purposeofPurchase,
-          ...x,
-        }
+
 
         const createdLead = await addLead(
           orgId,
@@ -366,7 +391,17 @@ export default function SiteVisitRegisterForm() {
           'New Lead from Site Visit'
         )
 
-        await updateLeadData(orgId, createdLead.id, x, user?.email)
+        // await updateLeadData(orgId, createdLead.id, x, user?.email)
+      if(newLeadData?.SourceCat === 'CP'){
+      newLeadData.assignedTo = selCPUser?.cpId
+      newLeadData.assignedToObj = selCPUser
+        const createdCPLead = await addCpLead(
+          orgId,
+          newLeadData,
+          user?.email,
+          'New Lead from Site Visit'
+        )
+      }
         setLoading(false)
       }
 
@@ -412,7 +447,7 @@ export default function SiteVisitRegisterForm() {
         label: 'All Projects',
         value: 'allprojects',
       })
-      setSelCPUser([])
+      setSelCPUser({})
       setLoading(false)
       toast.success('Site visit registered successfully!')
     } catch (error) {
@@ -623,6 +658,10 @@ if(!loading){
                               <div className="text-sm text-gray-500 ml-3">
                                 {lead.Source}
                               </div>
+                              <div className="text-sm text-gray-500 ml-3">
+                                {lead?.tableSource==='cpTable'?'CP':'Sales Team'}-{lead?.assignedToObj?.label || lead?.assignedTo || 'N/A'}
+                              </div>
+
                             </section>
                           </div>
                           <div>
@@ -950,6 +989,7 @@ if(!loading){
                               cpId: value?.uid,
                               email: value?.email,
                               cpPh: value?.offPh,
+                              ...value
                             }
                             // setSelCPUser(value)
                               setSelCPUser(x)
