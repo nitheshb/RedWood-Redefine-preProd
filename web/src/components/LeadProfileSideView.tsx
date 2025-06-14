@@ -2080,7 +2080,7 @@ const totalCommentsCount = leadSchFetchedData.reduce((total, task) => {
                           : 'text-[11px] text-black'
                       }`}
                     >
-                      {statusFlowObj.label}
+                      {statusFlowObj.label ==='negotiation'? statusFlowObj.label: isCp ? 'Moved to Sales': statusFlowObj.label }
                     </span>
 
                     {i < StatusListA.length - 1 && (
