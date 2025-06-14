@@ -4101,6 +4101,8 @@ const totalCommentsCount = leadSchFetchedData.reduce((total, task) => {
                                           {' '}
                                           {selProjectFullDetails?.projectName}
                                         </h2>
+                                             {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
+
                                         <a
                                           href="#"
                                           className="font-medium text-xs leading-tight tracking-normal sale_text_color underline decoration-solid decoration-0 decoration-offset-[25%] decoration-thick decoration-skip-ink-auto"
@@ -4118,6 +4120,7 @@ const totalCommentsCount = leadSchFetchedData.reduce((total, task) => {
                                           }
                                           )
                                         </a>
+                                          )}
                                       </div>
 
                                       <div className="flex flex-wrap gap-2">

@@ -55,7 +55,7 @@ const UnblockUnitForm = ({
     console.log('status is', selUnitDetails)
 
     // return
-    if (['customer_blocked'].includes(selUnitDetails?.status)) {
+    if (['customer_blocked', 'management_blocked','blocked'].includes(selUnitDetails?.status)) {
       const unitUpdate = {
         status: 'available',
         unblocked_on: Timestamp.now().toMillis(),
